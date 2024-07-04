@@ -169,7 +169,11 @@ struct NetworkProtectionStatusView: View {
     private func connectionDetails() -> some View {
         Section {
             if let ipAddress = statusModel.ipAddress {
-                NetworkProtectionServerItemView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
+                NetworkProtectionConnectionDetailView(title: UserText.netPStatusViewIPAddress, value: ipAddress)
+            }
+
+            if statusModel.dnsSettings.usesCustomDNS {
+                NetworkProtectionConnectionDetailView(title: UserText.netPStatusViewCustomDNS, value: String(describing: statusModel.dnsSettings))
             }
 
             NetworkProtectionThroughputItemView(
@@ -270,7 +274,7 @@ private struct NetworkProtectionLocationItemView: View {
     }
 }
 
-private struct NetworkProtectionServerItemView: View {
+private struct NetworkProtectionConnectionDetailView: View {
     let title: String
     let value: String
 
@@ -315,6 +319,13 @@ private struct NetworkProtectionThroughputItemView: View {
                 .foregroundColor(.init(designSystemColor: .textSecondary))
         }
         .listRowBackground(Color(designSystemColor: .surface))
+    }
+}
+
+extension NetworkProtectionDNSSettings {
+    var usesCustomDNS: Bool {
+        guard case .custom(let servers) = self, !servers.isEmpty else { return false }
+        return true
     }
 }
 

@@ -48,6 +48,10 @@ class MockUserAgentManager: UserAgentManager {
         return userAgent.agent(forUrl: nil, isDesktop: isDesktop, privacyConfig: privacyConfig)
     }
 
+    func userAgent(isDesktop: Bool, url: URL?) -> String {
+        return userAgent.agent(forUrl: url, isDesktop: isDesktop)
+    }
+
     public func update(request: inout URLRequest, isDesktop: Bool) {
         request.addValue(userAgent.agent(forUrl: nil, isDesktop: isDesktop, privacyConfig: privacyConfig), forHTTPHeaderField: "User-Agent")
     }

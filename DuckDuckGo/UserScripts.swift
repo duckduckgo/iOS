@@ -33,6 +33,15 @@ final class UserScripts: UserScriptsProvider {
     let contentScopeUserScript: ContentScopeUserScript
     let contentScopeUserScriptIsolated: ContentScopeUserScript
     let autoconsentUserScript: AutoconsentUserScript
+    
+    var specialPages: SpecialPagesUserScript?
+    var duckPlayer: DuckPlayerProtocol? {
+        didSet {
+            initializeDuckPlayer()
+        }
+    }
+    var youtubeOverlayScript: YoutubeOverlayUserScript?
+    var youtubePlayerUserScript: YoutubePlayerUserScript?
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -47,7 +56,7 @@ final class UserScripts: UserScriptsProvider {
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
         autofillUserScript.sessionKey = sourceProvider.contentScopeProperties.sessionKey
-
+        
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                         properties: sourceProvider.contentScopeProperties)
@@ -55,7 +64,15 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
+        
+        // Special pages - Such as Duck Player
+        specialPages = SpecialPagesUserScript()
+        if let specialPages {
+            userScripts.append(specialPages)
+        }
+        
     }
+    
 
     lazy var userScripts: [UserScript] = [
         debugScript,
@@ -73,7 +90,17 @@ final class UserScripts: UserScriptsProvider {
         contentScopeUserScript,
         contentScopeUserScriptIsolated
     ].compactMap({ $0 })
-
+    
+    // Initialize DuckPlayer scripts
+    private func initializeDuckPlayer() {
+        if let duckPlayer {
+            youtubeOverlayScript = YoutubeOverlayUserScript(duckPlayer: duckPlayer)
+            youtubePlayerUserScript = YoutubePlayerUserScript(duckPlayer: duckPlayer)
+            youtubeOverlayScript.map { contentScopeUserScriptIsolated.registerSubfeature(delegate: $0) }
+            youtubePlayerUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
+        }
+    }
+    
     @MainActor
     func loadWKUserScripts() async -> [WKUserScript] {
         return await withTaskGroup(of: WKUserScriptBox.self) { @MainActor group in
@@ -90,5 +117,5 @@ final class UserScripts: UserScriptsProvider {
             return wkUserScripts
         }
     }
-
+    
 }

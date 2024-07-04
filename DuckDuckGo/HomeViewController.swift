@@ -24,9 +24,11 @@ import Combine
 import Common
 import DDGSync
 import Persistence
+import RemoteMessaging
 
-class HomeViewController: UIViewController {
-    
+
+class HomeViewController: UIViewController, NewTabPage {
+
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
@@ -55,7 +57,11 @@ class HomeViewController: UIViewController {
             chromeDelegate?.tabBarContainer.alpha = percent
         }
     }
-    
+
+    var isDragging: Bool {
+        collectionView.isDragging
+    }
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     
@@ -123,7 +129,7 @@ class HomeViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
-                                               name: RemoteMessaging.Notifications.remoteMessagesDidChange,
+                                               name: RemoteMessagingStore.Notifications.remoteMessagesDidChange,
                                                object: nil)
 
         registerForBookmarksChanges()
@@ -205,6 +211,8 @@ class HomeViewController: UIViewController {
         guard presentedViewController?.isBeingDismissed ?? true else { return }
 
         Pixel.fire(pixel: .homeScreenShown)
+        sendDailyDisplayPixel()
+        
         showNextDaxDialog()
         
         collectionView.didAppear()
@@ -253,7 +261,11 @@ class HomeViewController: UIViewController {
     func onboardingCompleted() {
         showNextDaxDialog()
     }
-    
+
+    func reloadFavorites() {
+        collectionView.reloadData()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
@@ -309,11 +321,22 @@ class HomeViewController: UIViewController {
         .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
+private extension HomeViewController {
+    func sendDailyDisplayPixel() {
+
+        let favoritesCount = favoritesViewModel.favorites.count
+        let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)
+
+        DailyPixel.fire(pixel: .newTabPageDisplayedDaily, withAdditionalParameters: ["FavoriteCount": bucket.value])
+    }
+}
+
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .favoriteLaunchedNTP)
+        DailyPixel.fire(pixel: .favoriteLaunchedNTPDaily)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }

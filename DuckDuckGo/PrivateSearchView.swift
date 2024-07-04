@@ -40,44 +40,25 @@ struct PrivateSearchView: View {
         .applySettingsListModifiers(title: UserText.privateSearch,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsPrivateSearchOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }
 
 struct PrivateSearchViewSettings: View {
 
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text(UserText.searchSettings),
-                footer: Text(UserText.settingsAutocompleteSubtitle)) {
+        Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
-            SettingsCellView(label: UserText.settingsAutocomplete,
+            SettingsCellView(label: UserText.settingsAutocompleteLabel,
                              accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
         }
 
-        Section(footer: Text(UserText.voiceSearchFooter)) {
-            // Private Voice Search
-            if viewModel.state.speechRecognitionAvailable {
-                SettingsCellView(label: UserText.settingsVoiceSearch,
-                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledPrivateSearchBinding))
+        if viewModel.shouldShowRecentlyVisitedSites {
+            Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
+                SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
+                                 accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }
-        }
-        .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
-            Alert(title: Text(UserText.noVoicePermissionAlertTitle),
-                  message: Text(UserText.noVoicePermissionAlertMessage),
-                  dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
-                  action: {
-                    viewModel.shouldShowNoMicrophonePermissionAlert = false
-                })
-            )
-        }
-        .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
-            shouldShowNoMicrophonePermissionAlert = value
         }
 
         Section {

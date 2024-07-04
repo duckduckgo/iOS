@@ -119,7 +119,7 @@
 "addWidget.description" = "Få rask tilgang til privat søk og nettstedene du liker best.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Trykk lenge på startskjermen for å gå inn i ristemodus.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Trykk på %@-knappen.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Søk i DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Søkeforslag inkluderer nå nylig besøkte nettsteder. Slå dem av i innstillingene, eller slett dem når som helst med Fire Button 🔥.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Samme personvern.\nBedre søkeforslag!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Deaktivert";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importer en HTML-fil med bokmerker fra en annen nettleser, eller eksporter dine eksisterende bokmerker.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Rapporter et problem med dette nettstedet";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Den er grei";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Beskriv problemet du opplevde på dette nettstedet, så vi kan forstå bedre hvordan det kan fikses.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Beskrivelse er nødvendig";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Rapporten din bidrar til å gjøre DuckDuckGo bedre for alle!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nei";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Ble problemet på dette nettstedet løst ved å slå av personvernbeskyttelsen?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Ja";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Send alltid krasjrapporter";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Deaktiver for å forhindre at lenker automatisk åpnes i andre installerte apper.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Vis forslag fra autofullføring";
+"settings.autocomplete" = "Søkeforslag";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Nylig besøkte nettsteder";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Vis nylig besøkte nettsteder i søkeforslag. Nylig besøkte nettsteder er private, lagres bare på enheten din og kan slettes med Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Vis søkeforslag mens du skriver, inkludert bokmerkene dine. Alle søk er private.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Applås";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokkerer automatisk skjulte sporere når du surfer på nettet.\n[Finn ut mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Velg alternativet som best beskriver problemet du opplevde.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Avvis";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Dette hjelper oss med å forbedre nettleseren.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Fungerer ikke nettstedet? Gi beskjed til DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Nettstedet fungerer ikke";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Tillat varsler";

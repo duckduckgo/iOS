@@ -130,7 +130,11 @@ extension MainViewController {
             assertionFailure("Missing fundamental data")
             return
         }
-        
+
+        if mode == .report {
+            fireBrokenSiteReportShown()
+        }
+
         let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
@@ -147,7 +151,11 @@ extension MainViewController {
         }
         
         currentTab?.privacyDashboard = controller
+        controller.delegate = currentTab
+        currentTab?.breakageCategory = nil
+
         controller.popoverPresentationController?.delegate = controller
+        controller.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet
@@ -156,6 +164,29 @@ extension MainViewController {
         }
         
         present(controller, animated: true)
+    }
+
+    private func fireBrokenSiteReportShown() {
+        let parameters = [
+            PrivacyDashboardEvents.Parameters.variant: PixelExperiment.privacyDashboardVariant.rawValue,
+            PrivacyDashboardEvents.Parameters.source: BrokenSiteReport.Source.appMenu.rawValue
+        ]
+        Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
+    }
+
+    func segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: Bool = false) {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+
+        let feedbackPicker = FeedbackPickerViewController.loadFromStoryboard()
+
+        feedbackPicker.popoverPresentationController?.delegate = feedbackPicker
+        feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
+        feedbackPicker.modalPresentationStyle = isPad ? .formSheet : .pageSheet
+        feedbackPicker.loadViewIfNeeded()
+        feedbackPicker.configure(with: Feedback.Category.allCases, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
+
+        present(UINavigationController(rootViewController: feedbackPicker), animated: true)
     }
 
     func segueToDownloads() {
@@ -205,7 +236,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.triggerDeepLinkNavigation(to: .subscriptionFlow)
+            $0.triggerDeepLinkNavigation(to: .subscriptionFlow())
         }
     }
 
@@ -249,20 +280,26 @@ extension MainViewController {
                                                             syncPausedStateManager: syncPausedStateManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
-                                                  accountManager: AccountManager(),
+                                                  subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
+                                                  historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager)
+        Pixel.fire(pixel: .settingsPresented)
 
-        Pixel.fire(pixel: .settingsPresented,
-                   withAdditionalParameters: PixelExperiment.parameters)
-        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
-        
-        // We are still presenting legacy views, so use a Navcontroller
-        let navController = UINavigationController(rootViewController: settingsController)
-        settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
-        
-        present(navController, animated: true) {
-            completion?(settingsViewModel)
+        if let navigationController = self.presentedViewController as? UINavigationController,
+           let settingsHostingController = navigationController.viewControllers.first as? SettingsHostingController {
+            navigationController.popToRootViewController(animated: false)
+            completion?(settingsHostingController.viewModel)
+        } else {
+            let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+
+            // We are still presenting legacy views, so use a Navcontroller
+            let navController = UINavigationController(rootViewController: settingsController)
+            settingsController.modalPresentationStyle = UIModalPresentationStyle.automatic
+
+            present(navController, animated: true) {
+                completion?(settingsViewModel)
+            }
         }
     }
 

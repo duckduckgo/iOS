@@ -20,6 +20,7 @@
 import UIKit
 import BrowserServicesKit
 import Core
+import Common
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -27,7 +28,8 @@ class AutofillDebugViewController: UITableViewController {
         case toggleAutofillDebugScript = 201
         case resetEmailProtectionInContextSignUp = 202
         case resetDaysSinceInstalledTo0 = 203
-        case toggleAutofillSurvey = 204
+        case resetAutofillData = 204
+        case addAutofillData = 205
     }
 
     let defaults = AppUserDefaults()
@@ -46,9 +48,17 @@ class AutofillDebugViewController: UITableViewController {
                 defaults.autofillDebugScriptEnabled.toggle()
                 cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
                 NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.autofillDebugScriptToggled))
-            } else if cell.tag == Row.toggleAutofillSurvey.rawValue {
-                defaults.autofillSurveyEnabled = true
-                ActionMessageView.present(message: "Passwords Survey enabled")
+            } else if cell.tag == Row.resetAutofillData.rawValue {
+                let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
+                try? secureVault?.deleteAllWebsiteCredentials()
+                let autofillPixelReporter = AutofillPixelReporter(
+                        userDefaults: .standard,
+                        autofillEnabled: AppUserDefaults().autofillCredentialsEnabled,
+                        eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
+                autofillPixelReporter.resetStoreDefaults()
+                ActionMessageView.present(message: "Autofill Data reset")
+            } else if cell.tag == Row.addAutofillData.rawValue {
+                promptForNumberOfLoginsToAdd()
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
                 EmailManager().resetEmailProtectionInContextPrompt()
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -57,7 +67,42 @@ class AutofillDebugViewController: UITableViewController {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
         }
+    }
 
+    private func promptForNumberOfLoginsToAdd() {
+        let alertController = UIAlertController(title: "Enter number of Logins to add", message: nil, preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "Number"
+            textField.keyboardType = .numberPad
+        }
+
+        let submitAction = UIAlertAction(title: "Add", style: .default) { [unowned alertController] _ in
+            let textField = alertController.textFields![0]
+            if let numberString = textField.text, let number = Int(numberString) {
+                self.addLogins(number)
+            }
+        }
+        alertController.addAction(submitAction)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alertController, animated: true)
+    }
+
+    private func addLogins(_ count: Int) {
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
+
+        for i in 1...count {
+            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "https://fill.dev", notes: "")
+            let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password".data(using: .utf8))
+            do {
+                _ = try secureVault?.storeWebsiteCredentials(credentials)
+            } catch let error {
+                os_log(.debug, "Error inserting credential \(error.localizedDescription)")
+            }
+
+        }
+
+        ActionMessageView.present(message: "Autofill Data added")
     }
 
 }

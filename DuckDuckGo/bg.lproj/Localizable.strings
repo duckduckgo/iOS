@@ -119,7 +119,7 @@
 "addWidget.description" = "Получете бърз достъп до поверително търсене и до любимите си сайтове.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Натиснете продължително началния екран, за да влезете в режим за пренареждане.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Натиснете бутона плюс %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Търси с DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Предложенията за търсене вече включват наскоро посетени сайтове. Изключете ги в Настройки, а можете и да ги изтриете по всяко време с 🔥 Fire Button.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Същата поверителност.\nПо-добри предложения при търсене!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Деактивирано";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Импортирайте HTML файл с отметки от друг браузър или експортирайте съществуващите отметки.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Докладване на проблем с този сайт";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Разбрах";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Моля, опишете проблема, който сте срещнали на този сайт, за да разберем по-добре как да го отстраним.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Изисква се описание";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Вашето докладване ни помага да направим DuckDuckGo по-добър за всички!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Не";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Изключването на защитите на поверителността реши ли проблема с този сайт?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Да";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Винаги да се изпращат доклади за сривове";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Деактивирайте, за да предотвратите автоматично отваряне на връзки в други инсталирани приложения.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Показване на предложенията за автоматично довършване";
+"settings.autocomplete" = "Предложения за търсене";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Наскоро посетени сайтове";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Показване на наскоро посетени сайтове в предложенията за търсене. Наскоро посетените сайтове са поверителни, съхраняват се само на вашето устройство и могат да бъдат изтрити с Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Показване на предложения за търсене при въвеждане, включително от отметките. Всички търсения са поверителни.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Заключване на приложение";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo автоматично блокира скритите тракери, докато сърфирате в мрежата.\n[Научете повече](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Изберете опцията, която най-добре описва възникналия проблем.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Отказване";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Това ни помага да подобрим браузъра.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Сайтът не работи ли? Уведомете DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Уебсайтът е повреден";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Разрешаване на известия";

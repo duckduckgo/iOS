@@ -20,7 +20,7 @@
 import CoreData
 import Persistence
 
-extension Array where Element == CoreDataErrorsParser.ErrorInfo {
+public extension Array where Element == CoreDataErrorsParser.ErrorInfo {
 
     var errorPixelParameters: [String: String] {
         let params: [String: String]
@@ -37,9 +37,9 @@ extension Array where Element == CoreDataErrorsParser.ErrorInfo {
     }
 }
 
-extension NSManagedObjectContext {
+public extension NSManagedObjectContext {
 
-    public func save(onErrorFire event: Pixel.Event) throws {
+    func save(onErrorFire event: Pixel.Event) throws {
         do {
             try save()
         } catch {

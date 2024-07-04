@@ -22,6 +22,9 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+
+    var recentlyVisitedSites: Bool = false
+
     var isSyncBookmarksPaused: Bool = false
 
     var isSyncCredentialsPaused: Bool = false
@@ -68,8 +71,6 @@ class AppSettingsMock: AppSettings {
         autofillImportViaSyncStart = nil
     }
 
-    var autofillSurveyEnabled: Bool = false
-
     var voiceSearchEnabled: Bool = false
 
     var widgetInstalled: Bool = false
@@ -80,4 +81,9 @@ class AppSettingsMock: AppSettings {
     var autoconsentEnabled = true
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus = .undetermined
+
+    var newTabPageSectionsEnabled: Bool = false
+
+    var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
+    var duckPlayerAskModeOverlayHidden: Bool = false
 }

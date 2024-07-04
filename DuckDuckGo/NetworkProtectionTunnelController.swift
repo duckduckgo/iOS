@@ -24,12 +24,20 @@ import Combine
 import Core
 import NetworkExtension
 import NetworkProtection
+import Subscription
+
+enum VPNConfigurationRemovalReason: String {
+    case didBecomeActiveCheck
+    case entitlementCheck
+    case signedOut
+    case debugMenu
+}
 
 final class NetworkProtectionTunnelController: TunnelController {
     static var shouldSimulateFailure: Bool = false
 
     private let debugFeatures = NetworkProtectionDebugFeatures()
-    private let tokenStore = NetworkProtectionKeychainTokenStore()
+    private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
@@ -72,7 +80,8 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    init() {
+    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
+        self.tokenStore = tokenStore
         subscribeToStatusChanges()
     }
 
@@ -112,8 +121,18 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
-    func removeVPN() async {
-        try? await tunnelManager?.removeFromPreferences()
+    func removeVPN(reason: VPNConfigurationRemovalReason) async {
+        do {
+            try await tunnelManager?.removeFromPreferences()
+
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
+        } catch {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed, error: error, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
+        }
     }
 
     // MARK: - Connection Status Querying
@@ -185,8 +204,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         } catch {
             throw StartError.fetchAuthTokenFailed(error)
         }
-        options[NetworkProtectionOptionKey.selectedEnvironment] = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString
+        if let data = try? JSONEncoder().encode(AppDependencyProvider.shared.vpnSettings.dnsSettings) {
+            options[NetworkProtectionOptionKey.dnsSettings] = NSData(data: data)
+        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

@@ -26,16 +26,17 @@ import Subscription
 @available(iOS 15.0, *)
 final class SubscriptionEmailViewModel: ObservableObject {
     
-    let accountManager: AccountManager
+    private let subscriptionManager: SubscriptionManager
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     
     private var canGoBackCancellable: AnyCancellable?
     private var urlCancellable: AnyCancellable?
     
-    var emailURL = URL.activateSubscriptionViaEmail
+    private var emailURL: URL
     var webViewModel: AsyncHeadlessWebViewViewModel
-    
+
+
     enum SelectedFeature {
         case netP, dbp, itr, none
     }
@@ -69,23 +70,32 @@ final class SubscriptionEmailViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-    
+    var accountManager: AccountManager { subscriptionManager.accountManager }
+
     private var isWelcomePageOrSuccessPage: Bool {
-        webViewModel.url?.forComparison() == URL.subscriptionActivateSuccess.forComparison() ||
-        webViewModel.url?.forComparison() == URL.subscriptionPurchase.forComparison()
+        let subscriptionActivateSuccessURL = subscriptionManager.url(for: .activateSuccess)
+        let subscriptionPurchaseURL = subscriptionManager.url(for: .purchase)
+        return webViewModel.url?.forComparison() == subscriptionActivateSuccessURL.forComparison() ||
+        webViewModel.url?.forComparison() == subscriptionPurchaseURL.forComparison()
+    }
+
+    private var isVerifySubscriptionPage: Bool {
+        let confirmSubscriptionURL = subscriptionManager.url(for: .baseURL).appendingPathComponent("confirm")
+        return webViewModel.url?.forComparison() == confirmSubscriptionURL.forComparison()
     }
 
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         accountManager: AccountManager = AccountManager()) {
+         subscriptionManager: SubscriptionManager) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.webViewModel = AsyncHeadlessWebViewViewModel(userScript: userScript,
                                                           subFeature: subFeature,
                                                           settings: AsyncHeadlessWebViewSettings(bounces: false,
                                                                                                  allowedDomains: Self.allowedDomains,
                                                                                                  contentBlocking: false))
+        self.emailURL = subscriptionManager.url(for: .activateViaEmail)
     }
     
     @MainActor
@@ -95,7 +105,8 @@ final class SubscriptionEmailViewModel: ObservableObject {
         } else {
             // If not in the Welcome page, dismiss the view, otherwise, assume we
             // came from Activation, so dismiss the entire stack
-            if webViewModel.url?.forComparison() != URL.subscriptionPurchase.forComparison() {
+            let subscriptionPurchaseURL = subscriptionManager.url(for: .purchase)
+            if webViewModel.url?.forComparison() != subscriptionPurchaseURL.forComparison() {
                 state.shouldDismissView = true
             } else {
                 state.shouldPopToAppSettings = true
@@ -123,8 +134,10 @@ final class SubscriptionEmailViewModel: ObservableObject {
         // If the user is Authenticated & not in the Welcome page
         if accountManager.isUserAuthenticated && !isWelcomePageOrSuccessPage {
             // If user is authenticated, we want to "Add or manage email" instead of activating
-            emailURL = accountManager.email == nil ? URL.addEmailToSubscription : URL.manageSubscriptionEmail
-            state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionManageEmailTitle
+            let addEmailToSubscriptionURL = subscriptionManager.url(for: .addEmail)
+            let manageSubscriptionEmailURL = subscriptionManager.url(for: .manageEmail)
+            emailURL = accountManager.email == nil ? addEmailToSubscriptionURL : manageSubscriptionEmailURL
+            state.viewTitle = accountManager.email == nil ?  UserText.subscriptionRestoreAddEmailTitle : UserText.subscriptionEditEmailTitle
             
             // Also we assume subscription requires managing, and not activation
             state.managingSubscriptionEmail = true
@@ -216,15 +229,13 @@ final class SubscriptionEmailViewModel: ObservableObject {
     private func updateBackButton(canNavigateBack: Bool) {
         
         // If the view is not Activation Success, or Welcome page, allow WebView Back Navigation
-        if !isWelcomePageOrSuccessPage {
+        if !isWelcomePageOrSuccessPage && !isVerifySubscriptionPage {
             self.state.canNavigateBack = canNavigateBack
             self.state.backButtonTitle = UserText.backButtonTitle
         } else {
             self.state.canNavigateBack = false
             self.state.backButtonTitle = UserText.settingsTitle
         }
-        
-        
     }
     
     // MARK: -

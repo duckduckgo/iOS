@@ -21,30 +21,25 @@
 
 import SwiftUI
 import NetworkProtection
+import Subscription
 
 @available(iOS 15, *)
 struct NetworkProtectionRootView: View {
-    let model = NetworkProtectionRootViewModel()
-    let inviteCompletion: () -> Void
+    let statusViewModel: NetworkProtectionStatusViewModel
 
+    init() {
+        let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
+        statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
+                                                           settings: AppDependencyProvider.shared.vpnSettings,
+                                                           statusObserver: AppDependencyProvider.shared.connectionObserver,
+                                                           locationListRepository: locationListRepository)
+    }
     var body: some View {
-        let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(isManualCodeRedemptionFlow: true),
-            completion: inviteCompletion
-        )
-        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel()
+                statusModel: statusViewModel
             )
-        } else {
-            switch model.initialViewKind {
-            case .invite:
-                NetworkProtectionInviteView(model: inviteViewModel)
-            case .status:
-                NetworkProtectionStatusView(
-                    statusModel: NetworkProtectionStatusViewModel()
-                )
-            }
         }
     }
 }

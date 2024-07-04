@@ -131,6 +131,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var shouldShowConnectionDetails: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
+    @Published public var dnsSettings: NetworkProtectionDNSSettings
 
     @Published public var uploadTotal: String = Constants.defaultUploadVolume
     @Published public var downloadTotal: String = Constants.defaultDownloadVolume
@@ -142,12 +143,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @Published public var animationsOn: Bool = false
 
-    public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
-                settings: VPNSettings = VPNSettings(defaults: .networkProtectionGroupDefaults),
-                statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    public init(tunnelController: TunnelController,
+                settings: VPNSettings,
+                statusObserver: ConnectionStatusObserver,
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
-                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
+                locationListRepository: NetworkProtectionLocationListRepository) {
         self.tunnelController = tunnelController
         self.settings = settings
         self.statusObserver = statusObserver
@@ -159,12 +160,15 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
 
+        self.dnsSettings = settings.dnsSettings
+
         setUpIsConnectedStatePublishers()
         setUpToggledStatePublisher()
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
         setUpLocationPublishers()
+        setUpDNSSettingsPublisher()
         setUpThroughputRefreshTimer()
         setUpErrorPublishers()
 
@@ -312,6 +316,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .map(NetworkProtectionLocationStatusModel.init(selectedLocation:))
             .assign(to: \.preferredLocation, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpDNSSettingsPublisher() {
+        settings.dnsSettingsPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.dnsSettings, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

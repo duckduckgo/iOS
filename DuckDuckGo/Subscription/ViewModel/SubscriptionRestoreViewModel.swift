@@ -28,9 +28,9 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
-    let purchaseManager: PurchaseManager
-    let accountManager: AccountManager
-    
+    let subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager { subscriptionManager.accountManager }
+
     private var cancellables = Set<AnyCancellable>()
     
     enum SubscriptionActivationResult {
@@ -38,7 +38,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     }
     
     struct State {
-        var isAddingDevice: Bool = false
         var transactionStatus: SubscriptionTransactionStatus = .idle
         var activationResult: SubscriptionActivationResult = .unknown
         var subscriptionEmail: String?
@@ -58,69 +57,29 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         
     init(userScript: SubscriptionPagesUserScript,
          subFeature: SubscriptionPagesUseSubscriptionFeature,
-         purchaseManager: PurchaseManager = PurchaseManager.shared,
-         accountManager: AccountManager = AccountManager(),
+         subscriptionManager: SubscriptionManager,
          isAddingDevice: Bool = false) {
         self.userScript = userScript
         self.subFeature = subFeature
-        self.purchaseManager = purchaseManager
-        self.accountManager = accountManager
-        self.state.isAddingDevice = false
+        self.subscriptionManager = subscriptionManager
     }
     
     func onAppear() {
         DispatchQueue.main.async {
             self.resetState()
         }
-        Task { await setupContent() }
     }
     
     func onFirstAppear() async {
-        Pixel.fire(pixel: .privacyProSettingsAddDevice)
         await setupTransactionObserver()
-        await refreshToken()
     }
     
     private func cleanUp() {
         cancellables.removeAll()
     }
-    
-    private func refreshToken() async {
-        if state.isAddingDevice {
-            await AppStoreAccountManagementFlow.refreshAuthTokenIfNeeded(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
-        }
-    }
-    
-    private func setupContent() async {
-        if state.isAddingDevice {
-            DispatchQueue.main.async {
-                self.state.isLoading = true
-            }
-            
-            guard let token = accountManager.accessToken else { return }
-            switch await accountManager.fetchAccountDetails(with: token) {
-            case .success(let details):
-                DispatchQueue.main.async {
-                    self.state.subscriptionEmail = details.email
-                    self.state.isLoading = false
-                    self.state.viewTitle = UserText.subscriptionAddDeviceTitle
-                }
-            default:
-                DispatchQueue.main.async {
-                    self.state.viewTitle = UserText.subscriptionActivate
-                    self.state.isLoading = false
-                }
-            }
-        }
-    }
-    
+
     @MainActor
     private func resetState() {
-        state.isAddingDevice = false
-        if accountManager.isUserAuthenticated {
-            state.isAddingDevice = true
-        }
-        
         state.isShowingActivationFlow = false
         state.shouldShowPlans = false
         state.isShowingWelcomePage = false

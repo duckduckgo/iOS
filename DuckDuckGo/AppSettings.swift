@@ -42,8 +42,9 @@ enum AddressBarPosition: String, CaseIterable, CustomStringConvertible {
     }
 }
 
-protocol AppSettings: AnyObject {
+protocol AppSettings: AnyObject, AppDebugSettings {
     var autocomplete: Bool { get set }
+    var recentlyVisitedSites: Bool { get set }
     var currentThemeName: ThemeName { get set }
     
     var autoClearAction: AutoClearSettingsModel.Action { get set }
@@ -70,7 +71,6 @@ protocol AppSettings: AnyObject {
     func setAutofillIsNewInstallForOnByDefault()
     var autofillImportViaSyncStart: Date? { get set }
     func clearAutofillImportViaSyncStart()
-    var autofillSurveyEnabled: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
 
@@ -79,4 +79,11 @@ protocol AppSettings: AnyObject {
     var autoconsentEnabled: Bool { get set }
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
+    
+    var duckPlayerMode: DuckPlayerMode { get set }
+    var duckPlayerAskModeOverlayHidden: Bool { get set }
+}
+
+protocol AppDebugSettings {
+    var newTabPageSectionsEnabled: Bool { get set }
 }

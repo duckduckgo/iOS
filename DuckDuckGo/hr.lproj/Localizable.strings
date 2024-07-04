@@ -119,7 +119,7 @@
 "addWidget.description" = "Čeka vas brzi pristup privatnom pretraživanju i omiljenim mrežnim mjestima.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Dodirnite gumb plus %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Pretraži DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Prijedlozi za pretraživanje sada uključuju i nedavno posjećena mrežna mjesta. Isključi u Postavkama ili izbriši u bilo kojem trenutku pomoću Fire Buttona 🔥.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Ista privatnost.\nBolji prijedlozi za pretraživanje!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Onemogućeno";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Uvezite HTML datoteku oznaka iz drugog preglednika ili izvezite postojeće oznake.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Prijavi problem na ovom web-mjestu";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Shvatio/la sam";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Opiši problem na koji si naišao na ovoj stranici da bismo bolje razumjeli kako ga riješiti.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Opis je obavezan";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Tvoje prijave pomažu nam poboljšati DuckDuckGo za sve!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Ne";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Je li isključivanje zaštite privatnosti riješilo problem na ovom web-mjestu?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Da";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Uvijek šalji izvješća o padu programa";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Onemogući da spriječiš automatsko otvaranje poveznica u drugim instaliranim aplikacijama.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Prikaži prijedloge za automatsko ispunjavanje";
+"settings.autocomplete" = "Prijedlozi za pretraživanje";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Nedavno posjećena web-mjesta";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Prikaži nedavno posjećena mrežna mjesta u prijedlozima pretraživanja. Nedavno posjećena mrežna mjesta su privatna, pohranjena samo na tvom uređaju i mogu se izbrisati pomoću Fire Buttona.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Prikaži prijedloge pretraživanja dok tipkaš, uključujući knjižne oznake. Sve pretrage su privatne.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Zaključavanje aplikacije";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automatski blokira skrivene alate za praćenje dok pregledavaš web.\n[Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Odaberi opciju koja najbolje opisuje nastali problem.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Odbaci";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Ovo nam pomaže da poboljšamo preglednik.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Web-mjesto ne funkcionira? Javi DuckDuckGou.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Web-mjesto nije ispravno";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Dopusti obavijesti";

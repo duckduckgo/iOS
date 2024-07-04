@@ -119,7 +119,7 @@
 "addWidget.description" = "Erhalte schnellen Zugriff auf die private Suche und die Websites, die dir gefallen.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Drücke lange auf den Startbildschirm, um in den Jiggle-Modus zu wechseln.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tippe auf die Plus-Schaltfläche %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "An";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Mit DuckDuckGo suchen";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Suchvorschläge enthalten jetzt Ihre kürzlich besuchten Seiten. Du kannst sie in den Einstellungen deaktivieren oder jederzeit mit dem 🔥 Fire Button löschen.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Gleiche Privatsphäre.\nBessere Suchvorschläge!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Deaktiviert";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importiere eine HTML-Datei mit Lesezeichen aus einem anderen Browser oder exportieren deine vorhandenen Lesezeichen.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Ein Problem mit dieser Website melden";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Verstanden";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Bitte beschreibe das Problem, das auf dieser Website aufgetreten ist, damit wir besser verstehen können, wie wir es beheben können.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Beschreibung erforderlich";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Dein Bericht hilft, DuckDuckGo für alle zu verbessern!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nein";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Wurde das Problem auf dieser Website durch das Deaktivieren des Datenschutzes behoben?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Ja";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Absturzberichte immer senden";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Aktivieren, damit sich Links nicht automatisch in anderen installierten Apps öffnen.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Vorschläge für die Autovervollständigung";
+"settings.autocomplete" = "Vorschläge für die Suche";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Kürzlich besuchte Seiten";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Kürzlich besuchte Websites in den Suchvorschlägen anzeigen. Kürzlich besuchte Websites sind privat, werden nur auf deinem Gerät gespeichert und können mit dem Fire Button gelöscht werden.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Zeige Suchvorschläge während du tippst, einschließlich deiner Lesezeichen. Alle Suchanfragen sind privat.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Anwendungssperre";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blockiert beim Durchsuchen des Internets automatisch ausgeblendete Tracker.[Mehr erfahren](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Wähle die Option, die dein Problem am besten beschreibt.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Verwerfen";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Das hilft uns, den Browser zu verbessern.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Webseite funktioniert nicht? Sag DuckDuckGo Bescheid.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Website ist fehlerhaft";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Bericht senden";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Benachrichtigungen zulassen";

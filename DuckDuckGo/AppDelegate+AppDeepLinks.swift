@@ -38,10 +38,6 @@ extension AppDelegate {
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
             mainViewController.loadQueryInNewTab(query, reuseExisting: true)
-            if url == URL.emailProtectionHelpPageLink {
-                Pixel.fire(pixel: .settingsEmailProtectionLearnMore,
-                           withAdditionalParameters: PixelExperiment.parameters)
-            }
 
         case .addFavorite:
             mainViewController.startAddFavoriteFlow()
@@ -61,15 +57,19 @@ extension AppDelegate {
 #endif
 
         case .openPasswords:
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                mainViewController.launchAutofillLogins(openSearch: true)
-            }
+            var source: AutofillSettingsSource = .homeScreenWidget
+
             if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
                 let queryItems = components.queryItems,
                 queryItems.first(where: { $0.name == "ls" }) != nil {
                 Pixel.fire(pixel: .autofillLoginsLaunchWidgetLock)
+                source = .lockScreenWidget
             } else {
                 Pixel.fire(pixel: .autofillLoginsLaunchWidgetHome)
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                mainViewController.launchAutofillLogins(openSearch: true, source: source)
             }
 
         default:

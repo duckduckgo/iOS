@@ -50,8 +50,7 @@ final class AutoconsentSettingsViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        Pixel.fire(pixel: .settingsAutoconsentShown,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        Pixel.fire(pixel: .settingsAutoconsentShown)
     }
 
     override func viewDidLayoutSubviews() {
@@ -74,11 +73,9 @@ final class AutoconsentSettingsViewController: UITableViewController {
         Pixel.fire(pixel: autoconsentToggle.isOn ? .settingsAutoconsentOn : .settingsAutoconsentOff)
 
         if appSettings.autoconsentEnabled {
-            Pixel.fire(pixel: .settingsAutoconsentOn,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsAutoconsentOn)
         } else {
-            Pixel.fire(pixel: .settingsAutoconsentOff,
-                       withAdditionalParameters: PixelExperiment.parameters)
+            Pixel.fire(pixel: .settingsAutoconsentOff)
         }
     }
     

@@ -20,23 +20,20 @@
 import Foundation
 import Core
 
-protocol PixelFiring {
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) async throws
-}
+final actor AdAttributionPixelReporter {
 
-final class AdAttributionPixelReporter {
-
-    static let isAdAttributionReportingEnabled = true
+    static let isAdAttributionReportingEnabled = false
 
     static var shared = AdAttributionPixelReporter()
 
     private var fetcherStorage: AdAttributionReporterStorage
     private let attributionFetcher: AdAttributionFetcher
-    private let pixelFiring: PixelFiring.Type
+    private let pixelFiring: PixelFiringAsync.Type
+    private var isSendingAttribution: Bool = false
 
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
-         pixelFiring: PixelFiring.Type = Pixel.self) {
+         pixelFiring: PixelFiringAsync.Type = Pixel.self) {
         self.fetcherStorage = fetcherStorage
         self.attributionFetcher = attributionFetcher
         self.pixelFiring = pixelFiring
@@ -46,6 +43,16 @@ final class AdAttributionPixelReporter {
     func reportAttributionIfNeeded() async -> Bool {
         guard await fetcherStorage.wasAttributionReportSuccessful == false else {
             return false
+        }
+
+        guard !isSendingAttribution else {
+            return false
+        }
+
+        isSendingAttribution = true
+
+        defer {
+            isSendingAttribution = false
         }
 
         if let attributionData = await self.attributionFetcher.fetch() {
@@ -83,20 +90,5 @@ final class AdAttributionPixelReporter {
         params[PixelParameters.adAttributionAdID] = attribution.adId.map(String.init)
 
         return params
-    }
-}
-
-extension Pixel: PixelFiring {
-    static func fire(pixel: Event, withAdditionalParameters params: [String: String], includedParameters: [QueryParameters]) async throws {
-
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            Pixel.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters) { error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume()
-                }
-            }
-        }
     }
 }

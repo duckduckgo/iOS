@@ -34,10 +34,10 @@ struct SubscriptionSettingsView: View {
     @State var isShowingGoogleView = false
     @State var isShowingRemovalNotice = false
     @State var isShowingFAQView = false
-    @State var isShowingRestoreView = false
+    @State var isShowingLearnMoreView = false
+    @State var isShowingEmailView = false
     @State var isShowingConnectionError = false
-    @State var isLoading = false
-    
+
     enum Constants {
         static let alertIcon = "Exclamation-Color-16"
     }
@@ -54,35 +54,66 @@ struct SubscriptionSettingsView: View {
     
     private var headerSection: some View {
         Section {
-            let active = viewModel.state.subscriptionInfo?.isActive ?? false
+            let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
             VStack(alignment: .center, spacing: 7) {
                 Image("Privacy-Pro-96x96")
                 Text(UserText.subscriptionTitle).daxTitle2()
-                if !viewModel.state.isLoadingSubscriptionInfo {
-                    if active {
-                        Text(viewModel.state.subscriptionType).daxHeadline()
-                    }
+
+                if isExpired {
                     HStack {
-                        if !active { Image(Constants.alertIcon) }
+                        Image(Constants.alertIcon)
                         Text(viewModel.state.subscriptionDetails)
                             .daxSubheadRegular()
                             .foregroundColor(Color(designSystemColor: .textSecondary))
                     }
-                } else {
-                    SwiftUI.ProgressView()
                 }
             }
         }
         .listRowBackground(Color.clear)
         .frame(maxWidth: .infinity, alignment: .center)
-        
     }
-    
+
+    private var devicesSection: some View {
+        Section(header: Text(UserText.subscriptionDevicesSectionHeader),
+                footer: devicesSectionFooter) {
+
+            if !viewModel.state.isLoadingEmailInfo {
+                NavigationLink(destination: SubscriptionContainerViewFactory.makeEmailFlow(
+                    navigationCoordinator: subscriptionNavigationCoordinator,
+                    subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                    onDisappear: {
+                        Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false) }
+                    }),
+                               isActive: $isShowingEmailView) {
+                    if let email = viewModel.state.subscriptionEmail {
+                        SettingsCellView(label: UserText.subscriptionEditEmailButton,
+                                         subtitle: email)
+                    } else {
+                        SettingsCellView(label: UserText.subscriptionAddEmailButton)
+                    }
+                }.isDetailLink(false)
+            } else {
+                SwiftUI.ProgressView()
+            }
+        }
+    }
+
+    private var devicesSectionFooter: some View {
+        let hasEmail = !(viewModel.state.subscriptionEmail ?? "").isEmpty
+        let footerText = hasEmail ? UserText.subscriptionDevicesSectionWithEmailFooter : UserText.subscriptionDevicesSectionNoEmailFooter
+        return Text(.init("\(footerText)")) // required to parse markdown formatting
+            .environment(\.openURL, OpenURLAction { _ in
+                viewModel.displayLearnMoreView(true)
+                return .handled
+            })
+    }
+
     private var manageSection: some View {
-        Section(header: Text(UserText.subscriptionManageTitle)) {
+        Section(header: Text(UserText.subscriptionManageTitle),
+                footer: manageSectionFooter) {
             let active = viewModel.state.subscriptionInfo?.isActive ?? false
             SettingsCustomCell(content: {
-                
+
                 if !viewModel.state.isLoadingSubscriptionInfo {
                     if active {
                         Text(UserText.subscriptionChangePlan)
@@ -115,20 +146,6 @@ struct SubscriptionSettingsView: View {
                     SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
                 }
             }
-        }
-    }
-    
-    private var devicesSection: some View {
-        Section(header: Text(UserText.subscriptionManageDevices)) {
-            
-            NavigationLink(destination: SubscriptionContainerView(currentView: .restore)
-                                            .environmentObject(subscriptionNavigationCoordinator),
-                           isActive: $isShowingRestoreView) {
-                SettingsCustomCell(content: {
-                    Text(UserText.subscriptionAddDeviceButton)
-                        .daxBodyRegular()
-                })
-            }.isDetailLink(false)
 
             SettingsCustomCell(content: {
                 Text(UserText.subscriptionRemoveFromDevice)
@@ -136,10 +153,20 @@ struct SubscriptionSettingsView: View {
                         .foregroundColor(Color.init(designSystemColor: .accent))},
                                action: { viewModel.displayRemovalNotice(true) },
                                isButton: true)
-            
         }
     }
-    
+
+    private var manageSectionFooter: some View {
+        let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
+        return  Group {
+            if isExpired {
+                EmptyView()
+            } else {
+                Text(viewModel.state.subscriptionDetails)
+            }
+        }
+    }
+
     @ViewBuilder var helpSection: some View {
         Section(header: Text(UserText.subscriptionHelpAndSupport),
                 footer: Text(UserText.subscriptionFAQFooter)) {
@@ -166,7 +193,6 @@ struct SubscriptionSettingsView: View {
         
         List {
             headerSection
-            manageSection
             devicesSection
                 .alert(isPresented: $isShowingRemovalNotice) {
                     Alert(
@@ -181,6 +207,7 @@ struct SubscriptionSettingsView: View {
                         }
                     )
                 }
+            manageSection
             helpSection
             
         }
@@ -217,14 +244,22 @@ struct SubscriptionSettingsView: View {
             viewModel.displayRemovalNotice(value)
         }
         
-        // Removal Notice
+        // FAQ
         .onChange(of: viewModel.state.isShowingFAQView) { value in
             isShowingFAQView = value
         }
         .onChange(of: isShowingFAQView) { value in
             viewModel.displayFAQView(value)
         }
-        
+
+        // Learn More
+        .onChange(of: viewModel.state.isShowingLearnMoreView) { value in
+            isShowingLearnMoreView = value
+        }
+        .onChange(of: isShowingLearnMoreView) { value in
+            viewModel.displayLearnMoreView(value)
+        }
+
         // Connection Error
         .onChange(of: viewModel.state.isShowingConnectionError) { value in
             isShowingConnectionError = value
@@ -232,11 +267,20 @@ struct SubscriptionSettingsView: View {
         .onChange(of: isShowingConnectionError) { value in
             viewModel.showConnectionError(value)
         }
-       
+
+        .onChange(of: isShowingEmailView) { value in
+            if value {
+                if let email = viewModel.state.subscriptionEmail, !email.isEmpty {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementEmail, debounce: 1)
+                } else {
+                    Pixel.fire(pixel: .privacyProAddDeviceEnterEmail, debounce: 1)
+                }
+            }
+        }
         
         .onReceive(subscriptionNavigationCoordinator.$shouldPopToSubscriptionSettings) { shouldDismiss in
             if shouldDismiss {
-                isShowingRestoreView = false
+                isShowingEmailView = false
             }
         }
         
@@ -251,9 +295,13 @@ struct SubscriptionSettingsView: View {
         }
         
         .sheet(isPresented: $isShowingFAQView, content: {
-            SubscriptionExternalLinkView(viewModel: viewModel.state.FAQViewModel, title: UserText.subscriptionFAQ)
+            SubscriptionExternalLinkView(viewModel: viewModel.state.faqViewModel, title: UserText.subscriptionFAQ)
         })
-        
+
+        .sheet(isPresented: $isShowingLearnMoreView, content: {
+            SubscriptionExternalLinkView(viewModel: viewModel.state.learnMoreViewModel, title: UserText.subscriptionFAQ)
+        })
+
         .onFirstAppear {
             viewModel.onFirstAppear()
         }

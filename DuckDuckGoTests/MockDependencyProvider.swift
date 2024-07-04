@@ -22,10 +22,12 @@ import Core
 import BrowserServicesKit
 import DDGSync
 import Subscription
+import SubscriptionTestingUtilities
+import NetworkProtection
+import RemoteMessaging
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {
-
     var appSettings: AppSettings
     var variantManager: VariantManager
     var featureFlagger: FeatureFlagger
@@ -41,6 +43,13 @@ class MockDependencyProvider: DependencyProvider {
     var userBehaviorMonitor: UserBehaviorMonitor
     var toggleProtectionsCounter: ToggleProtectionsCounter
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
+    var subscriptionManager: SubscriptionManager
+    var accountManager: AccountManager
+    var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
+    var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
+    var networkProtectionTunnelController: NetworkProtectionTunnelController
+    var connectionObserver: NetworkProtection.ConnectionStatusObserver
+    var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -59,5 +68,32 @@ class MockDependencyProvider: DependencyProvider {
         userBehaviorMonitor = defaultProvider.userBehaviorMonitor
         toggleProtectionsCounter = defaultProvider.toggleProtectionsCounter
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
+
+        accountManager = AccountManagerMock()
+        if #available(iOS 15.0, *) {
+            let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+            let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
+            let storePurchaseManager = DefaultStorePurchaseManager()
+            subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
+                                                          subscriptionEndpointService: subscriptionService,
+                                                          authEndpointService: authService,
+                                                          storePurchaseManager: storePurchaseManager,
+                                                          currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
+                                                                                                      purchasePlatform: .appStore),
+                                                          canPurchase: true)
+        } else {
+            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
+            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
+        }
+
+        let accessTokenProvider: () -> String? = { { "sometoken" } }()
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+        networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
+                                                                              tokenStore: networkProtectionKeychainTokenStore)
+        vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
+                                                                  accountManager: accountManager)
+
+        connectionObserver = ConnectionStatusObserverThroughSession()
+        vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     }
 }

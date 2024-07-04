@@ -39,12 +39,14 @@ public class AppUserDefaults: AppSettings {
         public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
         public static let showsFullURLAddressSettingChanged = Notification.Name("com.duckduckgo.app.ShowsFullURLAddressSettingChanged")
         public static let autofillDebugScriptToggled = Notification.Name("com.duckduckgo.app.DidToggleAutofillDebugScript")
+        public static let duckPlayerSettingsUpdated = Notification.Name("com.duckduckgo.app.DuckPlayerSettingsUpdated")
     }
 
     private let groupName: String
 
     struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let recentlyVisitedSites = "com.duckduckgo.app.recentlyVisitedSitesKey"
         static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
         
         static let autoClearActionKey = "com.duckduckgo.app.autoClearActionKey"
@@ -74,6 +76,9 @@ public class AppUserDefaults: AppSettings {
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
+        
+        static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
+        static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
     }
 
     private struct DebugKeys {
@@ -107,6 +112,18 @@ public class AppUserDefaults: AppSettings {
 
     }
     
+    var recentlyVisitedSites: Bool {
+
+        get {
+            return userDefaults?.bool(forKey: Keys.recentlyVisitedSites, defaultValue: true) ?? true
+        }
+
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.recentlyVisitedSites)
+        }
+
+    }
+
     var currentThemeName: ThemeName {
         
         get {
@@ -287,9 +304,6 @@ public class AppUserDefaults: AppSettings {
         autofillImportViaSyncStart = nil
     }
 
-    @UserDefaultsWrapper(key: .autofillSurveyEnabled, defaultValue: true)
-    var autofillSurveyEnabled: Bool
-
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 
@@ -361,6 +375,38 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
+        }
+    }
+
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
+    var newTabPageSectionsEnabled: Bool
+    
+    var duckPlayerMode: DuckPlayerMode {
+        get {
+            if let value = userDefaults?.string(forKey: Keys.duckPlayerMode),
+               let mode = DuckPlayerMode(stringValue: value) {
+                return mode
+            }
+            return .alwaysAsk
+        }
+        set {
+            userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
+                                            object: duckPlayerMode)
+        }
+    }
+    
+    var duckPlayerAskModeOverlayHidden: Bool {
+        get {
+            if let value = userDefaults?.bool(forKey: Keys.duckPlayerAskModeOverlayHidden) {
+                return value
+            }
+            return false
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.duckPlayerAskModeOverlayHidden)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
+                                            object: duckPlayerMode)
         }
     }
 }

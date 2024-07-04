@@ -119,7 +119,7 @@
 "addWidget.description" = "Nopea pääsy yksityiseen hakuun ja suosikkisivustoihin.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Paina pitkään aloitusnäyttöä siirtyäksesi heilutustilaan.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Napauta pluspainiketta %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Päällä";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Hae DuckDuckGo:sta";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Hakuehdotuksiin sisältyvät nyt myös viimeksi käymäsi sivustot. Voit poistaa tämän käytöstä asetuksissa tai tyhjentää sivustotiedot milloin tahansa 🔥 Fire Buttonilla.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Sama tietoja,\nparempia hakuehdotuksia!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Pois käytöstä";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Ilmoita tällä sivustolla olevasta ongelmasta";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Selvä";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Kuvaile tällä sivustolla kohtaamasi ongelma, jotta voimme ymmärtää paremmin, miten se voidaan korjata.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Kuvaus vaaditaan";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Ilmoituksesi auttaa tekemään DuckDuckGosta paremman kaikille!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Ei";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Ratkaisiko yksityisyyden suojan käytöstä poistaminen tällä sivustolla olevan ongelman?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Kyllä";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Lähetä aina virheraportit";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Ota pois käytöstä estääksesi linkkejä avautumasta automaattisesti muissa asennetuissa sovelluksissa.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Näytä automaattisen täydennyksen ehdotukset";
+"settings.autocomplete" = "Hakuehdotukset";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Viimeksi käydyt sivustot";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Näytä viimeksi käydyt sivustot hakuehdotuksissa. Viimeksi käydyt sivustot ovat yksityisiä, tallennetaan vain laitteeseen ja ne voidaan tyhjentää Fire Buttonilla.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Näytä hakuehdotuksia kirjoittaessasi, mukaan lukien kirjanmerkit. Kaikki haut ovat yksityisiä.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Sovelluksen lukitus";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo estää piilotetut seurantalaitteet automaattisesti, kun selaat verkkoa.\n[Lue lisää] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Valitse vaihtoehto, joka parhaiten kuvaa ongelmaa.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Hylkää";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Tämä auttaa meitä parantamaan selainta.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Eikö sivusto toimi? Kerro siitä DuckDuckGolle.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Verkkosivusto on viallinen";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Salli ilmoitukset";

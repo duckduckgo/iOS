@@ -26,15 +26,14 @@ import Core
 import NetworkProtection
 #endif
 
-@available(iOS 15.0, *)
-final class SubscriptionDebugViewController: UITableViewController {
-    
-    private let accountManager = AccountManager()
-    fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
-    
-    @UserDefaultsWrapper(key: .privacyProEnvironment, defaultValue: SubscriptionPurchaseEnvironment.ServiceEnvironment.default.description)
-    private var privacyProEnvironment: String
-    
+// swiftlint:disable:next type_body_length
+@available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
+
+    let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+    private var subscriptionManager: SubscriptionManager {
+        AppDependencyProvider.shared.subscriptionManager
+    }
+
     private let titles = [
         Sections.authorization: "Authentication",
         Sections.subscription: "Subscription",
@@ -69,7 +68,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         case staging
         case production
     }
-    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -80,7 +78,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -125,22 +122,20 @@ final class SubscriptionDebugViewController: UITableViewController {
             }
         
         case .environment:
-            let staging = SubscriptionPurchaseEnvironment.ServiceEnvironment.staging
-            let prod = SubscriptionPurchaseEnvironment.ServiceEnvironment.production
+            let currentEnv = subscriptionManager.currentEnvironment.serviceEnvironment
             switch EnvironmentRows(rawValue: indexPath.row) {
             case .staging:
                 cell.textLabel?.text = "Staging"
-                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == staging ? .checkmark : .none
+                cell.accessoryType = currentEnv == .staging ? .checkmark : .none
             case .production:
                 cell.textLabel?.text = "Production"
-                cell.accessoryType = SubscriptionPurchaseEnvironment.currentServiceEnvironment == prod ? .checkmark : .none
+                cell.accessoryType = currentEnv == .production ? .checkmark : .none
             case .none:
                 break
             }
         }
         return cell
     }
-    // swiftlint:enable cyclomatic_complexity
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
@@ -153,7 +148,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .authorization:
@@ -176,19 +171,46 @@ final class SubscriptionDebugViewController: UITableViewController {
             default: break
             }
         case .environment:
-            switch EnvironmentRows(rawValue: indexPath.row) {
-            case .staging: setEnvironment(.staging)
-            case .production: setEnvironment(.production)
-            default: break
-            }
+            guard let subEnv: EnvironmentRows = EnvironmentRows(rawValue: indexPath.row) else { return }
+            changeSubscriptionEnvironment(envRows: subEnv)
         case .none:
             break
         }
-
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    // swiftlint:enable cyclomatic_complexity
     
+    private func changeSubscriptionEnvironment(envRows: EnvironmentRows) {
+        var subEnvDesc: String
+        switch envRows {
+        case .staging:
+            subEnvDesc = "STAGING"
+        case .production:
+            subEnvDesc = "PRODUCTION"
+        }
+        let message = """
+                    Are you sure you want to change the environment to \(subEnvDesc)?
+                    This setting IS persisted between app runs. This action will close the app, do you want to proceed?
+                    """
+        let alertController = UIAlertController(title: "⚠️ App restart required! The changes are persistent",
+                                                message: message,
+                                                preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+            switch envRows {
+            case .staging:
+                self?.setEnvironment(.staging)
+            case .production:
+                self?.setEnvironment(.production)
+            }
+            // Close the app
+            exit(0)
+        })
+        let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     private func showAlert(title: String, message: String? = nil) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -198,47 +220,51 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
 
+//    func showAlert(title: String, message: String, alternativeAction)
+
     // MARK: Account Status Actions
     private func clearAuthData() {
-        accountManager.signOut()
+        subscriptionManager.accountManager.signOut()
         showAlert(title: "Data cleared!")
     }
     
     private func injectCredentials() {
-        accountManager.storeAccount(token: "a-fake-token",
+        subscriptionManager.accountManager.storeAccount(token: "a-fake-token",
                                     email: "a.fake@email.com",
                                     externalID: "666")
         showAccountDetails()
     }
     
     private func showAccountDetails() {
-        let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = accountManager.isUserAuthenticated ?
-            ["Service Environment: \(SubscriptionPurchaseEnvironment.currentServiceEnvironment.description)",
-            "AuthToken: \(accountManager.authToken ?? "")",
-            "AccessToken: \(accountManager.accessToken ?? "")",
-            "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
+        let title = subscriptionManager.accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
+        let message = subscriptionManager.accountManager.isUserAuthenticated ?
+        ["Service Environment: \(subscriptionManager.currentEnvironment.serviceEnvironment.description)",
+            "AuthToken: \(subscriptionManager.accountManager.authToken ?? "")",
+            "AccessToken: \(subscriptionManager.accountManager.accessToken ?? "")",
+            "Email: \(subscriptionManager.accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
     }
             
     private func syncAppleIDAccount() {
         Task {
-            switch await purchaseManager.syncAppleIDAccount() {
-            case .success:
-                showAlert(title: "Account synced!", message: "")
-            case .failure(let error):
+            do {
+                try await subscriptionManager.storePurchaseManager().syncAppleIDAccount()
+            } catch {
                 showAlert(title: "Error syncing!", message: error.localizedDescription)
+                return
             }
+
+            showAlert(title: "Account synced!", message: "")
         }
     }
     
     private func validateToken() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
                 return
             }
-            switch await AuthService.validateToken(accessToken: token) {
+            switch await subscriptionManager.authEndpointService.validateToken(accessToken: token) {
             case .success(let response):
                 showAlert(title: "Token details", message: "\(response)")
             case .failure(let error):
@@ -249,11 +275,12 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func getSubscription() {
         Task {
-            guard let token = accountManager.accessToken else {
+            guard let token = subscriptionManager.accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
-            switch await SubscriptionService.getSubscription(accessToken: token, cachePolicy: .reloadIgnoringLocalCacheData) {
+            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
+                                                                                         cachePolicy: .reloadIgnoringLocalCacheData) {
             case .success(let response):
                 showAlert(title: "Subscription info", message: "\(response)")
             case .failure(let error):
@@ -265,13 +292,14 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getEntitlements() {
         Task {
             var results: [String] = []
-            guard accountManager.accessToken != nil else {
+            guard subscriptionManager.accountManager.accessToken != nil else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
                 return
             }
             let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
             for entitlement in entitlements {
-                if case let .success(result) = await AccountManager().hasEntitlement(for: entitlement, cachePolicy: .reloadIgnoringLocalCacheData) {
+                if case let .success(result) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement,
+                                                                                                       cachePolicy: .reloadIgnoringLocalCacheData) {
                     let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
                     results.append(resultSummary)
                     print(resultSummary)
@@ -281,23 +309,28 @@ final class SubscriptionDebugViewController: UITableViewController {
         }
     }
     
-    private func setEnvironment(_ environment: SubscriptionPurchaseEnvironment.ServiceEnvironment) {
-        if environment.description != privacyProEnvironment {
-            
-            AccountManager().signOut()
-            
-            // Update Subscription environment
-            privacyProEnvironment = environment.rawValue
-            SubscriptionPurchaseEnvironment.currentServiceEnvironment = environment
-            
-            // Update VPN Environment
-            VPNSettings(defaults: .networkProtectionGroupDefaults).selectedEnvironment = environment == .production
-                ? .production
-                : .staging
-            NetworkProtectionLocationListCompositeRepository.clearCache()
-            
-            tableView.reloadData()
-        }
+    private func setEnvironment(_ environment: SubscriptionEnvironment.ServiceEnvironment) {
         
+        let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
+        let currentSubscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
+        var newSubscriptionEnvironment = SubscriptionEnvironment.default
+        newSubscriptionEnvironment.serviceEnvironment = environment
+
+        if newSubscriptionEnvironment.serviceEnvironment != currentSubscriptionEnvironment.serviceEnvironment {
+            subscriptionManager.accountManager.signOut()
+
+            // Save Subscription environment
+            DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
+
+            // The VPN environment is forced to match the subscription environment
+            let settings = AppDependencyProvider.shared.vpnSettings
+            switch newSubscriptionEnvironment.serviceEnvironment {
+            case .production:
+                settings.selectedEnvironment = .production
+            case .staging:
+                settings.selectedEnvironment = .staging
+            }
+            NetworkProtectionLocationListCompositeRepository.clearCache()
+        }
     }
 }

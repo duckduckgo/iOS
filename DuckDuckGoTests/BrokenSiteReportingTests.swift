@@ -119,7 +119,8 @@ final class BrokenSiteReportingTests: XCTestCase {
                                       jsPerformance: nil,
                                       userRefreshCount: 0,
                                       didOpenReportInfo: false,
-                                      toggleReportCounter: nil)
+                                      toggleReportCounter: nil,
+                                      variant: "")
 
         let reporter = BrokenSiteReporter(pixelHandler: { params in
             

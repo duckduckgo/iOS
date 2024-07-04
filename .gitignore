@@ -8,6 +8,10 @@ DerivedData/
 Carthage/Checkouts
 node_modules/
 
+## UI Testing
+.maestro/device_uuid.txt
+xcodebuild.log
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -24,6 +28,7 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 .DS_Store
+default.profraw
 
 ## Obj-C/Swift specific
 *.hmap
@@ -76,3 +81,4 @@ Configuration/ExternalDeveloper.xcconfig
 scripts/assets
 
 DuckDuckGoTests/NetworkProtectionVPNLocationViewModelTests.swift*.plist
+*.profraw

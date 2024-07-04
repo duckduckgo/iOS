@@ -61,21 +61,12 @@ struct VPNMetadata: Encodable {
         let excludeLocalNetworksEnabled: Bool
         let notifyStatusChangesEnabled: Bool
         let selectedServer: String
+        let customDNS: Bool
     }
 
     struct PrivacyProInfo: Encodable {
-        // swiftlint:disable nesting
-        enum Source: String, Encodable {
-            case `internal`
-            case waitlist
-            case other
-        }
-        // swiftlint:enable nesting
-
-        let enableSource: Source
-        let betaParticipant: Bool
-        let hasToken: Bool
-        let subscriptionActive: Bool
+        let hasPrivacyProAccount: Bool
+        let hasVPNEntitlement: Bool
     }
 
     struct LastDisconnectError: Encodable {
@@ -123,21 +114,18 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let accessManager: NetworkProtectionAccessController
-    private let tokenStore: NetworkProtectionTokenStore
+    private let accountManager: AccountManager
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
-    init(statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
+    init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         networkProtectionAccessManager: NetworkProtectionAccessController = NetworkProtectionAccessController(),
-         tokenStore: NetworkProtectionTokenStore = NetworkProtectionKeychainTokenStore(),
+         accountManager: AccountManager = AppDependencyProvider.shared.subscriptionManager.accountManager,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.accessManager = networkProtectionAccessManager
-        self.tokenStore = tokenStore
+        self.accountManager = accountManager
         self.settings = settings
         self.defaults = defaults
     }
@@ -148,7 +136,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         let networkInfoMetadata = await collectNetworkInformation()
         let vpnState = await collectVPNState()
         let vpnSettingsState = collectVPNSettingsState()
-        let privacyProInfo = collectPrivacyProInfo()
+        let privacyProInfo = await collectPrivacyProInfo()
 
         return VPNMetadata(
             appInfo: appInfoMetadata,
@@ -260,40 +248,19 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             enforceRoutesEnabled: settings.enforceRoutes,
             excludeLocalNetworksEnabled: settings.excludeLocalNetworks,
             notifyStatusChangesEnabled: settings.notifyStatusChanges,
-            selectedServer: settings.selectedServer.stringValue ?? "automatic"
+            selectedServer: settings.selectedServer.stringValue ?? "automatic",
+            customDNS: settings.dnsSettings.usesCustomDNS
         )
     }
 
-    func collectPrivacyProInfo() -> VPNMetadata.PrivacyProInfo {
-        let accessType = accessManager.networkProtectionAccessType()
-        var hasToken: Bool {
-            guard let token = try? tokenStore.fetchToken(),
-                  !token.hasPrefix(NetworkProtectionKeychainTokenStore.authTokenPrefix) else {
-                return false
-            }
-            return true
-        }
-
+    func collectPrivacyProInfo() async -> VPNMetadata.PrivacyProInfo {
+        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
         return .init(
-            enableSource: .init(from: accessManager.networkProtectionAccessType()),
-            betaParticipant: accessType == .waitlistInvited,
-            hasToken: hasToken,
-            subscriptionActive: AccountManager(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs)).isUserAuthenticated
+            hasPrivacyProAccount: accountManager.isUserAuthenticated,
+            hasVPNEntitlement: hasVPNEntitlement
         )
     }
-}
 
-extension VPNMetadata.PrivacyProInfo.Source {
-    init(from accessType: NetworkProtectionAccessType) {
-        switch accessType {
-        case .inviteCodeInvited:
-            self = .internal
-        case .waitlistInvited:
-            self = .waitlist
-        default:
-            self = .other
-        }
-    }
 }
 
 private extension NSError {

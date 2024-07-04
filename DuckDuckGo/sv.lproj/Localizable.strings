@@ -119,7 +119,7 @@
 "addWidget.description" = "Få snabb tillgång till privat sökning och dina favoritwebbplatser.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Tryck länge på startskärmen tills apparna börjar vicka.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Tryck på plusknappen för %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Sök med DuckDuckGo";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Sökförslag inkluderar nu dina nyligen besökta webbplatser. Stäng av funktionen i inställningarna, eller rensa när som helst med 🔥 Fire Button.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Samma integritet.\nBättre sökförslag!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Inaktiverad";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importera en HTML-fil med bokmärken från en annan webbläsare eller exportera dina befintliga bokmärken.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Rapportera ett problem med den här webbplatsen";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Jag fattar";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Beskriv problemet du upplevde på den här webbplatsen så att vi bättre kan förstå hur vi ska åtgärda det.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Beskrivning krävs";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Din rapport hjälper till att göra DuckDuckGo bättre för alla!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Nej";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Löstes problemet på den här webbplatsen genom att stänga av integritetsskydd?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Ja";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Skicka alltid kraschrapporter";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Inaktivera för att förhindra att länkar automatiskt öppnas i andra installerade appar.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Visa Autoslutför förslag";
+"settings.autocomplete" = "Sökförslag";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Senast besökta webbplatser";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Visa nyligen besökta webbplatser i sökförslag. Nyligen besökta webbplatser är privata. De lagras endast på din enhet och kan rensas med Fire Button.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Visa sökförslag medan du skriver, inklusive dina bokmärken. Alla sökningar är privata.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "App-lås";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blockerar automatiskt dolda spårare när du surfar på webben.\n[Läs mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Välj det alternativ som bäst beskriver det problem som du har stött på.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Avvisa";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Det hjälper oss att förbättra webbläsaren.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Fungerar inte webbplatsen? Informera DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Webbplatsen fungerar inte";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Skicka in rapport";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Tillåt aviseringar";

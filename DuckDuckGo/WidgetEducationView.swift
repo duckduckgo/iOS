@@ -27,8 +27,33 @@ extension Font {
     }
 }
 
+struct WidgetEducationImageConfig {
+    let image: Image
+    let maxWidth: CGFloat
+    let horizontalOffset: CGFloat
+
+    init(image: Image, maxWidth: CGFloat, horizontalOffset: CGFloat = 0) {
+        self.image = image
+        self.maxWidth = maxWidth
+        self.horizontalOffset = horizontalOffset
+    }
+}
+
 struct WidgetEducationView: View {
-    
+    typealias ImageConfig = WidgetEducationImageConfig
+
+    let navBarTitle: String
+    let thirdParagraphText: String
+    let widgetExampleImageConfig: ImageConfig
+
+    init(navBarTitle: String = UserText.settingsAddWidget,
+         thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
+         widgetExampleImageConfig: ImageConfig = .init(image: .widgetExample, maxWidth: Const.Size.imageWidth)) {
+        self.navBarTitle = navBarTitle
+        self.thirdParagraphText = thirdParagraphText
+        self.widgetExampleImageConfig = widgetExampleImageConfig
+    }
+
     var body: some View {
         ZStack {
             Color.background
@@ -39,19 +64,15 @@ struct WidgetEducationView: View {
                                       text: Text(UserText.addWidgetSettingsFirstParagraph))
                     NumberedParagraph(number: 2,
                                       text: secondParagraphText,
-                                      image: Image.homeScreen)
+                                      imageConfig: ImageConfig(image: Image.homeScreen, maxWidth: Const.Size.imageWidth))
                     NumberedParagraph(number: 3,
-                                      text: Text(UserText.addWidgetSettingsThirdParagraph),
-                                      image: Image.widgetExample)
+                                      text: Text(thirdParagraphText),
+                                      imageConfig: widgetExampleImageConfig)
                 }
                 .padding(.horizontal)
                 .padding(.top, Const.Padding.top)
             }
-        }.navigationBarTitle(UserText.settingsAddWidget, displayMode: .inline)
-            .onForwardNavigationAppear {
-                Pixel.fire(pixel: .settingsNextStepsAddWidget,
-                           withAdditionalParameters: PixelExperiment.parameters)
-            }
+        }.navigationBarTitle(navBarTitle, displayMode: .inline)
     }
     
     private var secondParagraphText: Text {
@@ -63,8 +84,8 @@ struct WidgetEducationView: View {
 private struct NumberedParagraph: View {
     var number: Int
     var text: Text
-    var image: Image?
-    
+    var imageConfig: WidgetEducationImageConfig?
+
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: Const.Spacing.numberAndText) {
             NumberedCircle(number: number)
@@ -73,10 +94,14 @@ private struct NumberedParagraph: View {
                     .font(Font(uiFont: Const.Font.text))
                     .lineSpacing(Const.Spacing.line)
                     .foregroundColor(Color.font)
-                image?
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: Const.Size.imageWidth)
+                if let imageConfig {
+                    imageConfig
+                        .image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: imageConfig.maxWidth)
+                        .offset(x: imageConfig.horizontalOffset)
+                }
             }
         }
     }
@@ -101,7 +126,7 @@ private struct NumberedCircle: View {
 private extension Color {
     static let background = Color(designSystemColor: .background)
     static let font = Color("WidgetEducationFontColor")
-    static let circle = Color(UIColor.cornflowerBlue)
+    static let circle = Color(designSystemColor: .accent)
     static let numbers = Color.white
 }
 

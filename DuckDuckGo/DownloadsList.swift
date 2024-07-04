@@ -24,9 +24,8 @@ struct DownloadsList: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
-    
-    @State private var isCancelDownloadAlertPresented: Bool = false
-    
+    @State private var selectedRowModelToCancel: OngoingDownloadRowViewModel?
+
     var body: some View {
         NavigationView {
             listOrEmptyState
@@ -34,6 +33,9 @@ struct DownloadsList: View {
                 .navigationBarItems(trailing: doneButton)
         }
         .navigationViewStyle(.stack)
+        .alert(item: $selectedRowModelToCancel) { rowModel in
+            makeCancelDownloadAlert(for: rowModel)
+        }
     }
     
     private var doneButton: some View {
@@ -171,8 +173,7 @@ struct DownloadsList: View {
     private func row(for rowModel: DownloadsListRowViewModel) -> some View {
         if let rowModel = rowModel as? OngoingDownloadRowViewModel {
             OngoingDownloadRow(rowModel: rowModel,
-                               cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
-                .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: rowModel) }
+                               cancelButtonAction: { self.selectedRowModelToCancel = rowModel })
                 .deleteDisabled(true)
         } else if let rowModel = rowModel as? CompleteDownloadRowViewModel {
             CompleteDownloadRow(rowModel: rowModel,

@@ -3,6 +3,7 @@ name: Sync-End-to-End tests
 on:
   schedule:
     - cron: '0 5 * * *' # run at 5 AM UTC
+  workflow_dispatch:
 
 jobs:
   build-for-sync-end-to-end-tests:
@@ -68,7 +69,7 @@ jobs:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
     runs-on: macos-13-xlarge
-    timeout-minutes: 60
+    timeout-minutes: 90
     strategy:
       matrix:
         os-version: [15, 16, 17]
@@ -91,20 +92,25 @@ jobs:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
+    - name: Install Maestro
+      run: |
+        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+        
+    - name: Overwrite default config with sync one
+      run: |
+        cp .maestro/config-sync .maestro/config.yaml
+        
     - name: Sync e2e tests 
-      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
-      with:
-        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        ios-version: ${{ matrix.os-version }}
-        workspace: .maestro
-        include-tags: sync
-        env: |
-            CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
+      run: |
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        
+    - name: Reset config
+      run: |
+        git checkout .maestro/config.yaml
     
   notify-failure:
     name: Notify on failure
-    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
+    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
     needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
     runs-on: ubuntu-latest
 

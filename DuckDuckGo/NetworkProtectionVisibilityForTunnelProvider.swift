@@ -23,20 +23,27 @@ import Foundation
 import Subscription
 
 struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
-    func isWaitlistBetaActive() -> Bool {
-        preconditionFailure("Does not apply to Tunnel Provider")
+
+    private let accountManager: AccountManager
+
+    init(accountManager: AccountManager) {
+        self.accountManager = accountManager
     }
 
-    func isWaitlistUser() -> Bool {
-        preconditionFailure("Does not apply to Tunnel Provider")
-    }
-    
     func isPrivacyProLaunched() -> Bool {
-        AccountManager().isUserAuthenticated
+        accountManager.isUserAuthenticated
     }
     
     func shouldMonitorEntitlement() -> Bool {
         isPrivacyProLaunched()
+    }
+
+    func shouldShowVPNShortcut() -> Bool {
+        guard isPrivacyProLaunched() else {
+            return false
+        }
+
+        return accountManager.isUserAuthenticated
     }
 }
 

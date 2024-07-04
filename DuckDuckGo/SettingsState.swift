@@ -74,6 +74,7 @@ struct SettingsState {
 
     // Customization properties
     var autocomplete: Bool
+    var recentlyVisitedSites: Bool
     var longPressPreviews: Bool
     var allowUniversalLinks: Bool
 
@@ -99,6 +100,10 @@ struct SettingsState {
     // Sync Properties
     var sync: SyncSettings
     
+    // Duck Player Mode
+    var duckPlayerEnabled: Bool
+    var duckPlayerMode: DuckPlayerMode?
+    
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
@@ -112,6 +117,7 @@ struct SettingsState {
             autoclearDataEnabled: false,
             applicationLock: false,
             autocomplete: true,
+            recentlyVisitedSites: true,
             longPressPreviews: true,
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,
@@ -131,7 +137,9 @@ struct SettingsState {
                                        entitlements: [],
                                        platform: .unknown,
                                        isShowingStripeView: false),
-            sync: SyncSettings(enabled: false, title: "")
+            sync: SyncSettings(enabled: false, title: ""),
+            duckPlayerEnabled: false,
+            duckPlayerMode: .alwaysAsk
         )
     }
 }

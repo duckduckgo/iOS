@@ -24,6 +24,10 @@ Before submitting a PR, please ensure you have tested the combinations you expec
 Using a simulator where a physical device is unavailable is acceptable.
 -->
 
+**Definition of Done (Internal Only)**:
+
+* [ ] Does this PR satisfy our [Definition of Done](https://app.asana.com/0/1202500774821704/1207634633537039/f)?
+
 **Copy Testing**:
 
 * [ ] Use of correct apostrophes in new copy, ie `’` rather than `'`
@@ -43,9 +47,9 @@ Using a simulator where a physical device is unavailable is acceptable.
 
 **OS Testing**:
 
-* [ ] iOS 14
 * [ ] iOS 15
 * [ ] iOS 16
+* [ ] iOS 17
 
 **Theme Testing**:
 

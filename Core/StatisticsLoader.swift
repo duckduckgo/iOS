@@ -103,6 +103,8 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
+                NotificationCenter.default.post(name: .searchDAU,
+                                                object: nil, userInfo: nil)
             }
             completion()
         }

@@ -35,7 +35,7 @@ struct SettingsSubscriptionView: View {
     @State var isShowingStripeView = false
     @State var isShowingSubscriptionError = false
     @State var isShowingPrivacyPro = false
-    
+
     enum Constants {
         static let purchaseDescriptionPadding = 5.0
         static let topCellPadding = 3.0
@@ -43,6 +43,8 @@ struct SettingsSubscriptionView: View {
         static let navigationDelay = 0.3
         static let infoIcon = "info-16"
         static let alertIcon = "Exclamation-Color-16"
+
+        static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
     }
 
     private var subscriptionDescriptionView: some View {
@@ -79,19 +81,24 @@ struct SettingsSubscriptionView: View {
         Text(UserText.settingsPProManageSubscription)
             .daxBodyRegular()
     }
-    
+
+    private var subscriptionManager: SubscriptionManager {
+        AppDependencyProvider.shared.subscriptionManager
+    }
+
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
 
         Group {
             SettingsCustomCell(content: { subscriptionDescriptionView })
             
-            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
+            ).navigationViewStyle(.stack)
+            let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                               subscriptionManager: subscriptionManager)
                 .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
-            let restoreView = SubscriptionContainerView(currentView: .restore)
-                .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
                 .onFirstAppear {
                     Pixel.fire(pixel: .privacyProRestorePurchaseClick)
                 }
@@ -122,9 +129,10 @@ struct SettingsSubscriptionView: View {
                 }
             })
                         
-            let subscribeView = SubscriptionContainerView(currentView: .subscribe)
-                .navigationViewStyle(.stack)
-                .environmentObject(subscriptionNavigationCoordinator)
+            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
+                                                                                   subscriptionManager: subscriptionManager
+            ).navigationViewStyle(.stack)
             NavigationLink(
                 destination: subscribeView,
                 isActive: $isShowingSubscribeFlow,
@@ -208,9 +216,12 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         Group {
             if isShowingPrivacyPro {
-                
-                Section(header: Text(UserText.settingsPProSection)) {
-                                    
+                let footerLink = Link(UserText.settingsPProSectionFooter,
+                                      destination: Constants.privacyPolicyURL
+                ).daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
+
+                Section(header: Text(UserText.settingsPProSection), footer: footerLink) {
+
                     switch (
                         viewModel.state.subscription.isSignedIn,
                         viewModel.state.subscription.hasActiveSubscription,
@@ -247,12 +258,10 @@ struct SettingsSubscriptionView: View {
                         isShowingSubscribeFlow = false
                     }
                 }
-                
+
             }
         }.onReceive(viewModel.$state) { state in
-            if state.subscription.enabled && state.subscription.canPurchase {
-                isShowingPrivacyPro = true
-            }
+            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
         }
     }
 }

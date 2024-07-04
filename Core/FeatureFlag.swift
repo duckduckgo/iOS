@@ -30,11 +30,11 @@ public enum FeatureFlag: String {
     case autofillPasswordGeneration
     case autofillOnByDefault
     case incontextSignup
-    case networkProtection
-    case networkProtectionWaitlistAccess
-    case networkProtectionWaitlistActive
     case autoconsentOnByDefault
     case history
+    case historyRollout
+    case newTabPageSections
+    case duckPlayer
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -44,12 +44,6 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
-        case .networkProtection:
-            return .remoteReleasable(.feature(.networkProtection))
-        case .networkProtectionWaitlistAccess:
-            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlist))
-        case .networkProtectionWaitlistActive:
-            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlistBetaActive))
         case .autofillCredentialInjecting:
             return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
         case .autofillCredentialsSaving:
@@ -68,7 +62,12 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
         case .history:
             return .remoteReleasable(.feature(.history))
-        
+        case .historyRollout:
+            return .remoteReleasable(.subfeature(HistorySubFeature.onByDefault))
+        case .newTabPageSections:
+            return .internalOnly
+        case .duckPlayer:
+            return .remoteReleasable(.feature(.duckPlayer))
         }
     }
 }

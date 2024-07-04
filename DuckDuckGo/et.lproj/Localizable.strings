@@ -119,7 +119,7 @@
 "addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
+"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
@@ -243,6 +243,15 @@
 
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
+
+/* Subtitle for search history items */
+"autocomplete.history.search.duckduckgo" = "Otsi DuckDuckGo'st";
+
+/* The message text shown in suggestions */
+"autocomplete.history.warning.message" = "Otsingusoovitused hõlmavad nüüd sinu hiljuti külastatud saite. Saad selle välja lülitada seadetes või tühjendada igal ajal nupu 🔥 Fire Button abil.";
+
+/* Title for message show in suggestions */
+"autocomplete.history.warning.title" = "Sama privaatsus.\nParemad otsingusoovitused!";
 
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Keelatud";
@@ -669,6 +678,30 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Impordi järjehoidjate HTML-fail teisest brauserist või ekspordi oma olemas olevad järjehoidjad.";
+
+/* Button to open report form */
+"broken.site.report.menu.title" = "Teata selle saidi probleemist";
+
+/* Acknowledge button */
+"broken.site.report.missing.description.alert.button" = "Sain aru";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.description" = "Palun kirjelda sellel saidil kogetud probleemi, et saaksime paremini mõista, kuidas seda lahendada.";
+
+/* It appears as an alert after user tries to send a report without submitting any details */
+"broken.site.report.missing.description.alert.title" = "Kirjeldus on vajalik";
+
+/* Message that appears after submitting report */
+"broken.site.report.success.toast" = "Sinu aruanne aitab muuta DuckDuckGo kõigi jaoks paremaks!";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.no.button" = "Ei";
+
+/* An alert that appears after user turns off the privacy protection */
+"broken.site.report.toggle.alert.title" = "Kas privaatsuskaitsete väljalülitamine lahendas probleemi sellel saidil?";
+
+/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
+"broken.site.report.toggle.alert.yes.button" = "Jah";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Saada krahhiaruanded alati";
@@ -1769,7 +1802,16 @@
 "settings.associated.apps.description" = "Keela, et takistada linkide automaatset avanemist teistes installitud rakendustes.";
 
 /* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Automaatselt täidetavad ettepanekud";
+"settings.autocomplete" = "Otsingusoovitused";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited" = "Hiljuti külastatud saidid";
+
+/* Settings label for enabling or disabling recently visited sites */
+"settings.autocomplete.recentlyvisited.subtitle" = "Kuva hiljuti külastatud saidid otsingusoovitustes. Viimased külastatud saidid on privaatsed, salvestatakse ainult sinu seadmesse ja neid saab tühjendada nupu Fire Button abil.";
+
+/* Subtitle for Search Suggestions setting */
+"settings.autocomplete.subtitle" = "Kuva sisestamisel otsingusoovitusi, sealhulgas järjehoidjaid. Kõik otsingud on privaatsed.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Rakenduse lukk";
@@ -1972,6 +2014,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokeerib automaatselt peidetud jälgijaid, kui sa veebis sirvid.\n[Lisateave](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Vali suvand, mis kirjeldab sinu probleemi kõige paremini.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Loobu";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "See aitab meil brauserit täiustada.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Kas sait ei tööta? Anna DuckDuckGole teada.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Veebisait ei toimi";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
@@ -2366,6 +2423,9 @@
 /* Alert title for the alert when the Privacy Pro subscription expires */
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
+/* Title for the VPN widget onboarding screen */
+"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
 
@@ -2434,6 +2494,9 @@
 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+
+/* VPN settings screen cell text for adding the VPN widget to the home screen */
+"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Luba teavitused";

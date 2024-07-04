@@ -168,7 +168,7 @@ struct FavoritesWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color(designSystemColor: .surface))
+            Rectangle().fill(Color(designSystemColor: .backgroundSheets))
 
             VStack(alignment: .center, spacing: 0) {
 
@@ -207,7 +207,7 @@ struct FavoritesWidgetView: View {
             .padding(EdgeInsets(top: widgetFamily == .systemLarge ? 48 : 60, leading: 0, bottom: 0, trailing: 0))
 
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
+        .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
     }
 }
 
@@ -217,7 +217,7 @@ struct SearchWidgetView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color(designSystemColor: .surface))
+                .fill(Color(designSystemColor: .backgroundSheets))
                 .accessibilityLabel(Text(UserText.searchDuckDuckGo))
 
             VStack(alignment: .center, spacing: 15) {
@@ -244,7 +244,7 @@ struct SearchWidgetView: View {
                 }
             }.accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
+        .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
     }
 }
 
@@ -254,7 +254,7 @@ struct PasswordsWidgetView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                    .fill(Color(designSystemColor: .surface))
+                    .fill(Color(designSystemColor: .backgroundSheets))
                     .accessibilityLabel(Text(UserText.passwords))
 
             VStack(alignment: .center, spacing: 6) {
@@ -273,7 +273,7 @@ struct PasswordsWidgetView: View {
             }
             .accessibilityHidden(true)
         }
-        .widgetContainerBackground(color: Color(designSystemColor: .surface))
+        .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
     }
 }
 

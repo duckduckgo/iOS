@@ -38,15 +38,22 @@ struct SettingsGeneralView: View {
             Section(header: Text(UserText.privateSearch),
                     footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
-                SettingsCellView(label: UserText.settingsAutocomplete,
+                SettingsCellView(label: UserText.settingsAutocompleteLabel,
                                  accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
+            }
+
+            if viewModel.shouldShowRecentlyVisitedSites {
+                Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
+                    SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
+                                     accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+                }
             }
 
             Section(footer: Text(UserText.voiceSearchFooter)) {
                 // Private Voice Search
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
-                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledGeneralBinding))
+                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
                 }
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
@@ -82,9 +89,5 @@ struct SettingsGeneralView: View {
         .applySettingsListModifiers(title: UserText.general,
                                     displayMode: .inline,
                                     viewModel: viewModel)
-        .onForwardNavigationAppear {
-            Pixel.fire(pixel: .settingsGeneralOpen,
-                       withAdditionalParameters: PixelExperiment.parameters)
-        }
     }
 }

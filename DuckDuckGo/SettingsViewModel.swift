@@ -34,7 +34,6 @@ import NetworkProtection
 // swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
-    
     // Dependencies
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private(set) var privacyStore = PrivacyUserDefaults()
@@ -45,20 +44,18 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
+    private let historyManager: HistoryManager
 
     // Subscription Dependencies
-    private var subscriptionAccountManager: AccountManager
+    private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
     
+    private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
+        case subscriptionState = "com.duckduckgo.ios.subscription.state"
+    }
     // Used to cache the lasts subscription state for up to a week
-    private var subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(
-        key: UserDefaultsCacheKey.subscriptionState,
-        settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
-
-#if NETWORK_PROTECTION
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
-#endif
-    
+    private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
+                                                                         settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
@@ -87,8 +84,11 @@ final class SettingsViewModel: ObservableObject {
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     @Published var shouldShowEmailAlert: Bool = false
-    var autocompleteSubtitle: String?
+
+    @Published var shouldShowRecentlyVisitedSites: Bool = true
     
+    @Published var isInternalUser: Bool = AppDependencyProvider.shared.internalUserDecider.isInternalUser
+
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
@@ -102,7 +102,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.appTheme = $0
                 ThemeManager.shared.enableTheme(with: $0)
-                Pixel.fire(pixel: .settingsThemeSelectorPressed, withAdditionalParameters: PixelExperiment.parameters)
             }
         )
     }
@@ -120,8 +119,6 @@ final class SettingsViewModel: ObservableObject {
                 } completion: {
                     // no op
                 }
-                Pixel.fire(pixel: .settingsFireButtonSelectorPressed,
-                           withAdditionalParameters: PixelExperiment.parameters)
             }
         )
     }
@@ -134,13 +131,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.currentAddressBarPosition = $0
                 self.state.addressbar.position = $0
-                if $0 == .top {
-                    Pixel.fire(pixel: .settingsAddressBarTopSelected,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsAddressBarBottomSelected,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
             }
         )
     }
@@ -151,13 +141,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.state.showsFullURL = $0
                 self.appSettings.showFullSiteAddress = $0
-                if $0 {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressEnabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsShowFullSiteAddressDisabled,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
             }
         )
     }
@@ -172,54 +155,50 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
-    var autocompleteBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.autocomplete },
-            set: {
-                self.appSettings.autocomplete = $0
-                self.state.autocomplete = $0
-                if $0 {
-                    Pixel.fire(pixel: .settingsAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
-    var autocompletePrivateSearchBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.autocomplete },
-            set: {
-                self.appSettings.autocomplete = $0
-                self.state.autocomplete = $0
-                if $0 {
-                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
     var autocompleteGeneralBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
+                
                 if $0 {
-                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOn)
                 } else {
-                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGeneralAutocompleteOff)
+                }
+            }
+        )
+    }
+
+    var autocompletePrivateSearchBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.autocomplete },
+            set: {
+                self.appSettings.autocomplete = $0
+                self.state.autocomplete = $0
+                self.updateRecentlyVisitedSitesVisibility()
+
+                if $0 {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOn)
+                } else {
+                    Pixel.fire(pixel: .settingsPrivateSearchAutocompleteOff)
+                }
+            }
+        )
+    }
+
+    var autocompleteRecentlyVisitedSitesBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.recentlyVisitedSites },
+            set: {
+                self.appSettings.recentlyVisitedSites = $0
+                self.state.recentlyVisitedSites = $0
+                if $0 {
+                    Pixel.fire(pixel: .settingsRecentlyVisitedOn)
+                } else {
+                    Pixel.fire(pixel: .settingsRecentlyVisitedOff)
                 }
             }
         )
@@ -233,11 +212,9 @@ final class SettingsViewModel: ObservableObject {
                 self.state.sendDoNotSell = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
                 if $0 {
-                    Pixel.fire(pixel: .settingsGpcOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGpcOn)
                 } else {
-                    Pixel.fire(pixel: .settingsGpcOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsGpcOff)
                 }
             }
         )
@@ -250,11 +227,9 @@ final class SettingsViewModel: ObservableObject {
                 self.appSettings.autoconsentEnabled = $0
                 self.state.autoconsentEnabled = $0
                 if $0 {
-                    Pixel.fire(pixel: .settingsAutoconsentOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsAutoconsentOn)
                 } else {
-                    Pixel.fire(pixel: .settingsAutoconsentOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsAutoconsentOff)
                 }
             }
         )
@@ -266,63 +241,22 @@ final class SettingsViewModel: ObservableObject {
             set: { newValue in
                 self.setVoiceSearchEnabled(to: newValue)
                 if newValue {
-                    Pixel.fire(pixel: .settingsVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsVoiceSearchOn)
                 } else {
-                    Pixel.fire(pixel: .settingsVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
+                    Pixel.fire(pixel: .settingsVoiceSearchOff)
                 }
             }
         )
     }
 
-    // Remove after Settings experiment
-    var voiceSearchEnabledPrivateSearchBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsPrivateSearchVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsPrivateSearchVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
-    var voiceSearchEnabledGeneralBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsGeneralVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsGeneralVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
-            }
-        )
-    }
-
-    // Remove after Settings experiment
-    var voiceSearchEnabledAccessibilityBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.state.voiceSearchEnabled },
-            set: { newValue in
-                self.setVoiceSearchEnabled(to: newValue)
-                if newValue {
-                    Pixel.fire(pixel: .settingsAccessibilityVoiceSearchOn,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                } else {
-                    Pixel.fire(pixel: .settingsAccessibilityVoiceSearchOff,
-                               withAdditionalParameters: PixelExperiment.parameters)
-                }
+    var duckPlayerModeBinding: Binding<DuckPlayerMode> {
+        Binding<DuckPlayerMode>(
+            get: {
+                return self.state.duckPlayerMode ?? .alwaysAsk
+            },
+            set: {
+                self.appSettings.duckPlayerMode = $0
+                self.state.duckPlayerMode = $0
             }
         )
     }
@@ -390,22 +324,25 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
-         accountManager: AccountManager,
+         subscriptionManager: SubscriptionManager,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
+         historyManager: HistoryManager,
          syncPausedStateManager: any SyncPausedStateManaging) {
+
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.subscriptionAccountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
+        self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
 
         setupNotificationObservers()
-        autocompleteSubtitle = variantManager.isSupported(feature: .history) ? UserText.settingsAutocompleteSubtitle : nil
+        updateRecentlyVisitedSitesVisibility()
     }
-    
+
     deinit {
         subscriptionSignOutObserver = nil
     }
@@ -432,6 +369,7 @@ extension SettingsViewModel {
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
             applicationLock: privacyStore.authenticationEnabled,
             autocomplete: appSettings.autocomplete,
+            recentlyVisitedSites: appSettings.recentlyVisitedSites,
             longPressPreviews: appSettings.longPressPreviews,
             allowUniversalLinks: appSettings.allowUniversalLinks,
             activeWebsiteAccount: nil,
@@ -443,22 +381,24 @@ extension SettingsViewModel {
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
-            sync: getSyncState()
+            sync: getSyncState(),
+            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer),
+            duckPlayerMode: appSettings.duckPlayerMode
         )
         
+        updateRecentlyVisitedSitesVisibility()
         setupSubscribers()
         Task { await setupSubscriptionEnvironment() }
-        
     }
-    
-    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        var enabled = false
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            enabled = DefaultNetworkProtectionVisibility().shouldKeepVPNAccessViaWaitlist()
+
+    private func updateRecentlyVisitedSitesVisibility() {
+        withAnimation {
+            shouldShowRecentlyVisitedSites = historyManager.isHistoryFeatureEnabled() && state.autocomplete
         }
-#endif
-        return SettingsState.NetworkProtection(enabled: enabled, status: "")
+    }
+
+    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
+        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -495,7 +435,7 @@ extension SettingsViewModel {
     
 #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if DefaultNetworkProtectionVisibility().isPrivacyProLaunched() {
+        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
@@ -503,17 +443,7 @@ extension SettingsViewModel {
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }
         } else {
-            switch NetworkProtectionAccessController().networkProtectionAccessType() {
-            case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-                self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
-            case .waitlistInvited, .inviteCodeInvited:
-                switch connectionStatus {
-                case .connected:
-                    self.state.networkProtection.status = UserText.netPCellConnected
-                default:
-                    self.state.networkProtection.status = UserText.netPCellDisconnected
-                }
-            }
+            self.state.networkProtection.status = ""
         }
     }
 #endif
@@ -524,10 +454,9 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     private func setupSubscribers() {
-               
 
     #if NETWORK_PROTECTION
-        connectionObserver.publisher
+        AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] hasActiveSubscription in
                 self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
@@ -553,8 +482,7 @@ extension SettingsViewModel {
     }
     
     func setAsDefaultBrowser() {
-        Pixel.fire(pixel: .settingsSetAsDefault,
-                   withAdditionalParameters: PixelExperiment.parameters)
+        Pixel.fire(pixel: .settingsSetAsDefault)
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
@@ -616,33 +544,26 @@ extension SettingsViewModel {
         switch view {
         
         case .addToDock:
-            firePixel(.settingsNextStepsAddAppToDock,
-                      withAdditionalParameters: PixelExperiment.parameters)
             presentViewController(legacyViewProvider.addToDock, modal: true)
         case .sync:
-            firePixel(.settingsSyncOpen,
-                      withAdditionalParameters: PixelExperiment.parameters)
             pushViewController(legacyViewProvider.syncSettings)
         case .appIcon: pushViewController(legacyViewProvider.appIcon)
         case .unprotectedSites: pushViewController(legacyViewProvider.unprotectedSites)
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
         case .autoclearData:
-            firePixel(.settingsAutomaticallyClearDataOpen, withAdditionalParameters: PixelExperiment.parameters)
             pushViewController(legacyViewProvider.autoclearData)
         case .keyboard: pushViewController(legacyViewProvider.keyboard)
-        case .about: pushViewController(legacyViewProvider.about)
         case .debug: pushViewController(legacyViewProvider.debug)
             
         case .feedback:
             presentViewController(legacyViewProvider.feedback, modal: false)
         case .logins:
-            firePixel(.autofillSettingsOpened, withAdditionalParameters: PixelExperiment.parameters)
+            firePixel(.autofillSettingsOpened)
             pushViewController(legacyViewProvider.loginSettings(delegate: self,
                                                             selectedAccount: state.activeWebsiteAccount))
 
         case .textSize:
-            firePixel(.settingsAccessiblityTextSize,
-                      withAdditionalParameters: PixelExperiment.parameters)
+            firePixel(.settingsAccessiblityTextSize)
             pushViewController(legacyViewProvider.textSettings)
 
         case .gpc:
@@ -655,8 +576,7 @@ extension SettingsViewModel {
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings,
-                          withAdditionalParameters: PixelExperiment.parameters)
+                firePixel(.privacyProVPNSettings)
                 pushViewController(legacyViewProvider.netP)
             }
 #endif
@@ -687,12 +607,11 @@ extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
 // MARK: DeepLinks
 extension SettingsViewModel {
 
-    enum SettingsDeepLinkSection: Identifiable {
+    enum SettingsDeepLinkSection: Identifiable, Equatable {
         case netP
         case dbp
         case itr
-        case subscriptionFlow
-        case subscriptionRestoreFlow
+        case subscriptionFlow(origin: String? = nil)
         // Add other cases as needed
 
         var id: String {
@@ -701,7 +620,6 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
-            case .subscriptionRestoreFlow: return "subscriptionRestoreFlow"
             // Ensure all cases are covered
             }
         }
@@ -747,7 +665,6 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
-        
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -760,49 +677,43 @@ extension SettingsViewModel {
         state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
 
         // Update if can purchase based on App Store product availability
-        state.subscription.canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+        state.subscription.canPurchase = subscriptionManager.canPurchase
+
+        // Update if user is signed in based on the presence of token
+        state.subscription.isSignedIn = subscriptionManager.accountManager.isUserAuthenticated
 
         // Active subscription check
-        guard let token = subscriptionAccountManager.accessToken else {
+        guard let token = subscriptionManager.accountManager.accessToken else {
+            // Reset state in case cache was outdated
+            state.subscription.hasActiveSubscription = false
+            state.subscription.entitlements = []
+            state.subscription.platform = .unknown
+
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
         
-        let subscriptionResult = await SubscriptionService.getSubscription(accessToken: token)
+        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
         switch subscriptionResult {
             
         case .success(let subscription):
-            
-            state.subscription.isSignedIn = true
             state.subscription.platform = subscription.platform
-            
-            if subscription.isActive {
-                state.subscription.hasActiveSubscription = true
-                
-                // Check entitlements and update state
-                let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-                for entitlement in entitlements {
-                    if case .success = await AccountManager().hasEntitlement(for: entitlement) {
-                        switch entitlement {
-                        case .identityTheftRestoration:
-                            self.state.subscription.entitlements.append(.identityTheftRestoration)
-                        case .dataBrokerProtection:
-                            self.state.subscription.entitlements.append(.dataBrokerProtection)
-                        case .networkProtection:
-                            self.state.subscription.entitlements.append(.networkProtection)
-                        case .unknown:
-                            return
-                        }
-                    }
+            state.subscription.hasActiveSubscription = subscription.isActive
+
+            // Check entitlements and update state
+            var currentEntitlements: [Entitlement.ProductName] = []
+            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+
+            for entitlement in entitlementsToCheck {
+                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                    currentEntitlements.append(entitlement)
                 }
-            } else {
-                // Mark the subscription as 'inactive' 
-                state.subscription.hasActiveSubscription = false
             }
-            
+
+            self.state.subscription.entitlements = currentEntitlements
+
         case .failure:
             break
-            
         }
         
         // Sync Cache
@@ -826,7 +737,8 @@ extension SettingsViewModel {
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let result = await AppStoreRestoreFlow.restoreAccountFromPastPurchase(subscriptionAppGroup: Bundle.main.appGroup(bundle: .subs))
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:
             DispatchQueue.main.async {

@@ -27,8 +27,17 @@ import Persistence
 public protocol HistoryManaging {
 
     var historyCoordinator: HistoryCoordinating { get }
-    func loadStore()
+    func loadStore(onCleanFinished: @escaping () -> Void) throws
 
+}
+
+// Used for controlling incremental rollout
+public enum HistorySubFeature: String, PrivacySubfeature {
+    public var parent: PrivacyFeature {
+        .history
+    }
+
+    case onByDefault
 }
 
 public class HistoryManager: HistoryManaging {
@@ -36,12 +45,14 @@ public class HistoryManager: HistoryManaging {
     let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
     let database: CoreDataDatabase
-    let onStoreLoadFailed: (Error) -> Void
+    let internalUserDecider: InternalUserDecider
+    let isEnabledByUser: () -> Bool
 
     private var currentHistoryCoordinator: HistoryCoordinating?
 
     public var historyCoordinator: HistoryCoordinating {
-        guard isHistoryFeatureEnabled() else {
+        guard isHistoryFeatureEnabled(),
+                isEnabledByUser() else {
             currentHistoryCoordinator = nil
             return NullHistoryCoordinator()
         }
@@ -50,31 +61,47 @@ public class HistoryManager: HistoryManaging {
             return currentHistoryCoordinator
         }
 
-        var loadError: Error?
-        database.loadStore { _, error in
-            loadError = error
-        }
-        
-        if let loadError {
-            onStoreLoadFailed(loadError)
-            return NullHistoryCoordinator()
+        let coordinator = makeDatabaseHistoryCoordinator()
+        coordinator.loadHistory {
+            // no-op - only done here in case it was flipped in settings
         }
 
-        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
-        currentHistoryCoordinator = historyCoordinator
-        return historyCoordinator
+        currentHistoryCoordinator = coordinator
+        return coordinator
     }
 
-    public init(privacyConfigManager: PrivacyConfigurationManaging, variantManager: VariantManager, database: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) {
+    public init(privacyConfigManager: PrivacyConfigurationManaging,
+                variantManager: VariantManager,
+                database: CoreDataDatabase,
+                internalUserDecider: InternalUserDecider,
+                isEnabledByUser: @autoclosure @escaping () -> Bool) {
+
         self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
         self.database = database
-        self.onStoreLoadFailed = onStoreLoadFailed
+        self.internalUserDecider = internalUserDecider
+        self.isEnabledByUser = isEnabledByUser
     }
 
-    func isHistoryFeatureEnabled() -> Bool {
-        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) && variantManager.isSupported(feature: .history)
+    /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
+    public func isHistoryFeatureEnabled() -> Bool {
+        guard privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
+            // Whatever happens if this is disabled then disable the feature
+            return false
+        }
+
+        if internalUserDecider.isInternalUser {
+            // Internal users get the feature
+            return true
+        }
+
+        if variantManager.isSupported(feature: .history) {
+            // Users in the experiment get the feature
+            return true
+        }
+
+        // Handles incremental roll out to everyone else
+        return privacyConfigManager.privacyConfig.isSubfeatureEnabled(HistorySubFeature.onByDefault)
     }
 
     public func removeAllHistory() async {
@@ -85,10 +112,17 @@ public class HistoryManager: HistoryManaging {
         }
     }
 
-    public func loadStore() {
-        historyCoordinator.loadHistory {
-            // Do migrations here if needed
+    public func loadStore(onCleanFinished: @escaping () -> Void) {
+        let coordinator = makeDatabaseHistoryCoordinator()
+        coordinator.loadHistory {
+            onCleanFinished()
         }
+    }
+
+    private func makeDatabaseHistoryCoordinator() -> HistoryCoordinator {
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
+        return historyCoordinator
     }
 
 }

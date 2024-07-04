@@ -57,6 +57,7 @@ final class PrivacyDashboardViewController: UIViewController {
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
     private var privacyDashboardDidTriggerDismiss: Bool = false
+    private let entryPoint: PrivacyDashboardEntryPoint
 
     private let brokenSiteReporter: BrokenSiteReporter = {
         BrokenSiteReporter(pixelHandler: { parameters in
@@ -116,6 +117,7 @@ final class PrivacyDashboardViewController: UIViewController {
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         self.breakageAdditionalInfo = breakageAdditionalInfo
+        self.entryPoint = entryPoint
         super.init(coder: coder)
         
         privacyDashboardController.delegate = self
@@ -151,8 +153,9 @@ final class PrivacyDashboardViewController: UIViewController {
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
+        let source = entryPoint == .dashboard ? "dashboard" : "menu"
         let pixelParam = ["trigger_origin": state.eventOrigin.screen.rawValue,
-                          "source": privacyDashboardController.source.rawValue]
+                          "source": source]
         if state.isProtected {
             privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))

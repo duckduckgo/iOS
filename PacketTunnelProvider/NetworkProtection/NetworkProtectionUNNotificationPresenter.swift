@@ -117,18 +117,6 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         }
     }
 
-    func showSnoozeBeganNotification() {
-        let identifier = NetworkProtectionNotificationIdentifier.snoozeEnded.rawValue
-        let content = notificationContent(body: "Snooze mode has begun")
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: .none)
-
-        requestAlertAuthorization { authorized in
-            guard authorized else { return }
-            self.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: [identifier])
-            self.userNotificationCenter.add(request)
-        }
-    }
-
     func showSnoozeEndedNotification() {
         let identifier = NetworkProtectionNotificationIdentifier.snoozeEnded.rawValue
         let content = notificationContent(body: "Snooze mode has ended")

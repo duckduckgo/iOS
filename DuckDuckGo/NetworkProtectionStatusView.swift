@@ -40,7 +40,7 @@ struct NetworkProtectionStatusView: View {
             toggle()
             locationDetails()
 
-            if statusModel.shouldShowConnectionDetails {
+            if statusModel.hasActiveConnection && !statusModel.isSnoozing {
                 connectionDetails()
             }
 
@@ -50,7 +50,7 @@ struct NetworkProtectionStatusView: View {
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
             $0
-                .animation(.default, value: statusModel.shouldShowConnectionDetails)
+                .animation(.default, value: statusModel.hasActiveConnection)
                 .animation(.default, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
@@ -86,6 +86,8 @@ struct NetworkProtectionStatusView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
             .padding([.top, .bottom], 2)
+
+            snooze()
         } header: {
             header()
         }
@@ -125,6 +127,23 @@ struct NetworkProtectionStatusView: View {
             .padding(.horizontal, -16)
             .background(Color(designSystemColor: .background))
             Spacer(minLength: 0)
+        }
+    }
+
+    @ViewBuilder
+    private func snooze() -> some View {
+        if statusModel.isSnoozing {
+            Button("Resume") {
+                Task {
+                    await statusModel.cancelSnooze()
+                }
+            }
+        } else if statusModel.hasActiveConnection {
+            Button("Pause for 20 minutes") {
+                Task {
+                    await statusModel.startSnooze()
+                }
+            }
         }
     }
 

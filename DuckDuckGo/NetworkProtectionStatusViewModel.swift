@@ -118,6 +118,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: Toggle Item
 
     @Published public var isNetPEnabled = false
+    @Published public var isSnoozing = false
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
@@ -128,7 +129,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Connection Details
 
-    @Published public var shouldShowConnectionDetails: Bool = false
+    @Published public var hasActiveConnection: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
     @Published public var dnsSettings: NetworkProtectionDNSSettings
@@ -196,8 +197,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 if !isConnected {
                     self?.uploadTotal = Constants.defaultUploadVolume
                     self?.downloadTotal = Constants.defaultDownloadVolume
-                    self?.throughputUpdateTimer?.invalidate()
-                    self?.throughputUpdateTimer = nil
+
+                    // TODO: Restore these lines once status updating is working correctly
+                    // self?.throughputUpdateTimer?.invalidate()
+                    // self?.throughputUpdateTimer = nil
                 } else {
                     self?.setUpThroughputRefreshTimer()
                 }
@@ -218,6 +221,20 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
             .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
+            .store(in: &cancellables)
+
+        statusObserver.publisher
+            .map {
+                switch $0 {
+                case .snoozing:
+                    return true
+                default:
+                    return false
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+            .assign(to: \.isSnoozing, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -289,7 +306,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 $0.serverAddress != nil || $0.serverLocation != nil
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .assign(to: \.hasActiveConnection, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -398,6 +415,25 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         await tunnelController.stop()
     }
 
+    @MainActor
+    func startSnooze() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        let defaultDuration: TimeInterval = .seconds(15) // TODO: Change to 30 mins
+        try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
+    }
+
+    @MainActor
+    func cancelSnooze() async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? await activeSession.sendProviderMessage(.cancelSnooze)
+    }
+
     private class func titleText(connected isConnected: Bool) -> String {
         isConnected ? UserText.netPStatusHeaderTitleOn : UserText.netPStatusHeaderTitleOff
     }
@@ -407,7 +443,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private static func timedConnectedStatusMessagePublisher(forConnectedDate connectedDate: Date) -> AnyPublisher<String, Never> {
-        Timer.publish(every: 1, on: .main, in: .default)
+        Timer.publish(every: .seconds(1), on: .main, in: .default)
             .autoconnect()
             .map {
                 Self.connectedMessage(for: connectedDate, currentDate: $0)
@@ -426,7 +462,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         case .connecting, .reasserting:
             return UserText.netPStatusConnecting
         case .snoozing:
-            return "Snoozing"
+            return "Paused"
         }
     }
 
@@ -441,6 +477,15 @@ private extension ConnectionStatus {
     var isConnected: Bool {
         switch self {
         case .connected:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isSnoozing: Bool {
+        switch self {
+        case .snoozing:
             return true
         default:
             return false

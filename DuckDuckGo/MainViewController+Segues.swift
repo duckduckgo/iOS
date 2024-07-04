@@ -32,8 +32,8 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        let controller: Onboarding?
-        
+        var controller: (Onboarding & UIViewController)?
+
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
             controller = OnboardingIntroViewController()
         } else {
@@ -43,8 +43,8 @@ extension MainViewController {
             })
         }
         
+        controller?.delegate = self
         guard let controller else { return assertionFailure() }
-        controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: false)
     }

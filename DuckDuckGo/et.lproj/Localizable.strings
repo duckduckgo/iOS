@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Mõned järjehoidjad või paroolid on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Mõned järjehoidjad on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Oled saavutanud maksimaalse järjehoidjate arvu. Sünkroonimise jätkamiseks kustuta mõned järjehoidjad.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Järjehoidja sünkroonimine on peatatud";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Mõned paroolid on valesti vormindatud või liiga pikad ja neid ei sünkroonitud.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Oled saavutanud maksimaalse paroolide arvu. Sünkroonimise jätkamiseks kustuta mõned paroolid.";

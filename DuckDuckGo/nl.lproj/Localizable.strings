@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestaande bladwijzers worden niet gedupliceerd.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Sommige bladwijzers of wachtwoorden hebben de verkeerd indeling of te lang en werden niet gesynchroniseerd.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Sommige bladwijzers hebben de verkeerde indeling of zijn te lang en werden niet gesynchroniseerd.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Je hebt het maximumaantal bladwijzers bereikt. Verwijder enkele bladwijzers om de synchronisatie te hervatten.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Synchronisatie van bladwijzers is gepauzeerd";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Sommige wachtwoorden hebben de verkeerde indeling of zijn te lang en werden niet gesynchroniseerd.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Je hebt het maximumaantal wachtwoorden bereikt. Verwijder enkele wachtwoorden om de synchronisatie te hervatten.";

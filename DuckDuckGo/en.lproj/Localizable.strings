@@ -130,14 +130,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Some bookmarks or passwords are formatted incorrectly or too long and were not synced.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Some bookmarks are formatted incorrectly or too long and were not synced.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "You've reached the maximum number of bookmarks. Please delete some bookmarks to resume sync.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Bookmark Sync is Paused";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Some passwords are formatted incorrectly or too long and were not synced.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "You've reached the maximum number of passwords. Please delete some passwords to resume sync.";

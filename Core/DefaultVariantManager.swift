@@ -27,6 +27,8 @@ extension FeatureName {
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
     public static let history = FeatureName(rawValue: "history")
+
+    public static let newOnboardingIntro = FeatureName(rawValue: "newOnboardingIntro")
 }
 
 public struct VariantIOS: Variant {
@@ -65,6 +67,9 @@ public struct VariantIOS: Variant {
         // This needs to stay until we finish rolling out history to all users...
         // This ensures that users who previously had do not lose it.
         VariantIOS(name: "md", weight: doNotAllocate, isIncluded: When.inEnglish, features: [.history]),
+
+        VariantIOS(name: "ma", weight: 1, isIncluded: When.always, features: []),
+        VariantIOS(name: "mb", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro]),
 
         returningUser
     ]

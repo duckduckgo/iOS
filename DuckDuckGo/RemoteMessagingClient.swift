@@ -34,7 +34,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 4
         static let endpoint: URL = {
 #if DEBUG
-            URL(string: "https://staticcdn.kapusta.cc/macos-desktop-browser/remote-messaging-config.json")!
+            URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
 #else
             URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
 #endif

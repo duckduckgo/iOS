@@ -53,8 +53,8 @@ struct DaxDialogBrowsersComparisonView: View {
 
                         OnboardingActions(
                             viewModel: .init(
-                                primaryButtonTitle: UserText.onboardingSetAsDefaultBrowser,
-                                secondaryButtonTitle: UserText.onboardingDefaultBrowserMaybeLater
+                                primaryButtonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.cta,
+                                secondaryButtonTitle: UserText.onboardingSkip
                             ),
                             primaryAction: setAsDefaultBrowserAction,
                             secondaryAction: cancelAction

@@ -77,6 +77,8 @@ struct ContextualOnboardingListView: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview("List") {
     let list = [
         ContextualOnboardingListItem.search(title: "Search"),

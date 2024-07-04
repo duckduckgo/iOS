@@ -21,9 +21,10 @@ import Foundation
 import SwiftUI
 
 struct OnboardingTrySearchDialog: View {
-    let title = "Try a search!"
-    let message = NSAttributedString(string: "Your DuckDuckGo searches are always anonymous.")
+    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
+    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage)
     let list = [
+        // These will be defined later
         ContextualOnboardingListItem.search(title: "Weblink"),
         ContextualOnboardingListItem.search(title: "Weblink"),
         ContextualOnboardingListItem.search(title: "Weblink"),
@@ -43,8 +44,8 @@ struct OnboardingTrySearchDialog: View {
 
 struct OnboardingTryVisitingSiteDialog: View {
     let logoPosition: DaxDialogLogoPosition
-    let title = "Try visiting a site!"
-    let message = NSAttributedString(string: "We’ll block trackers so they can’t spy on you.")
+    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
+    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
     let list = [
         ContextualOnboardingListItem.site(title: "Sitelink"),
         ContextualOnboardingListItem.site(title: "Sitelink"),
@@ -65,7 +66,7 @@ struct OnboardingTryVisitingSiteDialog: View {
 
 struct OnboardingFireButtonDialog: View {
     var attributedMessage: NSAttributedString {
-        let firstString = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! ☝️"
+        let firstString = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryFireButtonMessage
         let boldString = "Fire Button."
         let attributedString = NSMutableAttributedString(string: firstString)
         let boldFontAttribute: [NSAttributedString.Key: Any] = [
@@ -90,8 +91,8 @@ struct OnboardingFirstSearchDoneDialog: View {
     @State var showNextScreen: Bool = false
     @State var shouldFollowUp: Bool
     let listAction: (_ index: Int) -> Void
-    let message = NSAttributedString(string: "That’s DuckDuckGo Search. Private. Fast. Fewer ads.")
-    let cta = "Got it!"
+    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
+    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
     let gotItAction: () -> Void
 
     var body: some View {
@@ -112,10 +113,9 @@ struct OnboardingFirstSearchDoneDialog: View {
 }
 
 struct OnboardingTrackersDoneDialog: View {
-
     @State var showNextScreen: Bool = false
     let message: NSAttributedString
-    let cta = "Got it!"
+    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
 
     var body: some View {
         if showNextScreen {
@@ -131,9 +131,9 @@ struct OnboardingTrackersDoneDialog: View {
 }
 
 struct OnboardingFinalDialog: View {
-    let title = "You’ve got this!"
-    let message = NSAttributedString(string: "Remember every time you browse with me a creepy ad loses it’s wings.")
-    let cta = "High five!"
+    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
+    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
+    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     let imageName = "Success-128"
     let highFiveAction: () -> Void
 
@@ -147,6 +147,8 @@ struct OnboardingFinalDialog: View {
         )
     }
 }
+
+// MARK: - Preview
 
 #Preview("Try Search") {
     OnboardingTrySearchDialog(action: { _ in })
@@ -178,7 +180,7 @@ struct OnboardingFinalDialog: View {
         .padding()
 }
 
-#Preview("Final Dialog") {
+#Preview("Trackers Dialog") {
     OnboardingTrackersDoneDialog(message: NSAttributedString(string: "Heads up! Instagram.com is owned by Facebook.\n\nFacebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\nI’ll block Facebook from seeing your activity on those sites."))
         .padding()
 }

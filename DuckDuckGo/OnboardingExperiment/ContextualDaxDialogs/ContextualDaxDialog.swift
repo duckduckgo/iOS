@@ -32,7 +32,12 @@ struct ContextualDaxDialog: View {
     var cta: String?
     var action: (() -> Void)?
 
-    @State private var currentDisplayIndex: Int = 0
+    @State private var typeToDisplay: DisplayableTypes = .none {
+        didSet {
+            updateTypeToDisplaySequentially()
+        }
+    }
+    @State private var visibleMessageLength: Int = 0
 
     var body: some View {
         DaxDialogView(logoPosition: logoPosition) {
@@ -44,6 +49,9 @@ struct ContextualDaxDialog: View {
                 actionView
             }
         }
+        .onAppear {
+            updateTypeToDisplaySequentially()
+        }
     }
 
     @ViewBuilder
@@ -51,17 +59,25 @@ struct ContextualDaxDialog: View {
         if let title {
             Text(title)
                 .daxTitle3()
-        } else {
-            EmptyView()
+                .opacity((typeToDisplay.rawValue >= 1) ? 1 : 0)
         }
     }
 
     @ViewBuilder
     private var messageView: some View {
-        if #available(iOS 15, *){
-            Text(AttributedString(message))
+        if #available(iOS 15, *) {
+            HStack {
+                let typedMessage = message.attributedSubstring(from: NSRange(location: 0, length: visibleMessageLength))
+                Text(AttributedString(typedMessage))
+                Spacer()
+            }
+
         } else {
-            Text(message.string)
+            HStack {
+                let typedMessage = message.attributedSubstring(from: NSRange(location: 0, length: visibleMessageLength))
+                Text(typedMessage.string)
+                Spacer()
+            }
         }
     }
 
@@ -69,8 +85,7 @@ struct ContextualDaxDialog: View {
     private var listView: some View {
         if let listAction {
             ContextualOnboardingListView(list: list, action: listAction)
-        } else {
-            EmptyView()
+                .opacity((typeToDisplay.rawValue >= 3) ? 1 : 0)
         }
     }
 
@@ -82,8 +97,7 @@ struct ContextualDaxDialog: View {
                 Image(imageName)
                 Spacer()
             }
-        } else {
-            EmptyView()
+            .opacity((typeToDisplay.rawValue >= 4) ? 1 : 0)
         }
     }
 
@@ -94,19 +108,80 @@ struct ContextualDaxDialog: View {
                 Text(cta)
             }
             .buttonStyle(PrimaryButtonStyle(compact: true))
+            .opacity((typeToDisplay.rawValue >= 5) ? 1 : 0)
+        }
+    }
+
+    enum DisplayableTypes: Int {
+        case none = 0
+        case title = 1
+        case message = 2
+        case list = 3
+        case image = 4
+        case button = 5
+    }
+
+    private func updateTypeToDisplaySequentially() {
+        let updateInterval = 0.3
+        DispatchQueue.main.asyncAfter(deadline: .now() + updateInterval) {
+            if self.typeToDisplay == .message {
+                self.startTypingAnimation()
+            } else if self.typeToDisplay.rawValue < DisplayableTypes.button.rawValue {
+                withAnimation(.easeIn(duration: 0.25)) {
+                    self.updateTypeToDisplay()
+                }
+            }
+        }
+    }
+
+    private func startTypingAnimation() {
+        let totalLength = message.length
+        let typingSpeed = 0.03
+        if visibleMessageLength < totalLength {
+            DispatchQueue.main.asyncAfter(deadline: .now() + typingSpeed) {
+                self.visibleMessageLength += 1
+                self.startTypingAnimation()
+            }
         } else {
-            EmptyView()
+            updateTypeToDisplay()
         }
     }
 
-    private func updateDisplayIndex() {
-        let totalComponents = 5  // corresponds to title, message, list, image, action
-        if currentDisplayIndex < totalComponents - 1 {
-            currentDisplayIndex += 1
+    private func updateTypeToDisplay() {
+        switch typeToDisplay {
+        case .none:
+            if title != nil {
+                typeToDisplay = .title
+            } else {
+                typeToDisplay = .message
+            }
+        case .title:
+            typeToDisplay = .message
+        case .message:
+            if !list.isEmpty {
+                typeToDisplay = .list
+            } else if imageName != nil {
+                typeToDisplay = .image
+            } else if cta != nil {
+                typeToDisplay = .button
+            }
+        case .list:
+            if imageName != nil {
+                typeToDisplay = .image
+            } else if cta != nil {
+                typeToDisplay = .button
+            }
+        case .image:
+            if cta != nil {
+                typeToDisplay = .button
+            }
+        case .button:
+            break
         }
     }
-
 }
+
+// MARK: - Preview
 
 #Preview("Intro Dialog - text") {
     let fullString = "Instantly clear your browsing activity with the Fire Button.\n\n Give it a try! ☝️"
@@ -160,7 +235,7 @@ struct ContextualDaxDialog: View {
         title: "Who is the best?",
         message: contextualText,
         list: list,
-        listAction: {_ in })
+        listAction: { _ in })
         .padding()
         .preferredColorScheme(.light)
 }

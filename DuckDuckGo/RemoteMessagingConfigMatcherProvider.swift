@@ -86,7 +86,6 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                 case .autoRenewable, .gracePeriod:
                     isPrivacyProSubscriptionActive = true
                 case .notAutoRenewable:
-                    isPrivacyProSubscriptionActive = true
                     isPrivacyProSubscriptionExpiring = true
                 case .expired, .inactive:
                     isPrivacyProSubscriptionExpired = true

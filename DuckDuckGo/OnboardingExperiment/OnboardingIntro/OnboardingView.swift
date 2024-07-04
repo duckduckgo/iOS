@@ -142,7 +142,7 @@ extension OnboardingView {
                         .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
 
                     Text(UserText.onboardingWelcomeHeader)
-                        .onboardingTitleStyle()
+                        .onboardingTitleStyle(fontSize: Metrics.titleSize.build(v: verticalSizeClass, h: horizontalSizeClass))
                         .frame(width: Metrics.titleWidth.build(v: verticalSizeClass, h: horizontalSizeClass), alignment: .top)
 
                     Spacer()
@@ -159,6 +159,7 @@ extension OnboardingView {
 
 private enum Metrics {
     static let iconSize = CGSize(width: 70, height: 70)
+    static let titleSize = MetricBuilder<CGFloat>(iPhone: 28, iPad: 36)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0

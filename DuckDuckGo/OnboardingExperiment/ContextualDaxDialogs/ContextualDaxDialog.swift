@@ -22,7 +22,7 @@ import SwiftUI
 import DuckUI
 
 struct ContextualDaxDialog: View {
-    
+
     var logoPosition: DaxDialogLogoPosition = .left
     var title: String?
     let message: NSAttributedString
@@ -43,10 +43,14 @@ struct ContextualDaxDialog: View {
         DaxDialogView(logoPosition: logoPosition) {
             VStack(alignment: .leading, spacing: 24) {
                 titleView
+                    .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
                 messageView
                 listView
+                    .visibility((typeToDisplay.rawValue >= 3) ? .visible : .invisible)
                 imageView
+                    .visibility((typeToDisplay.rawValue >= 4) ? .visible : .invisible)
                 actionView
+                    .visibility((typeToDisplay.rawValue >= 5) ? .visible : .invisible)
             }
         }
         .onAppear {
@@ -59,25 +63,20 @@ struct ContextualDaxDialog: View {
         if let title {
             Text(title)
                 .daxTitle3()
-                .opacity((typeToDisplay.rawValue >= 1) ? 1 : 0)
         }
     }
 
     @ViewBuilder
     private var messageView: some View {
-        if #available(iOS 15, *) {
-            HStack {
-                let typedMessage = message.attributedSubstring(from: NSRange(location: 0, length: visibleMessageLength))
-                Text(AttributedString(typedMessage))
-                Spacer()
-            }
+        let attributedString = createAttributedString(original: message, visibleLength: visibleMessageLength)
 
-        } else {
-            HStack {
-                let typedMessage = message.attributedSubstring(from: NSRange(location: 0, length: visibleMessageLength))
-                Text(typedMessage.string)
-                Spacer()
+        HStack {
+            if #available(iOS 15, *) {
+                Text(AttributedString(attributedString))
+            } else {
+                Text(attributedString.string)
             }
+            Spacer()
         }
     }
 
@@ -85,7 +84,6 @@ struct ContextualDaxDialog: View {
     private var listView: some View {
         if let listAction {
             ContextualOnboardingListView(list: list, action: listAction)
-                .opacity((typeToDisplay.rawValue >= 3) ? 1 : 0)
         }
     }
 
@@ -97,7 +95,6 @@ struct ContextualDaxDialog: View {
                 Image(imageName)
                 Spacer()
             }
-            .opacity((typeToDisplay.rawValue >= 4) ? 1 : 0)
         }
     }
 
@@ -108,7 +105,6 @@ struct ContextualDaxDialog: View {
                 Text(cta)
             }
             .buttonStyle(PrimaryButtonStyle(compact: true))
-            .opacity((typeToDisplay.rawValue >= 5) ? 1 : 0)
         }
     }
 
@@ -120,7 +116,11 @@ struct ContextualDaxDialog: View {
         case image = 4
         case button = 5
     }
+}
 
+// MARK: - Auxiliary Functions
+
+extension ContextualDaxDialog {
     private func updateTypeToDisplaySequentially() {
         let updateInterval = 0.3
         DispatchQueue.main.asyncAfter(deadline: .now() + updateInterval) {
@@ -145,6 +145,19 @@ struct ContextualDaxDialog: View {
         } else {
             updateTypeToDisplay()
         }
+    }
+
+    private func createAttributedString(original: NSAttributedString, visibleLength: Int) -> NSAttributedString {
+        let totalRange = NSRange(location: 0, length: original.length)
+        let visibleRange = NSRange(location: 0, length: min(visibleLength, original.length))
+
+        // Make the entire text transparent
+        let transparentText = original.applyingColor(.clear, to: totalRange)
+
+        // Change the color to standard for the visible range
+        let visibleText = transparentText.applyingColor(.label, to: visibleRange)
+
+        return visibleText
     }
 
     private func updateTypeToDisplay() {
@@ -180,6 +193,7 @@ struct ContextualDaxDialog: View {
         }
     }
 }
+
 
 // MARK: - Preview
 
@@ -238,4 +252,18 @@ struct ContextualDaxDialog: View {
         listAction: { _ in })
         .padding()
         .preferredColorScheme(.light)
+}
+
+extension NSAttributedString {
+    func applyingColor(_ color: UIColor, to range: NSRange) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString(attributedString: self)
+
+        mutableAttributedString.enumerateAttributes(in: range, options: []) { attributes, range, _ in
+            var newAttributes = attributes
+            newAttributes[.foregroundColor] = color
+            mutableAttributedString.setAttributes(newAttributes, range: range)
+        }
+
+        return mutableAttributedString
+    }
 }

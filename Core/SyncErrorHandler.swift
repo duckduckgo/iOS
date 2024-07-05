@@ -208,6 +208,7 @@ extension SyncErrorHandler {
             case .settings:
                 break
             }
+            DailyPixel.fire(pixel: modelType.badRequestPixel)
         case .unexpectedStatusCode(401):
             syncIsPaused(errorType: .invalidLoginCredentials)
         case .unexpectedStatusCode(418), .unexpectedStatusCode(429):
@@ -315,6 +316,17 @@ extension SyncErrorHandler {
                     .syncCredentialsTooManyRequestsDaily
             case .settings:
                     .syncSettingsTooManyRequestsDaily
+            }
+        }
+
+        var badRequestPixel: Pixel.Event {
+            switch self {
+            case .bookmarks:
+                    .syncBookmarksValidationErrorDaily
+            case .credentials:
+                    .syncCredentialsValidationErrorDaily
+            case .settings:
+                    .syncSettingsValidationErrorDaily
             }
         }
     }

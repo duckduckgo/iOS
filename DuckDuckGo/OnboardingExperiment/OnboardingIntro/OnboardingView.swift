@@ -27,37 +27,63 @@ struct OnboardingView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @ObservedObject private var model: OnboardingIntroViewModel
 
+    @State private var showIntroViewContent = true
+    @State private var showIntroButton = false
+    @State private var animateIntroText = true
+    @State private var showComparisonButton = false
+    @State private var animateComparisonText = false
+
     init(model: OnboardingIntroViewModel) {
         self.model = model
     }
 
     var body: some View {
-        switch model.state {
-        case .landing:
-            backgroundWrapped(view: landingView)
-        case let .onboarding(viewState):
-            backgroundWrapped(view: mainView(state: viewState))
+        ZStack {
+            OnboardingBackground()
+
+            switch model.state {
+            case .landing:
+                landingView
+            case let .onboarding(viewState):
+                onboardingDialogView(state: viewState)
+            }
         }
     }
 
-    private func backgroundWrapped(view: some View) -> some View {
-        view.background(OnboardingBackground())
-    }
-
-    private func mainView(state: ViewState.Intro) -> some View {
+    private func onboardingDialogView(state: ViewState.Intro) -> some View {
         GeometryReader { geometry in
             VStack(alignment: .center) {
-                switch state {
-                case .startOnboardingDialog:
-                    introView
-                        .frame(width: geometry.size.width)
-                case .browsersComparisonDialog:
-                    browsersComparisonView
-                        .frame(width: geometry.size.width)
-                }
+                DaxDialogView(
+                    logoPosition: .top,
+                    onTapGesture: {
+                        withAnimation {
+                            switch model.state {
+                            case .onboarding(.startOnboardingDialog):
+                                showIntroButton = true
+                                animateIntroText = false
+                            case .onboarding(.browsersComparisonDialog):
+                                showComparisonButton = true
+                                animateComparisonText = false
+                            default: break
+                            }
+                        }
+                    },
+                    content: {
+                        VStack {
+                            switch state {
+                            case .startOnboardingDialog:
+                                introView
+                            case .browsersComparisonDialog:
+                                browsersComparisonView
+                            }
+                        }
+                    }
+                )
             }
+            .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
         }
+        .padding()
     }
 
     private var landingView: some View {
@@ -72,15 +98,16 @@ struct OnboardingView: View {
     }
 
     private var introView: some View {
-        DaxDialogIntroView {
-            model.startOnboardingAction()
+        IntroDialogContent(animateText: $animateIntroText) {
+            animateBrowserComparisonViewState()
         }
         .onboardingDaxDialogStyle()
-        .padding()
+        .visibility(showIntroViewContent ? .visible : .invisible)
     }
 
     private var browsersComparisonView: some View {
-        DaxDialogBrowsersComparisonView(
+        BrowsersComparisonContent(
+            animateText: $animateComparisonText,
             setAsDefaultBrowserAction: {
                 model.setDefaultBrowserAction()
             }, cancelAction: {
@@ -88,7 +115,32 @@ struct OnboardingView: View {
             }
         )
         .onboardingDaxDialogStyle()
-        .padding()
+    }
+
+    private func animateBrowserComparisonViewState() {
+        // Hide content of Intro dialog before animating
+        showIntroViewContent = false
+
+        // Animation with small delay for a better effect when intro content disappear
+        let animationDuration = Metrics.comparisonChartAnimationDuration
+        let animation = Animation
+            .linear(duration: animationDuration)
+            .delay(0.2)
+
+        if #available(iOS 17, *) {
+            withAnimation(animation) {
+                model.startOnboardingAction()
+            } completion: {
+                animateComparisonText = true
+            }
+        } else {
+            withAnimation(animation) {
+                model.startOnboardingAction()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                animateComparisonText = true
+            }
+        }
     }
 }
 
@@ -112,45 +164,11 @@ extension OnboardingView.ViewState {
     
 }
 
-// MARK: - Landing View
-
-extension OnboardingView {
-    
-    struct LandingView: View {
-        @Environment(\.verticalSizeClass) private var verticalSizeClass
-        @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
-        var body: some View {
-            GeometryReader { proxy in
-                VStack {
-                    Spacer()
-
-                    Image(.daxIcon)
-                        .resizable()
-                        .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
-
-                    Text(UserText.onboardingWelcomeHeader)
-                        .onboardingTitleStyle(fontSize: Metrics.titleSize.build(v: verticalSizeClass, h: horizontalSizeClass))
-                        .frame(width: Metrics.titleWidth.build(v: verticalSizeClass, h: horizontalSizeClass), alignment: .top)
-
-                    Spacer()
-
-                    Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
-                }
-                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
-            }
-        }
-    }
-}
-
 // MARK: - Metrics
 
 private enum Metrics {
-    static let iconSize = CGSize(width: 70, height: 70)
-    static let titleSize = MetricBuilder<CGFloat>(iPhone: 28, iPad: 36)
-    static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
-    static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0
+    static let comparisonChartAnimationDuration = 0.25
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.01)
 }
 

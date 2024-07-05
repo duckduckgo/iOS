@@ -25,12 +25,12 @@ extension OnboardingView {
     struct IntroDialogContent: View {
 
         private var animateText: Binding<Bool>
+        private var showCTA: Binding<Bool>
         private let action: () -> Void
 
-        @State private var showButton = false
-
-        init(animateText: Binding<Bool> = .constant(true), action: @escaping () -> Void) {
+        init(animateText: Binding<Bool> = .constant(true), showCTA: Binding<Bool> = .constant(false), action: @escaping () -> Void) {
             self.animateText = animateText
+            self.showCTA = showCTA
             self.action = action
         }
 
@@ -38,7 +38,7 @@ extension OnboardingView {
             VStack(spacing: 24.0) {
                 AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: animateText) {
                     withAnimation {
-                        showButton = true
+                        showCTA.wrappedValue = true
                     }
                 }
                 .foregroundColor(.primary)
@@ -48,7 +48,7 @@ extension OnboardingView {
                     Text(UserText.DaxOnboardingExperiment.Intro.cta)
                 }
                 .buttonStyle(PrimaryButtonStyle())
-                .visibility(showButton ? .visible : .invisible)
+                .visibility(showCTA.wrappedValue ? .visible : .invisible)
             }
         }
     }

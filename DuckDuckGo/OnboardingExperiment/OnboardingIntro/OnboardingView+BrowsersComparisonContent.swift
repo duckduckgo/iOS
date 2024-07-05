@@ -25,13 +25,13 @@ extension OnboardingView {
     struct BrowsersComparisonContent: View {
 
         private var animateText: Binding<Bool>
+        private var showContent: Binding<Bool>
         private let setAsDefaultBrowserAction: () -> Void
         private let cancelAction: () -> Void
 
-        @State private var showButton = false
-
-        init(animateText: Binding<Bool> = .constant(true), setAsDefaultBrowserAction: @escaping () -> Void, cancelAction: @escaping () -> Void) {
+        init(animateText: Binding<Bool> = .constant(true), showContent: Binding<Bool> = .constant(false), setAsDefaultBrowserAction: @escaping () -> Void, cancelAction: @escaping () -> Void) {
             self.animateText = animateText
+            self.showContent = showContent
             self.setAsDefaultBrowserAction = setAsDefaultBrowserAction
             self.cancelAction = cancelAction
         }
@@ -40,7 +40,7 @@ extension OnboardingView {
             VStack(spacing: 16.0) {
                 AnimatableTypingText(UserText.DaxOnboardingExperiment.BrowsersComparison.title, startAnimating: animateText) {
                     withAnimation {
-                        showButton = true
+                        showContent.wrappedValue = true
                     }
                 }
                 .foregroundColor(.primary)
@@ -60,7 +60,7 @@ extension OnboardingView {
                     )
 
                 }
-                .visibility(showButton ? .visible : .invisible)
+                .visibility(showContent.wrappedValue ? .visible : .invisible)
             }
         }
 

@@ -140,8 +140,8 @@ extension Pixel {
         
         case brokenSiteReport
         
-        case onboardingIntroShown
-        case onboardingIntroComparisonChartShown
+        case onboardingIntroShownUnique
+        case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
 
         case daxDialogsSerp
@@ -859,8 +859,8 @@ extension Pixel.Event {
             
         case .brokenSiteReport: return "epbf"
             
-        case .onboardingIntroShown: return "m_preonboarding_intro_shown"
-        case .onboardingIntroComparisonChartShown: return "m_preonboarding_comparison_chart_shown"
+        case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
+        case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
 
         case .daxDialogsSerp: return "m_dx_s"

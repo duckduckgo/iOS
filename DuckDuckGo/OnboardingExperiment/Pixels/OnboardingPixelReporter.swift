@@ -46,14 +46,22 @@ protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
 // MARK: - Implementation
 
 final class OnboardingPixelReporter {
+    private let store: OnboardingPixelReporterStorage
     private let pixel: OnboardingPixelFiring.Type
 
-    init(pixel: OnboardingPixelFiring.Type = Pixel.self) {
+    init(store: OnboardingPixelReporterStorage = OnboardingPixelReporterStore(), pixel: OnboardingPixelFiring.Type = Pixel.self) {
+        self.store = store
         self.pixel = pixel
     }
 
     private func fire(event: Pixel.Event, additionalParameters: [String: String] = [:]) {
         pixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion, .atb])
+    }
+
+    private func fireUnique(event: Pixel.Event, for keypath: ReferenceWritableKeyPath<OnboardingPixelReporterStorage, Bool>, additionalParameters: [String: String] = [:]) {
+        guard !store[keyPath: keypath] else { return }
+        fire(event: event, additionalParameters: additionalParameters)
+        store[keyPath: keypath] = true
     }
 
 }
@@ -63,11 +71,11 @@ final class OnboardingPixelReporter {
 extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 
     func trackOnboardingIntroImpression() {
-        fire(event: .onboardingIntroShown)
+        fireUnique(event: .onboardingIntroShownUnique, for: \.hasFiredIntroScreenShownPixel)
     }
 
     func trackBrowserComparisonImpression() {
-        fire(event: .onboardingIntroComparisonChartShown)
+        fireUnique(event: .onboardingIntroComparisonChartShownUnique, for: \.hasFiredComparisonChartShownPixel)
     }
 
     func trackChooseBrowserCTAAction() {

@@ -40,6 +40,9 @@ public struct UserDefaultsWrapper<T> {
         case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
         case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
 
+        case onboardingIntroScreenSeen = "com.duckduckgo.ios.Onboarding.introScreenSeen"
+        case onboardingBrowersComparisonScreenSeen = "com.duckduckgo.ios.Onboarding.browsersComparisonScreenSeen"
+
         case daxIsDismissed = "com.duckduckgo.ios.daxOnboardingIsDismissed"
         case daxHomeScreenMessagesSeen = "com.duckduckgo.ios.daxOnboardingHomeScreenMessagesSeen"
         case daxBrowsingAfterSearchShown = "com.duckduckgo.ios.daxOnboardingBrowsingAfterSearchShown"

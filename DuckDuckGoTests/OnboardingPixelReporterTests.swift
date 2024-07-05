@@ -23,21 +23,24 @@ import Core
 
 final class OnboardingPixelReporterTests: XCTestCase {
     private var sut: OnboardingPixelReporter!
+    private var store: OnboardingPixelReporterStoreMock!
 
     override func setUpWithError() throws {
-        sut = OnboardingPixelReporter(pixel: OnboardingPixelFireMock.self)
+        store = OnboardingPixelReporterStoreMock()
+        sut = OnboardingPixelReporter(store: store, pixel: OnboardingPixelFireMock.self)
         try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
         OnboardingPixelFireMock.tearDown()
+        store = nil
         sut = nil
         try super.tearDownWithError()
     }
 
-    func testWhenTrackOnboardingIntroImpressionThenOnboardingIntroShowEventFires() {
+    func testWhenTrackOnboardingIntroImpressionThenOnboardingIntroShownEventFires() {
         // GIVEN
-        let expectedPixel = Pixel.Event.onboardingIntroShown
+        let expectedPixel = Pixel.Event.onboardingIntroShownUnique
         XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
         XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
         XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
@@ -49,14 +52,47 @@ final class OnboardingPixelReporterTests: XCTestCase {
         // THEN
         XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
         XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
-        XCTAssertEqual(expectedPixel.name, "m_preonboarding_intro_shown")
+        XCTAssertEqual(expectedPixel.name, "m_preonboarding_intro_shown_unique")
         XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
+    func testWhenTrackOnboardingIntroImpressionAndPixelHasAlreadyFiredThenPixelDoesNotFire() {
+        // GIVEN
+        store.hasFiredIntroScreenShownPixel = true
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackOnboardingIntroImpression()
+
+        // THEN
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+    }
+
+    func testWhenOnboardingIntroShownPixelFiresThenStoreIsUpdated() {
+        // GIVEN
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+        XCTAssertFalse(store.hasFiredIntroScreenShownPixel)
+
+        // WHEN
+        sut.trackOnboardingIntroImpression()
+
+        // THEN
+        XCTAssertTrue(store.hasFiredIntroScreenShownPixel)
+    }
+
     func testWhenTrackBrowserComparisonImpressionThenOnboardingIntroComparisonChartShownEventFires() {
         // GIVEN
-        let expectedPixel = Pixel.Event.onboardingIntroComparisonChartShown
+        let expectedPixel = Pixel.Event.onboardingIntroComparisonChartShownUnique
         XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
         XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
         XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
@@ -68,9 +104,42 @@ final class OnboardingPixelReporterTests: XCTestCase {
         // THEN
         XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
         XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
-        XCTAssertEqual(expectedPixel.name, "m_preonboarding_comparison_chart_shown")
+        XCTAssertEqual(expectedPixel.name, "m_preonboarding_comparison_chart_shown_unique")
         XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackBrowserComparisonImpressionAndPixelHasAlreadyFiredThenPixelDoesNotFire() {
+        // GIVEN
+        store.hasFiredComparisonChartShownPixel = true
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackBrowserComparisonImpression()
+
+        // THEN
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+    }
+
+    func testWhenOnboardingIntroComparisonChartShownPixelFiresThenStoreIsUpdated() {
+        // GIVEN
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+        XCTAssertFalse(store.hasFiredComparisonChartShownPixel)
+
+        // WHEN
+        sut.trackBrowserComparisonImpression()
+
+        // THEN
+        XCTAssertTrue(store.hasFiredComparisonChartShownPixel)
     }
 
     func testWhenTrackChooseBrowserCTAActionThenOnboardingIntroChooseBrowserCTAPressedEventFires() {
@@ -92,25 +161,4 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
-}
-
-private final class OnboardingPixelFireMock: OnboardingPixelFiring {
-    static private(set) var didCallFire = false
-    static private(set) var capturedPixelEvent: Pixel.Event?
-    static private(set) var capturedParams: [String: String] = [:]
-    static private(set) var capturedIncludeParameters: [Pixel.QueryParameters] = []
-
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) {
-        didCallFire = true
-        capturedPixelEvent = pixel
-        capturedParams = params
-        capturedIncludeParameters = includedParameters
-    }
-
-    static func tearDown() {
-        didCallFire = false
-        capturedPixelEvent = nil
-        capturedParams = [:]
-        capturedIncludeParameters = []
-    }
 }

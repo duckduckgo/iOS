@@ -151,7 +151,7 @@ private enum Metrics {
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0
-    static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.05)
+    static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.01)
 }
 
 // MARK: - Preview

@@ -48,6 +48,36 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
                             withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
                             includedParameters: [.appVersion, .atb])
+        case .connectionTesterStatusChange(let status):
+            vpnLogger.log(status)
+
+            switch status {
+            case .failed(let duration):
+                let pixel: Pixel.Event = {
+                    switch duration {
+                    case .immediate:
+                        return .networkProtectionConnectionTesterFailureDetected
+                    case .extended:
+                        return .networkProtectionConnectionTesterExtendedFailureDetected
+                    }
+                }()
+
+                DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             includedParameters: [.appVersion, .atb])
+            case .recovered(let duration, let failureCount):
+                let pixel: Pixel.Event = {
+                    switch duration {
+                    case .immediate:
+                        return .networkProtectionConnectionTesterFailureRecovered(failureCount: failureCount)
+                    case .extended:
+                        return .networkProtectionConnectionTesterExtendedFailureRecovered(failureCount: failureCount)
+                    }
+                }()
+
+                DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             withAdditionalParameters: [PixelParameters.count: String(failureCount)],
+                                             includedParameters: [.appVersion, .atb])
+            }
         case .reportConnectionAttempt(attempt: let attempt):
             vpnLogger.log(attempt)
 

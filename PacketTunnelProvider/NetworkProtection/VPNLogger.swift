@@ -30,6 +30,7 @@ import OSLog
 public final class VPNLogger {
     public typealias AttemptStep = PacketTunnelProvider.AttemptStep
     public typealias ConnectionAttempt = PacketTunnelProvider.ConnectionAttempt
+    public typealias ConnectionTesterStatus = PacketTunnelProvider.ConnectionTesterStatus
     public typealias LogCallback = (OSLogType, OSLogMessage) -> Void
 
     public init() {}
@@ -61,6 +62,17 @@ public final class VPNLogger {
             os_log("🔴 Connection attempt failed", log: log, type: .error)
         case .success:
             os_log("🟢 Connection attempt successful", log: log)
+        }
+    }
+
+    public func log(_ status: ConnectionTesterStatus) {
+        let log = OSLog.networkProtectionConnectionTesterLog
+
+        switch status {
+        case .failed(let duration):
+            os_log("🔴 Connection tester (%{public}@) failure", log: log, type: .error, duration.rawValue)
+        case .recovered(let duration, let failureCount):
+            os_log("🟢 Connection tester (%{public}@) recovery (after %{public}@ failures)", log: log, duration.rawValue, String(failureCount))
         }
     }
 

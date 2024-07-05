@@ -60,6 +60,9 @@ final class SettingsViewModel: ObservableObject {
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
     
+    // App Data State Notification Observer
+    private var appDataClearingObserver: Any?
+    
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
@@ -345,6 +348,7 @@ final class SettingsViewModel: ObservableObject {
 
     deinit {
         subscriptionSignOutObserver = nil
+        appDataClearingObserver = nil
     }
 }
 // swiftlint:enable type_body_length
@@ -732,12 +736,24 @@ extension SettingsViewModel {
                 }
             }
         }
+        
+        // Observe App Data clearing state
+        appDataClearingObserver = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.appDataClearingUpdated,
+                                                                         object: nil,
+                                                                         queue: .main) { [weak self] _ in
+            guard let settings = self?.appSettings else { return }
+            self?.state.autoclearDataEnabled = (AutoClearSettingsModel(settings: settings) != nil)
+        }
+        
     }
     
     @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
+                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
+                                                             authEndpointService: subscriptionManager.authEndpointService)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

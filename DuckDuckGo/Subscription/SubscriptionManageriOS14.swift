@@ -29,6 +29,13 @@ class SubscriptionManageriOS14: SubscriptionManager {
     func storePurchaseManager() -> StorePurchaseManager {
         DefaultStorePurchaseManager()
     }
+
+    static func loadEnvironmentFrom(userDefaults: UserDefaults) -> SubscriptionEnvironment? {
+        return nil
+    }
+
+    static func save(subscriptionEnvironment: SubscriptionEnvironment, userDefaults: UserDefaults) {}
+
     var currentEnvironment: SubscriptionEnvironment = SubscriptionEnvironment.default
     var canPurchase: Bool = false
     func loadInitialData() {}

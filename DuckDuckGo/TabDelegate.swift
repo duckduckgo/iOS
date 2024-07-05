@@ -89,7 +89,4 @@ protocol TabDelegate: AnyObject {
     
     func showBars()
 
-    func tabDidRequestRefresh(tab: TabViewController)
-
-    func tabDidRequestNavigationToDifferentSite(tab: TabViewController)
 }

@@ -121,7 +121,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    func segueToReportBrokenSite(mode: PrivacyDashboardMode = .report) {
+    func segueToReportBrokenSite(entryPoint: PrivacyDashboardEntryPoint = .report) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
@@ -131,7 +131,7 @@ extension MainViewController {
             return
         }
 
-        if mode == .report {
+        if entryPoint == .report {
             fireBrokenSiteReportShown()
         }
 
@@ -139,7 +139,7 @@ extension MainViewController {
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
-                                           dashboardMode: mode,
+                                           entryPoint: entryPoint,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())

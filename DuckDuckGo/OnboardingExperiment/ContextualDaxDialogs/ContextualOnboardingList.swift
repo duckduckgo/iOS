@@ -26,6 +26,17 @@ enum ContextualOnboardingListItem {
     case site(title: String)
     case surprise(title: String)
 
+    var visibleTitle: String {
+        switch self {
+        case .search(let title):
+            return title
+        case .site(let title):
+            return title
+        case .surprise(_):
+            return "Surprise me"
+        }
+    }
+
     var title: String {
         switch self {
         case .search(let title):
@@ -63,7 +74,7 @@ struct ContextualOnboardingListView: View {
                     HStack {
                         Image(list[index].imageName)
                             .frame(width: iconSize, height: iconSize)
-                        Text(list[index].title)
+                        Text(list[index].visibleTitle)
                             .frame(alignment: .leading)
                         Spacer()
                     }

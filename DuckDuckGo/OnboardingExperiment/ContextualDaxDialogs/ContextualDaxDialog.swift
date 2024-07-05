@@ -20,6 +20,7 @@
 import Foundation
 import SwiftUI
 import DuckUI
+import Combine
 
 struct ContextualDaxDialog: View {
 
@@ -34,10 +35,14 @@ struct ContextualDaxDialog: View {
 
     @State private var typeToDisplay: DisplayableTypes = .none {
         didSet {
-            updateTypeToDisplaySequentially()
+            if typeToDisplay == .message {
+                timerCancellable?.cancel()
+                startTyping = true
+            }
         }
     }
-    @State private var visibleMessageLength: Int = 0
+    @State private var startTyping: Bool = false
+    @State private var timerCancellable: AnyCancellable?
 
     var body: some View {
         DaxDialogView(logoPosition: logoPosition) {
@@ -54,7 +59,10 @@ struct ContextualDaxDialog: View {
             }
         }
         .onAppear {
-            updateTypeToDisplaySequentially()
+            startSequentialUpdate()
+        }
+        .onDisappear {
+            timerCancellable?.cancel()
         }
     }
 
@@ -68,16 +76,9 @@ struct ContextualDaxDialog: View {
 
     @ViewBuilder
     private var messageView: some View {
-        let attributedString = createAttributedString(original: message, visibleLength: visibleMessageLength)
-
-        HStack {
-            if #available(iOS 15, *) {
-                Text(AttributedString(attributedString))
-            } else {
-                Text(attributedString.string)
-            }
-            Spacer()
-        }
+        AnimatableTypingText(message, startAnimating: $startTyping, onTypingFinished: {
+            startSequentialUpdate()
+        })
     }
 
     @ViewBuilder
@@ -121,43 +122,19 @@ struct ContextualDaxDialog: View {
 // MARK: - Auxiliary Functions
 
 extension ContextualDaxDialog {
-    private func updateTypeToDisplaySequentially() {
+    private func startSequentialUpdate() {
         let updateInterval = 0.3
-        DispatchQueue.main.asyncAfter(deadline: .now() + updateInterval) {
-            if self.typeToDisplay == .message {
-                self.startTypingAnimation()
-            } else if self.typeToDisplay.rawValue < DisplayableTypes.button.rawValue {
+        let timerPublisher = Timer.publish(every: updateInterval, on: .main, in: .common).autoconnect()
+
+        timerCancellable = timerPublisher.sink { _ in
+            if self.typeToDisplay.rawValue < DisplayableTypes.button.rawValue {
                 withAnimation(.easeIn(duration: 0.25)) {
                     self.updateTypeToDisplay()
                 }
+            } else {
+                self.timerCancellable?.cancel()
             }
         }
-    }
-
-    private func startTypingAnimation() {
-        let totalLength = message.length
-        let typingSpeed = 0.03
-        if visibleMessageLength < totalLength {
-            DispatchQueue.main.asyncAfter(deadline: .now() + typingSpeed) {
-                self.visibleMessageLength += 1
-                self.startTypingAnimation()
-            }
-        } else {
-            updateTypeToDisplay()
-        }
-    }
-
-    private func createAttributedString(original: NSAttributedString, visibleLength: Int) -> NSAttributedString {
-        let totalRange = NSRange(location: 0, length: original.length)
-        let visibleRange = NSRange(location: 0, length: min(visibleLength, original.length))
-
-        // Make the entire text transparent
-        let transparentText = original.applyingColor(.clear, to: totalRange)
-
-        // Change the color to standard for the visible range
-        let visibleText = transparentText.applyingColor(.label, to: visibleRange)
-
-        return visibleText
     }
 
     private func updateTypeToDisplay() {
@@ -222,8 +199,8 @@ extension ContextualDaxDialog {
         message: contextualText,
         cta: "Got it!",
         action: {})
-        .padding()
-        .preferredColorScheme(.light)
+    .padding()
+    .preferredColorScheme(.light)
 }
 
 #Preview("Intro Dialog - title, text, image and button") {
@@ -234,8 +211,8 @@ extension ContextualDaxDialog {
         imageName: "Sync-Desktop-New-128",
         cta: "Got it!",
         action: {})
-        .padding()
-        .preferredColorScheme(.light)
+    .padding()
+    .preferredColorScheme(.light)
 }
 
 #Preview("Intro Dialog - title, text, list") {
@@ -250,20 +227,6 @@ extension ContextualDaxDialog {
         message: contextualText,
         list: list,
         listAction: { _ in })
-        .padding()
-        .preferredColorScheme(.light)
-}
-
-extension NSAttributedString {
-    func applyingColor(_ color: UIColor, to range: NSRange) -> NSAttributedString {
-        let mutableAttributedString = NSMutableAttributedString(attributedString: self)
-
-        mutableAttributedString.enumerateAttributes(in: range, options: []) { attributes, range, _ in
-            var newAttributes = attributes
-            newAttributes[.foregroundColor] = color
-            mutableAttributedString.setAttributes(newAttributes, range: range)
-        }
-
-        return mutableAttributedString
-    }
+    .padding()
+    .preferredColorScheme(.light)
 }

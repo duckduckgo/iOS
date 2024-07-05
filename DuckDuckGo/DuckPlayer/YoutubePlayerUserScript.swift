@@ -24,7 +24,8 @@ import Combine
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
-    private var duckPlayer: DuckPlayer
+    var duckPlayer: DuckPlayerProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
         static let featureName = "duckPlayerPage"
@@ -36,9 +37,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let initialSetup = "initialSetup"
     }
     
-    private var userValuesCancellable = Set<AnyCancellable>()
-    
-    init(duckPlayer: DuckPlayer) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
         super.init()
         subscribeToDuckPlayerMode()
@@ -46,12 +45,11 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     
     // Listen to DuckPlayer Settings changed
     private func subscribeToDuckPlayerMode() {
-        duckPlayer.$userValues
-            .dropFirst()
-            .sink { [weak self] updatedValues in
-                self?.userValuesUpdated(userValues: updatedValues)
+        duckPlayer.settings.duckPlayerSettingsPublisher
+            .sink { [weak self] in
+                self?.handleSettingsChange()
             }
-            .store(in: &userValuesCancellable)
+            .store(in: &cancellables)
     }
     
     weak var broker: UserScriptMessageBroker?
@@ -87,7 +85,13 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         }
     }
     
-    deinit {
-        userValuesCancellable.removeAll()
+    private func handleSettingsChange() {
+        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, askModeOverlayHidden: duckPlayer.settings.askModeOverlayHidden)
+        userValuesUpdated(userValues: values)
     }
+    
+    deinit {
+        cancellables.removeAll()
+    }
+    
 }

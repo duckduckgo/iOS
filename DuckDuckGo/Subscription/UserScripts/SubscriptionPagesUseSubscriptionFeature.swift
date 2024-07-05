@@ -95,7 +95,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let subscriptionManager: SubscriptionManager
     private var accountManager: AccountManager { subscriptionManager.accountManager }
     private let appStorePurchaseFlow: AppStorePurchaseFlow
-
     private let appStoreRestoreFlow: AppStoreRestoreFlow
     private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
 
@@ -177,7 +176,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private func resetSubscriptionFlow() {
         setTransactionError(nil)
-
     }
         
     private func setTransactionError(_ error: UseSubscriptionError?) {

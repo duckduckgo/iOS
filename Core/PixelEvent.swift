@@ -553,11 +553,17 @@ extension Pixel {
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
-        case syncBookmarksCountLimitExceededDaily
-        case syncCredentialsCountLimitExceededDaily
+        case syncBookmarksObjectLimitExceededDaily
+        case syncCredentialsObjectLimitExceededDaily
         case syncBookmarksRequestSizeLimitExceededDaily
         case syncCredentialsRequestSizeLimitExceededDaily
-        
+        case syncBookmarksTooManyRequestsDaily
+        case syncCredentialsTooManyRequestsDaily
+        case syncSettingsTooManyRequestsDaily
+        case syncBookmarksValidationErrorDaily
+        case syncCredentialsValidationErrorDaily
+        case syncSettingsValidationErrorDaily
+
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksFailed
@@ -715,6 +721,12 @@ extension Pixel {
         case reportBrokenSiteSkipToggleStep
         case reportBrokenSiteToggleProtectionOff
 
+        // MARK: New Tab Page baseline engagement
+        case addFavoriteDaily
+        case addBookmarkDaily
+        case favoriteLaunchedNTPDaily
+        case bookmarkLaunchedDaily
+        case newTabPageDisplayedDaily
     }
 
 }
@@ -1246,11 +1258,17 @@ extension Pixel.Event {
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
-        case .syncBookmarksCountLimitExceededDaily: return "m_d_sync_bookmarks_count_limit_exceeded_daily"
-        case .syncCredentialsCountLimitExceededDaily: return "m_d_sync_credentials_count_limit_exceeded_daily"
-        case .syncBookmarksRequestSizeLimitExceededDaily: return "m_d_sync_bookmarks_request_size_limit_exceeded_daily"
-        case .syncCredentialsRequestSizeLimitExceededDaily: return "m_d_sync_credentials_request_size_limit_exceeded_daily"
-            
+        case .syncBookmarksObjectLimitExceededDaily: return "m_sync_bookmarks_object_limit_exceeded_daily"
+        case .syncCredentialsObjectLimitExceededDaily: return "m_sync_credentials_object_limit_exceeded_daily"
+        case .syncBookmarksRequestSizeLimitExceededDaily: return "m_sync_bookmarks_request_size_limit_exceeded_daily"
+        case .syncCredentialsRequestSizeLimitExceededDaily: return "m_sync_credentials_request_size_limit_exceeded_daily"
+        case .syncBookmarksTooManyRequestsDaily: return "m_sync_bookmarks_too_many_requests_daily"
+        case .syncCredentialsTooManyRequestsDaily: return "m_sync_credentials_too_many_requests_daily"
+        case .syncSettingsTooManyRequestsDaily: return "m_sync_settings_too_many_requests_daily"
+        case .syncBookmarksValidationErrorDaily: return "m_sync_bookmarks_validation_error_daily"
+        case .syncCredentialsValidationErrorDaily: return "m_sync_credentials_validation_error_daily"
+        case .syncSettingsValidationErrorDaily: return "m_sync_settings_validation_error_daily"
+
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
@@ -1418,6 +1436,13 @@ extension Pixel.Event {
         case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
         case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
         case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
+
+        // MARK: New Tab Page baseline engagement
+        case .addFavoriteDaily: return "m_add_favorite_daily"
+        case .addBookmarkDaily: return "m_add_bookmark_daily"
+        case .favoriteLaunchedNTPDaily: return "m_favorite_launched_ntp_daily"
+        case .bookmarkLaunchedDaily: return "m_bookmark_launched_daily"
+        case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
         }
     }
 }

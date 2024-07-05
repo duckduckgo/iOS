@@ -32,7 +32,7 @@ enum ContextualOnboardingListItem {
             return title
         case .site(let title):
             return title
-        case .surprise(_):
+        case .surprise:
             return "Surprise me"
         }
     }
@@ -70,7 +70,7 @@ struct ContextualOnboardingListView: View {
             ForEach(list.indices, id: \.self) { index in
                 Button(action: {
                     action(index)
-                }) {
+                }, label: {
                     HStack {
                         Image(list[index].imageName)
                             .frame(width: iconSize, height: iconSize)
@@ -78,7 +78,7 @@ struct ContextualOnboardingListView: View {
                             .frame(alignment: .leading)
                         Spacer()
                     }
-                }
+                })
                 .buttonStyle(SecondaryButtonStyle(compact: true))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)

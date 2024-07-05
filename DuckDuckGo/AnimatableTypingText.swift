@@ -22,9 +22,6 @@ import Core
 import Combine
 
 // MARK: - View
-
-import SwiftUI
-
 struct AnimatableTypingText: View {
     private let text: NSAttributedString
     private var startAnimating: Binding<Bool>

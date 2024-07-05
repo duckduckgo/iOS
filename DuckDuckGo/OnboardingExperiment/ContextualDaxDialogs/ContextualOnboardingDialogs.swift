@@ -182,7 +182,12 @@ struct OnboardingFinalDialog: View {
 
 #Preview("Trackers Dialog") {
     OnboardingTrackersDoneDialog(
-        message: NSAttributedString(string: "Heads up! Instagram Facebook.\n\nFacebook’sof top websites 😱 but don’t worry!\n\nI’ll block Facebook from seeing  sites.")
+        message: NSAttributedString(string: """
+            Heads up! Instagram.com is owned by Facebook.\n\n
+            Facebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\n
+            I’ll block Facebook from seeing your activity on those sites.
+            """
+        )
     )
-        .padding()
+    .padding()
 }

@@ -2445,11 +2445,11 @@ extension MainViewController: AutoClearWorker {
 
     @MainActor
     func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool) {
+        autoClearInProgress = false
         if autoClearShouldRefreshUIAfterClear && isLaunching == false {
             refreshUIAfterClear()
         }
 
-        autoClearInProgress = false
         autoClearShouldRefreshUIAfterClear = true
     }
 

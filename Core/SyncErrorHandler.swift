@@ -208,10 +208,12 @@ extension SyncErrorHandler {
             case .settings:
                 break
             }
+            DailyPixel.fire(pixel: modelType.badRequestPixel)
         case .unexpectedStatusCode(401):
             syncIsPaused(errorType: .invalidLoginCredentials)
         case .unexpectedStatusCode(418), .unexpectedStatusCode(429):
             syncIsPaused(errorType: .tooManyRequests)
+            DailyPixel.fire(pixel: modelType.tooManyRequestsPixel)
         default:
             break
         }
@@ -223,11 +225,11 @@ extension SyncErrorHandler {
         case .bookmarksCountLimitExceeded:
             currentSyncBookmarksPausedError = errorType.rawValue
             self.isSyncBookmarksPaused = true
-            DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
+            DailyPixel.fire(pixel: .syncBookmarksObjectLimitExceededDaily)
         case .credentialsCountLimitExceeded:
             currentSyncCredentialsPausedError = errorType.rawValue
             self.isSyncCredentialsPaused = true
-            DailyPixel.fire(pixel: .syncCredentialsCountLimitExceededDaily)
+            DailyPixel.fire(pixel: .syncCredentialsObjectLimitExceededDaily)
         case .bookmarksRequestSizeLimitExceeded:
             currentSyncBookmarksPausedError = errorType.rawValue
             self.isSyncBookmarksPaused = true
@@ -303,6 +305,28 @@ extension SyncErrorHandler {
                     .syncCredentialsPatchCompressionFailed
             case .settings:
                     .syncSettingsPatchCompressionFailed
+            }
+        }
+
+        var tooManyRequestsPixel: Pixel.Event {
+            switch self {
+            case .bookmarks:
+                    .syncBookmarksTooManyRequestsDaily
+            case .credentials:
+                    .syncCredentialsTooManyRequestsDaily
+            case .settings:
+                    .syncSettingsTooManyRequestsDaily
+            }
+        }
+
+        var badRequestPixel: Pixel.Event {
+            switch self {
+            case .bookmarks:
+                    .syncBookmarksValidationErrorDaily
+            case .credentials:
+                    .syncCredentialsValidationErrorDaily
+            case .settings:
+                    .syncSettingsValidationErrorDaily
             }
         }
     }

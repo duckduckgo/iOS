@@ -8,6 +8,9 @@ tags:
 # Set up 
 - clearState
 - launchApp
+    - arguments:
+        autoclear-ui-test: true 
+
 - runFlow: 
     file: ../shared/onboarding.yaml
 

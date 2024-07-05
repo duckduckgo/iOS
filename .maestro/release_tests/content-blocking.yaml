@@ -1,0 +1,56 @@
+# content-blocking.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn:
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    file: ../shared/onboarding_browsing.yaml
+
+- tapOn:
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/tracker-reporting/1major-via-script.html"
+- pressKey: Enter
+
+- assertVisible: "1 major tracker loaded via script src"
+- tapOn: 
+    id: PrivacyIcon
+- assertVisible: "Protections are ON for this site"
+
+- assertVisible: "We blocked"
+- assertVisible: "Google Ads (Google)"
+- assertVisible: " from loading tracking requests on this page."
+
+- tapOn: "View Tracker Companies"
+- assertVisible: "doubleclick.net"
+- assertVisible: "Back"
+- tapOn: "Back"
+
+- assertVisible: "Disable Protections"
+- tapOn: "Disable Protections"
+- assertVisible: "Site not working? Let us know."
+- assertVisible: "Don't Send"
+- tapOn: "Don't Send"
+
+- tapOn: "Refresh Page"
+- assertVisible: "1 major tracker loaded via script src"
+
+- tapOn: 
+    id: PrivacyIcon
+- assertVisible: "Protections are OFF for this site"

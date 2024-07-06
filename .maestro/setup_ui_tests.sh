@@ -8,7 +8,7 @@ source $(dirname $0)/common.sh
 
 # The simulator command requires the hyphens
 target_device="iPhone-15"
-target_os="iOS-17-2"
+target_os="iOS-17-0"
 
 ## Functions
 

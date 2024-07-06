@@ -619,17 +619,7 @@ extension Pixel {
         case toggleReportDismiss
 
         case userBehaviorReloadTwiceWithin12Seconds
-        case userBehaviorReloadTwiceWithin24Seconds
-        case userBehaviorReloadAndRestartWithin30Seconds
-        case userBehaviorReloadAndRestartWithin50Seconds
         case userBehaviorReloadThreeTimesWithin20Seconds
-        case userBehaviorReloadThreeTimesWithin40Seconds
-
-        case siteNotWorkingShown
-        case siteNotWorkingDismiss
-        case siteNotWorkingDismissByNavigation
-        case siteNotWorkingDismissByRefresh
-        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -1336,19 +1326,7 @@ extension Pixel.Event {
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
-        case .userBehaviorReloadTwiceWithin24Seconds: return "m_reload-twice-within-24-seconds"
-
-        case .userBehaviorReloadAndRestartWithin30Seconds: return "m_reload-and-restart-within-30-seconds"
-        case .userBehaviorReloadAndRestartWithin50Seconds: return "m_reload-and-restart-within-50-seconds"
-
         case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
-        case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
-
-        case .siteNotWorkingShown: return "m_site-not-working_shown"
-        case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
-        case .siteNotWorkingDismissByNavigation: return "m_site-not-working_dismiss-by-navigation"
-        case .siteNotWorkingDismissByRefresh: return "m_site-not-working_dismiss-by-refresh"
-        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"

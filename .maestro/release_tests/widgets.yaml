@@ -1,0 +1,77 @@
+# widgets.yaml
+appId: com.duckduckgo.mobile.ios
+
+# Disabled until we can support iOS 17.2 on CI
+# tags:
+#     - release
+
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    file: ../shared/onboarding.yaml
+
+# Load a website
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site/"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    file: ../shared/onboarding_browsing.yaml
+
+# Prepare to add widgets
+- pressKey: HOME
+
+# Swipe to first page to get from the app (removing the app from home screen doesn't work)
+- swipe:  
+    start: 5%, 70%
+    end: 95%, 70%
+
+# Validate search widget
+- longPressOn:
+    point: 50%,50%
+- tapOn: "Add Widget"
+- tapOn: "Search Widgets"
+- inputText: "DuckDuck"
+- tapOn: "DuckDuckGo"
+- tapOn: " Add Widget"
+- tapOn: "Done"
+- tapOn: "DuckDuckGo"
+- inputText: "example.com"
+- pressKey: Enter
+- assertVisible: "Example Domain"
+- assertVisible: "Tab Switcher"
+- tapOn: "Tab Switcher"
+- assertVisible: "Open \"Privacy Test Pages - Home\" at privacy-test-pages.site"
+
+# Validate favorites widget
+- pressKey: HOME
+- longPressOn:
+    point: 50%,50%
+- tapOn: "Add Widget"
+- tapOn: "Search Widgets"
+- inputText: "DuckDuck"
+- tapOn: "DuckDuckGo"
+- assertVisible: "Search"
+- swipe:  
+    start: 90%, 50%
+    end: 10%, 50%
+- assertVisible: "Search Passwords"
+- swipe:  
+    start: 90%, 50%
+    end: 10%, 50%
+- assertVisible: "Search and Favorites"
+- swipe:  
+    start: 90%, 50%
+    end: 10%, 50%
+- assertVisible: "Search and Favorites"
+- swipe:  
+    start: 90%, 50%
+    end: 10%, 50%
+- assertVisible: "VPN"

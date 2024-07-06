@@ -337,6 +337,11 @@ extension Pixel {
         case networkProtectionServerMigrationAttemptSuccess
         case networkProtectionServerMigrationAttemptFailure
 
+        case networkProtectionConnectionTesterFailureDetected
+        case networkProtectionConnectionTesterFailureRecovered(failureCount: Int)
+        case networkProtectionConnectionTesterExtendedFailureDetected
+        case networkProtectionConnectionTesterExtendedFailureRecovered(failureCount: Int)
+
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
 
@@ -1043,6 +1048,10 @@ extension Pixel.Event {
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
+        case .networkProtectionConnectionTesterFailureDetected: return "m_netp_connection_tester_failure"
+        case .networkProtectionConnectionTesterFailureRecovered: return "m_netp_connection_tester_failure_recovered"
+        case .networkProtectionConnectionTesterExtendedFailureDetected: return "m_netp_connection_tester_extended_failure"
+        case .networkProtectionConnectionTesterExtendedFailureRecovered: return "m_netp_connection_tester_extended_failure_recovered"
         case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
         case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"

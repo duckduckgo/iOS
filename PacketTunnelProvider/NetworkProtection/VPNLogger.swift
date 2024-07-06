@@ -65,14 +65,18 @@ public final class VPNLogger {
         }
     }
 
-    public func log(_ status: ConnectionTesterStatus) {
+    public func log(_ status: ConnectionTesterStatus, server: String) {
         let log = OSLog.networkProtectionConnectionTesterLog
 
         switch status {
         case .failed(let duration):
-            os_log("🔴 Connection tester (%{public}@) failure", log: log, type: .error, duration.rawValue)
+            os_log("🔴 Connection tester (%{public}@ - %{public}@) failure", log: log, type: .error, duration.rawValue, server)
         case .recovered(let duration, let failureCount):
-            os_log("🟢 Connection tester (%{public}@) recovery (after %{public}@ failures)", log: log, duration.rawValue, String(failureCount))
+            os_log("🟢 Connection tester (%{public}@ - %{public}@) recovery (after %{public}@ failures)",
+                   log: log,
+                   duration.rawValue,
+                   server,
+                   String(failureCount))
         }
     }
 

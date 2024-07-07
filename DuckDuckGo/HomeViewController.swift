@@ -167,9 +167,11 @@ class HomeViewController: UIViewController, NewTabPage {
     }
     
     @objc func remoteMessagesDidChange() {
-        os_log("Remote messages did change", log: .remoteMessaging, type: .info)
-        collectionView.refreshHomeConfiguration()
-        refresh()
+        DispatchQueue.main.async {
+            os_log("Remote messages did change", log: .remoteMessaging, type: .info)
+            self.collectionView.refreshHomeConfiguration()
+            self.refresh()
+        }
     }
 
     func configureCollectionView() {

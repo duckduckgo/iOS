@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Neke oznake ili lozinke formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Neke oznake formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Dosegnut je maksimalni broj knjižnih oznaka. Izbriši neke oznake da bi nastavio sinkronizaciju.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Sinkronizacija knjižnih oznaka je pauzirana";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Neke lozinke formatirane su pogrešno, ili su preduge i nisu sinkronizirane.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Dosegnut je maksimalni broj lozinki. Izbriši neke lozinke za nastavak sinkronizacije.";

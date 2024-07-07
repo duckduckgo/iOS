@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Některé záložky nebo hesla jsou nesprávně naformátované nebo příliš dlouhé, takže jsme je nemohli synchronizovat.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Některé záložky jsou nesprávně naformátované nebo příliš dlouhé, takže jsme je nemohli synchronizovat.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Už máš maximální počet záložek. Jestli chceš synchronizaci obnovit, některé záložky smaž.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Synchronizace záložek je pozastavená";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Některá hesla jsou nesprávně naformátovaná nebo příliš dlouhá, takže jsme je nemohli synchronizovat.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Už máš maximální počet hesel. Jestli chceš synchronizaci obnovit, některá hesla smaž.";

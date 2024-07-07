@@ -832,7 +832,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let syncPausedAlertTitle = NSLocalizedString("alert.sync-paused-title", value: "Sync is Paused", comment: "Title for alert shown when sync paused for an error")
     static let syncInvalidLoginAlertDescription = NSLocalizedString("alert.sync-invalid-login-error-description", value: "Sync has been paused. If you want to continue syncing this device, reconnect using another device or your recovery code.", comment: "Description for alert shown when user logged off from sync")
     static let syncTooManyRequestsAlertDescription = NSLocalizedString("alert.sync-too-many-requests-error-description", value: "Sync & Backup is temporarily unavailable.", comment: "Description for alert shown when sync error occurs because of too many requests")
-    static let syncBadRequestAlertDescription = NSLocalizedString("alert.sync-bad-data-error-description", value: "Some bookmarks or passwords are formatted incorrectly or too long and were not synced.", comment: "Description for alert shown when sync error occurs because of bad data")
+    static let syncBadBookmarksRequestAlertDescription = NSLocalizedString("alert.sync-bookmarks-bad-data-error-description", value: "Some bookmarks are formatted incorrectly or too long and were not synced.", comment: "Description for alert shown when sync error occurs because of bad bookmarks data")
+    static let syncBadCredentialsRequestAlertDescription = NSLocalizedString("alert.sync-credentials-bad-data-error-description", value: "Some passwords are formatted incorrectly or too long and were not synced.", comment: "Description for alert shown when sync error occurs because of bad credentials data")
     static let syncErrorAlertAction  = NSLocalizedString("alert.sync-error-action", value: "Sync Settings", comment: "Sync error alert action button title, takes the user to the sync settings page.")
     static let syncBookmarkPausedAlertTitle = NSLocalizedString("alert.sync-bookmarks-paused-title", value: "Bookmark Sync is Paused", comment: "Title for alert shown when sync bookmarks paused for too many items")
     static let syncBookmarkPausedAlertDescription = NSLocalizedString("alert.sync-bookmarks-paused-description", value: "You've reached the maximum number of bookmarks. Please delete some bookmarks to resume sync.", comment: "Description for alert shown when sync bookmarks paused for too many items")
@@ -1142,13 +1143,6 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autocompleteHistoryWarningTitle = NSLocalizedString("autocomplete.history.warning.title", value: "Same privacy.\nBetter search suggestions!", comment: "Title for message show in suggestions")
     public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Search suggestions now include your recently visited sites. Turn off in Settings, or clear anytime with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
     public static let autocompleteSearchDuckDuckGo = NSLocalizedString("autocomplete.history.search.duckduckgo", value: "Search DuckDuckGo", comment: "Subtitle for search history items")
-
-    // Site not working
-    public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
-    public static let siteNotWorkingSubtitle = NSLocalizedString("site.not.working.subtitle", value: "This helps us improve the browser.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
-    public static let siteNotWorkingDismiss = NSLocalizedString("site.not.working.dismiss", value: "Dismiss", comment: "Dismiss button")
-    public static let siteNotWorkingWebsiteIsBroken = NSLocalizedString("site.not.working.website.is.broken", value: "Website Is Broken", comment: "Button that triggers flow to report broken site")
-    public static let siteNotWorkingDescription = NSLocalizedString("site.not.working.description", value: "Select the option that best describes the problem you experienced.", comment: "Description on a report broken site page.")
 
     // Broken site report experiment
     public static let brokenSiteReportMenuTitle = NSLocalizedString("broken.site.report.menu.title", value: "Report Problem With This Site", comment: "Button to open report form")

@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Algunos marcadores o contraseñas tienen un formato incorrecto o demasiado largo y no se han sincronizado.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Algunos marcadores tienen un formato incorrecto o demasiado largo y no se han sincronizado.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Has alcanzado el número máximo de marcadores. Elimina algunos marcadores para reanudar la sincronización.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "La sincronización de marcadores está en pausa";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Algunas contraseñas tienen un formato incorrecto o demasiado largo y no se han sincronizado.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Has alcanzado el número máximo de contraseñas. Elimina algunas contraseñas para reanudar la sincronización.";

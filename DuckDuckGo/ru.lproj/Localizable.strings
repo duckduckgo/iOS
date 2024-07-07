@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Некоторые закладки или пароли не синхронизируются из-за неверного формата или превышения ограничений по длине.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Некоторые закладки не синхронизируются из-за неверного формата или превышения ограничений по длине.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Достигнуто максимальное число закладок. Чтобы возобновить синхронизацию, удалите некоторые из них.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Синхронизация закладок приостановлена";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Некоторые пароли не синхронизируются из-за неверного формата или превышения ограничений по длине.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Достигнуто максимальное число паролей. Чтобы возобновить синхронизацию, удалите некоторые из них.";

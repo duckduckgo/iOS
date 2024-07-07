@@ -118,7 +118,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: Toggle Item
 
     @Published public var isNetPEnabled = false
-    @Published public var isSnoozing = false
+    @Published public var isSnoozing = false {
+        didSet {
+            print("SAMDEBUG: Set isSnoozing to \(isSnoozing)")
+            snoozeRequestPending = false
+        }
+    }
+
+    @Published public var snoozeRequestPending = false
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
@@ -421,7 +428,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .seconds(15) // TODO: Change to 30 mins
+        let defaultDuration: TimeInterval = .seconds(20) // TODO: Change to 20 mins, 20 seconds is only used for testing
+        snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
     }
 
@@ -431,6 +439,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
+        snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.cancelSnooze)
     }
 

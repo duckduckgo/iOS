@@ -57,18 +57,6 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertEqual(sut.state, .onboarding(.browsersComparisonDialog))
     }
 
-    func testWhenChooseBrowserActionIsCalledThenViewStateChangesToChooseBrowser() {
-        // GIVEN
-        let sut = OnboardingIntroViewModel()
-        XCTAssertEqual(sut.state, .landing)
-
-        // WHEN
-        sut.chooseBrowserAction()
-
-        // THEN
-        XCTAssertEqual(sut.state, .chooseBrowser)
-    }
-
     func testWhenSetDefaultBrowserActionIsCalledThenURLOpenerOpensSettingsURL() {
         // GIVEN
         let urlOpenerMock = MockURLOpener()

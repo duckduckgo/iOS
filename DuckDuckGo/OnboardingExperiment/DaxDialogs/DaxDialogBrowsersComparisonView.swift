@@ -22,7 +22,8 @@ import DuckUI
 
 struct DaxDialogBrowsersComparisonView: View {
 
-    let action: () -> Void
+    let setAsDefaultBrowserAction: () -> Void
+    let cancelAction: () -> Void
 
     @State private var showButton = false
     @State private var animateText = true
@@ -47,13 +48,18 @@ struct DaxDialogBrowsersComparisonView: View {
                     .font(Font.system(size: 20, weight: .bold))
 
 
-                    Group {
+                    VStack(spacing: 24) {
                         BrowsersComparisonChart(privacyFeatures: BrowsersComparisonModel.privacyFeatures)
 
-                        Button(action: action) {
-                            Text(UserText.DaxOnboardingExperiment.BrowsersComparison.cta)
-                        }
-                        .buttonStyle(PrimaryButtonStyle())
+                        OnboardingActions(
+                            viewModel: .init(
+                                primaryButtonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.cta,
+                                secondaryButtonTitle: UserText.onboardingSkip
+                            ),
+                            primaryAction: setAsDefaultBrowserAction,
+                            secondaryAction: cancelAction
+                        )
+
                     }
                     .visibility(showButton ? .visible : .invisible)
                 }
@@ -66,13 +72,13 @@ struct DaxDialogBrowsersComparisonView: View {
 // MARK: - Preview
 
 #Preview("Browsers Comparison - Light Mode") {
-    DaxDialogBrowsersComparisonView(action: {})
+    DaxDialogBrowsersComparisonView(setAsDefaultBrowserAction: {}, cancelAction: {})
         .padding()
         .preferredColorScheme(.light)
 }
 
 #Preview("Browsers Comparison - Dark Mode") {
-    DaxDialogBrowsersComparisonView(action: {})
+    DaxDialogBrowsersComparisonView(setAsDefaultBrowserAction: {}, cancelAction: {})
         .padding()
         .preferredColorScheme(.dark)
 }

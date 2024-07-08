@@ -37,8 +37,6 @@ struct OnboardingView: View {
             backgroundWrapped(view: landingView)
         case let .onboarding(viewState):
             backgroundWrapped(view: mainView(state: viewState))
-        case .chooseBrowser:
-            chooseBrowserView
         }
     }
 
@@ -62,17 +60,6 @@ struct OnboardingView: View {
         }
     }
 
-    private var chooseBrowserView: some View {
-        OnboardingDefaultBrowserView(
-            setAsDefaultBrowserAction: {
-                model.setDefaultBrowserAction()
-            },
-            cancelAction: {
-                model.cancelSetDefaultBrowserAction()
-            }
-        )
-    }
-
     private var landingView: some View {
         return LandingView()
             .ignoresSafeArea(edges: .bottom)
@@ -93,11 +80,13 @@ struct OnboardingView: View {
     }
 
     private var browsersComparisonView: some View {
-        DaxDialogBrowsersComparisonView {
-            withAnimation {
-                model.chooseBrowserAction()
+        DaxDialogBrowsersComparisonView(
+            setAsDefaultBrowserAction: {
+                model.setDefaultBrowserAction()
+            }, cancelAction: {
+                model.cancelSetDefaultBrowserAction()
             }
-        }
+        )
         .onboardingDaxDialogStyle()
         .padding()
     }
@@ -110,7 +99,6 @@ extension OnboardingView {
     enum ViewState: Equatable {
         case landing
         case onboarding(Intro)
-        case chooseBrowser
     }
     
 }
@@ -163,7 +151,7 @@ private enum Metrics {
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0
-    static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.05)
+    static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.01)
 }
 
 // MARK: - Preview

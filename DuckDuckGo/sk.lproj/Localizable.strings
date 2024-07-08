@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Kontextové okno je skryté";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Vyberte si prehliadač";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokovanie vyskakovacích okien o súboroch cookie";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokovať nepríjemné reklamy";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Rýchle vymazanie údajov prehliadania";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Predvolené vyhľadávanie so súkromím";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokovať sledovanie tretími stranami";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Ochrana súkromia bola aktivovaná!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Vždy otvor odkazy s pokojom mysle.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Poďme na to!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Dobrý deň.\n\nSte pripravený/-á na lepší, súkromnejší internet?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridať miniaplikáciu";
 

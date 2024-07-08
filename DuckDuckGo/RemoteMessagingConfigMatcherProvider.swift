@@ -27,6 +27,8 @@ import RemoteMessaging
 import NetworkProtection
 import Subscription
 
+extension DefaultVPNActivationDateStore: VPNActivationDateProviding {}
+
 final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherProviding {
 
     init(
@@ -93,12 +95,21 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                     break // Not supported in RMF
                 }
 
-                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: subscription)
+                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
+                    statisticsStore: statisticsStore,
+                    vpnActivationDateStore: DefaultVPNActivationDateStore(),
+                    subscription: subscription)
             } else {
-                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
+                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
+                    statisticsStore: statisticsStore,
+                    vpnActivationDateStore: DefaultVPNActivationDateStore(),
+                    subscription: nil)
             }
         } else {
-            surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
+            surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
+                statisticsStore: statisticsStore,
+                vpnActivationDateStore: DefaultVPNActivationDateStore(),
+                subscription: nil)
         }
 
         let dismissedMessageIds = store.fetchDismissedRemoteMessageIDs()

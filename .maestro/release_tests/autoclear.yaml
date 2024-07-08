@@ -73,3 +73,11 @@ tags:
           end: 50%, 50%
 
 - tapOn: "DuckDuckGo"
+
+- assertNotVisible: "https://example.com/"
+- assertVisible: "Search or enter address"
+- tapOn: "Tab Switcher"
+- assertNotVisible: "Example Domain"
+- assertVisible: "1 Private Tab"
+
+

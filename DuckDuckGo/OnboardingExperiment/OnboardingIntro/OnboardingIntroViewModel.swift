@@ -47,6 +47,7 @@ final class OnboardingIntroViewModel: ObservableObject {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             urlOpener.open(url)
         }
+        pixelReporter.trackChooseBrowserCTAAction()
         onCompletingOnboardingIntro?()
     }
 

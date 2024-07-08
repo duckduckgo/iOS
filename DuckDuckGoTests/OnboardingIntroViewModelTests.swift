@@ -141,7 +141,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertFalse(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
 
         // WHEN
-        sut.chooseBrowserAction()
+        sut.setDefaultBrowserAction()
 
         // THEN
         XCTAssertTrue(pixelReporterMock.didCallTrackChooseBrowserCTAAction)

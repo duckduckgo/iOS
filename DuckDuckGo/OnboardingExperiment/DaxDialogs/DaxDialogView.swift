@@ -114,13 +114,16 @@ struct DaxDialogView<Content: View>: View {
 
     private var wrappedContent: some View {
         let backgroundColor = Color(designSystemColor: .surface)
+        let shadowColors: (Color, Color) = colorScheme == .light ?
+        (.black.opacity(0.08), .black.opacity(0.1)) :
+        (.black.opacity(0.20), .black.opacity(0.16))
 
         return content
             .padding(.all, Metrics.contentPadding)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            .shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 8)
-            .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
+            .shadow(color: shadowColors.0, radius: 16, x: 0, y: 8)
+            .shadow(color: shadowColors.1, radius: 6, x: 0, y: 2)
             .overlay(
                 Triangle()
                     .frame(width: arrowSize.width, height: arrowSize.height)

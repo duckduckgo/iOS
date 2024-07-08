@@ -58,7 +58,7 @@ final class SyncBookmarksAdapterTests: XCTestCase {
         cancellables = nil
     }
 
-    func testWhenSyncErrorPublished_ThenErrorHandlerHandleCredentialErrorCalled() async {
+    func testWhenSyncErrorPublished_ThenErrorHandlerHandleBookmarksErrorCalled() async {
         let expectation = XCTestExpectation(description: "Sync did fail")
         let expectedError = NSError(domain: "some error", code: 400)
         adapter.setUpProviderIfNeeded(database: database, metadataStore: metadataStore)

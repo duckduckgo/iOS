@@ -8,6 +8,10 @@ DerivedData/
 Carthage/Checkouts
 node_modules/
 
+## UI Testing
+.maestro/device_uuid.txt
+xcodebuild.log
+
 ## Various settings
 *.pbxuser
 !default.pbxuser

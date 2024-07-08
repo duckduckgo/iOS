@@ -39,10 +39,6 @@ final class OnboardingIntroViewModel: ObservableObject {
         state = .onboarding(.browsersComparisonDialog)
     }
 
-    func chooseBrowserAction() {
-        state = .chooseBrowser
-    }
-
     func setDefaultBrowserAction() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             urlOpener.open(url)

@@ -33,7 +33,7 @@ struct OnboardingDefaultBrowserView: View {
 
             VStack(spacing: Metrics.verticalSpacing) {
                 Text(UserText.onboardingDefaultBrowserTitle)
-                    .onboardingTitleStyle()
+                    .onboardingTitleStyle(fontSize: 28)
                     .padding([.top, .horizontal])
 
                 Text(UserText.DaxOnboardingExperiment.DefaultBrowser.message)

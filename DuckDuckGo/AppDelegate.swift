@@ -236,7 +236,6 @@ import WebKit
             historyMessageManager.dismiss()
         }
 
-        PixelExperimentForBrokenSites.install()
         PixelExperiment.install()
 
         // MARK: Sync initialisation
@@ -356,10 +355,6 @@ import WebKit
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
 #endif
-
-        AppDependencyProvider.shared.toggleProtectionsCounter.sendEventsIfNeeded()
-
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
@@ -651,8 +646,6 @@ import WebKit
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
-
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

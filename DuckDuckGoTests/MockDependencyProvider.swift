@@ -39,7 +39,6 @@ class MockDependencyProvider: DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
     var userBehaviorMonitor: UserBehaviorMonitor
-    var toggleProtectionsCounter: ToggleProtectionsCounter
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     var subscriptionManager: SubscriptionManager
     var accountManager: AccountManager
@@ -62,7 +61,6 @@ class MockDependencyProvider: DependencyProvider {
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
         configurationManager = defaultProvider.configurationManager
         userBehaviorMonitor = defaultProvider.userBehaviorMonitor
-        toggleProtectionsCounter = defaultProvider.toggleProtectionsCounter
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
         accountManager = AccountManagerMock()

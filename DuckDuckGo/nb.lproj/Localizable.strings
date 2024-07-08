@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bokmerker blir ikke duplisert.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Noen bokmerker eller passord er formatert feil eller for lange og ble ikke synkronisert.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Noen bokmerker er formatert feil eller for lange og ble ikke synkronisert.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Du har nådd det maksimale antallet bokmerker. Slett noen bokmerker for å gjenoppta synkronisering.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Synkronisering av bokmerker er satt på pause";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Noen passord er formatert feil eller for lange og ble ikke synkronisert.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Du har nådd det maksimale antallet passord. Slett noen passord for å gjenoppta synkronisering.";

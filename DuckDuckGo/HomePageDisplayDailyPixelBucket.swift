@@ -1,5 +1,5 @@
 //
-//  BrokenSitePromptViewModel.swift
+//  HomePageDisplayDailyPixelBucket.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,14 +19,29 @@
 
 import Foundation
 
-final class BrokenSitePromptViewModel {
+struct HomePageDisplayDailyPixelBucket {
 
-    let onDidDismiss: () -> Void
-    let onDidSubmit: () -> Void
+    let value: String
 
-    init(onDidDismiss: @escaping () -> Void, onDidSubmit: @escaping () -> Void) {
-        self.onDidDismiss = onDidDismiss
-        self.onDidSubmit = onDidSubmit
+    init(favoritesCount: Int) {
+
+        switch favoritesCount {
+        case 0:
+            value = "0"
+        case 1:
+            value = "1"
+        case 2...3:
+            value = "2-3"
+        case 4...5:
+            value = "4-5"
+        case 6...10:
+            value = "6-10"
+        case 11...15:
+            value = "11-15"
+        case 16...25:
+            value = "16-25"
+        default:
+            value = ">25"
+        }
     }
-
 }

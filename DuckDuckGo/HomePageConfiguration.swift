@@ -83,7 +83,7 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
             os_log("Home message dismissed: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-            remoteMessagingClient.store.dismissRemoteMessage(withId: remoteMessage.id)
+            remoteMessagingClient.store.dismissRemoteMessage(withID: remoteMessage.id)
 
             if let index = homeMessages.firstIndex(of: homeMessage) {
                 homeMessages.remove(at: index)
@@ -101,11 +101,11 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
             Pixel.fire(pixel: .remoteMessageShown,
                        withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
-            if !remoteMessagingClient.store.hasShownRemoteMessage(withId: remoteMessage.id) {
+            if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
                 os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
                 Pixel.fire(pixel: .remoteMessageShownUnique,
                            withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
-                remoteMessagingClient.store.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
+                remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
             }
 
         default:

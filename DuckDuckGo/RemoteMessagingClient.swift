@@ -42,7 +42,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
     }
 
     let endpoint: URL = Constants.endpoint
-    let configurationFetcher: RemoteMessagingConfigFetching
+    let configFetcher: RemoteMessagingConfigFetching
     let configMatcherProvider: RemoteMessagingConfigMatcherProviding
     let store: RemoteMessagingStoring
     let remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
@@ -62,7 +62,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
             appSettings: appSettings,
             internalUserDecider: internalUserDecider
         )
-        let configurationFetcher = RemoteMessagingConfigFetcher(
+        let configFetcher = RemoteMessagingConfigFetcher(
             configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),
             configurationStore: configurationStore
         )
@@ -75,7 +75,7 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         )
         self.init(
             configMatcherProvider: provider,
-            configurationFetcher: configurationFetcher,
+            configFetcher: configFetcher,
             store: remoteMessagingStore,
             remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider
         )
@@ -83,12 +83,12 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
 
     init(
         configMatcherProvider: RemoteMessagingConfigMatcherProviding,
-        configurationFetcher: RemoteMessagingConfigFetching,
+        configFetcher: RemoteMessagingConfigFetching,
         store: RemoteMessagingStoring,
         remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
     ) {
         self.configMatcherProvider = configMatcherProvider
-        self.configurationFetcher = configurationFetcher
+        self.configFetcher = configFetcher
         self.store = store
         self.remoteMessagingAvailabilityProvider = remoteMessagingAvailabilityProvider
     }
@@ -107,7 +107,7 @@ extension RemoteMessagingClient {
 
     func registerBackgroundRefreshTaskHandler() {
         let provider = configMatcherProvider
-        let fetcher = configurationFetcher
+        let fetcher = configFetcher
         let remoteMessagingAvailabilityProvider = remoteMessagingAvailabilityProvider
         let store = store
 
@@ -119,7 +119,7 @@ extension RemoteMessagingClient {
             }
             let client = RemoteMessagingClient(
                 configMatcherProvider: provider,
-                configurationFetcher: fetcher,
+                configFetcher: fetcher,
                 store: store,
                 remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider
             )

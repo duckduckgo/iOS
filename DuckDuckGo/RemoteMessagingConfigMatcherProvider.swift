@@ -101,7 +101,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
             surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore, subscription: nil)
         }
 
-        let dismissedMessageIds = store.fetchDismissedRemoteMessageIds()
+        let dismissedMessageIds = store.fetchDismissedRemoteMessageIDs()
 
         return RemoteMessagingConfigMatcher(
             appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,

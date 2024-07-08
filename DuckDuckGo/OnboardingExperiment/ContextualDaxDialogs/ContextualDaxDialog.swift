@@ -28,7 +28,7 @@ struct ContextualDaxDialog: View {
     var title: String?
     let message: NSAttributedString
     var list: [ContextualOnboardingListItem] = []
-    var listAction: ((_ index: Int) -> Void)?
+    var listAction: ((_ title: String) -> Void)?
     var imageName: String?
     var cta: String?
     var action: (() -> Void)?

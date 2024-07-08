@@ -23,14 +23,8 @@ import SwiftUI
 struct OnboardingTrySearchDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage)
-    let list = [
-        // These will be defined later
-        ContextualOnboardingListItem.search(title: "Weblink"),
-        ContextualOnboardingListItem.search(title: "Weblink"),
-        ContextualOnboardingListItem.search(title: "Weblink"),
-        ContextualOnboardingListItem.surprise(title: "Surprise me")
-    ]
-    let action: (_ index: Int) -> Void
+    let list = OnboardingSuggestedSearchesProvider().searchesList
+    let action: (_ title: String) -> Void
 
     var body: some View {
         ContextualDaxDialog(
@@ -46,13 +40,8 @@ struct OnboardingTryVisitingSiteDialog: View {
     let logoPosition: DaxDialogLogoPosition
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
-    let list = [
-        ContextualOnboardingListItem.site(title: "Sitelink"),
-        ContextualOnboardingListItem.site(title: "Sitelink"),
-        ContextualOnboardingListItem.site(title: "Sitelink"),
-        ContextualOnboardingListItem.surprise(title: "Surprise me")
-    ]
-    let action: (_ index: Int) -> Void
+    let list = OnboardingSuggestedSitesProvider().sitesList
+    let action: (_ title: String) -> Void
 
     var body: some View {
         ContextualDaxDialog(
@@ -90,7 +79,7 @@ struct OnboardingFirstSearchDoneDialog: View {
 
     @State var showNextScreen: Bool = false
     @State var shouldFollowUp: Bool
-    let listAction: (_ index: Int) -> Void
+    let listAction: (_ title: String) -> Void
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
     let gotItAction: () -> Void

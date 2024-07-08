@@ -727,6 +727,21 @@
 /* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
 "contextual.onboarding.try-fire-button.message" = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! ☝️";
 
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "how to say “duck” in spanish";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "how to say “duck” in english";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "local weather";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "chocolate chip cookie recipes";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "dinner recipes";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
 
@@ -1668,6 +1683,12 @@ https://duckduckgo.com/mac";
 
 /* No comment provided by engineer. */
 "onboardingWelcomeHeader" = "Welcome to DuckDuckGo!";
+
+/* Search query for the cast of Mighty Ducks */
+"ontextual.onboarding.try-search.option2-english" = "cast of avatar";
+
+/* Search query for the cast of Avatar */
+"ontextual.onboarding.try-search.option2-international" = "mighty ducks cast";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "The app required to open that link can’t be found";

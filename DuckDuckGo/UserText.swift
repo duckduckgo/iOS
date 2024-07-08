@@ -1218,6 +1218,13 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
             static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.final-screen.message", value: "Remember every time you browse with me a creepy ad loses it’s wings.", comment: "Message of the last screen of the onboarding to the browser app.")
             static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let tryASearchOption1English = NSLocalizedString("contextual.onboarding.try-search.option1-English", value: "how to say “duck” in spanish", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption1International = NSLocalizedString("contextual.onboarding.try-search.option1international", value: "how to say “duck” in english", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption2English = NSLocalizedString("ontextual.onboarding.try-search.option2-english", value: "cast of avatar", comment: "Search query for the cast of Mighty Ducks")
+            static let tryASearchOption2International = NSLocalizedString("ontextual.onboarding.try-search.option2-international", value: "mighty ducks cast", comment: "Search query for the cast of Avatar")
+            static let tryASearchOption3 = NSLocalizedString("contextual.onboarding.try-search.option3", value: "local weather", comment: "Browser Search query for local weather")
+            static let tryASearchOptionSurpriseMeEnglish = NSLocalizedString("contextual.onboarding.try-search.surprise-me-english", value: "chocolate chip cookie recipes", comment: "Browser Search query for chocolate chip cookie recipes")
+            static let tryASearchOptionSurpriseMeInternational = NSLocalizedString("contextual.onboarding.try-search.surprise-me-international", value: "dinner recipes", comment: "Browser Search query for dinner recipes")
         }
     }
 }

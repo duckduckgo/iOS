@@ -249,6 +249,10 @@
 		56D060222C356B5C003BAEB5 /* ContextualDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */; };
 		56D060242C35918D003BAEB5 /* ContextualOnboardingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */; };
 		56D060262C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */; };
+		56D060282C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */; };
+		56D0602B2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */; };
+		56D0602D2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */; };
+		56D0602F2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */; };
 		56D8556A2BEA9169009F9698 /* CurrentDateProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D855692BEA9169009F9698 /* CurrentDateProviding.swift */; };
 		56D8556C2BEA91C4009F9698 /* SyncAlertsPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */; };
 		6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6DAB228804F97002723C0 /* BarsAnimator.swift */; };
@@ -1378,6 +1382,10 @@
 		56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialog.swift; sourceTree = "<group>"; };
 		56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingList.swift; sourceTree = "<group>"; };
 		56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingDialogs.swift; sourceTree = "<group>"; };
+		56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSearchesProvider.swift; sourceTree = "<group>"; };
+		56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSitesProvider.swift; sourceTree = "<group>"; };
+		56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSearchesProviderTests.swift; sourceTree = "<group>"; };
+		56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSitesProviderTests.swift; sourceTree = "<group>"; };
 		56D855692BEA9169009F9698 /* CurrentDateProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateProviding.swift; sourceTree = "<group>"; };
 		56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertsPresenting.swift; sourceTree = "<group>"; };
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
@@ -3439,6 +3447,15 @@
 			path = ContextualDaxDialogs;
 			sourceTree = "<group>";
 		};
+		56D060292C381AD1003BAEB5 /* OnboardingHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */,
+				56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */,
+			);
+			path = OnboardingHelpers;
+			sourceTree = "<group>";
+		};
 		6FB1FE9C2C24D4060075B68B /* NewTabPageSectionsDebugView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4257,6 +4274,8 @@
 			isa = PBXGroup;
 			children = (
 				9F23B8052C2BE22700950875 /* OnboardingIntroViewModelTests.swift */,
+				56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */,
+				56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -5424,6 +5443,7 @@
 		F1BE54481E69DD5F00FCF649 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				56D060292C381AD1003BAEB5 /* OnboardingHelpers */,
 				9FF7E9802C22A19800902BE5 /* OnboardingExperiment */,
 				984147AA24F0259000362052 /* Onboarding.storyboard */,
 				851B128722200575004781BC /* Onboarding.swift */,
@@ -6653,6 +6673,7 @@
 				CB2283F32BD79FC20057DD0A /* BrokenSitePromptView.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
 				B652DF12287C336E00C12A9C /* ContentBlockingUpdating.swift in Sources */,
+				56D0602B2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift in Sources */,
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
@@ -7009,6 +7030,7 @@
 				9FB027122C2526DD009EA190 /* DaxDialogIntroView.swift in Sources */,
 				37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */,
 				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
+				56D060282C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
 				F1FDC9302BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
@@ -7176,6 +7198,7 @@
 				981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */,
 				4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */,
 				314A3EFC293905EC00D3D4C8 /* BrokenSiteReportingTests.swift in Sources */,
+				56D0602F2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift in Sources */,
 				851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,
 				9F23B8092C2BE9B700950875 /* MockURLOpener.swift in Sources */,
@@ -7205,6 +7228,7 @@
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				9F23B8062C2BE22700950875 /* OnboardingIntroViewModelTests.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,
+				56D0602D2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift in Sources */,
 				85AD49EE2B6149110085D2D1 /* CookieStorageTests.swift in Sources */,
 				569437242BDD405400C0881B /* SyncBookmarksAdapterTests.swift in Sources */,
 				858479CD2B87964500D156C1 /* HistoryManagerTests.swift in Sources */,

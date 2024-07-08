@@ -25,6 +25,8 @@ extension OnboardingView {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
         @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
+        let animationNamespace: Namespace.ID
+
         var body: some View {
             GeometryReader { proxy in
                 VStack {
@@ -32,6 +34,7 @@ extension OnboardingView {
 
                     Image(.daxIcon)
                         .resizable()
+                        .matchedGeometryEffect(id: OnboardingView.daxGeometryEffectID, in: animationNamespace)
                         .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
 
                     Text(UserText.onboardingWelcomeHeader)
@@ -60,11 +63,11 @@ private enum Metrics {
 // MARK: - Preview
 
 #Preview("Light Mode") {
-    OnboardingView.LandingView()
+    OnboardingView.LandingView(animationNamespace: Namespace().wrappedValue)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode") {
-    OnboardingView.LandingView()
+    OnboardingView.LandingView(animationNamespace: Namespace().wrappedValue)
         .preferredColorScheme(.dark)
 }

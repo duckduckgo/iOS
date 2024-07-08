@@ -45,6 +45,8 @@ struct DaxDialogView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State private var logoPosition: LogoPosition
+    private let matchLogoAnimation: (id: String, namespace: Namespace.ID)
+    private let showDialogBox: Binding<Bool>
     private let cornerRadius: CGFloat
     private let arrowSize: CGSize
     private let onTapGesture: (() -> Void)?
@@ -52,12 +54,16 @@ struct DaxDialogView<Content: View>: View {
 
     init(
         logoPosition: LogoPosition,
+        matchLogoAnimation: (String, Namespace.ID) = ("", Namespace().wrappedValue),
+        showDialogBox: Binding<Bool> = .constant(true),
         cornerRadius: CGFloat = 16.0,
         arrowSize: CGSize = .init(width: 16.0, height: 8.0),
         onTapGesture: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         _logoPosition = State(initialValue: logoPosition)
+        self.matchLogoAnimation = matchLogoAnimation
+        self.showDialogBox = showDialogBox
         self.cornerRadius = cornerRadius
         self.arrowSize = arrowSize
         self.onTapGesture = onTapGesture
@@ -84,6 +90,7 @@ struct DaxDialogView<Content: View>: View {
                 .padding(.leading, Metrics.DaxLogo.horizontalPadding)
 
             wrappedContent
+                .visibility(showDialogBox.wrappedValue ? .visible : .invisible)
         }
     }
 
@@ -92,6 +99,7 @@ struct DaxDialogView<Content: View>: View {
             daxLogo
 
             wrappedContent
+                .visibility(showDialogBox.wrappedValue ? .visible : .invisible)
         }
 
     }
@@ -99,6 +107,7 @@ struct DaxDialogView<Content: View>: View {
     private var daxLogo: some View {
         Image(.daxIcon)
             .resizable()
+            .matchedGeometryEffect(id: matchLogoAnimation.id, in: matchLogoAnimation.namespace)
             .aspectRatio(contentMode: .fill)
             .frame(width: Metrics.DaxLogo.size, height: Metrics.DaxLogo.size)
     }

@@ -38,8 +38,10 @@ struct FavoriteItemView: View {
             
             Text(name)
                 .daxCaption()
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .top)
         }
     }
 }
@@ -57,5 +59,8 @@ private struct FavoriteIconView: View {
 }
 
 #Preview {
-    FavoriteItemView(favicon: nil, name: "Text").frame(width: 64, height: 64)
+    HStack(alignment: .top) {
+        FavoriteItemView(favicon: nil, name: "Text").frame(width: 64)
+        FavoriteItemView(favicon: nil, name: "Lorem Ipsum is simply dummy text of the printing and typesetting industry").frame(width: 64)
+    }
 }

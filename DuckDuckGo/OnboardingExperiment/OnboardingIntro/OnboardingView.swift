@@ -32,17 +32,14 @@ struct OnboardingView: View {
     }
 
     var body: some View {
-        Group {
-            switch model.state {
-            case .landing:
-                backgroundWrapped(view: landingView)
-            case let .onboarding(viewState):
-                backgroundWrapped(view: mainView(state: viewState))
-            case .chooseBrowser:
-                chooseBrowserView
-            }
+        switch model.state {
+        case .landing:
+            backgroundWrapped(view: landingView)
+        case let .onboarding(viewState):
+            backgroundWrapped(view: mainView(state: viewState))
+        case .chooseBrowser:
+            chooseBrowserView
         }
-        .transition(.opacity)
     }
 
     private func backgroundWrapped(view: some View) -> some View {
@@ -82,18 +79,14 @@ struct OnboardingView: View {
             .frame(maxHeight: .infinity, alignment: .bottom)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Metrics.daxDialogDelay) {
-                    withAnimation {
-                        model.onAppear()
-                    }
+                    model.onAppear()
                 }
             }
     }
 
     private var introView: some View {
         DaxDialogIntroView {
-            withAnimation {
-                model.startOnboardingAction()
-            }
+            model.startOnboardingAction()
         }
         .onboardingDaxDialogStyle()
         .padding()
@@ -149,7 +142,7 @@ extension OnboardingView {
                         .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
 
                     Text(UserText.onboardingWelcomeHeader)
-                        .onboardingTitleStyle()
+                        .onboardingTitleStyle(fontSize: Metrics.titleSize.build(v: verticalSizeClass, h: horizontalSizeClass))
                         .frame(width: Metrics.titleWidth.build(v: verticalSizeClass, h: horizontalSizeClass), alignment: .top)
 
                     Spacer()
@@ -166,6 +159,7 @@ extension OnboardingView {
 
 private enum Metrics {
     static let iconSize = CGSize(width: 70, height: 70)
+    static let titleSize = MetricBuilder<CGFloat>(iPhone: 28, iPad: 36)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     static let daxDialogDelay: TimeInterval = 2.0

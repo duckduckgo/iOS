@@ -1586,7 +1586,7 @@ https://duckduckgo.com/mac";
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
 /* Button to change the default browser */
-"onboarding.browsers.cta" = "Choose Your Browser";
+"onboarding.browsers.cta" = "Switch Default Browser";
 
 /* Message to highlight browser capability of blocking cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";

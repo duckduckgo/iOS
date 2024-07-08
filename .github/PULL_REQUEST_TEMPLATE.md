@@ -47,9 +47,9 @@ Using a simulator where a physical device is unavailable is acceptable.
 
 **OS Testing**:
 
-* [ ] iOS 14
 * [ ] iOS 15
 * [ ] iOS 16
+* [ ] iOS 17
 
 **Theme Testing**:
 

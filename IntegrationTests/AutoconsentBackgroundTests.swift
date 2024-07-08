@@ -47,12 +47,10 @@ final class AutoconsentBackgroundTests: XCTestCase {
         """.data(using: .utf8)!
 
         let mockEmbeddedData = MockEmbeddedDataProvider(data: embeddedConfig, etag: "embedded")
-        let eventMapping = EventMapping<ToggleProtectionsCounterEvent> { _, _, _, _ in }
         let manager = PrivacyConfigurationManager(fetchedETag: nil,
                                                   fetchedData: nil,
                                                   embeddedDataProvider: mockEmbeddedData,
                                                   localProtection: MockDomainsProtectionStore(),
-                                                  toggleProtectionsCounterEventReporting: eventMapping,
                                                   internalUserDecider: DefaultInternalUserDecider())
         return AutoconsentUserScript(config: manager.privacyConfig,
                                      preferences: MockAutoconsentPreferences(),

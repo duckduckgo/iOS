@@ -31,14 +31,20 @@ extension MainViewController {
     func segueToDaxOnboarding() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
-        let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
-        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
-            DaxOnboardingViewController(coder: coder)
-        }) else {
-            assertionFailure()
-            return
+
+        var controller: (Onboarding & UIViewController)?
+
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            controller = OnboardingIntroViewController()
+        } else {
+            let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
+            controller = storyboard.instantiateInitialViewController(creator: { coder in
+                DaxOnboardingViewController(coder: coder)
+            })
         }
-        controller.delegate = self
+        
+        controller?.delegate = self
+        guard let controller else { return assertionFailure() }
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: false)
     }
@@ -121,7 +127,7 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
-    func segueToReportBrokenSite(mode: PrivacyDashboardMode = .report) {
+    func segueToReportBrokenSite(entryPoint: PrivacyDashboardEntryPoint = .report) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
@@ -131,7 +137,7 @@ extension MainViewController {
             return
         }
 
-        if mode == .report {
+        if entryPoint == .report {
             fireBrokenSiteReportShown()
         }
 
@@ -139,7 +145,7 @@ extension MainViewController {
         let controller = storyboard.instantiateInitialViewController { coder in
             PrivacyDashboardViewController(coder: coder,
                                            privacyInfo: privacyInfo,
-                                           dashboardMode: mode,
+                                           entryPoint: entryPoint,
                                            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())

@@ -40,6 +40,18 @@ struct AnimatableTypingText: View {
         self.onTypingFinished = onTypingFinished
     }
 
+    init(
+        _ text: String,
+        startAnimating: Binding<Bool> = .constant(true),
+        onTypingFinished: (() -> Void)? = nil
+    ) {
+        let attributesText = NSAttributedString(string: text)
+        self.text = attributesText
+        _model = StateObject(wrappedValue: AnimatableTypingTextModel(text: attributesText, onTypingFinished: onTypingFinished))
+        self.startAnimating = startAnimating
+        self.onTypingFinished = onTypingFinished
+    }
+
     var body: some View {
         Group {
             if #available(iOS 15, *) {

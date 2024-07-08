@@ -21,15 +21,27 @@ import SwiftUI
 
 struct OnboardingBackground: View {
 
+    @Environment(\.verticalSizeClass) var vSizeClass
+    @Environment(\.horizontalSizeClass) var hSizeClass
+
     var body: some View {
-        Image(.daxOnboardingBackground)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .background(
-                Gradient()
-                    .ignoresSafeArea()
-            )
+        GeometryReader { proxy in
+            // On iPhone we want the background image to start from the left but on iPad we want to take the center part
+            let alignment = Metrics.imageCentering.build(v: vSizeClass, h: hSizeClass)
+            Image(.daxOnboardingBackground)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: proxy.size.width, height: proxy.size.height, alignment: alignment)
+                .background(
+                    Gradient()
+                        .ignoresSafeArea()
+                )
+        }
     }
+}
+
+private enum Metrics {
+    static let imageCentering = MetricBuilder<Alignment>(iPhone: .leading, iPad: .center)
 }
 
 // MARK: - Gradient

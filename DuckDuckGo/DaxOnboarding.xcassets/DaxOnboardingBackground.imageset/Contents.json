@@ -2,7 +2,11 @@
   "images" : [
     {
       "filename" : "DaxOnboardingBackground.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "BG-Background-Tablet.pdf",
+      "idiom" : "ipad"
     }
   ],
   "info" : {

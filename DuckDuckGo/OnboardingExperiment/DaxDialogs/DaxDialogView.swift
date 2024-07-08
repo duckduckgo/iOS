@@ -45,6 +45,7 @@ struct DaxDialogView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State private var logoPosition: DaxDialogLogoPosition
+
     private let cornerRadius: CGFloat
     private let arrowSize: CGSize
     private let onTapGesture: (() -> Void)?

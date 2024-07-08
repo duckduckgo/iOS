@@ -25,9 +25,11 @@ extension OnboardingStyles {
 
     struct TitleStyle: ViewModifier {
 
+        let fontSize: CGFloat
+
         func body(content: Content) -> some View {
             let view = content
-                .font(.system(size: 28, weight: .bold))
+                .font(.system(size: fontSize, weight: .bold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
 
@@ -44,8 +46,8 @@ extension OnboardingStyles {
 
 extension View {
 
-    func onboardingTitleStyle() -> some View {
-        modifier(OnboardingStyles.TitleStyle())
+    func onboardingTitleStyle(fontSize: CGFloat) -> some View {
+        modifier(OnboardingStyles.TitleStyle(fontSize: fontSize))
     }
     
 }

@@ -40,10 +40,11 @@ check_maestro() {
 }
 
 build_app() {
-
-    if [ -d "$derived_data_path" ]; then
+    if [ -d "$derived_data_path" ] && [ "$1" -eq "0" ]; then
         echo "⚠️ Removing previously created $derived_data_path"
         rm -rf $derived_data_path
+    else
+        echo "ℹ️ Not cleaning derived data at $derived_data_path"
     fi
 
     echo "⏲️ Building the app"
@@ -78,6 +79,8 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         --skip-build) 
             skip_build=1 ;;
+        --rebuild) 
+            rebuild=1 ;;
         *)
     esac
     shift
@@ -86,7 +89,7 @@ done
 if [ -n "$skip_build" ]; then
     echo "Skipping build"
 else
-    build_app
+    build_app $rebuild
 fi
 
 echo "ℹ️ Closing all simulators"

@@ -9945,7 +9945,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anh/netp/sanitize-location-selection";
+				branch = "graeme/sanitize-location-selection";
 				kind = branch;
 			};
 		};

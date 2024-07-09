@@ -1200,5 +1200,18 @@ But if you *do* want a peek under the hood, you can find more information about 
         enum DefaultBrowser {
             public static let message = NSLocalizedString("onboarding.defaultBrowser.message", value: "Open links with peace of mind, every time.", comment: "Subheader message for the screen to choose DuckDuckGo as default browser")
         }
+
+        enum ContextualOnboarding {
+            static let onboardingTryASearchTitle = NSLocalizedString("contextual.onboarding.try-a-search.title", value: "Try a search!", comment: "Title of a popover on the browser that invites the user to try a search")
+            static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.try-a-search.message", value: "Your DuckDuckGo searches are always anonymous.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous")
+            static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
+            static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "We’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
+            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! ☝️", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
+            static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
+            static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.first-search-done.message", value: "That’s DuckDuckGo Search. Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
+            static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
+            static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.final-screen.message", value: "Remember every time you browse with me a creepy ad loses it’s wings.", comment: "Message of the last screen of the onboarding to the browser app.")
+            static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+        }
     }
 }

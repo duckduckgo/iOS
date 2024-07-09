@@ -38,7 +38,8 @@ struct DaxDialogIntroView: View {
             },
             content: {
                 VStack(spacing: 24.0) {
-                    AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: $animateText) {
+                    let attributedString = NSAttributedString(string: UserText.DaxOnboardingExperiment.Intro.title)
+                    AnimatableTypingText(attString, startAnimating: $animateText) {
                         withAnimation {
                             showButton = true
                         }

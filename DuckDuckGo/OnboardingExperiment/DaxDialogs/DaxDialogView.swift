@@ -25,7 +25,7 @@ import DesignResourcesKit
 private enum Metrics {
     static let contentPadding: CGFloat = 24.0
     static let shadowRadius: CGFloat = 5.0
-    static let stackSpacing: CGFloat = 10.0
+    static let stackSpacing: CGFloat = 8
 
     enum DaxLogo {
         static let size: CGFloat = 54.0
@@ -85,7 +85,7 @@ struct DaxDialogView<Content: View>: View {
     }
 
     private var topLogoViewContentView: some View {
-        VStack(alignment: .leading, spacing: Metrics.stackSpacing) {
+        VStack(alignment: .leading, spacing: stackSpacing) {
             daxLogo
                 .padding(.leading, Metrics.DaxLogo.horizontalPadding)
 
@@ -95,13 +95,17 @@ struct DaxDialogView<Content: View>: View {
     }
 
     private var leftLogoContentView: some View {
-        HStack(alignment: .top, spacing: Metrics.stackSpacing) {
+        HStack(alignment: .top, spacing: stackSpacing) {
             daxLogo
 
             wrappedContent
                 .visibility(showDialogBox.wrappedValue ? .visible : .invisible)
         }
 
+    }
+
+    private var stackSpacing: CGFloat {
+        Metrics.stackSpacing + arrowSize.height
     }
 
     private var daxLogo: some View {

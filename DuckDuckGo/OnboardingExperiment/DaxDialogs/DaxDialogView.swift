@@ -35,16 +35,17 @@ private enum Metrics {
 
 // MARK: - DaxDialog
 
-struct DaxDialogView<Content: View>: View {
+enum DaxDialogLogoPosition {
+    case top
+    case left
+}
 
-    enum LogoPosition {
-        case top
-        case left
-    }
+struct DaxDialogView<Content: View>: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    @State private var logoPosition: LogoPosition
+    @State private var logoPosition: DaxDialogLogoPosition
+
     private let matchLogoAnimation: (id: String, namespace: Namespace.ID)
     private let showDialogBox: Binding<Bool>
     private let cornerRadius: CGFloat
@@ -53,7 +54,7 @@ struct DaxDialogView<Content: View>: View {
     private let content: Content
 
     init(
-        logoPosition: LogoPosition,
+        logoPosition: DaxDialogLogoPosition,
         matchLogoAnimation: (String, Namespace.ID) = ("", Namespace().wrappedValue),
         showDialogBox: Binding<Bool> = .constant(true),
         cornerRadius: CGFloat = 16.0,

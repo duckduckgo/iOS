@@ -73,6 +73,7 @@ struct NetworkProtectionStatusView: View {
                             .foregroundColor(.init(designSystemColor: .textSecondary))
                     }
                 }
+                .layoutPriority(1)
 
                 Toggle("", isOn: Binding(
                     get: { statusModel.isNetPEnabled },
@@ -152,7 +153,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func locationDetails() -> some View {
         Section {
-            if let location = statusModel.location {
+            if !statusModel.isSnoozing, let location = statusModel.location {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(
                         statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location

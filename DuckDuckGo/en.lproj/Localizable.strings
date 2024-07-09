@@ -1468,6 +1468,9 @@ https://duckduckgo.com/mac";
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
+/* The label for when NetP VPN is paused plus the length of time connected as a 'X min remaining' string */
+"network.protection.status.paused.format" = "Paused, %@ remaining";
+
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
 

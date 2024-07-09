@@ -73,12 +73,12 @@ final class NetworkProtectionDebugUtilities {
 
     // MARK: - Snooze
 
-    func startSnooze() async {
+    func startSnooze(duration: TimeInterval) async {
         guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
             return
         }
 
-        try? await activeSession.sendProviderMessage(.startSnooze(15))
+        try? await activeSession.sendProviderMessage(.startSnooze(duration))
     }
 }
 

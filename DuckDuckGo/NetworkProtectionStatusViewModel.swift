@@ -83,6 +83,22 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
+    private static var snoozeRemainingDateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute,]
+        formatter.zeroFormattingBehavior = .pad
+        formatter.unitsStyle = .brief
+        return formatter
+    }()
+
+    private static var preciseSnoozeRemainingDateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.second]
+        formatter.zeroFormattingBehavior = .pad
+        formatter.unitsStyle = .brief
+        return formatter
+    }()
+
     private let byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
@@ -120,10 +136,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var isNetPEnabled = false
     @Published public var isSnoozing = false {
         didSet {
-            if isSnoozing {
-                location = nil
-            }
-
             snoozeRequestPending = false
         }
     }
@@ -207,8 +219,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 if !isConnected {
                     self?.uploadTotal = Constants.defaultUploadVolume
                     self?.downloadTotal = Constants.defaultDownloadVolume
-
-                    // TODO: Restore these lines once status updating is working correctly
                     // self?.throughputUpdateTimer?.invalidate()
                     // self?.throughputUpdateTimer = nil
                 } else {
@@ -252,6 +262,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private func setUpStatusMessagePublishers() {
         statusObserver.publisher
+            .removeDuplicates()
             .flatMap(maxPublishers: .max(1)) { status in
                 // As soon as the connection status changes, we should update the status message
                 var statusUpdatePublishers = [Just(Self.message(for: status)).eraseToAnyPublisher()]
@@ -260,6 +271,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                     // In the case that the status is connected, we should then provide timed updates
                     // If we rely on the timed updates alone, there will be a delay to the initial update
                     statusUpdatePublishers.append(Self.timedConnectedStatusMessagePublisher(forConnectedDate: connectedDate))
+                case .snoozing:
+                    let timingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
+                    guard let endDate = timingStore.activeTiming?.endDate else {
+                        break
+                    }
+
+                    statusUpdatePublishers.append(Self.timedSnoozeDurationRemainingMessagePublisher(forSnoozeEndDate: endDate))
                 default:
                     break
                 }
@@ -437,7 +455,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .minutes(5) // TODO: Change to 20 mins, 5 mins is only used for testing
+        let defaultDuration: TimeInterval = .seconds(65) // TODO: Change to 20 mins, 1 min is only used for testing
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
     }
@@ -469,6 +487,15 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
 
+    private static func timedSnoozeDurationRemainingMessagePublisher(forSnoozeEndDate snoozeEndDate: Date) -> AnyPublisher<String, Never> {
+        Timer.publish(every: .seconds(1), on: .main, in: .default)
+            .autoconnect()
+            .map {
+                Self.snoozeDurationRemainingMessage(for: snoozeEndDate, currentDate: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+
     private static func message(for status: ConnectionStatus) -> String {
         switch status {
         case .disconnected, .notConfigured:
@@ -488,6 +515,22 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         let timeLapsedInterval = currentDate.timeIntervalSince(connectedDate)
         let timeLapsed = Self.dateFormatter.string(from: timeLapsedInterval) ?? "00:00:00"
         return UserText.netPStatusConnected(since: timeLapsed)
+    }
+
+    private static func snoozeDurationRemainingMessage(for snoozeEndDate: Date, currentDate: Date = Date()) -> String {
+        if snoozeEndDate <= currentDate {
+            return UserText.netPCellPaused
+        }
+
+        let timeRemainingInterval = snoozeEndDate.timeIntervalSince(currentDate)
+
+        if timeRemainingInterval < TimeInterval.minutes(1) {
+            let timeRemaining = Self.preciseSnoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0 sec"
+            return UserText.netPStatusPaused(until: timeRemaining)
+        } else {
+            let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0 min"
+            return UserText.netPStatusPaused(until: timeRemaining)
+        }
     }
 
     private func resetConnectionInformation() {

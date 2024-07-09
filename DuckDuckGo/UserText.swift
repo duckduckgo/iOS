@@ -493,6 +493,10 @@ public struct UserText {
         let localized = NSLocalizedString("network.protection.status.connected.format", value: "Connected · %@", comment: "The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string")
         return String(format: localized, timeLapsedString)
     }
+    static func netPStatusPaused(until timeLapsedString: String) -> String {
+        let localized = NSLocalizedString("network.protection.status.paused.format", value: "Paused, %@ remaining", comment: "The label for when NetP VPN is paused plus the length of time connected as a 'X min remaining' string")
+        return String(format: localized, timeLapsedString)
+    }
     static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
     static let netPStatusViewIPAddress = NSLocalizedString("network.protection.status.view.ip.address", value: "IP Address", comment: "IP Address label shown in NetworkProtection's status view.")
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")

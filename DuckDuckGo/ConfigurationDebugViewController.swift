@@ -54,6 +54,7 @@ class ConfigurationDebugViewController: UITableViewController {
         case surrogates
         case trackerDataSet
         case privacyConfiguration
+        case remoteMessagingConfig
         case resetEtags = "Reset ETags"
 
         var showDetail: Bool {

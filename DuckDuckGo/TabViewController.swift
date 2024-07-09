@@ -518,9 +518,8 @@ class TabViewController: UIViewController {
         refreshControl.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             reload()
-            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
         }, for: .valueChanged)
 
         refreshControl.backgroundColor = .systemBackground
@@ -821,7 +820,7 @@ class TabViewController: UIViewController {
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
-                                       dashboardMode: .dashboard,
+                                       entryPoint: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
@@ -1062,13 +1061,13 @@ class TabViewController: UIViewController {
                                                      image: "SiteBreakage",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: true))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: false))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)
         }
@@ -1527,13 +1526,11 @@ extension TabViewController: WKNavigationDelegate {
             refreshCountSinceLoad = 0
         }
 
-        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
-            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
-        }
-
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
-        if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
+        if navigationAction.navigationType != .backForward,
+           navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isDuckDuckGoSearch ?? false) {
             let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
@@ -2294,7 +2291,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
         }
 
         refreshCountSinceLoad += 1
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+        AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
     }
 
 }

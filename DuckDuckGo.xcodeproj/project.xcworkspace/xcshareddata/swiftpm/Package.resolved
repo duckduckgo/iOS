@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "28dd48c5aca37c46402e2a14f7c47aad3877b3aa",
-        "version" : "164.3.0"
+        "revision" : "bfabf4518a33eb2b4b11003a15633a24c28fa922",
+        "version" : "169.0.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "7ac68ae3bc052fa59adbc1ba8fd5cb5849a6bc99",
-        "version" : "5.25.0"
+        "revision" : "9c65477457126ab7ad963a32b7f85ce08e6bd1a7",
+        "version" : "6.0.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "924a80e20e2465dcaf3dca32c9b6e9b9968222b9",
-        "version" : "4.1.0"
+        "revision" : "348594efe2cd40ef156e915c272d02ec22f1903f",
+        "version" : "4.2.0"
       }
     },
     {
@@ -138,10 +138,10 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "46989693916f56d1186bd59ac15124caef896560",
-        "version" : "1.3.1"
+        "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
+        "version" : "1.4.0"
       }
     },
     {

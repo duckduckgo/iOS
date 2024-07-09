@@ -22,16 +22,15 @@ import Core
 import Combine
 
 // MARK: - View
-
 struct AnimatableTypingText: View {
-    private let text: String
+    private let text: NSAttributedString
     private var startAnimating: Binding<Bool>
     private var onTypingFinished: (() -> Void)?
 
     @StateObject private var model: AnimatableTypingTextModel
 
     init(
-        _ text: String,
+        _ text: NSAttributedString,
         startAnimating: Binding<Bool> = .constant(true),
         onTypingFinished: (() -> Void)? = nil
     ) {
@@ -41,12 +40,20 @@ struct AnimatableTypingText: View {
         self.onTypingFinished = onTypingFinished
     }
 
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            Text(text)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .visibility(.invisible)
+    init(
+        _ text: String,
+        startAnimating: Binding<Bool> = .constant(true),
+        onTypingFinished: (() -> Void)? = nil
+    ) {
+        let attributesText = NSAttributedString(string: text)
+        self.text = attributesText
+        _model = StateObject(wrappedValue: AnimatableTypingTextModel(text: attributesText, onTypingFinished: onTypingFinished))
+        self.startAnimating = startAnimating
+        self.onTypingFinished = onTypingFinished
+    }
 
+    var body: some View {
+        Group {
             if #available(iOS 15, *) {
                 Text(AttributedString(model.typedAttributedText))
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -78,15 +85,15 @@ final class AnimatableTypingTextModel: ObservableObject {
     @Published private(set) var typedAttributedText: NSAttributedString = .init(string: "")
 
     private var typingIndex = 0
-    private var textTypedSoFar: String = ""
-    private let text: String
+    private let text: NSAttributedString
     private let onTypingFinished: (() -> Void)?
     private let timerFactory: TimerCreating
 
-    init(text: String, onTypingFinished: (() -> Void)?, timerFactory: TimerCreating = TimerFactory()) {
+    init(text: NSAttributedString, onTypingFinished: (() -> Void)?, timerFactory: TimerCreating = TimerFactory()) {
         self.text = text
         self.onTypingFinished = onTypingFinished
         self.timerFactory = timerFactory
+        typedAttributedText = createAttributedString(original: text, visibleLength: 0)
     }
 
     func startAnimating() {
@@ -109,7 +116,7 @@ final class AnimatableTypingTextModel: ObservableObject {
     }
 
     private func handleTimerEvent() {
-        if textTypedSoFar == text {
+        if typingIndex >= text.length {
             onTypingFinished?()
             stopAnimating()
             return
@@ -119,35 +126,42 @@ final class AnimatableTypingTextModel: ObservableObject {
     }
 
     private func stopTyping() {
-        typedAttributedText = NSAttributedString(string: text)
+        typedAttributedText = text
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.onTypingFinished?()
         }
     }
 
     private func showCharacter() {
-
-        func attributedTypedString(forTypedChars typedChars: [String.Element]) -> NSAttributedString {
-            guard #available(iOS 15, *) else {
-                return NSAttributedString(string: String(typedChars))
-            }
-
-            let chars = Array(text)
-            let untypedChars = chars[typedChars.count ..< chars.count]
-            let combined = NSMutableAttributedString(string: String(typedChars))
-            combined.append(NSAttributedString(string: String(untypedChars), attributes: [
-                NSAttributedString.Key.foregroundColor: UIColor.clear
-            ]))
-
-            return combined
-        }
-
-        let chars = Array(text)
-        typingIndex = min(typingIndex + 1, chars.count)
-        let typedChars = Array(chars[0 ..< typingIndex])
-        textTypedSoFar = String(typedChars)
-        let attributedString = attributedTypedString(forTypedChars: typedChars)
-        typedAttributedText = attributedString
+        typingIndex = min(typingIndex + 1, text.length)
+        typedAttributedText = createAttributedString(original: text, visibleLength: typingIndex)
     }
 
+    private func createAttributedString(original: NSAttributedString, visibleLength: Int) -> NSAttributedString {
+        let totalRange = NSRange(location: 0, length: original.length)
+        let visibleRange = NSRange(location: 0, length: min(visibleLength, original.length))
+
+        // Make the entire text transparent
+        let transparentText = original.applyingColor(.clear, to: totalRange)
+
+        // Change the color to standard for the visible range
+        let visibleText = transparentText.applyingColor(.label, to: visibleRange)
+
+        return visibleText
+    }
+}
+
+// Extension to apply color to NSAttributedString
+extension NSAttributedString {
+    func applyingColor(_ color: UIColor, to range: NSRange) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString(attributedString: self)
+
+        mutableAttributedString.enumerateAttributes(in: range, options: []) { attributes, range, _ in
+            var newAttributes = attributes
+            newAttributes[.foregroundColor] = color
+            mutableAttributedString.setAttributes(newAttributes, range: range)
+        }
+
+        return mutableAttributedString
+    }
 }

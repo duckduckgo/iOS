@@ -151,14 +151,14 @@ extension YoutubeOverlayUserScript {
         
         switch pixelName {
         case "play.use":
-            Pixel.fire(Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
-            UniquePixel.fire(Pixel.Event.watchInDuckPlayerInitial)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
+            UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
                 
         case "play.do_not_use":
-            Pixel.fire(Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
                     
         case "overlay":
-            Pixel.fire(Pixel.Event.duckPlayerOverlayYoutubeImpressions)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
             
         default:
             break

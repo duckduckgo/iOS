@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1719853254811,
+    "version": 1720185364708,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -111,6 +111,11 @@
             "hash": "b9baf40f82353fbfd4e1daa45f7a60e9"
         },
         "androidBrowserConfig": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "androidNewStateKillSwitch": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
@@ -1160,6 +1165,9 @@
                     "domain": "soranews24.com"
                 },
                 {
+                    "domain": "pointstreaksites.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -1169,7 +1177,7 @@
                     "domain": "noaprints.com"
                 }
             ],
-            "hash": "ee9d383becfe28d8a5b575b51f5c9d11"
+            "hash": "477f58bcbc508d5ae1e73941407284b7"
         },
         "cookie": {
             "settings": {
@@ -1291,6 +1299,9 @@
             "features": {
                 "pip": {
                     "state": "disabled"
+                },
+                "autoplay": {
+                    "state": "disabled"
                 }
             },
             "settings": {
@@ -1357,7 +1368,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "314df3f87ca501a86eb1d04db8bf7bbc"
+            "hash": "d950da7e94382e26e5da62e52ce3ac79"
         },
         "elementHiding": {
             "exceptions": [
@@ -6213,7 +6224,8 @@
                                 "domains": [
                                     "ah.nl",
                                     "applesfera.com",
-                                    "rocketnews24.com"
+                                    "rocketnews24.com",
+                                    "servustv.com"
                                 ]
                             },
                             {
@@ -8665,7 +8677,7 @@
                     "domain": "noaprints.com"
                 }
             ],
-            "hash": "17e4849349a0968a744a171fbcc09f1d"
+            "hash": "d7d18b84410856df8bf3fb5e2a1f2e56"
         },
         "trackingCookies1p": {
             "settings": {

@@ -318,8 +318,9 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManager
     let historyCapture: HistoryCapture
-
-    let youtubeNavigationHandler: DuckNavigationHandling? = YoutubePlayerNavigationHandler()
+    
+    var duckPlayer: DuckPlayerProtocol = DuckPlayer()
+    var youtubeNavigationHandler: DuckNavigationHandling?
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -350,6 +351,9 @@ class TabViewController: UIViewController {
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
         
+        // Setup DuckPlayer navigation handler
+        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
+        
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
@@ -357,11 +361,6 @@ class TabViewController: UIViewController {
 #if NETWORK_PROTECTION
         observeNetPConnectionStatusChanges()
 #endif
-    }
-    
-    private func configureDuckPlayerUserScripts() {
-        userScripts?.youtubeOverlayScript?.webView = webView
-        userScripts?.youtubePlayerUserScript?.webView = webView
     }
     
     
@@ -519,9 +518,8 @@ class TabViewController: UIViewController {
         refreshControl.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             reload()
-            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+            AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
         }, for: .valueChanged)
 
         refreshControl.backgroundColor = .systemBackground
@@ -664,7 +662,7 @@ class TabViewController: UIViewController {
             if let handler = youtubeNavigationHandler,
                 let url,
                 url.isYoutubeVideo,
-                appSettings.duckPlayerMode == .enabled {
+                duckPlayer.settings.mode == .enabled {
                 handler.handleURLChange(url: url, webView: webView)
             }
         }
@@ -822,7 +820,7 @@ class TabViewController: UIViewController {
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
-                                       dashboardMode: .dashboard,
+                                       entryPoint: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
@@ -1063,13 +1061,13 @@ class TabViewController: UIViewController {
                                                      image: "SiteBreakage",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: true))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
                 Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(mode: .afterTogglePrompt(category: breakageCategory,
-                                                                                                       didToggleProtectionsFixIssue: false))
+                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
+                                                                                                              didToggleProtectionsFixIssue: false))
             }))
             self.alertPresenter?.present(in: self, animated: true)
         }
@@ -1528,13 +1526,11 @@ extension TabViewController: WKNavigationDelegate {
             refreshCountSinceLoad = 0
         }
 
-        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
-            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
-        }
-
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
-        if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
+        if navigationAction.navigationType != .backForward,
+           navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isDuckDuckGoSearch ?? false) {
             let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
@@ -1627,6 +1623,7 @@ extension TabViewController: WKNavigationDelegate {
         return true
     }
 
+    // swiftlint:disable function_body_length
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
@@ -1653,9 +1650,10 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if let handler = youtubeNavigationHandler,
+        if navigationAction.isTargetingMainFrame(),
+            let handler = youtubeNavigationHandler,
             url.isYoutubeVideo,
-            appSettings.duckPlayerMode == .enabled {
+            duckPlayer.settings.mode == .enabled {
             handler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
             return
         }
@@ -1677,7 +1675,11 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            youtubeNavigationHandler?.handleNavigation(navigationAction, webView: webView, completion: completion)
+            if let handler = youtubeNavigationHandler {
+                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
+                return
+            }
+            completion(.cancel)
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -1688,6 +1690,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
+    // swiftlint:enable function_body_length
     
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
@@ -2288,7 +2291,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
         }
 
         refreshCountSinceLoad += 1
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
+        AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
     }
 
 }
@@ -2325,6 +2328,9 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
+        
+        // Setup DuckPlayer
+        userScripts.duckPlayer = duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView
         userScripts.youtubePlayerUserScript?.webView = webView
         

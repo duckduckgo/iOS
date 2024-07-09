@@ -393,7 +393,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
                                           _ indexPath: IndexPath,
                                           _ completion: @escaping (Bool) -> Void) {
-
         func delete() {
             let oldCount = viewModel.bookmarks.count
             viewModel.softDeleteBookmark(bookmark)
@@ -409,14 +408,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
         func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
-            var count = 0
-            folder.childrenArray.forEach { bookmark in
-                count += 1
-                if bookmark.isFolder {
-                    count += countAllChildrenInFolder(bookmark)
-                }
+            return folder.childrenArray.reduce(0) { partialResult, entity in
+                return partialResult + 1 + (entity.isFolder ? countAllChildrenInFolder(entity) : 0)
             }
-            return count
         }
 
         func deleteFolder() {
@@ -431,7 +425,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             return
         }
 
-        if bookmark.isFolder, bookmark.children?.count ?? 0 > 0 {
+        if bookmark.isFolder && !bookmark.childrenArray.isEmpty {
             let title = String(format: UserText.deleteBookmarkFolderAlertTitle, bookmark.title ?? "")
             let count = countAllChildrenInFolder(bookmark)
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
@@ -444,6 +438,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 completion(true)
             }
             present(alertController, animated: true)
+        } else if bookmark.isFolder {
+            delete()
+            completion(true)
         } else {
             showBookmarkDeletedMessage(bookmark)
             delete()
@@ -833,6 +830,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         guard let url = bookmark.urlObject else { return }
         dismiss()
         Pixel.fire(pixel: .bookmarkLaunchList)
+        DailyPixel.fire(pixel: .bookmarkLaunchedDaily)
         delegate?.bookmarksDidSelect(url: url)
     }
 

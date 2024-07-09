@@ -44,14 +44,13 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     // MARK: - Messages
     
     private var homeMessageStorage: HomeMessageStorage
-    private var remoteMessagingStore: RemoteMessagingStore
+    private var remoteMessagingClient: RemoteMessagingClient
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil,
-         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore) {
+    init(variantManager: VariantManager? = nil, remoteMessagingClient: RemoteMessagingClient) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
-        self.remoteMessagingStore = remoteMessagingStore
+        self.remoteMessagingClient = remoteMessagingClient
         homeMessages = buildHomeMessages()
     }
 
@@ -75,7 +74,7 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+        guard let remoteMessageToPresent = remoteMessagingClient.store.fetchScheduledRemoteMessage() else { return nil }
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
@@ -84,7 +83,7 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
             os_log("Home message dismissed: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-            remoteMessagingStore.dismissRemoteMessage(withId: remoteMessage.id)
+            remoteMessagingClient.store.dismissRemoteMessage(withID: remoteMessage.id)
 
             if let index = homeMessages.firstIndex(of: homeMessage) {
                 homeMessages.remove(at: index)
@@ -102,11 +101,11 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
             Pixel.fire(pixel: .remoteMessageShown,
                        withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
-            if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessage.id) {
+            if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
                 os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
                 Pixel.fire(pixel: .remoteMessageShownUnique,
                            withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
-                remoteMessagingStore.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
+                remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
             }
 
         default:

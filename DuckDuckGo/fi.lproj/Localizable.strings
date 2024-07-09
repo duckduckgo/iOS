@@ -133,14 +133,17 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
 
-/* Description for alert shown when sync error occurs because of bad data */
-"alert.sync-bad-data-error-description" = "Jotkin kirjanmerkit tai salasanat on väärin muotoiltuja tai liian pitkiä, eikä niitä ole synkronoitu.";
+/* Description for alert shown when sync error occurs because of bad bookmarks data */
+"alert.sync-bookmarks-bad-data-error-description" = "Jotkin kirjanmerkit on muotoiltu väärin tai ovat liian pitkiä, eikä niitä ole synkronoitu.";
 
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Kirjanmerkkikiintiösi on täynnä. Poista joitakin kirjanmerkkejä jatkaaksesi synkronointia.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Kirjanmerkkien synkronointi on keskeytetty";
+
+/* Description for alert shown when sync error occurs because of bad credentials data */
+"alert.sync-credentials-bad-data-error-description" = "Jotkin salasanat on muotoiltu väärin tai ovat liian pitkiä, eikä niitä ole synkronoitu.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Salasanakiintiösi on täynnä. Poista joitakin salasanoja jatkaaksesi synkronointia.";

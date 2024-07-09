@@ -81,7 +81,14 @@ struct NewTabPageView: View {
 // MARK: - Preview
 
 #Preview("Regular") {
-    NewTabPageView(messagesModel: NewTabPageMessagesModel(), favoritesModel: FavoritesModel())
+    NewTabPageView(
+        messagesModel: NewTabPageMessagesModel(
+            homePageMessagesConfiguration: PreviewMessagesConfiguration(
+                homeMessages: []
+            )
+        ),
+        favoritesModel: FavoritesModel()
+    )
 }
 
 #Preview("With message") {

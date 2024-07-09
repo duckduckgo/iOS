@@ -91,6 +91,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
             // WHEN
             timerMock.fire()
 
+            // THEN
             XCTAssertTrue(isAttributedStringColorsCorrect(typedText, visibleLength: i + 1))
         }
     }

@@ -140,7 +140,7 @@ struct NetworkProtectionStatusView: View {
             }
             .disabled(statusModel.snoozeRequestPending)
         } else if statusModel.hasActiveConnection {
-            Button("Pause for 20 seconds") {
+            Button("Pause for 5 minutes") {
                 Task {
                     await statusModel.startSnooze()
                 }

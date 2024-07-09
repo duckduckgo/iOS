@@ -473,7 +473,8 @@ public struct UserText {
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "DuckDuckGo VPN", comment: "Title for the DuckDuckGo VPN feature")
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
-    
+    public static let netPCellPaused = NSLocalizedString("netP.cell.paused", value: "Paused", comment: "String indicating NetP is paused when viewed from the settings screen")
+
     static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You’re invited to try DuckDuckGo VPN", comment: "Title for the network protection invite screen")
     static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
     static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
@@ -875,6 +876,14 @@ But if you *do* want a peek under the hood, you can find more information about 
         let localized = NSLocalizedString(
             "network.protection.success.notification.subtitle.including.serverLocation",
             value: "Routing device traffic through %@.",
+            comment: "The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter"
+        )
+        return String(format: localized, serverLocation)
+    }
+    static func networkProtectionSnoozeEndedConnectionSuccessNotificationBody(serverLocation: String) -> String {
+        let localized = NSLocalizedString(
+            "network.protection.success.notification.subtitle.snooze.ended.including.serverLocation",
+            value: "VPN snooze has ended. Routing device traffic through %@.",
             comment: "The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter"
         )
         return String(format: localized, serverLocation)

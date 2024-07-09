@@ -120,7 +120,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var isNetPEnabled = false
     @Published public var isSnoozing = false {
         didSet {
-            print("SAMDEBUG: Set isSnoozing to \(isSnoozing)")
+            if isSnoozing {
+                location = nil
+            }
+
             snoozeRequestPending = false
         }
     }
@@ -404,7 +407,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // It makes sense as animations should mostly only happen when a user has interacted.
         animationsOn = true
         if enabled {
-            await enableNetP()
+            if isSnoozing {
+                await cancelSnooze()
+            } else {
+                await enableNetP()
+            }
         } else {
             await disableNetP()
         }
@@ -428,7 +435,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .seconds(20) // TODO: Change to 20 mins, 20 seconds is only used for testing
+        let defaultDuration: TimeInterval = .minutes(5) // TODO: Change to 20 mins, 5 mins is only used for testing
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
     }

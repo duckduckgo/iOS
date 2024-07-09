@@ -443,6 +443,8 @@ extension SettingsViewModel {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
+            case .snoozing:
+                self.state.networkProtection.status = UserText.netPCellPaused
             default:
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }
@@ -462,8 +464,8 @@ extension SettingsViewModel {
     #if NETWORK_PROTECTION
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasActiveSubscription in
-                self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
+            .sink { [weak self] status in
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
     #endif

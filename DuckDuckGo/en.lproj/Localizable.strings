@@ -1399,6 +1399,9 @@ https://duckduckgo.com/mac";
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
+/* String indicating NetP is paused when viewed from the settings screen */
+"netP.cell.paused" = "Paused";
+
 /* Title for the DuckDuckGo VPN feature in settings */
 "netP.settings.title" = "VPN";
 
@@ -1494,6 +1497,9 @@ https://duckduckgo.com/mac";
 
 /* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Routing device traffic through %@.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Turn On Notifications";

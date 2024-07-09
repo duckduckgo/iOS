@@ -76,10 +76,14 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         showNotification(.test, content)
     }
 
-    func showConnectedNotification(serverLocation: String?) {
+    func showConnectedNotification(serverLocation: String?, snoozeEnded: Bool) {
         let body: String
         if let serverLocation {
-            body = UserText.networkProtectionConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            if snoozeEnded {
+                body = UserText.networkProtectionSnoozeEndedConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            } else {
+                body = UserText.networkProtectionConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            }
         } else {
             body = UserText.networkProtectionConnectionSuccessNotificationBody
         }
@@ -108,18 +112,6 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
     func showEntitlementNotification() {
         let identifier = NetworkProtectionNotificationIdentifier.entitlement.rawValue
         let content = notificationContent(body: UserText.networkProtectionEntitlementExpiredNotificationBody)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: .none)
-
-        requestAlertAuthorization { authorized in
-            guard authorized else { return }
-            self.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: [identifier])
-            self.userNotificationCenter.add(request)
-        }
-    }
-
-    func showSnoozeEndedNotification() {
-        let identifier = NetworkProtectionNotificationIdentifier.snoozeEnded.rawValue
-        let content = notificationContent(body: "Snooze mode has ended")
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: .none)
 
         requestAlertAuthorization { authorized in

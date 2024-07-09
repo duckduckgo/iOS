@@ -37,6 +37,15 @@ final class UserText {
         return String(format: localized, serverLocation)
     }
 
+    static func networkProtectionSnoozeEndedConnectionSuccessNotificationBody(serverLocation: String) -> String {
+        let localized = NSLocalizedString(
+            "network.protection.success.notification.subtitle.snooze.ended.including.serverLocation",
+            value: "VPN snooze has ended. Routing device traffic through %@.",
+            comment: "The body of the notification shown when Network Protection connects successfully after snooze with the city + state/country as formatted parameter"
+        )
+        return String(format: localized, serverLocation)
+    }
+
     static let networkProtectionConnectionInterruptedNotificationBody = NSLocalizedString("network.protection.interrupted.notification.body", value: "Network Protection was interrupted. Attempting to reconnect now...", comment: "The body of the notification shown when Network Protection's connection is interrupted")
 
     static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "Network Protection failed to connect. Please try again later.", comment: "The body of the notification shown when Network Protection fails to reconnect")

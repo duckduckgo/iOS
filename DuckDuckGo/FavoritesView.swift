@@ -17,28 +17,27 @@
 //  limitations under the License.
 //
 
-import Common
-import DesignResourcesKit
-import DuckUI
+import Bookmarks
 import SwiftUI
+import Core
 
 struct FavoritesView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @ObservedObject var model: FavoritesModel
     
     @State var isCollapsed: Bool = true
-    
+
     var body: some View {
         VStack(alignment: .center) {
-            
+
             let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass) * 2
             
             let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
             
             NewTabPageGridView { _ in
                 ForEach(data) { item in
-                    FavoriteItemView(favicon: nil, name: "\(item.id)")
-                        .frame(width: NewTabPageGrid.Item.edgeSize)
+                    FavoriteItemView(favorite: item)
+                    .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
             }
             
@@ -55,4 +54,14 @@ struct FavoritesView: View {
 
 #Preview {
     FavoritesView(model: FavoritesModel())
+}
+
+extension FavoritesModel {
+    convenience init() {
+        let location = FileManager.default.temporaryDirectory.appendingPathComponent("Bookmarks.sqlite", conformingTo: .database)
+        let db = BookmarksDatabase.make(location: location)
+        db.loadStore()
+
+        self.init(interactionModel: FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: .default))
+    }
 }

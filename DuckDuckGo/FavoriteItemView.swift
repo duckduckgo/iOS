@@ -21,8 +21,7 @@ import DesignResourcesKit
 import SwiftUI
 
 struct FavoriteItemView: View {
-    let favicon: Image?
-    let name: String
+    let favorite: Favorite
 
     var body: some View {
         VStack(spacing: 6) {
@@ -31,36 +30,27 @@ struct FavoriteItemView: View {
                     .fill(Color(designSystemColor: .surface))
                     .shadow(color: .shade(0.12), radius: 0.5, y: 1)
                     .aspectRatio(1, contentMode: .fit)
-                
-                FavoriteIconView(favicon: favicon)
 
+                FavoriteIconView(domain: favorite.domain)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            
-            Text(name)
+
+            Text(favorite.title)
                 .daxCaption()
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(maxWidth: .infinity, alignment: .top)
         }
-    }
-}
-
-private struct FavoriteIconView: View {
-    let favicon: Image?
-
-    var body: some View {
-        if let favicon {
-            favicon
-                .resizable()
-                .aspectRatio(1.0, contentMode: .fit)
-        }
+        .accessibilityElement()
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel("\(favorite.title). \(UserText.favorite)")
     }
 }
 
 #Preview {
     HStack(alignment: .top) {
-        FavoriteItemView(favicon: nil, name: "Text").frame(width: 64)
-        FavoriteItemView(favicon: nil, name: "Lorem Ipsum is simply dummy text of the printing and typesetting industry").frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com")).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com")).frame(width: 64)
     }
 }

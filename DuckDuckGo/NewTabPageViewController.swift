@@ -18,12 +18,13 @@
 //
 
 import SwiftUI
+import Bookmarks
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
-    init() {
+    init(interactionModel: FavoritesListInteracting) {
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
-                                            favoritesModel: FavoritesModel())
+                                            favoritesModel: FavoritesModel(interactionModel: interactionModel))
         super.init(rootView: newTabPageView)
     }
     

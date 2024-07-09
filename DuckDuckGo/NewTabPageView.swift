@@ -59,8 +59,6 @@ struct NewTabPageView: View {
 
                 // MARK: Customize
                 Button(action: {
-                    // Temporary action for testing purposes
-                    favoritesModel.toggleFavoritesPresence()
                 }, label: {
                     NewTabPageCustomizeButtonView()
                 }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))

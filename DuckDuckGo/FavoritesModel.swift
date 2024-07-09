@@ -18,23 +18,62 @@
 //
 
 import Foundation
+import Bookmarks
+import SwiftUI
 
 final class FavoritesModel: ObservableObject {
 
     @Published private(set) var allFavorites: [Favorite]
+
+    private let interactionModel: FavoritesListInteracting
+
     var isEmpty: Bool {
         allFavorites.isEmpty
     }
 
-    init() {
-        self.allFavorites = []
-    }
-
-    func toggleFavoritesPresence() {
-        if isEmpty {
-            allFavorites = (1...50).map { Favorite(id: $0) }
-        } else {
-            allFavorites = []
+    init(interactionModel: FavoritesListInteracting) {
+        self.interactionModel = interactionModel
+        do {
+            self.allFavorites = try interactionModel.favorites.map(Favorite.init)
+        } catch {
+            fatalError(error.localizedDescription)
         }
     }
+}
+
+enum FavoriteMappingError: Error {
+    case missingUUID
+}
+
+private extension Favorite {
+    init(_ bookmarkEntry: BookmarkEntity) throws {
+        guard let uuid = bookmarkEntry.uuid else {
+            throw FavoriteMappingError.missingUUID
+        }
+
+        self.id = uuid
+        self.title = bookmarkEntry.displayTitle
+        self.domain = bookmarkEntry.host
+    }
+}
+
+private extension BookmarkEntity {
+
+    var displayTitle: String {
+        if let title = title?.trimmingWhitespace() {
+            return title
+        }
+
+        if let host = urlObject?.host?.droppingWwwPrefix() {
+            return host
+        }
+
+        assertionFailure("Unable to create display title")
+        return ""
+    }
+
+    var host: String {
+        return urlObject?.host ?? ""
+    }
+
 }

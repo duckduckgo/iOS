@@ -38,10 +38,7 @@ import SwiftUI
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-    // swiftlint:enable type_body_length
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -2622,5 +2619,3 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
-// swiftlint:enable file_length

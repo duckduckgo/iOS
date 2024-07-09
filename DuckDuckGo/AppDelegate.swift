@@ -41,10 +41,7 @@ import NetworkProtection
 import WebKit
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
-    // swiftlint:enable type_body_length
     
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     private struct ShortcutKey {
@@ -104,7 +101,6 @@ import WebKit
         AppDependencyProvider.shared.accountManager
     }
 
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // SKAD4 support
@@ -474,7 +470,6 @@ import WebKit
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 

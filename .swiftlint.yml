@@ -7,7 +7,11 @@ disabled_rules:
   - todo
   - unused_capture_list
   - trailing_comma
-  - cyclomatic_complexity
+  - line_length
+  - function_parameter_count
+  - function_body_length
+  - file_length
+  - type_body_length
 
 opt_in_rules:
   - closure_end_indentation
@@ -30,10 +34,12 @@ custom_rules:
 analyzer_rules:
   - unused_import
 
+# Rule Config
+cyclomatic_complexity:
+  ignores_case_statements: true
 force_cast: warning
 force_try: warning
 legacy_hashing: error
-
 identifier_name:
   min_length: 1
   max_length: 1000
@@ -43,29 +49,18 @@ identifier_name:
     - x
     - y
     - z
-
-line_length:
-  warning: 150
-  ignores_urls: true
-  ignores_function_declarations: true
-  ignores_comments: true
-
 vertical_whitespace:
   max_empty_lines: 2
-
 trailing_whitespace:
   ignores_empty_lines: true
   ignores_comments: true
-
 private_over_fileprivate:
   validate_extensions: true
-
 type_name:
  min_length: 3
  max_length:
    warning: 80
    error: 100
-
 file_header:
   required_pattern: |
                     \/\/

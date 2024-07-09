@@ -127,7 +127,7 @@ class FileSizeDebugViewController: UITableViewController {
         return cell
     }
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = model[indexPath.row]
         

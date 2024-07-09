@@ -16,7 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-// swiftlint:disable file_length
+
 import Core
 import BrowserServicesKit
 import Persistence
@@ -31,7 +31,6 @@ import Subscription
 import NetworkProtection
 #endif
 
-// swiftlint:disable type_body_length
 final class SettingsViewModel: ObservableObject {
 
     // Dependencies
@@ -351,7 +350,6 @@ final class SettingsViewModel: ObservableObject {
         appDataClearingObserver = nil
     }
 }
-// swiftlint:enable type_body_length
 
 // MARK: Private methods
 extension SettingsViewModel {
@@ -542,7 +540,6 @@ extension SettingsViewModel {
 // can review and migrate
 extension SettingsViewModel {
     
-    // swiftlint:disable:next cyclomatic_complexity
     @MainActor func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {
         
         switch view {
@@ -773,4 +770,3 @@ extension SettingsViewModel {
     }
     
 }
-// swiftlint:enable file_length

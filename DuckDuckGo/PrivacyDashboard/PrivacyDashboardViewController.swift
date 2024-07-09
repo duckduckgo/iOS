@@ -25,8 +25,6 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Common
 
-// swiftlint:disable file_length
-
 extension PixelExperiment {
 
     static var privacyDashboardVariant: PrivacyDashboardVariant {

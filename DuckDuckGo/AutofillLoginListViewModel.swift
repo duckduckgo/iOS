@@ -50,7 +50,6 @@ internal enum EnableAutofillRows: Int, CaseIterable {
     case resetNeverPromptWebsites
 }
 
-// swiftlint:disable file_length type_body_length
 final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
@@ -409,7 +408,6 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
 }
-// swiftlint:enable type_body_length
 
 extension AutofillLoginListItemViewModel: Comparable {
     static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {

@@ -113,7 +113,6 @@ class ConfigurationDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         switch Sections(rawValue: indexPath.section) {
@@ -159,7 +158,6 @@ class ConfigurationDebugViewController: UITableViewController {
 
         return cell
     }
-    // swiftlint:enable cyclomatic_complexity
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {

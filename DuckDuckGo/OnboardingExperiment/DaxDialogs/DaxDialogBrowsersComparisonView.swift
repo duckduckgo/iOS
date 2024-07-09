@@ -39,7 +39,8 @@ struct DaxDialogBrowsersComparisonView: View {
             },
             content: {
                 VStack(spacing: 16.0) {
-                    AnimatableTypingText(UserText.DaxOnboardingExperiment.BrowsersComparison.title, startAnimating: $animateText) {
+                    let attributedString = NSAttributedString(string: UserText.DaxOnboardingExperiment.Intro.title)
+                    AnimatableTypingText(attString, startAnimating: $animateText) {
                         withAnimation {
                             showButton = true
                         }

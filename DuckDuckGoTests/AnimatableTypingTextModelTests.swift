@@ -40,7 +40,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
 
     func testWhenStartAnimatingIsCalledThenTimerIsStarted() {
         // GIVEN
-        let sut = AnimatableTypingTextModel(text: "Hello World!!!", onTypingFinished: nil, timerFactory: factoryMock)
+        let sut = AnimatableTypingTextModel(text: NSAttributedString(string: "Hello World!!!"), onTypingFinished: nil, timerFactory: factoryMock)
         XCTAssertFalse(factoryMock.didCallMakeTimer)
         XCTAssertNil(factoryMock.capturedInterval)
         XCTAssertNil(factoryMock.capturedRepeats)
@@ -56,7 +56,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
 
     func testWhenStopAnimatingIsCalledThenTimerIsInvalidate() throws {
         // GIVEN
-        let sut = AnimatableTypingTextModel(text: "Hello World!!!", onTypingFinished: nil, timerFactory: factoryMock)
+        let sut = AnimatableTypingTextModel(text: NSAttributedString(string: "Hello World!!!"), onTypingFinished: nil, timerFactory: factoryMock)
         sut.startAnimating()
         let timerMock = try XCTUnwrap(factoryMock.createdTimer)
         XCTAssertFalse(timerMock.didCallInvalidate)
@@ -74,7 +74,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
         }
 
         // GIVEN
-        let text = "Hello World!!!"
+        let text = NSAttributedString(string: "Hello World!!!")
         var typedText: NSAttributedString = .init(string: "")
         let sut = AnimatableTypingTextModel(text: text, onTypingFinished: nil, timerFactory: factoryMock)
         sut.startAnimating()
@@ -87,12 +87,12 @@ final class AnimatableTypingTextModelTests: XCTestCase {
             .store(in: &cancellables)
         XCTAssertTrue(typedText.string.isEmpty)
 
-        for i in 0 ..< text.count {
+        for i in 0 ..< text.length {
             // WHEN
             timerMock.fire()
-            
-            // THEN checks that the right character doesn't have clear color applied but the rest of the string has
-            XCTAssertTrue(assertTypedChar(forTypedText: typedText, at: i))
+
+            // THEN
+            XCTAssertTrue(isAttributedStringColorsCorrect(typedText, visibleLength: i + 1))
         }
     }
 
@@ -102,7 +102,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
         }
 
         // GIVEN
-        let text = "Hello World!!!"
+        let text = NSAttributedString(string: "Hello World!!!")
         var typedText: NSAttributedString = .init(string: "")
         let sut = AnimatableTypingTextModel(text: text, onTypingFinished: nil, timerFactory: factoryMock)
         sut.startAnimating()
@@ -120,7 +120,7 @@ final class AnimatableTypingTextModelTests: XCTestCase {
         sut.stopAnimating()
 
         // THEN the string does not have any clear character
-        XCTAssertEqual(typedText.string, text)
+        XCTAssertEqual(typedText, text)
         let attributes = typedText.attributes(at: 0, effectiveRange: nil)
         let foregroundcColor = attributes[.foregroundColor] as? UIColor
         XCTAssertNil(foregroundcColor)
@@ -128,14 +128,14 @@ final class AnimatableTypingTextModelTests: XCTestCase {
 
     func testWhenTimerFiresLastCharOfTextThenTimerIsInvalidated() throws {
         // GIVEN
-        let text = "Hello World!!!"
+        let text = NSAttributedString(string: "Hello World!!!")
         let sut = AnimatableTypingTextModel(text: text, onTypingFinished: nil, timerFactory: factoryMock)
         sut.startAnimating()
         let timerMock = try XCTUnwrap(factoryMock.createdTimer)
         XCTAssertFalse(timerMock.didCallInvalidate)
 
         // WHEN
-        text.forEach { _ in
+        text.string.forEach { _ in
             timerMock.fire()
         }
         timerMock.fire() // Simulate timer firing after whole text shown
@@ -147,13 +147,13 @@ final class AnimatableTypingTextModelTests: XCTestCase {
     func testWhenTimerFinishesThenOnTypingFinishedBlockIsCalled() throws {
         // GIVEN
         let expectation = self.expectation(description: #function)
-        let text = "Hello World!!!"
+        let text = NSAttributedString(string: "Hello World!!!")
         let sut = AnimatableTypingTextModel(text: text, onTypingFinished: { expectation.fulfill() }, timerFactory: factoryMock)
         sut.startAnimating()
         let timerMock = try XCTUnwrap(factoryMock.createdTimer)
 
         // WHEN
-        text.forEach { _ in
+        text.string.forEach { _ in
             timerMock.fire()
         }
         timerMock.fire() // Simulate timer firing after whole text shown
@@ -166,23 +166,25 @@ final class AnimatableTypingTextModelTests: XCTestCase {
 
 private extension AnimatableTypingTextModelTests {
 
-    func assertTypedChar(forTypedText typedText: NSAttributedString, at position: Int) -> Bool {
-        let typedTextAttribute = typedText.attribute(.foregroundColor, at: position, effectiveRange: nil)
-
-        let location = position + 1
-
-        // If it's the last char just check the currenct character as there's no remaining string to check
-        guard location < typedText.length else {
-            return typedTextAttribute == nil
+    func isAttributedStringColorsCorrect(_ attributedString: NSAttributedString, visibleLength: Int) -> Bool {
+        var isCorrect = true
+        let range = NSRange(location: 0, length: attributedString.length)
+        attributedString.enumerateAttribute(.foregroundColor, in: range, options: []) { value, range, _ in
+            guard let color = value as? UIColor else {
+                isCorrect = false
+                return
+            }
+            if range.location < visibleLength {
+                if color != .label {
+                    isCorrect = false
+                }
+            } else {
+                if color != .clear {
+                    isCorrect = false
+                }
+            }
         }
-
-        // Checks that the remaining substring has a clear color
-        let remainingTextRange = NSRange(location: location, length: typedText.string.count)
-        let remainingTextAttributes = typedText.attributes(at: location, longestEffectiveRange: nil, in: remainingTextRange)
-        let remainingTextForegroundColor = remainingTextAttributes[.foregroundColor] as? UIColor
-
-        return typedTextAttribute == nil &&
-            remainingTextForegroundColor == .clear
+        return isCorrect
     }
 
 }

@@ -68,6 +68,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
+    private let homePageConfiguration: HomePageConfiguration
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
     private let appSettings: AppSettings
@@ -76,7 +77,9 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
+    // swiftlint:disable:next function_parameter_count
     static func loadFromStoryboard(
+        homePageConfiguration: HomePageConfiguration,
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
@@ -87,6 +90,7 @@ class HomeViewController: UIViewController, NewTabPage {
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
                 coder: coder,
+                homePageConfiguration: homePageConfiguration,
                 tabModel: model,
                 favoritesViewModel: favoritesViewModel,
                 appSettings: appSettings,
@@ -99,12 +103,14 @@ class HomeViewController: UIViewController, NewTabPage {
 
     required init?(
         coder: NSCoder,
+        homePageConfiguration: HomePageConfiguration,
         tabModel: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders
     ) {
+        self.homePageConfiguration = homePageConfiguration
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
         self.appSettings = appSettings
@@ -124,6 +130,7 @@ class HomeViewController: UIViewController, NewTabPage {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
+        collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
         decorate()
 
@@ -160,9 +167,11 @@ class HomeViewController: UIViewController, NewTabPage {
     }
     
     @objc func remoteMessagesDidChange() {
-        os_log("Remote messages did change", log: .remoteMessaging, type: .info)
-        collectionView.refreshHomeConfiguration()
-        refresh()
+        DispatchQueue.main.async {
+            os_log("Remote messages did change", log: .remoteMessaging, type: .info)
+            self.collectionView.refreshHomeConfiguration()
+            self.refresh()
+        }
     }
 
     func configureCollectionView() {

@@ -32,6 +32,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import RemoteMessaging
 import SyncDataProviders
 import Subscription
 
@@ -78,6 +79,10 @@ import WebKit
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
+
+    private(set) var homePageConfiguration: HomePageConfiguration!
+
+    private(set) var remoteMessagingClient: RemoteMessagingClient!
 
     private(set) var syncService: DDGSync!
     private(set) var syncDataProviders: SyncDataProviders!
@@ -278,6 +283,22 @@ import WebKit
                 })
             }
 
+        remoteMessagingClient = RemoteMessagingClient(
+            bookmarksDatabase: bookmarksDatabase,
+            appSettings: AppDependencyProvider.shared.appSettings,
+            internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+            configurationStore: ConfigurationStore.shared,
+            database: Database.shared,
+            errorEvents: RemoteMessagingStoreErrorHandling(),
+            remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
+                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
+            )
+        )
+        remoteMessagingClient.registerBackgroundRefreshTaskHandler()
+
+        homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
+                                                      remoteMessagingClient: remoteMessagingClient)
+
         let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
                                                 AppDependencyProvider.shared.internalUserDecider,
@@ -287,6 +308,7 @@ import WebKit
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
+                                      homePageConfiguration: homePageConfiguration,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
@@ -317,11 +339,6 @@ import WebKit
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-
-        RemoteMessagingClient.registerBackgroundRefreshTaskHandler(
-            bookmarksDatabase: bookmarksDatabase,
-            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-        )
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -616,10 +633,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessagingClient.fetchAndProcess(
-                bookmarksDatabase: self.bookmarksDatabase,
-                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            )
+            try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
         }
     }
 

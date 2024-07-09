@@ -44,7 +44,9 @@ final class YoutubePlayerNavigationHandler {
     }
     
     static var htmlTemplatePath: String {
-        guard let file = ContentScopeScripts.Bundle.path(forResource: Constants.templateName, ofType: Constants.templateExtension, inDirectory: Constants.templateDirectory) else {
+        guard let file = ContentScopeScripts.Bundle.path(forResource: Constants.templateName,
+                                                         ofType: Constants.templateExtension,
+                                                         inDirectory: Constants.templateDirectory) else {
             assertionFailure("YouTube Private Player HTML template not found")
             return ""
         }

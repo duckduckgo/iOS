@@ -36,8 +36,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 24.0) {
-                let attributedTitle = NSAttributedString(string: UserText.DaxOnboardingExperiment.Intro.title)
-                AnimatableTypingText(attributedTitle, startAnimating: animateText) {
+                AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: animateText) {
                     withAnimation {
                         showCTA.wrappedValue = true
                     }

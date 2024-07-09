@@ -38,8 +38,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                let attributedTitle = NSAttributedString(string: UserText.DaxOnboardingExperiment.BrowsersComparison.title)
-                AnimatableTypingText(attributedTitle, startAnimating: animateText) {
+                AnimatableTypingText(UserText.DaxOnboardingExperiment.BrowsersComparison.title, startAnimating: animateText) {
                     withAnimation {
                         showContent.wrappedValue = true
                     }

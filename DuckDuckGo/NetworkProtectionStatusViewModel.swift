@@ -71,7 +71,7 @@ struct NetworkProtectionLocationStatusModel {
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionStatusViewModel: ObservableObject {
 
-    private enum Constants {
+    enum Constants {
         static let defaultDownloadVolume = "0 KB"
         static let defaultUploadVolume = "0 KB"
     }
@@ -144,8 +144,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var ipAddress: String?
     @Published public var dnsSettings: NetworkProtectionDNSSettings
 
-    @Published public var uploadTotal: String = Constants.defaultUploadVolume
-    @Published public var downloadTotal: String = Constants.defaultDownloadVolume
+    @Published public var uploadTotal: String?
+    @Published public var downloadTotal: String?
     private var throughputUpdateTimer: Timer?
 
     var shouldShowFAQ: Bool {
@@ -220,17 +220,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private func setUpToggledStatePublisher() {
         statusObserver.publisher
-            .map {
-                switch $0 {
-                case .connected, .connecting:
-                    return true
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                switch status {
+                case .connected:
+                    self?.isNetPEnabled = true
+                case .connecting:
+                    self?.isNetPEnabled = true
+                    self?.resetConnectionInformation()
                 default:
-                    return false
+                    self?.isNetPEnabled = false
+                    self?.resetConnectionInformation()
                 }
             }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-            .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
             .store(in: &cancellables)
 
         statusObserver.publisher
@@ -487,6 +489,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         let timeLapsed = Self.dateFormatter.string(from: timeLapsedInterval) ?? "00:00:00"
         return UserText.netPStatusConnected(since: timeLapsed)
     }
+
+    private func resetConnectionInformation() {
+        self.location = nil
+        self.ipAddress = nil
+        self.uploadTotal = nil
+        self.downloadTotal = nil
+    }
+
 }
 
 private extension ConnectionStatus {

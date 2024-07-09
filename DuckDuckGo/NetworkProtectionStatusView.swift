@@ -40,7 +40,7 @@ struct NetworkProtectionStatusView: View {
             toggle()
             locationDetails()
 
-            if statusModel.hasActiveConnection && !statusModel.isSnoozing {
+            if statusModel.isNetPEnabled && statusModel.hasActiveConnection && !statusModel.isSnoozing && statusModel.ipAddress != nil {
                 connectionDetails()
             }
 
@@ -199,8 +199,8 @@ struct NetworkProtectionStatusView: View {
 
             NetworkProtectionThroughputItemView(
                 title: UserText.vpnDataVolume,
-                downloadSpeed: statusModel.downloadTotal,
-                uploadSpeed: statusModel.uploadTotal
+                downloadSpeed: statusModel.downloadTotal ?? NetworkProtectionStatusViewModel.Constants.defaultDownloadVolume,
+                uploadSpeed: statusModel.uploadTotal ?? NetworkProtectionStatusViewModel.Constants.defaultUploadVolume
             )
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))

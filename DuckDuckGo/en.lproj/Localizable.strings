@@ -1688,10 +1688,10 @@ https://duckduckgo.com/mac";
 "onboardingWelcomeHeader" = "Welcome to DuckDuckGo!";
 
 /* Search query for the cast of Mighty Ducks */
-"ontextual.onboarding.try-search.option2-english" = "cast of avatar";
+"ontextual.onboarding.try-search.option2-english" = "mighty ducks cast";
 
 /* Search query for the cast of Avatar */
-"ontextual.onboarding.try-search.option2-international" = "mighty ducks cast";
+"ontextual.onboarding.try-search.option2-international" = "cast of avatar";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "The app required to open that link can’t be found";

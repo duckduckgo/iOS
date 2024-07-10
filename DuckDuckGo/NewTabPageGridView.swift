@@ -28,7 +28,7 @@ struct NewTabPageGridView<Content: View>: View {
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
 
-        LazyVGrid(columns: flexibleColumns(columnsCount), content: {
+        LazyVGrid(columns: flexibleColumns(columnsCount), spacing: 24, content: {
             content(columnsCount)
         })
         .padding(0)

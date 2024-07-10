@@ -30,7 +30,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
     @State var isCollapsed: Bool = true
 
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 24) {
 
             let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape) * 2
 

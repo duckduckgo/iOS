@@ -25,6 +25,11 @@ import Core
 final class YoutubePlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
+    var referrer: DuckPlayerReferrer = .other {
+        didSet {
+            print(referrer)
+        }
+    }
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -108,6 +113,13 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
             DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
         }
         
+        // Pixel for Views From Youtube
+        if let url = navigationAction.request.url,
+            referrer == .youtube,
+            duckPlayer.settings.mode == .enabled {
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic, debounce: 2)
+        }
+        
         // If DuckPlayer is Enabled or in ask mode, render the video
         if let url = navigationAction.request.url,
             url.isDuckURLScheme,
@@ -138,6 +150,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     // such as changes triggered via JS
     @MainActor
     func handleURLChange(url: URL?, webView: WKWebView) {
+        
         if let url = url, url.isYoutubeVideo,
             !url.isDuckPlayer,
             let (videoID, timestamp) = url.youtubeVideoParams,
@@ -146,6 +159,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
             let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
             webView.load(URLRequest(url: newURL))
         }
+       
     }
     
     // DecidePolicyFor handler to redirect relevant requests

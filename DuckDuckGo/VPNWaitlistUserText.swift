@@ -19,7 +19,6 @@
 
 import Foundation
 
-// swiftlint:disable line_length
 struct VPNWaitlistUserText {
 
     static let networkProtectionPrivacyPolicySection1Title = "We don’t ask for any personal information from you in order to use this beta service."
@@ -64,4 +63,3 @@ struct VPNWaitlistUserText {
     static let networkProtectionTermsOfServiceSection8List = "You may be asked during the beta period to provide feedback about your experience. Doing so is optional and your feedback may be used to improve the service.\n\nIf you have enabled notifications for the DuckDuckGo app, we may use notifications to ask about your experience. You can disable notifications if you do not want to receive them."
 
 }
-// swiftlint:enable line_length

@@ -26,7 +26,6 @@ import Combine
 @testable import BrowserServicesKit
 @testable import Common
 
-// swiftlint:disable line_length file_length
 class AutofillLoginListViewModelTests: XCTestCase {
 
     private let tld = TLD()
@@ -445,4 +444,3 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
         XCTAssertEqual(result.count, 1)
     }
 }
-// swiftlint:enable line_length

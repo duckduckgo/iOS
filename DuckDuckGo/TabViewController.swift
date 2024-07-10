@@ -660,6 +660,12 @@ class TabViewController: UIViewController {
                 handler.handleURLChange(url: url, webView: webView)
             }
         }
+                
+        if var handler = youtubeNavigationHandler,
+            let url {
+            handler.referrer = url.isYoutube ? .youtube : .other
+            
+        }
     }
     
     func enableFireproofingForDomain(_ domain: String) {

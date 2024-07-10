@@ -774,18 +774,27 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        wakeLazyFireButtonAnimator()
-        
-        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            segueToActionSheetDaxDialogWithSpec(spec)
-        } else {
+
+        func showClearDataAlert() {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
             })
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
 
+        Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        wakeLazyFireButtonAnimator()
+
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            showClearDataAlert()
+        } else {
+            if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+                segueToActionSheetDaxDialogWithSpec(spec)
+            } else {
+               showClearDataAlert()
+            }
+        }
+        
         performCancel()
     }
     

@@ -28,7 +28,7 @@ struct ContextualDaxDialog: View {
     var title: String?
     let message: NSAttributedString
     var list: [ContextualOnboardingListItem] = []
-    var listAction: ((_ index: Int) -> Void)?
+    var listAction: ((_ title: String) -> Void)?
     var imageName: String?
     var cta: String?
     var action: (() -> Void)?
@@ -229,4 +229,20 @@ extension ContextualDaxDialog {
         listAction: { _ in })
     .padding()
     .preferredColorScheme(.light)
+}
+
+#Preview("en_GB list") {
+    ContextualDaxDialog(logoPosition: .top,
+                        title: "title",
+                        message: "this is a message".attributedStringFromMarkdown(color: .blue),
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_GB")).sitesList,
+                        listAction: { _ in })
+}
+
+#Preview("en_US list") {
+    ContextualDaxDialog(logoPosition: .top,
+                        title: "title",
+                        message: "this is a message".attributedStringFromMarkdown(color: .blue),
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_US")).sitesList,
+                        listAction: { _ in })
 }

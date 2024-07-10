@@ -162,6 +162,13 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
         }
         
+        // Pixel for views from Other Sites
+        if let url = navigationAction.request.url,
+            navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] != Constants.SERPURL,
+            duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
+        }
+        
         
         if let url = navigationAction.request.url,
             url.isYoutubeVideo,

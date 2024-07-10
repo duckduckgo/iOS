@@ -52,12 +52,7 @@ private extension ContextualOnboardingPresenter {
         vc.performSegue(withIdentifier: "DaxDialog", sender: spec)
     }
 
-    func presentExperimentContextualOnboarding(
-        for spec: DaxDialogs.BrowsingSpec,
-        in vc: TabViewControllerType,
-        onCompletion: (() -> Void)? = nil,
-        onDismiss: (() -> Void)? = nil
-    ) {
+    func presentExperimentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewControllerType) {
 
         func animate(daxController: UIViewController, visible isVisible: Bool, onCompletion: ((Bool) -> Void)? = nil) {
             daxController.view.isHidden = !isVisible

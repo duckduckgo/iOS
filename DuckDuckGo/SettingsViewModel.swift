@@ -260,6 +260,17 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.duckPlayerMode = $0
                 self.state.duckPlayerMode = $0
+                
+                switch self.state.duckPlayerMode {
+                case .alwaysAsk:
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerSettingBackToDefault)
+                case .disabled:
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerSettingNeverSettings)
+                case .enabled:
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerSettingNeverSettings)
+                default:
+                    break
+                }
             }
         )
     }

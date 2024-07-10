@@ -205,8 +205,8 @@ extension DownloadsList {
         Alert(
             title: Text(UserText.cancelDownloadAlertTitle),
             message: Text(UserText.cancelDownloadAlertDescription),
-            primaryButton: .cancel(Text(UserText.cancelDownloadAlertResumeAction)),
-            secondaryButton: .destructive(Text(UserText.cancelDownloadAlertCancelAction), action: {
+            primaryButton: .cancel(Text(UserText.cancelDownloadAlertNoAction)),
+            secondaryButton: .destructive(Text(UserText.cancelDownloadAlertYesAction), action: {
                 cancelDownload(for: row)
             })
         )

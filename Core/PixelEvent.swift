@@ -26,7 +26,6 @@ import NetworkProtection
 
 extension Pixel {
     
-    // swiftlint:disable:next type_body_length
     public enum Event {
         
         case appLaunch
@@ -1473,7 +1472,6 @@ extension Pixel.Event {
     }
 }
 
-// swiftlint:disable file_length
 extension Pixel.Event {
     
     public enum BucketAggregation: String, CustomStringConvertible {

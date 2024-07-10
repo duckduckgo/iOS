@@ -22,8 +22,6 @@ import Bookmarks
 import Core
 import WidgetKit
 
-// swiftlint:disable file_length
-// swiftlint:disable:next type_body_length
 public class AppUserDefaults: AppSettings {
     
     public struct Notifications {

@@ -183,7 +183,8 @@ class MainViewController: UIViewController {
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
         syncPausedStateManager: any SyncPausedStateManaging,
-        variantManager: VariantManager
+        variantManager: VariantManager,
+        contextualOnboardingPresenter: ContextualOnboardingPresenting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -201,7 +202,8 @@ class MainViewController: UIViewController {
                                      previewsSource: previewsSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
-                                     syncService: syncService)
+                                     syncService: syncService,
+                                     contextualOnboardingPresenter: contextualOnboardingPresenter)
         self.syncPausedStateManager = syncPausedStateManager
         self.homeTabManager = NewTabPageManager()
         self.variantManager = variantManager

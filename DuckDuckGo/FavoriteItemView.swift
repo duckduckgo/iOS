@@ -36,7 +36,7 @@ struct FavoriteItemView: View {
             }
 
             Text(favorite.title)
-                .daxCaption()
+                .font(Font.system(size: 12))
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))

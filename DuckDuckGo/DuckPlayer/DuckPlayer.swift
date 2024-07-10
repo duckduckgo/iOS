@@ -26,7 +26,7 @@ import UserScript
 import Core
 
 /// Values that the Frontend can use to determine the current state.
-struct InitialSetupSettings: Codable {
+struct InitialPlayerSettings: Codable {
     struct PlayerSettings: Codable {
         let pip: PIP
     }
@@ -57,6 +57,10 @@ struct InitialSetupSettings: Codable {
     let settings: PlayerSettings
     let platform: Platform
     let locale: Locale
+}
+
+struct InitialOverlaySettings: Codable {
+    let userValues: UserValues
 }
 
 
@@ -140,27 +144,22 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     @MainActor
-    private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialSetupSettings {
+    private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
-        let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let platform = InitialSetupSettings.Platform(name: "ios")
-        let environment = InitialSetupSettings.Environment.development
-        let locale = InitialSetupSettings.Locale.en
-        let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
+        let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
+        let platform = InitialPlayerSettings.Platform(name: "ios")
+        let environment = InitialPlayerSettings.Environment.development
+        let locale = InitialPlayerSettings.Locale.en
+        let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-        return InitialSetupSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+        return InitialPlayerSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
     }
     
     @MainActor
-    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialSetupSettings {
+    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
-        let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let platform = InitialSetupSettings.Platform(name: "ios")
-        let environment = InitialSetupSettings.Environment.development
-        let locale = InitialSetupSettings.Locale.en
-        let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-        return InitialSetupSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+        return InitialOverlaySettings(userValues: userValues)
     }
     
 }

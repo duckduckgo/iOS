@@ -20,16 +20,67 @@
 import SwiftUI
 import DuckUI
 
-struct ToggleExpandButtonView: View {
+struct ToggleExpandButtonStyle: ButtonStyle {
+    @Environment(\.colorScheme) private var colorScheme
 
-    let isIndicatingExpand: Bool
+    let direction: Direction
 
+    func makeBody(configuration: Configuration) -> some View {
+        let isDark = colorScheme == .dark
+
+        HStack(spacing: 0) {
+            VStack {
+                ExpandButtonDivider()
+            }
+            ZStack {
+                Circle()
+                    .stroke(Color(designSystemColor: .lines), lineWidth: 1)
+                    .frame(width: 32)
+                    .if(configuration.isPressed, transform: {
+                        $0.background(Circle()
+                            .fill(isDark ? Color.tint(0.12) : Color.shade(0.06)))
+                    })
+                    .background(
+                        Circle()
+                            .fill(Color(designSystemColor: .background))
+                    )
+                Image(direction.image)
+                    .resizable()
+                    .foregroundColor(Color(designSystemColor: .icons))
+                    .frame(width: 16, height: 16)
+            }
+            VStack {
+                ExpandButtonDivider()
+            }
+        }
+    }
+
+    enum Direction {
+        case up
+        case down
+
+        var image: ImageResource {
+            switch self {
+            case .up:
+                return .chevronUp
+            case .down:
+                return .chevronDown
+            }
+        }
+    }
+}
+
+private struct ExpandButtonDivider: View {
     var body: some View {
-        Text(isIndicatingExpand ? "Show more" : "Show less")
-            .daxCaption()
+        Divider()
+            .frame(height: 1)
+            .overlay(Color(designSystemColor: .lines))
     }
 }
 
 #Preview {
-    return ToggleExpandButtonView(isIndicatingExpand: true)
+    HStack {
+        Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .down))
+        Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .up))
+    }
 }

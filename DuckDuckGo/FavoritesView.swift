@@ -47,8 +47,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                 Button(action: {
                     isCollapsed.toggle()
                 }, label: {
-                    ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
-                })
+                }).buttonStyle(ToggleExpandButtonStyle(direction: isCollapsed ? .down : .up))
             }
         }
     }

@@ -21,10 +21,10 @@ import Bookmarks
 import SwiftUI
 import Core
 
-struct FavoritesView: View {
+struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @ObservedObject var model: FavoritesModel
     
+    @ObservedObject var model: Model
     @State var isCollapsed: Bool = true
 
     var body: some View {
@@ -53,15 +53,5 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView(model: FavoritesModel())
-}
-
-extension FavoritesModel {
-    convenience init() {
-        let location = FileManager.default.temporaryDirectory.appendingPathComponent("Bookmarks.sqlite", conformingTo: .database)
-        let db = BookmarksDatabase.make(location: location)
-        db.loadStore()
-
-        self.init(interactionModel: FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: .default))
-    }
+    FavoritesView(model: FavoritesPreviewModel())
 }

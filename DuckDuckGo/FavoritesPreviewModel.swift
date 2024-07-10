@@ -1,5 +1,5 @@
 //
-//  FavoritesModel.swift
+//  FavoritesPreviewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,8 +19,23 @@
 
 import Foundation
 
-protocol FavoritesModel: AnyObject, ObservableObject {
-    var allFavorites: [Favorite] { get }
+final class FavoritesPreviewModel: FavoritesModel {
+    @Published var allFavorites: [Favorite]
 
-    var isEmpty: Bool { get }
+    var isEmpty: Bool { allFavorites.isEmpty }
+
+    init(allFavorites: [Favorite]) {
+        self.allFavorites = allFavorites
+    }
+
+    convenience init() {
+        let favorites = (0...10).map {
+            Favorite(
+                id: UUID().uuidString,
+                title: "Favorite \($0)",
+                domain: "favorite\($0).domain.com")
+        }
+
+        self.init(allFavorites: favorites)
+    }
 }

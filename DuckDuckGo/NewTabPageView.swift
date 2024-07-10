@@ -21,13 +21,13 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView: View {
+struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @ObservedObject var messagesModel: NewTabPageMessagesModel
-    @ObservedObject var favoritesModel: FavoritesModel
+    @ObservedObject var favoritesModel: FavoritesModelType
 
-    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModel) {
+    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
 
@@ -67,19 +67,20 @@ struct NewTabPageView: View {
         }
         .background(Color(designSystemColor: .background))
     }
+}
 
-    private struct Constant {
-        static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+private struct Constant {
+    static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
 
-        static let messageMaximumWidth: CGFloat = 380
-        static let messageMaximumWidthPad: CGFloat = 455
-    }
+    static let messageMaximumWidth: CGFloat = 380
+    static let messageMaximumWidthPad: CGFloat = 455
 }
 
 // MARK: - Preview
 
 #Preview("Regular") {
-    NewTabPageView(messagesModel: NewTabPageMessagesModel(), favoritesModel: FavoritesModel())
+    NewTabPageView(messagesModel: NewTabPageMessagesModel(),
+                   favoritesModel: FavoritesPreviewModel())
 }
 
 #Preview("With message") {
@@ -98,7 +99,7 @@ struct NewTabPageView: View {
                 ]
             )
         ),
-        favoritesModel: FavoritesModel()
+        favoritesModel: FavoritesPreviewModel()
     )
 }
 

@@ -20,19 +20,19 @@
 import SwiftUI
 import Bookmarks
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
 
     init(interactionModel: FavoritesListInteracting) {
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
-                                            favoritesModel: FavoritesModel(interactionModel: interactionModel))
+                                            favoritesModel: FavoritesDefaultModel(interactionModel: interactionModel))
         super.init(rootView: newTabPageView)
     }
-    
+
     @available(*, unavailable)
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?

@@ -23,15 +23,17 @@ import Core
 
 struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+    @Environment(\.isLandscapeOrientation) var isLandscape
+
     @ObservedObject var model: Model
+
     @State var isCollapsed: Bool = true
 
     var body: some View {
         VStack(alignment: .center) {
 
-            let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass) * 2
-            
+            let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape) * 2
+
             let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
             
             NewTabPageGridView { _ in
@@ -40,7 +42,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                     .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
             }
-            
+
             if model.allFavorites.count > collapsedMaxItemsCount {
                 Button(action: {
                     isCollapsed.toggle()

@@ -21,11 +21,12 @@ import SwiftUI
 
 struct NewTabPageGridView<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
+    @Environment(\.isLandscapeOrientation) var isLandscape
+    
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
 
     var body: some View {
-        let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass)
+        let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
 
         LazyVGrid(columns: flexibleColumns(columnsCount), content: {
             content(columnsCount)
@@ -50,7 +51,8 @@ enum NewTabPageGrid {
         static let edgeSize = 64.0
     }
 
-    static func columnsCount(for sizeClass: UserInterfaceSizeClass?) -> Int {
-        sizeClass == .regular ? ColumnCount.regular : ColumnCount.compact
+    static func columnsCount(for sizeClass: UserInterfaceSizeClass?, isLandscape: Bool) -> Int {
+        let usesWideLayout = isLandscape || sizeClass == .regular
+        return usesWideLayout ? ColumnCount.regular : ColumnCount.compact
     }
 }

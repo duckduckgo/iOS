@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "bfabf4518a33eb2b4b11003a15633a24c28fa922",
-        "version" : "169.0.0"
+        "branch" : "bunn/duckplayer/newtab",
+        "revision" : "0fa12324a9bcc0072a521c433951e7f537f4ebc0"
       }
     },
     {

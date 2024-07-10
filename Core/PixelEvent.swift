@@ -1468,7 +1468,7 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
-        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial"
+        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }

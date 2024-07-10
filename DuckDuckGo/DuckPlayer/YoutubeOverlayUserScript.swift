@@ -23,18 +23,21 @@ import Common
 import UserScript
 import Combine
 import Core
+import BrowserServicesKit
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
     var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
+    var statisticsStore: StatisticsStore
     
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol) {
+    init(duckPlayer: DuckPlayerProtocol, statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.duckPlayer = duckPlayer
+        self.statisticsStore = statisticsStore
         super.init()
         subscribeToDuckPlayerMode()
     }
@@ -72,6 +75,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let getUserValues = "getUserValues"
         static let openDuckPlayer = "openDuckPlayer"
         static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
+        static let initialSetup = "initialSetup"
     }
 
     weak var broker: UserScriptMessageBroker?
@@ -102,6 +106,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             return openDuckPlayer
         case Handlers.sendDuckPlayerPixel:
             return handleSendJSPixel
+        case Handlers.initialSetup:
+            return duckPlayer.initialSetup
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
             // TODO: Send pixel here
@@ -152,7 +158,11 @@ extension YoutubeOverlayUserScript {
         switch pixelName {
         case "play.use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
-            UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
+            
+            if let installDate = statisticsStore.installDate,
+                installDate > Date.yearAgo {
+                UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
+            }
                 
         case "play.do_not_use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)

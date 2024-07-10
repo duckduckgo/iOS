@@ -1,5 +1,5 @@
 //
-//  FavoriteItemFavicon.swift
+//  FavoriteIconView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -56,7 +56,7 @@ struct FavoriteIconView: View {
                     return
                 }
 
-                let useBorder = URL.isDuckDuckGo(domain: domain) || icon.size.width < Constants.largeFaviconSize
+                let useBorder = URL.isDuckDuckGo(domain: domain) || icon.size.width < Constants.faviconSize
                 let image = Image(uiImage: icon)
                 continuation.resume(returning: Favicon(image: image, isUsingBorder: useBorder))
             }
@@ -76,8 +76,7 @@ struct FavoriteIconView: View {
     }
 
     struct Constants {
-        static let largeFaviconSize: CGFloat = 40
-        static let faviconSize: CGFloat = 64
+        static let faviconSize: CGFloat = 40
         static let borderSize: CGFloat = 12
     }
 }

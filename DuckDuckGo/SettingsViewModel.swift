@@ -267,7 +267,7 @@ final class SettingsViewModel: ObservableObject {
                 case .disabled:
                     Pixel.fire(pixel: Pixel.Event.duckPlayerSettingNeverSettings)
                 case .enabled:
-                    Pixel.fire(pixel: Pixel.Event.duckPlayerSettingNeverSettings)
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerSettingAlwaysSettings)
                 default:
                     break
                 }

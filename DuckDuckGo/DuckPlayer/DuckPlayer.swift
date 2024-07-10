@@ -35,9 +35,8 @@ struct InitialSetupSettings: Codable {
         let status: Status
     }
     
-    enum Platform: String, Codable {
-        case ios
-        case macos
+    struct Platform: Codable {
+        let name: String
     }
 
     enum Status: String, Codable {
@@ -144,7 +143,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialSetupSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let platform = InitialSetupSettings.Platform.ios
+        let platform = InitialSetupSettings.Platform(name: "ios")
         let environment = InitialSetupSettings.Environment.development
         let locale = InitialSetupSettings.Locale.en
         let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
@@ -156,7 +155,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialSetupSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-        let platform = InitialSetupSettings.Platform.ios
+        let platform = InitialSetupSettings.Platform(name: "ios")
         let environment = InitialSetupSettings.Environment.development
         let locale = InitialSetupSettings.Locale.en
         let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)

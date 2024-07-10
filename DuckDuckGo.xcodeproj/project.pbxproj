@@ -3472,17 +3472,17 @@
 		6FE127362C20436A00EB5724 /* HomeRedesign */ = {
 			isa = PBXGroup;
 			children = (
+				6FE1273B2C204C0D00EB5724 /* Subviews */,
 				6F03CAF82C32C3AA004179A8 /* Messages */,
 				6FE127372C20492500EB5724 /* NewTabPage.swift */,
 				6FE127392C204BD000EB5724 /* NewTabPageView.swift */,
 				6FE127452C2054A900EB5724 /* NewTabPageViewController.swift */,
 				6FB1FEA12C256ACD0075B68B /* NewTabPageManager.swift */,
-				6FE1273B2C204C0D00EB5724 /* Views */,
 			);
 			name = HomeRedesign;
 			sourceTree = "<group>";
 		};
-		6FE1273B2C204C0D00EB5724 /* Views */ = {
+		6FE1273B2C204C0D00EB5724 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
 				6FE127472C20941A00EB5724 /* Shortcuts */,
@@ -3491,7 +3491,7 @@
 				6F96FF0F2C2B128500162692 /* NewTabPageCustomizeButtonView.swift */,
 				6FB2A67D2C2DAFB4004D20C8 /* NewTabPageGridView.swift */,
 			);
-			name = Views;
+			name = Subviews;
 			sourceTree = "<group>";
 		};
 		6FE127412C204DE900EB5724 /* Favorites */ = {

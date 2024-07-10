@@ -54,8 +54,10 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
     @IBOutlet private(set) weak var errorMessage: UILabel!
+    @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var webViewContainer: UIView!
-    
+    var daxContextualOnboardingController: UIViewController?
+
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
@@ -293,7 +295,8 @@ class TabViewController: UIViewController {
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
-                                   syncService: DDGSyncing) -> TabViewController {
+                                   syncService: DDGSyncing,
+                                   contextualOnboardingPresenter: ContextualOnboardingPresenting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -301,7 +304,8 @@ class TabViewController: UIViewController {
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
-                              syncService: syncService)
+                              syncService: syncService,
+                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         })
         return controller
     }
@@ -315,19 +319,23 @@ class TabViewController: UIViewController {
     
     var duckPlayer: DuckPlayerProtocol = DuckPlayer()
     var youtubeNavigationHandler: DuckNavigationHandling?
-    
+
+    let contextualOnboardingPresenter: ContextualOnboardingPresenting
+
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   contextualOnboardingPresenter: ContextualOnboardingPresenting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.contextualOnboardingPresenter = contextualOnboardingPresenter
         super.init(coder: aDecoder)
     }
 
@@ -452,6 +460,13 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor),
+        ])
         webView.scrollView.refreshControl = refreshControl
         // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
         // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`
@@ -1343,25 +1358,30 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        isShowingFullScreenDaxDialog = true
+        if !DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            isShowingFullScreenDaxDialog = true
+        }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         let daxDialogSourceURL = self.url
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self else { return }
             // https://app.asana.com/0/414709148257752/1201620790053163/f
-            if self?.url != daxDialogSourceURL {
+            if self.url != daxDialogSourceURL {
                 DaxDialogs.shared.overrideShownFlagFor(spec, flag: false)
-                self?.isShowingFullScreenDaxDialog = false
+                self.isShowingFullScreenDaxDialog = false
                 return
             }
 
-            self?.chromeDelegate?.omniBar.resignFirstResponder()
-            self?.chromeDelegate?.setBarsHidden(false, animated: true)
-            self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+            self.chromeDelegate?.omniBar.resignFirstResponder()
+            self.chromeDelegate?.setBarsHidden(false, animated: true)
+
+            // Present the contextual onboarding
+            contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)
 
             if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
-                self?.woShownRecently = true
-                self?.fireWoFollowUp = true
+                self.woShownRecently = true
+                self.fireWoFollowUp = true
             }
         }
     }

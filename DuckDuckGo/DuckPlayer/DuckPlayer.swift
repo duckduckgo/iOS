@@ -157,7 +157,6 @@ final class DuckPlayer: DuckPlayerProtocol {
     
     @MainActor
     private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
-        let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let userValues = encodeUserValues()
         return InitialOverlaySettings(userValues: userValues)
     }

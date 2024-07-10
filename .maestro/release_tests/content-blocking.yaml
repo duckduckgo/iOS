@@ -33,9 +33,7 @@ tags:
     id: PrivacyIcon
 - assertVisible: "Protections are ON for this site"
 
-- assertVisible: "We blocked"
-- assertVisible: "Google Ads (Google)"
-- assertVisible: " from loading tracking requests on this page."
+- assertVisible: "We blocked Google Ads (Google) from loading tracking requests on this page."
 
 - tapOn: "View Tracker Companies"
 - assertVisible: "doubleclick.net"

@@ -34,15 +34,32 @@ struct InitialSetupSettings: Codable {
     struct PIP: Codable {
         let status: Status
     }
+    
+    enum Platform: String, Codable {
+        case ios
+        case macos
+    }
 
     enum Status: String, Codable {
         case enabled
         case disabled
     }
+    
+    enum Environment: String, Codable {
+        case development
+        case production
+    }
+    
+    enum Locale: String, Codable {
+        case en
+    }
 
     let userValues: UserValues
     let settings: PlayerSettings
+    let platform: Platform
+    let locale: Locale
 }
+
 
 /// Values that the Frontend can use to determine user settings
 public struct UserValues: Codable {
@@ -67,7 +84,9 @@ protocol DuckPlayerProtocol {
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func openVideoInDuckPlayer(url: URL, webView: WKWebView)
-    func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable?
+    func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
 }
 
 final class DuckPlayer: DuckPlayerProtocol {
@@ -103,9 +122,15 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     @MainActor
-    public func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable? {
+    public func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable? {
         let webView = message.webView
-        return await self.encodedSettings(with: webView)
+        return await self.encodedPlayerSettings(with: webView)
+    }
+    
+    @MainActor
+    public func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable? {
+        let webView = message.webView
+        return await self.encodedPlayerSettings(with: webView)
     }
 
     private func encodeUserValues() -> UserValues {
@@ -116,14 +141,27 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     @MainActor
-    private func encodedSettings(with webView: WKWebView?) async -> InitialSetupSettings {
+    private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialSetupSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-
+        let platform = InitialSetupSettings.Platform.ios
+        let environment = InitialSetupSettings.Environment.development
+        let locale = InitialSetupSettings.Locale.en
         let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-
-        return InitialSetupSettings(userValues: userValues, settings: playerSettings)
+        return InitialSetupSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+    }
+    
+    @MainActor
+    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialSetupSettings {
+        let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
+        let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
+        let platform = InitialSetupSettings.Platform.ios
+        let environment = InitialSetupSettings.Environment.development
+        let locale = InitialSetupSettings.Locale.en
+        let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
+        let userValues = encodeUserValues()
+        return InitialSetupSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
     }
     
 }

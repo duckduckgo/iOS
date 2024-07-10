@@ -873,6 +873,8 @@ class MainViewController: UIViewController {
                    currentTab?.url?.absoluteString ?? "<nil>")
             return
         }
+        // Make sure that once query is submitted, we don't trigger the non-SERP flow
+        skipSERPFlow = false
         loadUrl(url)
     }
 

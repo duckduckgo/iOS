@@ -29,25 +29,60 @@ extension OnboardingView {
 
         var body: some View {
             GeometryReader { proxy in
-                VStack {
-                    Spacer()
-
-                    Image(.daxIcon)
-                        .resizable()
-                        .matchedGeometryEffect(id: OnboardingView.daxGeometryEffectID, in: animationNamespace)
-                        .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
-
-                    Text(UserText.onboardingWelcomeHeader)
-                        .onboardingTitleStyle(fontSize: Metrics.titleSize.build(v: verticalSizeClass, h: horizontalSizeClass))
-                        .frame(width: Metrics.titleWidth.build(v: verticalSizeClass, h: horizontalSizeClass), alignment: .top)
-
-                    Spacer()
-
-                    Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
+                if isIpadLandscape(v: verticalSizeClass, h: horizontalSizeClass) {
+                    landingScreenIPadLandscape(proxy: proxy)
+                } else {
+                    landingScreenPortrait(proxy: proxy)
                 }
-                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
             }
         }
+
+        func landingScreenPortrait(proxy: GeometryProxy) -> some View {
+            VStack {
+                Spacer()
+
+                welcomeView
+
+                Spacer()
+
+                Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
+        }
+
+        func landingScreenIPadLandscape(proxy: GeometryProxy) -> some View {
+            HStack(alignment: .top) {
+
+                VStack {
+                    Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: proxy.size.height * 0.90)
+                }
+                .frame(width: proxy.size.width / 2, height: proxy.size.height, alignment: .bottomLeading)
+
+                welcomeView
+                    .padding(.top, proxy.size.height * 0.15)
+                    .frame(width: proxy.size.width / 2, alignment: .top)
+
+
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height)
+        }
+
+        private var welcomeView: some View {
+            VStack(alignment: .center, spacing: Metrics.welcomeMessageStackSpacing.build(v: verticalSizeClass, h: horizontalSizeClass)) {
+                Image(.daxIcon)
+                    .resizable()
+                    .matchedGeometryEffect(id: OnboardingView.daxGeometryEffectID, in: animationNamespace)
+                    .frame(width: Metrics.iconSize.width, height: Metrics.iconSize.height)
+
+                Text(UserText.onboardingWelcomeHeader)
+                    .onboardingTitleStyle(fontSize: Metrics.titleSize.build(v: verticalSizeClass, h: horizontalSizeClass))
+                    .frame(width: Metrics.titleWidth.build(v: verticalSizeClass, h: horizontalSizeClass), alignment: .top)
+            }
+        }
+
     }
 }
 
@@ -55,6 +90,7 @@ extension OnboardingView {
 
 private enum Metrics {
     static let iconSize = CGSize(width: 70, height: 70)
+    static let welcomeMessageStackSpacing = MetricBuilder<CGFloat>(iPhone: 13, iPad: 32)
     static let titleSize = MetricBuilder<CGFloat>(iPhone: 28, iPad: 36)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)

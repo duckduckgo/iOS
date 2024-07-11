@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "bfabf4518a33eb2b4b11003a15633a24c28fa922",
-        "version" : "169.0.0"
+        "branch" : "graeme/passwords-tooltip-logic-bug",
+        "revision" : "33f02f735d68fb8d37cb72b0d98fee43e96f1b18"
       }
     },
     {

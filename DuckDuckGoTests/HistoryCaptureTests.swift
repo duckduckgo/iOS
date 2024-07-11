@@ -79,7 +79,7 @@ final class HistoryCaptureTests: XCTestCase {
     }
 
     func makeCapture() -> HistoryCapture {
-        return HistoryCapture(historyManager: MockHistoryManager(historyCoordinator: mockHistoryCoordinator))
+        return HistoryCapture(historyManager: MockHistoryManager(historyCoordinator: mockHistoryCoordinator, isEnabledByUser: true, historyFeatureEnabled: true))
     }
 
 }
@@ -107,11 +107,20 @@ private extension URL {
 class MockHistoryManager: HistoryManaging {
 
     let historyCoordinator: HistoryCoordinating
+    var isEnabledByUser: Bool
+    var historyFeatureEnabled: Bool
 
-    init(historyCoordinator: HistoryCoordinating) {
+    init(historyCoordinator: HistoryCoordinating, isEnabledByUser: Bool, historyFeatureEnabled: Bool) {
         self.historyCoordinator = historyCoordinator
+        self.historyFeatureEnabled = historyFeatureEnabled
+        self.isEnabledByUser = isEnabledByUser
     }
 
-    func loadStore(onCleanFinished: @escaping () -> Void) throws {
+    func isHistoryFeatureEnabled() -> Bool {
+        return historyFeatureEnabled
     }
-}
+
+    func removeAllHistory() async {
+    }
+
+ }

@@ -25,9 +25,11 @@ import Common
 import Persistence
 
 public protocol HistoryManaging {
-
+    
     var historyCoordinator: HistoryCoordinating { get }
-    func loadStore(onCleanFinished: @escaping () -> Void) throws
+    func isHistoryFeatureEnabled() -> Bool
+    var isEnabledByUser: Bool { get }
+    func removeAllHistory() async
 
 }
 
@@ -44,43 +46,38 @@ public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging
     let variantManager: VariantManager
-    let database: CoreDataDatabase
     let internalUserDecider: InternalUserDecider
-    let isEnabledByUser: () -> Bool
-
-    private var currentHistoryCoordinator: HistoryCoordinating?
+    let dbCoordinator: HistoryCoordinator
 
     public var historyCoordinator: HistoryCoordinating {
         guard isHistoryFeatureEnabled(),
-                isEnabledByUser() else {
-            currentHistoryCoordinator = nil
+                isEnabledByUser else {
             return NullHistoryCoordinator()
         }
-
-        if let currentHistoryCoordinator {
-            return currentHistoryCoordinator
-        }
-
-        let coordinator = makeDatabaseHistoryCoordinator()
-        coordinator.loadHistory {
-            // no-op - only done here in case it was flipped in settings
-        }
-
-        currentHistoryCoordinator = coordinator
-        return coordinator
+        return dbCoordinator
     }
 
-    public init(privacyConfigManager: PrivacyConfigurationManaging,
-                variantManager: VariantManager,
-                database: CoreDataDatabase,
-                internalUserDecider: InternalUserDecider,
-                isEnabledByUser: @autoclosure @escaping () -> Bool) {
+    public let isAutocompleteEnabledByUser: () -> Bool
+    public let isRecentlyVisitedSitesEnabledByUser: () -> Bool
+
+    public var isEnabledByUser: Bool {
+        return isAutocompleteEnabledByUser() && isRecentlyVisitedSitesEnabledByUser()
+    }
+
+    /// Use `make()`
+    init(privacyConfigManager: PrivacyConfigurationManaging,
+         variantManager: VariantManager,
+         internalUserDecider: InternalUserDecider,
+         dbCoordinator: HistoryCoordinator,
+         isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
+         isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool) {
 
         self.privacyConfigManager = privacyConfigManager
         self.variantManager = variantManager
-        self.database = database
         self.internalUserDecider = internalUserDecider
-        self.isEnabledByUser = isEnabledByUser
+        self.dbCoordinator = dbCoordinator
+        self.isAutocompleteEnabledByUser = isAutocompleteEnabledByUser
+        self.isRecentlyVisitedSitesEnabledByUser = isRecentlyVisitedSitesEnabledByUser
     }
 
     /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
@@ -106,23 +103,10 @@ public class HistoryManager: HistoryManaging {
 
     public func removeAllHistory() async {
         await withCheckedContinuation { continuation in
-            historyCoordinator.burnAll {
+            dbCoordinator.burnAll {
                 continuation.resume()
             }
         }
-    }
-
-    public func loadStore(onCleanFinished: @escaping () -> Void) {
-        let coordinator = makeDatabaseHistoryCoordinator()
-        coordinator.loadHistory {
-            onCleanFinished()
-        }
-    }
-
-    private func makeDatabaseHistoryCoordinator() -> HistoryCoordinator {
-        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        let historyCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
-        return historyCoordinator
     }
 
 }
@@ -243,4 +227,60 @@ class HistoryStoreEventMapper: EventMapping<HistoryStore.HistoryStoreEvents> {
     override init(mapping: @escaping EventMapping<HistoryStore.HistoryStoreEvents>.Mapping) {
         fatalError("Use init()")
     }
+}
+
+extension HistoryManager {
+
+    /// Should only be called once in the app
+    public static func make(isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
+                            isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool,
+                            internalUserDecider: InternalUserDecider,
+                            privacyConfigManager: PrivacyConfigurationManaging) -> Result<HistoryManager, Error> {
+
+        let database = HistoryDatabase.make()
+        var loadError: Error?
+        database.loadStore { _, error in
+            loadError = error
+        }
+
+        if let loadError {
+            return .failure(loadError)
+        }
+
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        let dbCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
+
+        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
+                                            variantManager: DefaultVariantManager(),
+                                            internalUserDecider: internalUserDecider,
+                                            dbCoordinator: dbCoordinator,
+                                            isAutocompleteEnabledByUser: isAutocompleteEnabledByUser(),
+                                            isRecentlyVisitedSitesEnabledByUser: isRecentlyVisitedSitesEnabledByUser())
+
+        dbCoordinator.loadHistory(onCleanFinished: {
+            // Do future migrations after clean has finished.  See macOS for an example.
+        })
+
+        return .success(historyManager)
+    }
+
+}
+
+// Available in case `make` fails so that we don't have to pass optional around.
+public struct NullHistoryManager: HistoryManaging {
+
+    public var isEnabledByUser = false
+
+    public let historyCoordinator: HistoryCoordinating = NullHistoryCoordinator()
+    
+    public func removeAllHistory() async {
+        // No-op
+    }
+
+    public func isHistoryFeatureEnabled() -> Bool {
+        return false
+    }
+
+    public init() { }
+    
 }

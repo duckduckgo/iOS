@@ -44,7 +44,7 @@ final class SettingsViewModel: ObservableObject {
     private let voiceSearchHelper: VoiceSearchHelperProtocol
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
-    private let historyManager: HistoryManager
+    private let historyManager: HistoryManaging
 
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
@@ -164,6 +164,8 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+
+                self.clearHistoryIfNeeded()
                 self.updateRecentlyVisitedSitesVisibility()
                 
                 if $0 {
@@ -181,6 +183,7 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
+                self.clearHistoryIfNeeded()
                 self.updateRecentlyVisitedSitesVisibility()
 
                 if $0 {
@@ -203,6 +206,7 @@ final class SettingsViewModel: ObservableObject {
                 } else {
                     Pixel.fire(pixel: .settingsRecentlyVisitedOff)
                 }
+                self.clearHistoryIfNeeded()
             }
         )
     }
@@ -331,7 +335,7 @@ final class SettingsViewModel: ObservableObject {
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
-         historyManager: HistoryManager,
+         historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging) {
 
         self.state = SettingsState.defaults
@@ -398,6 +402,14 @@ extension SettingsViewModel {
     private func updateRecentlyVisitedSitesVisibility() {
         withAnimation {
             shouldShowRecentlyVisitedSites = historyManager.isHistoryFeatureEnabled() && state.autocomplete
+        }
+    }
+
+    private func clearHistoryIfNeeded() {
+        if !historyManager.isEnabledByUser {
+            Task {
+                await self.historyManager.removeAllHistory()
+            }
         }
     }
 

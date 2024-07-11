@@ -18,31 +18,73 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import DuckDuckGo
 
-final class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
+class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    var factory: ContextualOnboardingNewTabDialogFactory!
+    var mockDelegate: MockOnboardingNavigationDelegate!
+    var onDismissCalled: Bool!
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    override func setUp() {
+        super.setUp()
+        mockDelegate = MockOnboardingNavigationDelegate()
+        onDismissCalled = false
+        factory = ContextualOnboardingNewTabDialogFactory(delegate: mockDelegate) {
+            self.onDismissCalled = true
         }
     }
 
+    override func tearDown() {
+        factory = nil
+        mockDelegate = nil
+        onDismissCalled = nil
+        super.tearDown()
+    }
+
+    func testCreateInitialDialog() {
+        // Given
+        let homeDialog = DaxDialogs.HomeScreenSpec.initial
+
+        // When
+        let view = factory.createDaxDialog(for: homeDialog)
+
+        // Then
+        XCTAssertTrue(view is OnboardingTrySearchDialog)
+    }
+
+//    func testCreateAddFavoriteDialog() {
+//        let homeDialog = DaxDialogs.HomeScreenSpec.addFavorite(message: "Test Message")
+//        let view = factory.createDaxDialog(for: homeDialog)
+//
+//        // Verify the view type
+//        XCTAssertTrue(view is AnyView)
+//        // Additional type checking if necessary
+//    }
+//
+//    func testCreateSubsequentDialog() {
+//        let homeDialog = DaxDialogs.HomeScreenSpec.subsequent
+//        let view = factory.createDaxDialog(for: homeDialog)
+//
+//        // Verify the view type
+//        XCTAssertTrue(view is AnyView)
+//        // Additional type checking if necessary
+//    }
+//
+//    func testOnDismissCalled() {
+//        let homeDialog = DaxDialogs.HomeScreenSpec.subsequent
+//        let view = factory.createDaxDialog(for: homeDialog)
+//
+//        // Since we can't directly simulate the button press, check the onDismiss logic directly
+//        factory.onDismiss()
+//        XCTAssertTrue(onDismissCalled)
+//    }
+}
+
+class MockOnboardingNavigationDelegate: OnboardingNavigationDelegate {
+    func suggestedSearchPressed(_ query: String) {
+
+    }
+    
 }

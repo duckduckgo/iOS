@@ -164,7 +164,6 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.autocomplete = $0
                 self.state.autocomplete = $0
-
                 self.clearHistoryIfNeeded()
                 self.updateRecentlyVisitedSitesVisibility()
                 

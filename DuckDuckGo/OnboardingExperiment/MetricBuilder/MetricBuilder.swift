@@ -52,6 +52,10 @@ final class MetricBuilder<T> {
     }
 }
 
+func isIphone(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
+    !isIPad(v: v, h: h)
+}
+
 func isIPhonePortrait(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
     v == .regular && h == .compact
 }

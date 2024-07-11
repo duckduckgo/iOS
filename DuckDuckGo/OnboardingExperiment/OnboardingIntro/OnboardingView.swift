@@ -95,7 +95,10 @@ struct OnboardingView: View {
                 }
             }
         }
-        .padding()
+        .ignoresSafeArea()
+        .if(isIphone(v: verticalSizeClass, h: horizontalSizeClass)) { view in
+            view.padding()
+        }
     }
 
     private var landingView: some View {

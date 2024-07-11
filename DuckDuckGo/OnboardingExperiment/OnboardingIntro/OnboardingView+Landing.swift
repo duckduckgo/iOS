@@ -51,7 +51,7 @@ extension OnboardingView {
         }
 
         func landingScreenIPadLandscape(proxy: GeometryProxy) -> some View {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 0) {
 
                 VStack {
                     Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))

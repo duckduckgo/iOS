@@ -31,7 +31,7 @@ final class NewTabPageMessagesModel: ObservableObject {
     private let notificationCenter: NotificationCenter
     private let pixelFiring: PixelFiring.Type
 
-    init(homePageMessagesConfiguration: HomePageMessagesConfiguration = AppDependencyProvider.shared.homePageConfiguration,
+    init(homePageMessagesConfiguration: HomePageMessagesConfiguration,
          notificationCenter: NotificationCenter = .default,
          pixelFiring: PixelFiring.Type = Pixel.self) {
         self.homePageMessagesConfiguration = homePageMessagesConfiguration

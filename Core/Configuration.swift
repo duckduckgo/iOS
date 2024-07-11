@@ -31,6 +31,7 @@ public extension Configuration {
         case .surrogates: return "surrogates"
         case .trackerDataSet: return "trackerDataSet"
         case .FBConfig: return "FBConfig"
+        case .remoteMessagingConfig: return "remoteMessagingConfig"
         }
     }
 

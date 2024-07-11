@@ -21,8 +21,8 @@ import SwiftUI
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
-    init() {
-        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
+    init(homePageMessagesConfiguration: HomePageMessagesConfiguration) {
+        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
                                             favoritesModel: FavoritesModel())
         super.init(rootView: newTabPageView)
     }

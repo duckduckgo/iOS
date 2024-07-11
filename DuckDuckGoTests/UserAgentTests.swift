@@ -23,12 +23,10 @@ import XCTest
 
 @testable import Core
 
-// swiftlint:disable file_length type_body_length
 final class UserAgentTests: XCTestCase {
     
     private struct DefaultAgent {
 
-        // swiftlint:disable line_length
         static let mobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
         static let tablet = "Mozilla/5.0 (iPad; CPU OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
         static let oldWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.14 (KHTML, like Gecko) Mobile/15E148"
@@ -60,8 +58,6 @@ final class UserAgentTests: XCTestCase {
         static let mobileClosest = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.4 Mobile/15E148 Safari/604.1"
         static let tabletClosest = "Mozilla/5.0 (iPad; CPU OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.4 Mobile/15E148 Safari/604.1"
         static let desktopClosest = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
-        // swiftlint:enable line_length
-        
     }
     
     private struct Constants {
@@ -450,4 +446,3 @@ final class UserAgentTests: XCTestCase {
     }
 
 }
-// swiftlint:enable file_length type_body_length

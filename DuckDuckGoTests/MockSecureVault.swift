@@ -22,7 +22,6 @@ import Foundation
 import GRDB
 import SecureStorage
 
-// swiftlint:disable file_length
 typealias MockVaultFactory = SecureVaultFactory<MockSecureVault<MockDatabaseProvider>>
 
 // swiftlint:disable:next identifier_name
@@ -39,7 +38,6 @@ let MockSecureVaultFactory = SecureVaultFactory<MockSecureVault>(
 )
 
 final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
-
     public typealias MockSecureVaultDatabaseProviders = SecureStorageProviders<T>
 
     var storedAccounts: [SecureVaultModels.WebsiteAccount] = []
@@ -62,6 +60,11 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
     func encrypt(_ data: Data, using key: Data) throws -> Data {
         data
     }
+
+    func encryptPassword(for credentials: BrowserServicesKit.SecureVaultModels.WebsiteCredentials, key l2Key: Data?, salt: Data?) throws -> BrowserServicesKit.SecureVaultModels.WebsiteCredentials {
+        .init(account: .init(username: nil, domain: nil), password: nil)
+    }
+
 
     func decrypt(_ data: Data, using key: Data) throws -> Data {
         data

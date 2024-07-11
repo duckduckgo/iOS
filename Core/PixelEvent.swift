@@ -26,7 +26,6 @@ import NetworkProtection
 
 extension Pixel {
     
-    // swiftlint:disable:next type_body_length
     public enum Event {
         
         case appLaunch
@@ -337,6 +336,11 @@ extension Pixel {
         case networkProtectionServerMigrationAttemptSuccess
         case networkProtectionServerMigrationAttemptFailure
 
+        case networkProtectionConnectionTesterFailureDetected
+        case networkProtectionConnectionTesterFailureRecovered(failureCount: Int)
+        case networkProtectionConnectionTesterExtendedFailureDetected
+        case networkProtectionConnectionTesterExtendedFailureRecovered(failureCount: Int)
+
         case networkProtectionTunnelFailureDetected
         case networkProtectionTunnelFailureRecovered
 
@@ -615,17 +619,7 @@ extension Pixel {
         case toggleReportDismiss
 
         case userBehaviorReloadTwiceWithin12Seconds
-        case userBehaviorReloadTwiceWithin24Seconds
-        case userBehaviorReloadAndRestartWithin30Seconds
-        case userBehaviorReloadAndRestartWithin50Seconds
         case userBehaviorReloadThreeTimesWithin20Seconds
-        case userBehaviorReloadThreeTimesWithin40Seconds
-
-        case siteNotWorkingShown
-        case siteNotWorkingDismiss
-        case siteNotWorkingDismissByNavigation
-        case siteNotWorkingDismissByRefresh
-        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -727,6 +721,27 @@ extension Pixel {
         case favoriteLaunchedNTPDaily
         case bookmarkLaunchedDaily
         case newTabPageDisplayedDaily
+
+        // MARK: DuckPlayer        
+        case duckPlayerDailyUniqueView
+        case duckPlayerViewFromYoutubeViaMainOverlay
+        case duckPlayerViewFromYoutubeViaHoverButton
+        case duckPlayerViewFromYoutubeAutomatic
+        case duckPlayerViewFromSERP
+        case duckPlayerViewFromOther
+        case duckPlayerOverlayYoutubeImpressions
+        case duckPlayerOverlayYoutubeWatchHere
+        case duckPlayerSettingAlwaysDuckPlayer
+        case duckPlayerSettingAlwaysOverlaySERP
+        case duckPlayerSettingAlwaysOverlayYoutube
+        case duckPlayerSettingAlwaysSettings
+        case duckPlayerSettingNeverOverlaySERP
+        case duckPlayerSettingNeverOverlayYoutube
+        case duckPlayerSettingNeverSettings
+        case duckPlayerSettingBackToDefault
+        case duckPlayerWatchOnYoutube
+        case watchInDuckPlayerInitial
+        
     }
 
 }
@@ -1054,6 +1069,10 @@ extension Pixel.Event {
         case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
         case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
         case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
+        case .networkProtectionConnectionTesterFailureDetected: return "m_netp_connection_tester_failure"
+        case .networkProtectionConnectionTesterFailureRecovered: return "m_netp_connection_tester_failure_recovered"
+        case .networkProtectionConnectionTesterExtendedFailureDetected: return "m_netp_connection_tester_extended_failure"
+        case .networkProtectionConnectionTesterExtendedFailureRecovered: return "m_netp_connection_tester_extended_failure_recovered"
         case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
         case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
@@ -1329,19 +1348,7 @@ extension Pixel.Event {
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
-        case .userBehaviorReloadTwiceWithin24Seconds: return "m_reload-twice-within-24-seconds"
-
-        case .userBehaviorReloadAndRestartWithin30Seconds: return "m_reload-and-restart-within-30-seconds"
-        case .userBehaviorReloadAndRestartWithin50Seconds: return "m_reload-and-restart-within-50-seconds"
-
         case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
-        case .userBehaviorReloadThreeTimesWithin40Seconds: return "m_reload-three-times-within-40-seconds"
-
-        case .siteNotWorkingShown: return "m_site-not-working_shown"
-        case .siteNotWorkingDismiss: return "m_site-not-working_dismiss"
-        case .siteNotWorkingDismissByNavigation: return "m_site-not-working_dismiss-by-navigation"
-        case .siteNotWorkingDismissByRefresh: return "m_site-not-working_dismiss-by-refresh"
-        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
@@ -1443,11 +1450,30 @@ extension Pixel.Event {
         case .favoriteLaunchedNTPDaily: return "m_favorite_launched_ntp_daily"
         case .bookmarkLaunchedDaily: return "m_bookmark_launched_daily"
         case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
+            
+        // MARK: DuckPlayer
+        case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"
+        case .duckPlayerViewFromYoutubeViaMainOverlay: return "m_duck-player_view-from_youtube_main-overlay"
+        case .duckPlayerViewFromYoutubeViaHoverButton: return "m_duck-player_view-from_youtube_hover-button"
+        case .duckPlayerViewFromYoutubeAutomatic: return "m_duck-player_view-from_youtube_automatic"
+        case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
+        case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
+        case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
+        case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
+        case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
+        case .duckPlayerSettingAlwaysOverlaySERP: return "m_duck-player_setting_always_overlay_serp"
+        case .duckPlayerSettingAlwaysOverlayYoutube: return "m_duck-player_setting_always_overlay_youtube"
+        case .duckPlayerSettingNeverOverlaySERP: return "m_duck-player_setting_never_overlay_serp"
+        case .duckPlayerSettingNeverOverlayYoutube: return "m_duck-player_setting_never_overlay_youtube"
+        case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
+        case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
+        case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
+        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }
 
-// swiftlint:disable file_length
 extension Pixel.Event {
     
     public enum BucketAggregation: String, CustomStringConvertible {

@@ -23,8 +23,6 @@ import OHHTTPStubsSwift
 import Networking
 @testable import Core
 
-// swiftlint:disable type_body_length
-
 final class DailyPixelTests: XCTestCase {
     
     let host = "improving.duckduckgo.com"
@@ -363,5 +361,3 @@ final class DailyPixelTests: XCTestCase {
         case testError
     }
 }
-
-// swiftlint:enable type_body_length

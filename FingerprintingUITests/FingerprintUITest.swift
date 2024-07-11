@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable line_length
-
 import XCTest
 
 class FingerprintUITest: XCTestCase {
@@ -161,7 +159,7 @@ class FingerprintUITest: XCTestCase {
 }
 
 extension XCUIElement {
-    
+
     // https://stackoverflow.com/a/38523252
     public func clear() {
         guard let stringValue = self.value as? String else {
@@ -175,7 +173,4 @@ extension XCUIElement {
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
         self.typeText(deleteString)
     }
-
 }
-
-// swiftlint:enable line_length

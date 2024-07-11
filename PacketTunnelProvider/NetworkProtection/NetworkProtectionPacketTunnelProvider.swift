@@ -29,8 +29,6 @@ import NetworkProtection
 import Subscription
 import WidgetKit
 
-// swiftlint:disable type_body_length
-
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
@@ -48,6 +46,40 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
                             withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
                             includedParameters: [.appVersion, .atb])
+        case .connectionTesterStatusChange(let status, let server):
+            vpnLogger.log(status, server: server)
+
+            switch status {
+            case .failed(let duration):
+                let pixel: Pixel.Event = {
+                    switch duration {
+                    case .immediate:
+                        return .networkProtectionConnectionTesterFailureDetected
+                    case .extended:
+                        return .networkProtectionConnectionTesterExtendedFailureDetected
+                    }
+                }()
+
+                DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             withAdditionalParameters: [PixelParameters.server: server],
+                                             includedParameters: [.appVersion, .atb])
+            case .recovered(let duration, let failureCount):
+                let pixel: Pixel.Event = {
+                    switch duration {
+                    case .immediate:
+                        return .networkProtectionConnectionTesterFailureRecovered(failureCount: failureCount)
+                    case .extended:
+                        return .networkProtectionConnectionTesterExtendedFailureRecovered(failureCount: failureCount)
+                    }
+                }()
+
+                DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             withAdditionalParameters: [
+                                                PixelParameters.count: String(failureCount),
+                                                PixelParameters.server: server
+                                             ],
+                                             includedParameters: [.appVersion, .atb])
+            }
         case .reportConnectionAttempt(attempt: let attempt):
             vpnLogger.log(attempt)
 
@@ -173,7 +205,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     // MARK: - Error Reporting
 
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
     private static func networkProtectionDebugEvents(controllerErrorStore: NetworkProtectionTunnelErrorStore) -> EventMapping<NetworkProtectionError>? {
         return EventMapping { event, _, _, _ in
             let pixelEvent: Pixel.Event
@@ -411,7 +442,4 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 }
-
-// swiftlint:enable type_body_length
-// swiftlint:disable:next file_length
 #endif

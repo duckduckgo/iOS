@@ -26,8 +26,6 @@ import DDGSync
 import DesignResourcesKit
 import SwiftUI
 
-// swiftlint:disable file_length type_body_length
-
 enum AutofillSettingsSource: String {
     case settings
     case overflow = "overflow_menu"
@@ -1034,4 +1032,3 @@ extension AutofillLoginSettingsListViewController {
         )
     }
 }
-// swiftlint:enable file_length type_body_length

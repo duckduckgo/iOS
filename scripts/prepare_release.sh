@@ -104,8 +104,8 @@ process_release() { # expected input e.g. "1.72.0"
 
 	echo "Processing version number: $version"
 
-	if release_branch_exists; then 
-		is_subsequent_release=1		
+	if release_branch_exists; then
+		is_subsequent_release=1
 		base_branch="$release_branch"
 	fi
 }
@@ -115,10 +115,10 @@ process_hotfix() { # expected input e.g. "hotfix/1.72.1"
 	release_branch="$1"
 	base_branch="$1"
 	is_hotfix=1
-	
+
 	echo "Processing hotfix branch name: $release_branch"
 
-	if ! release_branch_exists; then 
+	if ! release_branch_exists; then
 		die "💥 Error: Hotfix branch ${release_branch} does not exist. It should be created before you run this script."
 	fi
 }
@@ -144,7 +144,9 @@ create_release_branch() {
 	fi
 
 	eval git checkout -b "${release_branch}" "$mute"
-	eval git push -u origin "${release_branch}" "$mute"
+	if ! eval git push -u origin "${release_branch}" "$mute"; then
+		die "💥 Error: Failed to push ${release_branch} to origin"
+	fi
 	echo "✅"
 }
 
@@ -165,7 +167,10 @@ create_build_branch() {
 	fi
 
 	eval git checkout -b "${build_branch}" "$mute"
-	eval git push -u origin "${build_branch}" "$mute"
+	if ! eval git push -u origin "${build_branch}" "$mute"; then
+		die "💥 Error: Failed to push ${build_branch} to origin"
+	fi
+
 	echo "✅"
 }
 
@@ -237,7 +242,7 @@ main() {
 	read_command_line_arguments "$@"
 	checkout_base_branch
 
-	if [[ $is_subsequent_release ]]; then 
+	if [[ $is_subsequent_release ]]; then
 		create_build_branch
 	elif [[ $is_hotfix ]]; then
 		create_build_branch

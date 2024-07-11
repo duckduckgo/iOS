@@ -197,7 +197,6 @@ class BookmarksExporterTests: XCTestCase {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func buildCommonContent(level: Int = 2) -> String {
         return [
             BookmarksExporter.Template.openFolder(level: level, named: "FolderA-Level1"),

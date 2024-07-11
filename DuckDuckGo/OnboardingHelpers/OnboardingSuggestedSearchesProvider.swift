@@ -28,7 +28,7 @@ protocol OnboardingSuggestedSearchesProviding {
     var searchesList: [ContextualOnboardingListItem] { get }
 }
 
-struct OnboardingSuggestedSearchesProvider {
+struct OnboardingSuggestedSearchesProvider: OnboardingSuggestedSearchesProviding {
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
 
     init(countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current) {

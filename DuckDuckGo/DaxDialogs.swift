@@ -54,7 +54,8 @@ final class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
         static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
-        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
+        static let subsequent = HomeScreenSpec(message: "", accessibilityLabel: nil)
+        static let final = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
         static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
                                                 accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
 
@@ -154,7 +155,7 @@ final class DaxDialogs {
     }
 
     private enum Constants {
-        static let homeScreenMessagesSeenMaxCeiling = 2
+        static let homeScreenMessagesSeenMaxCeiling = 4
     }
 
     public static let shared = DaxDialogs(entityProviding: ContentBlocking.shared.contentBlockingManager)
@@ -183,7 +184,14 @@ final class DaxDialogs {
             || settings.browsingWithoutTrackersShown
             || settings.browsingMajorTrackingSiteShown
     }
-    
+
+    private var firstSearchSeenButNoSiteVisit: Bool {
+        return settings.browsingAfterSearchShown
+            && !settings.browsingWithTrackersShown
+            && !settings.browsingWithoutTrackersShown
+            && !settings.browsingMajorTrackingSiteShown
+    }
+
     private var nonDDGBrowsingMessageSeen: Bool {
         settings.browsingWithTrackersShown
         || settings.browsingWithoutTrackersShown
@@ -319,14 +327,20 @@ final class DaxDialogs {
         }
 
         guard isEnabled else { return nil }
-        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else { return nil }
+//        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else {
+//            return nil
+//        }
 
         if settings.homeScreenMessagesSeen == 0 {
             return .initial
         }
 
-        if firstBrowsingMessageSeen {
+        if firstSearchSeenButNoSiteVisit && true {
             return .subsequent
+        }
+
+        if firstBrowsingMessageSeen {
+            return .final
         }
 
         return nil

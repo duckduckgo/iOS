@@ -25,6 +25,7 @@ import Common
 import DDGSync
 import Persistence
 import RemoteMessaging
+import SwiftUI
 
 
 class HomeViewController: UIViewController, NewTabPage {
@@ -38,7 +39,8 @@ class HomeViewController: UIViewController, NewTabPage {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
-    
+    var hostingController: UIHostingController<AnyView>? = nil
+
     var logoContainer: UIView! {
         return delegate?.homeDidRequestLogoContainer(self)
     }
@@ -64,7 +66,8 @@ class HomeViewController: UIViewController, NewTabPage {
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    
+    weak var onboardingNavigationDelegate: OnboardingNavigationDelegate?
+
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
@@ -196,7 +199,7 @@ class HomeViewController: UIViewController, NewTabPage {
     
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        showNextDaxDialog()
+        showNextDaxDialogNew()
     }
     
     @IBAction func launchSettings() {
@@ -213,8 +216,8 @@ class HomeViewController: UIViewController, NewTabPage {
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
         
-        showNextDaxDialog()
-        
+        showNextDaxDialogNew()
+
         collectionView.didAppear()
 
         viewHasAppeared = true
@@ -254,12 +257,41 @@ class HomeViewController: UIViewController, NewTabPage {
         configureCollectionView()
     }
 
+    func showNextDaxDialogNew() {
+        dismissHostingController()
+        guard let homeDialog = DaxDialogs.shared.nextHomeScreenMessage() else { return }
+        let factory = ContextualOnboardingNewTabDialogFactory(delegate: onboardingNavigationDelegate, onDismiss: dismissHostingController)
+        let daxDialogView = AnyView(factory.createDaxDialog(for: homeDialog))
+        hostingController = UIHostingController(rootView: daxDialogView)
+        guard let hostingController else { return }
+        hostingController.view.backgroundColor = .clear
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hideLogo()
+        let barHeight = chromeDelegate?.tabBarContainer.topAnchor
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        configureCollectionView()
+    }
+
+    private func dismissHostingController() {
+        hostingController?.willMove(toParent: nil)
+        hostingController?.view.removeFromSuperview()
+        hostingController?.removeFromParent()
+        delegate?.home(self, didRequestHideLogo: false)
+    }
+
     func hideLogo() {
         delegate?.home(self, didRequestHideLogo: true)
     }
     
     func onboardingCompleted() {
-        showNextDaxDialog()
+        showNextDaxDialogNew()
     }
 
     func reloadFavorites() {
@@ -363,5 +395,24 @@ extension HomeViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         settingsButton.tintColor = theme.barTintColor
+    }
+}
+
+struct FadeInView<Content: View>: View {
+    var content: Content
+    @State private var opacity: Double = 0
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .opacity(opacity)
+            .onAppear {
+                withAnimation(.easeIn(duration: 0.4)) {
+                    opacity = 1.0
+                }
+            }
     }
 }

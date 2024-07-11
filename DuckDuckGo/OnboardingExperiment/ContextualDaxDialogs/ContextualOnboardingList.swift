@@ -62,14 +62,14 @@ enum ContextualOnboardingListItem: Equatable {
 
 struct ContextualOnboardingListView: View {
     let list: [ContextualOnboardingListItem]
-    var action: (_ title: String) -> Void
+    var action: (_ item: ContextualOnboardingListItem) -> Void
     let iconSize = 16.0
 
     var body: some View {
         VStack {
             ForEach(list.indices, id: \.self) { index in
                 Button(action: {
-                    action(list[index].title)
+                    action(list[index])
                 }, label: {
                     HStack {
                         Image(list[index].imageName)

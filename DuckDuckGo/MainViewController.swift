@@ -749,6 +749,7 @@ class MainViewController: UIViewController {
 
             controller.delegate = self
             controller.chromeDelegate = self
+            controller.onboardingNavigationDelegate = self
             homeViewController = controller
             addToContentContainer(controller: controller)
         }
@@ -2524,6 +2525,16 @@ extension MainViewController: OnboardingDelegate {
         settings.hasSeenOnboarding = true
     }
     
+}
+
+extension MainViewController: OnboardingNavigationDelegate {
+    func navigateTo(url: URL) {
+        self.loadUrl(url, fromExternalLink: true)
+    }
+    
+    func suggestedSearchPressed(_ query: String) {
+        self.loadQuery(query)
+    }
 }
 
 extension MainViewController: UIDropInteractionDelegate {

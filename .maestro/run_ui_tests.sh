@@ -78,17 +78,6 @@ echo "ℹ️ Running UI tests for $1"
 device_uuid=$(cat $device_uuid_path)
 echo "ℹ️ using device $device_uuid"
 
-killall Simulator
-
-xcrun simctl shutdown $device_uuid
-xcrun simctl boot $device_uuid
-if [ $? -ne 0 ]; then
-    echo "‼️ Unable to boot simulator"
-    exit 1
-fi
-
-open -a Simulator
-
 echo "ℹ️ creating run log in $run_log"
 if [ -f $run_log ]; then
 	rm $run_log

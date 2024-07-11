@@ -230,3 +230,19 @@ extension ContextualDaxDialog {
     .padding()
     .preferredColorScheme(.light)
 }
+
+#Preview("en_GB list") {
+    ContextualDaxDialog(logoPosition: .top,
+                        title: "title",
+                        message: "this is a message".attributedStringFromMarkdown(color: .blue),
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_GB")).sitesList,
+                        listAction: { _ in })
+}
+
+#Preview("en_US list") {
+    ContextualDaxDialog(logoPosition: .top,
+                        title: "title",
+                        message: "this is a message".attributedStringFromMarkdown(color: .blue),
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_US")).sitesList,
+                        listAction: { _ in })
+}

@@ -21,7 +21,7 @@ import SwiftUI
 import Core
 
 final class FavoriteIconViewModel: ObservableObject {
-    @MainActor @Published var favicon: Favicon = .empty
+    @Published var favicon: Favicon = .empty
 
     let domain: String
     let onFaviconMissing: (() -> Void)?
@@ -33,18 +33,47 @@ final class FavoriteIconViewModel: ObservableObject {
 
     @MainActor
     func loadFavicon(size: CGFloat) async {
-        self.favicon = createFakeFavicon(for: domain, size: size)
+        self.favicon = createFakeFavicon(size: size)
+
+        guard !Task.isCancelled else {
+            print("** is cancelled")
+            return
+        }
 
         let faviconResult = await FaviconsHelper.loadFaviconSync(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false)
+        
         if let iconImage = faviconResult.image {
             let useBorder = URL.isDuckDuckGo(domain: self.domain) || iconImage.size.width < size
+
+            guard !Task.isCancelled else {
+                print("** is cancelled")
+                return
+            }
+
             self.favicon = Favicon(image: iconImage, isUsingBorder: useBorder)
         } else {
             onFaviconMissing?()
         }
     }
 
-    private func createFakeFavicon(for domain: String, size: CGFloat) -> Favicon {
+    @MainActor
+    func loadFavicon(size: CGFloat) async -> Favicon? {
+        guard !Task.isCancelled else { return nil }
+
+        let faviconResult = await FaviconsHelper.loadFaviconSync(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false)
+        if let iconImage = faviconResult.image {
+            let useBorder = URL.isDuckDuckGo(domain: self.domain) || iconImage.size.width < size
+
+            guard !Task.isCancelled else { return nil }
+
+            return Favicon(image: iconImage, isUsingBorder: useBorder)
+        } else {
+            onFaviconMissing?()
+            return nil
+        }
+    }
+
+    func createFakeFavicon(size: CGFloat) -> Favicon {
         let color = UIColor.forDomain(domain)
         let icon = FaviconsHelper.createFakeFavicon(
             forDomain: domain,
@@ -57,9 +86,13 @@ final class FavoriteIconViewModel: ObservableObject {
     }
 }
 
-struct Favicon {
+struct Favicon: Equatable, Hashable {
     let image: UIImage
     let isUsingBorder: Bool
 
     static let empty = Self.init(image: UIImage(), isUsingBorder: false)
+
+    var isEmpty: Bool {
+        image.size == .zero
+    }
 }

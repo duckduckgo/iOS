@@ -22,21 +22,53 @@ import SwiftUI
 struct FavoriteIconView: View {
     @ObservedObject var model: FavoriteIconViewModel
 
+    @State private var favicon: Favicon = .empty
+
     init(model: FavoriteIconViewModel) {
         self.model = model
     }
 
     var body: some View {
-        let favicon = model.favicon
-        Image(uiImage: favicon.image)
-            .resizable()
-            .aspectRatio(1.0, contentMode: .fit)
-            .if(favicon.isUsingBorder) {
-                $0.padding(Constant.borderSize)
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(designSystemColor: .surface))
+                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+                .aspectRatio(1, contentMode: .fit)
+
+            if favicon.isEmpty {
+                Text("EMPTY?!")
             }
-            .task {
-                await model.loadFavicon(size: Constant.faviconSize)
-            }
+
+            // STATE APPROACH
+            Image(uiImage: favicon.image)
+                .resizable()
+                .aspectRatio(1.0, contentMode: .fit)
+                .if(favicon.isUsingBorder) {
+                    $0.padding(Constant.borderSize)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .task {
+                    self.favicon = model.createFakeFavicon(size: Constant.faviconSize)
+                    if let favicon = await model.loadFavicon(size: Constant.faviconSize) {
+                        self.favicon = favicon
+                    }
+                }
+            // END
+
+            // MODEL APPROACH
+//            let favicon = model.favicon
+//            Image(uiImage: favicon.image)
+//                .resizable()
+//                .aspectRatio(1.0, contentMode: .fit)
+//                .if(favicon.isUsingBorder) {
+//                    $0.padding(Constant.borderSize)
+//                }
+//                .clipShape(RoundedRectangle(cornerRadius: 8))
+//                .task {
+//                    await model.loadFavicon(size: Constant.faviconSize)
+//                }
+            // END
+        }
     }
 }
 
@@ -46,5 +78,9 @@ private struct Constant {
 }
 
 #Preview {
-    FavoriteIconView(model: FavoriteIconViewModel(domain: "foo.bar", onFaviconMissing: nil))
+    VStack(spacing: 8) {
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "apple.com", onFaviconMissing: nil))
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "duckduckgo.com", onFaviconMissing: nil))
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "foobar.com", onFaviconMissing: nil))
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  ContextualOnboardingNewTabDialogFactory.swift
+//  NewTabDialogFactory.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,17 +20,20 @@
 import Foundation
 import SwiftUI
 
-class ContextualOnboardingNewTabDialogFactory {
-    var delegate: OnboardingNavigationDelegate?
-    var onDismiss: () -> Void
+protocol NewTabDaxDialogProvider {
+    associatedtype DaxDialog: View
+    func createDaxDialog(for homeDialog: DaxDialogs.HomeScreenSpec, onDismiss: @escaping () -> Void) -> DaxDialog
+}
 
-    init(delegate: OnboardingNavigationDelegate?, onDismiss: @escaping () -> Void) {
+class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
+    var delegate: OnboardingNavigationDelegate?
+
+    init(delegate: OnboardingNavigationDelegate?) {
         self.delegate = delegate
-        self.onDismiss = onDismiss
     }
 
     @ViewBuilder
-    func createDaxDialog(for homeDialog: DaxDialogs.HomeScreenSpec) -> some View {
+    func createDaxDialog(for homeDialog: DaxDialogs.HomeScreenSpec, onDismiss: @escaping () -> Void) -> some View {
         switch homeDialog {
         case .initial:
             createInitialDialog()
@@ -39,7 +42,7 @@ class ContextualOnboardingNewTabDialogFactory {
         case .subsequent:
             createSubsequentDialog()
         case .final:
-            createFinalDialog()
+            createFinalDialog(onDismiss: onDismiss)
         default:
             EmptyView()
 
@@ -79,11 +82,11 @@ class ContextualOnboardingNewTabDialogFactory {
         }
     }
 
-    private func createFinalDialog() -> some View {
+    private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
         return ScrollView(.vertical) {
             FadeInView {
                 OnboardingFinalDialog(highFiveAction: {
-                    self.onDismiss()
+                    onDismiss()
                 }).padding()
             }
         }

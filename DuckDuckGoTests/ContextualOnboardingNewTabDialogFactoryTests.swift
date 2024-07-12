@@ -23,7 +23,7 @@ import SwiftUI
 
 class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
 
-    var factory: ContextualOnboardingNewTabDialogFactory!
+    var factory: NewTabDaxDialogFactory!
     var mockDelegate: MockOnboardingNavigationDelegate!
     var onDismissCalled: Bool!
 
@@ -31,7 +31,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         super.setUp()
         mockDelegate = MockOnboardingNavigationDelegate()
         onDismissCalled = false
-        factory = ContextualOnboardingNewTabDialogFactory(delegate: mockDelegate) {
+        factory = NewTabDaxDialogFactory(delegate: mockDelegate) {
             self.onDismissCalled = true
         }
     }

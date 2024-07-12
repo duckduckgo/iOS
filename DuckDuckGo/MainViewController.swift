@@ -744,16 +744,16 @@ class MainViewController: UIViewController {
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
         } else {
+            let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self)
             let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
-                                                                   syncDataProviders: syncDataProviders, 
-                                                                   variantManager: variantManager)
+                                                                   syncDataProviders: syncDataProviders,
+                                                                   variantManager: variantManager, newTabDialogFactory: newTabDaxDialogFactory)
 
             controller.delegate = self
             controller.chromeDelegate = self
-            controller.onboardingNavigationDelegate = self
             homeViewController = controller
             addToContentContainer(controller: controller)
         }

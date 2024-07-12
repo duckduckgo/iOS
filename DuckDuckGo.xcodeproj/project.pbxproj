@@ -235,7 +235,7 @@
 		4BF3E4AF2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3E4AE2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift */; };
 		560E990F2BEE2CB800507CE0 /* SyncErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */; };
 		564DE4512C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4502C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift */; };
-		564DE4532C3ED1B700D23241 /* ContextualOnboardingNewTabDialogFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4522C3ED1B700D23241 /* ContextualOnboardingNewTabDialogFactory.swift */; };
+		564DE4532C3ED1B700D23241 /* NewTabDaxDialogFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */; };
 		564DE4552C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */; };
 		566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */; };
 		566B73732BECE4F200FF1959 /* SyncErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */; };
@@ -1379,7 +1379,7 @@
 		4BF3E4AE2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNRedditSessionWorkaround.swift; sourceTree = "<group>"; };
 		560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorMessage.swift; sourceTree = "<group>"; };
 		564DE4502C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestionsViewModel.swift; sourceTree = "<group>"; };
-		564DE4522C3ED1B700D23241 /* ContextualOnboardingNewTabDialogFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingNewTabDialogFactory.swift; sourceTree = "<group>"; };
+		564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabDaxDialogFactory.swift; sourceTree = "<group>"; };
 		564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingNewTabDialogFactoryTests.swift; sourceTree = "<group>"; };
 		566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+SyncAlerts.swift"; sourceTree = "<group>"; };
 		566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandling.swift; sourceTree = "<group>"; };
@@ -3466,7 +3466,7 @@
 				56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */,
 				56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */,
 				56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */,
-				564DE4522C3ED1B700D23241 /* ContextualOnboardingNewTabDialogFactory.swift */,
+				564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */,
 			);
 			path = ContextualDaxDialogs;
 			sourceTree = "<group>";
@@ -6926,7 +6926,7 @@
 				D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */,
 				1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */,
 				8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */,
-				564DE4532C3ED1B700D23241 /* ContextualOnboardingNewTabDialogFactory.swift in Sources */,
+				564DE4532C3ED1B700D23241 /* NewTabDaxDialogFactory.swift in Sources */,
 				1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */,
 				4B412ACC2BBB3D0900A39F5E /* LazyView.swift in Sources */,
 				85047C772A0D5D3D00D2FF3F /* SyncSettingsViewController+SyncDelegate.swift in Sources */,

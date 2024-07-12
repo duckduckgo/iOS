@@ -67,7 +67,6 @@ class HomeViewController: UIViewController, NewTabPage {
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    weak var onboardingNavigationDelegate: OnboardingNavigationDelegate?
 
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
@@ -78,6 +77,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
     private let variantManager: VariantManager
+    private let newTabDialogFactory: any NewTabDaxDialogProvider
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
@@ -87,7 +87,8 @@ class HomeViewController: UIViewController, NewTabPage {
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        variantManager: VariantManager
+        variantManager: VariantManager,
+        newTabDialogFactory: any NewTabDaxDialogProvider
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -98,7 +99,8 @@ class HomeViewController: UIViewController, NewTabPage {
                 appSettings: appSettings,
                 syncService: syncService,
                 syncDataProviders: syncDataProviders,
-                variantManager: variantManager
+                variantManager: variantManager,
+                newTabDialogFactory: newTabDialogFactory
             )
         })
         return controller
@@ -111,7 +113,8 @@ class HomeViewController: UIViewController, NewTabPage {
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        variantManager: VariantManager
+        variantManager: VariantManager,
+        newTabDialogFactory: any NewTabDaxDialogProvider
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
@@ -119,6 +122,7 @@ class HomeViewController: UIViewController, NewTabPage {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.variantManager = variantManager
+        self.newTabDialogFactory = newTabDialogFactory
 
         super.init(coder: coder)
     }
@@ -274,8 +278,7 @@ class HomeViewController: UIViewController, NewTabPage {
     func showNextDaxDialogNew() {
         dismissHostingController()
         guard let homeDialog = DaxDialogs.shared.nextHomeScreenMessage() else { return }
-        let factory = ContextualOnboardingNewTabDialogFactory(delegate: onboardingNavigationDelegate, onDismiss: dismissHostingController)
-        let daxDialogView = AnyView(factory.createDaxDialog(for: homeDialog))
+        let daxDialogView = AnyView(newTabDialogFactory.createDaxDialog(for: homeDialog, onDismiss: dismissHostingController))
         hostingController = UIHostingController(rootView: daxDialogView)
         guard let hostingController else { return }
         hostingController.view.backgroundColor = .clear
@@ -283,7 +286,6 @@ class HomeViewController: UIViewController, NewTabPage {
         hostingController.didMove(toParent: self)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         hideLogo()
-        let barHeight = chromeDelegate?.tabBarContainer.topAnchor
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),

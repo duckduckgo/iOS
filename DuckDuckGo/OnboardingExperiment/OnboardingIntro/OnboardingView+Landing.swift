@@ -51,23 +51,32 @@ extension OnboardingView {
         }
 
         func landingScreenIPadLandscape(proxy: GeometryProxy) -> some View {
-            HStack(alignment: .top, spacing: 0) {
+            HStack(spacing: 0) {
+                // Divide screen in half with two containers:
+                // 1. Hiker to be centered horizontally in the container and with a height of 90% of the screen size
+                // 2. Welcome view horizontally centered in the container with min padding leading and trailing to wrap the text if needed.
+                HStack {
+                    Spacer()
 
-                VStack {
                     Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
                         .resizable()
                         .scaledToFit()
-                        .frame(height: proxy.size.height * 0.90)
+                        .frame(height: proxy.size.height * Metrics.Landscape.hikerHeightPercentage)
+
+                    Spacer()
                 }
-                .frame(width: proxy.size.width / 2, height: proxy.size.height, alignment: .bottomLeading)
+                .frame(width: proxy.size.width / 2, height: proxy.size.height, alignment: .bottom)
 
-                welcomeView
-                    .padding(.top, proxy.size.height * 0.15)
-                    .frame(width: proxy.size.width / 2, alignment: .top)
+                HStack {
+                    Spacer(minLength: Metrics.Landscape.textMinSpacer)
 
+                    welcomeView
+                        .padding(.top, proxy.size.height * Metrics.Landscape.daxImagePositionPercentage)
 
+                    Spacer(minLength: Metrics.Landscape.textMinSpacer)
+                }
+                .frame(width: proxy.size.width / 2, height: proxy.size.height, alignment: .top)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
         }
 
         private var welcomeView: some View {
@@ -94,6 +103,11 @@ private enum Metrics {
     static let titleSize = MetricBuilder<CGFloat>(iPhone: 28, iPad: 36)
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
+    enum Landscape {
+        static let textMinSpacer: CGFloat = 40
+        static let daxImagePositionPercentage: CGFloat = 0.15
+        static let hikerHeightPercentage: CGFloat = 0.9
+    }
 }
 
 // MARK: - Preview

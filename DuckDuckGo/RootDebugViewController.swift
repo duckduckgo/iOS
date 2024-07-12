@@ -45,7 +45,7 @@ class RootDebugViewController: UITableViewController {
         case resetSendCrashLogs = 671
         case refreshConfig = 672
         case newTabPageSections = 674
-        case showNewOnboardingIntro = 675
+        case showNewOnboardingIntro = 676
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!

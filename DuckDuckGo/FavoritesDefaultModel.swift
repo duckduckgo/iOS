@@ -20,6 +20,7 @@
 import Foundation
 import Bookmarks
 import SwiftUI
+import Core
 
 final class FavoritesDefaultModel: FavoritesModel {
 
@@ -27,8 +28,6 @@ final class FavoritesDefaultModel: FavoritesModel {
 
     private let interactionModel: FavoritesListInteracting
     private var didReportMissingFavicon = false
-
-    var onFaviconMissing: () -> Void = {}
 
     var isEmpty: Bool {
         allFavorites.isEmpty
@@ -43,8 +42,23 @@ final class FavoritesDefaultModel: FavoritesModel {
         }
     }
 
+
+    // MARK: - External actions
+
+    var onFaviconMissing: () -> Void = {}
     func faviconMissing() {
         onFaviconMissing()
+    }
+
+    var onFavoriteURLSelected: ((URL) -> Void)?
+    func favoriteSelected(_ favorite: Favorite) {
+        guard let url = favorite.urlObject else { return }
+
+        Pixel.fire(pixel: .favoriteLaunchedNTP)
+        DailyPixel.fire(pixel: .favoriteLaunchedNTPDaily)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
+
+        onFavoriteURLSelected?(url)
     }
 }
 
@@ -53,14 +67,15 @@ enum FavoriteMappingError: Error {
 }
 
 private extension Favorite {
-    init(_ bookmarkEntry: BookmarkEntity) throws {
-        guard let uuid = bookmarkEntry.uuid else {
+    init(_ bookmark: BookmarkEntity) throws {
+        guard let uuid = bookmark.uuid else {
             throw FavoriteMappingError.missingUUID
         }
 
         self.id = uuid
-        self.title = bookmarkEntry.displayTitle
-        self.domain = bookmarkEntry.host
+        self.title = bookmark.displayTitle
+        self.domain = bookmark.host
+        self.urlObject = bookmark.urlObject
     }
 }
 

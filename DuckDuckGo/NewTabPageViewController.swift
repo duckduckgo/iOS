@@ -29,32 +29,44 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
+    private let favoritesModel: FavoritesDefaultModel
+
     init(interactionModel: FavoritesListInteracting, syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter) {
 
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        let favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
+        self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
                                             favoritesModel: favoritesModel)
 
         super.init(rootView: newTabPageView)
 
+        assignFavoriteModelActions()
+    }
+
+    // MARK: - Private
+
+    private func assignFavoriteModelActions() {
         favoritesModel.onFaviconMissing = { [weak self] in
             guard let self else { return }
             self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
         }
+
+        favoritesModel.onFavoriteURLSelected = { [weak self] url in
+            guard let self else { return }
+
+            delegate?.newTabPageDidOpenFavoriteURL(self, url: url)
+        }
     }
 
-    @available(*, unavailable)
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - NewTabPage
 
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?
-    weak var delegate: HomeControllerDelegate?
+//    weak var delegate: HomeControllerDelegate?
+    weak var delegate: NewTabPageControllerDelegate?
 
     func launchNewSearch() {
 
@@ -82,5 +94,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     func reloadFavorites() {
 
+    }
+
+    // MARK: -
+
+    @available(*, unavailable)
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

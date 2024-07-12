@@ -17,11 +17,20 @@
 //  limitations under the License.
 //
 
-import Foundation
+import Bookmarks
 import SwiftUI
 
 struct Favorite: Identifiable, Equatable {
     let id: String
     let title: String
     let domain: String
+
+    let urlObject: URL?
+
+    init(id: String, title: String, domain: String, urlObject: URL? = nil) {
+        self.id = id
+        self.title = title
+        self.domain = domain
+        self.urlObject = urlObject
+    }
 }

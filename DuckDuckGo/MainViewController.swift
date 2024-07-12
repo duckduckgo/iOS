@@ -739,6 +739,9 @@ class MainViewController: UIViewController {
             let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
+
+            controller.delegate = self
+
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
@@ -1954,6 +1957,18 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
 }
 
+extension MainViewController {
+    private func handleRequestedURL(_ url: URL) {
+        showKeyboardAfterFireButton?.cancel()
+
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
+    }
+}
+
 extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -1961,13 +1976,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        showKeyboardAfterFireButton?.cancel()
-        
-        if url.isBookmarklet() {
-            executeBookmarklet(url)
-        } else {
-            loadUrl(url)
-        }
+        handleRequestedURL(url)
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
@@ -2001,6 +2010,12 @@ extension MainViewController: HomeControllerDelegate {
         viewCoordinator.navigationBarContainer.alpha = percent
     }
     
+}
+
+extension MainViewController: NewTabPageControllerDelegate {
+    func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL) {
+        handleRequestedURL(url)
+    }
 }
 
 extension MainViewController: TabDelegate {

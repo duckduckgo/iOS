@@ -37,10 +37,14 @@ struct FavoritesView<Model: FavoritesModel>: View {
             
             NewTabPageGridView { _ in
                 ForEach(data) { item in
-                    FavoriteItemView(favorite: item, onFaviconMissing: {
-                        self.model.faviconMissing()
+                    Button(action: {
+                        model.favoriteSelected(item)
+                    }, label: {
+                        FavoriteItemView(favorite: item, onFaviconMissing: {
+                            self.model.faviconMissing()
+                        })
+                        .frame(width: NewTabPageGrid.Item.edgeSize)
                     })
-                    .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
             }
 

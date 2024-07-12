@@ -114,7 +114,7 @@ import WebKit
         }
     }
 
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // SKAD4 support
@@ -237,10 +237,8 @@ import WebKit
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
-            historyMessageManager.dismiss()
-        }
 
-        if variantManager.isSupported(feature: .history) {
+            // New users don't see the message
             historyMessageManager.dismiss()
         }
 
@@ -380,7 +378,6 @@ import WebKit
 
         switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
                                    isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
-                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                    privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
 
         case .failure(let error):

@@ -52,6 +52,18 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         return true
     }
 
+    private let pixelReporting: OnboardingIntroImpressionReporting
+
+    init?(coder: NSCoder, pixelReporting: OnboardingIntroImpressionReporting = OnboardingPixelReporter()) {
+        self.pixelReporting = pixelReporting
+        super.init(coder: coder)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,6 +73,8 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
         daxDialogContainerHeight.constant = daxDialog?.calculateHeight() ?? 0
         button.displayDropShadow()
         daxIcon.isHidden = true
+
+        pixelReporting.trackOnboardingIntroImpression()
     }
     
     override func viewDidAppear(_ animated: Bool) {

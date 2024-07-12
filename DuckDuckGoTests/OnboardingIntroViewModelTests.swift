@@ -22,6 +22,8 @@ import XCTest
 
 final class OnboardingIntroViewModelTests: XCTestCase {
 
+    // MARK: - State + Actions
+
     func testWhenSubscribeToViewStateThenShouldSendLanding() {
         // GIVEN
         let sut = OnboardingIntroViewModel()
@@ -33,7 +35,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertEqual(result, .landing)
     }
 
-    func testWhenOnAppearIsCalledIsCalledThenViewStateChangesToStartOnboardingDialog() {
+    func testWhenOnAppearIsCalledThenViewStateChangesToStartOnboardingDialog() {
         // GIVEN
         let sut = OnboardingIntroViewModel()
         XCTAssertEqual(sut.state, .landing)
@@ -104,4 +106,63 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertTrue(didCallOnCompletingOnboardingIntro)
     }
 
+    // MARK: - Pixels
+
+    func testWhenOnAppearIsCalledThenPixelReporterTrackOnboardingIntroImpression() {
+        // GIVEN
+        let pixelReporterMock = OnboardingIntroPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        XCTAssertFalse(pixelReporterMock.didCallTrackOnboardingIntroImpression)
+
+        // WHEN
+        sut.onAppear()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackOnboardingIntroImpression)
+    }
+
+    func testWhenStartOnboardingActionIsCalledThenPixelReporterTrackBrowserComparisonImpression() {
+        // GIVEN
+        let pixelReporterMock = OnboardingIntroPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        XCTAssertFalse(pixelReporterMock.didCallTrackBrowserComparisonImpression)
+
+        // WHEN
+        sut.startOnboardingAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackBrowserComparisonImpression)
+    }
+
+    func testWhenChooseBrowserIsCalledThenPixelReporterTrackChooseBrowserCTAAction() {
+        // GIVEN
+        let pixelReporterMock = OnboardingIntroPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        XCTAssertFalse(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
+
+        // WHEN
+        sut.setDefaultBrowserAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
+    }
+
+}
+
+private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReporting {
+    private(set) var didCallTrackOnboardingIntroImpression = false
+    private(set) var didCallTrackBrowserComparisonImpression = false
+    private(set) var didCallTrackChooseBrowserCTAAction = false
+
+    func trackOnboardingIntroImpression() {
+        didCallTrackOnboardingIntroImpression = true
+    }
+
+    func trackBrowserComparisonImpression() {
+        didCallTrackBrowserComparisonImpression = true
+    }
+
+    func trackChooseBrowserCTAAction() {
+        didCallTrackChooseBrowserCTAAction = true
+    }
 }

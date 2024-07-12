@@ -20,9 +20,8 @@
 import SwiftUI
 
 struct OnboardingBackground: View {
-    @Environment(\.verticalSizeClass) var vSizeClass
-    @Environment(\.horizontalSizeClass) var hSizeClass
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.verticalSizeClass) private var vSizeClass
+    @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {

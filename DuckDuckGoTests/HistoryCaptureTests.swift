@@ -79,7 +79,10 @@ final class HistoryCaptureTests: XCTestCase {
     }
 
     func makeCapture() -> HistoryCapture {
-        return HistoryCapture(historyManager: MockHistoryManager(historyCoordinator: mockHistoryCoordinator, isEnabledByUser: true, historyFeatureEnabled: true))
+        let mock = MockHistoryManager(historyCoordinator: mockHistoryCoordinator,
+                                      isEnabledByUser: true,
+                                      historyFeatureEnabled: true)
+        return HistoryCapture(historyManager: mock)
     }
 
 }

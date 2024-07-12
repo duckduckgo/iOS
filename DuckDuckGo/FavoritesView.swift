@@ -28,6 +28,8 @@ struct FavoritesView<Model: FavoritesModel>: View {
 
     @State private var isCollapsed = true
 
+    private let selectionFeedback = UISelectionFeedbackGenerator()
+
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
 
@@ -39,6 +41,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                 ForEach(data) { item in
                     Button(action: {
                         model.favoriteSelected(item)
+                        selectionFeedback.selectionChanged()
                     }, label: {
                         FavoriteItemView(favorite: item, onFaviconMissing: {
                             self.model.faviconMissing()

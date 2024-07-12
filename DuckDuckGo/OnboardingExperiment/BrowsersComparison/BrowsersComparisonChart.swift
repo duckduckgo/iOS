@@ -75,7 +75,7 @@ extension BrowsersComparisonChart {
                     .font(Metrics.font)
                     .foregroundColor(.primary)
                     .lineLimit(nil)
-                    .lineSpacing(3)
+                    .lineSpacing(1)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -83,6 +83,8 @@ extension BrowsersComparisonChart {
 
                 BrowsersSupport(browsersSupport: feature.browsersSupport)
             }
+            .frame(maxHeight: Metrics.imageContainerSize.height)
+
             Divider()
         }
     }
@@ -99,11 +101,10 @@ extension BrowsersComparisonChart.Row {
         var body: some View {
             ForEach(Array(browsersSupport.enumerated()), id: \.offset) { index, browserSupport in
                 Image(browserSupport.availability.image)
-                    .frame(width: Metrics.imageContainerSize.width, height: Metrics.imageContainerSize.height)
+                    .frame(width: Metrics.imageContainerSize.width)
 
                 if index < browsersSupport.count - 1 {
                     Divider()
-                        .frame(height: Metrics.imageContainerSize.height)
                 }
             }
         }
@@ -116,8 +117,8 @@ extension BrowsersComparisonChart.Row {
 private enum Metrics {
     static let stackSpacing: CGFloat = 0.0
     static let headerHeight: CGFloat = 60
-    static let headerImageContainerSize = CGSize(width: 50, height: 80)
-    static let imageContainerSize = CGSize(width: 50.0, height: 50.0)
+    static let headerImageContainerSize = CGSize(width: 40, height: 80)
+    static let imageContainerSize = CGSize(width: 40.0, height: 50.0)
     static let font = Font.system(size: 15.0)
 }
 

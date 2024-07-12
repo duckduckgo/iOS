@@ -17,18 +17,19 @@
 //  limitations under the License.
 //
 
-import UIKit
-import LinkPresentation
-import Core
-import Kingfisher
-import WebKit
 import BrowserServicesKit
 import Common
 import Configuration
-import Persistence
+import Core
+import Crashes
 import DDGSync
+import Kingfisher
+import LinkPresentation
 import NetworkProtection
+import Persistence
 import SwiftUI
+import UIKit
+import WebKit
 
 class RootDebugViewController: UITableViewController {
 
@@ -37,6 +38,7 @@ class RootDebugViewController: UITableViewController {
         case crashFatalError = 666
         case crashMemory = 667
         case crashException = 673
+        case crashCxxException = 675
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
         case openVanillaBrowser = 670
@@ -144,6 +146,8 @@ class RootDebugViewController: UITableViewController {
                 tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
+            case .crashCxxException:
+                throwTestCppExteption()
             case .toggleInspectableWebViews:
                 let defaults = AppUserDefaults()
                 defaults.inspectableWebViewEnabled.toggle()

@@ -69,7 +69,6 @@ public class LegacyBookmarksStoreMigration {
     }
 
     // swiftlint:disable cyclomatic_complexity
-    // swiftlint:disable function_body_length
 
     private static func migrate(source: NSManagedObjectContext, destination: NSManagedObjectContext) {
 
@@ -189,6 +188,4 @@ public class LegacyBookmarksStoreMigration {
         }
     }
     // swiftlint:enable cyclomatic_complexity
-    // swiftlint:enable function_body_length
-
 }

@@ -41,10 +41,7 @@ import NetworkProtection
 import WebKit
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
-    // swiftlint:enable type_body_length
     
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     private struct ShortcutKey {
@@ -104,6 +101,19 @@ import WebKit
         AppDependencyProvider.shared.accountManager
     }
 
+    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
+    private var didCrashDuringCrashHandlersSetUp: Bool
+
+    override init() {
+        super.init()
+
+        if !didCrashDuringCrashHandlersSetUp {
+            didCrashDuringCrashHandlersSetUp = true
+            CrashLogMessageExtractor.setUp()
+            didCrashDuringCrashHandlersSetUp = false
+        }
+    }
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -143,19 +153,17 @@ import WebKit
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.start { pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = self.window?.rootViewController else {
-                    return
-                }
-                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                guard let viewController = self.window?.rootViewController else { return }
+
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
                 self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }
@@ -300,9 +308,7 @@ import WebKit
                                                       remoteMessagingClient: remoteMessagingClient)
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
-                                                AppDependencyProvider.shared.internalUserDecider,
-                                                ContentBlocking.shared.privacyConfigurationManager)
+        let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -360,7 +366,35 @@ import WebKit
 
         setUpAutofillPixelReporter()
 
+        if didCrashDuringCrashHandlersSetUp {
+            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
+            didCrashDuringCrashHandlersSetUp = false
+        }
+
         return true
+    }
+
+    private func makeHistoryManager() -> HistoryManaging {
+
+        let settings = AppDependencyProvider.shared.appSettings
+
+        switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
+                                   isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
+                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
+
+        case .failure(let error):
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+            return NullHistoryManager()
+
+        case .success(let historyManager):
+            return historyManager
+        }
     }
 
     private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
@@ -382,39 +416,6 @@ import WebKit
             }
         }
         return tabsModel
-    }
-
-    private func makeHistoryManager(_ appSettings: AppSettings,
-                                    _ internalUserDecider: InternalUserDecider,
-                                    _ privacyConfigManager: PrivacyConfigurationManaging) -> HistoryManager {
-
-        let db = HistoryDatabase.make()
-        var loadError: Error?
-        db.loadStore { _, error in
-            loadError = error
-        }
-
-        if let loadError {
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: loadError)
-            if loadError.isDiskFull {
-                self.presentInsufficientDiskSpaceAlert()
-            } else {
-                self.presentPreemptiveCrashAlert()
-            }
-        }
-
-        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
-                                            variantManager: DefaultVariantManager(),
-                                            database: db,
-                                            internalUserDecider: internalUserDecider,
-                                            isEnabledByUser: appSettings.recentlyVisitedSites)
-
-        // Ensure we don't do this if the history is disabled in privacy confg
-        guard historyManager.isHistoryFeatureEnabled() else { return historyManager }
-        historyManager.loadStore(onCleanFinished: {
-            // Do future migrations after clean has finished.  See macOS for an example.
-        })
-        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {
@@ -474,7 +475,6 @@ import WebKit
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 

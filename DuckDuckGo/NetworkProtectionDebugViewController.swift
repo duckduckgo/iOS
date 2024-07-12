@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 import UIKit
 
 #if !NETWORK_PROTECTION
@@ -35,7 +33,6 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 
-// swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.featureVisibility: "Feature Visibility",
@@ -177,7 +174,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         return titles[section]
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -229,7 +225,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         return cell
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .clearData: return ClearDataRows.allCases.count
@@ -247,7 +242,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .clearData:
@@ -739,5 +733,3 @@ extension NWConnection {
 }
 
 #endif
-
-// swiftlint:enable file_length

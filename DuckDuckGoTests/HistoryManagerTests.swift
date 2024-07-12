@@ -30,7 +30,6 @@ final class HistoryManagerTests: XCTestCase {
     let privacyConfigManager = MockPrivacyConfigurationManager()
     var variantManager = MockVariantManager()
     let internalUserStore = MockInternalUserStoring()
-    var enabledByUser = true
 
     func test() {
 
@@ -85,7 +84,8 @@ final class HistoryManagerTests: XCTestCase {
                 XCTFail("DB Error \($0)")
             }
 
-            XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
+            let result = historyManager.isHistoryFeatureEnabled()
+            XCTAssertEqual(condition.expected, result, "\(index): \(condition)")
 
             if condition.expected {
                 XCTAssertTrue(historyManager.historyCoordinator is HistoryCoordinator)
@@ -97,7 +97,7 @@ final class HistoryManagerTests: XCTestCase {
 
     }
 
-    func test_WhenUserHasDisabledSetting_ThenDontStoreOrLoadHistory() {
+    func test_WhenUserHasDisabledAutocompleteSitesSetting_ThenDontStoreOrLoadHistory() {
 
         privacyConfig.isFeatureKeyEnabled = { feature, _ in
             XCTAssertEqual(feature, .history)
@@ -106,7 +106,29 @@ final class HistoryManagerTests: XCTestCase {
 
         internalUserStore.isInternalUser = true
         privacyConfigManager.privacyConfig = privacyConfig
-        enabledByUser = false
+        autocompleteEnabledByUser = false
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        db.loadStore()
+
+        let historyManager = makeHistoryManager(db) {
+            XCTFail("DB Error \($0)")
+        }
+
+        XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
+    }
+
+    func test_WhenUserHasDisabledRecentlyVisitedSitesSetting_ThenDontStoreOrLoadHistory() {
+
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
+        }
+
+        internalUserStore.isInternalUser = true
+        privacyConfigManager.privacyConfig = privacyConfig
+        recentlyVisitedSitesEnabledByUser = false
 
         let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
@@ -120,16 +142,20 @@ final class HistoryManagerTests: XCTestCase {
     }
 
     private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
-        let manager = HistoryManager(privacyConfigManager: privacyConfigManager,
+        let eventMapper = HistoryStoreEventMapper()
+        let store = HistoryStore(context: db.makeContext(concurrencyType: .privateQueueConcurrencyType), eventMapper: eventMapper)
+        let dbCoordinator = HistoryCoordinator(historyStoring: store)
+
+        return HistoryManager(privacyConfigManager: privacyConfigManager,
                               variantManager: variantManager,
-                              database: db,
                               internalUserDecider: DefaultInternalUserDecider(mockedStore: internalUserStore),
-                              isEnabledByUser: self.isEnabledByUser())
-        return manager
+                              dbCoordinator: dbCoordinator,
+                              isAutocompleteEnabledByUser: self.autocompleteEnabledByUser,
+                              isRecentlyVisitedSitesEnabledByUser: self.recentlyVisitedSitesEnabledByUser)
+
     }
 
-    private func isEnabledByUser() -> Bool {
-        return enabledByUser
-    }
+    var autocompleteEnabledByUser = true
+    var recentlyVisitedSitesEnabledByUser = true
 
 }

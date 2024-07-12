@@ -21,7 +21,6 @@ import SwiftUI
 import WidgetKit
 import DesignResourcesKit
 
-// swiftlint:disable file_length
 struct FavoriteView: View {
 
     var favorite: Favorite?
@@ -410,4 +409,3 @@ struct WidgetViews_Previews: PreviewProvider {
             .environment(\.colorScheme, .dark)
     }
 }
-// swiftlint:enable file_length

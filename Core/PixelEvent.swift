@@ -26,7 +26,6 @@ import NetworkProtection
 
 extension Pixel {
     
-    // swiftlint:disable:next type_body_length
     public enum Event {
         
         case appLaunch
@@ -436,7 +435,8 @@ extension Pixel {
         
         // MARK: debug pixels
         case dbCrashDetected
-        
+        case crashOnCrashHandlersSetUp
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -721,6 +721,27 @@ extension Pixel {
         case favoriteLaunchedNTPDaily
         case bookmarkLaunchedDaily
         case newTabPageDisplayedDaily
+
+        // MARK: DuckPlayer        
+        case duckPlayerDailyUniqueView
+        case duckPlayerViewFromYoutubeViaMainOverlay
+        case duckPlayerViewFromYoutubeViaHoverButton
+        case duckPlayerViewFromYoutubeAutomatic
+        case duckPlayerViewFromSERP
+        case duckPlayerViewFromOther
+        case duckPlayerOverlayYoutubeImpressions
+        case duckPlayerOverlayYoutubeWatchHere
+        case duckPlayerSettingAlwaysDuckPlayer
+        case duckPlayerSettingAlwaysOverlaySERP
+        case duckPlayerSettingAlwaysOverlayYoutube
+        case duckPlayerSettingAlwaysSettings
+        case duckPlayerSettingNeverOverlaySERP
+        case duckPlayerSettingNeverOverlayYoutube
+        case duckPlayerSettingNeverSettings
+        case duckPlayerSettingBackToDefault
+        case duckPlayerWatchOnYoutube
+        case watchInDuckPlayerInitial
+        
     }
 
 }
@@ -1132,6 +1153,7 @@ extension Pixel.Event {
             // MARK: debug pixels
             
         case .dbCrashDetected: return "m_d_crash"
+        case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
@@ -1428,11 +1450,30 @@ extension Pixel.Event {
         case .favoriteLaunchedNTPDaily: return "m_favorite_launched_ntp_daily"
         case .bookmarkLaunchedDaily: return "m_bookmark_launched_daily"
         case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
+            
+        // MARK: DuckPlayer
+        case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"
+        case .duckPlayerViewFromYoutubeViaMainOverlay: return "m_duck-player_view-from_youtube_main-overlay"
+        case .duckPlayerViewFromYoutubeViaHoverButton: return "m_duck-player_view-from_youtube_hover-button"
+        case .duckPlayerViewFromYoutubeAutomatic: return "m_duck-player_view-from_youtube_automatic"
+        case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
+        case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
+        case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
+        case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
+        case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
+        case .duckPlayerSettingAlwaysOverlaySERP: return "m_duck-player_setting_always_overlay_serp"
+        case .duckPlayerSettingAlwaysOverlayYoutube: return "m_duck-player_setting_always_overlay_youtube"
+        case .duckPlayerSettingNeverOverlaySERP: return "m_duck-player_setting_never_overlay_serp"
+        case .duckPlayerSettingNeverOverlayYoutube: return "m_duck-player_setting_never_overlay_youtube"
+        case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
+        case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
+        case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
+        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }
 
-// swiftlint:disable file_length
 extension Pixel.Event {
     
     public enum BucketAggregation: String, CustomStringConvertible {

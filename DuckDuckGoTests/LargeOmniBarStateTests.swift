@@ -22,9 +22,6 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-// swiftlint:disable type_body_length
-// swiftlint:disable file_length
-
 class LargeOmniBarStateTests: XCTestCase {
 
     var mockDependencyProvider: MockDependencyProvider!
@@ -464,5 +461,3 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, LargeOmniBarState.HomeNonEditingState().name)
     }
 }
-// swiftlint:enable type_body_length
-// swiftlint:enable file_length

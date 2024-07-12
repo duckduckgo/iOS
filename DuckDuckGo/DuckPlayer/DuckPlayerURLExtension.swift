@@ -112,6 +112,12 @@ extension URL {
         
     }
     
+    var isYoutube: Bool {
+        guard let host else { return false }
+        return host == "m.youtube.com" || host == "youtube.com"
+        
+    }
+    
     private func addingTimestamp(_ timestamp: String?) -> URL {
         guard let timestamp = timestamp,
               let regex = try? NSRegularExpression(pattern: "^(\\d+[smh]?)+$"),

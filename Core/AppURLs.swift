@@ -20,8 +20,6 @@
 import BrowserServicesKit
 import Foundation
 
-// swiftlint:disable line_length
-
 public extension URL {
 
     private static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
@@ -260,5 +258,3 @@ public final class StatisticsDependentURLFactory {
     }
 
 }
-
-// swiftlint:enable line_length

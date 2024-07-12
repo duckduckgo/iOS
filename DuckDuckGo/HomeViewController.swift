@@ -26,6 +26,7 @@ import DDGSync
 import Persistence
 import RemoteMessaging
 import SwiftUI
+import BrowserServicesKit
 
 
 class HomeViewController: UIViewController, NewTabPage {
@@ -76,6 +77,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private let appSettings: AppSettings
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private let variantManager: VariantManager
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
@@ -84,7 +86,8 @@ class HomeViewController: UIViewController, NewTabPage {
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        variantManager: VariantManager
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -94,7 +97,8 @@ class HomeViewController: UIViewController, NewTabPage {
                 favoritesViewModel: favoritesViewModel,
                 appSettings: appSettings,
                 syncService: syncService,
-                syncDataProviders: syncDataProviders
+                syncDataProviders: syncDataProviders,
+                variantManager: variantManager
             )
         })
         return controller
@@ -106,13 +110,15 @@ class HomeViewController: UIViewController, NewTabPage {
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        variantManager: VariantManager
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
         self.appSettings = appSettings
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
+        self.variantManager = variantManager
 
         super.init(coder: coder)
     }
@@ -199,7 +205,11 @@ class HomeViewController: UIViewController, NewTabPage {
     
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        showNextDaxDialogNew()
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew()
+        } else {
+            showNextDaxDialog()
+        }
     }
     
     @IBAction func launchSettings() {
@@ -216,7 +226,11 @@ class HomeViewController: UIViewController, NewTabPage {
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
         
-        showNextDaxDialogNew()
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew()
+        } else {
+            showNextDaxDialog()
+        }
 
         collectionView.didAppear()
 
@@ -291,7 +305,11 @@ class HomeViewController: UIViewController, NewTabPage {
     }
     
     func onboardingCompleted() {
-        showNextDaxDialogNew()
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew()
+        } else {
+            showNextDaxDialog()
+        }
     }
 
     func reloadFavorites() {

@@ -217,7 +217,8 @@ final class DaxDialogs {
     }
 
     func isStillOnboarding() -> Bool {
-        if peekNextHomeScreenMessage() != nil {
+        if peekNextHomeScreenMessage() != nil
+            || peekNextHomeScreenMessageExperiment() != nil {
             return true
         }
         return false
@@ -312,7 +313,14 @@ final class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        guard let homeScreenSpec = peekNextHomeScreenMessage() else { return nil }
+        var homeScreenSpec: HomeScreenSpec?
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            homeScreenSpec = peekNextHomeScreenMessageExperiment()
+        } else {
+            homeScreenSpec = peekNextHomeScreenMessage()
+        }
+
+        guard let homeScreenSpec else { return nil }
 
         if homeScreenSpec != nextHomeScreenMessageOverride {
             settings.homeScreenMessagesSeen += 1
@@ -327,15 +335,32 @@ final class DaxDialogs {
         }
 
         guard isEnabled else { return nil }
-//        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else {
-//            return nil
-//        }
+        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else {
+            return nil
+        }
 
         if settings.homeScreenMessagesSeen == 0 {
             return .initial
         }
 
-        if firstSearchSeenButNoSiteVisit && true {
+        if firstBrowsingMessageSeen {
+            return .final
+        }
+
+        return nil
+    }
+
+    private func peekNextHomeScreenMessageExperiment() -> HomeScreenSpec? {
+        if nextHomeScreenMessageOverride != nil {
+            return nextHomeScreenMessageOverride
+        }
+        guard isEnabled else { return nil }
+
+        if !settings.browsingAfterSearchShown {
+            return .initial
+        }
+
+        if firstSearchSeenButNoSiteVisit {
             return .subsequent
         }
 
@@ -345,7 +370,7 @@ final class DaxDialogs {
 
         return nil
     }
-    
+
     private func noTrackersMessage() -> DaxDialogs.BrowsingSpec? {
         if !settings.browsingWithoutTrackersShown && !settings.browsingMajorTrackingSiteShown && !settings.browsingWithTrackersShown {
             settings.browsingWithoutTrackersShown = true

@@ -105,6 +105,7 @@ class MainViewController: UIViewController {
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let syncPausedStateManager: any SyncPausedStateManaging
+    private let variantManager: VariantManager
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -182,7 +183,8 @@ class MainViewController: UIViewController {
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
-        syncPausedStateManager: any SyncPausedStateManaging
+        syncPausedStateManager: any SyncPausedStateManaging,
+        variantManager: VariantManager
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -202,6 +204,7 @@ class MainViewController: UIViewController {
                                      syncService: syncService)
         self.syncPausedStateManager = syncPausedStateManager
         self.homeTabManager = NewTabPageManager()
+        self.variantManager = variantManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -745,7 +748,8 @@ class MainViewController: UIViewController {
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
-                                                                   syncDataProviders: syncDataProviders)
+                                                                   syncDataProviders: syncDataProviders, 
+                                                                   variantManager: variantManager)
 
             controller.delegate = self
             controller.chromeDelegate = self

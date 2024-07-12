@@ -308,9 +308,7 @@ import WebKit
                                                       remoteMessagingClient: remoteMessagingClient)
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager(AppDependencyProvider.shared.appSettings,
-                                                AppDependencyProvider.shared.internalUserDecider,
-                                                ContentBlocking.shared.privacyConfigurationManager)
+        let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -376,6 +374,29 @@ import WebKit
         return true
     }
 
+    private func makeHistoryManager() -> HistoryManaging {
+
+        let settings = AppDependencyProvider.shared.appSettings
+
+        switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
+                                   isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
+                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
+
+        case .failure(let error):
+            Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
+            if error.isDiskFull {
+                self.presentInsufficientDiskSpaceAlert()
+            } else {
+                self.presentPreemptiveCrashAlert()
+            }
+            return NullHistoryManager()
+
+        case .success(let historyManager):
+            return historyManager
+        }
+    }
+
     private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                   isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
@@ -395,39 +416,6 @@ import WebKit
             }
         }
         return tabsModel
-    }
-
-    private func makeHistoryManager(_ appSettings: AppSettings,
-                                    _ internalUserDecider: InternalUserDecider,
-                                    _ privacyConfigManager: PrivacyConfigurationManaging) -> HistoryManager {
-
-        let db = HistoryDatabase.make()
-        var loadError: Error?
-        db.loadStore { _, error in
-            loadError = error
-        }
-
-        if let loadError {
-            Pixel.fire(pixel: .historyStoreLoadFailed, error: loadError)
-            if loadError.isDiskFull {
-                self.presentInsufficientDiskSpaceAlert()
-            } else {
-                self.presentPreemptiveCrashAlert()
-            }
-        }
-
-        let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
-                                            variantManager: DefaultVariantManager(),
-                                            database: db,
-                                            internalUserDecider: internalUserDecider,
-                                            isEnabledByUser: appSettings.recentlyVisitedSites)
-
-        // Ensure we don't do this if the history is disabled in privacy confg
-        guard historyManager.isHistoryFeatureEnabled() else { return historyManager }
-        historyManager.loadStore(onCleanFinished: {
-            // Do future migrations after clean has finished.  See macOS for an example.
-        })
-        return historyManager
     }
 
     private func presentPreemptiveCrashAlert() {

@@ -168,13 +168,13 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    var historyManager: HistoryManager
+    var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        historyManager: HistoryManager,
+        historyManager: HistoryManaging,
         homePageConfiguration: HomePageConfiguration,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,

@@ -26,6 +26,9 @@ final class FavoritesDefaultModel: FavoritesModel {
     @Published private(set) var allFavorites: [Favorite]
 
     private let interactionModel: FavoritesListInteracting
+    private var didReportMissingFavicon = false
+
+    var onFaviconMissing: () -> Void = {}
 
     var isEmpty: Bool {
         allFavorites.isEmpty
@@ -38,6 +41,10 @@ final class FavoritesDefaultModel: FavoritesModel {
         } catch {
             fatalError(error.localizedDescription)
         }
+    }
+
+    func faviconMissing() {
+        onFaviconMissing()
     }
 }
 

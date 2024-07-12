@@ -18,70 +18,33 @@
 //
 
 import SwiftUI
-import Core
 
 struct FavoriteIconView: View {
-    let domain: String
+    @ObservedObject var model: FavoriteIconViewModel
 
-    @MainActor
-    @State private var favicon: Favicon
-
-    @MainActor
-    init(domain: String) {
-        self.domain = domain
-        self.favicon = Self.createFakeFavicon(for: domain)
+    init(model: FavoriteIconViewModel) {
+        self.model = model
     }
 
     var body: some View {
-        favicon.image
+        let favicon = model.favicon
+        Image(uiImage: favicon.image)
             .resizable()
             .aspectRatio(1.0, contentMode: .fit)
             .if(favicon.isUsingBorder) {
-                $0.padding(Constants.borderSize)
+                $0.padding(Constant.borderSize)
             }
             .task {
-                if let favicon = await loadFavicon() {
-                    self.favicon = favicon
-                }
+                await model.loadFavicon(size: Constant.faviconSize)
             }
-    }
-
-    private func loadFavicon() async -> Favicon? {
-        await withCheckedContinuation { continuation in
-            FaviconsHelper.loadFaviconSync(forDomain: domain,
-                                           usingCache: .fireproof,
-                                           useFakeFavicon: false) { icon, _ in
-                guard let icon else {
-                    continuation.resume(returning: .none)
-                    return
-                }
-
-                let useBorder = URL.isDuckDuckGo(domain: domain) || icon.size.width < Constants.faviconSize
-                let image = Image(uiImage: icon)
-                continuation.resume(returning: Favicon(image: image, isUsingBorder: useBorder))
-            }
-        }
-    }
-
-    static private func createFakeFavicon(for domain: String) -> Favicon {
-        let color = UIColor.forDomain(domain)
-        let icon = FaviconsHelper.createFakeFavicon(
-            forDomain: domain,
-            size: Constants.faviconSize,
-            backgroundColor: color,
-            bold: false
-        ) ?? UIImage()
-
-        return Favicon(image: Image(uiImage: icon), isUsingBorder: false)
-    }
-
-    struct Constants {
-        static let faviconSize: CGFloat = 40
-        static let borderSize: CGFloat = 12
     }
 }
 
-private struct Favicon {
-    let image: Image
-    let isUsingBorder: Bool
+private struct Constant {
+    static let faviconSize: CGFloat = 40
+    static let borderSize: CGFloat = 12
+}
+
+#Preview {
+    FavoriteIconView(model: FavoriteIconViewModel(domain: "foo.bar", onFaviconMissing: nil))
 }

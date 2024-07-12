@@ -18,14 +18,32 @@
 //
 
 import SwiftUI
+import DDGSync
 import Bookmarks
+import Core
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
 
-    init(interactionModel: FavoritesListInteracting) {
+    private let syncService: DDGSyncing
+    private let syncBookmarksAdapter: SyncBookmarksAdapter
+
+    private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
+
+    init(interactionModel: FavoritesListInteracting, syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter) {
+
+        self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
+
+        let favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
-                                            favoritesModel: FavoritesDefaultModel(interactionModel: interactionModel))
+                                            favoritesModel: favoritesModel)
+
         super.init(rootView: newTabPageView)
+
+        favoritesModel.onFaviconMissing = { [weak self] in
+            guard let self else { return }
+            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+        }
     }
 
     @available(*, unavailable)

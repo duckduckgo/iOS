@@ -23,4 +23,6 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     var allFavorites: [Favorite] { get }
 
     var isEmpty: Bool { get }
+
+    func faviconMissing()
 }

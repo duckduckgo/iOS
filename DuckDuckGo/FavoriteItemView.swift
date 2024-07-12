@@ -22,6 +22,7 @@ import SwiftUI
 
 struct FavoriteItemView: View {
     let favorite: Favorite
+    let onFaviconMissing: () -> Void
 
     var body: some View {
         VStack(spacing: 6) {
@@ -31,7 +32,7 @@ struct FavoriteItemView: View {
                     .shadow(color: .shade(0.12), radius: 0.5, y: 1)
                     .aspectRatio(1, contentMode: .fit)
 
-                FavoriteIconView(domain: favorite.domain)
+                FavoriteIconView(model: FavoriteIconViewModel(domain: favorite.domain, onFaviconMissing: onFaviconMissing))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             }
 
@@ -50,7 +51,7 @@ struct FavoriteItemView: View {
 
 #Preview {
     HStack(alignment: .top) {
-        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com")).frame(width: 64)
-        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com")).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com"), onFaviconMissing: {}).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com"), onFaviconMissing: {}).frame(width: 64)
     }
 }

@@ -19,7 +19,6 @@
 
 import Bookmarks
 import SwiftUI
-import Core
 
 struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -27,7 +26,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
 
     @ObservedObject var model: Model
 
-    @State var isCollapsed: Bool = true
+    @State private var isCollapsed = true
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
@@ -38,7 +37,9 @@ struct FavoritesView<Model: FavoritesModel>: View {
             
             NewTabPageGridView { _ in
                 ForEach(data) { item in
-                    FavoriteItemView(favorite: item)
+                    FavoriteItemView(favorite: item, onFaviconMissing: {
+                        self.model.faviconMissing()
+                    })
                     .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
             }

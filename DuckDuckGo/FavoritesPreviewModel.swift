@@ -38,4 +38,8 @@ final class FavoritesPreviewModel: FavoritesModel {
 
         self.init(allFavorites: favorites)
     }
+
+    func faviconMissing() {
+
+    }
 }

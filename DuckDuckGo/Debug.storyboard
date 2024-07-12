@@ -303,6 +303,15 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Crash (Exception)"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" tag="675" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="5a5-ut-I04">
+                                        <rect key="frame" x="0.0" y="886.5" width="414" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5a5-ut-I04" id="W61-xr-Kpu">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" text="Crash (C++ exception)"/>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="671" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wKg-4u-kJ4">
                                         <rect key="frame" x="0.0" y="931" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>

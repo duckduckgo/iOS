@@ -26,9 +26,6 @@ run_flow() {
 	local flow=$2
 
 	echo "ℹ️ Deleting app in simulator $device_uuid"
-	
-	# Ignore result of this for now. The only error hopefully is that there was nothing to terminate
-	xcrun simctl terminate $device_uuid $app_bundle 2> /dev/null
 
 	xcrun simctl uninstall $device_uuid $app_bundle
 	if [ $? -ne 0 ]; then
@@ -40,6 +37,7 @@ run_flow() {
 
 	echo "⏲️ Starting flow $( basename $flow)"
 
+	export MAESTRO_DRIVER_STARTUP_TIMEOUT=60000
 	maestro --udid=$device_uuid test $flow
 	if [ $? -ne 0 ]; then
 		log_message $run_log "❌ FAIL: $flow"
@@ -78,6 +76,8 @@ echo "ℹ️ Running UI tests for $1"
 device_uuid=$(cat $device_uuid_path)
 echo "ℹ️ using device $device_uuid"
 
+# Simulator should already be up and running from running the setup script
+#  re-run the setup script with `--skip-build` to set up again 
 echo "ℹ️ creating run log in $run_log"
 if [ -f $run_log ]; then
 	rm $run_log

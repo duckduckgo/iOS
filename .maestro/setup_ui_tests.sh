@@ -112,6 +112,20 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo "ℹ️ Setting device locale to en_US"
+
+xcrun simctl spawn $device_uuid defaults write "Apple Global Domain" AppleLanguages -array en
+if [ $? -ne 0 ]; then
+    echo "‼️ Unable to set preferred language"
+    exit 1
+fi
+
+xcrun simctl spawn $device_uuid defaults write "Apple Global Domain" AppleLocale -string en_US
+if [ $? -ne 0 ]; then
+    echo "‼️ Unable to set region"
+    exit 1
+fi
+
 open -a Simulator
 
 xcrun simctl install booted $app_location

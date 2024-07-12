@@ -24,6 +24,8 @@ final class MetricBuilder<T> {
     private let iPhoneValue: T
     private let iPadValue: T
     private var iPhoneSmallScreen: T?
+    private var iPadPortraitValue: T?
+    private var iPadLandscapeValue: T?
 
     init(iPhone: T, iPad: T) {
         iPhoneValue = iPhone
@@ -34,6 +36,17 @@ final class MetricBuilder<T> {
         self.init(iPhone: value, iPad: value)
     }
 
+    func iPad(portrait: T, landscape: T) -> Self {
+        iPadPortraitValue = portrait
+        iPadLandscapeValue = landscape
+        return self
+    }
+
+    func iPad(landscape: T) -> Self {
+        iPadLandscapeValue = landscape
+        return self
+    }
+
     func smallIphone(_ value: T) -> Self {
         iPhoneSmallScreen = value
         return self
@@ -41,7 +54,11 @@ final class MetricBuilder<T> {
 
     func build(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> T {
         if isIPad(v: v, h: h) {
-            iPadValue
+            if isIpadLandscape(v: v, h: h) {
+                iPadLandscapeValue ?? iPadValue
+            } else {
+                iPadPortraitValue ?? iPadValue
+            }
         } else {
             if isIPhoneSmallScreen(UIScreen.main.bounds.size) {
                 iPhoneSmallScreen ?? iPhoneValue

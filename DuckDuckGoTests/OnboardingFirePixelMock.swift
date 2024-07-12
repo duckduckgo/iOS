@@ -41,3 +41,24 @@ final class OnboardingPixelFireMock: OnboardingPixelFiring {
         capturedIncludeParameters = []
     }
 }
+
+final class OnboardingUniquePixelFireMock: OnboardingPixelFiring {
+    static private(set) var didCallFire = false
+    static private(set) var capturedPixelEvent: Pixel.Event?
+    static private(set) var capturedParams: [String: String] = [:]
+    static private(set) var capturedIncludeParameters: [Pixel.QueryParameters] = []
+
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) {
+        didCallFire = true
+        capturedPixelEvent = pixel
+        capturedParams = params
+        capturedIncludeParameters = includedParameters
+    }
+
+    static func tearDown() {
+        didCallFire = false
+        capturedPixelEvent = nil
+        capturedParams = [:]
+        capturedIncludeParameters = []
+    }
+}

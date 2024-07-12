@@ -23,17 +23,15 @@ import Core
 
 final class OnboardingPixelReporterTests: XCTestCase {
     private var sut: OnboardingPixelReporter!
-    private var store: OnboardingPixelReporterStoreMock!
 
     override func setUpWithError() throws {
-        store = OnboardingPixelReporterStoreMock()
-        sut = OnboardingPixelReporter(store: store, pixel: OnboardingPixelFireMock.self)
+        sut = OnboardingPixelReporter(pixel: OnboardingPixelFireMock.self, uniquePixel: OnboardingUniquePixelFireMock.self)
         try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
         OnboardingPixelFireMock.tearDown()
-        store = nil
+        OnboardingUniquePixelFireMock.tearDown()
         sut = nil
         try super.tearDownWithError()
     }
@@ -41,105 +39,39 @@ final class OnboardingPixelReporterTests: XCTestCase {
     func testWhenTrackOnboardingIntroImpressionThenOnboardingIntroShownEventFires() {
         // GIVEN
         let expectedPixel = Pixel.Event.onboardingIntroShownUnique
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
 
         // WHEN
         sut.trackOnboardingIntroImpression()
 
         // THEN
-        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
         XCTAssertEqual(expectedPixel.name, "m_preonboarding_intro_shown_unique")
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
-    }
-
-    func testWhenTrackOnboardingIntroImpressionAndPixelHasAlreadyFiredThenPixelDoesNotFire() {
-        // GIVEN
-        store.hasFiredIntroScreenShownPixel = true
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-
-        // WHEN
-        sut.trackOnboardingIntroImpression()
-
-        // THEN
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-    }
-
-    func testWhenOnboardingIntroShownPixelFiresThenStoreIsUpdated() {
-        // GIVEN
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-        XCTAssertFalse(store.hasFiredIntroScreenShownPixel)
-
-        // WHEN
-        sut.trackOnboardingIntroImpression()
-
-        // THEN
-        XCTAssertTrue(store.hasFiredIntroScreenShownPixel)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
     func testWhenTrackBrowserComparisonImpressionThenOnboardingIntroComparisonChartShownEventFires() {
         // GIVEN
         let expectedPixel = Pixel.Event.onboardingIntroComparisonChartShownUnique
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
 
         // WHEN
         sut.trackBrowserComparisonImpression()
 
         // THEN
-        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
         XCTAssertEqual(expectedPixel.name, "m_preonboarding_comparison_chart_shown_unique")
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
-    }
-
-    func testWhenTrackBrowserComparisonImpressionAndPixelHasAlreadyFiredThenPixelDoesNotFire() {
-        // GIVEN
-        store.hasFiredComparisonChartShownPixel = true
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-
-        // WHEN
-        sut.trackBrowserComparisonImpression()
-
-        // THEN
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-    }
-
-    func testWhenOnboardingIntroComparisonChartShownPixelFiresThenStoreIsUpdated() {
-        // GIVEN
-        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingPixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
-        XCTAssertFalse(store.hasFiredComparisonChartShownPixel)
-
-        // WHEN
-        sut.trackBrowserComparisonImpression()
-
-        // THEN
-        XCTAssertTrue(store.hasFiredComparisonChartShownPixel)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
     func testWhenTrackChooseBrowserCTAActionThenOnboardingIntroChooseBrowserCTAPressedEventFires() {

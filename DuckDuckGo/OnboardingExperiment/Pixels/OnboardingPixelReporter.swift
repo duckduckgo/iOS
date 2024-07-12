@@ -32,6 +32,12 @@ extension Pixel: OnboardingPixelFiring {
     }
 }
 
+extension UniquePixel: OnboardingPixelFiring {
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String : String], includedParameters: [Pixel.QueryParameters]) {
+        self.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: { _ in })
+    }
+}
+
 // MARK: - OnboardingPixelReporter
 
 protocol OnboardingIntroImpressionReporting {
@@ -46,22 +52,21 @@ protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
 // MARK: - Implementation
 
 final class OnboardingPixelReporter {
-    private let store: OnboardingPixelReporterStorage
     private let pixel: OnboardingPixelFiring.Type
+    private let uniquePixel: OnboardingPixelFiring.Type
 
-    init(store: OnboardingPixelReporterStorage = OnboardingPixelReporterStore(), pixel: OnboardingPixelFiring.Type = Pixel.self) {
-        self.store = store
+    init(pixel: OnboardingPixelFiring.Type = Pixel.self, uniquePixel: OnboardingPixelFiring.Type = UniquePixel.self) {
         self.pixel = pixel
+        self.uniquePixel = uniquePixel
     }
 
-    private func fire(event: Pixel.Event, additionalParameters: [String: String] = [:]) {
-        pixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion, .atb])
-    }
-
-    private func fireUnique(event: Pixel.Event, for keypath: ReferenceWritableKeyPath<OnboardingPixelReporterStorage, Bool>, additionalParameters: [String: String] = [:]) {
-        guard !store[keyPath: keypath] else { return }
-        fire(event: event, additionalParameters: additionalParameters)
-        store[keyPath: keypath] = true
+    private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
+        let parameters: [Pixel.QueryParameters] = [.appVersion, .atb]
+        if unique {
+            uniquePixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: parameters)
+        } else {
+            pixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: parameters)
+        }
     }
 
 }
@@ -71,15 +76,15 @@ final class OnboardingPixelReporter {
 extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 
     func trackOnboardingIntroImpression() {
-        fireUnique(event: .onboardingIntroShownUnique, for: \.hasFiredIntroScreenShownPixel)
+        fire(event: .onboardingIntroShownUnique, unique: true)
     }
 
     func trackBrowserComparisonImpression() {
-        fireUnique(event: .onboardingIntroComparisonChartShownUnique, for: \.hasFiredComparisonChartShownPixel)
+        fire(event: .onboardingIntroComparisonChartShownUnique, unique: true)
     }
 
     func trackChooseBrowserCTAAction() {
-        fire(event: .onboardingIntroChooseBrowserCTAPressed)
+        fire(event: .onboardingIntroChooseBrowserCTAPressed, unique: false)
     }
 
 }

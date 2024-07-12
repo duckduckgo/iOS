@@ -43,7 +43,7 @@ struct OnboardingBackground: View {
 }
 
 private enum Metrics {
-    static let imageCentering = MetricBuilder<Alignment>(iPhone: .leading, iPad: .center)
+    static let imageCentering = MetricBuilder<Alignment>(iPhone: .bottomLeading, iPad: .center)
 }
 
 // MARK: - Gradient

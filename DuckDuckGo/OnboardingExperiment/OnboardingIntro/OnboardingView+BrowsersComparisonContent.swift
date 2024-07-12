@@ -52,8 +52,8 @@ extension OnboardingView {
 
                     OnboardingActions(
                         viewModel: .init(
-                            primaryButtonTitle: "Switch Default Browser",
-                            secondaryButtonTitle: "Skip"
+                            primaryButtonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.cta,
+                            secondaryButtonTitle: UserText.onboardingSkip
                         ),
                         primaryAction: setAsDefaultBrowserAction,
                         secondaryAction: cancelAction

@@ -23,13 +23,17 @@ import SwiftUI
 
 struct OnboardingView: View {
 
+    static let daxGeometryEffectID = "DaxIcon"
+
+    @Namespace var animationNamespace
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @ObservedObject private var model: OnboardingIntroViewModel
 
+    @State private var showDaxDialogBox = false
     @State private var showIntroViewContent = true
     @State private var showIntroButton = false
-    @State private var animateIntroText = true
+    @State private var animateIntroText = false
     @State private var showComparisonButton = false
     @State private var animateComparisonText = false
 
@@ -55,6 +59,8 @@ struct OnboardingView: View {
             VStack(alignment: .center) {
                 DaxDialogView(
                     logoPosition: .top,
+                    matchLogoAnimation: (Self.daxGeometryEffectID, animationNamespace),
+                    showDialogBox: $showDaxDialogBox,
                     onTapGesture: {
                         withAnimation {
                             switch model.state {
@@ -82,17 +88,25 @@ struct OnboardingView: View {
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Metrics.daxDialogVisibilityDelay) {
+                    showDaxDialogBox = true
+                    animateIntroText = true
+                }
+            }
         }
         .padding()
     }
 
     private var landingView: some View {
-        return LandingView()
+        return LandingView(animationNamespace: animationNamespace)
             .ignoresSafeArea(edges: .bottom)
             .frame(maxHeight: .infinity, alignment: .bottom)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Metrics.daxDialogDelay) {
-                    model.onAppear()
+                    withAnimation {
+                        model.onAppear()
+                    }
                 }
             }
     }
@@ -169,6 +183,7 @@ extension OnboardingView.ViewState {
 
 private enum Metrics {
     static let daxDialogDelay: TimeInterval = 2.0
+    static let daxDialogVisibilityDelay: TimeInterval = 0.5
     static let comparisonChartAnimationDuration = 0.25
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(iPhone: 0.1, iPad: 0.2).smallIphone(0.01)
 }

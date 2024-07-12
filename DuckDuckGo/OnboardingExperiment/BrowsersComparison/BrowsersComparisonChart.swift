@@ -45,14 +45,12 @@ extension BrowsersComparisonChart {
         let browsers: [BrowsersComparisonModel.Browser]
 
         var body: some View {
-            HStack(alignment: .top) {
+            HStack(alignment: .bottom) {
                 Spacer()
 
                 ForEach(Array(browsers.enumerated()), id: \.offset) { index, browser in
                     Image(browser.image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: Metrics.imageContainerSize.width, height: Metrics.imageContainerSize.height)
+                        .frame(width: Metrics.headerImageContainerSize.width, height: Metrics.headerImageContainerSize.height)
 
                     if index < browsers.count - 1 {
                         Divider()
@@ -118,6 +116,7 @@ extension BrowsersComparisonChart.Row {
 private enum Metrics {
     static let stackSpacing: CGFloat = 0.0
     static let headerHeight: CGFloat = 60
+    static let headerImageContainerSize = CGSize(width: 50, height: 80)
     static let imageContainerSize = CGSize(width: 50.0, height: 50.0)
     static let font = Font.system(size: 15.0)
 }

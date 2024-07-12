@@ -24,6 +24,8 @@ final class MetricBuilder<T> {
     private let iPhoneValue: T
     private let iPadValue: T
     private var iPhoneSmallScreen: T?
+    private var iPadPortraitValue: T?
+    private var iPadLandscapeValue: T?
 
     init(iPhone: T, iPad: T) {
         iPhoneValue = iPhone
@@ -34,14 +36,29 @@ final class MetricBuilder<T> {
         self.init(iPhone: value, iPad: value)
     }
 
+    func iPad(portrait: T, landscape: T) -> Self {
+        iPadPortraitValue = portrait
+        iPadLandscapeValue = landscape
+        return self
+    }
+
+    func iPad(landscape: T) -> Self {
+        iPadLandscapeValue = landscape
+        return self
+    }
+
     func smallIphone(_ value: T) -> Self {
         iPhoneSmallScreen = value
         return self
     }
 
     func build(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> T {
-        if isIPad(v, h) {
-            iPadValue
+        if isIPad(v: v, h: h) {
+            if isIpadLandscape(v: v, h: h) {
+                iPadLandscapeValue ?? iPadValue
+            } else {
+                iPadPortraitValue ?? iPadValue
+            }
         } else {
             if isIPhoneSmallScreen(UIScreen.main.bounds.size) {
                 iPhoneSmallScreen ?? iPhoneValue
@@ -50,20 +67,28 @@ final class MetricBuilder<T> {
             }
         }
     }
+}
 
-    private func isIPhonePortrait(_ verticalSizeClass: UserInterfaceSizeClass?, _ horizontalSizeClass: UserInterfaceSizeClass?) -> Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .compact
-    }
+func isIphone(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
+    !isIPad(v: v, h: h)
+}
 
-    private func isIPhoneLandscape(_ verticalSizeClass: UserInterfaceSizeClass?) -> Bool {
-        verticalSizeClass == .compact
-    }
+func isIPhonePortrait(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
+    v == .regular && h == .compact
+}
 
-    private func isIPhoneSmallScreen(_ frame: CGSize) -> Bool {
-        frame.height > 0 && frame.height <= 667 // iPhone SE
-    }
+func isIPhoneLandscape(v: UserInterfaceSizeClass?) -> Bool {
+    v == .compact
+}
 
-    private func isIPad(_ verticalSizeClass: UserInterfaceSizeClass?, _ horizontalSizeClass: UserInterfaceSizeClass?) -> Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .regular
-    }
+func isIPhoneSmallScreen(_ frame: CGSize) -> Bool {
+    frame.height > 0 && frame.height <= 667 // iPhone SE
+}
+
+func isIPad(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
+    v == .regular && h == .regular
+}
+
+func isIpadLandscape(v: UserInterfaceSizeClass?, h: UserInterfaceSizeClass?) -> Bool {
+    isIPad(v: v, h: h) && UIScreen.main.bounds.width > UIScreen.main.bounds.height
 }

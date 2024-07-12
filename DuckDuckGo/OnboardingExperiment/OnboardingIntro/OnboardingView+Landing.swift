@@ -100,7 +100,7 @@ private enum Metrics {
     static let titleWidth = MetricBuilder<CGFloat?>(iPhone: 252, iPad: nil)
     static let hikerImage = MetricBuilder<ImageResource>(value: .hiker).smallIphone(.hikerSmall)
     enum Landscape {
-        static let textMinSpacer: CGFloat = 40
+        static let textMinSpacer: CGFloat = 50
         static let daxImagePositionPercentage: CGFloat = 0.15
         static let hikerHeightPercentage: CGFloat = 0.9
     }

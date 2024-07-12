@@ -49,7 +49,7 @@ class SuggestionTrayViewController: UIViewController {
     private var willRemoveAutocomplete = false
     private let bookmarksDatabase: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
-    private let historyManager: HistoryManager
+    private let historyManager: HistoryManaging
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -79,7 +79,7 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManager) {
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManaging) {
         self.favoritesModel = favoritesViewModel
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager

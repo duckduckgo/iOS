@@ -58,6 +58,18 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
             delegate?.newTabPageDidOpenFavoriteURL(self, url: url)
         }
+
+        favoritesModel.onFavoriteEdit = { [weak self] favorite in
+            guard let self else { return }
+
+            delegate?.newTabPageDidEditFavorite(self, favorite: favorite)
+        }
+
+        favoritesModel.onFavoriteDeleted = { [weak self] favorite in
+            guard let self else { return }
+
+            delegate?.newTabPageDidDeleteFavorite(self, favorite: favorite)
+        }
     }
 
     // MARK: - NewTabPage

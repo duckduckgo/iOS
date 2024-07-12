@@ -34,3 +34,16 @@ struct Favorite: Identifiable, Equatable {
         self.urlObject = urlObject
     }
 }
+
+extension Favorite {
+    var menuTitle: String {
+        [title, truncatedUrlString].compactMap { $0 }.joined(separator: "\n")
+    }
+
+    private var truncatedUrlString: String? {
+        guard let url = urlObject?.absoluteString else { return nil }
+        let urlString = url.prefix(100).description
+        let ellipsis = url.count != urlString.count ? "…" : ""
+        return urlString + ellipsis
+    }
+}

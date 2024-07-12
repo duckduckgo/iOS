@@ -33,7 +33,6 @@ struct NewTabPageGridView<Content: View>: View {
         })
         .padding(0)
         .offset(.zero)
-        .clipped()
     }
 
     private func flexibleColumns(_ count: Int) -> [GridItem] {

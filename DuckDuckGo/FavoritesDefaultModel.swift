@@ -21,6 +21,7 @@ import Foundation
 import Bookmarks
 import SwiftUI
 import Core
+import WidgetKit
 
 final class FavoritesDefaultModel: FavoritesModel {
 
@@ -59,6 +60,39 @@ final class FavoritesDefaultModel: FavoritesModel {
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
 
         onFavoriteURLSelected?(url)
+    }
+
+    var onFavoriteDeleted: ((BookmarkEntity) -> Void)?
+    func deleteFavorite(_ favorite: Favorite) {
+        guard let entity = lookupEntity(for: favorite) else { return }
+
+        Pixel.fire(pixel: .homeScreenDeleteFavorite)
+        
+        interactionModel.removeFavorite(entity)
+
+        WidgetCenter.shared.reloadAllTimelines()
+        try? updateData()
+
+        onFavoriteDeleted?(entity)
+    }
+
+    var onFavoriteEdit: ((BookmarkEntity) -> Void)?
+    func editFavorite(_ favorite: Favorite) {
+        guard let entity = lookupEntity(for: favorite) else { return }
+
+        Pixel.fire(pixel: .homeScreenEditFavorite)
+
+        onFavoriteEdit?(entity)
+    }
+
+    private func lookupEntity(for favorite: Favorite) -> BookmarkEntity? {
+        interactionModel.favorites.first {
+            $0.uuid == favorite.id
+        }
+    }
+
+    private func updateData() throws {
+        self.allFavorites = try interactionModel.favorites.map(Favorite.init)
     }
 }
 

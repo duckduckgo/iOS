@@ -2016,6 +2016,14 @@ extension MainViewController: NewTabPageControllerDelegate {
     func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL) {
         handleRequestedURL(url)
     }
+
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        segueToEditBookmark(favorite)
+    }
+
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        // no-op for now
+    }
 }
 
 extension MainViewController: TabDelegate {

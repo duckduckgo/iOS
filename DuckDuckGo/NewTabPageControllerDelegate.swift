@@ -17,8 +17,11 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Foundation
 
 protocol NewTabPageControllerDelegate: AnyObject {
     func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL)
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
 }

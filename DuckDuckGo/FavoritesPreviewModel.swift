@@ -47,4 +47,12 @@ final class FavoritesPreviewModel: FavoritesModel {
     func favoriteSelected(_ favorite: Favorite) {
 
     }
+
+    func deleteFavorite(_ favorite: Favorite) {
+
+    }
+
+    func editFavorite(_ favorite: Favorite) {
+
+    }
 }

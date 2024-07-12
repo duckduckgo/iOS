@@ -36,16 +36,25 @@ struct FavoritesView<Model: FavoritesModel>: View {
             let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape) * 2
 
             let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
-            
+
             NewTabPageGridView { _ in
                 ForEach(data) { item in
                     Button(action: {
                         model.favoriteSelected(item)
                         selectionFeedback.selectionChanged()
                     }, label: {
-                        FavoriteItemView(favorite: item, onFaviconMissing: {
-                            self.model.faviconMissing()
-                        })
+                        FavoriteItemView(
+                            favorite: item,
+                            onFaviconMissing: {
+                                model.faviconMissing()
+                            },
+                            onMenuAction: { action in
+                                switch action {
+                                case .delete: model.deleteFavorite(item)
+                                case .edit: model.editFavorite(item)
+                                }
+                            })
+                        .background(.clear)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                     })
                 }

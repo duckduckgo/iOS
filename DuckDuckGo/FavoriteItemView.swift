@@ -23,17 +23,19 @@ import SwiftUI
 struct FavoriteItemView: View {
     let favorite: Favorite
     let onFaviconMissing: () -> Void
+    let onMenuAction: ((MenuAction) -> Void)?
 
     var body: some View {
         VStack(spacing: 6) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(designSystemColor: .surface))
-                    .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                    .aspectRatio(1, contentMode: .fit)
-
-                FavoriteIconView(model: FavoriteIconViewModel(domain: favorite.domain, onFaviconMissing: onFaviconMissing))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            FavoriteIconView(
+                model: FavoriteIconViewModel(
+                    domain: favorite.domain,
+                    onFaviconMissing: onFaviconMissing
+                )
+            )
+            .contextMenu {
+                // This context menu can be moved up in the hierarchy to `FavoritesView` once support for iOS 15 is removed. contextMenu with preview modifier can be used then.
+                    contextMenuItems()
             }
 
             Text(favorite.title)
@@ -47,11 +49,40 @@ struct FavoriteItemView: View {
         .accessibilityAddTraits(.isButton)
         .accessibilityLabel("\(favorite.title). \(UserText.favorite)")
     }
+
+    private func contextMenuItems() -> some View {
+        Section(favorite.menuTitle) {
+            Button {
+                onMenuAction?(.edit)
+            } label: {
+                Label(UserText.favoriteMenuEdit, image: "Edit")
+            }
+
+            Button {
+                onMenuAction?(.delete)
+            } label: {
+                Label(UserText.favoriteMenuRemove, image: "RemoveFavoriteMenuIcon")
+            }
+        }
+    }
+}
+
+extension FavoriteItemView {
+    enum MenuAction {
+        case edit
+        case delete
+    }
 }
 
 #Preview {
     HStack(alignment: .top) {
-        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com"), onFaviconMissing: {}).frame(width: 64)
-        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com"), onFaviconMissing: {}).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com")).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com")).frame(width: 64)
+    }
+}
+
+private extension FavoriteItemView {
+    init(favorite: Favorite) {
+        self.init(favorite: favorite, onFaviconMissing: {}, onMenuAction: nil)
     }
 }

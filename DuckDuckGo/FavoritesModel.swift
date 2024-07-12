@@ -29,4 +29,6 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     // MARK: - Favorites interactions
     
     func favoriteSelected(_ favorite: Favorite)
+    func editFavorite(_ favorite: Favorite)
+    func deleteFavorite(_ favorite: Favorite)
 }

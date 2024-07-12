@@ -435,7 +435,8 @@ extension Pixel {
         
         // MARK: debug pixels
         case dbCrashDetected
-        
+        case crashOnCrashHandlersSetUp
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -1152,6 +1153,7 @@ extension Pixel.Event {
             // MARK: debug pixels
             
         case .dbCrashDetected: return "m_d_crash"
+        case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"

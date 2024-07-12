@@ -22,14 +22,17 @@ import SwiftUI
 struct OnboardingBackground: View {
     @Environment(\.verticalSizeClass) var vSizeClass
     @Environment(\.horizontalSizeClass) var hSizeClass
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         GeometryReader { proxy in
             // On iPhone we want the background image to start from the left but on iPad we want to take the center part
             let alignment = Metrics.imageCentering.build(v: vSizeClass, h: hSizeClass)
-            Image(.daxOnboardingBackground)
+            Image(.onboardingBackground)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
+                .opacity(colorScheme == .light ? 0.5 : 0.3)
                 .frame(width: proxy.size.width, height: proxy.size.height, alignment: alignment)
                 .background(
                     Gradient()

@@ -55,15 +55,11 @@ extension OnboardingView {
                 // Divide screen in half with two containers:
                 // 1. Hiker to be centered horizontally in the container and with a height of 90% of the screen size
                 // 2. Welcome view horizontally centered in the container with min padding leading and trailing to wrap the text if needed.
-                HStack {
-                    Spacer()
-
+                VStack(alignment: .center) {
                     Image(Metrics.hikerImage.build(v: verticalSizeClass, h: horizontalSizeClass))
                         .resizable()
                         .scaledToFit()
                         .frame(height: proxy.size.height * Metrics.Landscape.hikerHeightPercentage)
-
-                    Spacer()
                 }
                 .frame(width: proxy.size.width / 2, height: proxy.size.height, alignment: .bottom)
 

@@ -33,7 +33,7 @@ extension Pixel: OnboardingPixelFiring {
 }
 
 extension UniquePixel: OnboardingPixelFiring {
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String : String], includedParameters: [Pixel.QueryParameters]) {
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String], includedParameters: [Pixel.QueryParameters]) {
         self.fire(pixel: pixel, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: { _ in })
     }
 }

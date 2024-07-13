@@ -26,7 +26,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
     func testWhenSubscribeToViewStateThenShouldSendLanding() {
         // GIVEN
-        let sut = OnboardingIntroViewModel()
+        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
 
         // WHEN
         let result = sut.state
@@ -37,7 +37,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
     func testWhenOnAppearIsCalledThenViewStateChangesToStartOnboardingDialog() {
         // GIVEN
-        let sut = OnboardingIntroViewModel()
+        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
         XCTAssertEqual(sut.state, .landing)
 
         // WHEN
@@ -111,7 +111,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenOnAppearIsCalledThenPixelReporterTrackOnboardingIntroImpression() {
         // GIVEN
         let pixelReporterMock = OnboardingIntroPixelReporterMock()
-        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, urlOpener: MockURLOpener())
         XCTAssertFalse(pixelReporterMock.didCallTrackOnboardingIntroImpression)
 
         // WHEN
@@ -124,7 +124,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenStartOnboardingActionIsCalledThenPixelReporterTrackBrowserComparisonImpression() {
         // GIVEN
         let pixelReporterMock = OnboardingIntroPixelReporterMock()
-        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, urlOpener: MockURLOpener())
         XCTAssertFalse(pixelReporterMock.didCallTrackBrowserComparisonImpression)
 
         // WHEN
@@ -137,7 +137,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenChooseBrowserIsCalledThenPixelReporterTrackChooseBrowserCTAAction() {
         // GIVEN
         let pixelReporterMock = OnboardingIntroPixelReporterMock()
-        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock)
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, urlOpener: MockURLOpener())
         XCTAssertFalse(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
 
         // WHEN

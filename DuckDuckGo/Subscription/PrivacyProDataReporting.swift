@@ -64,7 +64,15 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         static let searchCountKey = "com.duckduckgo.ios.privacypropromo.SearchCount"
     }
 
+    enum UseCase {
+        case messageID(String)
+        case origin(String?)
+    }
+
     public static let shared = DefaultPrivacyProDataReporter()
+
+    public static let eligibleMessageIDs: [String] = []
+    public static let eligibleOrigins: [String] = []
 
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
@@ -97,6 +105,41 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     func injectSyncService(_ service: DDGSync) {
         syncService = service
     }
+
+    func additionalParameters(for useCase: UseCase) async -> [String: String] {
+        switch useCase {
+        case .messageID(let messageID):
+            guard Self.eligibleMessageIDs.contains(messageID) else { return [:] }
+        case .origin(let origin):
+            guard let origin, Self.eligibleOrigins.contains(origin) else { return [:] }
+        }
+
+        var additionalParameters = [String: String]()
+
+        let randomizedParameters = PrivacyProPromoParameters.randomizedSubset()
+        for parameter in randomizedParameters {
+            let value: Bool
+            switch parameter {
+            case .isReinstall: value = isReinstall()
+            case .fireButtonUser: value = isFireButtonUser()
+            case .syncUsed: value = isSyncUsed()
+            case .fireproofingUsed: value = isFireproofingUsed()
+            case .appOnboardingCompleted: value = isAppOnboardingCompleted()
+            case .emailEnabled: value = isEmailEnabled()
+            case .widgetAdded: value = await isWidgetAdded()
+            case .frequentUser: value = isFrequentUser()
+            case .longTermUser: value = isLongTermUser()
+            case .autofillUser: value = isAutofillUser()
+            case .validOpenTabsCount: value = isValidOpenTabsCount()
+            case .searchUser: value = isSearchUser()
+            }
+            additionalParameters[parameter.rawValue] = String(value)
+        }
+
+        return additionalParameters
+    }
+
+    // MARK: - Additional parameters
 
     func isReinstall() -> Bool {
         DefaultVariantManager().currentVariant?.name == VariantIOS.returningUser.name

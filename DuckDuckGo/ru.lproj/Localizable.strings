@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Всплывающее окно скрыто";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Выбрать браузер";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Блокировка всплывающих окон куки";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Защита от надоедливой рекламы";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Быстрая очистка данных из браузера";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Конфиденциальный поиск по умолчанию";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Блокировка сторонних трекеров";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Защита конфиденциальности уже включена!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Открывайте ссылки, ни о чем не беспокоясь.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Поехали!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Привет!\n\nКачественный интернет с защитой данных заказывали?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добавить виджет";
 

@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Açılır Pencere Gizli";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Tarayıcınızı Seçin";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Çerez açılır pencerelerini engelle";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Tekinsiz reklamları engelleyin";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Tarama verilerini hızlıca silin";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Varsayılan olarak gizli arama yapın";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Üçüncü taraf izleyicileri engelleyin";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Gizlilik korumaları etkinleştirildi!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Her zaman gönül rahatlığıyla açık bağlantılar.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Hadi Başlayalım!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Merhaba.\n\nDaha iyi, daha özel bir internete hazır mısınız?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget Ekle";
 

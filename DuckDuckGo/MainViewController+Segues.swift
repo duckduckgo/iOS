@@ -31,14 +31,20 @@ extension MainViewController {
     func segueToDaxOnboarding() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
-        let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
-        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
-            DaxOnboardingViewController(coder: coder)
-        }) else {
-            assertionFailure()
-            return
+
+        var controller: (Onboarding & UIViewController)?
+
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            controller = OnboardingIntroViewController()
+        } else {
+            let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
+            controller = storyboard.instantiateInitialViewController(creator: { coder in
+                DaxOnboardingViewController(coder: coder)
+            })
         }
-        controller.delegate = self
+        
+        controller?.delegate = self
+        guard let controller else { return assertionFailure() }
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: false)
     }

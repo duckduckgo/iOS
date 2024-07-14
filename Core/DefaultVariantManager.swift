@@ -50,7 +50,7 @@ public struct VariantIOS: Variant {
     }
 
     /// This variant is used for returning users to separate them from really new users.
-    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
+    public static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
 
     static let doNotAllocate = 0
 

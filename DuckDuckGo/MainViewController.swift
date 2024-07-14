@@ -2437,6 +2437,8 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
             self.refreshUIAfterClear()
         } completion: {
+            DefaultPrivacyProDataReporter.shared.saveFireCount()
+
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()

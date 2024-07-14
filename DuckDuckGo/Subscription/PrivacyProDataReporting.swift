@@ -22,19 +22,19 @@ import Core
 import BrowserServicesKit
 import DDGSync
 
-enum PrivacyProPromoParameters: Hashable, CaseIterable {
-    static let isReinstall = "isReinstall"
-    static let fireButtonUser = "fireButtonUsed"
-    static let syncUsed = "syncUsed"
-    static let fireproofingUsed = "fireproofingUsed"
-    static let appOnboardingCompleted = "appOnboardingCompleted"
-    static let emailEnabled = "emailEnabled"
-    static let widgetAdded = "widgetAdded"
-    static let frequentUser = "frequentUser"
-    static let longTermUser = "longTermUser"
-    static let autofillUser = "autofillUser"
-    static let validOpenTabsCount = "validOpenTabsCount"
-    static let searchUser = "searchUser"
+enum PrivacyProPromoParameters: String, CaseIterable {
+    case isReinstall = "isReinstall"
+    case fireButtonUser = "fireButtonUsed"
+    case syncUsed = "syncUsed"
+    case fireproofingUsed = "fireproofingUsed"
+    case appOnboardingCompleted = "appOnboardingCompleted"
+    case emailEnabled = "emailEnabled"
+    case widgetAdded = "widgetAdded"
+    case frequentUser = "frequentUser"
+    case longTermUser = "longTermUser"
+    case autofillUser = "autofillUser"
+    case validOpenTabsCount = "validOpenTabsCount"
+    case searchUser = "searchUser"
 
     static func randomizedSubset() -> [PrivacyProPromoParameters] {
         Array(allCases.shuffled().prefix(4))

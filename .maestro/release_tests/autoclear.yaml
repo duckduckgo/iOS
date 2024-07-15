@@ -5,7 +5,7 @@ tags:
 
 ---
 
-# Set up 
+# Set up  - custom setup
 - launchApp:
     appId: "com.duckduckgo.mobile.ios"
     clearState: true

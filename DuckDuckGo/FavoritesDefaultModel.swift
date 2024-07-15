@@ -116,7 +116,7 @@ private extension Favorite {
 private extension BookmarkEntity {
 
     var displayTitle: String {
-        if let title = title?.trimmingWhitespace() {
+        if let title = title?.trimmingWhitespace(), !title.isEmpty {
             return title
         }
 

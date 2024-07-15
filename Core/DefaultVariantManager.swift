@@ -91,7 +91,7 @@ public protocol VariantRNG {
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        let variantName = ProcessInfo.variantName
+        let variantName = ProcessInfo.variantName ?? storage.variant
         return variants.first(where: { $0.name == variantName })
     }
 

@@ -21,7 +21,7 @@ import Foundation
 import SwiftUI
 import DuckUI
 
-enum ContextualOnboardingListItem: Equatable {
+public enum ContextualOnboardingListItem: Equatable {
     case search(title: String)
     case site(title: String)
     case surprise(title: String)

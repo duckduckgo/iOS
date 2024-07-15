@@ -24,18 +24,14 @@ protocol OnboardingRegionAndLanguageProvider {
     var languageCode: String? { get }
 }
 
-protocol OnboardingSuggestedSearchesProviding {
-    var searchesList: [ContextualOnboardingListItem] { get }
-}
-
-struct OnboardingSuggestedSearchesProvider: OnboardingSuggestedSearchesProviding {
+struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding {
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
 
     init(countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current) {
         self.countryAndLanguageProvider = countryAndLanguageProvider
     }
 
-    var searchesList: [ContextualOnboardingListItem] {
+    var list: [ContextualOnboardingListItem] {
         return [
             option1,
             option2,

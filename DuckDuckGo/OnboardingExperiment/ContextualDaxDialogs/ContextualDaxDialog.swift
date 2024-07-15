@@ -235,7 +235,7 @@ extension ContextualDaxDialog {
     ContextualDaxDialog(logoPosition: .top,
                         title: "title",
                         message: "this is a message".attributedStringFromMarkdown(color: .blue),
-                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_GB")).sitesList,
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_GB")).list,
                         listAction: { _ in })
 }
 
@@ -243,6 +243,6 @@ extension ContextualDaxDialog {
     ContextualDaxDialog(logoPosition: .top,
                         title: "title",
                         message: "this is a message".attributedStringFromMarkdown(color: .blue),
-                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_US")).sitesList,
+                        list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_US")).list,
                         listAction: { _ in })
 }

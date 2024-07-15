@@ -750,7 +750,8 @@ class MainViewController: UIViewController {
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
                                                                    syncDataProviders: syncDataProviders,
-                                                                   variantManager: variantManager, newTabDialogFactory: newTabDaxDialogFactory)
+                                                                   variantManager: variantManager,
+                                                                   newTabDialogFactory: newTabDaxDialogFactory)
 
             controller.delegate = self
             controller.chromeDelegate = self
@@ -2536,7 +2537,7 @@ extension MainViewController: OnboardingNavigationDelegate {
         self.loadUrl(url, fromExternalLink: true)
     }
     
-    func suggestedSearchPressed(_ query: String) {
+    func searchFor(_ query: String) {
         self.loadQuery(query)
     }
 }

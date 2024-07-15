@@ -78,6 +78,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private let syncDataProviders: SyncDataProviders
     private let variantManager: VariantManager
     private let newTabDialogFactory: any NewTabDaxDialogProvider
+    private let newTabDialogTypeProvider: NewTabDialogSpecProvider
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
@@ -88,7 +89,8 @@ class HomeViewController: UIViewController, NewTabPage {
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         variantManager: VariantManager,
-        newTabDialogFactory: any NewTabDaxDialogProvider
+        newTabDialogFactory: any NewTabDaxDialogProvider,
+        newTabDialogTypeProvider: NewTabDialogSpecProvider = DaxDialogs.shared
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -100,7 +102,8 @@ class HomeViewController: UIViewController, NewTabPage {
                 syncService: syncService,
                 syncDataProviders: syncDataProviders,
                 variantManager: variantManager,
-                newTabDialogFactory: newTabDialogFactory
+                newTabDialogFactory: newTabDialogFactory, 
+                newTabDialogTypeProvider: newTabDialogTypeProvider
             )
         })
         return controller
@@ -114,7 +117,8 @@ class HomeViewController: UIViewController, NewTabPage {
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         variantManager: VariantManager,
-        newTabDialogFactory: any NewTabDaxDialogProvider
+        newTabDialogFactory: any NewTabDaxDialogProvider,
+        newTabDialogTypeProvider: NewTabDialogSpecProvider
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
@@ -123,6 +127,7 @@ class HomeViewController: UIViewController, NewTabPage {
         self.syncDataProviders = syncDataProviders
         self.variantManager = variantManager
         self.newTabDialogFactory = newTabDialogFactory
+        self.newTabDialogTypeProvider = newTabDialogTypeProvider
 
         super.init(coder: coder)
     }
@@ -249,7 +254,7 @@ class HomeViewController: UIViewController, NewTabPage {
     func showNextDaxDialog() {
 
         guard !isShowingDax else { return }
-        guard let spec = DaxDialogs.shared.nextHomeScreenMessage(),
+        guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage(),
               let daxDialogViewController = daxDialogViewController else { return }
         collectionView.isHidden = true
         daxDialogContainer.isHidden = false
@@ -277,7 +282,7 @@ class HomeViewController: UIViewController, NewTabPage {
 
     func showNextDaxDialogNew() {
         dismissHostingController()
-        guard let homeDialog = DaxDialogs.shared.nextHomeScreenMessage() else { return }
+        guard let homeDialog = newTabDialogTypeProvider.nextHomeScreenMessageNew() else { return }
         let daxDialogView = AnyView(newTabDialogFactory.createDaxDialog(for: homeDialog, onDismiss: dismissHostingController))
         hostingController = UIHostingController(rootView: daxDialogView)
         guard let hostingController else { return }

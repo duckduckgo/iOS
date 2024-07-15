@@ -1,5 +1,5 @@
 //
-//   ContextualOnboardingNewTabDialogFactoryTests.swift
+//  ContextualOnboardingNewTabDialogFactoryTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -24,16 +24,14 @@ import SwiftUI
 class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
 
     var factory: NewTabDaxDialogFactory!
-    var mockDelegate: MockOnboardingNavigationDelegate!
+    var mockDelegate: CapturingOnboardingNavigationDelegate!
     var onDismissCalled: Bool!
 
     override func setUp() {
         super.setUp()
-        mockDelegate = MockOnboardingNavigationDelegate()
+        mockDelegate = CapturingOnboardingNavigationDelegate()
         onDismissCalled = false
-        factory = NewTabDaxDialogFactory(delegate: mockDelegate) {
-            self.onDismissCalled = true
-        }
+        factory = NewTabDaxDialogFactory(delegate: mockDelegate)
     }
 
     override func tearDown() {
@@ -43,48 +41,80 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         super.tearDown()
     }
 
-    func testCreateInitialDialog() {
+    func testCreateInitialDialogCreatesAnOnboardingTrySearchDialog() {
         // Given
         let homeDialog = DaxDialogs.HomeScreenSpec.initial
 
         // When
-        let view = factory.createDaxDialog(for: homeDialog)
+        let view = factory.createDaxDialog(for: homeDialog, onDismiss: {})
+        let host = UIHostingController(rootView: view)
+        XCTAssertNotNil(host.view)
 
         // Then
-        XCTAssertTrue(view is OnboardingTrySearchDialog)
+        let trySearchDialog = find(OnboardingTrySearchDialog.self, in: host)
+        XCTAssertNotNil(trySearchDialog)
+        XCTAssertTrue(trySearchDialog?.viewModel.delegate === mockDelegate)
     }
 
-//    func testCreateAddFavoriteDialog() {
-//        let homeDialog = DaxDialogs.HomeScreenSpec.addFavorite(message: "Test Message")
-//        let view = factory.createDaxDialog(for: homeDialog)
-//
-//        // Verify the view type
-//        XCTAssertTrue(view is AnyView)
-//        // Additional type checking if necessary
-//    }
-//
-//    func testCreateSubsequentDialog() {
-//        let homeDialog = DaxDialogs.HomeScreenSpec.subsequent
-//        let view = factory.createDaxDialog(for: homeDialog)
-//
-//        // Verify the view type
-//        XCTAssertTrue(view is AnyView)
-//        // Additional type checking if necessary
-//    }
-//
-//    func testOnDismissCalled() {
-//        let homeDialog = DaxDialogs.HomeScreenSpec.subsequent
-//        let view = factory.createDaxDialog(for: homeDialog)
-//
-//        // Since we can't directly simulate the button press, check the onDismiss logic directly
-//        factory.onDismiss()
-//        XCTAssertTrue(onDismissCalled)
-//    }
-}
+    func testCreateSubsequentDialogCreatesAnOnboardingTryVisitingSiteDialog() {
+        // Given
+        let homeDialog = DaxDialogs.HomeScreenSpec.subsequent
 
-class MockOnboardingNavigationDelegate: OnboardingNavigationDelegate {
-    func suggestedSearchPressed(_ query: String) {
+        // When
+        let view = factory.createDaxDialog(for: homeDialog, onDismiss: {})
+        let host = UIHostingController(rootView: view)
+        XCTAssertNotNil(host.view)
 
+        // Then
+        let trySiteDialog = find(OnboardingTryVisitingSiteDialog.self, in: host)
+        XCTAssertNotNil(trySiteDialog)
+        XCTAssertTrue(trySiteDialog?.viewModel.delegate === mockDelegate)
     }
-    
+
+    func testCreateFinalDialogCreatesAnOnboardingFinalDialog() {
+        // Given
+        var onDismissedRun = false
+        let homeDialog = DaxDialogs.HomeScreenSpec.final
+        let onDimsiss = { onDismissedRun = true }
+
+        // When
+        let view = factory.createDaxDialog(for: homeDialog, onDismiss: onDimsiss)
+        let host = UIHostingController(rootView: view)
+        XCTAssertNotNil(host.view)
+
+        // Then
+        let finalDialog = find(OnboardingFinalDialog.self, in: host)
+        XCTAssertNotNil(finalDialog)
+        finalDialog?.highFiveAction()
+        XCTAssertTrue(onDismissedRun)
+    }
+
+    func testCreateAddFavoriteDialogCreatesAnContextualDaxDialog() {
+        // Given
+        let homeDialog = DaxDialogs.HomeScreenSpec.addFavorite
+
+        // When
+        let view = factory.createDaxDialog(for: homeDialog, onDismiss: {})
+        let host = UIHostingController(rootView: view)
+        XCTAssertNotNil(host.view)
+
+        // Then
+        let addFavoriteDialog = find(ContextualDaxDialog.self, in: host)
+        XCTAssertNotNil(addFavoriteDialog)
+        XCTAssertEqual(addFavoriteDialog?.message.string, homeDialog.message)
+    }
+
+
+    private func find<T: View>(_ type: T.Type, in root: Any) -> T? {
+        let mirror = Mirror(reflecting: root)
+        for child in mirror.children {
+            if let view = child.value as? T {
+                return view
+            }
+            if let found = find(type, in: child.value) {
+                return found
+            }
+        }
+        return nil
+    }
 }

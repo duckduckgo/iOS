@@ -20,43 +20,43 @@
 import Foundation
 
 protocol OnboardingNavigationDelegate: AnyObject {
-    func suggestedSearchPressed(_ query: String)
+    func searchFor(_ query: String)
     func navigateTo(url: URL)
 }
 
 struct OnboardingSearchSuggestionsViewModel {
-    let suggestedSearchesProvider: OnboardingSuggestedSearchesProviding
+    let suggestedSearchesProvider: OnboardingSuggestionsItemsProviding
     weak var delegate: OnboardingNavigationDelegate?
 
     init(
-        suggestedSearchesProvider: OnboardingSuggestedSearchesProviding = OnboardingSuggestedSearchesProvider(),
+        suggestedSearchesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSearchesProvider(),
         delegate: OnboardingNavigationDelegate? = nil) {
         self.suggestedSearchesProvider = suggestedSearchesProvider
         self.delegate = delegate
     }
 
     var itemsList: [ContextualOnboardingListItem] {
-        suggestedSearchesProvider.searchesList
+        suggestedSearchesProvider.list
     }
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {
-        delegate?.suggestedSearchPressed(item.title)
+        delegate?.searchFor(item.title)
     }
 }
 
 struct OnboardingSiteSuggestionsViewModel {
-    let suggestedSitesProvider: OnboardingSuggestedSitesProviding
+    let suggestedSitesProvider: OnboardingSuggestionsItemsProviding
     weak var delegate: OnboardingNavigationDelegate?
 
     init(
-        suggestedSitesProvider: OnboardingSuggestedSitesProviding = OnboardingSuggestedSitesProvider(),
+        suggestedSitesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(),
         delegate: OnboardingNavigationDelegate? = nil) {
         self.suggestedSitesProvider = suggestedSitesProvider
         self.delegate = delegate
     }
 
     var itemsList: [ContextualOnboardingListItem] {
-        suggestedSitesProvider.sitesList
+        suggestedSitesProvider.list
     }
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {

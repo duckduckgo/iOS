@@ -33,6 +33,11 @@ protocol EntityProviding {
     
 }
 
+protocol NewTabDialogSpecProvider {
+    func nextHomeScreenMessage() -> DaxDialogs.HomeScreenSpec?
+    func nextHomeScreenMessageNew() -> DaxDialogs.HomeScreenSpec?
+}
+
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
@@ -41,7 +46,7 @@ extension ContentBlockerRulesManager: EntityProviding {
     
 }
 
-final class DaxDialogs {
+final class DaxDialogs: NewTabDialogSpecProvider {
     
     struct MajorTrackers {
         
@@ -155,7 +160,7 @@ final class DaxDialogs {
     }
 
     private enum Constants {
-        static let homeScreenMessagesSeenMaxCeiling = 4
+        static let homeScreenMessagesSeenMaxCeiling = 2
     }
 
     public static let shared = DaxDialogs(entityProviding: ContentBlocking.shared.contentBlockingManager)
@@ -185,7 +190,7 @@ final class DaxDialogs {
             || settings.browsingMajorTrackingSiteShown
     }
 
-    private var firstSearchSeenButNoSiteVisit: Bool {
+    private var firstSearchSeenButNoSiteVisited: Bool {
         return settings.browsingAfterSearchShown
             && !settings.browsingWithTrackersShown
             && !settings.browsingWithoutTrackersShown
@@ -313,12 +318,7 @@ final class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        var homeScreenSpec: HomeScreenSpec?
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
-            homeScreenSpec = peekNextHomeScreenMessageExperiment()
-        } else {
-            homeScreenSpec = peekNextHomeScreenMessage()
-        }
+        var homeScreenSpec = peekNextHomeScreenMessage()
 
         guard let homeScreenSpec else { return nil }
 
@@ -326,6 +326,12 @@ final class DaxDialogs {
             settings.homeScreenMessagesSeen += 1
         }
 
+        return homeScreenSpec
+    }
+
+    func nextHomeScreenMessageNew() -> HomeScreenSpec? {
+        var homeScreenSpec = peekNextHomeScreenMessageExperiment()
+        guard let homeScreenSpec else { return nil }
         return homeScreenSpec
     }
 
@@ -360,7 +366,7 @@ final class DaxDialogs {
             return .initial
         }
 
-        if firstSearchSeenButNoSiteVisit {
+        if firstSearchSeenButNoSiteVisited {
             return .subsequent
         }
 

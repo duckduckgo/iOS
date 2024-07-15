@@ -38,10 +38,7 @@ import SwiftUI
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-    // swiftlint:enable type_body_length
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -90,6 +87,7 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
+    let homePageConfiguration: HomePageConfiguration
     let homeTabManager: NewTabPageManager
     let tabManager: TabManager
     let previewsSource: TabPreviewsSource
@@ -170,13 +168,14 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    var historyManager: HistoryManager
+    var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        historyManager: HistoryManager,
+        historyManager: HistoryManaging,
+        homePageConfiguration: HomePageConfiguration,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
@@ -187,6 +186,7 @@ class MainViewController: UIViewController {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.historyManager = historyManager
+        self.homePageConfiguration = homePageConfiguration
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -678,7 +678,7 @@ class MainViewController: UIViewController {
     private func addLaunchTabNotificationObserver() {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self else { return }
-            if let url = URL(string: urlString) {
+            if let url = URL(trimmedAddressBarString: urlString), url.isValid {
                 self.loadUrlInNewTab(url, inheritedAttribution: nil)
             } else {
                 self.loadQuery(urlString)
@@ -728,7 +728,7 @@ class MainViewController: UIViewController {
         
         currentTab?.dismiss()
         removeHomeScreen()
-        AppDependencyProvider.shared.homePageConfiguration.refresh()
+        homePageConfiguration.refresh()
 
         // Access the tab model directly as we don't want to create a new tab controller here
         guard let tabModel = tabManager.model.currentTab else {
@@ -738,7 +738,8 @@ class MainViewController: UIViewController {
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
                                                       syncService: syncService,
-                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
+                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                      homePageMessagesConfiguration: homePageConfiguration)
 
             controller.delegate = self
 
@@ -746,7 +747,8 @@ class MainViewController: UIViewController {
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
         } else {
-            let controller = HomeViewController.loadFromStoryboard(model: tabModel,
+            let controller = HomeViewController.loadFromStoryboard(homePageConfiguration: homePageConfiguration,
+                                                                   model: tabModel,
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
@@ -877,6 +879,8 @@ class MainViewController: UIViewController {
                    currentTab?.url?.absoluteString ?? "<nil>")
             return
         }
+        // Make sure that once query is submitted, we don't trigger the non-SERP flow
+        skipSERPFlow = false
         loadUrl(url)
     }
 
@@ -2643,5 +2647,3 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
-// swiftlint:enable file_length

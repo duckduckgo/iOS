@@ -20,20 +20,38 @@
 import Foundation
 import ContentScopeScripts
 import WebKit
+import Core
 
 final class YoutubePlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
+    var referrer: DuckPlayerReferrer = .other {
+        didSet {
+            print(referrer)
+        }
+    }
+    
+    private struct Constants {
+        static let SERPURL =  "https://duckduckgo.com/"
+        static let refererHeader = "Referer"
+        static let templateDirectory = "pages/duckplayer"
+        static let templateName = "index"
+        static let templateExtension = "html"
+        static let localhost = "http://localhost"
+        static let duckPlayerAlwaysString = "always"
+        static let duckPlayerDefaultString = "default"
+        static let settingsKey = "settings"
+        static let httpMethod = "GET"
+    }
     
     init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
     }
     
-    private static let templateDirectory = "pages/duckplayer"
-    private static let templateName = "index"
-    
     static var htmlTemplatePath: String {
-        guard let file = ContentScopeScripts.Bundle.path(forResource: Self.templateName, ofType: "html", inDirectory: Self.templateDirectory) else {
+        guard let file = ContentScopeScripts.Bundle.path(forResource: Constants.templateName,
+                                                         ofType: Constants.templateExtension,
+                                                         inDirectory: Constants.templateDirectory) else {
             assertionFailure("YouTube Private Player HTML template not found")
             return ""
         }
@@ -50,8 +68,8 @@ final class YoutubePlayerNavigationHandler {
 
     static func makeDuckPlayerRequest(for videoID: String, timestamp: String?) -> URLRequest {
         var request = URLRequest(url: .youtubeNoCookie(videoID, timestamp: timestamp))
-        request.addValue("http://localhost/", forHTTPHeaderField: "Referer")
-        request.httpMethod = "GET"
+        request.addValue(Constants.localhost, forHTTPHeaderField: Constants.refererHeader)
+        request.httpMethod = Constants.httpMethod
         return request
     }
 
@@ -87,6 +105,21 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
                           webView: WKWebView,
                           completion: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        // Daily Unique View Pixel
+        if let url = navigationAction.request.url,
+           url.isDuckPlayer,
+           duckPlayer.settings.mode != .disabled {
+            let setting = duckPlayer.settings.mode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
+            DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
+        }
+        
+        // Pixel for Views From Youtube
+        if let url = navigationAction.request.url,
+            referrer == .youtube,
+            duckPlayer.settings.mode == .enabled {
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic, debounce: 2)
+        }
+        
         // If DuckPlayer is Enabled or in ask mode, render the video
         if let url = navigationAction.request.url,
             url.isDuckURLScheme,
@@ -117,6 +150,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     // such as changes triggered via JS
     @MainActor
     func handleURLChange(url: URL?, webView: WKWebView) {
+        
         if let url = url, url.isYoutubeVideo,
             !url.isDuckPlayer,
             let (videoID, timestamp) = url.youtubeVideoParams,
@@ -125,6 +159,7 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
             let newURL = URL.duckPlayer(videoID, timestamp: timestamp)
             webView.load(URLRequest(url: newURL))
         }
+       
     }
     
     // DecidePolicyFor handler to redirect relevant requests
@@ -133,6 +168,22 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
                                completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView) {
+        
+        // Pixel for Views From SERP
+        if let url = navigationAction.request.url,
+            navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,
+            duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
+        }
+        
+        // Pixel for views from Other Sites
+        if let url = navigationAction.request.url,
+            navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] != Constants.SERPURL,
+            duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
+        }
+        
+        
         if let url = navigationAction.request.url,
             url.isYoutubeVideo,
             !url.isDuckPlayer, let (videoID, timestamp) = url.youtubeVideoParams,

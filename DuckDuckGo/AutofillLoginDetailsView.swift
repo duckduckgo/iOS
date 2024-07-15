@@ -21,9 +21,6 @@ import SwiftUI
 import DuckUI
 import DesignResourcesKit
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var actionSheetConfirmDeletePresented: Bool = false
@@ -647,5 +644,3 @@ private struct Constants {
     static let textFieldTapSize: CGFloat = 36
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }
-
-// swiftlint:enable type_body_length

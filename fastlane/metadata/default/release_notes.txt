@@ -1,5 +1,2 @@
-- Bug fixes and other improvements.
-
-For Privacy Pro subscribers:
-- You can now specify a custom DNS server under VPN Settings to route your DNS queries through while the VPN is active.
-
+- Fixed an issue where cancelling downloads would sometimes not work as expected.
+- Make sure you have iOS 15 or later to keep getting the latest browser updates and improvements. Here's how to update iOS: https://support.apple.com/guide/iphone/update-ios-iph3e504502/14.0/ios/14.0

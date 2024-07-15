@@ -31,13 +31,16 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private let favoritesModel: FavoritesDefaultModel
 
-    init(interactionModel: FavoritesListInteracting, syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter) {
+    init(interactionModel: FavoritesListInteracting,
+         syncService: DDGSyncing,
+         syncBookmarksAdapter: SyncBookmarksAdapter,
+         homePageMessagesConfiguration: HomePageMessagesConfiguration) {
 
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
         self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
-        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(),
+        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
                                             favoritesModel: favoritesModel)
 
         super.init(rootView: newTabPageView)

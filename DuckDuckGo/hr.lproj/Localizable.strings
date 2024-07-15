@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skočni prozor je sakriven";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Odaberi preglednik";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokiraj skočne prozore kolačića";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokiraj neželjene oglase";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Brzo izbriši podatke pregledavanja";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Pretražuj privatno po zadanim postavkama";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokiraj alate za praćenje trećih strana";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Zaštita privatnosti aktivirana!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Svaki put poveznice otvori spokojno.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Učinimo to!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Bok!\n\nJesi li spreman za bolji, privatniji internet?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj widget";
 

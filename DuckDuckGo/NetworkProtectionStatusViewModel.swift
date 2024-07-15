@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 #if NETWORK_PROTECTION
 
 import Foundation
@@ -68,7 +66,6 @@ struct NetworkProtectionLocationStatusModel {
     }
 }
 
-// swiftlint:disable:next type_body_length
 final class NetworkProtectionStatusViewModel: ObservableObject {
 
     enum Constants {
@@ -466,5 +463,3 @@ private extension ConnectionStatus {
 }
 
 #endif
-
-// swiftlint:enable file_length

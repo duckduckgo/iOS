@@ -24,7 +24,6 @@ import Core
 import Subscription
 
 @available(iOS 15.0, *)
-// swiftlint:disable:next type_body_length
 final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
@@ -143,8 +142,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
         .store(in: &cancellables)
        
     }
-    
-    // swiftlint:disable cyclomatic_complexity
+
     @MainActor
     private func handleTransactionError(error: SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError) {
 
@@ -206,7 +204,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
         }
     }
-    // swiftlint:enable cyclomatic_complexity
     
     private func setupWebViewObservers() async {
         webViewModel.$navigationError

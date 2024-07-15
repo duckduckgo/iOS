@@ -19,7 +19,6 @@
 
 import Foundation
 
-// swiftlint:disable line_length
 public struct UserText {
 
     // Sync Title
@@ -170,6 +169,4 @@ public struct UserText {
     static let syncUnavailableTitle = NSLocalizedString("sync.warning.sync.unavailable", bundle: Bundle.module, value: "Sync & Backup is Unavailable", comment: "Title of the warning message")
     static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", bundle: Bundle.module, value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
     static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", bundle: Bundle.module, value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
-
-    // swiftlint:enable line_length
 }

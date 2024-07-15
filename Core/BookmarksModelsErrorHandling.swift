@@ -26,7 +26,6 @@ import CoreData
 
 public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
 
-    // swiftlint:disable:next cyclomatic_complexity
     init(syncService: DDGSyncing? = nil) {
         super.init { event, error, _, _ in
             var domainEvent: Pixel.Event?

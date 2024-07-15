@@ -91,8 +91,14 @@ private struct Constant {
 // MARK: - Preview
 
 #Preview("Regular") {
-    NewTabPageView(messagesModel: NewTabPageMessagesModel(),
-                   favoritesModel: FavoritesPreviewModel())
+    NewTabPageView(
+        messagesModel: NewTabPageMessagesModel(
+            homePageMessagesConfiguration: PreviewMessagesConfiguration(
+                homeMessages: []
+            )
+        ),
+        favoritesModel: FavoritesPreviewModel()
+    )
 }
 
 #Preview("With message") {

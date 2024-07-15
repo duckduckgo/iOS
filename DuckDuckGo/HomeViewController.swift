@@ -28,7 +28,6 @@ import RemoteMessaging
 import SwiftUI
 import BrowserServicesKit
 
-
 class HomeViewController: UIViewController, NewTabPage {
 
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
@@ -40,7 +39,7 @@ class HomeViewController: UIViewController, NewTabPage {
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
-    var hostingController: UIHostingController<AnyView>? = nil
+    var hostingController: UIHostingController<AnyView>?
 
     var logoContainer: UIView! {
         return delegate?.homeDidRequestLogoContainer(self)
@@ -83,27 +82,20 @@ class HomeViewController: UIViewController, NewTabPage {
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
     static func loadFromStoryboard(
-        model: Tab,
-        favoritesViewModel: FavoritesListInteracting,
-        appSettings: AppSettings,
-        syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders,
-        variantManager: VariantManager,
-        newTabDialogFactory: any NewTabDaxDialogProvider,
-        newTabDialogTypeProvider: NewTabDialogSpecProvider = DaxDialogs.shared
+        homePageDependecies: HomePageDependencies
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
                 coder: coder,
-                tabModel: model,
-                favoritesViewModel: favoritesViewModel,
-                appSettings: appSettings,
-                syncService: syncService,
-                syncDataProviders: syncDataProviders,
-                variantManager: variantManager,
-                newTabDialogFactory: newTabDialogFactory, 
-                newTabDialogTypeProvider: newTabDialogTypeProvider
+                tabModel: homePageDependecies.model,
+                favoritesViewModel: homePageDependecies.favoritesViewModel,
+                appSettings: homePageDependecies.appSettings,
+                syncService: homePageDependecies.syncService,
+                syncDataProviders: homePageDependecies.syncDataProviders,
+                variantManager: homePageDependecies.variantManager,
+                newTabDialogFactory: homePageDependecies.newTabDialogFactory,
+                newTabDialogTypeProvider: homePageDependecies.newTabDialogTypeProvider
             )
         })
         return controller
@@ -214,11 +206,7 @@ class HomeViewController: UIViewController, NewTabPage {
     
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
-            showNextDaxDialogNew()
-        } else {
-            showNextDaxDialog()
-        }
+        presentNextDaxDialog()
     }
     
     @IBAction func launchSettings() {
@@ -235,11 +223,7 @@ class HomeViewController: UIViewController, NewTabPage {
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
         
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
-            showNextDaxDialogNew()
-        } else {
-            showNextDaxDialog()
-        }
+        presentNextDaxDialog()
 
         collectionView.didAppear()
 
@@ -250,72 +234,21 @@ class HomeViewController: UIViewController, NewTabPage {
     var isShowingDax: Bool {
         return !daxDialogContainer.isHidden
     }
-        
-    func showNextDaxDialog() {
-
-        guard !isShowingDax else { return }
-        guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage(),
-              let daxDialogViewController = daxDialogViewController else { return }
-        collectionView.isHidden = true
-        daxDialogContainer.isHidden = false
-        daxDialogContainer.alpha = 0.0
-        
-        daxDialogViewController.loadViewIfNeeded()
-        daxDialogViewController.message = spec.message
-        daxDialogViewController.accessibleMessage = spec.accessibilityLabel
-        
-        view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
-        
-        daxDialogContainerHeight.constant = daxDialogViewController.calculateHeight()
-        hideLogo()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.daxDialogContainer.alpha = 1.0
-            }, completion: { _ in
-                self.daxDialogViewController?.start()
-            })
-        }
-
-        configureCollectionView()
-    }
-
-    func showNextDaxDialogNew() {
-        dismissHostingController()
-        guard let homeDialog = newTabDialogTypeProvider.nextHomeScreenMessageNew() else { return }
-        let daxDialogView = AnyView(newTabDialogFactory.createDaxDialog(for: homeDialog, onDismiss: dismissHostingController))
-        hostingController = UIHostingController(rootView: daxDialogView)
-        guard let hostingController else { return }
-        hostingController.view.backgroundColor = .clear
-        view.addSubview(hostingController.view)
-        hostingController.didMove(toParent: self)
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        hideLogo()
-        NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        configureCollectionView()
-    }
-
-    private func dismissHostingController() {
-        hostingController?.willMove(toParent: nil)
-        hostingController?.view.removeFromSuperview()
-        hostingController?.removeFromParent()
-        delegate?.home(self, didRequestHideLogo: false)
-    }
 
     func hideLogo() {
         delegate?.home(self, didRequestHideLogo: true)
     }
     
     func onboardingCompleted() {
+        presentNextDaxDialog()
+    }
+
+    func presentNextDaxDialog() {
+        guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage() else { return }
         if variantManager.isSupported(feature: .newOnboardingIntro) {
-            showNextDaxDialogNew()
+            showNextDaxDialogNew(spec: spec, factory: newTabDialogFactory)
         } else {
-            showNextDaxDialog()
+            showNextDaxDialog(spec: spec)
         }
     }
 
@@ -420,24 +353,5 @@ extension HomeViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         settingsButton.tintColor = theme.barTintColor
-    }
-}
-
-struct FadeInView<Content: View>: View {
-    var content: Content
-    @State private var opacity: Double = 0
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
-
-    var body: some View {
-        content
-            .opacity(opacity)
-            .onAppear {
-                withAnimation(.easeIn(duration: 0.4)) {
-                    opacity = 1.0
-                }
-            }
     }
 }

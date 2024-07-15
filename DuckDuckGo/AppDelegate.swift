@@ -292,7 +292,7 @@ import WebKit
                                       appSettings: AppDependencyProvider.shared.appSettings,
                                       previewsSource: previewsSource,
                                       tabsModel: tabsModel,
-                                      syncPausedStateManager: syncErrorHandler, 
+                                      syncPausedStateManager: syncErrorHandler,
                                       variantManager: variantManager)
 
         main.loadViewIfNeeded()

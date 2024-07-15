@@ -222,8 +222,9 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     }
 
     func isStillOnboarding() -> Bool {
-        if peekNextHomeScreenMessage() != nil
-            || peekNextHomeScreenMessageExperiment() != nil {
+        if variantManager.isSupported(feature: .newOnboardingIntro) && peekNextHomeScreenMessageExperiment() != nil {
+            return true
+        } else if peekNextHomeScreenMessage() != nil {
             return true
         }
         return false
@@ -318,9 +319,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-        var homeScreenSpec = peekNextHomeScreenMessage()
-
-        guard let homeScreenSpec else { return nil }
+        guard let homeScreenSpec = peekNextHomeScreenMessage() else { return nil }
 
         if homeScreenSpec != nextHomeScreenMessageOverride {
             settings.homeScreenMessagesSeen += 1
@@ -330,8 +329,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     }
 
     func nextHomeScreenMessageNew() -> HomeScreenSpec? {
-        var homeScreenSpec = peekNextHomeScreenMessageExperiment()
-        guard let homeScreenSpec else { return nil }
+        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else { return nil }
         return homeScreenSpec
     }
 
@@ -341,9 +339,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         }
 
         guard isEnabled else { return nil }
-        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else {
-            return nil
-        }
+        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else { return nil }
 
         if settings.homeScreenMessagesSeen == 0 {
             return .initial

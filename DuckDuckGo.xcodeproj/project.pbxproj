@@ -241,6 +241,8 @@
 		564DE45A2C450BE600D23241 /* DaxDialogsNewTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */; };
 		564DE45C2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45B2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift */; };
 		564DE45E2C45218500D23241 /* OnboardingNavigationDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */; };
+		564DE4602C4544CA00D23241 /* HomePageDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45F2C4544CA00D23241 /* HomePageDependencies.swift */; };
+		564DE4622C4546BE00D23241 /* HomeViewController+DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4612C4546BE00D23241 /* HomeViewController+DaxDialogs.swift */; };
 		566B73702BECD46800FF1959 /* MainViewController+SyncAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */; };
 		566B73732BECE4F200FF1959 /* SyncErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */; };
 		566B73762BECE53D00FF1959 /* SyncPausedStateManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */; };
@@ -1389,6 +1391,8 @@
 		564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsNewTabTests.swift; sourceTree = "<group>"; };
 		564DE45B2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestionsViewModelsTests.swift; sourceTree = "<group>"; };
 		564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationDelegateTests.swift; sourceTree = "<group>"; };
+		564DE45F2C4544CA00D23241 /* HomePageDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDependencies.swift; sourceTree = "<group>"; };
+		564DE4612C4546BE00D23241 /* HomeViewController+DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+DaxDialogs.swift"; sourceTree = "<group>"; };
 		566B736F2BECD46800FF1959 /* MainViewController+SyncAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+SyncAlerts.swift"; sourceTree = "<group>"; };
 		566B73712BECE4F200FF1959 /* SyncErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandling.swift; sourceTree = "<group>"; };
 		566B73742BECE53D00FF1959 /* SyncPausedStateManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPausedStateManaging.swift; sourceTree = "<group>"; };
@@ -5151,9 +5155,11 @@
 				85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */,
 				6F03CAFD2C32DD08004179A8 /* HomePageMessagesConfiguration.swift */,
 				F16390811E648B7A005B4550 /* HomeViewController.swift */,
+				564DE4612C4546BE00D23241 /* HomeViewController+DaxDialogs.swift */,
 				6F40D15A2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift */,
 				85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */,
 				85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */,
+				564DE45F2C4544CA00D23241 /* HomePageDependencies.swift */,
 				85B9CB8321AEBD72009001F1 /* Cells */,
 				85374D3621AC417200FF5A1E /* Renderers */,
 			);
@@ -6965,6 +6971,7 @@
 				85DB12ED2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1D43AFC2B99C56000BAB743 /* RootDebugViewController+VanillaBrowser.swift in Sources */,
+				564DE4602C4544CA00D23241 /* HomePageDependencies.swift in Sources */,
 				C159DF072A430B60007834BB /* EmailSignupViewController.swift in Sources */,
 				37A6A8FE2AFD0208008580A3 /* FaviconsFetcherOnboarding.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
@@ -7165,6 +7172,7 @@
 				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
 				1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */,
 				1DEAADFB2BA71E9A00E25A97 /* SettingsPrivacyProtectionDescriptionView.swift in Sources */,
+				564DE4622C4546BE00D23241 /* HomeViewController+DaxDialogs.swift in Sources */,
 				2DC3FC65C6D9DA634426672D /* AutofillNoAuthAvailableView.swift in Sources */,
 				6F03CAFC2C32C6F6004179A8 /* NewTabPageMessagesModel.swift in Sources */,
 			);

@@ -581,7 +581,6 @@ extension SettingsViewModel {
         case .feedback:
             presentViewController(legacyViewProvider.feedback, modal: false)
         case .logins:
-            firePixel(.autofillSettingsOpened)
             pushViewController(legacyViewProvider.loginSettings(delegate: self,
                                                             selectedAccount: state.activeWebsiteAccount))
 

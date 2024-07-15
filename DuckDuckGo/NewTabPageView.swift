@@ -35,37 +35,48 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack {
-                // MARK: Messages
-                ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
-                    HomeMessageView(viewModel: messageModel)
-                        .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                        .padding(16)
-                }
+        GeometryReader { proxy in
+            ScrollView {
+                VStack {
+                    // MARK: Messages
+                    ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
+                        HomeMessageView(viewModel: messageModel)
+                            .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
+                            .padding(16)
+                    }
 
-                // MARK: Favorites
-                if favoritesModel.isEmpty {
-                    FavoritesEmptyStateView()
+                    // MARK: Favorites
+                    if favoritesModel.isEmpty {
+                        FavoritesEmptyStateView()
+                            .padding(Constant.sectionPadding)
+                    } else {
+                        FavoritesView(model: favoritesModel)
+                            .padding(Constant.sectionPadding)
+                    }
+
+                    // MARK: Shortcuts
+                    ShortcutsView()
                         .padding(Constant.sectionPadding)
-                } else {
-                    FavoritesView(model: favoritesModel)
-                        .padding(Constant.sectionPadding)
+
+                    Spacer()
+
+                    // MARK: Customize button
+                    HStack {
+                        Spacer()
+
+                        Button(action: {
+                        }, label: {
+                            NewTabPageCustomizeButtonView()
+                            // Needed to reduce default button margins
+                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
+                        }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                            .padding(Constant.sectionPadding)
+                    }
                 }
-
-                // MARK: Shortcuts
-                ShortcutsView()
-                    .padding(Constant.sectionPadding)
-
-                // MARK: Customize
-                Button(action: {
-                }, label: {
-                    NewTabPageCustomizeButtonView()
-                }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                    .padding(EdgeInsets(top: 88, leading: 0, bottom: 16, trailing: 0))
+                .frame(minHeight: proxy.frame(in: .local).size.height)
             }
+            .background(Color(designSystemColor: .background))
         }
-        .background(Color(designSystemColor: .background))
     }
 }
 

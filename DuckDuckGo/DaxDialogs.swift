@@ -36,6 +36,7 @@ protocol EntityProviding {
 protocol NewTabDialogSpecProvider {
     func nextHomeScreenMessage() -> DaxDialogs.HomeScreenSpec?
     func nextHomeScreenMessageNew() -> DaxDialogs.HomeScreenSpec?
+    func dismiss()
 }
 
 extension ContentBlockerRulesManager: EntityProviding {
@@ -222,8 +223,10 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     }
 
     func isStillOnboarding() -> Bool {
-        if variantManager.isSupported(feature: .newOnboardingIntro) && peekNextHomeScreenMessageExperiment() != nil {
-            return true
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            if peekNextHomeScreenMessageExperiment() != nil {
+                return true
+            }
         } else if peekNextHomeScreenMessage() != nil {
             return true
         }

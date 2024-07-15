@@ -23,8 +23,8 @@ import SwiftUI
 
 extension HomeViewController {
 
-    func showNextDaxDialog(spec: DaxDialogs.HomeScreenSpec) {
-
+    func showNextDaxDialog(dialogProvider: NewTabDialogSpecProvider) {
+        guard let spec = dialogProvider.nextHomeScreenMessage() else { return }
         guard !isShowingDax else { return }
         guard let daxDialogViewController = daxDialogViewController else { return }
         collectionView.isHidden = true
@@ -51,9 +51,14 @@ extension HomeViewController {
         configureCollectionView()
     }
 
-    func showNextDaxDialogNew(spec: DaxDialogs.HomeScreenSpec, factory: any NewTabDaxDialogProvider) {
+    func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
         dismissHostingController()
-        let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: dismissHostingController))
+        let onDismiss = {
+            dialogProvider.dismiss()
+            self.dismissHostingController()
+        }
+        guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
+        let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
         hostingController = UIHostingController(rootView: daxDialogView)
         guard let hostingController else { return }
         hostingController.view.backgroundColor = .clear

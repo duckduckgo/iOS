@@ -223,8 +223,6 @@ class HomeViewController: UIViewController, NewTabPage {
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
         
-        presentNextDaxDialog()
-
         collectionView.didAppear()
 
         viewHasAppeared = true
@@ -245,11 +243,9 @@ class HomeViewController: UIViewController, NewTabPage {
 
     func presentNextDaxDialog() {
         if variantManager.isSupported(feature: .newOnboardingIntro) {
-            guard let spec = newTabDialogTypeProvider.nextHomeScreenMessageNew() else { return }
-            showNextDaxDialogNew(spec: spec, factory: newTabDialogFactory)
+            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         } else {
-            guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage() else { return }
-            showNextDaxDialog(spec: spec)
+            showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
         }
     }
 

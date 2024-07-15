@@ -81,37 +81,6 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc = nil
     }
 
-    func testWhenNewOnboarding_OnViewDidAppear_CorrectTypePassedToDialogFactory() throws {
-        // GIVEN
-        variantManager.isSupported = true
-        let expectedSpec = randomDialogType()
-        specProvider.specToReturn = expectedSpec
-
-        // WHEN
-        hvc.viewDidAppear(true)
-
-        // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
-        XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
-        XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
-        XCTAssertNotNil(self.dialogFactory.onDismiss)
-    }
-
-    func testWhenOldOnboarding_OnViewDidAppear_NothingPassedDialogFactory() throws {
-        // GIVEN
-        variantManager.isSupported = false
-
-        // WHEN
-        hvc.viewDidAppear(true)
-
-        // THEN
-        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertNil(dialogFactory.homeDialog)
-        XCTAssertNil(dialogFactory.onDismiss)
-    }
-
     func testWhenNewOnboarding_OnOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
         variantManager.isSupported = true
@@ -158,6 +127,9 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
         XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
         XCTAssertNotNil(self.dialogFactory.onDismiss)
+        let onDismiss = try XCTUnwrap(dialogFactory.onDismiss)
+        onDismiss()
+        XCTAssertTrue(specProvider.dismissCalled)
     }
 
     func testWhenOldOnboarding_OnOpenedAsNewTab_NothingPassedDialogFactory() throws {
@@ -222,6 +194,7 @@ class CapturingNewTabDaxDialogProvider: NewTabDaxDialogProvider {
 class MockNewTabDialogSpecProvider: NewTabDialogSpecProvider {
     var nextHomeScreenMessageCalled = false
     var nextHomeScreenMessageNewCalled = false
+    var dismissCalled = false
     var specToReturn: DaxDialogs.HomeScreenSpec?
 
     func nextHomeScreenMessage() -> DaxDialogs.HomeScreenSpec? {
@@ -232,5 +205,9 @@ class MockNewTabDialogSpecProvider: NewTabDialogSpecProvider {
     func nextHomeScreenMessageNew() -> DaxDialogs.HomeScreenSpec? {
         nextHomeScreenMessageNewCalled = true
         return specToReturn
+    }
+
+    func dismiss() {
+        dismissCalled = true
     }
 }

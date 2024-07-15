@@ -242,7 +242,6 @@ extension Pixel {
         case autofillLoginsFillLoginInlineDisablePromptAutofillKept
         case autofillLoginsFillLoginInlineDisablePromptAutofillDisabled
         
-        case autofillSettingsOpened
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsResetExcludedDisplayed
@@ -982,7 +981,6 @@ extension Pixel.Event {
         case .autofillLoginsFillLoginInlineDisablePromptAutofillKept: return "m_autofill_logins_save_disable-prompt_autofill-kept"
         case .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled: return "m_autofill_logins_save_disable-prompt_autofill-disabled"
             
-        case .autofillSettingsOpened: return "m_autofill_settings_opened"
         case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsResetExcludedDisplayed: return "m_autofill_settings_reset_excluded_displayed"

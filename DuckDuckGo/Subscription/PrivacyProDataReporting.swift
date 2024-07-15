@@ -81,25 +81,34 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     private static let openTabsCountThreshold = 3
     private static let searchCountThreshold = 50
 
+    private let variantManager: VariantManager
     private let userDefaults: UserDefaults
     private let emailManager: EmailManager
+    private let tutorialSettings: TutorialSettings
     private let appSettings: AppSettings
     private let statisticsStore: StatisticsStore
     private let secureVault: (any AutofillSecureVault)?
     private var syncService: DDGSyncing?
+    private let dateGenerator: () -> Date
 
-    init(userDefaults: UserDefaults = .app,
+    init(variantManager: VariantManager = DefaultVariantManager(),
+         userDefaults: UserDefaults = .app,
          emailManager: EmailManager = EmailManager(),
+         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
          appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()),
-         syncService: DDGSyncing? = nil) {
+         syncService: DDGSyncing? = nil,
+         dateGenerator: @escaping () -> Date = Date.init) {
+        self.variantManager = variantManager
         self.userDefaults = userDefaults
         self.emailManager = emailManager
+        self.tutorialSettings = tutorialSettings
         self.appSettings = appSettings
         self.statisticsStore = statisticsStore
         self.secureVault = secureVault
         self.syncService = syncService
+        self.dateGenerator = dateGenerator
     }
 
     func injectSyncService(_ service: DDGSync) {
@@ -142,7 +151,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     // MARK: - Additional parameters
 
     func isReinstall() -> Bool {
-        DefaultVariantManager().currentVariant?.name == VariantIOS.returningUser.name
+        variantManager.currentVariant?.name == VariantIOS.returningUser.name
     }
 
     func isFireButtonUser() -> Bool {
@@ -161,7 +170,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isAppOnboardingCompleted() -> Bool {
-        DefaultTutorialSettings().hasSeenOnboarding
+        tutorialSettings.hasSeenOnboarding
     }
 
     func isEmailEnabled() -> Bool {
@@ -174,7 +183,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     func isFrequentUser() -> Bool {
         guard let lastActiveDate,
-              let daysSinceLastActive = Calendar.current.numberOfDaysBetween(lastActiveDate, and: Date()) else {
+              let daysSinceLastActive = Calendar.current.numberOfDaysBetween(lastActiveDate, and: dateGenerator()) else {
             return false
         }
         return daysSinceLastActive < Self.frequentUserThreshold
@@ -182,7 +191,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     func isLongTermUser() -> Bool {
         guard let installDate = statisticsStore.installDate,
-              let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: Date()) else {
+              let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: dateGenerator()) else {
             return false
         }
         return daysSinceInstall > Self.longTermUserThreshold
@@ -208,7 +217,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func saveApplicationLastActiveDate() {
-        userDefaults.set(Date(), forKey: Key.applicationLastActiveDateKey)
+        userDefaults.set(dateGenerator(), forKey: Key.applicationLastActiveDateKey)
     }
     
     func saveFireCount() {

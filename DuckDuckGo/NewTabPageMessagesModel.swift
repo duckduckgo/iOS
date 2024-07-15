@@ -52,7 +52,9 @@ final class NewTabPageMessagesModel: ObservableObject {
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
         homePageMessagesConfiguration.dismissHomeMessage(homeMessage)
-        updateHomeMessageViewModel()
+        Task {
+            await updateHomeMessageViewModel()
+        }
     }
 
     func didAppear(_ homeMessage: HomeMessage) {
@@ -63,14 +65,22 @@ final class NewTabPageMessagesModel: ObservableObject {
 
     private func refresh() {
         homePageMessagesConfiguration.refresh()
-        updateHomeMessageViewModel()
+        Task {
+            await updateHomeMessageViewModel()
+        }
     }
 
-    private func updateHomeMessageViewModel() {
-        self.homeMessageViewModels = homePageMessagesConfiguration.homeMessages.compactMap(self.homeMessageViewModel(for:))
+    private func updateHomeMessageViewModel() async {
+        var viewModels: [HomeMessageViewModel] = []
+        for message in homePageMessagesConfiguration.homeMessages {
+            if let viewModel = await self.homeMessageViewModel(for: message) {
+                viewModels.append(viewModel)
+            }
+        }
+        homeMessageViewModels = viewModels
     }
 
-    private func homeMessageViewModel(for message: HomeMessage) -> HomeMessageViewModel? {
+    private func homeMessageViewModel(for message: HomeMessage) async -> HomeMessageViewModel? {
         switch message {
         case .placeholder:
             return HomeMessageViewModel(messageId: "", modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
@@ -79,6 +89,9 @@ final class NewTabPageMessagesModel: ObservableObject {
                 // no-op
             }
         case .remoteMessage(let remoteMessage):
+            let additionalParameters = [PixelParameters.message: "\(remoteMessage.id)"]
+                .merging(await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .messageID(remoteMessage.id))) { $1 }
+
             return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
 
                 guard let action,
@@ -90,27 +103,23 @@ final class NewTabPageMessagesModel: ObservableObject {
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    pixelFiring.fire(.remoteMessageActionClicked, withAdditionalParameters: additionalParameters)
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessagePrimaryActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    pixelFiring.fire(.remoteMessagePrimaryActionClicked, withAdditionalParameters: additionalParameters)
 
                 case .secondaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageSecondaryActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    pixelFiring.fire(.remoteMessageSecondaryActionClicked, withAdditionalParameters: additionalParameters)
 
                 case .close:
                     self.dismissHomeMessage(message)
-                    pixelFiring.fire(.remoteMessageDismissed,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    pixelFiring.fire(.remoteMessageDismissed, withAdditionalParameters: additionalParameters)
 
                 }
             } onDidAppear: { [weak self] in

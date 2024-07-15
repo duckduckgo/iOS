@@ -47,7 +47,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler()
         )
-        hvc = HomeViewController.loadFromStoryboard(
+        let dependencies = HomePageDependencies(
             model: Tab(),
             favoritesViewModel: MockFavoritesListInteracting(),
             appSettings: AppSettingsMock(),
@@ -56,6 +56,8 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             variantManager: variantManager,
             newTabDialogFactory: dialogFactory,
             newTabDialogTypeProvider: specProvider)
+        hvc = HomeViewController.loadFromStoryboard(
+            homePageDependecies: dependencies)
 
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

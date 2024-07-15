@@ -244,10 +244,11 @@ class HomeViewController: UIViewController, NewTabPage {
     }
 
     func presentNextDaxDialog() {
-        guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage() else { return }
         if variantManager.isSupported(feature: .newOnboardingIntro) {
+            guard let spec = newTabDialogTypeProvider.nextHomeScreenMessageNew() else { return }
             showNextDaxDialogNew(spec: spec, factory: newTabDialogFactory)
         } else {
+            guard let spec = newTabDialogTypeProvider.nextHomeScreenMessage() else { return }
             showNextDaxDialog(spec: spec)
         }
     }

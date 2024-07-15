@@ -30,6 +30,6 @@ protocol NewTabPage: UIViewController {
 
     func dismiss()
 
-    func showNextDaxDialog()
+    func presentNextDaxDialog()
     func onboardingCompleted()
 }

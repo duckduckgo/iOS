@@ -751,7 +751,8 @@ class MainViewController: UIViewController {
                                                             syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             variantManager: variantManager,
-                                                            newTabDialogFactory: newTabDaxDialogFactory)
+                                                            newTabDialogFactory: newTabDaxDialogFactory,
+                                                            newTabDialogTypeProvider: DaxDialogs.shared)
             let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencied)
 
             controller.delegate = self
@@ -2442,7 +2443,7 @@ extension MainViewController: AutoClearWorker {
         } completion: {
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
-                self.homeController?.showNextDaxDialog()
+                self.homeController?.presentNextDaxDialog()
             } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()

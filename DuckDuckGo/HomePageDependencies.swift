@@ -31,5 +31,5 @@ struct HomePageDependencies {
     let syncDataProviders: SyncDataProviders
     let variantManager: VariantManager
     let newTabDialogFactory: any NewTabDaxDialogProvider
-    let newTabDialogTypeProvider: NewTabDialogSpecProvider = DaxDialogs.shared
+    let newTabDialogTypeProvider: NewTabDialogSpecProvider
 }

@@ -1,0 +1,10 @@
+appId: com.duckduckgo.mobile.ios
+
+---
+
+# Set up 
+- clearState
+- clearKeychain
+- launchApp
+- runFlow: 
+    file: onboarding.yaml

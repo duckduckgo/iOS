@@ -91,7 +91,7 @@ public protocol VariantRNG {
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
+        let variantName = ProcessInfo.variantName
         return variants.first(where: { $0.name == variantName })
     }
 
@@ -175,6 +175,20 @@ public class Arc4RandomUniformVariantRNG: VariantRNG {
     public func nextInt(upperBound: Int) -> Int {
         // swiftlint:disable:next legacy_random
         return Int(arc4random_uniform(UInt32(upperBound)))
+    }
+
+}
+
+extension ProcessInfo {
+
+    static var variantName: String? {
+        guard let variantArg = ProcessInfo().arguments.first(where: {
+            $0.starts(with: "VARIANT=")
+        }) else { return nil }
+
+        let components = variantArg.components(separatedBy: "=")
+        guard components.count == 2 else { return nil }
+        return components[1]
     }
 
 }

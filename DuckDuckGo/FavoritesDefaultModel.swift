@@ -19,6 +19,7 @@
 
 import Foundation
 import Bookmarks
+import Combine
 import SwiftUI
 import Core
 import WidgetKit
@@ -29,6 +30,7 @@ final class FavoritesDefaultModel: FavoritesModel {
 
     private let interactionModel: FavoritesListInteracting
     private var didReportMissingFavicon = false
+    private var cancellables = Set<AnyCancellable>()
 
     var isEmpty: Bool {
         allFavorites.isEmpty
@@ -41,6 +43,10 @@ final class FavoritesDefaultModel: FavoritesModel {
         } catch {
             fatalError(error.localizedDescription)
         }
+
+        interactionModel.externalUpdates.sink { [weak self] _ in
+            try? self?.updateData()
+        }.store(in: &cancellables)
     }
 
 

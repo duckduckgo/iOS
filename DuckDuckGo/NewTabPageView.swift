@@ -71,6 +71,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                                 .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
                         }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
                             .padding(Constant.sectionPadding)
+                            .padding(.top, 40)
                     }
                 }
                 .frame(minHeight: proxy.frame(in: .local).size.height)

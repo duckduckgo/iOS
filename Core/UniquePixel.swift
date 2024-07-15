@@ -54,8 +54,8 @@ public final class UniquePixel {
                             withAdditionalParameters params: [String: String] = [:],
                             includedParameters: [Pixel.QueryParameters] = [.appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
-        guard pixel.name.hasSuffix("_u") else {
-            assertionFailure("Unique pixel: must end with _u")
+        guard pixel.name.hasSuffix("_u") || pixel.name.hasSuffix("_unique") else {
+            assertionFailure("Unique pixel: must end with _u or _unique")
             return
         }
 

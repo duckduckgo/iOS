@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skryté vyskakovací okno";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Vyber si prohlížeč";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokování vyskakovacích oken ohledně cookies";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokování reklam, které tě všude pronásledují";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Rychle vymaž údaje o procházení";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Soukromé vyhledávání ve výchozím nastavení";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokuj trackery třetích stran";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Ochrana osobních údajů je aktivní!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Otevírejte odkazy s klidem mysli, pokaždé.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Pojďme na to!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Zdravíme tě.\n\nTěšíš se na lepší internet s větší ochranou soukromí?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Přidat widget";
 

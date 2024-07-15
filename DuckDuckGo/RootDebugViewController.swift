@@ -45,6 +45,7 @@ class RootDebugViewController: UITableViewController {
         case resetSendCrashLogs = 671
         case refreshConfig = 672
         case newTabPageSections = 674
+        case showNewOnboardingIntro = 676
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -167,6 +168,8 @@ class RootDebugViewController: UITableViewController {
             case .newTabPageSections:
                 let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
                 show(controller, sender: nil)
+            case .showNewOnboardingIntro:
+                showOnboardingIntro()
             }
         }
     }

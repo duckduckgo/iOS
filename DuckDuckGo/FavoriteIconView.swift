@@ -20,23 +20,35 @@
 import SwiftUI
 
 struct FavoriteIconView: View {
-    @ObservedObject var model: FavoriteIconViewModel
+    let model: FavoriteIconViewModel
+
+    @State private var favicon: Favicon = .empty
 
     init(model: FavoriteIconViewModel) {
         self.model = model
     }
 
     var body: some View {
-        let favicon = model.favicon
-        Image(uiImage: favicon.image)
-            .resizable()
-            .aspectRatio(1.0, contentMode: .fit)
-            .if(favicon.isUsingBorder) {
-                $0.padding(Constant.borderSize)
-            }
-            .task {
-                await model.loadFavicon(size: Constant.faviconSize)
-            }
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(designSystemColor: .surface))
+                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+                .aspectRatio(1, contentMode: .fit)
+
+            Image(uiImage: favicon.image)
+                .resizable()
+                .aspectRatio(1.0, contentMode: .fit)
+                .if(favicon.isUsingBorder) {
+                    $0.padding(Constant.borderSize)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .task {
+                    self.favicon = model.createFakeFavicon(size: Constant.faviconSize)
+                    if let favicon = await model.loadFavicon(size: Constant.faviconSize) {
+                        self.favicon = favicon
+                    }
+                }
+        }
     }
 }
 
@@ -46,5 +58,9 @@ private struct Constant {
 }
 
 #Preview {
-    FavoriteIconView(model: FavoriteIconViewModel(domain: "foo.bar", onFaviconMissing: nil))
+    VStack(spacing: 8) {
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "apple.com", onFaviconMissing: nil))
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "duckduckgo.com", onFaviconMissing: nil))
+        FavoriteIconView(model: FavoriteIconViewModel(domain: "foobar.com", onFaviconMissing: nil))
+    }
 }

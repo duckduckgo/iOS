@@ -62,9 +62,14 @@ struct FavoritesView<Model: FavoritesModel>: View {
 
             if model.allFavorites.count > collapsedMaxItemsCount {
                 Button(action: {
-                    isCollapsed.toggle()
+                    withAnimation(.easeInOut) {
+                        isCollapsed.toggle()
+                    }
                 }, label: {
-                }).buttonStyle(ToggleExpandButtonStyle(direction: isCollapsed ? .down : .up))
+                    Image(isCollapsed ? .chevronDown : .chevronUp)
+                        .resizable()
+                })
+                .buttonStyle(ToggleExpandButtonStyle())
             }
         }
     }

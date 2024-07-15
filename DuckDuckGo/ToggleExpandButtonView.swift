@@ -23,8 +23,6 @@ import DuckUI
 struct ToggleExpandButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
 
-    let direction: Direction
-
     func makeBody(configuration: Configuration) -> some View {
         let isDark = colorScheme == .dark
 
@@ -44,27 +42,12 @@ struct ToggleExpandButtonStyle: ButtonStyle {
                         Circle()
                             .fill(Color(designSystemColor: .background))
                     )
-                Image(direction.image)
-                    .resizable()
+                configuration.label
                     .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
                     .frame(width: 16, height: 16)
             }
             VStack {
                 ExpandButtonDivider()
-            }
-        }
-    }
-
-    enum Direction {
-        case up
-        case down
-
-        var image: ImageResource {
-            switch self {
-            case .up:
-                return .chevronUp
-            case .down:
-                return .chevronDown
             }
         }
     }
@@ -81,7 +64,16 @@ private struct ExpandButtonDivider: View {
 
 #Preview {
     VStack {
-        Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .down))
-        Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .up))
+        Button(action: {},
+               label: {
+            Image(.chevronDown)
+                .resizable()
+        }).buttonStyle(ToggleExpandButtonStyle())
+
+        Button(action: {},
+               label: {
+            Image(.chevronUp)
+                .resizable()
+        }).buttonStyle(ToggleExpandButtonStyle())
     }
 }

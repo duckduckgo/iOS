@@ -39,10 +39,12 @@ let MockSecureVaultFactory = SecureVaultFactory<MockSecureVault>(
 )
 
 final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
+
     public typealias MockSecureVaultDatabaseProviders = SecureStorageProviders<T>
 
     var storedAccounts: [SecureVaultModels.WebsiteAccount] = []
     var storedCredentials: [Int64: SecureVaultModels.WebsiteCredentials] = [:]
+    var storedCredentialsForDomain: [String: [SecureVaultModels.WebsiteCredentials]] = [:]
     var storedNeverPromptWebsites = [SecureVaultModels.NeverPromptWebsites]()
     var storedNotes: [SecureVaultModels.Note] = []
     var storedIdentities: [SecureVaultModels.Identity] = []
@@ -99,6 +101,10 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
     func websiteCredentialsFor(accountId: Int64) throws -> SecureVaultModels.WebsiteCredentials? {
         return storedCredentials[accountId]
+    }
+
+    func websiteCredentialsFor(domain: String) throws -> [BrowserServicesKit.SecureVaultModels.WebsiteCredentials] {
+        return storedCredentialsForDomain[domain] ?? []
     }
 
     func storeWebsiteCredentials(_ credentials: SecureVaultModels.WebsiteCredentials) throws -> Int64 {
@@ -265,6 +271,7 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     var _creditCards = [Int64: SecureVaultModels.CreditCard]()
     var _forDomain = [String]()
     var _credentialsDict = [Int64: SecureVaultModels.WebsiteCredentials]()
+    var _credentialsForDomain = [String: [SecureVaultModels.WebsiteCredentials]]()
     var _note: SecureVaultModels.Note?
     var _neverPromptWebsites = [SecureVaultModels.NeverPromptWebsites]()
 
@@ -292,6 +299,10 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
 
     func websiteCredentialsForAccountId(_ accountId: Int64) throws -> SecureVaultModels.WebsiteCredentials? {
         return _credentialsDict[accountId]
+    }
+
+    func websiteCredentialsForDomain(_ domain: String) throws -> [BrowserServicesKit.SecureVaultModels.WebsiteCredentials] {
+        return _credentialsForDomain[domain] ?? []
     }
 
     func websiteAccountsForDomain(_ domain: String) throws -> [SecureVaultModels.WebsiteAccount] {

@@ -182,13 +182,12 @@ public class Arc4RandomUniformVariantRNG: VariantRNG {
 extension ProcessInfo {
 
     static var variantName: String? {
-        guard let variantArg = ProcessInfo().arguments.first(where: {
-            $0.starts(with: "VARIANT=")
+        let p = ProcessInfo()
+        guard let variantArgIndex = p.arguments.firstIndex(where: {
+            $0.starts(with: "VARIANT")
         }) else { return nil }
-
-        let components = variantArg.components(separatedBy: "=")
-        guard components.count == 2 else { return nil }
-        return components[1]
+        guard p.arguments.count > variantArgIndex + 1 else { return nil }
+        return p.arguments[variantArgIndex + 1]
     }
 
 }

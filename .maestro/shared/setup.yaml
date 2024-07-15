@@ -1,10 +1,15 @@
+# setup.yaml
 appId: com.duckduckgo.mobile.ios
 
 ---
 
-# Set up 
-- clearState
-- clearKeychain
-- launchApp
-- runFlow: 
+# If you need more arguments, copy this whole thing into your test
+- launchApp:
+    appId: "com.duckduckgo.mobile.ios"
+    clearState: true
+    clearKeychain: true
+    arguments: 
+       "VARIANT": "ru"
+
+- runFlow:
     file: onboarding.yaml

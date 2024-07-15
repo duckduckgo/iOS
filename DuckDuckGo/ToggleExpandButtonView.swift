@@ -46,7 +46,7 @@ struct ToggleExpandButtonStyle: ButtonStyle {
                     )
                 Image(direction.image)
                     .resizable()
-                    .foregroundColor(Color(designSystemColor: .icons))
+                    .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
                     .frame(width: 16, height: 16)
             }
             VStack {
@@ -72,14 +72,15 @@ struct ToggleExpandButtonStyle: ButtonStyle {
 
 private struct ExpandButtonDivider: View {
     var body: some View {
-        Divider()
+        Rectangle()
+            .frame(maxWidth: .infinity)
             .frame(height: 1)
-            .overlay(Color(designSystemColor: .lines))
+            .foregroundColor(Color(designSystemColor: .lines))
     }
 }
 
 #Preview {
-    HStack {
+    VStack {
         Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .down))
         Button("", action: {}).buttonStyle(ToggleExpandButtonStyle(direction: .up))
     }

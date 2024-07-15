@@ -38,10 +38,7 @@ import SwiftUI
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-    // swiftlint:enable type_body_length
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -171,13 +168,13 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    var historyManager: HistoryManager
+    var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        historyManager: HistoryManager,
+        historyManager: HistoryManaging,
         homePageConfiguration: HomePageConfiguration,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
@@ -876,6 +873,8 @@ class MainViewController: UIViewController {
                    currentTab?.url?.absoluteString ?? "<nil>")
             return
         }
+        // Make sure that once query is submitted, we don't trigger the non-SERP flow
+        skipSERPFlow = false
         loadUrl(url)
     }
 
@@ -2624,5 +2623,3 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
-// swiftlint:enable file_length

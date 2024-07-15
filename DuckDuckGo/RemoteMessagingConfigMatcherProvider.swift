@@ -45,7 +45,6 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
     let appSettings: AppSettings
     let internalUserDecider: InternalUserDecider
 
-    // swiftlint:disable:next function_body_length
     func refreshConfigMatcher(using store: RemoteMessagingStoring) async -> RemoteMessagingConfigMatcher {
 
         var bookmarksCount = 0

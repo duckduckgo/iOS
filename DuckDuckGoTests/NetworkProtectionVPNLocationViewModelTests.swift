@@ -23,9 +23,6 @@ import NetworkExtension
 import NetworkProtectionTestUtils
 @testable import DuckDuckGo
 
-// swiftlint:disable type_body_length
-// swiftlint:disable file_length
-
 final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     private var listRepository: MockNetworkProtectionLocationListRepository!
     private var settings: VPNSettings!
@@ -657,8 +654,6 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     }
 }
 
-// swiftlint:enable type_body_length
-
 final class MockNetworkProtectionLocationListRepository: NetworkProtectionLocationListRepository {
     var stubLocationList: [NetworkProtectionLocation] = []
     var stubError: Error?
@@ -690,5 +685,3 @@ struct EncodableWrapper: Encodable {
         try self.wrapped.encode(to: encoder)
     }
 }
-
-// swiftlint:enable file_length

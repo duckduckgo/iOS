@@ -26,7 +26,6 @@ import Core
 import NetworkProtection
 #endif
 
-// swiftlint:disable:next type_body_length
 @available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
@@ -148,7 +147,6 @@ import NetworkProtection
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .authorization:

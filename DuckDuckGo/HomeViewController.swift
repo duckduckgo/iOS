@@ -77,7 +77,6 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
-    // swiftlint:disable:next function_parameter_count
     static func loadFromStoryboard(
         homePageConfiguration: HomePageConfiguration,
         model: Tab,

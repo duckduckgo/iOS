@@ -90,7 +90,6 @@ class AppDependencyProvider: DependencyProvider {
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
-    // swiftlint:disable:next function_body_length
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)

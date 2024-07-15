@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Popup-vindu skjult";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Velg nettleseren din";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blokker popup-vinduer om informasjonskapsler";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blokker påtrengende annonser";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Slett nettleserdata raskt";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Søk privat som standard";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blokker tredjepartssporere";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Personvern er aktivert!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Åpne lenker med ro i sinnet, hver gang.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Sett i gang!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Heisann.\n\nKlar for et bedre, mer privat internett?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Legg til widget";
 

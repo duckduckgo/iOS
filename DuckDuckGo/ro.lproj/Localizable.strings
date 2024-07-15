@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up ascuns";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Alege browserul";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Blochează ferestrele pop-up privind modulele cookie";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Blochează reclamele înfiorătoare";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Șterge rapid datele de navigare";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Caută implicit în mod privat";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Blochează tehnologiile de urmărire terțe";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Măsurile de protecție a confidențialității au fost activate!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Deschide link-urile liniștit, de fiecare dată.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Să începem!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Salut!\n\nEști gata pentru un internet mai bun și mai privat?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Adăugare widget";
 

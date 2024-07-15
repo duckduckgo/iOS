@@ -41,18 +41,12 @@ import ContentScopeScripts
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class TabViewController: UIViewController {
-// swiftlint:enable type_body_length
 
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
-        
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
-        
         static let secGPCHeader = "Sec-GPC"
-
         static let navigationExpectationInterval = 3.0
     }
     
@@ -298,7 +292,7 @@ class TabViewController: UIViewController {
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
-                                   historyManager: HistoryManager,
+                                   historyManager: HistoryManaging,
                                    syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -316,7 +310,7 @@ class TabViewController: UIViewController {
         (webView.configuration.userContentController as? UserContentController)!
     }
 
-    let historyManager: HistoryManager
+    let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
     
     var duckPlayer: DuckPlayerProtocol = DuckPlayer()
@@ -326,7 +320,7 @@ class TabViewController: UIViewController {
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
-                   historyManager: HistoryManager,
+                   historyManager: HistoryManaging,
                    syncService: DDGSyncing) {
         self.tabModel = tabModel
         self.appSettings = appSettings
@@ -665,6 +659,12 @@ class TabViewController: UIViewController {
                 duckPlayer.settings.mode == .enabled {
                 handler.handleURLChange(url: url, webView: webView)
             }
+        }
+                
+        if var handler = youtubeNavigationHandler,
+            let url {
+            handler.referrer = url.isYoutube ? .youtube : .other
+            
         }
     }
     
@@ -1470,8 +1470,7 @@ extension TabViewController: WKNavigationDelegate {
 
         return request
     }
-    
-    // swiftlint:disable function_body_length
+
     // swiftlint:disable cyclomatic_complexity
 
     func webView(_ webView: WKWebView,
@@ -1602,7 +1601,6 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(decision)
         }
     }
-    // swiftlint:enable function_body_length
     // swiftlint:enable cyclomatic_complexity
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {
@@ -1625,7 +1623,6 @@ extension TabViewController: WKNavigationDelegate {
         return true
     }
 
-    // swiftlint:disable function_body_length
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
@@ -1692,8 +1689,6 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
-    // swiftlint:enable function_body_length
-    
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
         guard navigationAction.navigationType != .reload else { return nil }
@@ -2583,7 +2578,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
-    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
@@ -2617,7 +2611,6 @@ extension TabViewController: SecureVaultManagerDelegate {
             completionHandler(nil)
         }
     }
-    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -2641,7 +2634,6 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
-    // swiftlint:disable function_parameter_count
     func presentAutofillPromptViewController(accountMatches: AccountMatches,
                                              domain: String,
                                              trigger: AutofillUserScript.GetTriggerType,
@@ -2683,7 +2675,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
-    // swiftlint:enable function_parameter_count
 
     // Used on macOS to request authentication for individual autofill items
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
@@ -2844,5 +2835,3 @@ extension UserContentController {
     }
 
 }
-
-// swiftlint:enable file_length

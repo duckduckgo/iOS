@@ -826,7 +826,7 @@
 /* Alert action for starting a file dowload */
 "downloads.alert.action.save-to-downloads" = "Save to Downloads";
 
-/* Cancel download action for alert when trying to cancel the file download */
+/* Cancel download action for downloads */
 "downloads.cancel-download.alert.cancel" = "Cancel";
 
 /* Message for alert when trying to cancel the file download */

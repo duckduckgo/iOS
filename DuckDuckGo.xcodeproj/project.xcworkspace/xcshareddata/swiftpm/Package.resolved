@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/passwords-tooltip-logic-bug",
-        "revision" : "33f02f735d68fb8d37cb72b0d98fee43e96f1b18"
+        "revision" : "a213b0bb6e456abf2cb3003c0739a20e07056ea5"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "9c65477457126ab7ad963a32b7f85ce08e6bd1a7",
-        "version" : "6.0.0"
+        "revision" : "d0d4f28bbe2fd44cbc5db5f109bb8453699308a3",
+        "version" : "6.1.0"
       }
     },
     {

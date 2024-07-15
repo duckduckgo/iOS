@@ -25,7 +25,6 @@ import WebKit
 import Bookmarks
 import Persistence
 
-// swiftlint:disable file_length
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
@@ -543,4 +542,3 @@ extension TabSwitcherViewController {
         collectionView.reloadData()
     }
 }
-// swiftlint:enable file_length

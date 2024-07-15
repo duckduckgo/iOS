@@ -67,7 +67,7 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
         XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
         XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
-        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost/")
+        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost")
         XCTAssertEqual(duckPlayerRequest.httpMethod, "GET")
     }
     
@@ -81,7 +81,7 @@ class YoutubePlayerNavigationHandlerTests: XCTestCase {
         XCTAssertEqual(duckPlayerRequest.url?.host, "www.youtube-nocookie.com")
         XCTAssertEqual(duckPlayerRequest.url?.path, "/embed/abc123")
         XCTAssertEqual(duckPlayerRequest.url?.query?.contains("t=10s"), true)
-        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost/")
+        XCTAssertEqual(duckPlayerRequest.value(forHTTPHeaderField: "Referer"), "http://localhost")
         XCTAssertEqual(duckPlayerRequest.httpMethod, "GET")
     }
     

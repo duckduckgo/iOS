@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "Hiker.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "HikerLarge.pdf",
+      "idiom" : "ipad"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

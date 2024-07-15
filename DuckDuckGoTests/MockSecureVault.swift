@@ -22,7 +22,6 @@ import Foundation
 import GRDB
 import SecureStorage
 
-// swiftlint:disable file_length
 typealias MockVaultFactory = SecureVaultFactory<MockSecureVault<MockDatabaseProvider>>
 
 // swiftlint:disable:next identifier_name

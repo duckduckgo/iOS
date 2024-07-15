@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 import BrowserServicesKit
 import Common
 import Foundation
@@ -33,7 +31,6 @@ enum SubscriptionTransactionStatus {
 }
 
 @available(iOS 15.0, *)
-// swiftlint:disable:next type_body_length
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
     struct Constants {
@@ -210,7 +207,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
     }
     
-    // swiftlint:disable:next function_body_length
     func subscriptionSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
 
         DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
@@ -455,4 +451,3 @@ private extension Pixel {
     }
 
 }
-// swiftlint:enable file_length

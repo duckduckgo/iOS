@@ -30,7 +30,7 @@ final class FavoritesPreviewModel: FavoritesModel {
     }
 
     convenience init() {
-        let favorites = (0...10).map {
+        let favorites = (0...20).map {
             Favorite(
                 id: UUID().uuidString,
                 title: "Favorite \($0)",

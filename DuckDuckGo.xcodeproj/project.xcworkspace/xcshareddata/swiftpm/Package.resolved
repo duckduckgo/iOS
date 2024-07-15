@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/reset-rmf",
-        "revision" : "54a25570e21d8e3c45c9356d675d56413e6370ae"
+        "revision" : "c9462f5a01ef4b298caea661981fa6cecff687b7",
+        "version" : "171.1.0"
       }
     },
     {

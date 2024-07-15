@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/duckplayer/css-changes",
-        "revision" : "afb197a5367558cd77e884f2de3d2638ed492f49"
+        "revision" : "a3bd039e78e75e0ad36dffbf1874b555738f22af",
+        "version" : "171.2.0"
       }
     },
     {

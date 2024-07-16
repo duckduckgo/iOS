@@ -17,6 +17,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "@duckduckgo/autoconsent": "^10.10.0"
+    "@duckduckgo/autoconsent": "duckduckgo/autoconsent#cosmetic-easylist"
   }
 }

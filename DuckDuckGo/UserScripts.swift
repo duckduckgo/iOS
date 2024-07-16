@@ -63,8 +63,9 @@ final class UserScripts: UserScriptsProvider {
         contentScopeUserScriptIsolated = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
-        autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
-        
+        autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig,
+                                                      cpmFilterList: sourceProvider.contentBlockerRulesConfig.trackerData?.cpm?.filterList)
+
         // Special pages - Such as Duck Player
         specialPages = SpecialPagesUserScript()
         if let specialPages {

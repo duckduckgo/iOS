@@ -53,6 +53,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     var topUrl: URL?
     var preferences: AutoconsentPreferences
     let management = AutoconsentManagement.shared
+    let cpmFilterList: String?
 
     public var messageNames: [String] { MessageName.allCases.map(\.rawValue) }
     let source: String
@@ -60,12 +61,16 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     private let ignoreNonHTTPURLs: Bool
     weak var delegate: AutoconsentUserScriptDelegate?
 
-    init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults(), ignoreNonHTTPURLs: Bool = true) {
+    init(config: PrivacyConfiguration,
+         preferences: AutoconsentPreferences = AppUserDefaults(),
+         ignoreNonHTTPURLs: Bool = true,
+         cpmFilterList: String?) {
         os_log("Initialising autoconsent userscript", log: .autoconsentLog, type: .debug)
         source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
         self.config = config
         self.preferences = preferences
         self.ignoreNonHTTPURLs = ignoreNonHTTPURLs
+        self.cpmFilterList = cpmFilterList
     }
     
     func userContentController(_ userContentController: WKUserContentController,
@@ -257,9 +262,11 @@ extension AutoconsentUserScript {
         let remoteConfig = self.config.settings(for: .autoconsent)
         let disabledCMPs = remoteConfig["disabledCMPs"] as? [String] ?? []
 
-        replyHandler([
+        let replyObject = [
             "type": "initResp",
-            "rules": nil, // rules are bundled with the content script atm
+            "rules": [ // Other rules are bundled with the content script atm
+                "filterList": cpmFilterList,
+                     ] as [String: Any?],
             "config": [
                 "enabled": true,
                 "autoAction": "optOut",
@@ -269,7 +276,8 @@ extension AutoconsentUserScript {
                 "detectRetries": 20,
                 "isMainWorld": false
             ] as [String: Any?]
-        ] as [String: Any?], nil)
+        ] as [String: Any?]
+        replyHandler(replyObject, nil)
     }
     
     @MainActor

@@ -43,7 +43,10 @@ public extension URL {
     // The following URLs shall match the ones in update_embedded.sh. 
     // Danger checks that the URLs match on every PR. If the code changes, the regex that Danger uses may need an update.
     static let privacyConfig = URL(string: "\(staticBase)/trackerblocking/config/v4/ios-config.json")!
-    static let trackerDataSet = URL(string: "\(staticBase)/trackerblocking/v5/current/ios-tds.json")!
+
+    //    static let trackerDataSet = URL(string: "\(staticBase)/trackerblocking/v5/current/ios-tds.json")!
+    static let trackerDataSet = URL(string: "https://dub.duckduckgo.com/raw/duckduckgo/tracker-radar-internal/main/tracker-lists/app-extension/v7/apple/tds.json?token=GHSAT0AAAAAAAAACFMMML3CFWCIBFDPZER2ZU6KM3Q")!
+    
     static let bloomFilter = URL(string: "\(staticBase)/https/https-mobile-v2-bloom.bin")!
     static let bloomFilterSpec = URL(string: "\(staticBase)/https/https-mobile-v2-bloom-spec.json")!
     static let bloomFilterExcludedDomains = URL(string: "\(staticBase)/https/https-mobile-v2-false-positives.json")!

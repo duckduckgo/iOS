@@ -90,7 +90,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
 
         // THEN
         XCTAssertNotNil(navigationDelegate.urlToNavigateTo)
-        XCTAssertEqual(navigationDelegate.urlToNavigateTo, URL(string: "https:" + randomItem.title))
+        XCTAssertEqual(navigationDelegate.urlToNavigateTo, URL(string: randomItem.title))
     }
 
 }

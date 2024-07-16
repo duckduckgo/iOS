@@ -713,6 +713,8 @@
 		BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */; };
 		BDE219EA2C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E92C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift */; };
+		BDE219F62C45ADB8005D5884 /* DDGSyncTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = BDE219F52C45ADB8005D5884 /* DDGSyncTestingUtilities */; };
+		BDE219F82C46D7DE005D5884 /* SecureStorageTestsUtils in Frameworks */ = {isa = PBXBuildFile; productRef = BDE219F72C46D7DE005D5884 /* SecureStorageTestsUtils */; };
 		BDF8D0022C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */; };
 		BDFF031D2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */; };
 		BDFF03212BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF03202BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift */; };
@@ -2379,6 +2381,10 @@
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
 		BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporting.swift; sourceTree = "<group>"; };
 		BDE219E92C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPrivacyProDataReporterTests.swift; sourceTree = "<group>"; };
+		BDE219EF2C45AD50005D5884 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		BDE219F02C45AD50005D5884 /* SecureStorageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageStub.swift; sourceTree = "<group>"; };
+		BDE219F22C45AD56005D5884 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		BDE219F32C45AD56005D5884 /* SecureStorageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageStub.swift; sourceTree = "<group>"; };
 		BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDNSSettingsViewModel.swift; sourceTree = "<group>"; };
 		BDFF03192BA39C5A00F324C9 /* NetworkProtectionFeatureVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFeatureVisibility.swift; sourceTree = "<group>"; };
 		BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProtectionVisibility.swift; sourceTree = "<group>"; };
@@ -2776,10 +2782,12 @@
 			files = (
 				F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */,
 				F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */,
+				BDE219F62C45ADB8005D5884 /* DDGSyncTestingUtilities in Frameworks */,
 				4BE67B052B96B9AB007335F7 /* ContentBlocking in Frameworks */,
 				F15531922BF215ED0029ED04 /* SubscriptionTestingUtilities in Frameworks */,
 				F15531902BF215ED0029ED04 /* Subscription in Frameworks */,
 				F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */,
+				BDE219F82C46D7DE005D5884 /* SecureStorageTestsUtils in Frameworks */,
 				EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */,
 				4BE67B072B96B9B0007335F7 /* Common in Frameworks */,
 			);
@@ -4470,6 +4478,26 @@
 			path = Feedback;
 			sourceTree = "<group>";
 		};
+		BDE219F12C45AD50005D5884 /* DDGSyncTestingUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				BDE219EF2C45AD50005D5884 /* Mocks.swift */,
+				BDE219F02C45AD50005D5884 /* SecureStorageStub.swift */,
+			);
+			name = DDGSyncTestingUtilities;
+			path = ../BrowserServicesKit/Sources/DDGSyncTestingUtilities;
+			sourceTree = "<group>";
+		};
+		BDE219F42C45AD56005D5884 /* DDGSyncTestingUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				BDE219F22C45AD56005D5884 /* Mocks.swift */,
+				BDE219F32C45AD56005D5884 /* SecureStorageStub.swift */,
+			);
+			name = DDGSyncTestingUtilities;
+			path = ../BrowserServicesKit/Sources/DDGSyncTestingUtilities;
+			sourceTree = "<group>";
+		};
 		BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -5416,6 +5444,8 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDE219F12C45AD50005D5884 /* DDGSyncTestingUtilities */,
+				BDE219F42C45AD56005D5884 /* DDGSyncTestingUtilities */,
 				D664C7DC2B28A02800CBFA76 /* StoreKit.framework */,
 				F1AA54601E48D90700223211 /* NotificationCenter.framework */,
 				8512EA4E24ED30D20073EE19 /* WidgetKit.framework */,
@@ -5892,6 +5922,8 @@
 				4BE67B062B96B9B0007335F7 /* Common */,
 				F155318F2BF215ED0029ED04 /* Subscription */,
 				F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */,
+				BDE219F52C45ADB8005D5884 /* DDGSyncTestingUtilities */,
+				BDE219F72C46D7DE005D5884 /* SecureStorageTestsUtils */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -10330,6 +10362,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
 			productName = SwiftLintTool;
+		};
+		BDE219F52C45ADB8005D5884 /* DDGSyncTestingUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DDGSyncTestingUtilities;
+		};
+		BDE219F72C46D7DE005D5884 /* SecureStorageTestsUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorageTestsUtils;
 		};
 		C14882EC27F211A000D59F0C /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

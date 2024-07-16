@@ -1,5 +1,5 @@
 //
-//  PrivacyProDataReporter.swift
+//  PrivacyProDataReporting.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -71,8 +71,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     public static let shared = DefaultPrivacyProDataReporter()
 
-    public static let eligibleMessageIDs: [String] = []
-    public static let eligibleOrigins: [String] = []
+    public static let eligibleMessageIDs: [String] = ["some", "message", "ids"]
+    public static let eligibleOrigins: [String] = ["some", "origins"]
 
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
@@ -89,6 +89,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     private let statisticsStore: StatisticsStore
     private let secureVault: (any AutofillSecureVault)?
     private var syncService: DDGSyncing?
+    private var tabsModel: TabsModel?
     private let dateGenerator: () -> Date
 
     init(variantManager: VariantManager = DefaultVariantManager(),
@@ -99,6 +100,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()),
          syncService: DDGSyncing? = nil,
+         tabsModel: TabsModel? = nil,
          dateGenerator: @escaping () -> Date = Date.init) {
         self.variantManager = variantManager
         self.userDefaults = userDefaults
@@ -108,11 +110,16 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         self.statisticsStore = statisticsStore
         self.secureVault = secureVault
         self.syncService = syncService
+        self.tabsModel = tabsModel
         self.dateGenerator = dateGenerator
     }
 
     func injectSyncService(_ service: DDGSync) {
         syncService = service
+    }
+
+    func injectTabsModel(_ model: TabsModel) {
+        tabsModel = model
     }
 
     func additionalParameters(for useCase: UseCase) async -> [String: String] {
@@ -198,13 +205,16 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isAutofillUser() -> Bool {
-        guard let accounts = try? secureVault?.accounts() else { return false }
-        return accounts.count > Self.autofillUserThreshold
+        guard let accountsCount = try? secureVault?.accountsCount() else { return false }
+        return accountsCount > Self.autofillUserThreshold
     }
 
     func isValidOpenTabsCount() -> Bool {
-        guard let tabsCount = TabsModel.get()?.count else { return false }
-        return tabsCount > Self.openTabsCountThreshold
+        guard let tabsModel else {
+            preconditionFailure("tabsModel must be non-nil")
+        }
+
+        return tabsModel.count > Self.openTabsCountThreshold
     }
 
     func isSearchUser() -> Bool {

@@ -309,6 +309,8 @@ import WebKit
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
+        DefaultPrivacyProDataReporter.shared.injectTabsModel(tabsModel)
+
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
@@ -516,6 +518,9 @@ import WebKit
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
+        
+        DefaultPrivacyProDataReporter.shared.injectSyncService(syncService)
+
         fireFailedCompilationsPixelIfNeeded()
 
 #if NETWORK_PROTECTION
@@ -543,7 +548,6 @@ import WebKit
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
-        DefaultPrivacyProDataReporter.shared.injectSyncService(syncService)
         DefaultPrivacyProDataReporter.shared.saveApplicationLastActiveDate()
     }
 

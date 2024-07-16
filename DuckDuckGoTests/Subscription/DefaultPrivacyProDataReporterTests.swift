@@ -178,10 +178,10 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     }
 
     func testAttachedParameters() async {
-        let params1 = await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .messageID("test"))
-        let params2 = await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .origin("test"))
-        let params3 = await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .messageID("message"))
-        let params4 = await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .origin("origins"))
+        let params1 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID("test"))
+        let params2 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .origin("test"))
+        let params3 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID("message"))
+        let params4 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .origin("origins"))
         XCTAssertEqual(params1.count, 0)
         XCTAssertEqual(params2.count, 0)
         XCTAssertEqual(params3.count, 4)

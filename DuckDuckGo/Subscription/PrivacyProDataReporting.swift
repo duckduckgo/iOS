@@ -56,6 +56,7 @@ protocol PrivacyProDataReporting {
     func isSearchUser() -> Bool
 }
 
+// swiftlint:disable identifier_name
 final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
@@ -122,7 +123,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         tabsModel = model
     }
 
-    func additionalParameters(for useCase: UseCase) async -> [String: String] {
+    func randomizedParameters(for useCase: UseCase) async -> [String: String] {
         switch useCase {
         case .messageID(let messageID):
             guard Self.eligibleMessageIDs.contains(messageID) else { return [:] }
@@ -155,21 +156,16 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         return additionalParameters
     }
 
-    // MARK: - Additional parameters
-
     func isReinstall() -> Bool {
-        variantManager.currentVariant?.name == VariantIOS.returningUser.name
+        _variantName == VariantIOS.returningUser.name
     }
 
     func isFireButtonUser() -> Bool {
-        fireCount > Self.fireCountThreshold
+        _fireCount > Self.fireCountThreshold
     }
 
     func isSyncUsed() -> Bool {
-        guard let syncService else {
-            preconditionFailure("syncService must be non-nil")
-        }
-        return syncService.authState != .inactive
+        _syncAuthState != .inactive
     }
 
     func isFireproofingUsed() -> Bool {
@@ -189,36 +185,32 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isFrequentUser() -> Bool {
-        guard let lastActiveDate,
-              let daysSinceLastActive = Calendar.current.numberOfDaysBetween(lastActiveDate, and: dateGenerator()) else {
+        let now = dateGenerator()
+        guard let _lastActiveDate,
+              let daysSinceLastActive = Calendar.current.numberOfDaysBetween(_lastActiveDate, and: now) else {
             return false
         }
-        return daysSinceLastActive < Self.frequentUserThreshold
+        return daysSinceLastActive < Self.frequentUserThreshold && !_lastActiveDate.isSameDay(now)
     }
 
     func isLongTermUser() -> Bool {
-        guard let installDate = statisticsStore.installDate,
-              let daysSinceInstall = Calendar.current.numberOfDaysBetween(installDate, and: dateGenerator()) else {
+        guard let _installDate,
+              let daysSinceInstall = Calendar.current.numberOfDaysBetween(_installDate, and: dateGenerator()) else {
             return false
         }
         return daysSinceInstall > Self.longTermUserThreshold
     }
 
     func isAutofillUser() -> Bool {
-        guard let accountsCount = try? secureVault?.accountsCount() else { return false }
-        return accountsCount > Self.autofillUserThreshold
+        _accountsCount > Self.autofillUserThreshold
     }
 
     func isValidOpenTabsCount() -> Bool {
-        guard let tabsModel else {
-            preconditionFailure("tabsModel must be non-nil")
-        }
-
-        return tabsModel.count > Self.openTabsCountThreshold
+         _tabsCount > Self.openTabsCountThreshold
     }
 
     func isSearchUser() -> Bool {
-        searchCount > Self.searchCountThreshold
+        _searchCount > Self.searchCountThreshold
     }
 
     func saveFireproofingUsed() {
@@ -231,24 +223,50 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
     
     func saveFireCount() {
-        userDefaults.set(fireCount + 1, forKey: Key.fireCountKey)
+        userDefaults.set(_fireCount + 1, forKey: Key.fireCountKey)
     }
 
     func saveSearchCount() {
-        userDefaults.set(searchCount + 1, forKey: Key.searchCountKey)
+        userDefaults.set(_searchCount + 1, forKey: Key.searchCountKey)
     }
 
-    // MARK: - Private
+    var _syncAuthState: SyncAuthState {
+        guard let syncService else {
+            preconditionFailure("syncService must be non-nil")
+        }
+        return syncService.authState
+    }
 
-    private var fireCount: Int {
+    var _variantName: String? {
+        variantManager.currentVariant?.name
+    }
+
+    var _fireCount: Int {
         userDefaults.object(forKey: Key.fireCountKey) as? Int ?? 0
     }
 
-    private var lastActiveDate: Date? {
+    var _lastActiveDate: Date? {
         userDefaults.object(forKey: Key.applicationLastActiveDateKey) as? Date ?? nil
     }
 
-    private var searchCount: Int {
+    var _installDate: Date? {
+        statisticsStore.installDate
+    }
+
+    var _accountsCount: Int {
+        (try? secureVault?.accountsCount()) ?? 0
+    }
+
+    var _tabsCount: Int {
+        guard let tabsModel else {
+            preconditionFailure("tabsModel must be non-nil")
+        }
+
+        return tabsModel.count
+    }
+
+    var _searchCount: Int {
         userDefaults.object(forKey: Key.searchCountKey) as? Int ?? 0
     }
 }
+// swiftlint:enable identifier_name

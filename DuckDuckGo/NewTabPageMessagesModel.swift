@@ -90,7 +90,7 @@ final class NewTabPageMessagesModel: ObservableObject {
             }
         case .remoteMessage(let remoteMessage):
             let additionalParameters = [PixelParameters.message: "\(remoteMessage.id)"]
-                .merging(await DefaultPrivacyProDataReporter.shared.additionalParameters(for: .messageID(remoteMessage.id))) { $1 }
+                .merging(await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID(remoteMessage.id))) { $1 }
 
             return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
 

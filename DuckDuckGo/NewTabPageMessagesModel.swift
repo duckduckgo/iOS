@@ -103,7 +103,8 @@ final class NewTabPageMessagesModel: ObservableObject {
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageActionClicked, withAdditionalParameters: additionalParameters)
+                    pixelFiring.fire(.remoteMessageActionClicked,
+                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
@@ -115,7 +116,8 @@ final class NewTabPageMessagesModel: ObservableObject {
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageSecondaryActionClicked, withAdditionalParameters: additionalParameters)
+                    pixelFiring.fire(.remoteMessageSecondaryActionClicked,
+                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 case .close:
                     self.dismissHomeMessage(message)

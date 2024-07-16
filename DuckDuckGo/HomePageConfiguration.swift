@@ -94,18 +94,20 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     }
 
     func didAppear(_ homeMessage: HomeMessage) {
-
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
-            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-            Pixel.fire(pixel: .remoteMessageShown,
-                       withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+            Task {
+                let additionalParameters = [PixelParameters.message: "\(remoteMessage.id)"]
+                    .merging(await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID(remoteMessage.id))) { $1 }
 
-            if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
-                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                Pixel.fire(pixel: .remoteMessageShownUnique,
-                           withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
-                remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
+                os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Pixel.fire(pixel: .remoteMessageShown, withAdditionalParameters: additionalParameters)
+
+                if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
+                    os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                    Pixel.fire(pixel: .remoteMessageShownUnique, withAdditionalParameters: additionalParameters)
+                    remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
+                }
             }
 
         default:

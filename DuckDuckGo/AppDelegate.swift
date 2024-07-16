@@ -547,8 +547,6 @@ import WebKit
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
-
-        DefaultPrivacyProDataReporter.shared.saveApplicationLastActiveDate()
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -659,6 +657,7 @@ import WebKit
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+        DefaultPrivacyProDataReporter.shared.saveApplicationLastSessionEnded()
     }
 
     private func suspendSync() {

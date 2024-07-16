@@ -125,11 +125,11 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     func testIsFrequentUser() {
         XCTAssertFalse(reporter.isFrequentUser())
 
-        reporter.saveApplicationLastActiveDate()
+        reporter.saveApplicationLastSessionEnded()
         mockCalendar.advance(by: .day, value: 1)
         XCTAssertTrue(reporter.isFrequentUser())
 
-        reporter.saveApplicationLastActiveDate()
+        reporter.saveApplicationLastSessionEnded()
         mockCalendar.advance(by: .weekOfMonth, value: 2)
         XCTAssertFalse(reporter.isFrequentUser())
     }

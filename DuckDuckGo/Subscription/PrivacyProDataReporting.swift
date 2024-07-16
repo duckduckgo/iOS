@@ -61,7 +61,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
         static let isFireproofingUsedKey = "com.duckduckgo.ios.privacypropromo.FireproofingUsed"
-        static let applicationLastActiveDateKey = "com.duckduckgo.ios.privacypropromo.ApplicationLastActiveDate"
+        static let applicationLastSessionEndedKey = "com.duckduckgo.ios.privacypropromo.ApplicationLastSessionEnded"
         static let searchCountKey = "com.duckduckgo.ios.privacypropromo.SearchCount"
     }
 
@@ -186,11 +186,11 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     func isFrequentUser() -> Bool {
         let now = dateGenerator()
-        guard let _lastActiveDate,
-              let daysSinceLastActive = Calendar.current.numberOfDaysBetween(_lastActiveDate, and: now) else {
+        guard let _lastSessionEnded,
+              let daysSinceLastSession = Calendar.current.numberOfDaysBetween(_lastSessionEnded, and: now) else {
             return false
         }
-        return daysSinceLastActive < Self.frequentUserThreshold && !_lastActiveDate.isSameDay(now)
+        return daysSinceLastSession < Self.frequentUserThreshold
     }
 
     func isLongTermUser() -> Bool {
@@ -218,8 +218,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         userDefaults.set(true, forKey: Key.isFireproofingUsedKey)
     }
 
-    func saveApplicationLastActiveDate() {
-        userDefaults.set(dateGenerator(), forKey: Key.applicationLastActiveDateKey)
+    func saveApplicationLastSessionEnded() {
+        userDefaults.set(dateGenerator(), forKey: Key.applicationLastSessionEndedKey)
     }
     
     func saveFireCount() {
@@ -245,8 +245,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         userDefaults.object(forKey: Key.fireCountKey) as? Int ?? 0
     }
 
-    var _lastActiveDate: Date? {
-        userDefaults.object(forKey: Key.applicationLastActiveDateKey) as? Date ?? nil
+    var _lastSessionEnded: Date? {
+        userDefaults.object(forKey: Key.applicationLastSessionEndedKey) as? Date ?? nil
     }
 
     var _installDate: Date? {

@@ -279,7 +279,7 @@ import NetworkProtection
                 appOnboardingCompleted=\(reporter.isAppOnboardingCompleted().toString)
                 emailEnabled=\(reporter.isEmailEnabled().toString)
                 widgetAdded=\(await reporter.isWidgetAdded().toString)
-                frequentUser=\(reporter.isFrequentUser().toString) (lastActive=\(dateFormatter.string(from: reporter._lastActiveDate ?? .distantPast)))
+                frequentUser=\(reporter.isFrequentUser().toString) (lastSession=\(dateFormatter.string(from: reporter._lastSessionEnded ?? .distantPast)))
                 longTermUser=\(reporter.isLongTermUser().toString) (installDate=\(dateFormatter.string(from: reporter._installDate ?? .distantPast)))
                 autofillUser=\(reporter.isAutofillUser().toString) (count=\(reporter._accountsCount))
                 validOpenTabsCount=\(reporter.isValidOpenTabsCount().toString) (count=\(reporter._tabsCount))

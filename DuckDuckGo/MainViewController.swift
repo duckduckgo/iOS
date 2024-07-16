@@ -745,7 +745,8 @@ class MainViewController: UIViewController {
             viewCoordinator.logoContainer.isHidden = true
         } else {
             let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self)
-            let homePageDependencies = HomePageDependencies(model: tabModel,
+            let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
+                                                            model: tabModel,
                                                             favoritesViewModel: favoritesViewModel,
                                                             appSettings: appSettings,
                                                             syncService: syncService,

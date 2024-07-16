@@ -89,6 +89,7 @@ class HomeViewController: UIViewController, NewTabPage {
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
                 coder: coder,
+                homePageConfiguration: homePageDependecies.homePageConfiguration,
                 tabModel: homePageDependecies.model,
                 favoritesViewModel: homePageDependecies.favoritesViewModel,
                 appSettings: homePageDependecies.appSettings,
@@ -136,8 +137,7 @@ class HomeViewController: UIViewController, NewTabPage {
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        presentNextDaxDialog()
+
         collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
         decorate()
@@ -148,6 +148,7 @@ class HomeViewController: UIViewController, NewTabPage {
                                                object: nil)
 
         registerForBookmarksChanges()
+        presentNextDaxDialog()
     }
 
     private func registerForBookmarksChanges() {

@@ -24,6 +24,7 @@ import Core
 import BrowserServicesKit
 
 struct HomePageDependencies {
+    let homePageConfiguration: HomePageConfiguration
     let model: Tab
     let favoritesViewModel: FavoritesListInteracting
     let appSettings: AppSettings

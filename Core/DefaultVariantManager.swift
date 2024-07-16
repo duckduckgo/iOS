@@ -65,9 +65,6 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "ma", weight: 1, isIncluded: When.always, features: []),
         VariantIOS(name: "mb", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro]),
 
-        VariantIOS(name: "ma", weight: 1, isIncluded: When.always, features: []),
-        VariantIOS(name: "mb", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro]),
-
         returningUser
     ]
 

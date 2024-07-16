@@ -79,7 +79,7 @@ extension OnboardingView {
             let iconSize = Metrics.iconSize.build(v: verticalSizeClass, h: horizontalSizeClass)
 
             return VStack(alignment: .center, spacing: Metrics.welcomeMessageStackSpacing.build(v: verticalSizeClass, h: horizontalSizeClass)) {
-                Image(.daxIcon)
+                Image(.daxIconExperiment)
                     .resizable()
                     .matchedGeometryEffect(id: OnboardingView.daxGeometryEffectID, in: animationNamespace)
                     .frame(width: iconSize.width, height: iconSize.height)

@@ -30,6 +30,12 @@ protocol EntityProviding {
     
 }
 
+protocol NewTabDialogSpecProvider {
+    func nextHomeScreenMessage() -> DaxDialogs.HomeScreenSpec?
+    func nextHomeScreenMessageNew() -> DaxDialogs.HomeScreenSpec?
+    func dismiss()
+}
+
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
@@ -38,7 +44,7 @@ extension ContentBlockerRulesManager: EntityProviding {
     
 }
 
-final class DaxDialogs {
+final class DaxDialogs: NewTabDialogSpecProvider {
     
     struct MajorTrackers {
         
@@ -51,7 +57,8 @@ final class DaxDialogs {
     
     struct HomeScreenSpec: Equatable {
         static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
-        static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
+        static let subsequent = HomeScreenSpec(message: "", accessibilityLabel: nil)
+        static let final = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
         static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
                                                 accessibilityLabel: UserText.daxDialogHomeAddFavoriteAccessible)
 
@@ -180,7 +187,14 @@ final class DaxDialogs {
             || settings.browsingWithoutTrackersShown
             || settings.browsingMajorTrackingSiteShown
     }
-    
+
+    private var firstSearchSeenButNoSiteVisited: Bool {
+        return settings.browsingAfterSearchShown
+            && !settings.browsingWithTrackersShown
+            && !settings.browsingWithoutTrackersShown
+            && !settings.browsingMajorTrackingSiteShown
+    }
+
     private var nonDDGBrowsingMessageSeen: Bool {
         settings.browsingWithTrackersShown
         || settings.browsingWithoutTrackersShown
@@ -206,7 +220,11 @@ final class DaxDialogs {
     }
 
     func isStillOnboarding() -> Bool {
-        if peekNextHomeScreenMessage() != nil {
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            if peekNextHomeScreenMessageExperiment() != nil {
+                return true
+            }
+        } else if peekNextHomeScreenMessage() != nil {
             return true
         }
         return false
@@ -310,6 +328,11 @@ final class DaxDialogs {
         return homeScreenSpec
     }
 
+    func nextHomeScreenMessageNew() -> HomeScreenSpec? {
+        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else { return nil }
+        return homeScreenSpec
+    }
+
     private func peekNextHomeScreenMessage() -> HomeScreenSpec? {
         if nextHomeScreenMessageOverride != nil {
             return nextHomeScreenMessageOverride
@@ -323,12 +346,33 @@ final class DaxDialogs {
         }
 
         if firstBrowsingMessageSeen {
-            return .subsequent
+            return .final
         }
 
         return nil
     }
-    
+
+    private func peekNextHomeScreenMessageExperiment() -> HomeScreenSpec? {
+        if nextHomeScreenMessageOverride != nil {
+            return nextHomeScreenMessageOverride
+        }
+        guard isEnabled else { return nil }
+
+        if !settings.browsingAfterSearchShown {
+            return .initial
+        }
+
+        if firstSearchSeenButNoSiteVisited {
+            return .subsequent
+        }
+
+        if firstBrowsingMessageSeen {
+            return .final
+        }
+
+        return nil
+    }
+
     private func noTrackersMessage() -> DaxDialogs.BrowsingSpec? {
         if !settings.browsingWithoutTrackersShown && !settings.browsingMajorTrackingSiteShown && !settings.browsingWithTrackersShown {
             settings.browsingWithoutTrackersShown = true

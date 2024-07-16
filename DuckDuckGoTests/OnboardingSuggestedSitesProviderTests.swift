@@ -28,7 +28,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "bolasport.com"))
@@ -43,7 +43,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "skysports.com"))
@@ -58,7 +58,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "kicker.de"))
@@ -73,7 +73,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "tsn.ca"))
@@ -88,7 +88,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "voetbalprimeur.nl"))
@@ -103,7 +103,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "afl.com.au"))
@@ -118,7 +118,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "svenskafans.com"))
@@ -133,7 +133,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "skysports.com"))
@@ -148,7 +148,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "ESPN.com"))
@@ -163,7 +163,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sut = OnboardingSuggestedSitesProvider(countryProvider: mockProvider)
 
         // WHEN
-        let sitesList = sut.sitesList
+        let sitesList = sut.list
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: "ESPN.com"))

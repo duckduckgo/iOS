@@ -320,7 +320,8 @@ import WebKit
                                       previewsSource: previewsSource,
                                       tabsModel: tabsModel,
                                       syncPausedStateManager: syncErrorHandler,
-                                      privacyProDataReporter: privacyProDataReporter)
+                                      privacyProDataReporter: privacyProDataReporter,
+                                      variantManager: variantManager)
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

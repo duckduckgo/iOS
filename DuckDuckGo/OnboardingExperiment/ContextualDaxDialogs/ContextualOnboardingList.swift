@@ -21,7 +21,7 @@ import Foundation
 import SwiftUI
 import DuckUI
 
-enum ContextualOnboardingListItem: Equatable {
+public enum ContextualOnboardingListItem: Equatable {
     case search(title: String)
     case site(title: String)
     case surprise(title: String)
@@ -38,13 +38,14 @@ enum ContextualOnboardingListItem: Equatable {
     }
 
     var title: String {
+        let scheme = "https:"
         switch self {
         case .search(let title):
-            return title
+            return scheme + title
         case .site(let title):
-            return title
+            return scheme + title
         case .surprise(let title):
-            return title
+            return scheme + title
         }
     }
 
@@ -62,14 +63,14 @@ enum ContextualOnboardingListItem: Equatable {
 
 struct ContextualOnboardingListView: View {
     let list: [ContextualOnboardingListItem]
-    var action: (_ title: String) -> Void
+    var action: (_ item: ContextualOnboardingListItem) -> Void
     let iconSize = 16.0
 
     var body: some View {
         VStack {
             ForEach(list.indices, id: \.self) { index in
                 Button(action: {
-                    action(list[index].title)
+                    action(list[index])
                 }, label: {
                     HStack {
                         Image(list[index].imageName)

@@ -60,12 +60,7 @@ struct OnboardingSiteSuggestionsViewModel {
     }
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {
-        let urlString = item.title
-        var components = URLComponents(string: urlString)
-        if components?.scheme == nil {
-            components?.scheme = "https"
-        }
-        guard let url = components?.url else { return }
+        guard let url = URL(string: item.title) else { return }
         delegate?.navigateTo(url: url)
     }
 }

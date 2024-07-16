@@ -38,13 +38,14 @@ public enum ContextualOnboardingListItem: Equatable {
     }
 
     var title: String {
+        let scheme = "https:"
         switch self {
         case .search(let title):
-            return title
+            return scheme + title
         case .site(let title):
-            return title
+            return scheme + title
         case .surprise(let title):
-            return title
+            return scheme + title
         }
     }
 

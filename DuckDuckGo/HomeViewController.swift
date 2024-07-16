@@ -148,7 +148,6 @@ class HomeViewController: UIViewController, NewTabPage {
                                                object: nil)
 
         registerForBookmarksChanges()
-        presentNextDaxDialog()
     }
 
     private func registerForBookmarksChanges() {
@@ -230,7 +229,9 @@ class HomeViewController: UIViewController, NewTabPage {
 
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
-        
+
+        presentNextDaxDialog()
+
         collectionView.didAppear()
 
         viewHasAppeared = true

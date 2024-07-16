@@ -23,6 +23,9 @@ import Bookmarks
 import DDGSync
 import History
 import BrowserServicesKit
+import RemoteMessaging
+import Configuration
+import Combine
 @testable import DuckDuckGo
 @testable import Core
 
@@ -35,12 +38,6 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
         db.loadStore()
         let bookmarkDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: db, errorEvents: nil)
-        let historyManager = HistoryManager(
-            privacyConfigManager: MockPrivacyConfigurationManager(),
-            variantManager: MockVariantManager(),
-            database: db,
-            internalUserDecider: DefaultInternalUserDecider(),
-            isEnabledByUser: false)
         let dataProviders = SyncDataProviders(
             bookmarksDatabase: db,
             secureVaultFactory: AutofillSecureVaultFactory,
@@ -49,11 +46,22 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler()
         )
+        
+        let remoteMessagingClient = RemoteMessagingClient(
+            bookmarksDatabase: db,
+            appSettings: AppSettingsMock(),
+            internalUserDecider: DefaultInternalUserDecider(),
+            configurationStore: MockConfigurationStoring(),
+            database: db,
+            errorEvents: nil,
+            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
+        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient)
         let tabsModel = TabsModel(desktop: true)
         mainVC = MainViewController(
             bookmarksDatabase: db,
             bookmarksDatabaseCleaner: bookmarkDatabaseCleaner,
-            historyManager: historyManager,
+            historyManager: MockHistoryManager(historyCoordinator: MockHistoryCoordinator(), isEnabledByUser: true, historyFeatureEnabled: true),
+            homePageConfiguration: homePageConfiguration,
             syncService: MockDDGSyncing(authState: .active, isSyncInProgress: false),
             syncDataProviders: dataProviders,
             appSettings: AppSettingsMock(),
@@ -106,5 +114,34 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         XCTAssertNotNil(mainVC.currentTab?.url)
         XCTAssertEqual(mainVC.currentTab?.url, expectedUrl)
     }
+
+}
+
+class MockConfigurationStoring: ConfigurationStoring {
+    func loadData(for configuration: Configuration) -> Data? {
+        return nil
+    }
+    
+    func loadEtag(for configuration: Configuration) -> String? {
+        return nil
+    }
+    
+    func loadEmbeddedEtag(for configuration: Configuration) -> String? {
+        return nil
+    }
+    
+    func saveData(_ data: Data, for configuration: Configuration) throws {
+    }
+    
+    func saveEtag(_ etag: String, for configuration: Configuration) throws {
+    }
+
+}
+
+class MockRemoteMessagingAvailabilityProviding: RemoteMessagingAvailabilityProviding {
+    var isRemoteMessagingAvailable: Bool = false
+
+    var isRemoteMessagingAvailablePublisher: AnyPublisher<Bool, Never> = Just(false)
+        .eraseToAnyPublisher()
 
 }

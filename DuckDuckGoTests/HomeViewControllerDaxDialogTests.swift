@@ -47,7 +47,17 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler()
         )
+        let remoteMessagingClient = RemoteMessagingClient(
+            bookmarksDatabase: db,
+            appSettings: AppSettingsMock(),
+            internalUserDecider: DefaultInternalUserDecider(),
+            configurationStore: MockConfigurationStoring(),
+            database: db,
+            errorEvents: nil,
+            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
+        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient)
         let dependencies = HomePageDependencies(
+            homePageConfiguration: homePageConfiguration,
             model: Tab(),
             favoritesViewModel: MockFavoritesListInteracting(),
             appSettings: AppSettingsMock(),
@@ -81,14 +91,14 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc = nil
     }
 
-    func testWhenNewOnboarding_OnViewDidLoad_CorrectTypePassedToDialogFactory() throws {
+    func testWhenNewOnboarding_OnDidAppear_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
         variantManager.isSupported = true
         let expectedSpec = randomDialogType()
         specProvider.specToReturn = expectedSpec
 
         // WHEN
-        hvc.viewDidLoad()
+        hvc.viewDidAppear(false)
 
         // THEN
         XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
@@ -98,12 +108,12 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNotNil(self.dialogFactory.onDismiss)
     }
 
-    func testWhenOldOnboarding_OnViewDidLoad_NothingPassedDialogFactory() throws {
+    func testWhenOldOnboarding_OnDidAppear_NothingPassedDialogFactory() throws {
         // GIVEN
         variantManager.isSupported = false
 
         // WHEN
-        hvc.viewDidLoad()
+        hvc.viewDidAppear(false)
 
         // THEN
         XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)

@@ -162,7 +162,6 @@ private struct ScrollDisabledIfAvailable: ViewModifier {
 
 #Preview {
     let model = CrashCollectionOnboardingViewModel(appSettings: AppDependencyProvider.shared.appSettings)
-    // swiftlint:disable:next line_length
     model.setReportDetails(with: ["test report details test report details test report details test report details test report details\n\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details\ntest report details".data(using: .utf8)!])
     return CrashCollectionOnboardingView(model: model)
 }

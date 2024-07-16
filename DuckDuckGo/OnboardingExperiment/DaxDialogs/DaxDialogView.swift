@@ -25,7 +25,7 @@ import DesignResourcesKit
 private enum Metrics {
     static let contentPadding: CGFloat = 24.0
     static let shadowRadius: CGFloat = 5.0
-    static let stackSpacing: CGFloat = 10.0
+    static let stackSpacing: CGFloat = 8
 
     enum DaxLogo {
         static let size: CGFloat = 54.0
@@ -46,6 +46,8 @@ struct DaxDialogView<Content: View>: View {
 
     @State private var logoPosition: DaxDialogLogoPosition
 
+    private let matchLogoAnimation: (id: String, namespace: Namespace.ID)
+    private let showDialogBox: Binding<Bool>
     private let cornerRadius: CGFloat
     private let arrowSize: CGSize
     private let onTapGesture: (() -> Void)?
@@ -53,12 +55,16 @@ struct DaxDialogView<Content: View>: View {
 
     init(
         logoPosition: DaxDialogLogoPosition,
+        matchLogoAnimation: (String, Namespace.ID) = ("", Namespace().wrappedValue),
+        showDialogBox: Binding<Bool> = .constant(true),
         cornerRadius: CGFloat = 16.0,
         arrowSize: CGSize = .init(width: 16.0, height: 8.0),
         onTapGesture: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         _logoPosition = State(initialValue: logoPosition)
+        self.matchLogoAnimation = matchLogoAnimation
+        self.showDialogBox = showDialogBox
         self.cornerRadius = cornerRadius
         self.arrowSize = arrowSize
         self.onTapGesture = onTapGesture
@@ -80,38 +86,49 @@ struct DaxDialogView<Content: View>: View {
     }
 
     private var topLogoViewContentView: some View {
-        VStack(alignment: .leading, spacing: Metrics.stackSpacing) {
+        VStack(alignment: .leading, spacing: stackSpacing) {
             daxLogo
                 .padding(.leading, Metrics.DaxLogo.horizontalPadding)
 
             wrappedContent
+                .visibility(showDialogBox.wrappedValue ? .visible : .invisible)
         }
     }
 
     private var leftLogoContentView: some View {
-        HStack(alignment: .top, spacing: Metrics.stackSpacing) {
+        HStack(alignment: .top, spacing: stackSpacing) {
             daxLogo
 
             wrappedContent
+                .visibility(showDialogBox.wrappedValue ? .visible : .invisible)
         }
 
+    }
+
+    private var stackSpacing: CGFloat {
+        Metrics.stackSpacing + arrowSize.height
     }
 
     private var daxLogo: some View {
         Image(.daxIcon)
             .resizable()
+            .matchedGeometryEffect(id: matchLogoAnimation.id, in: matchLogoAnimation.namespace)
             .aspectRatio(contentMode: .fill)
             .frame(width: Metrics.DaxLogo.size, height: Metrics.DaxLogo.size)
     }
 
     private var wrappedContent: some View {
         let backgroundColor = Color(designSystemColor: .surface)
+        let shadowColors: (Color, Color) = colorScheme == .light ?
+        (.black.opacity(0.08), .black.opacity(0.1)) :
+        (.black.opacity(0.20), .black.opacity(0.16))
 
         return content
             .padding(.all, Metrics.contentPadding)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            .shadow(radius: Metrics.shadowRadius)
+            .shadow(color: shadowColors.0, radius: 16, x: 0, y: 8)
+            .shadow(color: shadowColors.1, radius: 6, x: 0, y: 2)
             .overlay(
                 Triangle()
                     .frame(width: arrowSize.width, height: arrowSize.height)

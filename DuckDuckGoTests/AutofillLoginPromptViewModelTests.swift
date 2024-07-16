@@ -21,7 +21,6 @@ import XCTest
 @testable import DuckDuckGo
 @testable import BrowserServicesKit
 
-// swiftlint:disable:next type_body_length
 final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenOnePerfectMatchAndNoPartialMatchesThenOnePerfectMatchShownAndMoreOptionsNotShown() {

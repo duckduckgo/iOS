@@ -20,6 +20,7 @@
 import WebKit
 
 protocol DuckNavigationHandling {
+    var referrer: DuckPlayerReferrer { get set }
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView,
                           completion: @escaping (WKNavigationActionPolicy) -> Void)

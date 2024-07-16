@@ -70,6 +70,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
+    private let homePageConfiguration: HomePageConfiguration
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
     private let appSettings: AppSettings
@@ -103,6 +104,7 @@ class HomeViewController: UIViewController, NewTabPage {
 
     required init?(
         coder: NSCoder,
+        homePageConfiguration: HomePageConfiguration,
         tabModel: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
@@ -112,6 +114,7 @@ class HomeViewController: UIViewController, NewTabPage {
         newTabDialogFactory: any NewTabDaxDialogProvider,
         newTabDialogTypeProvider: NewTabDialogSpecProvider
     ) {
+        self.homePageConfiguration = homePageConfiguration
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
         self.appSettings = appSettings
@@ -135,6 +138,7 @@ class HomeViewController: UIViewController, NewTabPage {
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         presentNextDaxDialog()
+        collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
         decorate()
 
@@ -171,9 +175,11 @@ class HomeViewController: UIViewController, NewTabPage {
     }
     
     @objc func remoteMessagesDidChange() {
-        os_log("Remote messages did change", log: .remoteMessaging, type: .info)
-        collectionView.refreshHomeConfiguration()
-        refresh()
+        DispatchQueue.main.async {
+            os_log("Remote messages did change", log: .remoteMessaging, type: .info)
+            self.collectionView.refreshHomeConfiguration()
+            self.refresh()
+        }
     }
 
     func configureCollectionView() {

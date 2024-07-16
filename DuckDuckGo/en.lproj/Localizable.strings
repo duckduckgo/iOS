@@ -871,17 +871,20 @@
 /* Alert action for starting a file dowload */
 "downloads.alert.action.save-to-downloads" = "Save to Downloads";
 
-/* Cancel download action for alert when trying to cancel the file download */
+/* Cancel download action for downloads */
 "downloads.cancel-download.alert.cancel" = "Cancel";
 
 /* Message for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.message" = "Are you sure you want to cancel this download?";
 
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Resume";
+/* Confirm action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.no" = "No";
 
 /* Title for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.title" = "Cancel download?";
+
+/* Confirm action for for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.yes" = "Yes";
 
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Delete All";
@@ -1628,7 +1631,7 @@ https://duckduckgo.com/mac";
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
 /* Button to change the default browser */
-"onboarding.browsers.cta" = "Switch Default Browser";
+"onboarding.browsers.cta" = "Choose Your Browser";
 
 /* Message to highlight browser capability of blocking cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";

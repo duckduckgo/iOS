@@ -26,7 +26,7 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-private struct MockEntityProvider: EntityProviding {
+struct MockEntityProvider: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
         let mapper = ["www.example.com": ("https://www.example.com", [], 1.0),
@@ -71,12 +71,13 @@ final class DaxDialog: XCTestCase {
     }
     
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessagesShown() {
+        mockVariantManager.isSupportedReturns = false
         onboarding.enableAddFavoriteFlow()
         onboarding.resumeRegularFlow()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.google)))
-        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .subsequent)
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .final)
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
 
@@ -261,7 +262,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(DaxDialogs.HomeScreenSpec.final, onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
         XCTAssertNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
@@ -273,7 +274,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(DaxDialogs.HomeScreenSpec.final, onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
 

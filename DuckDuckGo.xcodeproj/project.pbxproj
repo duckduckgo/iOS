@@ -2438,6 +2438,7 @@
 		D62EC3C12C248AF800FC9D04 /* DuckNavigationHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckNavigationHandling.swift; sourceTree = "<group>"; };
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
 		D63677F42BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxLogoNavbarTitle.swift; sourceTree = "<group>"; };
+		D636DDF02C468BA7003696BD /* content-scope-scripts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "content-scope-scripts"; path = "../content-scope-scripts"; sourceTree = "<group>"; };
 		D63FF8892C1B21C2006DE24D /* YouTubePlayerNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerNavigationHandler.swift; sourceTree = "<group>"; };
 		D63FF88B2C1B21ED006DE24D /* DuckPlayerURLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerURLExtension.swift; sourceTree = "<group>"; };
 		D63FF8932C1B67E8006DE24D /* YoutubePlayerUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubePlayerUserScript.swift; sourceTree = "<group>"; };
@@ -3629,6 +3630,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				D636DDF02C468BA7003696BD /* content-scope-scripts */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,

@@ -26,6 +26,7 @@ import PrivacyDashboard
 
 protocol AutoconsentPreferences {
     var autoconsentEnabled: Bool { get set }
+    var autoconsentFilterListEnabled: Bool { get }
 }
 
 extension AppUserDefaults: AutoconsentPreferences { }
@@ -265,7 +266,7 @@ extension AutoconsentUserScript {
         let replyObject = [
             "type": "initResp",
             "rules": [ // Other rules are bundled with the content script atm
-                "filterList": cpmFilterList,
+                "filterList": preferences.autoconsentFilterListEnabled ? cpmFilterList : nil,
                      ] as [String: Any?],
             "config": [
                 "enabled": true,

@@ -31,6 +31,7 @@ public enum FeatureFlag: String {
     case autofillOnByDefault
     case incontextSignup
     case autoconsentOnByDefault
+    case autoconsentFilterList
     case history
     case newTabPageSections
     case duckPlayer
@@ -59,6 +60,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:
             return .remoteReleasable(.subfeature(AutoconsentSubfeature.onByDefault))
+        case .autoconsentFilterList:
+            return .remoteReleasable(.subfeature(AutoconsentSubfeature.filterList))
         case .history:
             return .remoteReleasable(.feature(.history))
         case .newTabPageSections:

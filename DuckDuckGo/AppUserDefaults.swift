@@ -336,6 +336,10 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
+    var autoconsentFilterListEnabled: Bool {
+        return featureFlagger.isFeatureOn(.autoconsentFilterList)
+    }
+
     // Only for testing and `DebugViewController` purposes
     func clearAutoconsentUserSetting() {
         autoconsentEnabledSetting = nil

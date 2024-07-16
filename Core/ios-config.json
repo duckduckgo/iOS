@@ -359,6 +359,17 @@
                             }
                         ]
                     }
+                },
+                "filterlist": {
+                    "state": "disabled",
+                    "minSupportedVersion": "7.113.0",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 1
+                            }
+                        ]
+                    }
                 }
             },
             "hash": "c47027bc9d235b909d868f5ffa97d3c9"

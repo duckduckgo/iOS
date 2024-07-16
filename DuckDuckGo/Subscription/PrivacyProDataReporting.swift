@@ -212,7 +212,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func saveFireproofingUsed() {
-        guard isFireproofingUsed() else { return }
+        guard !isFireproofingUsed() else { return }
         userDefaults.set(true, forKey: Key.isFireproofingUsedKey)
     }
 

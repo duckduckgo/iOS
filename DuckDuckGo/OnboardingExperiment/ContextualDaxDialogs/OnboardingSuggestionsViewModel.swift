@@ -60,7 +60,7 @@ struct OnboardingSiteSuggestionsViewModel {
     }
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {
-        var urlString = item.title
+        let urlString = item.title
         var components = URLComponents(string: urlString)
         if components?.scheme == nil {
             components?.scheme = "https"

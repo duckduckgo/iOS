@@ -104,7 +104,6 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         XCTAssertEqual(addFavoriteDialog?.message.string, homeDialog.message)
     }
 
-
     private func find<T: View>(_ type: T.Type, in root: Any) -> T? {
         let mirror = Mirror(reflecting: root)
         for child in mirror.children {

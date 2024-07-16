@@ -745,7 +745,7 @@ class MainViewController: UIViewController {
             viewCoordinator.logoContainer.isHidden = true
         } else {
             let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self)
-            let homePageDependencied = HomePageDependencies(model: tabModel,
+            let homePageDependencies = HomePageDependencies(model: tabModel,
                                                             favoritesViewModel: favoritesViewModel,
                                                             appSettings: appSettings,
                                                             syncService: syncService,
@@ -753,7 +753,7 @@ class MainViewController: UIViewController {
                                                             variantManager: variantManager,
                                                             newTabDialogFactory: newTabDaxDialogFactory,
                                                             newTabDialogTypeProvider: DaxDialogs.shared)
-            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencied)
+            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencies)
 
             controller.delegate = self
             controller.chromeDelegate = self
@@ -2443,7 +2443,7 @@ extension MainViewController: AutoClearWorker {
         } completion: {
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
-                self.homeController?.presentNextDaxDialog()
+                self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()

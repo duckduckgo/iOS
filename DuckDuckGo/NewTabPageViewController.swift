@@ -53,7 +53,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
     }
 
-    func presentNextDaxDialog() {
+    func showNextDaxDialog() {
 
     }
 

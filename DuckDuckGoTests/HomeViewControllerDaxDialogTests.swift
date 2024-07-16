@@ -81,6 +81,37 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc = nil
     }
 
+    func testWhenNewOnboarding_OnViewDidLoad_CorrectTypePassedToDialogFactory() throws {
+        // GIVEN
+        variantManager.isSupported = true
+        let expectedSpec = randomDialogType()
+        specProvider.specToReturn = expectedSpec
+
+        // WHEN
+        hvc.viewDidLoad()
+
+        // THEN
+        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
+        XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
+        XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
+        XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
+        XCTAssertNotNil(self.dialogFactory.onDismiss)
+    }
+
+    func testWhenOldOnboarding_OnViewDidLoad_NothingPassedDialogFactory() throws {
+        // GIVEN
+        variantManager.isSupported = false
+
+        // WHEN
+        hvc.viewDidLoad()
+
+        // THEN
+        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
+        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
+        XCTAssertNil(dialogFactory.homeDialog)
+        XCTAssertNil(dialogFactory.onDismiss)
+    }
+
     func testWhenNewOnboarding_OnOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
         variantManager.isSupported = true
@@ -89,7 +120,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 
         // WHEN
         hvc.onboardingCompleted()
-        
+
         // THEN
         XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
         XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)

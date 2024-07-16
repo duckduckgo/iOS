@@ -133,7 +133,8 @@ class HomeViewController: UIViewController, NewTabPage {
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-
+        
+        presentNextDaxDialog()
         configureCollectionView()
         decorate()
 
@@ -247,6 +248,10 @@ class HomeViewController: UIViewController, NewTabPage {
         } else {
             showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
         }
+    }
+
+    func showNextDaxDialog() {
+        showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
     }
 
     func reloadFavorites() {

@@ -1,6 +1,7 @@
 name: Make ad-hoc build
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       suffix:
@@ -10,6 +11,14 @@ on:
         description: "Asana task URL"
         required: false
         type: string
+      is-alpha:
+        description: "Is alpha build"
+        type: choice
+        required: true
+        default: 'false'
+        options:
+           - true
+           - false
 
 jobs:
   make-adhoc:
@@ -41,10 +50,15 @@ jobs:
           APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
+          lane_to_use = "adhoc"
+          if [[ "${{ github.event.inputs.is-alpha }}" == "false" ]]; then
+            lane_to_use = "release_adhoc"
+          fi
+          
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
-            bundle exec fastlane adhoc suffix:${{ github.event.inputs.suffix }}
+            bundle exec fastlane ${lane_to_use} suffix:${{ github.event.inputs.suffix }}
           else
-            bundle exec fastlane adhoc
+            bundle exec fastlane ${lane_to_use}
           fi
 
       - name: Set filenames

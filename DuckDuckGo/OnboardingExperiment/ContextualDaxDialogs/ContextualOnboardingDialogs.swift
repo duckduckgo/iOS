@@ -23,16 +23,15 @@ import SwiftUI
 struct OnboardingTrySearchDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage)
-    let list = OnboardingSuggestedSearchesProvider().searchesList
-    let action: (_ title: String) -> Void
+    let viewModel: OnboardingSearchSuggestionsViewModel
 
     var body: some View {
         ContextualDaxDialog(
             logoPosition: .top,
             title: title,
             message: message,
-            list: list,
-            listAction: action)
+            list: viewModel.itemsList,
+            listAction: viewModel.listItemPressed)
     }
 }
 
@@ -40,16 +39,15 @@ struct OnboardingTryVisitingSiteDialog: View {
     let logoPosition: DaxDialogLogoPosition
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
-    let list = OnboardingSuggestedSitesProvider().sitesList
-    let action: (_ title: String) -> Void
+    let viewModel: OnboardingSiteSuggestionsViewModel
 
     var body: some View {
         ContextualDaxDialog(
             logoPosition: logoPosition,
             title: title,
             message: message,
-            list: list,
-            listAction: action)
+            list: viewModel.itemsList,
+            listAction: viewModel.listItemPressed)
     }
 }
 
@@ -79,14 +77,14 @@ struct OnboardingFirstSearchDoneDialog: View {
 
     @State var showNextScreen: Bool = false
     @State var shouldFollowUp: Bool
-    let listAction: (_ title: String) -> Void
+    let viewModel: OnboardingSiteSuggestionsViewModel
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
     let gotItAction: () -> Void
 
     var body: some View {
         if showNextScreen {
-            OnboardingTryVisitingSiteDialog(logoPosition: .left, action: listAction)
+            OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
         } else {
             ContextualDaxDialog(
                 message: message,
@@ -140,17 +138,17 @@ struct OnboardingFinalDialog: View {
 // MARK: - Preview
 
 #Preview("Try Search") {
-    OnboardingTrySearchDialog(action: { _ in })
+    OnboardingTrySearchDialog(viewModel: OnboardingSearchSuggestionsViewModel())
         .padding()
 }
 
 #Preview("Try Site Top") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .top, action: { _ in })
+    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel())
         .padding()
 }
 
 #Preview("Try Site Left") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .left, action: { _ in })
+    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel())
         .padding()
 }
 
@@ -160,7 +158,7 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, listAction: { _ in }, gotItAction: {})
+    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
         .padding()
 }
 

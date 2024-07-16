@@ -80,7 +80,6 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?
-//    weak var delegate: HomeControllerDelegate?
     weak var delegate: NewTabPageControllerDelegate?
 
     func launchNewSearch() {

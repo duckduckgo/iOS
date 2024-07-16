@@ -387,6 +387,12 @@ class TabViewController: UIViewController {
             .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        Swift.print("***", #function)
+        super.viewWillAppear(animated)
+        webView.scrollView.contentInset.bottom = appSettings.currentAddressBarPosition == .bottom ? 52 : 0
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // The email manager is pulled from the main view controller, so reconnect it now, otherwise, it's nil

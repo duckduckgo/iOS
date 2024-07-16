@@ -50,8 +50,7 @@ jobs:
           APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
-          lane_to_use="adhoc"
-          echo ${{ github.event.inputs.is-alpha }}
+          lane_to_use="release_adhoc"
           if [[ "${{ github.event.inputs.is-alpha }}" == "false" ]]; then
             lane_to_use = "release_adhoc"
           fi

@@ -1,7 +1,6 @@
 name: Make ad-hoc build
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       suffix:
@@ -15,7 +14,7 @@ on:
         description: "Is alpha build"
         type: choice
         required: true
-        default: 'false'
+        default: 'true'
         options:
            - true
            - false
@@ -50,7 +49,7 @@ jobs:
           APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
-          lane_to_use="release_adhoc"
+          lane_to_use="adhoc"
           if [[ "${{ github.event.inputs.is-alpha }}" == "false" ]]; then
             lane_to_use = "release_adhoc"
           fi

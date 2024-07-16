@@ -100,6 +100,7 @@ class MainViewController: UIViewController {
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let syncPausedStateManager: any SyncPausedStateManaging
+    private let variantManager: VariantManager
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -177,7 +178,8 @@ class MainViewController: UIViewController {
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
         syncPausedStateManager: any SyncPausedStateManaging,
-        privacyProDataReporter: PrivacyProDataReporting
+        privacyProDataReporter: PrivacyProDataReporting,
+        variantManager: VariantManager
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -200,6 +202,7 @@ class MainViewController: UIViewController {
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
+        self.variantManager = variantManager
 
         super.init(nibName: nil, bundle: nil)
         
@@ -754,13 +757,18 @@ class MainViewController: UIViewController {
             viewCoordinator.logoContainer.isHidden = true
             adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
         } else {
-            let controller = HomeViewController.loadFromStoryboard(homePageConfiguration: homePageConfiguration,
-                                                                   model: tabModel,
-                                                                   favoritesViewModel: favoritesViewModel,
-                                                                   appSettings: appSettings,
-                                                                   syncService: syncService,
-                                                                   syncDataProviders: syncDataProviders,
-                                                                   privacyProDataReporter: privacyProDataReporter)
+            let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self)
+            let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
+                                                            model: tabModel,
+                                                            favoritesViewModel: favoritesViewModel,
+                                                            appSettings: appSettings,
+                                                            syncService: syncService,
+                                                            syncDataProviders: syncDataProviders,
+                                                            privacyProDataReporter: privacyProDataReporter,
+                                                            variantManager: variantManager,
+                                                            newTabDialogFactory: newTabDaxDialogFactory,
+                                                            newTabDialogTypeProvider: DaxDialogs.shared)
+            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencies)
 
             controller.delegate = self
             controller.chromeDelegate = self
@@ -2605,6 +2613,16 @@ extension MainViewController: OnboardingDelegate {
         settings.hasSeenOnboarding = true
     }
     
+}
+
+extension MainViewController: OnboardingNavigationDelegate {
+    func navigateTo(url: URL) {
+        self.loadUrl(url, fromExternalLink: true)
+    }
+    
+    func searchFor(_ query: String) {
+        self.loadQuery(query)
+    }
 }
 
 extension MainViewController: UIDropInteractionDelegate {

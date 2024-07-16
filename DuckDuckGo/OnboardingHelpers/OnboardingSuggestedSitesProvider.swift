@@ -19,11 +19,11 @@
 
 import Foundation
 
-protocol OnboardingSuggestedSitesProviding {
-    var sitesList: [ContextualOnboardingListItem] { get }
+protocol OnboardingSuggestionsItemsProviding {
+    var list: [ContextualOnboardingListItem] { get }
 }
 
-struct OnboardingSuggestedSitesProvider: OnboardingSuggestedSitesProviding {
+struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
     private let countryProvider: OnboardingRegionAndLanguageProvider
 
     init(countryProvider: OnboardingRegionAndLanguageProvider = Locale.current) {
@@ -41,7 +41,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestedSitesProviding {
         case ireland = "IE"
     }
 
-    var sitesList: [ContextualOnboardingListItem] {
+    var list: [ContextualOnboardingListItem] {
         return [
             option1,
             option2,

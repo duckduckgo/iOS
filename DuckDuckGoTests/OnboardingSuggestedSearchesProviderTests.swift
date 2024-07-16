@@ -35,7 +35,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish)
         ]
 
-        XCTAssertEqual(provider.searchesList, expectedSearches)
+        XCTAssertEqual(provider.list, expectedSearches)
     }
 
     func testSearchesListForNonEnglishLanguageAndNonUSRegion() {
@@ -49,7 +49,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeInternational)
         ]
 
-        XCTAssertEqual(provider.searchesList, expectedSearches)
+        XCTAssertEqual(provider.list, expectedSearches)
     }
 
     func testSearchesListForUSRegionAndNonEnglishLanguage() {
@@ -63,7 +63,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish)
         ]
 
-        XCTAssertEqual(provider.searchesList, expectedSearches)
+        XCTAssertEqual(provider.list, expectedSearches)
     }
 }
 

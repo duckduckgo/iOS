@@ -1349,7 +1349,9 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
-            
+            // Dismiss Contextual onboarding if there's no message to show.
+            contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
             }

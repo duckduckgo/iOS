@@ -96,6 +96,9 @@ import WebKit
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+    
+    @UserDefaultsWrapper(key: .duckPlayerLastRenderedVideo, defaultValue: nil)
+    private var duckPlayerLastRenderedVideo: String?
 
     var accountManager: AccountManager {
         AppDependencyProvider.shared.accountManager
@@ -355,7 +358,8 @@ import WebKit
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         setUpAutofillPixelReporter()
-
+        initializeDuckPlayer()
+        
         return true
     }
 
@@ -922,6 +926,10 @@ import WebKit
             UIApplication.shared.shortcutItems = nil
         }
 #endif
+    }
+    
+    private func initializeDuckPlayer() {
+        duckPlayerLastRenderedVideo = nil
     }
 
 }

@@ -97,7 +97,7 @@ import WebKit
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
     
-    @UserDefaultsWrapper(key: .duckPlayerLastRenderedVideo, defaultValue: nil)
+    @UserDefaultsWrapper(key: .duckPlayerActiveVideos, defaultValue: nil)
     private var duckPlayerLastRenderedVideo: String?
 
     var accountManager: AccountManager {

@@ -1,5 +1,5 @@
 //
-//  YouTubePlayerNavigationHandler.swift
+//  DuckPlayerNavigationHandler.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -23,10 +23,9 @@ import WebKit
 import Core
 import Common
 
-final class YoutubePlayerNavigationHandler {
+final class DuckPlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
-    var tabID: String
     var referrer: DuckPlayerReferrer = .other
     
     private var isDuckPlayerTemporarilyDisabled = false
@@ -46,13 +45,12 @@ final class YoutubePlayerNavigationHandler {
         static let watchInYoutubeVideoParameter = "v"
     }
     
-    init(duckPlayer: DuckPlayerProtocol, tabID: String) {
+    init(duckPlayer: DuckPlayerProtocol) {
         self.duckPlayer = duckPlayer
-        self.tabID = tabID
         print("DP Initializing")
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerLastRenderedVideo, defaultValue: "")
+    @UserDefaultsWrapper(key: .duckPlayerActiveVideos, defaultValue: "")
     private var currentYoutubeVideoID: String
     
     static var htmlTemplatePath: String {
@@ -114,7 +112,7 @@ final class YoutubePlayerNavigationHandler {
     
 }
 
-extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
+extension DuckPlayerNavigationHandler: DuckNavigationHandling {
 
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk

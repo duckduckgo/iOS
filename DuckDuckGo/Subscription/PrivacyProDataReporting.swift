@@ -72,6 +72,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     enum UseCase {
         case messageID(String)
         case origin(String?)
+        case debug
     }
 
     public static let shared = DefaultPrivacyProDataReporter()
@@ -135,6 +136,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
             guard let includedOrigins, includedOrigins.contains(messageID) else { return [:] }
         case .origin(let origin):
             guard let includedOrigins, let origin, includedOrigins.contains(origin) else { return [:] }
+        case .debug:
+            break
         }
 
         var additionalParameters = [String: String]()

@@ -270,7 +270,7 @@ import NetworkProtection
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .none
-            let reportedParameters = await reporter.randomizedParameters(for: .messageID("message")).map { "\($0.key)=\($0.value)" }
+            let reportedParameters = await reporter.randomizedParameters(for: .debug).map { "\($0.key)=\($0.value)" }
             let message = """
                 isReinstall=\(reporter.isReinstall().toString) (variant=\(reporter._variantName ?? "unknown"))
                 fireButtonUsed=\(reporter.isFireButtonUser().toString) (count=\(reporter._fireCount))

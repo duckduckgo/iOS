@@ -26,12 +26,14 @@ struct OnboardingTrySearchDialog: View {
     let viewModel: OnboardingSearchSuggestionsViewModel
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {            DaxDialogView(logoPosition: .top) {
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .top) {
                 ContextualDaxDialogContent(
                     title: title,
                     message: message,
                     list: viewModel.itemsList,
-                    listAction: viewModel.listItemPressed)
+                    listAction: viewModel.listItemPressed
+                )
             }
         }
     }
@@ -102,10 +104,8 @@ struct OnboardingFirstSearchDoneDialog: View {
                     if showNextScreen {
                         OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
                     } else {
-                        ContextualDaxDialogContent(
-                            message: message,
-                            cta: cta) {
-                                buttonAction()
+                        ContextualDaxDialogContent(message: message, cta: cta) {
+                            buttonAction()
                         }
                     }
                 }
@@ -138,13 +138,11 @@ struct OnboardingTrackersDoneDialog: View {
                     if showNextScreen {
                         OnboardingFireButtonDialogContent()
                     } else {
-                        ContextualDaxDialogContent(
-                            message: message,
-                            cta: cta) {
-                                withAnimation {
-                                    showNextScreen = true
-                                    blockedTrackersCTAAction()
-                                }
+                        ContextualDaxDialogContent(message: message, cta: cta) {
+                            withAnimation {
+                                showNextScreen = true
+                                blockedTrackersCTAAction()
+                            }
                         }
                     }
                 }

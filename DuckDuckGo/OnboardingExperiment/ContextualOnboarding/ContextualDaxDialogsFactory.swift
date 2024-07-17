@@ -68,7 +68,8 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {
-        OnboardingTrackersDoneDialog(message: NSAttributedString(string: spec.message), blockedTrackersCTAAction: { [weak delegate] in
+        let attributedMessage = spec.message.attributedStringFromMarkdown(color: ThemeManager.shared.currentTheme.daxDialogTextColor)
+        return OnboardingTrackersDoneDialog(message: attributedMessage, blockedTrackersCTAAction: { [weak delegate] in
             delegate?.didAcknowledgeTrackersDialog()
         })
         .onAppear { [weak delegate] in

@@ -87,7 +87,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
-    private let tunnelController: TunnelController
+    private let tunnelController: (TunnelController & TunnelSessionProvider)
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
@@ -140,7 +140,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @Published public var animationsOn: Bool = false
 
-    public init(tunnelController: TunnelController,
+    public init(tunnelController: (TunnelController & TunnelSessionProvider),
                 settings: VPNSettings,
                 statusObserver: ConnectionStatusObserver,
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
@@ -346,7 +346,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func refreshDataVolumeTotals() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await tunnelController.activeSession() else {
             return
         }
 

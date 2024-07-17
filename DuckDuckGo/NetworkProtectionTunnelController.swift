@@ -33,7 +33,7 @@ enum VPNConfigurationRemovalReason: String {
     case debugMenu
 }
 
-final class NetworkProtectionTunnelController: TunnelController {
+final class NetworkProtectionTunnelController: TunnelController, TunnelSessionProvider {
     static var shouldSimulateFailure: Bool = false
 
     private var internalManager: NETunnelProviderManager?

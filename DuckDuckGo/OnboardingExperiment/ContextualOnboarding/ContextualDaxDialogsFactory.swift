@@ -39,11 +39,20 @@ final class ExistingLogicContextualDaxDialogsFactory: ContextualDaxDialogsFactor
             action: onActionTapped
         )
 
-        let hostingController = UIHostingController(rootView: ContextualOnboardingBackgroundWrapper(contextualDialog))
+        let hostingController = UIHostingController(rootView: contextualDialog.withOnboardingBackground())
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
         }
 
         return hostingController
     }
+
+private extension View {
+
+    func withOnboardingBackground() -> some View {
+        self
+            .padding()
+            .background(OnboardingBackground())
+    }
+
 }

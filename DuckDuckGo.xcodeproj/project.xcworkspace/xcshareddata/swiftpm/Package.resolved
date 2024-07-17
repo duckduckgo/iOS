@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bartek/explicit-dev-redirects",
-        "revision" : "33fe4b20f038c7e43e73e9f14dec990426a50ff2"
+        "revision" : "0e7f13b24876a28934320ebf0ec14f644a211869",
+        "version" : "171.2.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "d0d4f28bbe2fd44cbc5db5f109bb8453699308a3",
-        "version" : "6.1.0"
+        "revision" : "dc26bfc6e33ad9c79a719b7f21d5ca0564db1859",
+        "version" : "6.3.0"
       }
     },
     {

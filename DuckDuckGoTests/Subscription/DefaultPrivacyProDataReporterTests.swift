@@ -26,6 +26,7 @@ import XCTest
 @testable import SecureStorage
 @testable import SecureStorageTestsUtils
 
+// swiftlint:disable force_try
 final class DefaultPrivacyProDataReporterTests: XCTestCase {
     let testSuiteName = "DefaultPrivacyProDataReporterTests"
     var testDefaults: UserDefaults!
@@ -247,3 +248,4 @@ class MockCalendar {
         date
     }
 }
+// swiftlint:enable force_try

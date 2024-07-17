@@ -126,7 +126,8 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         // Just open it in Youtube
         if let url = navigationAction.request.url,
            let (videoID, _) = url.youtubeVideoParams,
-           videoID == currentYoutubeVideoID {
+           videoID == currentYoutubeVideoID,
+            duckPlayer.settings.mode == .enabled {
             isDuckPlayerTemporarilyDisabled = true
             os_log("DP: Trying to load the same video while in DuckPlayer, use Youtube:", log: .duckPlayerLog, type: .debug)
             webView.load(URLRequest(url: URL.youtube(videoID)))
@@ -212,7 +213,8 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         // Just open it in Youtube
         if let url = url,
            let (videoID, _) = url.youtubeVideoParams,
-           videoID == currentYoutubeVideoID {
+            videoID == currentYoutubeVideoID,
+            duckPlayer.settings.mode == .enabled {
             isDuckPlayerTemporarilyDisabled = true
             os_log("DP: Trying to load the same video while in DuckPlayer, use Youtube:", log: .duckPlayerLog, type: .debug)
             webView.load(URLRequest(url: URL.youtube(videoID)))

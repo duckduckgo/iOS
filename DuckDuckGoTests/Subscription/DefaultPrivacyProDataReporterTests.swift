@@ -25,6 +25,31 @@ import XCTest
 @testable import SecureStorage
 
 final class DefaultPrivacyProDataReporterTests: XCTestCase {
+    let testConfig = """
+    {
+        "readme": "https://github.com/duckduckgo/privacy-configuration",
+        "version": 1,
+        "features": {
+            "additionalCampaignPixelParams": {
+                "exceptions": [],
+                "state": "enabled",
+                "settings": {
+                    "origins": [
+                      "test_origin"
+                    ]
+                },
+                "minSupportedVersion": 52080000,
+                "hash": "12345"
+            }
+        }
+    }
+    """.data(using: .utf8)!
+    lazy var config = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: MockEmbeddedDataProvider(data: testConfig, etag: "etag"),
+                                                  localProtection: MockDomainsProtectionStore(),
+                                                  internalUserDecider: DefaultInternalUserDecider())
+
     let testSuiteName = "DefaultPrivacyProDataReporterTests"
     var testDefaults: UserDefaults!
     let mockCalendar = MockCalendar()
@@ -37,6 +62,7 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
         super.setUp()
         testDefaults = UserDefaults(suiteName: testSuiteName)
         reporter = DefaultPrivacyProDataReporter(
+            config: config,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "sc", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
             emailManager: EmailManager(storage: MockEmailStorage.mock),
@@ -48,6 +74,7 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
             dateGenerator: mockCalendar.now
         )
         anotherReporter = DefaultPrivacyProDataReporter(
+            config: config,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "ru", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
             emailManager: EmailManager(storage: MockEmailStorage.anotherMock),
@@ -136,10 +163,10 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     }
 
     func testAttachedParameters() async {
-        let params1 = await reporter.randomizedParameters(for: .messageID("test"))
-        let params2 = await reporter.randomizedParameters(for: .origin("test"))
-        let params3 = await reporter.randomizedParameters(for: .messageID("message"))
-        let params4 = await reporter.randomizedParameters(for: .origin("origins"))
+        let params1 = await reporter.randomizedParameters(for: .messageID("some_id"))
+        let params2 = await reporter.randomizedParameters(for: .origin("some_origin"))
+        let params3 = await reporter.randomizedParameters(for: .messageID("test_origin"))
+        let params4 = await reporter.randomizedParameters(for: .origin("test_origin"))
         XCTAssertEqual(params1.count, 0)
         XCTAssertEqual(params2.count, 0)
         XCTAssertEqual(params3.count, 8)

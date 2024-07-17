@@ -20,12 +20,13 @@
 import SwiftUI
 import DuckUI
 import RemoteMessaging
+import Core
 
 struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    @ObservedObject var messagesModel: NewTabPageMessagesModel
-    @ObservedObject var favoritesModel: FavoritesModelType
+    @ObservedObject private var messagesModel: NewTabPageMessagesModel
+    @ObservedObject private var favoritesModel: FavoritesModelType
 
     init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType) {
         self.messagesModel = messagesModel
@@ -77,7 +78,19 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                 .frame(minHeight: proxy.frame(in: .local).size.height)
             }
             .background(Color(designSystemColor: .background))
+            .onFirstAppear {
+                Pixel.fire(pixel: .homeScreenShown)
+                sendDailyDisplayPixel()
+            }
         }
+    }
+
+    private func sendDailyDisplayPixel() {
+
+        let favoritesCount = favoritesModel.allFavorites.count
+        let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)
+
+        DailyPixel.fire(pixel: .newTabPageDisplayedDaily, withAdditionalParameters: ["FavoriteCount": bucket.value])
     }
 }
 

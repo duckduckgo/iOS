@@ -23,6 +23,7 @@ import Core
 import Combine
 import Persistence
 import Bookmarks
+import CoreData
 
 class BookmarksDebugViewController: UIHostingController<BookmarksDebugRootView> {
 
@@ -39,8 +40,14 @@ struct BookmarksDebugRootView: View {
     var body: some View {
         List(model.bookmarks, id: \.id) { entry in
             VStack(alignment: .leading) {
-                Text(entry.title ?? "")
+                Text(entry.title ?? "empty!")
                     .font(.system(size: 16))
+                Text("Is unified fav: " + (entry.isFavorite(on: .unified) ? "true" : "false") )
+                    .font(.system(size: 12))
+                Text("Is mobile fav: " + (entry.isFavorite(on: .mobile) ? "true" : "false") )
+                    .font(.system(size: 12))
+                Text("Is desktop fav: " + (entry.isFavorite(on: .desktop) ? "true" : "false") )
+                    .font(.system(size: 12))
                 ForEach(model.bookmarkAttributes, id: \.self) { attr in
                     Text(entry.formattedValue(for: attr))
                         .font(.system(size: 12))
@@ -49,13 +56,6 @@ struct BookmarksDebugRootView: View {
             }
         }
         .navigationTitle("\(model.bookmarks.count) Bookmarks")
-        .toolbar {
-            if #available(iOS 15, *) {
-                Button("Delete All", role: .destructive) {
-                    model.deleteAll()
-                }
-            }
-        }
     }
 
 }
@@ -73,34 +73,20 @@ class BookmarksDebugViewModel: ObservableObject {
     let bookmarkAttributes: [String]
 
     let database: CoreDataDatabase
+    let context: NSManagedObjectContext
 
     init() {
         database = BookmarksDatabase.make()
         database.loadStore()
 
-        let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         bookmarkAttributes = Array(BookmarkEntity.entity(in: context).attributesByName.keys)
 
         fetch()
     }
 
-    func deleteAll() {
-        let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
-        let fetchRequest = BookmarkEntity.fetchRequest()
-        let items = try? context.fetch(fetchRequest)
-        items?.forEach { obj in
-            context.delete(obj)
-        }
-        do {
-            try context.save()
-        } catch {
-            assertionFailure("Failed to save after delete all")
-        }
-        fetch()
-    }
-
     func fetch() {
-        let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+
         let fetchRequest = BookmarkEntity.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(BookmarkEntity.title),
                                                          ascending: false)]

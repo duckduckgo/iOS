@@ -2381,10 +2381,6 @@
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
 		BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporting.swift; sourceTree = "<group>"; };
 		BDE219E92C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPrivacyProDataReporterTests.swift; sourceTree = "<group>"; };
-		BDE219EF2C45AD50005D5884 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
-		BDE219F02C45AD50005D5884 /* SecureStorageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageStub.swift; sourceTree = "<group>"; };
-		BDE219F22C45AD56005D5884 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
-		BDE219F32C45AD56005D5884 /* SecureStorageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageStub.swift; sourceTree = "<group>"; };
 		BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDNSSettingsViewModel.swift; sourceTree = "<group>"; };
 		BDFF03192BA39C5A00F324C9 /* NetworkProtectionFeatureVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFeatureVisibility.swift; sourceTree = "<group>"; };
 		BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProtectionVisibility.swift; sourceTree = "<group>"; };
@@ -4478,26 +4474,6 @@
 			path = Feedback;
 			sourceTree = "<group>";
 		};
-		BDE219F12C45AD50005D5884 /* DDGSyncTestingUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				BDE219EF2C45AD50005D5884 /* Mocks.swift */,
-				BDE219F02C45AD50005D5884 /* SecureStorageStub.swift */,
-			);
-			name = DDGSyncTestingUtilities;
-			path = ../BrowserServicesKit/Sources/DDGSyncTestingUtilities;
-			sourceTree = "<group>";
-		};
-		BDE219F42C45AD56005D5884 /* DDGSyncTestingUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				BDE219F22C45AD56005D5884 /* Mocks.swift */,
-				BDE219F32C45AD56005D5884 /* SecureStorageStub.swift */,
-			);
-			name = DDGSyncTestingUtilities;
-			path = ../BrowserServicesKit/Sources/DDGSyncTestingUtilities;
-			sourceTree = "<group>";
-		};
 		BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -5444,8 +5420,6 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BDE219F12C45AD50005D5884 /* DDGSyncTestingUtilities */,
-				BDE219F42C45AD56005D5884 /* DDGSyncTestingUtilities */,
 				D664C7DC2B28A02800CBFA76 /* StoreKit.framework */,
 				F1AA54601E48D90700223211 /* NotificationCenter.framework */,
 				8512EA4E24ED30D20073EE19 /* WidgetKit.framework */,

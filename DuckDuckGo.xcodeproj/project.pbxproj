@@ -630,7 +630,6 @@
 		9F23B8062C2BE22700950875 /* OnboardingIntroViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8052C2BE22700950875 /* OnboardingIntroViewModelTests.swift */; };
 		9F23B8092C2BE9B700950875 /* MockURLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F23B8082C2BE9B700950875 /* MockURLOpener.swift */; };
 		9F5E5AAC2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */; };
-		9F5E5AAE2C3E44DC00165F54 /* ContextualOnboardingBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAD2C3E44DC00165F54 /* ContextualOnboardingBackgroundWrapper.swift */; };
 		9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */; };
 		9F5E5AB22C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
@@ -2317,7 +2316,6 @@
 		9F23B8082C2BE9B700950875 /* MockURLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLOpener.swift; sourceTree = "<group>"; };
 		9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFirePixelMock.swift; sourceTree = "<group>"; };
 		9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialogsFactory.swift; sourceTree = "<group>"; };
-		9F5E5AAD2C3E44DC00165F54 /* ContextualOnboardingBackgroundWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingBackgroundWrapper.swift; sourceTree = "<group>"; };
 		9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenter.swift; sourceTree = "<group>"; };
 		9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterTests.swift; sourceTree = "<group>"; };
 		9F9EE4D32C37BB1300D4118E /* OnboardingView+Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+Landing.swift"; sourceTree = "<group>"; };
@@ -3492,7 +3490,6 @@
 				56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */,
 				56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */,
 				564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */,
-				9F5E5AAD2C3E44DC00165F54 /* ContextualOnboardingBackgroundWrapper.swift */,
 			);
 			path = ContextualDaxDialogs;
 			sourceTree = "<group>";
@@ -6818,7 +6815,6 @@
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,
 				D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */,
-				9F5E5AAE2C3E44DC00165F54 /* ContextualOnboardingBackgroundWrapper.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
 				CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */,
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,

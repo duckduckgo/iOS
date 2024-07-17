@@ -51,7 +51,7 @@ jobs:
         run: |
           lane_to_use="adhoc"
           if [[ "${{ github.event.inputs.build-type }}" == "Release" ]]; then
-            lane_to_use = "release_adhoc"
+            lane_to_use="release_adhoc"
           fi
           
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then

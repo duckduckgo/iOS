@@ -10,7 +10,7 @@ on:
         description: "Asana task URL"
         required: false
         type: string
-      is-alpha:
+      build-type:
         description: "Build Configuration"
         type: choice
         required: true
@@ -50,7 +50,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           lane_to_use="adhoc"
-          if [[ "${{ github.event.inputs.is-alpha }}" == "Release" ]]; then
+          if [[ "${{ github.event.inputs.build-type }}" == "Release" ]]; then
             lane_to_use = "release_adhoc"
           fi
           

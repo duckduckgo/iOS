@@ -19,33 +19,74 @@
 
 import SwiftUI
 
+// MARK: - ContextualOnboardingEventDelegate
+
+/// A delegate to inform about specific events happening during the contextual onboarding.
+protocol ContextualOnboardingEventDelegate: AnyObject {
+    /// Inform the delegate that a dialog for blocked trackers have been shown to the user.
+    func didShowTrackersDialog()
+    /// Inform the delegate that the user did acknowledge the dialog for blocked trackers.
+    func didAcknowledgeTrackersDialog()
+}
+
+// Composed delegate for Contextual Onboarding to decorate events also needed in New Tab Page.
+typealias ContextualOnboardingDelegate = OnboardingNavigationDelegate & ContextualOnboardingEventDelegate
+
+// MARK: - Contextual Dialogs Factory
+
 protocol ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec, onActionTapped: (() -> Void)?) -> UIViewController
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onDismiss: (() -> Void)?) -> UIViewController
 }
 
 extension ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec) -> UIViewController {
-        self.makeView(for: spec, onActionTapped: nil)
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController {
+        self.makeView(for: spec, delegate: delegate, onDismiss: nil)
     }
 }
 
-// TODO: This will be replaced with the factory that returns the Contextual Dax Dialogs for the new contextual flow
-final class ExistingLogicContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
+final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
-    func makeView(for spec: DaxDialogs.BrowsingSpec, onActionTapped: (() -> Void)?) -> UIViewController {
-        let contextualDialog = ContextualDaxDialog(
-            message: spec.message.attributedStringFromMarkdown(color: ThemeManager.shared.currentTheme.daxDialogTextColor),
-            cta: spec.cta,
-            action: onActionTapped
-        )
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onDismiss: (() -> Void)?) -> UIViewController {
+        let rootView: AnyView
+        switch spec.type {
+        case .afterSearch:
+            rootView = AnyView(afterSearchDialog(for: spec, delegate: delegate))
+        case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
+            rootView = AnyView(withTrackersDialog(for: spec, delegate: delegate))
+        case .final:
+            rootView = AnyView(endOfJourneyDialog(onDismiss: onDismiss))
+        }
 
-        let hostingController = UIHostingController(rootView: contextualDialog.withOnboardingBackground())
+        let viewWithBackground = rootView.withOnboardingBackground()
+        let hostingController = UIHostingController(rootView: viewWithBackground)
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
         }
 
         return hostingController
     }
+
+    private func afterSearchDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {
+        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        return OnboardingFirstSearchDoneDialog(viewModel: viewModel, gotItAction: {})
+    }
+
+    private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {
+        OnboardingTrackersDoneDialog(message: NSAttributedString(string: spec.message), blockedTrackersCTAAction: { [weak delegate] in
+            delegate?.didAcknowledgeTrackersDialog()
+        })
+        .onAppear { [weak delegate] in
+            delegate?.didShowTrackersDialog()
+        }
+    }
+
+    private func endOfJourneyDialog(onDismiss: (() -> Void)?) -> some View {
+        OnboardingFinalDialog(highFiveAction: { onDismiss?() })
+    }
+
+}
+
+// MARK: - View + Onboarding Bacgkround
 
 private extension View {
 

@@ -2836,6 +2836,26 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     }
 }
 
+extension TabViewController: OnboardingNavigationDelegate {
+    
+    func searchFor(_ query: String) {
+    }
+
+    func navigateTo(url: URL) {
+    }
+
+}
+
+extension TabViewController: ContextualOnboardingEventDelegate {
+
+    func didAcknowledgeTrackersDialog() {
+    }
+
+    func didShowTrackersDialog() {
+    }
+
+}
+
 extension WKWebView {
 
     func load(_ url: URL, in frame: WKFrameInfo?) {

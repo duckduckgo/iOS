@@ -114,10 +114,6 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "VARIANT ma"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-com.apple.CoreData.SQLDebug 1"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -130,6 +126,11 @@
          <EnvironmentVariable
             key = "ONBOARDING"
             value = "true"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "VARIANT"
+            value = "ma"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

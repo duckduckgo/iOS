@@ -26,6 +26,7 @@ import Common
 final class YoutubePlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
+    var tabID: String
     var referrer: DuckPlayerReferrer = .other
     
     private var isDuckPlayerTemporarilyDisabled = false
@@ -45,8 +46,9 @@ final class YoutubePlayerNavigationHandler {
         static let watchInYoutubeVideoParameter = "v"
     }
     
-    init(duckPlayer: DuckPlayerProtocol) {
+    init(duckPlayer: DuckPlayerProtocol, tabID: String) {
         self.duckPlayer = duckPlayer
+        self.tabID = tabID
         print("DP Initializing")
     }
     

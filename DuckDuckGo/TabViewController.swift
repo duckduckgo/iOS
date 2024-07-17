@@ -346,7 +346,7 @@ class TabViewController: UIViewController {
         registerForDownloadsNotifications()
         
         // Setup DuckPlayer navigation handler
-        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
+        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer, tabID: tabModel.uid)
         
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()

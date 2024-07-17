@@ -27,6 +27,7 @@ import WidgetKit
 final class FavoritesDefaultModel: FavoritesModel {
 
     @Published private(set) var allFavorites: [Favorite]
+    @Published private(set) var isCollapsed: Bool = true
 
     private let interactionModel: FavoritesListInteracting
     private var didReportMissingFavicon = false
@@ -49,6 +50,17 @@ final class FavoritesDefaultModel: FavoritesModel {
         }.store(in: &cancellables)
     }
 
+    func toggleCollapse() {
+        isCollapsed.toggle()
+    }
+
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {
+        let maxCollapsedItemsCount = columnsCount * 2
+        let favorites = isCollapsed ? Array(allFavorites.prefix(maxCollapsedItemsCount)) : allFavorites
+        let isCollapsible = allFavorites.count > maxCollapsedItemsCount
+
+        return .init(items: favorites, isCollapsible: isCollapsible)
+    }
 
     // MARK: - External actions
 

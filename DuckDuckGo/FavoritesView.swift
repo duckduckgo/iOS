@@ -26,19 +26,16 @@ struct FavoritesView<Model: FavoritesModel>: View {
 
     @ObservedObject var model: Model
 
-    @State private var isCollapsed = true
-
     private let selectionFeedback = UISelectionFeedbackGenerator()
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
 
-            let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape) * 2
-
-            let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
+            let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
+            let result = model.prefixedFavorites(for: columns)
 
             NewTabPageGridView { _ in
-                ForEach(data) { item in
+                ForEach(result.items) { item in
                     Button(action: {
                         model.favoriteSelected(item)
                         selectionFeedback.selectionChanged()
@@ -60,13 +57,13 @@ struct FavoritesView<Model: FavoritesModel>: View {
                 }
             }
 
-            if model.allFavorites.count > collapsedMaxItemsCount {
+            if result.isCollapsible {
                 Button(action: {
                     withAnimation(.easeInOut) {
-                        isCollapsed.toggle()
+                        model.toggleCollapse()
                     }
                 }, label: {
-                    Image(isCollapsed ? .chevronDown : .chevronUp)
+                    Image(model.isCollapsed ? .chevronDown : .chevronUp)
                         .resizable()
                 })
                 .buttonStyle(ToggleExpandButtonStyle())

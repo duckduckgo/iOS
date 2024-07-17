@@ -23,12 +23,21 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     var allFavorites: [Favorite] { get }
 
     var isEmpty: Bool { get }
+    var isCollapsed: Bool { get }
 
     func faviconMissing()
+
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
+    func toggleCollapse()
 
     // MARK: - Favorites interactions
     
     func favoriteSelected(_ favorite: Favorite)
     func editFavorite(_ favorite: Favorite)
     func deleteFavorite(_ favorite: Favorite)
+}
+
+struct FavoritesSlice {
+    let items: [Favorite]
+    let isCollapsible: Bool
 }

@@ -21,6 +21,8 @@ import Bookmarks
 import Foundation
 
 final class FavoritesPreviewModel: FavoritesModel {
+    var isCollapsed: Bool = true
+    
     @Published var allFavorites: [Favorite]
 
     var isEmpty: Bool { allFavorites.isEmpty }
@@ -38,6 +40,18 @@ final class FavoritesPreviewModel: FavoritesModel {
         }
 
         self.init(allFavorites: favorites)
+    }
+
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {
+        let maxCollapsedItemsCount = columnsCount * 2
+        let favorites = isCollapsed ? Array(allFavorites.prefix(maxCollapsedItemsCount)) : allFavorites
+        let isCollapsible = allFavorites.count > maxCollapsedItemsCount
+
+        return .init(items: favorites, isCollapsible: isCollapsible)
+    }
+
+    func toggleCollapse() {
+        isCollapsed.toggle()
     }
 
     func faviconMissing() {

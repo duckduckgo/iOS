@@ -2181,6 +2181,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController) {
+        showPrivacyDashboardButtonPulse()
     }
 
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {

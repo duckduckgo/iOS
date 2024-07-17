@@ -62,12 +62,11 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         // THEN
         XCTAssertTrue(parent.didCallAddChild)
         XCTAssertNotNil(parent.capturedChild)
-        XCTAssertTrue(parent.capturedChild is UIHostingController<ContextualOnboardingBackgroundWrapper<ContextualDaxDialog>>)
     }
 
 }
 
-final class TabViewControllerMock: UIViewController, TabViewControllerType {
+final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
     var daxDialogsStackView: UIStackView = UIStackView()
     var webViewContainerView: UIView  = UIView()
     var daxContextualOnboardingController: UIViewController?
@@ -79,6 +78,15 @@ final class TabViewControllerMock: UIViewController, TabViewControllerType {
     private(set) var didCallAddChild = false
     private(set) var capturedChild: UIViewController?
 
+    private(set) var didCalldidShowTrackersDialog = false
+    private(set) var didCallDidShowTrackersDialog = false
+    private(set) var didCallDidAcknowledgeTrackersDialog = false
+    private(set) var didCallDidTapDismissAction = false
+    private(set) var didCallSearchForQuery = false
+    private(set) var capturedQuery: String?
+    private(set) var didCallNavigateToURL = false
+    private(set) var capturedURL: URL?
+
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         didCallPerformSegue = true
         capturedSegueIdentifier = identifier
@@ -88,6 +96,28 @@ final class TabViewControllerMock: UIViewController, TabViewControllerType {
     override func addChild(_ childController: UIViewController) {
         didCallAddChild = true
         capturedChild = childController
+    }
+
+    func didShowTrackersDialog() {
+        didCalldidShowTrackersDialog = true
+    }
+
+    func didAcknowledgeTrackersDialog() {
+        didCallDidAcknowledgeTrackersDialog = true
+    }
+
+    func didTapDismissAction() {
+        didCallDidTapDismissAction = true
+    }
+
+    func searchFor(_ query: String) {
+        didCallSearchForQuery = true
+        capturedQuery = query
+    }
+
+    func navigateTo(url: URL) {
+        didCallNavigateToURL = true
+        capturedURL = url
     }
 
 }

@@ -11,13 +11,13 @@ on:
         required: false
         type: string
       is-alpha:
-        description: "Is alpha build"
+        description: "Build Configuration"
         type: choice
         required: true
-        default: 'true'
+        default: 'Alpha'
         options:
-           - true
-           - false
+           - Alpha
+           - Release
 
 jobs:
   make-adhoc:
@@ -50,7 +50,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           lane_to_use="adhoc"
-          if [[ "${{ github.event.inputs.is-alpha }}" == "false" ]]; then
+          if [[ "${{ github.event.inputs.is-alpha }}" == "Release" ]]; then
             lane_to_use = "release_adhoc"
           fi
           

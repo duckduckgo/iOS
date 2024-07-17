@@ -713,8 +713,6 @@
 		BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */; };
 		BDE219EA2C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E92C457B46005D5884 /* DefaultPrivacyProDataReporterTests.swift */; };
-		BDE219FA2C4720DB005D5884 /* SecureStorageTestsUtils in Frameworks */ = {isa = PBXBuildFile; productRef = BDE219F92C4720DB005D5884 /* SecureStorageTestsUtils */; };
-		BDE219FC2C4720E2005D5884 /* DDGSyncTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = BDE219FB2C4720E2005D5884 /* DDGSyncTestingUtilities */; };
 		BDF8D0022C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */; };
 		BDFF031D2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */; };
 		BDFF03212BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF03202BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift */; };
@@ -2781,11 +2779,9 @@
 				4BE67B052B96B9AB007335F7 /* ContentBlocking in Frameworks */,
 				F15531922BF215ED0029ED04 /* SubscriptionTestingUtilities in Frameworks */,
 				F15531902BF215ED0029ED04 /* Subscription in Frameworks */,
-				BDE219FC2C4720E2005D5884 /* DDGSyncTestingUtilities in Frameworks */,
 				F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */,
 				EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */,
 				4BE67B072B96B9B0007335F7 /* Common in Frameworks */,
-				BDE219FA2C4720DB005D5884 /* SecureStorageTestsUtils in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5896,8 +5892,6 @@
 				4BE67B062B96B9B0007335F7 /* Common */,
 				F155318F2BF215ED0029ED04 /* Subscription */,
 				F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */,
-				BDE219F92C4720DB005D5884 /* SecureStorageTestsUtils */,
-				BDE219FB2C4720E2005D5884 /* DDGSyncTestingUtilities */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -10131,8 +10125,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = anh/ppro/pixels;
-				kind = branch;
+				kind = exactVersion;
+				version = 171.2.2;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -10336,16 +10330,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B6F997C22B8F374300476735 /* XCRemoteSwiftPackageReference "apple-toolbox" */;
 			productName = SwiftLintTool;
-		};
-		BDE219F92C4720DB005D5884 /* SecureStorageTestsUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
-			productName = SecureStorageTestsUtils;
-		};
-		BDE219FB2C4720E2005D5884 /* DDGSyncTestingUtilities */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
-			productName = DDGSyncTestingUtilities;
 		};
 		C14882EC27F211A000D59F0C /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

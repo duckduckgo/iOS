@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/ppro/pixels",
-        "revision" : "0f0b2c34b4b02c572405e7754d6028c66b95ec14"
+        "revision" : "0e7f13b24876a28934320ebf0ec14f644a211869",
+        "version" : "171.2.2"
       }
     },
     {

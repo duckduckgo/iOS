@@ -22,23 +22,13 @@ import XCTest
 @testable import Core
 @testable import BrowserServicesKit
 @testable import DDGSync
-@testable import DDGSyncTestingUtilities
 @testable import SecureStorage
-@testable import SecureStorageTestsUtils
 
-// swiftlint:disable force_try
 final class DefaultPrivacyProDataReporterTests: XCTestCase {
     let testSuiteName = "DefaultPrivacyProDataReporterTests"
     var testDefaults: UserDefaults!
     let mockCalendar = MockCalendar()
     lazy var statisticsStore = StatisticsUserDefaults(groupName: testSuiteName)
-
-    var mockCryptoProvider = MockCryptoProvider()
-    var mockDatabaseProvider = (try! MockAutofillDatabaseProvider())
-    var mockKeystoreProvider = MockKeystoreProvider()
-    lazy var testVault = DefaultAutofillSecureVault(providers: SecureStorageProviders(crypto: mockCryptoProvider,
-                                                                                      database: mockDatabaseProvider,
-                                                                                      keystore: mockKeystoreProvider))
 
     var reporter: DefaultPrivacyProDataReporter!
     var anotherReporter: DefaultPrivacyProDataReporter!
@@ -53,7 +43,7 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
             tutorialSettings: MockTutorialSettings(hasSeenOnboarding: false),
             appSettings: AppSettingsMock(),
             statisticsStore: statisticsStore,
-            secureVault: testVault,
+            secureVault: nil,
             tabsModel: TabsModel(tabs: [], desktop: false),
             dateGenerator: mockCalendar.now
         )
@@ -63,13 +53,13 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
             emailManager: EmailManager(storage: MockEmailStorage.anotherMock),
             tutorialSettings: MockTutorialSettings(hasSeenOnboarding: true),
             appSettings: AppSettingsMock.mockWithWidget,
+            secureVault: nil,
             tabsModel: TabsModel(tabs: [Tab(), Tab(), Tab(), Tab()], desktop: false)
         )
     }
 
     override func tearDown() {
         testDefaults.removePersistentDomain(forName: testSuiteName)
-        try? testVault.deleteAllWebsiteCredentials()
         super.tearDown()
     }
 
@@ -84,20 +74,6 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
             reporter.saveFireCount()
         }
         XCTAssertTrue(reporter.isFireButtonUser())
-    }
-
-    func testIsSyncUsed() {
-        let dependencies = MockSyncDependencies()
-        dependencies.keyValueStore.set(true, forKey: DDGSync.Constants.syncEnabledKey)
-        let syncService = DDGSync(dataProvidersSource: MockDataProvidersSource(),
-                                  dependencies: dependencies)
-        reporter.injectSyncService(syncService)
-        XCTAssertEqual(syncService.authState, .initializing)
-        XCTAssertTrue(reporter.isSyncUsed())
-
-        syncService.initializeIfNeeded()
-        XCTAssertEqual(syncService.authState, .inactive)
-        XCTAssertFalse(reporter.isSyncUsed())
     }
 
     func testIsFireproofingUsed() {
@@ -146,25 +122,6 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
         XCTAssertTrue(reporter.isLongTermUser())
     }
 
-    func testIsAutofillUser() throws {
-        XCTAssertFalse(reporter.isAutofillUser())
-
-        mockCryptoProvider._decryptedData = "decrypted".data(using: .utf8)
-        mockKeystoreProvider._generatedPassword = "generated".data(using: .utf8)
-        mockCryptoProvider._derivedKey = "derived".data(using: .utf8)
-        mockKeystoreProvider._encryptedL2Key = "encryptedL2Key".data(using: .utf8)
-
-        for accountId in 1...6 {
-            let account = SecureVaultModels.WebsiteAccount(id: "\(accountId)", username: "user\(accountId)@example.com", domain: "example.com", created: Date(), lastUpdated: Date())
-            let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password\(accountId)".data(using: .utf8)!)
-            _ = try testVault.storeWebsiteCredentials(credentials)
-            self.mockDatabaseProvider._accounts.append(account)
-        }
-
-        XCTAssertEqual(try testVault.accounts().count, 6)
-        XCTAssertTrue(reporter.isAutofillUser())
-    }
-
     func testIsValidOpenTabsCount() {
         XCTAssertFalse(reporter.isValidOpenTabsCount())
         XCTAssertTrue(anotherReporter.isValidOpenTabsCount())
@@ -179,14 +136,14 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     }
 
     func testAttachedParameters() async {
-        let params1 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID("test"))
-        let params2 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .origin("test"))
-        let params3 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID("message"))
-        let params4 = await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .origin("origins"))
+        let params1 = await reporter.randomizedParameters(for: .messageID("test"))
+        let params2 = await reporter.randomizedParameters(for: .origin("test"))
+        let params3 = await reporter.randomizedParameters(for: .messageID("message"))
+        let params4 = await reporter.randomizedParameters(for: .origin("origins"))
         XCTAssertEqual(params1.count, 0)
         XCTAssertEqual(params2.count, 0)
-        XCTAssertEqual(params3.count, 4)
-        XCTAssertEqual(params4.count, 4)
+        XCTAssertEqual(params3.count, 8)
+        XCTAssertEqual(params4.count, 8)
     }
 }
 
@@ -248,4 +205,3 @@ class MockCalendar {
         date
     }
 }
-// swiftlint:enable force_try

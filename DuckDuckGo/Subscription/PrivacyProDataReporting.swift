@@ -37,7 +37,7 @@ enum PrivacyProPromoParameters: String, CaseIterable {
     case searchUser = "searchUser"
 
     static func randomizedSubset() -> [PrivacyProPromoParameters] {
-        Array(allCases.shuffled().prefix(4))
+        Array(allCases.shuffled().prefix(8))
     }
 }
 
@@ -165,7 +165,12 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isSyncUsed() -> Bool {
-        _syncAuthState != .inactive
+#if DEBUG
+        guard !ProcessInfo().arguments.contains("testing") else {
+            return false
+        }
+#endif
+        return _syncAuthState != .inactive
     }
 
     func isFireproofingUsed() -> Bool {

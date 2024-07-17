@@ -78,7 +78,6 @@ echo "ℹ️ using device $device_uuid"
 
 # Simulator should already be up and running from running the setup script
 #  re-run the setup script with `--skip-build` to set up again 
-
 echo "ℹ️ creating run log in $run_log"
 if [ -f $run_log ]; then
 	rm $run_log

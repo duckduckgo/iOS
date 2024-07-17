@@ -11,8 +11,6 @@ appId: com.duckduckgo.mobile.ios
     appId: "com.duckduckgo.mobile.ios"
     clearState: true
     clearKeychain: true
-    arguments: 
-       "VARIANT": "ru"
 
 # Get past onboarding screens
 - runFlow:

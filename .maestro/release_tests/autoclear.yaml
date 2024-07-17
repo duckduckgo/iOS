@@ -12,7 +12,6 @@ tags:
     clearKeychain: true
     arguments: 
        "autoclear-ui-test": true
-       "VARIANT": "ru"
 
 - runFlow: 
     file: ../shared/onboarding.yaml

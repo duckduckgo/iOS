@@ -2178,6 +2178,9 @@ extension MainViewController: TabDelegate {
         showFireButtonPulse()
     }
     
+    func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController) {
+    }
+
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
         searchBarRect
     }
@@ -2230,6 +2233,14 @@ extension MainViewController: TabDelegate {
 
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
         return currentTab === tab
+    }
+
+    func tab(_ tab: TabViewController, didRequestLoadURL url: URL) {
+        loadUrl(url, fromExternalLink: true)
+    }
+
+    func tab(_ tab: TabViewController, didRequestLoadQuery query: String) {
+        loadQuery(query)
     }
 
 }

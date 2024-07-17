@@ -23,21 +23,21 @@ import BrowserServicesKit
 import DDGSync
 
 enum PrivacyProPromoParameters: String, CaseIterable {
-    case isReinstall = "isReinstall"
+    case isReinstall
     case fireButtonUser = "fireButtonUsed"
-    case syncUsed = "syncUsed"
-    case fireproofingUsed = "fireproofingUsed"
-    case appOnboardingCompleted = "appOnboardingCompleted"
-    case emailEnabled = "emailEnabled"
-    case widgetAdded = "widgetAdded"
-    case frequentUser = "frequentUser"
-    case longTermUser = "longTermUser"
-    case autofillUser = "autofillUser"
-    case validOpenTabsCount = "validOpenTabsCount"
-    case searchUser = "searchUser"
+    case syncUsed
+    case fireproofingUsed
+    case appOnboardingCompleted
+    case emailEnabled
+    case widgetAdded
+    case frequentUser
+    case longTermUser
+    case autofillUser
+    case validOpenTabsCount
+    case searchUser
 
     static func randomizedSubset() -> [PrivacyProPromoParameters] {
-        Array(allCases.shuffled().prefix(8))
+        Array(allCases.shuffled().prefix(Int(allCases.count * 2/3)))
     }
 }
 
@@ -65,15 +65,16 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         static let searchCountKey = "com.duckduckgo.ios.privacypropromo.SearchCount"
     }
 
+    enum Constants {
+        static let includedOrigins = "origins"
+    }
+
     enum UseCase {
         case messageID(String)
         case origin(String?)
     }
 
     public static let shared = DefaultPrivacyProDataReporter()
-
-    public static let eligibleMessageIDs: [String] = ["some", "message", "ids"]
-    public static let eligibleOrigins: [String] = ["some", "origins"]
 
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
@@ -82,6 +83,9 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     private static let openTabsCountThreshold = 3
     private static let searchCountThreshold = 50
 
+    private lazy var includedOrigins = config.settings(for: .additionalCampaignPixelParams)[Constants.includedOrigins] as? [String]
+
+    private let config: PrivacyConfiguration
     private let variantManager: VariantManager
     private let userDefaults: UserDefaults
     private let emailManager: EmailManager
@@ -93,7 +97,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     private var tabsModel: TabsModel?
     private let dateGenerator: () -> Date
 
-    init(variantManager: VariantManager = DefaultVariantManager(),
+    init(config: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
+         variantManager: VariantManager = DefaultVariantManager(),
          userDefaults: UserDefaults = .app,
          emailManager: EmailManager = EmailManager(),
          tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
@@ -103,6 +108,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,
          dateGenerator: @escaping () -> Date = Date.init) {
+        self.config = config
         self.variantManager = variantManager
         self.userDefaults = userDefaults
         self.emailManager = emailManager
@@ -126,9 +132,9 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     func randomizedParameters(for useCase: UseCase) async -> [String: String] {
         switch useCase {
         case .messageID(let messageID):
-            guard Self.eligibleMessageIDs.contains(messageID) else { return [:] }
+            guard let includedOrigins, includedOrigins.contains(messageID) else { return [:] }
         case .origin(let origin):
-            guard let origin, Self.eligibleOrigins.contains(origin) else { return [:] }
+            guard let includedOrigins, let origin, includedOrigins.contains(origin) else { return [:] }
         }
 
         var additionalParameters = [String: String]()

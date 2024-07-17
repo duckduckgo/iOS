@@ -6,7 +6,6 @@ appId: com.duckduckgo.mobile.ios
 # If you need more arguments, copy these two commands directly into your test
 # * See release_tests/autoclear.yaml for an example
 
-# Launch the app with `ru` variant to ensure that no experiment variant is used
 - launchApp:
     appId: "com.duckduckgo.mobile.ios"
     clearState: true

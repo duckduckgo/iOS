@@ -117,8 +117,6 @@ import WebKit
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        OSLog.enabledLoggingCategories = ["Content Blocking"]
-
         // SKAD4 support
         updateSKAd(conversionValue: 1)
 

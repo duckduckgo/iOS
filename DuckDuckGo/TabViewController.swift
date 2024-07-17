@@ -2839,9 +2839,11 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 extension TabViewController: OnboardingNavigationDelegate {
     
     func searchFor(_ query: String) {
+        delegate?.tab(self, didRequestLoadQuery: query)
     }
 
     func navigateTo(url: URL) {
+        delegate?.tab(self, didRequestLoadURL: url)
     }
 
 }
@@ -2849,9 +2851,11 @@ extension TabViewController: OnboardingNavigationDelegate {
 extension TabViewController: ContextualOnboardingEventDelegate {
 
     func didAcknowledgeTrackersDialog() {
+        delegate?.tabDidRequestFireButtonPulse(tab: self)
     }
 
     func didShowTrackersDialog() {
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
     }
 
 }

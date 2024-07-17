@@ -72,12 +72,7 @@ private extension ContextualOnboardingPresenter {
         }
 
         // Ask the Dax Dialogs Factory for a view for the given spec
-        let controller = daxDialogsFactory.makeView(for: spec, delegate: vc) { [weak self, weak vc] in
-            guard let self, let vc, let daxController = vc.daxContextualOnboardingController else { return }
-
-            // Collapse stack view and remove dax controller
-            remove(daxController: daxController, fromParent: vc)
-        }
+        let controller = daxDialogsFactory.makeView(for: spec, delegate: vc)
         controller.view.isHidden = true
         controller.view.alpha = 0
 

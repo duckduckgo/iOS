@@ -27,6 +27,8 @@ protocol ContextualOnboardingEventDelegate: AnyObject {
     func didShowTrackersDialog()
     /// Inform the delegate that the user did acknowledge the dialog for blocked trackers.
     func didAcknowledgeTrackersDialog()
+    /// Inform the delegate that the user dismissed the contextual dialog.
+    func didTapDismissAction()
 }
 
 // Composed delegate for Contextual Onboarding to decorate events also needed in New Tab Page.
@@ -35,18 +37,12 @@ typealias ContextualOnboardingDelegate = OnboardingNavigationDelegate & Contextu
 // MARK: - Contextual Dialogs Factory
 
 protocol ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onDismiss: (() -> Void)?) -> UIViewController
-}
-
-extension ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController {
-        self.makeView(for: spec, delegate: delegate, onDismiss: nil)
-    }
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController
 }
 
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onDismiss: (() -> Void)?) -> UIViewController {
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController {
         let rootView: AnyView
         switch spec.type {
         case .afterSearch:
@@ -54,7 +50,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
             rootView = AnyView(withTrackersDialog(for: spec, delegate: delegate))
         case .final:
-            rootView = AnyView(endOfJourneyDialog(onDismiss: onDismiss))
+            rootView = AnyView(endOfJourneyDialog(delegate: delegate))
         }
 
         let viewWithBackground = rootView.withOnboardingBackground()
@@ -80,8 +76,10 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         }
     }
 
-    private func endOfJourneyDialog(onDismiss: (() -> Void)?) -> some View {
-        OnboardingFinalDialog(highFiveAction: { onDismiss?() })
+    private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate) -> some View {
+        OnboardingFinalDialog(highFiveAction: { [weak delegate] in
+            delegate?.didTapDismissAction()
+        })
     }
 
 }

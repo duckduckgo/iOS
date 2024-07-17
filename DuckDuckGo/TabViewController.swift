@@ -2860,6 +2860,10 @@ extension TabViewController: ContextualOnboardingEventDelegate {
         delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
     }
 
+    func didTapDismissAction() {
+        contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+    }
+
 }
 
 extension WKWebView {

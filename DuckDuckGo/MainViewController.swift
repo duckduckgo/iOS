@@ -2498,7 +2498,13 @@ extension MainViewController: AutoClearWorker {
             ViewHighlighter.showIn(window, focussedOnView: view)
         }
     }
-    
+
+    private func showPrivacyDashboardButtonPulse() {
+        // TODO:
+        // 1. Wait for Lottie Tracker animation to complete
+        // 2. Animate Privacy Icon with pulsing animation similar to `showFireButtonPulse()`.
+    }
+
 }
 
 extension MainViewController {

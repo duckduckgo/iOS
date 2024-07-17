@@ -77,6 +77,9 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         case .siteIsMajorTracker, .siteOwnedByMajorTracker:
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
+        case .final:
+            // TODO: Reset flag
+            break
         }
     }
     
@@ -90,6 +93,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
             case siteOwnedByMajorTracker
             case withOneTracker
             case withMultipleTrackers
+            case final
         }
         // swiftlint:enable nesting
 

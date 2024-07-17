@@ -26,7 +26,6 @@ import WidgetKit
 import Common
 import PrivacyDashboard
 
-// swiftlint:disable file_length
 extension TabViewController {
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {

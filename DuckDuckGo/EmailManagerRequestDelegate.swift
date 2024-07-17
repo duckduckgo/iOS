@@ -32,7 +32,6 @@ extension EmailManagerRequestDelegate {
     }
     // swiftlint:enable unused_setter_value
 
-    // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let finalURL = url.appendingParameters(parameters ?? [:])
         var request = URLRequest(url: finalURL, timeoutInterval: timeoutInterval)
@@ -51,7 +50,6 @@ extension EmailManagerRequestDelegate {
 
         return data
     }
-    // swiftlint:enable function_parameter_count
 
     func emailManagerKeychainAccessFailed(_ emailManager: EmailManager,
                                           accessType: EmailKeychainAccessType,

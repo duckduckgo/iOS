@@ -54,6 +54,10 @@ public struct UserValues: Codable {
     let askModeOverlayHidden: Bool
 }
 
+public enum DuckPlayerReferrer {
+    case youtube, other
+}
+
 protocol DuckPlayerProtocol {
     
     var settings: DuckPlayerSettingsProtocol { get }
@@ -65,7 +69,6 @@ protocol DuckPlayerProtocol {
     func openVideoInDuckPlayer(url: URL, webView: WKWebView)
     func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable?
 }
-
 
 final class DuckPlayer: DuckPlayerProtocol {
     

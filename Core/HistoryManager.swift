@@ -33,20 +33,9 @@ public protocol HistoryManaging {
 
 }
 
-// Used for controlling incremental rollout
-public enum HistorySubFeature: String, PrivacySubfeature {
-    public var parent: PrivacyFeature {
-        .history
-    }
-
-    case onByDefault
-}
-
 public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging
-    let variantManager: VariantManager
-    let internalUserDecider: InternalUserDecider
     let dbCoordinator: HistoryCoordinator
 
     public var historyCoordinator: HistoryCoordinating {
@@ -66,15 +55,11 @@ public class HistoryManager: HistoryManaging {
 
     /// Use `make()`
     init(privacyConfigManager: PrivacyConfigurationManaging,
-         variantManager: VariantManager,
-         internalUserDecider: InternalUserDecider,
          dbCoordinator: HistoryCoordinator,
          isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
          isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool) {
 
         self.privacyConfigManager = privacyConfigManager
-        self.variantManager = variantManager
-        self.internalUserDecider = internalUserDecider
         self.dbCoordinator = dbCoordinator
         self.isAutocompleteEnabledByUser = isAutocompleteEnabledByUser
         self.isRecentlyVisitedSitesEnabledByUser = isRecentlyVisitedSitesEnabledByUser
@@ -82,23 +67,7 @@ public class HistoryManager: HistoryManaging {
 
     /// Determines if the history feature is enabled.  This code will need to be cleaned up once the roll out is at 100%
     public func isHistoryFeatureEnabled() -> Bool {
-        guard privacyConfigManager.privacyConfig.isEnabled(featureKey: .history) else {
-            // Whatever happens if this is disabled then disable the feature
-            return false
-        }
-
-        if internalUserDecider.isInternalUser {
-            // Internal users get the feature
-            return true
-        }
-
-        if variantManager.isSupported(feature: .history) {
-            // Users in the experiment get the feature
-            return true
-        }
-
-        // Handles incremental roll out to everyone else
-        return privacyConfigManager.privacyConfig.isSubfeatureEnabled(HistorySubFeature.onByDefault)
+        return privacyConfigManager.privacyConfig.isEnabled(featureKey: .history)
     }
 
     public func removeAllHistory() async {
@@ -234,7 +203,6 @@ extension HistoryManager {
     /// Should only be called once in the app
     public static func make(isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
                             isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool,
-                            internalUserDecider: InternalUserDecider,
                             privacyConfigManager: PrivacyConfigurationManaging) -> Result<HistoryManager, Error> {
 
         let database = HistoryDatabase.make()
@@ -251,8 +219,6 @@ extension HistoryManager {
         let dbCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
 
         let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
-                                            variantManager: DefaultVariantManager(),
-                                            internalUserDecider: internalUserDecider,
                                             dbCoordinator: dbCoordinator,
                                             isAutocompleteEnabledByUser: isAutocompleteEnabledByUser(),
                                             isRecentlyVisitedSitesEnabledByUser: isRecentlyVisitedSitesEnabledByUser())

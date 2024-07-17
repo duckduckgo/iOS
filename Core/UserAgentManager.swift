@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 import BrowserServicesKit
 import Common
 import Foundation
@@ -103,7 +101,6 @@ struct UserAgent {
     }
 
     private enum Constants {
-        // swiftlint:disable line_length
         static let fallbackWekKitVersion = "605.1.15"
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
         static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
@@ -122,7 +119,6 @@ struct UserAgent {
 
         static let uaVersionsKey = "versions"
         static let uaStateKey = "state"
-        // swiftlint:enable line_length
     }
 
     private struct Regex {
@@ -193,7 +189,6 @@ struct UserAgent {
         return versions
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     public func agent(forUrl url: URL?,
                       isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {

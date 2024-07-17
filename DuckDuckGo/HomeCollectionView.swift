@@ -27,15 +27,14 @@ class HomeCollectionView: UICollectionView {
         static let topInset: CGFloat = 79
     }
     
+    var homePageConfiguration: HomePageConfiguration!
     private weak var controller: HomeViewController!
     
     private(set) var renderers: HomeViewSectionRenderers!
     
     private lazy var collectionViewReorderingGesture =
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
-    
-    private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
-    
+
     private var topIndexPath: IndexPath? {
         for section in 0..<renderers.numberOfSections(in: self) where numberOfItems(inSection: section) > 0 {
             return IndexPath(row: 0, section: section)

@@ -27,7 +27,6 @@ import WebKit
 import DesignResourcesKit
 import SecureStorage
 
-// swiftlint:disable file_length
 class EmailSignupViewController: UIViewController {
 
     private enum Constants {
@@ -341,7 +340,6 @@ extension EmailSignupViewController: UserContentControllerDelegate {
 
 extension EmailSignupViewController: EmailManagerRequestDelegate {
 
-    // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
@@ -353,8 +351,6 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
         let request = APIRequest(configuration: configuration, urlSession: .session())
         return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
     }
-    // swiftlint:enable function_parameter_count
-
 }
 
 // MARK: - SecureVaultManagerDelegate
@@ -384,7 +380,6 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         // no-op
     }
 
-    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
@@ -393,7 +388,6 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
         // no-op
     }
-    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -465,5 +459,3 @@ extension EmailSignupViewController {
     }
 
 }
-
-// swiftlint:enable file_length

@@ -24,9 +24,6 @@ import BrowserServicesKit
 import Common
 import PrivacyDashboard
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-
 protocol EntityProviding {
     
     func entity(forHost host: String) -> Entity?
@@ -404,5 +401,3 @@ final class DaxDialogs {
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }
 }
-// swiftlint:enable type_body_length
-// swiftlint:enable file_length

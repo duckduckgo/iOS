@@ -32,6 +32,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import RemoteMessaging
 import SyncDataProviders
 import Subscription
 
@@ -40,10 +41,7 @@ import NetworkProtection
 import WebKit
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
-    // swiftlint:enable type_body_length
     
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     private struct ShortcutKey {
@@ -79,6 +77,10 @@ import WebKit
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private(set) var homePageConfiguration: HomePageConfiguration!
+
+    private(set) var remoteMessagingClient: RemoteMessagingClient!
+
     private(set) var syncService: DDGSync!
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
@@ -99,7 +101,20 @@ import WebKit
         AppDependencyProvider.shared.accountManager
     }
 
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
+    private var didCrashDuringCrashHandlersSetUp: Bool
+
+    override init() {
+        super.init()
+
+        if !didCrashDuringCrashHandlersSetUp {
+            didCrashDuringCrashHandlersSetUp = true
+            CrashLogMessageExtractor.setUp()
+            didCrashDuringCrashHandlersSetUp = false
+        }
+    }
+
+    // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // SKAD4 support
@@ -138,19 +153,17 @@ import WebKit
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.start { pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = self.window?.rootViewController else {
-                    return
-                }
-                let dataPayloads = payloads.map { $0.jsonRepresentation() }
+                guard let viewController = self.window?.rootViewController else { return }
+
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: dataPayloads, from: viewController, sendReport: sendReport)
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
                 self.crashReportUploaderOnboarding = crashReportUploaderOnboarding
             }
         }
@@ -224,10 +237,8 @@ import WebKit
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
-            historyMessageManager.dismiss()
-        }
 
-        if variantManager.isSupported(feature: .history) {
+            // New users don't see the message
             historyMessageManager.dismiss()
         }
 
@@ -278,6 +289,22 @@ import WebKit
                 })
             }
 
+        remoteMessagingClient = RemoteMessagingClient(
+            bookmarksDatabase: bookmarksDatabase,
+            appSettings: AppDependencyProvider.shared.appSettings,
+            internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+            configurationStore: ConfigurationStore.shared,
+            database: Database.shared,
+            errorEvents: RemoteMessagingStoreErrorHandling(),
+            remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
+                privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
+            )
+        )
+        remoteMessagingClient.registerBackgroundRefreshTaskHandler()
+
+        homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
+                                                      remoteMessagingClient: remoteMessagingClient)
+
         let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
@@ -285,6 +312,7 @@ import WebKit
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       historyManager: historyManager,
+                                      homePageConfiguration: homePageConfiguration,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings,
@@ -316,11 +344,6 @@ import WebKit
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
-        RemoteMessagingClient.registerBackgroundRefreshTaskHandler(
-            bookmarksDatabase: bookmarksDatabase,
-            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-        )
-
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
@@ -341,6 +364,11 @@ import WebKit
 
         setUpAutofillPixelReporter()
 
+        if didCrashDuringCrashHandlersSetUp {
+            Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
+            didCrashDuringCrashHandlersSetUp = false
+        }
+
         return true
     }
 
@@ -350,7 +378,6 @@ import WebKit
 
         switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
                                    isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
-                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
                                    privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
 
         case .failure(let error):
@@ -445,7 +472,6 @@ import WebKit
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -604,10 +630,7 @@ import WebKit
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessagingClient.fetchAndProcess(
-                bookmarksDatabase: self.bookmarksDatabase,
-                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            )
+            try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
         }
     }
 

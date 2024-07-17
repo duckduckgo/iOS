@@ -24,7 +24,6 @@ import UIKit
 import LinkPresentation
 import WidgetKit
 
-// swiftlint:disable type_body_length file_length
 public class Favicons {
 
     public struct Constants {
@@ -513,4 +512,3 @@ extension Favicons: Bookmarks.FaviconStoring {
         }
     }
 }
-// swiftlint:enable type_body_length file_length

@@ -29,8 +29,6 @@ public enum OmniBarIcon: String {
     case duckPlayer = "DuckPlayerURLIcon"
 }
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class OmniBar: UIView {
    
     public static let didLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
@@ -512,7 +510,6 @@ class OmniBar: UIView {
     }
 
 }
-// swiftlint:enable type_body_length
 
 extension OmniBar: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -589,4 +586,3 @@ extension OmniBar {
         }
     }
 }
-// swiftlint:enable file_length

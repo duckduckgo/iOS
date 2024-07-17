@@ -29,9 +29,6 @@ import Combine
 import Persistence
 import WidgetKit
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-
 class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private enum Constants {
@@ -976,6 +973,3 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
     }
 
 }
-
-// swiftlint:enable type_body_length
-// swiftlint:enable file_length

@@ -61,7 +61,6 @@ extension MainViewController {
 // MARK: - EmailManagerRequestDelegate
 extension MainViewController: EmailManagerRequestDelegate {
 
-    // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: HTTPHeaders, parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
@@ -73,8 +72,6 @@ extension MainViewController: EmailManagerRequestDelegate {
         let request = APIRequest(configuration: configuration, urlSession: .session())
         return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
     }
-    // swiftlint:enable function_parameter_count
-
 }
 
 // MARK: - EmailManagerAliasPermissionDelegate

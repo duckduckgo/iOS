@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1720185364708,
+    "version": 1720796469387,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -321,6 +321,9 @@
                     "domain": "lotusbakeries.com"
                 },
                 {
+                    "domain": "harley-davidson.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -361,7 +364,7 @@
                     }
                 }
             },
-            "hash": "c47027bc9d235b909d868f5ffa97d3c9"
+            "hash": "df9028f0ff7582513c9660a63b0eb86b"
         },
         "autofill": {
             "exceptions": [
@@ -1165,9 +1168,6 @@
                     "domain": "soranews24.com"
                 },
                 {
-                    "domain": "pointstreaksites.com"
-                },
-                {
                     "domain": "marvel.com"
                 },
                 {
@@ -1177,7 +1177,7 @@
                     "domain": "noaprints.com"
                 }
             ],
-            "hash": "477f58bcbc508d5ae1e73941407284b7"
+            "hash": "ee9d383becfe28d8a5b575b51f5c9d11"
         },
         "cookie": {
             "settings": {
@@ -1302,6 +1302,9 @@
                 },
                 "autoplay": {
                     "state": "disabled"
+                },
+                "openInNewTab": {
+                    "state": "disabled"
                 }
             },
             "settings": {
@@ -1368,7 +1371,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "d950da7e94382e26e5da62e52ce3ac79"
+            "hash": "17689d71b3f20a31d01c050bd5cba1ee"
         },
         "elementHiding": {
             "exceptions": [
@@ -3793,7 +3796,7 @@
                                 "type": "hide"
                             },
                             {
-                                "selector": "[devicetype=\"desktop\"] .grid:not([style='filter: blur(4px);']) ~ shreddit-experience-tree",
+                                "selector": "[devicetype=\"desktop\"] .grid:not([style='filter: blur(4px);']) ~ shreddit-experience-tree:not([active-experiences='[\"nsfw_bypassable\"]'])",
                                 "type": "hide"
                             }
                         ]
@@ -4011,6 +4014,14 @@
                         "rules": [
                             {
                                 "selector": "[class^='styles__PubAdWrapper']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[data-test='sponsored-text']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[id^='btf-']",
                                 "type": "closest-empty"
                             }
                         ]
@@ -4570,7 +4581,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "573f3bc0a0f15e5dc7d561034e7a082d"
+            "hash": "c69c499b65697c42f660e3c5588bebe4"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5078,12 +5089,15 @@
                             },
                             {
                                 "percent": 50
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
                     }
                 }
             },
-            "hash": "8ec044ab0b9532ae2b9852c70fd0d436"
+            "hash": "e705c70baeee9f16f5c481a5be1d95b9"
         },
         "https": {
             "state": "enabled",
@@ -6957,6 +6971,7 @@
                                     "newschannel20.com",
                                     "newschannel9.com",
                                     "okcfox.com",
+                                    "pointstreaksites.com",
                                     "post-gazette.com",
                                     "raleighcw.com",
                                     "siouxlandnews.com",
@@ -8677,7 +8692,7 @@
                     "domain": "noaprints.com"
                 }
             ],
-            "hash": "d7d18b84410856df8bf3fb5e2a1f2e56"
+            "hash": "0b185cf5671fe879e5029509a627c457"
         },
         "trackingCookies1p": {
             "settings": {

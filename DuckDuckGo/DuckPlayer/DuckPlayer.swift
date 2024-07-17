@@ -140,7 +140,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     
     public func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable? {
         NotificationCenter.default.post(
-            name: .openDuckPlayerSettings,
+            name: .settingsDeepLinkNotification,
             object: SettingsViewModel.SettingsDeepLinkSection.duckPlayer,
             userInfo: nil
         )
@@ -177,8 +177,4 @@ final class DuckPlayer: DuckPlayerProtocol {
         return InitialOverlaySettings(userValues: userValues)
     }
     
-}
-
-extension NSNotification.Name {
-    static let openDuckPlayerSettings: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.openDuckPlayerSettings")
 }

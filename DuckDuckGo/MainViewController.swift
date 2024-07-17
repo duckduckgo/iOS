@@ -264,6 +264,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
+        subscribeToSettingsDeeplinkNotifications()
         
 #if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()

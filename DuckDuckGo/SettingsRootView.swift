@@ -118,7 +118,7 @@ struct SettingsRootView: View {
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
         case .duckPlayer:
-            SettingsDuckPlayerView()
+            SettingsDuckPlayerView().environmentObject(viewModel)
         default:
             EmptyView()
         }

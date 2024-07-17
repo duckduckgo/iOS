@@ -42,9 +42,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                     }, label: {
                         FavoriteItemView(
                             favorite: item,
-                            onFaviconMissing: {
-                                model.faviconMissing()
-                            },
+                            faviconLoading: model.faviconLoader,
                             onMenuAction: { action in
                                 switch action {
                                 case .delete: model.deleteFavorite(item)

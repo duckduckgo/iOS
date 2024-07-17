@@ -26,6 +26,7 @@ final class FavoritesPreviewModel: FavoritesModel {
     @Published var allFavorites: [Favorite]
 
     var isEmpty: Bool { allFavorites.isEmpty }
+    var faviconLoader: FavoritesFaviconLoading? { nil }
 
     init(allFavorites: [Favorite]) {
         self.allFavorites = allFavorites
@@ -68,5 +69,19 @@ final class FavoritesPreviewModel: FavoritesModel {
 
     func editFavorite(_ favorite: Favorite) {
 
+    }
+
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async {
+        
+    }
+}
+
+struct EmptyFaviconLoading: FavoritesFaviconLoading {
+    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+        .empty
+    }
+    
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+        nil
     }
 }

@@ -26,12 +26,22 @@ import WidgetKit
 
 final class FavoritesDefaultModel: FavoritesModel {
 
-    @Published private(set) var allFavorites: [Favorite]
+    @Published private(set) var allFavorites: [Favorite] = []
     @Published private(set) var isCollapsed: Bool = true
+    
+    private(set) lazy var faviconLoader: FavoritesFaviconLoading? = {
+        FavoritesFaviconLoader(onFaviconMissing: { [weak self] in
+            guard let self else { return }
+
+            await MainActor.run {
+                self.faviconMissing()
+            }
+        })
+    }()
+
+    private var cancellables = Set<AnyCancellable>()
 
     private let interactionModel: FavoritesListInteracting
-    private var didReportMissingFavicon = false
-    private var cancellables = Set<AnyCancellable>()
 
     var isEmpty: Bool {
         allFavorites.isEmpty
@@ -39,15 +49,16 @@ final class FavoritesDefaultModel: FavoritesModel {
 
     init(interactionModel: FavoritesListInteracting) {
         self.interactionModel = interactionModel
-        do {
-            self.allFavorites = try interactionModel.favorites.map(Favorite.init)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
 
         interactionModel.externalUpdates.sink { [weak self] _ in
             try? self?.updateData()
         }.store(in: &cancellables)
+
+        do {
+            try updateData()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 
     func toggleCollapse() {

@@ -19,14 +19,16 @@
 
 import SwiftUI
 
+protocol FavoritesFaviconLoading {
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon?
+    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon
+}
+
 struct FavoriteIconView: View {
-    let model: FavoriteIconViewModel
+    @State private var favicon: Favicon
 
-    @State private var favicon: Favicon = .empty
-
-    init(model: FavoriteIconViewModel) {
-        self.model = model
-    }
+    let favorite: Favorite
+    let faviconLoading: FavoritesFaviconLoading?
 
     var body: some View {
         ZStack {
@@ -42,25 +44,37 @@ struct FavoriteIconView: View {
                     $0.padding(Constant.borderSize)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .task {
-                    self.favicon = model.createFakeFavicon(size: Constant.faviconSize)
-                    if let favicon = await model.loadFavicon(size: Constant.faviconSize) {
-                        self.favicon = favicon
-                    }
-                }
+        }
+        .task {
+            if let favicon = await faviconLoading?.loadFavicon(for: favorite, size: Constant.faviconSize) {
+                self.favicon = favicon
+            }
         }
     }
 }
 
 private struct Constant {
-    static let faviconSize: CGFloat = 40
+    static let faviconSize: CGFloat = 64
     static let borderSize: CGFloat = 12
 }
 
 #Preview {
     VStack(spacing: 8) {
-        FavoriteIconView(model: FavoriteIconViewModel(domain: "apple.com", onFaviconMissing: nil))
-        FavoriteIconView(model: FavoriteIconViewModel(domain: "duckduckgo.com", onFaviconMissing: nil))
-        FavoriteIconView(model: FavoriteIconViewModel(domain: "foobar.com", onFaviconMissing: nil))
+        FavoriteIconView(favorite: Favorite.mock("apple.com"), faviconLoading: nil)
+        FavoriteIconView(favorite: Favorite.mock("duckduckgo.com"), faviconLoading: nil)
+        FavoriteIconView(favorite: Favorite.mock("foobar.com"), faviconLoading: nil)
+    }
+}
+
+private extension Favorite {
+    static func mock(_ domain: String) -> Favorite {
+        return Favorite(id: domain, title: domain, domain: domain)
+    }
+}
+
+extension FavoriteIconView {
+    init(favorite: Favorite, faviconLoading: FavoritesFaviconLoading? = nil) {
+        let favicon = faviconLoading?.fakeFavicon(for: favorite, size: Constant.faviconSize) ?? .empty
+        self.init(favicon: favicon, favorite: favorite, faviconLoading: faviconLoading)
     }
 }

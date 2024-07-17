@@ -21,17 +21,19 @@ import Foundation
 
 protocol FavoritesModel: AnyObject, ObservableObject {
     var allFavorites: [Favorite] { get }
+    var faviconLoader: FavoritesFaviconLoading? { get }
 
     var isEmpty: Bool { get }
     var isCollapsed: Bool { get }
 
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
+
     func faviconMissing()
 
-    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
+    // MARK: - Interactions
+
     func toggleCollapse()
 
-    // MARK: - Favorites interactions
-    
     func favoriteSelected(_ favorite: Favorite)
     func editFavorite(_ favorite: Favorite)
     func deleteFavorite(_ favorite: Favorite)

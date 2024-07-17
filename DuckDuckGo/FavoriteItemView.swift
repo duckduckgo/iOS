@@ -22,17 +22,12 @@ import SwiftUI
 
 struct FavoriteItemView: View {
     let favorite: Favorite
-    let onFaviconMissing: () -> Void
+    let faviconLoading: FavoritesFaviconLoading?
     let onMenuAction: ((MenuAction) -> Void)?
 
     var body: some View {
         VStack(spacing: 6) {
-            FavoriteIconView(
-                model: FavoriteIconViewModel(
-                    domain: favorite.domain,
-                    onFaviconMissing: onFaviconMissing
-                )
-            )
+            FavoriteIconView(favorite: favorite, faviconLoading: faviconLoading)
             .contextMenu {
                 // This context menu can be moved up in the hierarchy to `FavoritesView` once support for iOS 15 is removed. contextMenu with preview modifier can be used then.
                     contextMenuItems()
@@ -83,6 +78,6 @@ extension FavoriteItemView {
 
 private extension FavoriteItemView {
     init(favorite: Favorite) {
-        self.init(favorite: favorite, onFaviconMissing: {}, onMenuAction: nil)
+        self.init(favorite: favorite, faviconLoading: nil, onMenuAction: nil)
     }
 }

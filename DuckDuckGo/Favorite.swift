@@ -35,6 +35,13 @@ struct Favorite: Identifiable, Equatable {
     }
 }
 
+struct Favicon: Equatable, Hashable {
+    let image: UIImage
+    let isUsingBorder: Bool
+
+    static let empty = Self.init(image: UIImage(), isUsingBorder: false)
+}
+
 extension Favorite {
     var menuTitle: String {
         [title, truncatedUrlString].compactMap { $0 }.joined(separator: "\n")

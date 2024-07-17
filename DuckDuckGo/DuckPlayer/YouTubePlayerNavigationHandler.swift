@@ -177,7 +177,6 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
         if let url = navigationAction.request.url,
             url.isDuckURLScheme,
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            let html = Self.makeHTMLFromTemplate()
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
             if #available(iOS 15.0, *) {
                 os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
@@ -273,6 +272,9 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     // Handle Webview BackButton on DuckPlayer videos
     @MainActor
     func handleGoBack(webView: WKWebView) {
+        // Reset current video
+        currentYoutubeVideoID = ""
+        
         guard let backURL = webView.backForwardList.backItem?.url,
                 backURL.isYoutubeVideo,
                 backURL.youtubeVideoParams?.videoID == webView.url?.youtubeVideoParams?.videoID,
@@ -286,6 +288,10 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
     // Handle Reload for DuckPlayer Videos
     @MainActor
     func handleReload(webView: WKWebView) {
+        
+        // Reset current video
+        currentYoutubeVideoID = ""
+        
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,

@@ -25,16 +25,9 @@ import Common
 import NetworkExtension
 import Subscription
 
-
-private class DefaultTunnelSessionProvider: TunnelSessionProvider {
-    func activeSession() async -> NETunnelProviderSession? {
-        return await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession()
-    }
-}
-
 extension ConnectionStatusObserverThroughSession {
     convenience init() {
-        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+        self.init(tunnelSessionProvider: AppDependencyProvider.shared.networkProtectionTunnelController,
                   platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
@@ -42,7 +35,7 @@ extension ConnectionStatusObserverThroughSession {
 
 extension ConnectionErrorObserverThroughSession {
     convenience init() {
-        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+        self.init(tunnelSessionProvider: AppDependencyProvider.shared.networkProtectionTunnelController,
                   platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
@@ -50,7 +43,7 @@ extension ConnectionErrorObserverThroughSession {
 
 extension ConnectionServerInfoObserverThroughSession {
     convenience init() {
-        self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+        self.init(tunnelSessionProvider: AppDependencyProvider.shared.networkProtectionTunnelController,
                   platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }

@@ -36,9 +36,10 @@ struct OnboardingTrySearchDialog: View {
 }
 
 struct OnboardingTryVisitingSiteDialog: View {
-    let logoPosition: DaxDialogLogoPosition
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
+
+    let logoPosition: DaxDialogLogoPosition
     let viewModel: OnboardingSiteSuggestionsViewModel
 
     var body: some View {
@@ -52,7 +53,7 @@ struct OnboardingTryVisitingSiteDialog: View {
 }
 
 struct OnboardingFireButtonDialog: View {
-    var attributedMessage: NSAttributedString {
+    private let attributedMessage: NSAttributedString = {
         let firstString = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryFireButtonMessage
         let boldString = "Fire Button."
         let attributedString = NSMutableAttributedString(string: firstString)
@@ -65,7 +66,7 @@ struct OnboardingFireButtonDialog: View {
         }
 
         return attributedString
-    }
+    }()
 
     var body: some View {
         ContextualDaxDialog(
@@ -74,12 +75,13 @@ struct OnboardingFireButtonDialog: View {
 }
 
 struct OnboardingFirstSearchDoneDialog: View {
-
-    @State var showNextScreen: Bool = false
-    @State var shouldFollowUp: Bool
-    let viewModel: OnboardingSiteSuggestionsViewModel
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+
+    @State private var showNextScreen: Bool = false
+    @State private var shouldFollowUp: Bool = true
+
+    let viewModel: OnboardingSiteSuggestionsViewModel
     let gotItAction: () -> Void
 
     var body: some View {
@@ -100,9 +102,12 @@ struct OnboardingFirstSearchDoneDialog: View {
 }
 
 struct OnboardingTrackersDoneDialog: View {
-    @State var showNextScreen: Bool = false
-    let message: NSAttributedString
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+
+    @State private var showNextScreen: Bool = false
+
+    let message: NSAttributedString
+    let blockedTrackersCTAAction: () -> Void
 
     var body: some View {
         if showNextScreen {
@@ -112,6 +117,7 @@ struct OnboardingTrackersDoneDialog: View {
                 message: message,
                 cta: cta) {
                     showNextScreen = true
+                    blockedTrackersCTAAction()
             }
         }
     }
@@ -122,6 +128,7 @@ struct OnboardingFinalDialog: View {
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     let imageName = "Success-128"
+    
     let highFiveAction: () -> Void
 
     var body: some View {
@@ -158,7 +165,7 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
         .padding()
 }
 
@@ -174,7 +181,8 @@ struct OnboardingFinalDialog: View {
             Facebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\n
             I’ll block Facebook from seeing your activity on those sites.
             """
-        )
+        ),
+        blockedTrackersCTAAction: { }
     )
     .padding()
 }

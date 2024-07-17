@@ -65,7 +65,8 @@ class MainViewCoordinator {
 
         var navigationBarContainerTop: NSLayoutConstraint!
         var navigationBarContainerBottom: NSLayoutConstraint!
-        var navigationBarCollectionViewBottom: NSLayoutConstraint!
+//        var navigationBarCollectionViewBottom: NSLayoutConstraint!
+        var navigationBarContainerHeight: NSLayoutConstraint!
         var toolbarBottom: NSLayoutConstraint!
         var contentContainerTop: NSLayoutConstraint!
         var tabBarContainerTop: NSLayoutConstraint!

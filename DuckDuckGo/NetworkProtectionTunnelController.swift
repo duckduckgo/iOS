@@ -36,12 +36,51 @@ enum VPNConfigurationRemovalReason: String {
 final class NetworkProtectionTunnelController: TunnelController {
     static var shouldSimulateFailure: Bool = false
 
+    private var internalManager: NETunnelProviderManager?
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
     private var cancellables = Set<AnyCancellable>()
+
+    // MARK: - Manager, Session, & Connection
+
+    /// The tunnel manager: will try to load if it its not loaded yet, but if one can't be loaded from preferences,
+    /// a new one will not be created.  This is useful for querying the connection state and information without triggering
+    /// a VPN-access popup to the user.
+    ///
+    @MainActor var tunnelManager: NETunnelProviderManager? {
+        get async {
+            if let internalManager {
+                return internalManager
+            }
+
+            let loadedManager = try? await NETunnelProviderManager.loadAllFromPreferences().first
+            internalManager = loadedManager
+            return loadedManager
+        }
+    }
+
+    public var connection: NEVPNConnection? {
+        get async {
+            await tunnelManager?.connection
+        }
+    }
+
+    public func activeSession() async -> NETunnelProviderSession? {
+        await session
+    }
+
+    public var session: NETunnelProviderSession? {
+        get async {
+            guard let manager = await tunnelManager, let session = manager.connection as? NETunnelProviderSession else {
+                return nil
+            }
+
+            return session
+        }
+    }
 
     // MARK: - Starting & Stopping the VPN
 
@@ -83,6 +122,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
         subscribeToStatusChanges()
+        subscribeToConfigurationChanges()
     }
 
     /// Starts the VPN connection used for Network Protection
@@ -106,7 +146,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     func stop() async {
-        guard let tunnelManager = await loadTunnelManager() else {
+        guard let tunnelManager = await self.tunnelManager else {
             return
         }
 
@@ -139,8 +179,7 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     var isInstalled: Bool {
         get async {
-            let tunnelManager = await loadTunnelManager()
-            return tunnelManager != nil
+            return await self.tunnelManager != nil
         }
     }
 
@@ -150,7 +189,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     ///
     var isConnected: Bool {
         get async {
-            guard let tunnelManager = await loadTunnelManager() else {
+            guard let tunnelManager = await self.tunnelManager else {
                 return false
             }
 
@@ -174,7 +213,7 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         switch tunnelManager.connection.status {
         case .invalid:
-            reloadTunnelManager()
+            clearInternalManager()
             try await startWithError()
         case .connected:
             // Intentional no-op
@@ -184,10 +223,8 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    /// Reloads the tunnel manager from preferences.
-    ///
-    private func reloadTunnelManager() {
-        internalTunnelManager = nil
+    private func clearInternalManager() {
+        internalManager = nil
     }
 
     private func start(_ tunnelManager: NETunnelProviderManager) throws {
@@ -224,35 +261,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         }
     }
 
-    /// The actual storage for our tunnel manager.
-    ///
-    private var internalTunnelManager: NETunnelProviderManager?
-
-    /// The tunnel manager: will try to load if it its not loaded yet, but if one can't be loaded from preferences,
-    /// a new one will not be created.  This is useful for querying the connection state and information without triggering
-    /// a VPN-access popup to the user.
-    ///
-    private var tunnelManager: NETunnelProviderManager? {
-        get async {
-            guard let tunnelManager = internalTunnelManager else {
-                let tunnelManager = await loadTunnelManager()
-                internalTunnelManager = tunnelManager
-                return tunnelManager
-            }
-
-            return tunnelManager
-        }
-    }
-
-    private func loadTunnelManager() async -> NETunnelProviderManager? {
-        try? await NETunnelProviderManager.loadAllFromPreferences().first
-    }
-
     private func loadOrMakeTunnelManager() async throws -> NETunnelProviderManager {
         guard let tunnelManager = await tunnelManager else {
             let tunnelManager = NETunnelProviderManager()
             try await setupAndSave(tunnelManager)
-            internalTunnelManager = tunnelManager
+            internalManager = tunnelManager
             return tunnelManager
         }
 
@@ -262,12 +275,7 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
-        try await saveToPreferences(tunnelManager)
-        try await loadFromPreferences(tunnelManager)
-        try await saveToPreferences(tunnelManager)
-    }
 
-    private func saveToPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
         do {
             try await tunnelManager.saveToPreferences()
         } catch {
@@ -281,9 +289,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             }
             throw StartError.saveToPreferencesFailed(error)
         }
-    }
 
-    private func loadFromPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
         do {
             try await tunnelManager.loadFromPreferences()
         } catch {
@@ -309,6 +315,31 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    // MARK: - Observing Configuration Changes
+
+    private func subscribeToConfigurationChanges() {
+        notificationCenter.publisher(for: .NEVPNConfigurationChange)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                Task { @MainActor in
+                    guard let manager = await self.internalManager else {
+                        return
+                    }
+
+                    do {
+                        try await manager.loadFromPreferences()
+
+                        if manager.connection.status == .invalid {
+                            self.clearInternalManager()
+                        }
+                    } catch {
+                        self.clearInternalManager()
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - Observing Status Changes

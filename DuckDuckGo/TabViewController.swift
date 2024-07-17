@@ -61,7 +61,8 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorHeader: UILabel!
     @IBOutlet private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
-    
+    var webViewBottomAnchorConstraint: NSLayoutConstraint?
+
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
@@ -350,7 +351,8 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-        
+        registerForAddressBarLocationNotifications()
+
         // Setup DuckPlayer navigation handler
         self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
         
@@ -363,7 +365,13 @@ class TabViewController: UIViewController {
 #endif
     }
     
-    
+    private func registerForAddressBarLocationNotifications() {
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(onAddressBarPositionChanged),
+                                               name: AppUserDefaults.Notifications.addressBarPositionChanged,
+                                               object: nil)
+    }
+
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -381,16 +389,20 @@ class TabViewController: UIViewController {
 #endif
     }
 
+    @objc
+    private func onAddressBarPositionChanged() {
+        updateWebViewBottomAnchor()
+    }
+
+    private func updateWebViewBottomAnchor() {
+        let targetHeight = chromeDelegate?.barsMaxHeight ?? 0.0
+        webViewBottomAnchorConstraint?.constant = appSettings.currentAddressBarPosition == .bottom ? -targetHeight : 0
+    }
+
     private func observeNetPConnectionStatusChanges() {
         netPConnectionObserverCancellable = netPConnectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        Swift.print("***", #function)
-        super.viewWillAppear(animated)
-        webView.scrollView.contentInset.bottom = appSettings.currentAddressBarPosition == .bottom ? 52 : 0
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -399,6 +411,7 @@ class TabViewController: UIViewController {
         userScripts?.autofillUserScript.emailDelegate = emailManager
 
         woShownRecently = false // don't fire if the user goes somewhere else first
+        updateWebViewBottomAnchor()
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
@@ -454,7 +467,6 @@ class TabViewController: UIViewController {
         userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -463,7 +475,17 @@ class TabViewController: UIViewController {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        
         webViewContainer.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webViewBottomAnchorConstraint!,
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor)
+        ])
+
         webView.scrollView.refreshControl = refreshControl
         // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
         // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`

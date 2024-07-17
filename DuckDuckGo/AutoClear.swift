@@ -73,6 +73,10 @@ class AutoClear {
     private func shouldClearData(elapsedTime: TimeInterval) -> Bool {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return false }
 
+        if ProcessInfo.processInfo.arguments.contains("autoclear-ui-test") {
+            return elapsedTime > 5
+        }
+
         switch settings.timing {
         case .termination:
             return false

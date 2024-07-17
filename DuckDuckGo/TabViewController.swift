@@ -292,7 +292,7 @@ class TabViewController: UIViewController {
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
-                                   historyManager: HistoryManager,
+                                   historyManager: HistoryManaging,
                                    syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -310,7 +310,7 @@ class TabViewController: UIViewController {
         (webView.configuration.userContentController as? UserContentController)!
     }
 
-    let historyManager: HistoryManager
+    let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
     
     var duckPlayer: DuckPlayerProtocol = DuckPlayer()
@@ -320,7 +320,7 @@ class TabViewController: UIViewController {
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
-                   historyManager: HistoryManager,
+                   historyManager: HistoryManaging,
                    syncService: DDGSyncing) {
         self.tabModel = tabModel
         self.appSettings = appSettings

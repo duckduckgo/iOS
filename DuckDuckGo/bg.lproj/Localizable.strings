@@ -1633,6 +1633,36 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Изскачащият прозорец е скрит";
 
+/* Button to change the default browser */
+"onboarding.browsers.cta" = "Изберете своя браузър";
+
+/* Message to highlight browser capability of blocking cookie pop-ups */
+"onboarding.browsers.features.cookiePopups.title" = "Блокиране на изскачащи прозорци за бисквитки";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.browsers.features.creepyAds.title" = "Блокиране на досадни реклами";
+
+/* Message to highlight browser capability ofswiftly erase browsing data */
+"onboarding.browsers.features.eraseBrowsingData.title" = "Бързо изтриване на данните за сърфиране";
+
+/* Message to highlight browser capability of private searches */
+"onboarding.browsers.features.privateSearch.title" = "Поверително търсене по подразбиране";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.browsers.features.trackerBlocker.title" = "Блокиране на тракерите на трети страни";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.browsers.title" = "Защитата на поверителността е активирана!";
+
+/* Subheader message for the screen to choose DuckDuckGo as default browser */
+"onboarding.defaultBrowser.message" = "Отваряйте връзки без притеснения, всеки път.";
+
+/* Button to continue the onboarding process */
+"onboarding.intro.cta" = "Да го направим!";
+
+/* The title of the onboarding dialog popup */
+"onboarding.intro.title" = "Здравейте.\n\nГотови ли сте за по-добро и по-поверително изживяване в интернет?";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добави приспособлението";
 

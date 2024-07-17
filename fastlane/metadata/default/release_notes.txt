@@ -1,3 +1,1 @@
-- Fixed an issue where cancelling downloads would sometimes not work as expected.
-- Make sure you have iOS 15 or later to keep getting the latest browser updates and improvements. Here's how to update iOS: https://support.apple.com/guide/iphone/update-ios-iph3e504502/14.0/ios/14.0
-Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring
+- Bug fixes and other improvements.

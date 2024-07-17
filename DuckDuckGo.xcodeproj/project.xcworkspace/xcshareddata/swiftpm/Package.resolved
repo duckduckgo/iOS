@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/duckduckgo/apple-toolbox.git",
         "state": {
           "branch": null,
-          "revision": "ab53ca41e9044a20eab7e53249526fadcf9acc9f",
-          "version": "3.1.1"
+          "revision": "0c13c5f056805f2d403618ccc3bfb833c303c68d",
+          "version": "3.1.2"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "522a9defa0eb951c9101d9f54c19d51f8ef57f4c",
-          "version": "169.1.0"
+          "revision": "09844ec2d0c9d2312e02c90527e8df063db89318",
+          "version": "171.2.1"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "46989693916f56d1186bd59ac15124caef896560",
-          "version": "1.3.1"
+          "revision": "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
+          "version": "1.4.0"
         }
       },
       {

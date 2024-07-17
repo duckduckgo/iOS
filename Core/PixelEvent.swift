@@ -139,6 +139,10 @@ extension Pixel {
         
         case brokenSiteReport
         
+        case onboardingIntroShownUnique
+        case onboardingIntroComparisonChartShownUnique
+        case onboardingIntroChooseBrowserCTAPressed
+
         case daxDialogsSerp
         case daxDialogsWithoutTrackers
         case daxDialogsWithoutTrackersFollowUp
@@ -238,7 +242,6 @@ extension Pixel {
         case autofillLoginsFillLoginInlineDisablePromptAutofillKept
         case autofillLoginsFillLoginInlineDisablePromptAutofillDisabled
         
-        case autofillSettingsOpened
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsResetExcludedDisplayed
@@ -435,7 +438,8 @@ extension Pixel {
         
         // MARK: debug pixels
         case dbCrashDetected
-        
+        case crashOnCrashHandlersSetUp
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -875,6 +879,10 @@ extension Pixel.Event {
             
         case .brokenSiteReport: return "epbf"
             
+        case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
+        case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
+        case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+
         case .daxDialogsSerp: return "m_dx_s"
         case .daxDialogsWithoutTrackers: return "m_dx_wo"
         case .daxDialogsWithoutTrackersFollowUp: return "m_dx_wof"
@@ -973,7 +981,6 @@ extension Pixel.Event {
         case .autofillLoginsFillLoginInlineDisablePromptAutofillKept: return "m_autofill_logins_save_disable-prompt_autofill-kept"
         case .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled: return "m_autofill_logins_save_disable-prompt_autofill-disabled"
             
-        case .autofillSettingsOpened: return "m_autofill_settings_opened"
         case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsResetExcludedDisplayed: return "m_autofill_settings_reset_excluded_displayed"
@@ -1152,6 +1159,7 @@ extension Pixel.Event {
             // MARK: debug pixels
             
         case .dbCrashDetected: return "m_d_crash"
+        case .crashOnCrashHandlersSetUp: return "m_d_crash_on_handlers_setup"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"

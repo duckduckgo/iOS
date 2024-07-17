@@ -32,7 +32,7 @@ class TabManager {
     private var tabControllerCache = [TabViewController]()
 
     private let bookmarksDatabase: CoreDataDatabase
-    private let historyManager: HistoryManager
+    private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
 
@@ -45,7 +45,7 @@ class TabManager {
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
-         historyManager: HistoryManager,
+         historyManager: HistoryManaging,
          syncService: DDGSyncing) {
         self.model = model
         self.previewsSource = previewsSource

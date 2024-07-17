@@ -117,6 +117,8 @@ struct SettingsRootView: View {
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+        case .duckPlayer:
+            SettingsDuckPlayerView()
         default:
             EmptyView()
         }

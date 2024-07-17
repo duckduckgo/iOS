@@ -87,6 +87,8 @@ protocol DuckPlayerProtocol {
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func openVideoInDuckPlayer(url: URL, webView: WKWebView)
+    func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable?
+    func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable?
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
@@ -135,6 +137,20 @@ final class DuckPlayer: DuckPlayerProtocol {
         let webView = message.webView
         return await self.encodedPlayerSettings(with: webView)
     }
+    
+    public func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable? {
+        NotificationCenter.default.post(
+            name: .openDuckPlayerSettings,
+            object: SettingsViewModel.SettingsDeepLinkSection.duckPlayer,
+            userInfo: nil
+        )
+        return nil
+    }
+    
+    public func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable? {
+        // NOOP, Just prevent the assertion
+        return nil
+    }
 
     private func encodeUserValues() -> UserValues {
         UserValues(
@@ -161,4 +177,8 @@ final class DuckPlayer: DuckPlayerProtocol {
         return InitialOverlaySettings(userValues: userValues)
     }
     
+}
+
+extension NSNotification.Name {
+    static let openDuckPlayerSettings: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.openDuckPlayerSettings")
 }

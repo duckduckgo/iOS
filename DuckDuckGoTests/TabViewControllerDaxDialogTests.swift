@@ -31,7 +31,7 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         try super.setUpWithError()
         delegateMock = MockTabDelegate()
         onboardingPresenterMock = ContextualOnboardingPresenterMock()
-        sut = .mock(contextualOnboardingPresenter: onboardingPresenterMock)
+        sut = .fake(contextualOnboardingPresenter: onboardingPresenterMock)
         sut.delegate = delegateMock
     }
 

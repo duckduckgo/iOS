@@ -116,7 +116,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL.makeSearchURL(query: query, queryContext: nil))
 
         // WHEN
-        mainVC.tab(.mock(), didRequestLoadQuery: query)
+        mainVC.tab(.fake(), didRequestLoadQuery: query)
 
         // THEN
         assertExpected(queryURL: expectedUrl)
@@ -128,7 +128,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL(string: site))
 
         // WHEN
-        mainVC.tab(.mock(), didRequestLoadURL: expectedUrl)
+        mainVC.tab(.fake(), didRequestLoadURL: expectedUrl)
 
         // THEN
         assertExpected(url: expectedUrl)

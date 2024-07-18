@@ -111,7 +111,7 @@ final class MockTabDelegate: TabDelegate {
 
 extension TabViewController {
 
-    static func mock(contextualOnboardingPresenter: ContextualOnboardingPresenting = ContextualOnboardingPresenterMock()) -> TabViewController {
+    static func fake(contextualOnboardingPresenter: ContextualOnboardingPresenting = ContextualOnboardingPresenterMock()) -> TabViewController {
         let tab = TabViewController.loadFromStoryboard(
             model: .init(link: Link(title: nil, url: .ddg)),
             appSettings: AppSettingsMock(),

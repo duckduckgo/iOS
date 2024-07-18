@@ -347,7 +347,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         guard let host = privacyInfo.domain else { return nil }
 
         if privacyInfo.url.isDuckDuckGoSearch {
-            // If user already performed a search, show after search dialog but don't follow up by suggesting to visit a site.
+            // If user already visited a site, show after search dialog but don't follow up by suggesting to visit a site.
             // Otherwise show after search dialog and follow up by suggesting to visit a site.
             if nonDDGBrowsingMessageSeen {
                 return searchMessage()

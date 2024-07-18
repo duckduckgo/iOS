@@ -41,7 +41,7 @@ struct AutofillBreakageReportCellContentView: View {
                 .foregroundColor(Color(designSystemColor: .textPrimary))
 
             Divider()
-                .foregroundColor(Color(designSystemColor: .lines)).opacity(0.4)
+                .foregroundColor(Color(designSystemColor: .lines)).opacity(0.6)
 
                 Button {
                     onReport()
@@ -53,9 +53,9 @@ struct AutofillBreakageReportCellContentView: View {
                         Spacer()
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 4)
         }
-        .padding(.leading, 24.0)
+        .padding(.leading, 16.0)
         .padding(.vertical, 8.0)
     }
 }

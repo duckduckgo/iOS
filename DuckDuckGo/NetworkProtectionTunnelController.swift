@@ -324,7 +324,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 Task { @MainActor in
-                    guard let manager = await self.internalManager else {
+                    guard let manager = self.internalManager else {
                         return
                     }
 

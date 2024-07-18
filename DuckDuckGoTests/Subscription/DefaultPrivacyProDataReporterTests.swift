@@ -120,10 +120,10 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     }
 
     func testIsWidgetAdded() async {
-        let hasNothing = await reporter.isWidgetAdded()
-        XCTAssertFalse(hasNothing)
-        let hasSomething = await anotherReporter.isWidgetAdded()
-        XCTAssertTrue(hasSomething)
+        await reporter.saveWidgetAdded()
+        XCTAssertFalse(reporter.isWidgetAdded())
+        await anotherReporter.saveWidgetAdded()
+        XCTAssertTrue(anotherReporter.isWidgetAdded())
     }
 
     func testIsFrequentUser() {
@@ -163,10 +163,10 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
     }
 
     func testAttachedParameters() async {
-        let params1 = await reporter.randomizedParameters(for: .messageID("some_id"))
-        let params2 = await reporter.randomizedParameters(for: .origin("some_origin"))
-        let params3 = await reporter.randomizedParameters(for: .messageID("test_origin"))
-        let params4 = await reporter.randomizedParameters(for: .origin("test_origin"))
+        let params1 = reporter.randomizedParameters(for: .messageID("some_id"))
+        let params2 = reporter.randomizedParameters(for: .origin("some_origin"))
+        let params3 = reporter.randomizedParameters(for: .messageID("test_origin"))
+        let params4 = reporter.randomizedParameters(for: .origin("test_origin"))
         XCTAssertEqual(params1.count, 0)
         XCTAssertEqual(params2.count, 0)
         XCTAssertEqual(params3.count, 8)

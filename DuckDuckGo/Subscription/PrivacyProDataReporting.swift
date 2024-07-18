@@ -49,7 +49,7 @@ protocol PrivacyProDataReporting {
     func isFireproofingUsed() -> Bool
     func isAppOnboardingCompleted() -> Bool
     func isEmailEnabled() -> Bool
-    func isWidgetAdded() async -> Bool
+    func isWidgetAdded() -> Bool
     func isFrequentUser() -> Bool
     func isLongTermUser() -> Bool
     func isAutofillUser() -> Bool
@@ -62,6 +62,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
         static let isFireproofingUsedKey = "com.duckduckgo.ios.privacypropromo.FireproofingUsed"
+        static let isWidgetAddedKey = "com.duckduckgo.ios.privacypropromo.WidgetAdded"
         static let applicationLastSessionEndedKey = "com.duckduckgo.ios.privacypropromo.ApplicationLastSessionEnded"
         static let searchCountKey = "com.duckduckgo.ios.privacypropromo.SearchCount"
     }
@@ -137,7 +138,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     /// Collect a randomized subset of parameters iff the Privacy Pro impression/conversion pixels
     /// or the Origin Attribution subscription pixel are being fired
-    func randomizedParameters(for useCase: UseCase) async -> [String: String] {
+    func randomizedParameters(for useCase: UseCase) -> [String: String] {
         switch useCase {
         case .messageID(let messageID):
             guard let includedOrigins, includedOrigins.contains(messageID) else { return [:] }
@@ -148,8 +149,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         }
 
         /// Wait for all the injected dependencies to be available
-        if !isReady {
-            return await randomizedParameters(for: useCase)
+        if !isReady && !ProcessInfo().arguments.contains("testing") {
+            return randomizedParameters(for: useCase)
         }
 
         var additionalParameters = [String: String]()
@@ -164,7 +165,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
             case .fireproofingUsed: value = isFireproofingUsed()
             case .appOnboardingCompleted: value = isAppOnboardingCompleted()
             case .emailEnabled: value = isEmailEnabled()
-            case .widgetAdded: value = await isWidgetAdded()
+            case .widgetAdded: value = isWidgetAdded()
             case .frequentUser: value = isFrequentUser()
             case .longTermUser: value = isLongTermUser()
             case .autofillUser: value = isAutofillUser()
@@ -177,8 +178,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         return additionalParameters
     }
 
-    func mergeRandomizedParameters(for useCase: UseCase, with parameters: [String: String]) async -> [String: String] {
-        await randomizedParameters(for: useCase).merging(parameters) { $1 }
+    func mergeRandomizedParameters(for useCase: UseCase, with parameters: [String: String]) -> [String: String] {
+        randomizedParameters(for: useCase).merging(parameters) { $1 }
     }
 
     func isReinstall() -> Bool {
@@ -210,8 +211,8 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         emailManager.isSignedIn
     }
 
-    func isWidgetAdded() async -> Bool {
-        await appSettings.isWidgetInstalled()
+    func isWidgetAdded() -> Bool {
+        userDefaults.bool(forKey: Key.isWidgetAddedKey, defaultValue: false)
     }
 
     func isFrequentUser() -> Bool {
@@ -246,6 +247,13 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     func saveFireproofingUsed() {
         guard !isFireproofingUsed() else { return }
         userDefaults.set(true, forKey: Key.isFireproofingUsedKey)
+    }
+
+    func saveWidgetAdded() async {
+        let isInstalled = await appSettings.isWidgetInstalled()
+        if isInstalled != isWidgetAdded() {
+            userDefaults.set(isInstalled, forKey: Key.isWidgetAddedKey)
+        }
     }
 
     func saveApplicationLastSessionEnded() {

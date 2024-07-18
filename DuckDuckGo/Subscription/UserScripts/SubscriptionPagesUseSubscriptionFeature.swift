@@ -264,7 +264,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case .success(let purchaseUpdate):
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-            await Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin)
+            Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin)
             setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
         case .failure:
@@ -441,7 +441,7 @@ private extension Pixel {
         static let locale = "locale"
     }
 
-    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current) async {
+    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current) {
         var parameters: [String: String] = [:]
         parameters[AttributionParameters.locale] = locale.identifier
         if let origin {
@@ -449,8 +449,8 @@ private extension Pixel {
         }
         Self.fire(
             pixel: pixel,
-            withAdditionalParameters: await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .origin(origin),
-                                                                                                           with: parameters)
+            withAdditionalParameters: DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .origin(origin),
+                                                                                                     with: parameters)
         )
     }
 

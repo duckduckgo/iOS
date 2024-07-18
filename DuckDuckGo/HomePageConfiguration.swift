@@ -96,17 +96,15 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     func didAppear(_ homeMessage: HomeMessage) {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
-            Task {
-                os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                Pixel.fire(pixel: .remoteMessageShown,
-                           withAdditionalParameters: await additionalParameters(for: remoteMessage.id))
+            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Pixel.fire(pixel: .remoteMessageShown,
+                       withAdditionalParameters: additionalParameters(for: remoteMessage.id))
 
-                if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
-                    os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                    Pixel.fire(pixel: .remoteMessageShownUnique,
-                               withAdditionalParameters: await additionalParameters(for: remoteMessage.id))
-                    remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
-                }
+            if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
+                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Pixel.fire(pixel: .remoteMessageShownUnique,
+                           withAdditionalParameters: additionalParameters(for: remoteMessage.id))
+                remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
             }
 
         default:
@@ -115,8 +113,8 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
 
     }
 
-    private func additionalParameters(for messageID: String) async -> [String: String] {
-        await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
-                                                                             with: [PixelParameters.message: "\(messageID)"])
+    private func additionalParameters(for messageID: String) -> [String: String] {
+        DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
+                                                                       with: [PixelParameters.message: "\(messageID)"])
     }
 }

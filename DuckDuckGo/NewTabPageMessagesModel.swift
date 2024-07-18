@@ -79,38 +79,37 @@ final class NewTabPageMessagesModel: ObservableObject {
                 // no-op
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { action in
-                Task { [weak self] in
-                    guard let action, let self else { return }
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
+                guard let action,
+                      let self else { return }
 
-                    switch action {
+                switch action {
 
-                    case .action(let isSharing):
-                        if !isSharing {
-                            self.dismissHomeMessage(message)
-                        }
-                        pixelFiring.fire(.remoteMessageActionClicked,
-                                         withAdditionalParameters: await self.additionalParameters(for: remoteMessage.id))
-
-                    case .primaryAction(let isSharing):
-                        if !isSharing {
-                            self.dismissHomeMessage(message)
-                        }
-                        pixelFiring.fire(.remoteMessagePrimaryActionClicked,
-                                         withAdditionalParameters: await self.additionalParameters(for: remoteMessage.id))
-
-                    case .secondaryAction(let isSharing):
-                        if !isSharing {
-                            self.dismissHomeMessage(message)
-                        }
-                        pixelFiring.fire(.remoteMessageSecondaryActionClicked,
-                                         withAdditionalParameters: await self.additionalParameters(for: remoteMessage.id))
-
-                    case .close:
+                case .action(let isSharing):
+                    if !isSharing {
                         self.dismissHomeMessage(message)
-                        pixelFiring.fire(.remoteMessageDismissed,
-                                         withAdditionalParameters: await self.additionalParameters(for: remoteMessage.id))
                     }
+                    pixelFiring.fire(.remoteMessageActionClicked,
+                                     withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
+
+                case .primaryAction(let isSharing):
+                    if !isSharing {
+                        self.dismissHomeMessage(message)
+                    }
+                    pixelFiring.fire(.remoteMessagePrimaryActionClicked,
+                                     withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
+
+                case .secondaryAction(let isSharing):
+                    if !isSharing {
+                        self.dismissHomeMessage(message)
+                    }
+                    pixelFiring.fire(.remoteMessageSecondaryActionClicked,
+                                     withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
+
+                case .close:
+                    self.dismissHomeMessage(message)
+                    pixelFiring.fire(.remoteMessageDismissed,
+                                     withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
                 }
             } onDidAppear: { [weak self] in
                 self?.homePageMessagesConfiguration.didAppear(message)
@@ -118,8 +117,8 @@ final class NewTabPageMessagesModel: ObservableObject {
         }
     }
 
-    private func additionalParameters(for messageID: String) async -> [String: String] {
-        await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
-                                                                             with: [PixelParameters.message: "\(messageID)"])
+    private func additionalParameters(for messageID: String) -> [String: String] {
+        DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
+                                                                       with: [PixelParameters.message: "\(messageID)"])
     }
 }

@@ -218,6 +218,6 @@ private class HomePageMessagesConfigurationMock: HomePageMessagesConfiguration {
 
 private extension HomeMessage {
     static func mockRemote(withType type: RemoteMessageModelType) -> Self {
-        HomeMessage.remoteMessage(remoteMessage: .init(id: "foo", content: type, matchingRules: [], exclusionRules: []))
+        HomeMessage.remoteMessage(remoteMessage: .init(id: "foo", content: type, matchingRules: [], exclusionRules: [], isMetricsEnabled: false))
     }
 }

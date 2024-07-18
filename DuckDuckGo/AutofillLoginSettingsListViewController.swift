@@ -142,6 +142,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         tableView.registerCell(ofType: AutofillNeverSavedTableViewCell.self)
+        tableView.registerCell(ofType: AutofillBreakageReportTableViewCell.self)
         return tableView
     }()
 
@@ -170,6 +171,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     init(appSettings: AppSettings,
          currentTabUrl: URL? = nil,
+         currentTabUid: String? = nil,
          syncService: DDGSyncing,
          syncDataProviders: SyncDataProviders,
          selectedAccount: SecureVaultModels.WebsiteAccount?,
@@ -179,7 +181,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         if secureVault == nil {
             os_log("Failed to make vault")
         }
-        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl, currentTabUid: currentTabUid)
         self.syncService = syncService
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
@@ -700,6 +702,23 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         cell.theme = ThemeManager.shared.currentTheme
         return cell
     }
+
+    private func reportCell(for tableView: UITableView, indexPath: IndexPath) -> AutofillBreakageReportTableViewCell {
+        let cell = tableView.dequeueCell(ofType: AutofillBreakageReportTableViewCell.self, for: indexPath)
+        let contentView = AutofillBreakageReportCellContentView(onReport: { [weak self] in
+
+            guard let alert = self?.viewModel.createBreakageReporterAlert() else {
+                return
+            }
+
+            self?.present(controller: alert, fromView: tableView)
+
+            Pixel.fire(pixel: .autofillLoginsReportConfirmationPromptDisplayed)
+        })
+        cell.embed(in: self, withView: contentView)
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
+        return cell
+    }
 }
 
 // MARK: UITableViewDelegate
@@ -710,7 +729,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
             return 44
-        case .credentials:
+        case .suggestions, .credentials:
             return 60
         }
     }
@@ -725,6 +744,11 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
                 presentNeverPromptResetPromptAtIndexPath(indexPath)
             default:
                 break
+            }
+        case .suggestions(_, let items):
+            if indexPath.row < items.count {
+                let item = items[indexPath.row]
+                showAccountDetails(item.account)
             }
         case .credentials(_, let items):
             let item = items[indexPath.row]
@@ -799,6 +823,12 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
             default:
                 fatalError("No cell for row at index \(indexPath.row)")
             }
+        case .suggestions(_, let items):
+            if indexPath.row == items.count {
+                return reportCell(for: tableView, indexPath: indexPath)
+            } else {
+                return credentialCell(for: tableView, item: items[indexPath.row], indexPath: indexPath)
+            }
         case .credentials(_, let items):
             return credentialCell(for: tableView, item: items[indexPath.row], indexPath: indexPath)
         }
@@ -810,7 +840,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch viewModel.sections[indexPath.section] {
-        case .credentials(_, let items):
+        case .credentials(_, let items), .suggestions(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
                 let domain = items[indexPath.row].account.domain ?? ""
@@ -843,7 +873,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         switch viewModel.sections[section] {
         case .enableAutofill:
             return nil
-        case .credentials(let title, _):
+        case .suggestions(let title, _), .credentials(let title, _):
             return title
         }
     }
@@ -877,7 +907,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch viewModel.sections[indexPath.section] {
-        case .credentials:
+        case .credentials, .suggestions:
             return true
         default:
             return false
@@ -954,7 +984,7 @@ extension AutofillLoginSettingsListViewController {
 
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
-        tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.separatorColor = UIColor(designSystemColor: .lines)
         tableView.sectionIndexColor = theme.buttonTintColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
@@ -1031,4 +1061,8 @@ extension AutofillLoginSettingsListViewController {
             (tableView.frame.height / 2) - searchController.searchBar.frame.height
         )
     }
+}
+
+extension NSNotification.Name {
+    static let autofillFailureReport: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.autofillFailureReport")
 }

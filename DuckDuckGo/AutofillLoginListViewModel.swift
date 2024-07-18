@@ -23,9 +23,11 @@ import Common
 import UIKit
 import Combine
 import Core
+import PrivacyDashboard
 
 internal enum AutofillLoginListSectionType: Comparable {
     case enableAutofill
+    case suggestions(title: String, items: [AutofillLoginListItemViewModel])
     case credentials(title: String, items: [AutofillLoginListItemViewModel])
     
     static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
@@ -60,7 +62,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         case searching
         case searchingNoResults
     }
-    
+
+    struct UserInfoKeys {
+        static let tabUid = "com.duckduckgo.autofill.tab-uid"
+    }
+
     let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
     var isSearching: Bool = false
     var isEditing: Bool = false {
@@ -78,12 +84,33 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var appSettings: AppSettings
     private let tld: TLD
     private var currentTabUrl: URL?
+    private var currentTabUid: String?
     private let secureVault: (any AutofillSecureVault)?
     private let autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
+    private let privacyConfig: PrivacyConfiguration
+    private let breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+    private var showBreakageReporter: Bool = false
 
+    private lazy var reporterDateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
+    private lazy var breakageReportIntervalDays = {
+        let settings = privacyConfig.settings(for: .autofillBreakageReporter)
+        return settings["monitorIntervalDays"] as? Int ?? 42
+    }()
+
+    internal lazy var breakageReporter = BrokenSiteReporter(pixelHandler: { [weak self] _ in
+        if let currentTabUid = self?.currentTabUid {
+            NotificationCenter.default.post(name: .autofillFailureReport, object: self, userInfo: [UserInfoKeys.tabUid: currentTabUid])
+        }
+        self?.updateData()
+    }, keyValueStoring: breakageReporterKeyValueStoring, storageConfiguration: .autofillConfig)
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -113,13 +140,23 @@ final class AutofillLoginListViewModel: ObservableObject {
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: self)
         }
     }
-    
-    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil, autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager) {
+
+    init(appSettings: AppSettings,
+         tld: TLD,
+         secureVault: (any AutofillSecureVault)?,
+         currentTabUrl: URL? = nil,
+         currentTabUid: String? = nil,
+         autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager,
+         privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
+         breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable = UserDefaults.standard) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
         self.currentTabUrl = currentTabUrl
+        self.currentTabUid = currentTabUid
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
+        self.privacyConfig = privacyConfig
+        self.breakageReporterKeyValueStoring = breakageReporterKeyValueStoring
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
@@ -133,7 +170,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     func delete(at indexPath: IndexPath) -> Bool {
         let section = sections[indexPath.section]
         switch section {
-        case .credentials(_, let items):
+        case .credentials(_, let items), .suggestions(_, let items):
             let item = items[indexPath.row]
             let success = delete(item.account)
             updateData()
@@ -204,6 +241,12 @@ final class AutofillLoginListViewModel: ObservableObject {
         switch self.sections[section] {
         case .enableAutofill:
             return autofillNeverPromptWebsitesManager.neverPromptWebsites.isEmpty ? 1 : 2
+        case .suggestions(_, let items):
+            if isEditing || !showBreakageReporter {
+                return items.count
+            } else {
+                return items.count + 1
+            }
         case .credentials(_, let items):
             return items.count
         }
@@ -213,6 +256,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.accounts = fetchAccounts()
         self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
+        showBreakageReporter = shouldShowBreakageReporter()
     }
     
     func filterData(with query: String? = nil) {
@@ -233,6 +277,62 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     func resetNeverPromptWebsites() {
         _ = autofillNeverPromptWebsitesManager.deleteAllNeverPromptWebsites()
+    }
+
+    func createBreakageReporterAlert() -> UIAlertController? {
+        guard let currentTabUrl = currentTabUrl else {
+            return nil
+        }
+
+        let urlName = tld.eTLDplus1(forStringURL: currentTabUrl.absoluteString) ??
+        autofillDomainNameUrlMatcher.normalizeUrlForWeb(currentTabUrl.absoluteString)
+
+        let alert = UIAlertController(title: UserText.autofillSettingsReportNotWorkingConfirmationPromptTitle(for: urlName),
+                                      message: UserText.autofillSettingsReportNotWorkingConfirmationPromptMessage,
+                                      preferredStyle: .alert)
+
+        let sendReportAction = UIAlertAction(title: UserText.autofillSettingsReportNotWorkingConfirmationPromptButton,
+                                             style: .default) {[weak self] _ in
+            self?.saveReport(for: currentTabUrl)
+            Pixel.fire(pixel: .autofillLoginsReportConfirmationPromptConfirmed)
+        }
+
+        alert.addAction(sendReportAction)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: { _ in
+            Pixel.fire(pixel: .autofillLoginsReportConfirmationPromptDismissed)
+        }))
+        alert.preferredAction = sendReportAction
+
+        return alert
+    }
+
+    private func saveReport(for currentTabUrl: URL) {
+        let report = BrokenSiteReport(siteUrl: currentTabUrl,
+                                      category: "",
+                                      description: "",
+                                      osVersion: "",
+                                      manufacturer: "",
+                                      upgradedHttps: false,
+                                      tdsETag: nil,
+                                      blockedTrackerDomains: nil,
+                                      installedSurrogates: nil,
+                                      isGPCEnabled: true,
+                                      ampURL: "",
+                                      urlParametersRemoved: true,
+                                      protectionsState: true,
+                                      reportFlow: .appMenu,
+                                      siteType: .mobile,
+                                      atb: "",
+                                      model: "",
+                                      errors: nil,
+                                      httpStatusCodes: nil,
+                                      openerContext: nil,
+                                      vpnOn: false,
+                                      jsPerformance: nil,
+                                      userRefreshCount: 0,
+                                      variant: "")
+
+        try? breakageReporter.report(report, reportMode: .regular, daysToExpiry: breakageReportIntervalDays)
     }
 
     // MARK: Private Methods
@@ -295,7 +395,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                                                                                           autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
                                                                                           autofillDomainNameUrlSort: autofillDomainNameUrlSort)
                 }
-                newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
+                newSections.append(.suggestions(title: UserText.autofillLoginListSuggested, items: accountItems))
             }
         }
 
@@ -349,12 +449,17 @@ final class AutofillLoginListViewModel: ObservableObject {
         var rowsToDelete: [IndexPath] = []
 
         for (index, section) in sections.enumerated() {
-            if case .credentials(_, let items) = section, items.contains(where: { $0.account.id == accountId }) {
-                if items.count == 1 {
-                    sectionsToDelete.append(index)
-                } else if let rowIndex = items.firstIndex(where: { $0.account.id == accountId }) {
-                    rowsToDelete.append(IndexPath(row: rowIndex, section: index))
-                }
+            switch section {
+            case .credentials(_, let items), .suggestions(_, let items):
+                if let itemIndex = items.firstIndex(where: { $0.account.id == accountId }) {
+                        if items.count == 1 {
+                            sectionsToDelete.append(index)
+                        } else {
+                            rowsToDelete.append(IndexPath(row: itemIndex, section: index))
+                        }
+                    }
+            default:
+                break
             }
         }
 
@@ -406,6 +511,30 @@ final class AutofillLoginListViewModel: ObservableObject {
             Pixel.fire(pixel: .secureVaultError, error: error)
             return false
         }
+    }
+
+    func shouldShowBreakageReporter() -> Bool {
+        guard let currentTabUrl = currentTabUrl,
+              !accountsToSuggest.isEmpty,
+              privacyConfig.isEnabled(featureKey: .autofillBreakageReporter),
+              let identifier = currentTabUrl.privacySafeDomainIdentifier,
+              !privacyConfig.isInExceptionList(domain: currentTabUrl.host, forFeature: .autofillBreakageReporter) else {
+            return false
+        }
+
+        if let entry = breakageReporter.persistencyManager.entry(forKey: identifier),
+           let lastReportedDateStr = entry.value as? String,
+           let lastReportedDate = reporterDateFormatter.date(from: lastReportedDateStr) {
+
+            if Date.daysAgo(breakageReportIntervalDays) > lastReportedDate {
+                _ = breakageReporter.persistencyManager.removeExpiredItems(currentDate: Date())
+                return true
+            } else {
+                return false
+            }
+        }
+
+        return true
     }
 }
 

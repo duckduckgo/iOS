@@ -280,6 +280,11 @@ extension Pixel {
         case autofillManagementUpdateLogin
 
         case autofillMultipleAuthCallsTriggered
+        case autofillLoginsReportFailure
+        case autofillLoginsReportAvailable
+        case autofillLoginsReportConfirmationPromptDisplayed
+        case autofillLoginsReportConfirmationPromptConfirmed
+        case autofillLoginsReportConfirmationPromptDismissed
 
         case getDesktopCopy
         case getDesktopShare
@@ -1027,6 +1032,11 @@ extension Pixel.Event {
             return "m_autofill_management_update_login"
 
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
+        case .autofillLoginsReportFailure: return "autofill_logins_report_failure"
+        case .autofillLoginsReportAvailable: return "autofill_logins_report_available"
+        case .autofillLoginsReportConfirmationPromptDisplayed: return "autofill_logins_report_confirmation_prompt_displayed"
+        case .autofillLoginsReportConfirmationPromptConfirmed: return "autofill_logins_report_confirmation_prompt_confirmed"
+        case .autofillLoginsReportConfirmationPromptDismissed: return "autofill_logins_report_confirmation_prompt_dismissed"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"

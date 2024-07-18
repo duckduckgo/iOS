@@ -39,15 +39,15 @@ final class NewTabPageMessagesModel: ObservableObject {
         self.pixelFiring = pixelFiring
     }
 
-    func load(completion: (() -> Void)? = nil) {
+    func load() {
         observable = notificationCenter.addObserver(
             forName: RemoteMessagingStore.Notifications.remoteMessagesDidChange,
             object: nil,
             queue: .main) { [weak self] _ in
-                self?.refresh(completion: completion)
+                self?.refresh()
         }
 
-        refresh(completion: completion)
+        refresh()
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
@@ -61,7 +61,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
     // MARK: - Private
 
-    private func refresh(completion: (() -> Void)? = nil) {
+    private func refresh() {
         homePageMessagesConfiguration.refresh()
         updateHomeMessageViewModel()
     }

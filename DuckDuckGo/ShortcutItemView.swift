@@ -21,7 +21,7 @@ import DesignResourcesKit
 import SwiftUI
 
 struct ShortcutItemView: View {
-    let name: String
+    let shortcut: NewTabPageShortcut
 
     var body: some View {
         VStack(spacing: 6) {
@@ -31,19 +31,52 @@ struct ShortcutItemView: View {
                     .shadow(color: .shade(0.12), radius: 0.5, y: 1)
                     .aspectRatio(1, contentMode: .fit)
                     .frame(width: NewTabPageGrid.Item.edgeSize)
-                Image("Login-32-Color")
+                Image(shortcut.imageResource)
                     .resizable()
-                    .aspectRatio(1.0, contentMode: .fit)
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
             }
-            Text(name)
+            Text(shortcut.name)
                 .font(Font.system(size: 12))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .top)
         }
     }
 }
 
 #Preview {
-    ShortcutItemView(name: "Shortcut")
+}
+
+private extension NewTabPageShortcut {
+    var name: String {
+        switch self {
+        case .bookmarks:
+            UserText.newTabPageShortcutBookmarks
+        case .aiChat:
+            UserText.newTabPageShortcutAIChat
+        case .passwords:
+            UserText.newTabPageShortcutPasswords
+        case .downloads:
+            UserText.newTabPageShortcutDownloads
+        case .settings:
+            UserText.newTabPageShortcutSettings
+        }
+    }
+
+    var imageResource: ImageResource {
+        switch self {
+        case .bookmarks:
+            return .bookmarksColor32
+        case .aiChat:
+            return .aiChatColor32
+        case .passwords:
+            return .passwordsAutofillColor32
+        case .downloads:
+            return .downloadsColor32
+        case .settings:
+            return .settingsColor32
+        }
+    }
 }

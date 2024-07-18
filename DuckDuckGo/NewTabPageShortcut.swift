@@ -1,5 +1,5 @@
 //
-//  ShortcutsView.swift
+//  NewTabPageShortcut.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,24 +17,10 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import UIKit
 
-struct ShortcutsView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State var enabledShortcuts: [NewTabPageShortcut] = Array(NewTabPageShortcut.allCases)
+enum NewTabPageShortcut: Int, CaseIterable, Equatable, Identifiable {
+    var id: Int { rawValue }
 
-    var body: some View {
-        NewTabPageGridView { _ in
-            ForEach(enabledShortcuts) { shortcut in
-                ShortcutItemView(shortcut: shortcut, accessoryType: .add)
-            }
-        }
-    }
-}
-
-#Preview {
-    ScrollView {
-        ShortcutsView()
-    }
-    .background(Color(designSystemColor: .background))
+    case bookmarks, aiChat, passwords, downloads, settings
 }

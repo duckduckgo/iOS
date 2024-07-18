@@ -736,7 +736,13 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(homePageMessagesConfiguration: homePageConfiguration)
+            let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
+                                                      syncService: syncService,
+                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                      homePageMessagesConfiguration: homePageConfiguration)
+
+            controller.delegate = self
+
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
@@ -1955,6 +1961,18 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
 }
 
+extension MainViewController {
+    private func handleRequestedURL(_ url: URL) {
+        showKeyboardAfterFireButton?.cancel()
+
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
+    }
+}
+
 extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -1962,13 +1980,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        showKeyboardAfterFireButton?.cancel()
-        
-        if url.isBookmarklet() {
-            executeBookmarklet(url)
-        } else {
-            loadUrl(url)
-        }
+        handleRequestedURL(url)
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
@@ -2002,6 +2014,20 @@ extension MainViewController: HomeControllerDelegate {
         viewCoordinator.navigationBarContainer.alpha = percent
     }
     
+}
+
+extension MainViewController: NewTabPageControllerDelegate {
+    func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL) {
+        handleRequestedURL(url)
+    }
+
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        segueToEditBookmark(favorite)
+    }
+
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        // no-op for now
+    }
 }
 
 extension MainViewController: TabDelegate {

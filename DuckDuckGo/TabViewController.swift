@@ -1854,23 +1854,9 @@ extension TabViewController {
         let url = navigationResponse.response.url!
 
         if case .blob = SchemeHandler.schemeType(for: url) {
-            if #available(iOS 14.5, *) {
-                decisionHandler(.download)
+            decisionHandler(.download)
 
-                return nil
-
-            // [iOS<14.5 legacy] reuse temporary download for blob: initiated by WKNavigationAction
-            } else if let download = self.temporaryDownloadForPreviewedFile,
-                      download.temporary,
-                      download.url == navigationResponse.response.url {
-                self.temporaryDownloadForPreviewedFile = nil
-                download.temporary = FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType)
-                downloadManager.startDownload(download)
-
-                decisionHandler(.cancel)
-
-                return download
-            }
+            return nil
         } else if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
             downloadManager.startDownload(download)
             decisionHandler(.cancel)
@@ -1902,9 +1888,7 @@ extension TabViewController {
         guard SchemeHandler.schemeType(for: url) != .blob else {
             // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
             // WKNavigationResponse._downloadAttribute private API could be used instead of it :(
-            if #available(iOS 14.5, *),
-               // if temporary download not setup yet, preview otherwise
-               self.temporaryDownloadForPreviewedFile?.url != url {
+            if self.temporaryDownloadForPreviewedFile?.url != url { // if temporary download not setup yet, preview otherwise
                 // calls webView:navigationAction:didBecomeDownload:
                 return .download
             } else {
@@ -1920,7 +1904,6 @@ extension TabViewController {
         return .allow
     }
 
-    @available(iOS 14.5, *)
     func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
         let delegate = InlineWKDownloadDelegate()
         // temporary delegate held strongly in callbacks
@@ -1978,7 +1961,6 @@ extension TabViewController {
         download.delegate = delegate
     }
 
-    @available(iOS 14.5, *)
     private func transfer(_ download: WKDownload,
                           to downloadManager: DownloadManager,
                           with response: URLResponse,

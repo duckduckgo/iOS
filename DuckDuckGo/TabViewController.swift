@@ -1368,7 +1368,9 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
-            
+            // Dismiss Contextual onboarding if there's no message to show.
+            contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
             }
@@ -2851,6 +2853,34 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
         present(alertController, animated: true)
     }
+}
+
+extension TabViewController: OnboardingNavigationDelegate {
+    
+    func searchFor(_ query: String) {
+        delegate?.tab(self, didRequestLoadQuery: query)
+    }
+
+    func navigateTo(url: URL) {
+        delegate?.tab(self, didRequestLoadURL: url)
+    }
+
+}
+
+extension TabViewController: ContextualOnboardingEventDelegate {
+
+    func didAcknowledgeContextualOnboardingTrackersDialog() {
+        delegate?.tabDidRequestFireButtonPulse(tab: self)
+    }
+
+    func didShowContextualOnboardingTrackersDialog() {
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
+    }
+
+    func didTapDismissContextualOnboardingAction() {
+        contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+    }
+
 }
 
 extension WKWebView {

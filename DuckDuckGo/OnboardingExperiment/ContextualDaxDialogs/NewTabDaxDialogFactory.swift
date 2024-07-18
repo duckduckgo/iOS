@@ -51,11 +51,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createInitialDialog() -> some View {
         let viewModel = OnboardingSearchSuggestionsViewModel(delegate: delegate)
-        return ScrollView(.vertical) {
-            FadeInView {
-                OnboardingTrySearchDialog(viewModel: viewModel)
-                    .padding()
-            }
+        return FadeInView {
+            OnboardingTrySearchDialog(viewModel: viewModel)
+                .padding()
         }
         .background(
             OnboardingBackground()
@@ -77,8 +75,11 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createAddFavoriteDialog(message: String) -> some View {
         return FadeInView {
-            ContextualDaxDialog(logoPosition: .top, message: NSAttributedString(string: message))
-                .padding()
+            DaxDialogView(logoPosition: .top) {
+                ContextualDaxDialogContent(message: NSAttributedString(string: message))
+
+            }
+            .padding()
         }
     }
 

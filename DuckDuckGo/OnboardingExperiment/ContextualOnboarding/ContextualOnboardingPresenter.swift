@@ -21,25 +21,36 @@ import Foundation
 import BrowserServicesKit
 import Core
 
+// Typealias for TabViewControllerType used for testing and Contextual Onboarding Delegate
+typealias TabViewOnboardingDelegate = TabViewControllerType & ContextualOnboardingDelegate
+
+// MARK: - Contextual Onboarding Presenter
+
 protocol ContextualOnboardingPresenting {
-    func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewControllerType)
+    func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate)
+    func dismissContextualOnboardingIfNeeded(from vc: TabViewOnboardingDelegate)
 }
 
 final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     private let variantManager: VariantManager
     private let daxDialogsFactory: ContextualDaxDialogsFactory
 
-    init(variantManager: VariantManager, daxDialogsFactory: ContextualDaxDialogsFactory = ExistingLogicContextualDaxDialogsFactory()) {
+    init(variantManager: VariantManager, daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory()) {
         self.variantManager = variantManager
         self.daxDialogsFactory = daxDialogsFactory
     }
 
-    func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewControllerType) {
+    func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
         if variantManager.isSupported(feature: .newOnboardingIntro) {
             presentExperimentContextualOnboarding(for: spec, in: vc)
         } else {
             presentControlContextualOnboarding(for: spec, in: vc)
         }
+    }
+
+    func dismissContextualOnboardingIfNeeded(from vc: TabViewOnboardingDelegate) {
+        guard variantManager.isSupported(feature: .newOnboardingIntro), let daxContextualOnboarding = vc.daxContextualOnboardingController else { return }
+        remove(daxController: daxContextualOnboarding, fromParent: vc)
     }
 
 }
@@ -48,23 +59,11 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
 
 private extension ContextualOnboardingPresenter {
 
-    func presentControlContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewControllerType) {
+    func presentControlContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
         vc.performSegue(withIdentifier: "DaxDialog", sender: spec)
     }
 
-    func presentExperimentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewControllerType) {
-
-        func animate(daxController: UIViewController, visible isVisible: Bool, onCompletion: ((Bool) -> Void)? = nil) {
-            daxController.view.isHidden = !isVisible
-            UIView.animate(
-                withDuration: 0.3,
-                animations: {
-                    daxController.view.alpha = isVisible ? 1 : 0
-                    daxController.parent?.view.layoutIfNeeded()
-                },
-                completion: onCompletion
-            )
-        }
+    func presentExperimentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
 
         // Before presenting a new dialog, remove any existing ones.
         vc.daxDialogsStackView.arrangedSubviews.filter({ $0 != vc.webViewContainerView }).forEach {
@@ -73,15 +72,7 @@ private extension ContextualOnboardingPresenter {
         }
 
         // Ask the Dax Dialogs Factory for a view for the given spec
-        let controller = daxDialogsFactory.makeView(for: spec) { [weak vc] in
-            guard let vc, let daxController = vc.daxContextualOnboardingController else { return }
-
-            // Collapse stack view and remove dax controller
-            animate(daxController: daxController, visible: false) { _ in
-                vc.daxDialogsStackView.removeArrangedSubview(daxController.view)
-                vc.removeChild(daxController)
-            }
-        }
+        let controller = daxDialogsFactory.makeView(for: spec, delegate: vc)
         controller.view.isHidden = true
         controller.view.alpha = 0
 
@@ -89,6 +80,25 @@ private extension ContextualOnboardingPresenter {
         vc.daxContextualOnboardingController = controller
 
         animate(daxController: controller, visible: true)
+    }
+
+    func remove(daxController: UIViewController, fromParent parent: TabViewOnboardingDelegate) {
+        animate(daxController: daxController, visible: false) { _ in
+            parent.daxDialogsStackView.removeArrangedSubview(daxController.view)
+            parent.removeChild(daxController)
+        }
+    }
+
+    func animate(daxController: UIViewController, visible isVisible: Bool, onCompletion: ((Bool) -> Void)? = nil) {
+        daxController.view.isHidden = !isVisible
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                daxController.view.alpha = isVisible ? 1 : 0
+                daxController.parent?.view.layoutIfNeeded()
+            },
+            completion: onCompletion
+        )
     }
 
 }

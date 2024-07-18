@@ -235,6 +235,7 @@ final class DaxDialog: XCTestCase {
     }
     
     func testWhenFirstTimeOnSearchPageThenShowSearchPageMessage() {
+        mockVariantManager.isSupportedReturns = false
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.BrowsingSpec.afterSearch, onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
     }
@@ -301,6 +302,39 @@ final class DaxDialog: XCTestCase {
     
     func testDaxDialogsDismissedByDefault() {
         XCTAssertTrue(DefaultDaxDialogsSettings().isDismissed)
+    }
+
+    // MARK: - Experiment
+
+    func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndHasVisitedWebsiteThenSpecTypeSearchIsReturned() throws {
+        try [DaxDialogs.BrowsingSpec.withoutTrackers, .siteIsMajorTracker, .siteOwnedByMajorTracker, .withOneTracker, .withMultipleTrackers].forEach { spec in
+            // GIVEN
+            let isExperiment = true
+            let mockVariantManager = MockVariantManager(isSupportedReturns: isExperiment)
+            let settings = InMemoryDaxDialogsSettings()
+            let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+            sut.overrideShownFlagFor(spec, flag: true)
+
+            // WHEN
+            let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+
+            // THEN
+            XCTAssertEqual(result.type, .afterSearch)
+        }
+    }
+
+    func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndHasNotVisitedWebsiteThenSpecTypeSearchWithWebsiteFollowUpIsReturned() throws {
+        // GIVEN
+        let isExperiment = true
+        let settings = InMemoryDaxDialogsSettings()
+        let mockVariantManager = MockVariantManager(isSupportedReturns: isExperiment)
+        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+
+        // THEN
+        XCTAssertEqual(result.type, .afterSearchWithWebsitesFollowUp)
     }
 
 

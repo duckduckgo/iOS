@@ -19,8 +19,25 @@
 
 import UIKit
 
-enum NewTabPageShortcut: Int, CaseIterable, Equatable, Identifiable {
-    var id: Int { rawValue }
+enum NewTabPageShortcut: CaseIterable, Equatable, Identifiable, Codable {
+    var id: String { storageIdentifier }
 
     case bookmarks, aiChat, passwords, downloads, settings
+}
+
+extension NewTabPageShortcut {
+    var storageIdentifier: String {
+        switch self {
+        case .bookmarks:
+            "shortcut.storage.identifier.bookmarks"
+        case .aiChat:
+            "shortcut.storage.identifier.aichat"
+        case .passwords:
+            "shortcut.storage.identifier.passwords"
+        case .downloads:
+            "shortcut.storage.identifier.downloads"
+        case .settings:
+            "shortcut.storage.identifier.settings"
+        }
+    }
 }

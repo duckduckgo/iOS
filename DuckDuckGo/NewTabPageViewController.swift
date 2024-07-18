@@ -41,7 +41,8 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
         self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
-                                            favoritesModel: favoritesModel)
+                                            favoritesModel: favoritesModel,
+                                            shortcutsModel: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()))
 
         super.init(rootView: newTabPageView)
 

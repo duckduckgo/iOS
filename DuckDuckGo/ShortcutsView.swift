@@ -20,13 +20,12 @@
 import SwiftUI
 
 struct ShortcutsView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State var enabledShortcuts: [NewTabPageShortcut] = Array(NewTabPageShortcut.allCases)
+    @ObservedObject private(set) var model: ShortcutsModel
 
     var body: some View {
         NewTabPageGridView { _ in
-            ForEach(enabledShortcuts) { shortcut in
-                ShortcutItemView(shortcut: shortcut, accessoryType: .add)
+            ForEach(model.enabledShortcuts) { shortcut in
+                ShortcutItemView(shortcut: shortcut, accessoryType: nil)
             }
         }
     }
@@ -34,7 +33,7 @@ struct ShortcutsView: View {
 
 #Preview {
     ScrollView {
-        ShortcutsView()
+        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()))
     }
     .background(Color(designSystemColor: .background))
 }

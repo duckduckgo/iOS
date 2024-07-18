@@ -263,6 +263,7 @@
 		6F64AA592C4818D700CF4489 /* NewTabPageShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F64AA582C4818D700CF4489 /* NewTabPageShortcut.swift */; };
 		6F64AA5B2C481AAA00CF4489 /* Shortcuts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F64AA5A2C481AAA00CF4489 /* Shortcuts.xcassets */; };
 		6F64AA5D2C4920D200CF4489 /* ShortcutAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F64AA5C2C4920D200CF4489 /* ShortcutAccessoryView.swift */; };
+		6F64AA5F2C49463C00CF4489 /* ShortcutsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F64AA5E2C49463C00CF4489 /* ShortcutsModel.swift */; };
 		6F655BE22BAB289E00AC3597 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */; };
 		6F8496412BC3D8EE00ADA54E /* OnboardingButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8496402BC3D8EE00ADA54E /* OnboardingButtonsView.swift */; };
 		6F96FF102C2B128500162692 /* NewTabPageCustomizeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F96FF0F2C2B128500162692 /* NewTabPageCustomizeButtonView.swift */; };
@@ -1411,6 +1412,7 @@
 		6F64AA582C4818D700CF4489 /* NewTabPageShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageShortcut.swift; sourceTree = "<group>"; };
 		6F64AA5A2C481AAA00CF4489 /* Shortcuts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shortcuts.xcassets; sourceTree = "<group>"; };
 		6F64AA5C2C4920D200CF4489 /* ShortcutAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutAccessoryView.swift; sourceTree = "<group>"; };
+		6F64AA5E2C49463C00CF4489 /* ShortcutsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsModel.swift; sourceTree = "<group>"; };
 		6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		6F8496402BC3D8EE00ADA54E /* OnboardingButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonsView.swift; sourceTree = "<group>"; };
 		6F96FF0F2C2B128500162692 /* NewTabPageCustomizeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageCustomizeButtonView.swift; sourceTree = "<group>"; };
@@ -3578,6 +3580,7 @@
 				6F64AA5C2C4920D200CF4489 /* ShortcutAccessoryView.swift */,
 				6F64AA582C4818D700CF4489 /* NewTabPageShortcut.swift */,
 				6F64AA5A2C481AAA00CF4489 /* Shortcuts.xcassets */,
+				6F64AA5E2C49463C00CF4489 /* ShortcutsModel.swift */,
 			);
 			name = Shortcuts;
 			sourceTree = "<group>";
@@ -7003,6 +7006,7 @@
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				CB825C922C071B1400BCC586 /* AlertView.swift in Sources */,
 				1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */,
+				6F64AA5F2C49463C00CF4489 /* ShortcutsModel.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				6FD3F8192C41252900DA5797 /* NewTabPageControllerDelegate.swift in Sources */,

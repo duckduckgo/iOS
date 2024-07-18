@@ -26,24 +26,39 @@ struct OnboardingTrySearchDialog: View {
     let viewModel: OnboardingSearchSuggestionsViewModel
 
     var body: some View {
-        ContextualDaxDialog(
-            logoPosition: .top,
-            title: title,
-            message: message,
-            list: viewModel.itemsList,
-            listAction: viewModel.listItemPressed)
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .top) {
+                ContextualDaxDialogContent(
+                    title: title,
+                    message: message,
+                    list: viewModel.itemsList,
+                    listAction: viewModel.listItemPressed
+                )
+            }
+        }
     }
 }
 
 struct OnboardingTryVisitingSiteDialog: View {
     let logoPosition: DaxDialogLogoPosition
+    let viewModel: OnboardingSiteSuggestionsViewModel
+
+    var body: some View {
+        ScrollView(.vertical) {
+            DaxDialogView(logoPosition: logoPosition) {
+                OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
+            }
+        }
+    }
+}
+
+struct OnboardingTryVisitingSiteDialogContent: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
     let viewModel: OnboardingSiteSuggestionsViewModel
 
     var body: some View {
-        ContextualDaxDialog(
-            logoPosition: logoPosition,
+        ContextualDaxDialogContent(
             title: title,
             message: message,
             list: viewModel.itemsList,
@@ -51,8 +66,8 @@ struct OnboardingTryVisitingSiteDialog: View {
     }
 }
 
-struct OnboardingFireButtonDialog: View {
-    var attributedMessage: NSAttributedString {
+struct OnboardingFireButtonDialogContent: View {
+    private let attributedMessage: NSAttributedString = {
         let firstString = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryFireButtonMessage
         let boldString = "Fire Button."
         let attributedString = NSMutableAttributedString(string: firstString)
@@ -65,53 +80,74 @@ struct OnboardingFireButtonDialog: View {
         }
 
         return attributedString
-    }
+    }()
 
     var body: some View {
-        ContextualDaxDialog(
+        ContextualDaxDialogContent(
             message: attributedMessage)
     }
 }
 
 struct OnboardingFirstSearchDoneDialog: View {
-
-    @State var showNextScreen: Bool = false
-    @State var shouldFollowUp: Bool
-    let viewModel: OnboardingSiteSuggestionsViewModel
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+
+    @State private var showNextScreen: Bool = false
+
+    let shouldFollowUp: Bool
+    let viewModel: OnboardingSiteSuggestionsViewModel
     let gotItAction: () -> Void
 
     var body: some View {
-        if showNextScreen {
-            OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
-        } else {
-            ContextualDaxDialog(
-                message: message,
-                cta: cta) {
-                    if shouldFollowUp {
-                        showNextScreen = true
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .left) {
+                VStack {
+                    if showNextScreen {
+                        OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
                     } else {
-                        gotItAction()
+                        ContextualDaxDialogContent(message: message, cta: cta) {
+                            buttonAction()
+                        }
                     }
+                }
+            }
+        }
+    }
+
+    private func buttonAction() {
+        withAnimation {
+            if shouldFollowUp {
+                showNextScreen = true
+            } else {
+                gotItAction()
             }
         }
     }
 }
 
 struct OnboardingTrackersDoneDialog: View {
-    @State var showNextScreen: Bool = false
-    let message: NSAttributedString
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
 
+    @State private var showNextScreen: Bool = false
+
+    let message: NSAttributedString
+    let blockedTrackersCTAAction: () -> Void
+
     var body: some View {
-        if showNextScreen {
-            OnboardingFireButtonDialog()
-        } else {
-            ContextualDaxDialog(
-                message: message,
-                cta: cta) {
-                    showNextScreen = true
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .left) {
+                VStack {
+                    if showNextScreen {
+                        OnboardingFireButtonDialogContent()
+                    } else {
+                        ContextualDaxDialogContent(message: message, cta: cta) {
+                            withAnimation {
+                                showNextScreen = true
+                                blockedTrackersCTAAction()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -122,16 +158,21 @@ struct OnboardingFinalDialog: View {
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     let imageName = "Success-128"
+    
     let highFiveAction: () -> Void
 
     var body: some View {
-        ContextualDaxDialog(
-            title: title,
-            message: message,
-            imageName: imageName,
-            cta: cta,
-            action: highFiveAction
-        )
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .left) {
+                ContextualDaxDialogContent(
+                    title: title,
+                    message: message,
+                    imageName: imageName,
+                    cta: cta,
+                    action: highFiveAction
+                )
+            }
+        }
     }
 }
 
@@ -153,7 +194,9 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("Try Fire Button") {
-    OnboardingFireButtonDialog()
+    DaxDialogView(logoPosition: .left) {
+        OnboardingFireButtonDialogContent()
+    }
         .padding()
 }
 
@@ -174,7 +217,8 @@ struct OnboardingFinalDialog: View {
             Facebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\n
             I’ll block Facebook from seeing your activity on those sites.
             """
-        )
+        ),
+        blockedTrackersCTAAction: { }
     )
     .padding()
 }

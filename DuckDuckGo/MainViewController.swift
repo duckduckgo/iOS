@@ -788,6 +788,8 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
 
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            // Dismiss pulsing fire button animation when the user taps on the Fire Button
+            ViewHighlighter.hideAll()
             showClearDataAlert()
         } else {
             if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
@@ -2178,6 +2180,10 @@ extension MainViewController: TabDelegate {
         showFireButtonPulse()
     }
     
+    func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController) {
+        showPrivacyDashboardButtonPulse()
+    }
+
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
         searchBarRect
     }
@@ -2230,6 +2236,14 @@ extension MainViewController: TabDelegate {
 
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
         return currentTab === tab
+    }
+
+    func tab(_ tab: TabViewController, didRequestLoadURL url: URL) {
+        loadUrl(url, fromExternalLink: true)
+    }
+
+    func tab(_ tab: TabViewController, didRequestLoadQuery query: String) {
+        loadQuery(query)
     }
 
 }
@@ -2485,7 +2499,13 @@ extension MainViewController: AutoClearWorker {
             ViewHighlighter.showIn(window, focussedOnView: view)
         }
     }
-    
+
+    private func showPrivacyDashboardButtonPulse() {
+        // TODO:
+        // 1. Wait for Lottie Tracker animation to complete
+        // 2. Animate Privacy Icon with pulsing animation similar to `showFireButtonPulse()`.
+    }
+
 }
 
 extension MainViewController {

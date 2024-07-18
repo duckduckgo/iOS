@@ -1646,7 +1646,8 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(),
             url.isYoutubeVideo,
             duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
+            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
+            completion(.allow)
             return
         }
         
@@ -1667,7 +1668,9 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler.handleNavigation(navigationAction, webView: webView, completion: completion)
+            duckPlayerNavigationHandler.handleNavigation(navigationAction, webView: webView)
+            completion(.cancel)
+            return
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {

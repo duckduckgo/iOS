@@ -107,10 +107,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk
     @MainActor
-    func handleNavigation(_ navigationAction: WKNavigationAction,
-                          webView: WKWebView,
-                          completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
         
         os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
        
@@ -128,7 +125,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                         // Disable DP temporarily
                         isDuckPlayerTemporarilyDisabled = true
                         handleURLChange(url: URL.youtube(id, timestamp: nil), webView: webView)
-                        completion(.allow)
                         return
                 }
             }
@@ -158,7 +154,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             if #available(iOS 15.0, *) {
                 os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
                 performRequest(request: newRequest, webView: webView)
-                completion(.allow)
                 return
             }
         }
@@ -169,11 +164,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             duckPlayer.settings.mode == .disabled {
             os_log("DP: is Disabled. We should load original video for %s", log: .duckPlayerLog, type: .debug)
             handleURLChange(url: URL.youtube(videoID, timestamp: timestamp), webView: webView)
-            completion(.allow)
             return
         }
-        
-        completion(.allow)
     }
     
     // Handle URL changes not triggered via Omnibar
@@ -195,13 +187,14 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 os_log("DP: Duckplayer is temporarily disabled.  Opening Youtube", log: .duckPlayerLog, type: .debug)
                 newURL = URL.youtube(videoID, timestamp: timestamp)
             } else {
-                os_log("DP: Duckplayer is NOT disabled.  Opening Youtube", log: .duckPlayerLog, type: .debug)
+                os_log("DP: Duckplayer is NOT disabled.  Opening DuckPlayer", log: .duckPlayerLog, type: .debug)
             }
             
-            // Add a delay as the Webview may not respond
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                webView.stopLoading()
-                webView.load(URLRequest(url: newURL))
+            // Load the URL
+            webView.load(URLRequest(url: newURL))
+            
+            // Add a delay before resetting to allow the webview to properly render
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.isDuckPlayerTemporarilyDisabled = false
             }
         }
@@ -211,8 +204,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     // to duck://player
     @MainActor
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                               completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView) {
+        
+        if let url = navigationAction.request.url {
+            os_log("DP: Handling decidePolicy for Duck Player with %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+        }
         
         // Pixel for Views From SERP
         if let url = navigationAction.request.url,
@@ -234,10 +230,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
             os_log("DP: Handling decidePolicy for Duck Player with %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
             handleURLChange(url: URL.duckPlayer(videoID, timestamp: timestamp), webView: webView)
-            completion(.allow)
             return
         }
-        completion(.allow)
     }
     
     // Handle Webview BackButton on DuckPlayer videos

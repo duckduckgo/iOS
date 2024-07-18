@@ -22,13 +22,9 @@ import WebKit
 protocol DuckNavigationHandling {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
-    func handleNavigation(_ navigationAction: WKNavigationAction,
-                          webView: WKWebView,
-                          completion: @escaping (WKNavigationActionPolicy) -> Void)
+    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
     func handleURLChange(url: URL?, webView: WKWebView)
-    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                               completion: @escaping (WKNavigationActionPolicy) -> Void,
-                               webView: WKWebView)
+    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction, webView: WKWebView)
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
 }

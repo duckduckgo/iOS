@@ -317,11 +317,17 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        
-        if DaxDialogs.shared.shouldShowFireButtonPulse {
+        let isNewOnboarding = DefaultVariantManager().isSupported(feature: .newOnboardingIntro)
+
+        if !isNewOnboarding
+            && DaxDialogs.shared.shouldShowFireButtonPulse {
+            ViewHighlighter.hideAll()
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
+            if isNewOnboarding {
+                ViewHighlighter.hideAll()
+            }
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAll()
             })

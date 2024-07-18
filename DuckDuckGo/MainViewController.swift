@@ -1161,11 +1161,12 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchAutofillLogins(with currentTabUrl: URL? = nil, openSearch: Bool = false, source: AutofillSettingsSource) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil, currentTabUid: String? = nil, openSearch: Bool = false, source: AutofillSettingsSource) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
+            currentTabUid: currentTabUid,
             syncService: syncService,
             syncDataProviders: syncDataProviders,
             selectedAccount: nil,
@@ -2114,7 +2115,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
-        launchAutofillLogins(with: currentTab?.url, source: .overflow)
+        launchAutofillLogins(with: currentTab?.url, currentTabUid: tab.tabModel.uid, source: .overflow)
     }
     
     func tabDidRequestSettings(tab: TabViewController) {

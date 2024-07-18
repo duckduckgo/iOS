@@ -312,7 +312,7 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-    
+
     var duckPlayer: DuckPlayerProtocol = DuckPlayer()
     var youtubeNavigationHandler: DuckNavigationHandling?
     
@@ -344,7 +344,8 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-        
+        registerForAutofillNotifications()
+
         // Setup DuckPlayer navigation handler
         self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
         
@@ -1826,6 +1827,32 @@ extension TabViewController: WKNavigationDelegate {
     
     @objc private func dismissLoginDetails() {
         dismiss(animated: true)
+    }
+
+    private func registerForAutofillNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(autofillBreakageReport),
+                                               name: .autofillFailureReport,
+                                               object: nil)
+    }
+
+    @objc private func autofillBreakageReport(_ notification: Notification) {
+        guard let tabUid = notification.userInfo?[AutofillLoginListViewModel.UserInfoKeys.tabUid] as? String,
+              tabUid == tabModel.uid,
+              let url = webView.url?.normalized() else {
+            return
+        }
+
+        let parameters: [String: String] = [
+            "website": url.absoluteString,
+            "language": Locale.current.languageCode ?? "en",
+            "autofill_enabled": appSettings.autofillCredentialsEnabled ? "true" : "false",
+            "privacy_protection": (privacyInfo?.isFor(self.url) ?? false) ? "true" : "false",
+            "email_protection": (emailManager?.isSignedIn ?? false) ? "true" : "false",
+            "never_prompt": autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: url.host ?? url.absoluteString) ? "true" : "false"
+        ]
+
+        Pixel.fire(pixel: .autofillLoginsReportFailure, withAdditionalParameters: parameters)
     }
 }
 

@@ -21,6 +21,7 @@ import UIKit
 import BrowserServicesKit
 import Core
 import Common
+import PrivacyDashboard
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -30,6 +31,7 @@ class AutofillDebugViewController: UITableViewController {
         case resetDaysSinceInstalledTo0 = 203
         case resetAutofillData = 204
         case addAutofillData = 205
+        case resetAutofillBrokenReports = 206
     }
 
     let defaults = AppUserDefaults()
@@ -65,6 +67,12 @@ class AutofillDebugViewController: UITableViewController {
             } else if cell.tag == Row.resetDaysSinceInstalledTo0.rawValue {
                 StatisticsUserDefaults().installDate = Date()
                 tableView.deselectRow(at: indexPath, animated: true)
+            } else if cell.tag == Row.resetAutofillBrokenReports.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let reporter = BrokenSiteReporter(pixelHandler: { _ in }, keyValueStoring: UserDefaults.standard, storageConfiguration: .autofillConfig)
+                let expiryDate = Calendar.current.date(byAdding: .day, value: 60, to: Date())!
+                _ = reporter.persistencyManager.removeExpiredItems(currentDate: expiryDate)
+                ActionMessageView.present(message: "Autofill Broken Reports reset")
             }
         }
     }

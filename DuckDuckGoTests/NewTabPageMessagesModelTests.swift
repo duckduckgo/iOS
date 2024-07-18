@@ -41,12 +41,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
     func testUpdatesOnNotification() {
         let sut = createSUT()
 
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         XCTAssertTrue(sut.homeMessageViewModels.isEmpty)
 
         messagesConfiguration.homeMessages = [.placeholder]
@@ -64,12 +60,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.close)
@@ -82,12 +74,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.action(isShare: false))
@@ -100,12 +88,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.primaryAction(isShare: false))
@@ -118,12 +102,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.secondaryAction(isShare: false))
@@ -136,12 +116,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.action(isShare: true))
@@ -158,12 +134,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
         model.onDidClose(.close)
@@ -177,12 +149,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: .seconds(0.5))
+        sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         model.onDidClose(.action(isShare: false))
@@ -196,12 +163,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         model.onDidClose(.primaryAction(isShare: false))
 
@@ -214,12 +177,8 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
         ]
-        let expectation = XCTestExpectation(description: "modelLoaded")
-        sut.load {
-            expectation.fulfill()
-        }
+        sut.load()
 
-        wait(for: [expectation], timeout: .seconds(0.5))
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         model.onDidClose(.secondaryAction(isShare: false))
 
@@ -236,7 +195,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
 private class HomePageMessagesConfigurationMock: HomePageMessagesConfiguration {
     var homeMessages: [HomeMessage]
-    
+
     init(homeMessages: [HomeMessage]) {
         self.homeMessages = homeMessages
     }

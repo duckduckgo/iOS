@@ -176,10 +176,10 @@ struct HomeMessageView: View {
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
                     Task {
-                        let additionalParameters = [
+                        let additionalParameters = await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
                             PixelParameters.message: "\(viewModel.messageId)",
                             PixelParameters.sheetResult: "\(result)"
-                        ].merging(await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID(viewModel.messageId))) { $1 }
+                        ])
 
                         Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
 

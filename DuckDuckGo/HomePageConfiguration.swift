@@ -97,15 +97,14 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
             Task {
-                let additionalParameters = [PixelParameters.message: "\(remoteMessage.id)"]
-                    .merging(await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .messageID(remoteMessage.id))) { $1 }
-
                 os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                Pixel.fire(pixel: .remoteMessageShown, withAdditionalParameters: additionalParameters)
+                Pixel.fire(pixel: .remoteMessageShown,
+                           withAdditionalParameters: await additionalParameters(for: remoteMessage.id))
 
                 if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
                     os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                    Pixel.fire(pixel: .remoteMessageShownUnique, withAdditionalParameters: additionalParameters)
+                    Pixel.fire(pixel: .remoteMessageShownUnique,
+                               withAdditionalParameters: await additionalParameters(for: remoteMessage.id))
                     remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
                 }
             }
@@ -114,5 +113,10 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
             break
         }
 
+    }
+
+    private func additionalParameters(for messageID: String) async -> [String: String] {
+        await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
+                                                                             with: [PixelParameters.message: "\(messageID)"])
     }
 }

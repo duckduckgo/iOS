@@ -449,7 +449,8 @@ private extension Pixel {
         }
         Self.fire(
             pixel: pixel,
-            withAdditionalParameters: parameters.merging(await DefaultPrivacyProDataReporter.shared.randomizedParameters(for: .origin(origin))) { $1 }
+            withAdditionalParameters: await DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .origin(origin), 
+                                                                                                           with: parameters)
         )
     }
 

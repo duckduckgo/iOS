@@ -36,6 +36,7 @@ enum PrivacyProPromoParameters: String, CaseIterable {
     case validOpenTabsCount
     case searchUser
 
+    /// Pick a randomized subset of parameters each time they are attached to a pixel
     static func randomizedSubset() -> [PrivacyProPromoParameters] {
         Array(allCases.shuffled().prefix(Int(allCases.count * 2/3)))
     }
@@ -130,6 +131,12 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         tabsModel = model
     }
 
+    private var isReady: Bool {
+        syncService != nil && tabsModel != nil
+    }
+
+    /// Collect a randomized subset of parameters iff the Privacy Pro impression/conversion pixels
+    /// or the Origin Attribution subscription pixel are being fired
     func randomizedParameters(for useCase: UseCase) async -> [String: String] {
         switch useCase {
         case .messageID(let messageID):
@@ -138,6 +145,11 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
             guard let includedOrigins, let origin, includedOrigins.contains(origin) else { return [:] }
         case .debug:
             break
+        }
+
+        /// Wait for all the injected dependencies to be available
+        if !isReady {
+            return await randomizedParameters(for: useCase)
         }
 
         var additionalParameters = [String: String]()
@@ -163,6 +175,10 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         }
 
         return additionalParameters
+    }
+
+    func mergeRandomizedParameters(for useCase: UseCase, with parameters: [String: String]) async -> [String: String] {
+        await randomizedParameters(for: useCase).merging(parameters) { $1 }
     }
 
     func isReinstall() -> Bool {

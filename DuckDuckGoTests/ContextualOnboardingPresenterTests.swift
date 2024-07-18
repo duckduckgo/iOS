@@ -64,6 +64,54 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         XCTAssertNotNil(parent.capturedChild)
     }
 
+    func testWhenDismissContextualOnboardingAndVariantSupportsNewOnboardingIntroThenContextualOnboardingIsDismissed() {
+        // GIVEN
+        let expectation = self.expectation(description: #function)
+        var variantManagerMock = MockVariantManager()
+        variantManagerMock.isSupportedBlock = { feature in
+            feature == .newOnboardingIntro
+        }
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let parent = TabViewControllerMock()
+        let daxController = DaxContextualOnboardingControllerMock()
+        daxController.removeFromParentExpectation = expectation
+        parent.daxContextualOnboardingController = daxController
+        parent.daxDialogsStackView.addArrangedSubview(daxController.view)
+        XCTAssertFalse(daxController.didCallRemoveFromParent)
+        XCTAssertTrue(parent.daxDialogsStackView.arrangedSubviews.contains(daxController.view))
+
+        // WHEN
+        sut.dismissContextualOnboardingIfNeeded(from: parent)
+
+        // THEN
+        waitForExpectations(timeout: 1.0)
+        XCTAssertTrue(daxController.didCallRemoveFromParent)
+        XCTAssertFalse(parent.daxDialogsStackView.arrangedSubviews.contains(daxController.view))
+    }
+
+    func testWhenDismissContextualOnboardingAndVariantDoesNotSupportsNewOnboardingIntroThenNothingHappens() {
+        // GIVEN
+        let expectation = self.expectation(description: #function)
+        expectation.isInverted = true
+        var variantManagerMock = MockVariantManager()
+        variantManagerMock.isSupportedBlock = { feature in
+            feature != .newOnboardingIntro
+        }
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let parent = TabViewControllerMock()
+        let daxController = DaxContextualOnboardingControllerMock()
+        daxController.removeFromParentExpectation = expectation
+        parent.daxContextualOnboardingController = daxController
+        XCTAssertFalse(daxController.didCallRemoveFromParent)
+
+        // WHEN
+        sut.dismissContextualOnboardingIfNeeded(from: parent)
+
+        // THEN
+        waitForExpectations(timeout: 0.4)
+        XCTAssertFalse(daxController.didCallRemoveFromParent)
+    }
+
 }
 
 final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
@@ -98,15 +146,15 @@ final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
         capturedChild = childController
     }
 
-    func didShowTrackersDialog() {
+    func didShowContextualOnboardingTrackersDialog() {
         didCalldidShowTrackersDialog = true
     }
 
-    func didAcknowledgeTrackersDialog() {
+    func didAcknowledgeContextualOnboardingTrackersDialog() {
         didCallDidAcknowledgeTrackersDialog = true
     }
 
-    func didTapDismissAction() {
+    func didTapDismissContextualOnboardingAction() {
         didCallDidTapDismissAction = true
     }
 
@@ -118,6 +166,19 @@ final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
     func navigateTo(url: URL) {
         didCallNavigateToURL = true
         capturedURL = url
+    }
+
+}
+
+final class DaxContextualOnboardingControllerMock: UIViewController {
+
+    private(set) var didCallRemoveFromParent = false
+
+    var removeFromParentExpectation: XCTestExpectation?
+
+    override func removeFromParent() {
+        didCallRemoveFromParent = true
+        removeFromParentExpectation?.fulfill()
     }
 
 }

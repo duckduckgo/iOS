@@ -24,11 +24,11 @@ import SwiftUI
 /// A delegate to inform about specific events happening during the contextual onboarding.
 protocol ContextualOnboardingEventDelegate: AnyObject {
     /// Inform the delegate that a dialog for blocked trackers have been shown to the user.
-    func didShowTrackersDialog()
+    func didShowContextualOnboardingTrackersDialog()
     /// Inform the delegate that the user did acknowledge the dialog for blocked trackers.
-    func didAcknowledgeTrackersDialog()
+    func didAcknowledgeContextualOnboardingTrackersDialog()
     /// Inform the delegate that the user dismissed the contextual dialog.
-    func didTapDismissAction()
+    func didTapDismissContextualOnboardingAction()
 }
 
 // Composed delegate for Contextual Onboarding to decorate events also needed in New Tab Page.
@@ -67,23 +67,23 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate) -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
-        let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch { {} } else { { [weak delegate] in delegate?.didTapDismissAction() } }
+        let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch { {} } else { { [weak delegate] in delegate?.didTapDismissContextualOnboardingAction() } }
         return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
     }
 
     private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {
         let attributedMessage = spec.message.attributedStringFromMarkdown(color: ThemeManager.shared.currentTheme.daxDialogTextColor)
         return OnboardingTrackersDoneDialog(message: attributedMessage, blockedTrackersCTAAction: { [weak delegate] in
-            delegate?.didAcknowledgeTrackersDialog()
+            delegate?.didAcknowledgeContextualOnboardingTrackersDialog()
         })
         .onAppear { [weak delegate] in
-            delegate?.didShowTrackersDialog()
+            delegate?.didShowContextualOnboardingTrackersDialog()
         }
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate) -> some View {
         OnboardingFinalDialog(highFiveAction: { [weak delegate] in
-            delegate?.didTapDismissAction()
+            delegate?.didTapDismissContextualOnboardingAction()
         })
     }
 

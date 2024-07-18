@@ -2852,15 +2852,15 @@ extension TabViewController: OnboardingNavigationDelegate {
 
 extension TabViewController: ContextualOnboardingEventDelegate {
 
-    func didAcknowledgeTrackersDialog() {
+    func didAcknowledgeContextualOnboardingTrackersDialog() {
         delegate?.tabDidRequestFireButtonPulse(tab: self)
     }
 
-    func didShowTrackersDialog() {
+    func didShowContextualOnboardingTrackersDialog() {
         delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
     }
 
-    func didTapDismissAction() {
+    func didTapDismissContextualOnboardingAction() {
         contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
     }
 

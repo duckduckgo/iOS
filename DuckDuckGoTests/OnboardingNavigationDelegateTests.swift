@@ -34,9 +34,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
     var mainVC: MainViewController!
 
     override func setUp() {
-        let model = CoreDataDatabase.loadModel(from: Bookmarks.bundle, named: "BookmarksModel")!
-        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
-        db.loadStore()
+        let db = CoreDataDatabase.bookmarksMock
         let bookmarkDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: db, errorEvents: nil)
         let dataProviders = SyncDataProviders(
             bookmarksDatabase: db,
@@ -91,29 +89,61 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
     func testSearchForQueryLoadsQueryInCurrentTab() throws {
         // GIVEN
         let query = "Some query"
-        let expectedUrl = URL.makeSearchURL(query: query, queryContext: nil)
+        let expectedUrl = try XCTUnwrap(URL.makeSearchURL(query: query, queryContext: nil))
 
         // WHEN
         mainVC.searchFor(query)
 
         // THEN
-        XCTAssertNotNil(mainVC.currentTab?.url)
-        XCTAssertEqual(mainVC.currentTab?.url?.scheme, expectedUrl?.scheme)
-        XCTAssertEqual(mainVC.currentTab?.url?.host, expectedUrl?.host)
-        XCTAssertEqual(mainVC.currentTab?.url?.query, expectedUrl?.query)
+        assertExpected(queryURL: expectedUrl)
     }
 
     func testNavigateToURLLoadsSiteInCurrentTab() throws {
         // GIVEN
         let site = "duckduckgo.com"
-        let expectedUrl = URL(string: site)!
+        let expectedUrl = try XCTUnwrap(URL(string: site))
 
         // WHEN
         mainVC.navigateTo(url: expectedUrl)
 
         // THEN
+        assertExpected(url: expectedUrl)
+    }
+
+    func testWhenDidRequestLoadQueryIsCalledThenLoadsQueryInCurrentTab() throws {
+        // GIVEN
+        let query = "Some query"
+        let expectedUrl = try XCTUnwrap(URL.makeSearchURL(query: query, queryContext: nil))
+
+        // WHEN
+        mainVC.tab(.mock(), didRequestLoadQuery: query)
+
+        // THEN
+        assertExpected(queryURL: expectedUrl)
+    }
+
+    func testWhenDidRequestLoadsURLIsCalledThenLoadSiteInCurrentTab() throws {
+        // GIVEN
+        let site = "duckduckgo.com"
+        let expectedUrl = try XCTUnwrap(URL(string: site))
+
+        // WHEN
+        mainVC.tab(.mock(), didRequestLoadURL: expectedUrl)
+
+        // THEN
+        assertExpected(url: expectedUrl)
+    }
+
+    func assertExpected(queryURL: URL) {
         XCTAssertNotNil(mainVC.currentTab?.url)
-        XCTAssertEqual(mainVC.currentTab?.url, expectedUrl)
+        XCTAssertEqual(mainVC.currentTab?.url?.scheme, queryURL.scheme)
+        XCTAssertEqual(mainVC.currentTab?.url?.host, queryURL.host)
+        XCTAssertEqual(mainVC.currentTab?.url?.query, queryURL.query)
+    }
+
+    func assertExpected(url: URL) {
+        XCTAssertNotNil(mainVC.currentTab?.url)
+        XCTAssertEqual(mainVC.currentTab?.url, url)
     }
 
 }

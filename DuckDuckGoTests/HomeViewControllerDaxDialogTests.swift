@@ -34,8 +34,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
     var hvc: HomeViewController!
 
     override func setUpWithError() throws {
-        let model = CoreDataDatabase.loadModel(from: Bookmarks.bundle, named: "BookmarksModel")!
-        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        let db = CoreDataDatabase.bookmarksMock
         variantManager = CapturingVariantManager()
         dialogFactory = CapturingNewTabDaxDialogProvider()
         specProvider = MockNewTabDialogSpecProvider()

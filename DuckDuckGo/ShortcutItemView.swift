@@ -58,25 +58,6 @@ struct ShortcutItemView: View {
     }
 }
 
-#Preview {
-    LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
-        let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
-
-        ForEach(accessoryTypes, id: \.?.hashValue) { type in
-            Section {
-                ForEach(NewTabPageShortcut.allCases) { shortcut in
-                    ShortcutItemView(shortcut: shortcut, accessoryType: type)
-                }
-
-            } footer: {
-                Spacer(minLength: 12)
-                Divider()
-                Spacer(minLength: 12)
-            }
-        }
-    }).padding(8)
-}
-
 private extension NewTabPageShortcut {
     var name: String {
         switch self {
@@ -107,4 +88,23 @@ private extension NewTabPageShortcut {
             return .settingsColor32
         }
     }
+}
+
+#Preview {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+        let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
+
+        ForEach(accessoryTypes, id: \.?.hashValue) { type in
+            Section {
+                ForEach(NewTabPageShortcut.allCases) { shortcut in
+                    ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                }
+
+            } footer: {
+                Spacer(minLength: 12)
+                Divider()
+                Spacer(minLength: 12)
+            }
+        }
+    }).padding(8)
 }

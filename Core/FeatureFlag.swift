@@ -57,8 +57,7 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .autofillOnByDefault:
             return .remoteReleasable(.subfeature(AutofillSubfeature.onByDefault))
         case .autofillFailureReporting:
-            return .internalOnly
-//            return .remoteReleasable(.feature(.autofillBreakageReporter))
+            return .remoteReleasable(.feature(.autofillBreakageReporter))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:

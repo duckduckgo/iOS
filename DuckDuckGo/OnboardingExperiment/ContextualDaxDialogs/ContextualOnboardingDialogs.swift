@@ -99,7 +99,8 @@ struct OnboardingFirstSearchDoneDialog: View {
     let gotItAction: () -> Void
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {            DaxDialogView(logoPosition: .left) {
+        ScrollView(.vertical, showsIndicators: false) {            
+            DaxDialogView(logoPosition: .left) {
                 VStack {
                     if showNextScreen {
                         OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
@@ -133,7 +134,8 @@ struct OnboardingTrackersDoneDialog: View {
     let blockedTrackersCTAAction: () -> Void
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {            DaxDialogView(logoPosition: .left) {
+        ScrollView(.vertical, showsIndicators: false) {            
+            DaxDialogView(logoPosition: .left) {
                 VStack {
                     if showNextScreen {
                         OnboardingFireButtonDialogContent()

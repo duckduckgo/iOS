@@ -101,7 +101,8 @@ struct NewTabPageView: View {
                             id: "0",
                             content: .small(titleText: "Title", descriptionText: "Description"),
                             matchingRules: [],
-                            exclusionRules: []
+                            exclusionRules: [],
+                            isMetricsEnabled: false
                         )
                     )
                 ]

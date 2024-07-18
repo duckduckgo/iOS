@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "09844ec2d0c9d2312e02c90527e8df063db89318",
-        "version" : "171.2.1"
+        "branch" : "dominik/rmf-skip-pixels",
+        "revision" : "449b010ba5f285130d1aaccfbba9ac3c7dcfe360"
       }
     },
     {

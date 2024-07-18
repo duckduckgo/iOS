@@ -109,16 +109,12 @@ class AppDependencyProvider: DependencyProvider {
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
-        if #available(iOS 15.0, *) {
-            subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                             accountManager: accountManager,
-                                                             subscriptionEndpointService: subscriptionService,
-                                                             authEndpointService: authService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
-        } else {
-            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
-            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
-        }
+        
+        subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+                                                         accountManager: accountManager,
+                                                         subscriptionEndpointService: subscriptionService,
+                                                         authEndpointService: authService,
+                                                         subscriptionEnvironment: subscriptionEnvironment)
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,

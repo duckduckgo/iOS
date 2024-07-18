@@ -25,7 +25,11 @@ struct ShortcutsView: View {
     var body: some View {
         NewTabPageGridView { _ in
             ForEach(model.enabledShortcuts) { shortcut in
-                ShortcutItemView(shortcut: shortcut, accessoryType: nil)
+                Button {
+                    model.openShortcut(shortcut)
+                } label: {
+                    ShortcutItemView(shortcut: shortcut, accessoryType: nil)
+                }
             }
         }
     }

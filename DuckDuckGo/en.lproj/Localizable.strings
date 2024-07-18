@@ -479,7 +479,7 @@
 "autofill.logins.prompt.auth.cancel" = "Cancel";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Unlock to use saved password";
+"autofill.logins.prompt.auth.reason" = "Unlock device to use saved password";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "From this website";
@@ -564,6 +564,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Save Password";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Send Anonymous Report";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Send Report";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Report Autofill not Working on %@";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anonymously report autofill not working on this site. Passwords are never shared.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Autofill not working?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Show Password";

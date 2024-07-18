@@ -690,8 +690,18 @@ But if you *do* want a peek under the hood, you can find more information about 
         return message.format(arguments: count)
     }
 
+    public static let autofillSettingsReportNotWorkingTitle = NSLocalizedString("autofill.settings.report.not.working.title", value:"Autofill not working?", comment: "Title for the row to report that autofill is not working on a site in autofill settings")
+    public static let autofillSettingsReportNotWorkingSubtitle = NSLocalizedString("autofill.settings.report.not.working.subtitle", value:"Anonymously report autofill not working on this site. Passwords are never shared.", comment: "Subtitle for the row to report that autofill is not working on a site in autofill settings")
+    public static let autofillSettingsReportNotWorkingButtonTitle = NSLocalizedString("autofill.settings.report.not.working.button.title", value:"Send Anonymous Report", comment: "Title for the button to report that autofill is not working on a site in autofill settings")
+    public static func autofillSettingsReportNotWorkingConfirmationPromptTitle(for site: String) -> String {
+        let message = NSLocalizedString("autofill.settings.report.not.working.confirmation.title", value: "Report Autofill not Working on %@", comment: "Title for the confirmation prompt when reporting autofill is not working for a website")
+        return message.format(arguments: site)
+    }
+    public static let autofillSettingsReportNotWorkingConfirmationPromptMessage = NSLocalizedString("autofill.settings.report.not.working.confirmation.message", value: "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.", comment: "Message for the confirmation prompt when reporting autofill is not working for a website")
+    public static let autofillSettingsReportNotWorkingConfirmationPromptButton = NSLocalizedString("autofill.settings.report.not.working.confirmation.button", value: "Send Report", comment: "Button title for the confirmation prompt when reporting autofill is not working for a website")
+
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
-    public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock to use saved password", comment: "Reason for auth during login prompt")
+    public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock device to use saved password", comment: "Reason for auth during login prompt")
     public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved password?", comment: "Title for autofill login prompt")
     public static let autofillLoginPromptExactMatchTitle = NSLocalizedString("autofill.logins.prompt.exact.match.title", value:"From this website", comment: "Title for section of autofill logins that are an exact match to the current website")
     public static func autofillLoginPromptPartialMatchTitle(for type: String) -> String {

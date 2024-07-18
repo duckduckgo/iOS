@@ -28,7 +28,8 @@ final class DaxDialogsNewTabTests: XCTestCase {
 
     override func setUp() {
         settings = MockDaxDialogsSettings()
-        daxDialogs = DaxDialogs(settings: settings, entityProviding: MockEntityProvider())
+        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        daxDialogs = DaxDialogs(settings: settings, entityProviding: MockEntityProvider(), variantManager: mockVariantManager)
     }
 
     override func tearDown() {
@@ -66,10 +67,11 @@ final class DaxDialogsNewTabTests: XCTestCase {
         XCTAssertEqual(homeScreenMessage, .subsequent)
     }
 
-    func testIfBrowsingAfterSearchShown_andBrowsingMajorTrackingSiteShown_OnNextHomeScreenMessageNew_ReturnsAddFavorite() {
+    func testIfBrowsingAfterSearchShown_andBrowsingMajorTrackingSiteShown_andFireAnimationShown_OnNextHomeScreenMessageNew_ReturnsAddFavorite() {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingMajorTrackingSiteShown = true
+        daxDialogs.fireButtonPulseStarted()
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
@@ -78,28 +80,44 @@ final class DaxDialogsNewTabTests: XCTestCase {
         XCTAssertEqual(homeScreenMessage, .final)
     }
 
-    func testIfBrowsingAfterSearchShown_andBrowsingWithTrackersShown_OnNextHomeScreenMessageNew_ReturnsAddFavorite() {
+    func testIfBrowsingAfterSearchShown_andBrowsingWithTrackersShown_andFireAnimationShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
         // GIVEN
         settings.browsingAfterSearchShown = true
+        settings.browsingWithTrackersShown = true
+        daxDialogs.fireButtonPulseStarted()
+
+        // WHEN
+        let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertEqual(homeScreenMessage, .final)
+    }
+
+    func testIfBrowsingAfterSearchShown_andBrowsingWithoutTrackersShown_andFireAnimationShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
+        // GIVEN
+        settings.browsingAfterSearchShown = true
+        settings.browsingWithoutTrackersShown = true
+        daxDialogs.fireButtonPulseStarted()
+
+        // WHEN
+        let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertEqual(homeScreenMessage, .final)
+    }
+
+    func testIfBrowsingAfterSearchShown_andTrackersDialogsShown_andFirreButtonAnimationNotShown_OnNextHomeScreenMessageNew_ReturnsNil() {
+        // GIVEN
+        settings.browsingAfterSearchShown = true
+        settings.browsingWithoutTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithTrackersShown = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
 
         // THEN
-        XCTAssertEqual(homeScreenMessage, .final)
-    }
-
-    func testIfBrowsingAfterSearchShown_andBrowsingWithoutTrackersShown_OnNextHomeScreenMessageNew_ReturnsAddFavorite() {
-        // GIVEN
-        settings.browsingAfterSearchShown = true
-        settings.browsingWithoutTrackersShown = true
-
-        // WHEN
-        let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
-
-        // THEN
-        XCTAssertEqual(homeScreenMessage, .final)
+        XCTAssertNil(homeScreenMessage)
     }
 
 }

@@ -422,7 +422,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
             return .subsequent
         }
 
-        if firstBrowsingMessageSeen {
+        if settings.fireButtonPulseDateShown != nil {
             return .final
         }
 

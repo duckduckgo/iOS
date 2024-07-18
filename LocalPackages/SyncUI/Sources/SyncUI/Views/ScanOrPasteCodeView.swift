@@ -71,11 +71,7 @@ public struct ScanOrSeeCode: View {
     }
 
     func instructionsText() -> some View {
-        if #available(iOS 15.0, *) {
-            return Text(instructionsString)
-        } else {
-            return Text(UserText.scanOrSeeCodeInstruction)
-        }
+        return Text(instructionsString)
     }
 
     @available(iOS 15, *)

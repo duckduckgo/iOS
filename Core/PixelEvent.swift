@@ -201,8 +201,6 @@ extension Pixel {
         
         case downloadsSharingPredownloadedLocalFile
         
-        case downloadAttemptToOpenBLOBviaJS
-        
         case jsAlertShown
         
         case featureFlaggingInternalUserAuthenticated
@@ -933,8 +931,6 @@ extension Pixel.Event {
         case .downloadsListSharePressed: return "m_downloads_list_share_pressed"
             
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
-            
-        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
             
         case .jsAlertShown: return "m_js_alert_shown"
             

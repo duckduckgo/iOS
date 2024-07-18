@@ -102,7 +102,6 @@ final class ImportPasswordsViewModel {
         return step.instructions()
     }
 
-    @available(iOS 15.0, *)
     func attributedInstructionsForStep(_ step: InstructionStep) -> AttributedString {
         let semiboldFont = Font.system(.body).weight(.semibold)
         var attributedString = AttributedString(step.instructions())

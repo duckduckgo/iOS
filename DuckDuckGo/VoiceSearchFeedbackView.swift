@@ -172,10 +172,9 @@ struct VoiceSearchFeedbackView_Previews: PreviewProvider {
                 VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: PreviewMockSpeechRecognizer()))
                     .preferredColorScheme($0)
             }
-            if #available(iOS 15.0, *) {
-                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: PreviewMockSpeechRecognizer()))
-                    .previewInterfaceOrientation(.landscapeRight)
-            }
+
+            VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: PreviewMockSpeechRecognizer()))
+                .previewInterfaceOrientation(.landscapeRight)
         }
     }
 }

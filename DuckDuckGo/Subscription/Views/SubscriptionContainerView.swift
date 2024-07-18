@@ -20,7 +20,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct SubscriptionContainerView: View {
     
     enum CurrentView {

@@ -21,7 +21,6 @@ import Foundation
 import Subscription
 import Combine
 
-@available(iOS 15.0, *)
 final class SubscriptionContainerViewModel: ObservableObject {
 
     let userScript: SubscriptionPagesUserScript

@@ -42,29 +42,17 @@ extension View {
 
     @ViewBuilder
     func regularMaterialBackground() -> some View {
-        if #available(iOS 15.0, *) {
-            self.background(.regularMaterial)
-        } else {
-            self.background(Rectangle().foregroundColor(.black.opacity(0.9)))
-        }
+        self.background(.regularMaterial)
     }
 
     @ViewBuilder
     func thinMaterialBackground() -> some View {
-        if #available(iOS 15.0, *) {
-            self.background(.ultraThinMaterial)
-        } else {
-            self.background(Rectangle().foregroundColor(.black.opacity(0.9)))
-        }
+        self.background(.ultraThinMaterial)
     }
 
     @ViewBuilder
     func monospaceSystemFont(ofSize size: Double) -> some View {
-        if #available(iOS 15.0, *) {
-            font(.system(size: size).monospaced())
-        } else {
-            font(.system(size: size))
-        }
+        font(.system(size: size).monospaced())
     }
 
     @ViewBuilder

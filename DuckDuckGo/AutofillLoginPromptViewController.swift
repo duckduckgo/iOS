@@ -82,8 +82,7 @@ class AutofillLoginPromptViewController: UIViewController {
         if #available(iOS 16.0, *) {
             return true
         }
-        if #available(iOS 15.0, *),
-           let presentationController = presentationController as? UISheetPresentationController {
+        if let presentationController = presentationController as? UISheetPresentationController {
             if presentationController.selectedDetentIdentifier == nil &&
                 presentationController.detents.contains(.medium()) {
                 return false
@@ -178,10 +177,8 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     }
     
     func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel) {
-        if #available(iOS 15.0, *) {
-            dismiss(animated: true) {
-                self.completion?(nil, true)
-            }
+        dismiss(animated: true) {
+            self.completion?(nil, true)
         }
     }
 

@@ -22,7 +22,6 @@ import Subscription
 import SwiftUI
 import UIKit
 
-@available(iOS 15.0, *)
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel

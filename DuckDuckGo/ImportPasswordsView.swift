@@ -110,7 +110,7 @@ struct ImportPasswordsView: View {
 
                 ForEach(ImportPasswordsViewModel.InstructionStep.allCases, id: \.self) { step in
 
-                    if #available(iOS 15.0, *), step == .step2 || step == .step3 {
+                    if step == .step2 || step == .step3 {
                         Instruction(step: step.rawValue, instructionText: attributedText(viewModel.attributedInstructionsForStep(step)))
                     } else {
                         Instruction(step: step.rawValue, instructionText: Text(viewModel.instructionsForStep(step)))
@@ -120,7 +120,6 @@ struct ImportPasswordsView: View {
 
         }
 
-        @available(iOS 15.0, *)
         func attributedText(_ string: AttributedString) -> Text {
             return Text(string)
         }

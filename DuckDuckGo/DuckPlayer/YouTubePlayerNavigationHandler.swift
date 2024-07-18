@@ -82,10 +82,7 @@ final class YoutubePlayerNavigationHandler {
     }
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
-        // iOS 14 will be soon dropped out (and it does not support simulatedRequests)
-        if #available(iOS 15.0, *) {
-            webView.loadSimulatedRequest(request, responseHTML: responseHTML)
-        }
+        webView.loadSimulatedRequest(request, responseHTML: responseHTML)
     }
     
     private func performRequest(request: URLRequest, webView: WKWebView) {
@@ -126,11 +123,10 @@ extension YoutubePlayerNavigationHandler: DuckNavigationHandling {
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
             let html = Self.makeHTMLFromTemplate()
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-            if #available(iOS 15.0, *) {
-                webView.loadSimulatedRequest(newRequest, responseHTML: html)
-                completion(.allow)
-                return
-            }
+
+            webView.loadSimulatedRequest(newRequest, responseHTML: html)
+            completion(.allow)
+            return
         }
         
         // DuckPlayer is disabled, so we redirect to the video in YouTube

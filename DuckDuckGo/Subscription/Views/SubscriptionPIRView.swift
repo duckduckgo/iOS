@@ -22,7 +22,6 @@ import Foundation
 import DesignResourcesKit
 import DuckUI
 
-@available(iOS 15.0, *)
 struct SubscriptionPIRView: View {
         
     @Environment(\.dismiss) var dismiss

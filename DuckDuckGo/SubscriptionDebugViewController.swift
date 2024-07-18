@@ -26,7 +26,7 @@ import Core
 import NetworkProtection
 #endif
 
-@available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
+final class SubscriptionDebugViewController: UITableViewController {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     private var subscriptionManager: SubscriptionManager {

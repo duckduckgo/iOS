@@ -2597,17 +2597,10 @@ extension MainViewController {
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             
-            if #available(iOS 15.0, *) {
-                return UIAction(title: historyItem.title,
-                                subtitle: historyItem.sanitizedURLForDisplay,
-                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
-            } else {
-                return  UIAction(title: historyItem.title,
-                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
+            return UIAction(title: historyItem.title,
+                            subtitle: historyItem.sanitizedURLForDisplay,
+                            discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                self?.loadBackForwardItem(historyItem.backForwardItem)
             }
         }
         

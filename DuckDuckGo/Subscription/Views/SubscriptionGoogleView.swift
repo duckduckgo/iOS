@@ -20,8 +20,6 @@
 import Foundation
 import SwiftUI
 
-
-@available(iOS 15.0, *)
 struct SubscriptionGoogleView: View {
         
     enum Constants {
@@ -53,8 +51,6 @@ struct SubscriptionGoogleView: View {
 
 
 #if DEBUG
-@available(iOS 15.0, *)
-
 struct SubscriptionGoogleView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {

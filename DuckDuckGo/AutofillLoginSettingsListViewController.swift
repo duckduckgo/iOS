@@ -465,15 +465,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         )
 
-        if #available(iOS 15.0, *) {
-            if let presentationController = authConfirmationPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.deleteAllPromptMinHeight
-                    })]
-                } else {
-                    presentationController.detents = [.medium()]
-                }
+        if let presentationController = authConfirmationPromptViewController.presentationController as? UISheetPresentationController {
+            if #available(iOS 16.0, *) {
+                presentationController.detents = [.custom(resolver: { _ in
+                    AutofillViews.deleteAllPromptMinHeight
+                })]
+            } else {
+                presentationController.detents = [.medium()]
             }
         }
 
@@ -960,14 +958,12 @@ extension AutofillLoginSettingsListViewController {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
 
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
+        let appearance = UINavigationBarAppearance()
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = theme.backgroundColor
 
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
 
         tableView.reloadData()
     }

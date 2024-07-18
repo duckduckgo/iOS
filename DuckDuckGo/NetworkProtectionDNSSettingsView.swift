@@ -22,7 +22,6 @@
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15.0, *)
 struct NetworkProtectionDNSSettingsView: View {
     @StateObject var viewModel = NetworkProtectionDNSSettingsViewModel(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
     @Environment(\.dismiss) private var dismiss

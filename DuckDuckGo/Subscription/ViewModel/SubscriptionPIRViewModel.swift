@@ -20,7 +20,6 @@
 import Foundation
 import Core
 
-@available(iOS 15.0, *)
 final class SubscriptionPIRViewModel: ObservableObject {
     
     var viewTitle = UserText.settingsPProDBPTitle

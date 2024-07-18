@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Waitlist",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v15)
     ],
 
     products: [

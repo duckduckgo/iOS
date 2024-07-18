@@ -22,7 +22,6 @@ import XCTest
 @testable import Subscription
 import SubscriptionTestingUtilities
 
-@available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     override func setUpWithError() throws {

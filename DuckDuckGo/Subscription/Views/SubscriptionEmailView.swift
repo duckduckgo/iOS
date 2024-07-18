@@ -22,7 +22,6 @@ import Foundation
 import Core
 import Combine
 
-@available(iOS 15.0, *)
 struct SubscriptionEmailView: View {
         
     @StateObject var viewModel: SubscriptionEmailViewModel

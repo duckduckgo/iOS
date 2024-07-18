@@ -22,7 +22,6 @@ import Foundation
 import DesignResourcesKit
 import Core
 
-@available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss

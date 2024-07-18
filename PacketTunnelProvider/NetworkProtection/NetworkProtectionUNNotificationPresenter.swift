@@ -61,11 +61,8 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         content.threadIdentifier = threadIdentifier
         content.title = UserText.networkProtectionNotificationsTitle
         content.body = body
-
-        if #available(iOS 15.0, *) {
-            content.interruptionLevel = .timeSensitive
-            content.relevanceScore = 0
-        }
+        content.interruptionLevel = .timeSensitive
+        content.relevanceScore = 0
 
         return content
     }

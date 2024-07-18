@@ -256,7 +256,6 @@ private struct NetworkProtectionErrorView: View {
     }
 }
 
-@available(iOS 15.0, *)
 private struct NetworkProtectionLocationItemView: View {
     let title: AttributedString
     let imageName: String?

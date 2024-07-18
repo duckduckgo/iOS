@@ -20,7 +20,6 @@
 import SwiftUI
 import Subscription
 
-@available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
     static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {

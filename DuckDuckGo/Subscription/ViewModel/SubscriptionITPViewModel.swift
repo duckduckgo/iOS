@@ -23,7 +23,6 @@ import Combine
 import Core
 import Subscription
 
-@available(iOS 15.0, *)
 final class SubscriptionITPViewModel: ObservableObject {
     
     var userScript: IdentityTheftRestorationPagesUserScript?

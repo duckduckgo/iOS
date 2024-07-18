@@ -22,7 +22,6 @@ import XCTest
 @testable import Subscription
 import SubscriptionTestingUtilities
 
-@available(iOS 15.0, *)
 final class SubscriptionContainerViewModelTests: XCTestCase {
     var sut: SubscriptionContainerViewModel!
     let subscriptionManager = MockDependencyProvider().subscriptionManager

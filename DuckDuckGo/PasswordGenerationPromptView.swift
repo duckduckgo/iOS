@@ -169,11 +169,7 @@ private extension View {
 
     @ViewBuilder
     func textSelectionEnabled() -> some View {
-        if #available(iOS 15.0, *) {
-            self.textSelection(.enabled)
-        } else {
-            self
-        }
+        self.textSelection(.enabled)
     }
 }
 

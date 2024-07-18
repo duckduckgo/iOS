@@ -22,7 +22,6 @@ import SwiftUI
 import DesignResourcesKit
 import Core
 
-@available(iOS 15.0, *)
 struct SubscriptionSettingsView: View {
         
     @Environment(\.dismiss) var dismiss

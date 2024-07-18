@@ -32,7 +32,6 @@ struct SubscriptionActivityViewController: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
-@available(iOS 15.0, *)
 struct SubscriptionITPView: View {
         
     @Environment(\.dismiss) var dismiss

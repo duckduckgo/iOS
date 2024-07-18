@@ -110,6 +110,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             NotificationCenter.default.post(name: .autofillFailureReport, object: self, userInfo: [UserInfoKeys.tabUid: currentTabUid])
         }
         self?.updateData()
+        self?.showBreakageReporter = false
     }, keyValueStoring: breakageReporterKeyValueStoring, storageConfiguration: .autofillConfig)
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -256,7 +257,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.accounts = fetchAccounts()
         self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
-        showBreakageReporter = shouldShowBreakageReporter()
+        self.showBreakageReporter = shouldShowBreakageReporter()
     }
     
     func filterData(with query: String? = nil) {

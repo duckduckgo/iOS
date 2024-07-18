@@ -22,9 +22,8 @@ import SwiftUI
 import DuckUI
 import Combine
 
-struct ContextualDaxDialog: View {
+struct ContextualDaxDialogContent: View {
 
-    var logoPosition: DaxDialogLogoPosition = .left
     var title: String?
     let message: NSAttributedString
     var list: [ContextualOnboardingListItem] = []
@@ -45,18 +44,16 @@ struct ContextualDaxDialog: View {
     @State private var timerCancellable: AnyCancellable?
 
     var body: some View {
-        DaxDialogView(logoPosition: logoPosition) {
-            VStack(alignment: .leading, spacing: 24) {
-                titleView
-                    .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
-                messageView
-                listView
-                    .visibility((typeToDisplay.rawValue >= 3) ? .visible : .invisible)
-                imageView
-                    .visibility((typeToDisplay.rawValue >= 4) ? .visible : .invisible)
-                actionView
-                    .visibility((typeToDisplay.rawValue >= 5) ? .visible : .invisible)
-            }
+        VStack(alignment: .leading, spacing: 24) {
+            titleView
+                .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
+            messageView
+            listView
+                .visibility((typeToDisplay.rawValue >= 3) ? .visible : .invisible)
+            imageView
+                .visibility((typeToDisplay.rawValue >= 4) ? .visible : .invisible)
+            actionView
+                .visibility((typeToDisplay.rawValue >= 5) ? .visible : .invisible)
         }
         .onAppear {
             startSequentialUpdate()
@@ -121,7 +118,7 @@ struct ContextualDaxDialog: View {
 
 // MARK: - Auxiliary Functions
 
-extension ContextualDaxDialog {
+extension ContextualDaxDialogContent {
     private func startSequentialUpdate() {
         let updateInterval = 0.3
         let timerPublisher = Timer.publish(every: updateInterval, on: .main, in: .common).autoconnect()
@@ -188,14 +185,14 @@ extension ContextualDaxDialog {
         attributedString.addAttributes(boldFontAttribute, range: nsBoldRange)
     }
 
-    return ContextualDaxDialog(message: attributedString)
+    return ContextualDaxDialogContent(message: attributedString)
         .padding()
         .preferredColorScheme(.light)
 }
 
 #Preview("Intro Dialog - text and button") {
     let contextualText = NSMutableAttributedString(string: "Sabrina is the best\n\nBelieve me! ☝️")
-    return ContextualDaxDialog(
+    return ContextualDaxDialogContent(
         message: contextualText,
         cta: "Got it!",
         action: {})
@@ -205,7 +202,7 @@ extension ContextualDaxDialog {
 
 #Preview("Intro Dialog - title, text, image and button") {
     let contextualText = NSMutableAttributedString(string: "Sabrina is the best\n\nBelieve me! ☝️")
-    return ContextualDaxDialog(
+    return ContextualDaxDialogContent(
         title: "Who is the best?",
         message: contextualText,
         imageName: "Sync-Desktop-New-128",
@@ -222,7 +219,7 @@ extension ContextualDaxDialog {
         ContextualOnboardingListItem.site(title: "Website"),
         ContextualOnboardingListItem.surprise(title: "Surprise"),
     ]
-    return ContextualDaxDialog(
+    return ContextualDaxDialogContent(
         title: "Who is the best?",
         message: contextualText,
         list: list,
@@ -232,17 +229,17 @@ extension ContextualDaxDialog {
 }
 
 #Preview("en_GB list") {
-    ContextualDaxDialog(logoPosition: .top,
-                        title: "title",
+    ContextualDaxDialogContent(title: "title",
                         message: "this is a message".attributedStringFromMarkdown(color: .blue),
                         list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_GB")).list,
                         listAction: { _ in })
+    .padding()
 }
 
 #Preview("en_US list") {
-    ContextualDaxDialog(logoPosition: .top,
-                        title: "title",
+    ContextualDaxDialogContent(title: "title",
                         message: "this is a message".attributedStringFromMarkdown(color: .blue),
                         list: OnboardingSuggestedSitesProvider(countryProvider: Locale(identifier: "en_US")).list,
                         listAction: { _ in })
+    .padding()
 }

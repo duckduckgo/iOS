@@ -22,6 +22,7 @@ import SwiftUI
 
 struct ShortcutItemView: View {
     let shortcut: NewTabPageShortcut
+    let accessoryType: ShortcutAccessoryType?
 
     var body: some View {
         VStack(spacing: 6) {
@@ -36,6 +37,13 @@ struct ShortcutItemView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
             }
+            .overlay(alignment: .topTrailing) {
+                if let accessoryType {
+                    ShortcutAccessoryView(accessoryType: accessoryType)
+                        .frame(width: 24)
+                        .offset(Constant.accessoryOffset)
+                }
+            }
             Text(shortcut.name)
                 .font(Font.system(size: 12))
                 .lineLimit(2)
@@ -44,9 +52,29 @@ struct ShortcutItemView: View {
                 .frame(maxWidth: .infinity, alignment: .top)
         }
     }
+
+    private enum Constant {
+        static let accessoryOffset = CGSize(width: 6, height: -6)
+    }
 }
 
 #Preview {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+        let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
+
+        ForEach(accessoryTypes, id: \.?.hashValue) { type in
+            Section {
+                ForEach(NewTabPageShortcut.allCases) { shortcut in
+                    ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                }
+
+            } footer: {
+                Spacer(minLength: 12)
+                Divider()
+                Spacer(minLength: 12)
+            }
+        }
+    }).padding(8)
 }
 
 private extension NewTabPageShortcut {

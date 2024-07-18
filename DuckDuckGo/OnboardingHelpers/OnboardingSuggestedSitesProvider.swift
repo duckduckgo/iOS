@@ -30,6 +30,8 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         self.countryProvider = countryProvider
     }
 
+    private let scheme = "https:"
+
     enum Countries: String {
         case indonesia = "ID"
         case gb = "GB"
@@ -67,7 +69,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         case .ireland: site = "skysports.com"
         default: site = "ESPN.com"
         }
-        return ContextualOnboardingListItem.site(title: site)
+        return ContextualOnboardingListItem.site(title: scheme + site)
     }
 
     private var option2: ContextualOnboardingListItem {
@@ -83,7 +85,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         case .ireland: site = "bbc.co.uk"
         default: site = "yahoo.com"
         }
-        return ContextualOnboardingListItem.site(title: site)
+        return ContextualOnboardingListItem.site(title: scheme + site)
     }
 
     private var option3: ContextualOnboardingListItem {
@@ -96,7 +98,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         case .sweden: site = "tradera.com"
         default: site = "eBay.com"
         }
-        return ContextualOnboardingListItem.site(title: site)
+        return ContextualOnboardingListItem.site(title: scheme + site)
     }
 
     private var surpriseMe: ContextualOnboardingListItem {

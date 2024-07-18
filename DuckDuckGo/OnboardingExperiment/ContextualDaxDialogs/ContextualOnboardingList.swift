@@ -31,21 +31,22 @@ public enum ContextualOnboardingListItem: Equatable {
         case .search(let title):
             return title
         case .site(let title):
-            return title
+            return title.replacingOccurrences(of: "https:", with: "")
         case .surprise:
             return "Surprise me"
         }
     }
 
     var title: String {
-        let scheme = "https:"
         switch self {
         case .search(let title):
-            return scheme + title
+            return title
+                .replacingOccurrences(of: "”", with: "")
+                .replacingOccurrences(of: "“", with: "")
         case .site(let title):
-            return scheme + title
+            return title
         case .surprise(let title):
-            return scheme + title
+            return title
         }
     }
 

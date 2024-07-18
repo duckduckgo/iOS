@@ -40,7 +40,7 @@ struct ShortcutItemView: View {
             .overlay(alignment: .topTrailing) {
                 if let accessoryType {
                     ShortcutAccessoryView(accessoryType: accessoryType)
-                        .frame(width: 24)
+                        .frame(width: Constant.accessorySize)
                         .offset(Constant.accessoryOffset)
                 }
             }
@@ -54,6 +54,7 @@ struct ShortcutItemView: View {
     }
 
     private enum Constant {
+        static let accessorySize = 24.0
         static let accessoryOffset = CGSize(width: 6, height: -6)
     }
 }

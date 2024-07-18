@@ -79,8 +79,8 @@ struct OnboardingFirstSearchDoneDialog: View {
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
 
     @State private var showNextScreen: Bool = false
-    @State private var shouldFollowUp: Bool = true
 
+    let shouldFollowUp: Bool
     let viewModel: OnboardingSiteSuggestionsViewModel
     let gotItAction: () -> Void
 
@@ -165,7 +165,7 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
         .padding()
 }
 

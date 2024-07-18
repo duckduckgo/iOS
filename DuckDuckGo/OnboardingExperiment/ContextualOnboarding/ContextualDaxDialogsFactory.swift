@@ -46,7 +46,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         let rootView: AnyView
         switch spec.type {
         case .afterSearch:
-            rootView = AnyView(afterSearchDialog(for: spec, delegate: delegate))
+            rootView = AnyView(afterSearchDialog(shouldFollowUpToWebsiteSearch: false, delegate: delegate))
+        case .afterSearchWithWebsitesFollowUp:
+            rootView = AnyView(afterSearchDialog(shouldFollowUpToWebsiteSearch: true, delegate: delegate))
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
             rootView = AnyView(withTrackersDialog(for: spec, delegate: delegate))
         case .final:
@@ -62,9 +64,11 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         return hostingController
     }
 
-    private func afterSearchDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {
+    private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate) -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
-        return OnboardingFirstSearchDoneDialog(viewModel: viewModel, gotItAction: {})
+        // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
+        let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch { {} } else { { [weak delegate] in delegate?.didTapDismissAction() } }
+        return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
     }
 
     private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> some View {

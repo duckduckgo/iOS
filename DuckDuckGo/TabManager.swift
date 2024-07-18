@@ -37,6 +37,7 @@ class TabManager {
     private var previewsSource: TabPreviewsSource
     private var duckPlayer: DuckPlayerProtocol
     private var privacyProDataReporter: PrivacyProDataReporting
+    private let contextualOnboardingPresenter: ContextualOnboardingPresenting
 
     weak var delegate: TabDelegate?
 
@@ -50,7 +51,8 @@ class TabManager {
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
          duckPlayer: DuckPlayer = DuckPlayer(),
-         privacyProDataReporter: PrivacyProDataReporting) {
+         privacyProDataReporter: PrivacyProDataReporting,
+         contextualOnboardingPresenter: ContextualOnboardingPresenting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -58,6 +60,7 @@ class TabManager {
         self.syncService = syncService
         self.duckPlayer = duckPlayer
         self.privacyProDataReporter = privacyProDataReporter
+        self.contextualOnboardingPresenter = contextualOnboardingPresenter
         registerForNotifications()
     }
 
@@ -75,7 +78,8 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayer: duckPlayer,
-                                                              privacyProDataReporter: privacyProDataReporter)
+                                                              privacyProDataReporter: privacyProDataReporter,
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -149,7 +153,8 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayer: duckPlayer,
-                                                              privacyProDataReporter: privacyProDataReporter)
+                                                              privacyProDataReporter: privacyProDataReporter,
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

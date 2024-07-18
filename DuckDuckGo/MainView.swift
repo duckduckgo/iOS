@@ -214,29 +214,23 @@ extension MainViewFactory {
     }
     
     private func constrainNavigationBarContainer() {
-        let navigationBarContainer = coordinator.navigationBarContainer!
+        let container = coordinator.navigationBarContainer!
         let toolbar = coordinator.toolbar!
         let navigationBarCollectionView = coordinator.navigationBarCollectionView!
 
-        coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
-        coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
-//        coordinator.constraints.navigationBarCollectionViewBottom
-//            = navigationBarCollectionView.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
-        
-        coordinator.constraints.navigationBarContainerHeight =
-//            navigationBarContainer.constrainAttribute(.height, to: 52, relatedBy: .greaterThanOrEqual)
-            navigationBarContainer.constrainAttribute(.height, to: 52, relatedBy: .equal)
+        coordinator.constraints.navigationBarContainerTop = container.constrainView(superview.safeAreaLayoutGuide, by: .top)
+        coordinator.constraints.navigationBarContainerBottom = container.constrainView(toolbar, by: .bottom, to: .top)
+        coordinator.constraints.navigationBarContainerHeight = container.constrainAttribute(.height, to: 52, relatedBy: .equal)
 
         NSLayoutConstraint.activate([
             coordinator.constraints.navigationBarContainerTop,
-            navigationBarContainer.constrainView(superview, by: .leading),
-            navigationBarContainer.constrainView(superview, by: .trailing),
+            container.constrainView(superview, by: .leading),
+            container.constrainView(superview, by: .trailing),
             coordinator.constraints.navigationBarContainerHeight,
             navigationBarCollectionView.constrainAttribute(.height, to: 52),
-            navigationBarCollectionView.constrainView(navigationBarContainer, by: .top),
-            navigationBarCollectionView.constrainView(navigationBarContainer, by: .leading),
-            navigationBarCollectionView.constrainView(navigationBarContainer, by: .trailing),
-            // coordinator.constraints.navigationBarCollectionViewBottom
+            navigationBarCollectionView.constrainView(container, by: .top),
+            navigationBarCollectionView.constrainView(container, by: .leading),
+            navigationBarCollectionView.constrainView(container, by: .trailing),
         ])
     }
 

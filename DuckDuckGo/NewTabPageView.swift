@@ -21,13 +21,13 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView: View {
+struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @ObservedObject var messagesModel: NewTabPageMessagesModel
-    @ObservedObject var favoritesModel: FavoritesModel
+    @ObservedObject var favoritesModel: FavoritesModelType
 
-    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModel) {
+    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
 
@@ -35,47 +35,57 @@ struct NewTabPageView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack {
-                // MARK: Messages
-                ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
-                    HomeMessageView(viewModel: messageModel)
-                        .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                        .padding(16)
-                }
+        GeometryReader { proxy in
+            ScrollView {
+                VStack {
+                    // MARK: Messages
+                    ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
+                        HomeMessageView(viewModel: messageModel)
+                            .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
+                            .padding(16)
+                    }
 
-                // MARK: Favorites
-                if favoritesModel.isEmpty {
-                    FavoritesEmptyStateView()
+                    // MARK: Favorites
+                    if favoritesModel.isEmpty {
+                        FavoritesEmptyStateView()
+                            .padding(Constant.sectionPadding)
+                    } else {
+                        FavoritesView(model: favoritesModel)
+                            .padding(Constant.sectionPadding)
+                    }
+
+                    // MARK: Shortcuts
+                    ShortcutsView()
                         .padding(Constant.sectionPadding)
-                } else {
-                    FavoritesView(model: favoritesModel)
-                        .padding(Constant.sectionPadding)
+
+                    Spacer()
+
+                    // MARK: Customize button
+                    HStack {
+                        Spacer()
+
+                        Button(action: {
+                        }, label: {
+                            NewTabPageCustomizeButtonView()
+                            // Needed to reduce default button margins
+                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
+                        }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                            .padding(Constant.sectionPadding)
+                            .padding(.top, 40)
+                    }
                 }
-
-                // MARK: Shortcuts
-                ShortcutsView()
-                    .padding(Constant.sectionPadding)
-
-                // MARK: Customize
-                Button(action: {
-                    // Temporary action for testing purposes
-                    favoritesModel.toggleFavoritesPresence()
-                }, label: {
-                    NewTabPageCustomizeButtonView()
-                }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                    .padding(EdgeInsets(top: 88, leading: 0, bottom: 16, trailing: 0))
+                .frame(minHeight: proxy.frame(in: .local).size.height)
             }
+            .background(Color(designSystemColor: .background))
         }
-        .background(Color(designSystemColor: .background))
     }
+}
 
-    private struct Constant {
-        static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+private struct Constant {
+    static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
 
-        static let messageMaximumWidth: CGFloat = 380
-        static let messageMaximumWidthPad: CGFloat = 455
-    }
+    static let messageMaximumWidth: CGFloat = 380
+    static let messageMaximumWidthPad: CGFloat = 455
 }
 
 // MARK: - Preview
@@ -87,7 +97,7 @@ struct NewTabPageView: View {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesModel()
+        favoritesModel: FavoritesPreviewModel()
     )
 }
 
@@ -107,7 +117,7 @@ struct NewTabPageView: View {
                 ]
             )
         ),
-        favoritesModel: FavoritesModel()
+        favoritesModel: FavoritesPreviewModel()
     )
 }
 

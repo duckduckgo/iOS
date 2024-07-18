@@ -699,6 +699,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
     public static let autofillSettingsReportNotWorkingConfirmationPromptMessage = NSLocalizedString("autofill.settings.report.not.working.confirmation.message", value: "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.", comment: "Message for the confirmation prompt when reporting autofill is not working for a website")
     public static let autofillSettingsReportNotWorkingConfirmationPromptButton = NSLocalizedString("autofill.settings.report.not.working.confirmation.button", value: "Send Report", comment: "Button title for the confirmation prompt when reporting autofill is not working for a website")
+    public static let autofillSettingsReportNotWorkingSentConfirmation = NSLocalizedString("autofill.settings.report.not.working.sent.confirmation", value: "Thank you! Your report will help us make DuckDuckGo better for everyone.", comment: "Message shown to user when they submit a report that autofill is not working for a website")
+
 
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock device to use saved password", comment: "Reason for auth during login prompt")

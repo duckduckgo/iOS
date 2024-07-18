@@ -577,6 +577,9 @@
 /* Title for the confirmation prompt when reporting autofill is not working for a website */
 "autofill.settings.report.not.working.confirmation.title" = "Report Autofill not Working on %@";
 
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Thank you! Your report will help us make DuckDuckGo better for everyone.";
+
 /* Subtitle for the row to report that autofill is not working on a site in autofill settings */
 "autofill.settings.report.not.working.subtitle" = "Anonymously report autofill not working on this site. Passwords are never shared.";
 

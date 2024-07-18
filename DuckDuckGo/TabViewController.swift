@@ -1853,6 +1853,8 @@ extension TabViewController: WKNavigationDelegate {
         ]
 
         Pixel.fire(pixel: .autofillLoginsReportFailure, withAdditionalParameters: parameters)
+
+        ActionMessageView.present(message: UserText.autofillSettingsReportNotWorkingSentConfirmation)
     }
 }
 

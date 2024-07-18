@@ -99,7 +99,7 @@ struct OnboardingFirstSearchDoneDialog: View {
     let gotItAction: () -> Void
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {      
+        ScrollView(.vertical, showsIndicators: false) {
             DaxDialogView(logoPosition: .left) {
                 VStack {
                     if showNextScreen {

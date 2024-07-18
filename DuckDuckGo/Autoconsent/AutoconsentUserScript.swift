@@ -103,6 +103,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
 extension AutoconsentUserScript {
     enum MessageName: String, CaseIterable {
         case `init`
+        case ddgPerfMetrics
         case cmpDetected
         case eval
         case popupFound
@@ -188,6 +189,10 @@ extension AutoconsentUserScript {
         }
 
         switch messageName {
+        case MessageName.ddgPerfMetrics:
+            os_log("DDG PERF METRICS: %s", log: .autoconsentLog, type: .info, String(describing:message.body))
+            replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
+            return
         case MessageName.`init`:
             handleInit(message: message, replyHandler: replyHandler)
         case MessageName.eval:

@@ -319,7 +319,8 @@ import WebKit
                                       previewsSource: previewsSource,
                                       tabsModel: tabsModel,
                                       syncPausedStateManager: syncErrorHandler,
-                                      variantManager: variantManager)
+                                      variantManager: variantManager,
+                                      contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager))
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

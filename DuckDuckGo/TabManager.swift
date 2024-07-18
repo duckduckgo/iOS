@@ -35,6 +35,7 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
+    private let contextualOnboardingPresenter: ContextualOnboardingPresenting
 
     weak var delegate: TabDelegate?
 
@@ -46,12 +47,14 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         contextualOnboardingPresenter: ContextualOnboardingPresenting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
+        self.contextualOnboardingPresenter = contextualOnboardingPresenter
 
         registerForNotifications()
     }
@@ -68,7 +71,8 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -140,7 +144,8 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

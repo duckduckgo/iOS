@@ -68,7 +68,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             previewsSource: TabPreviewsSource(),
             tabsModel: tabsModel,
             syncPausedStateManager: CapturingSyncPausedStateManager(),
-            variantManager: MockVariantManager())
+            variantManager: MockVariantManager(),
+            contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: DefaultVariantManager()))
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

@@ -28,11 +28,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yc-Gh-Vqe">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <edgeInsets key="layoutMargins" top="-50" left="0.0" bottom="0.0" right="0.0"/>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-yB-zj4">
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yc-Gh-Vqe">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+                                        <edgeInsets key="layoutMargins" top="-50" left="0.0" bottom="0.0" right="0.0"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gSI-9K-1Ti" userLabel="Alert Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <connections>
@@ -119,11 +123,15 @@
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerY" secondItem="t0t-53-xVf" secondAttribute="centerY" id="3qe-NM-ikO"/>
                             <constraint firstItem="gSI-9K-1Ti" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="4ZJ-81-h64"/>
                             <constraint firstItem="gSI-9K-1Ti" firstAttribute="top" secondItem="Sgm-Wo-lho" secondAttribute="top" id="9Fd-Ru-MPw"/>
+                            <constraint firstItem="Wfg-yB-zj4" firstAttribute="leading" secondItem="t0t-53-xVf" secondAttribute="leading" id="DLc-Mq-QSc"/>
                             <constraint firstItem="t0t-53-xVf" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="top" constant="80" id="Hdu-Wc-sCB"/>
                             <constraint firstAttribute="trailing" secondItem="gSI-9K-1Ti" secondAttribute="trailing" id="WIt-GE-l23"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="WgD-oO-Ds7"/>
+                            <constraint firstItem="Wfg-yB-zj4" firstAttribute="top" secondItem="t0t-53-xVf" secondAttribute="top" id="atL-ZI-N6g"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
+                            <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="Wfg-yB-zj4" secondAttribute="trailing" id="bpw-ay-E03"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="oFL-Ft-NQV"/>
+                            <constraint firstItem="t0t-53-xVf" firstAttribute="bottom" secondItem="Wfg-yB-zj4" secondAttribute="bottom" id="reE-gN-ecB"/>
                             <constraint firstAttribute="bottom" secondItem="gSI-9K-1Ti" secondAttribute="bottom" id="t3k-1K-dv4"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                         </constraints>
@@ -133,6 +141,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="containerStackView" destination="Wfg-yB-zj4" id="TDY-ap-WRj"/>
                         <outlet property="error" destination="Kd4-Oi-JP2" id="zBn-cG-pfQ"/>
                         <outlet property="errorHeader" destination="6P7-7R-riV" id="IkB-Tc-Eat"/>
                         <outlet property="errorInfoImage" destination="TUO-E3-s7Q" id="ngN-8S-PwR"/>
@@ -153,7 +162,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1181.5999999999999" y="445.72713643178412"/>
+            <point key="canvasLocation" x="1181.25" y="445.31249999999994"/>
         </scene>
         <!--PrivacyDashboard-->
         <scene sceneID="L6K-iW-ae0">

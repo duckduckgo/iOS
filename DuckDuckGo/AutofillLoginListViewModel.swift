@@ -517,7 +517,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     func shouldShowBreakageReporter() -> Bool {
         guard let currentTabUrl = currentTabUrl,
               !accountsToSuggest.isEmpty,
-              privacyConfig.isEnabled(featureKey: .autofillBreakageReporter),
+              privacyConfig.isEnabled(featureKey: .autofill),
               let identifier = currentTabUrl.privacySafeDomainIdentifier,
               !privacyConfig.isInExceptionList(domain: currentTabUrl.host, forFeature: .autofillBreakageReporter) else {
             return false

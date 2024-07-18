@@ -25,11 +25,7 @@ import Core
 final class YoutubePlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
-    var referrer: DuckPlayerReferrer = .other {
-        didSet {
-            print(referrer)
-        }
-    }
+    var referrer: DuckPlayerReferrer = .other
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"

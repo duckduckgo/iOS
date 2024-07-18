@@ -179,7 +179,8 @@ class MainViewController: UIViewController {
         tabsModel: TabsModel,
         syncPausedStateManager: any SyncPausedStateManaging,
         privacyProDataReporter: PrivacyProDataReporting,
-        variantManager: VariantManager
+        variantManager: VariantManager,
+        contextualOnboardingPresenter: ContextualOnboardingPresenting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -198,7 +199,8 @@ class MainViewController: UIViewController {
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
                                      syncService: syncService,
-                                     privacyProDataReporter: privacyProDataReporter)
+                                     privacyProDataReporter: privacyProDataReporter,
+                                     contextualOnboardingPresenter: contextualOnboardingPresenter)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -777,18 +779,27 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-        Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        wakeLazyFireButtonAnimator()
-        
-        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            segueToActionSheetDaxDialogWithSpec(spec)
-        } else {
+
+        func showClearDataAlert() {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
             })
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
 
+        Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        wakeLazyFireButtonAnimator()
+
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            showClearDataAlert()
+        } else {
+            if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+                segueToActionSheetDaxDialogWithSpec(spec)
+            } else {
+               showClearDataAlert()
+            }
+        }
+        
         performCancel()
     }
     

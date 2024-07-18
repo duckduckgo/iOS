@@ -51,8 +51,10 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
     @IBOutlet private(set) weak var errorMessage: UILabel!
+    @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var webViewContainer: UIView!
     var webViewBottomAnchorConstraint: NSLayoutConstraint?
+    var daxContextualOnboardingController: UIViewController?
 
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
@@ -293,7 +295,8 @@ class TabViewController: UIViewController {
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
                                    duckPlayer: DuckPlayerProtocol,
-                                   privacyProDataReporter: PrivacyProDataReporting) -> TabViewController {
+                                   privacyProDataReporter: PrivacyProDataReporting,
+                                   contextualOnboardingPresenter: ContextualOnboardingPresenting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -303,7 +306,8 @@ class TabViewController: UIViewController {
                               historyManager: historyManager,
                               syncService: syncService,
                               duckPlayer: duckPlayer,
-                              privacyProDataReporter: privacyProDataReporter)
+                              privacyProDataReporter: privacyProDataReporter,
+                              contextualOnboardingPresenter: contextualOnboardingPresenter)
         })
         return controller
     }
@@ -316,7 +320,9 @@ class TabViewController: UIViewController {
     let historyCapture: HistoryCapture
     var duckPlayer: DuckPlayerProtocol
     var duckPlayerNavigationHandler: DuckNavigationHandling?
-    
+
+    let contextualOnboardingPresenter: ContextualOnboardingPresenting
+
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
@@ -324,7 +330,8 @@ class TabViewController: UIViewController {
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
                    duckPlayer: DuckPlayerProtocol,
-                   privacyProDataReporter: PrivacyProDataReporting) {
+                   privacyProDataReporter: PrivacyProDataReporting,
+                   contextualOnboardingPresenter: ContextualOnboardingPresenting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -334,6 +341,7 @@ class TabViewController: UIViewController {
         self.duckPlayer = duckPlayer
         self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
         self.privacyProDataReporter = privacyProDataReporter
+        self.contextualOnboardingPresenter = contextualOnboardingPresenter
         super.init(coder: aDecoder)
     }
 
@@ -1378,25 +1386,30 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        isShowingFullScreenDaxDialog = true
+        if !DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            isShowingFullScreenDaxDialog = true
+        }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         let daxDialogSourceURL = self.url
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self else { return }
             // https://app.asana.com/0/414709148257752/1201620790053163/f
-            if self?.url != daxDialogSourceURL {
+            if self.url != daxDialogSourceURL {
                 DaxDialogs.shared.overrideShownFlagFor(spec, flag: false)
-                self?.isShowingFullScreenDaxDialog = false
+                self.isShowingFullScreenDaxDialog = false
                 return
             }
 
-            self?.chromeDelegate?.omniBar.resignFirstResponder()
-            self?.chromeDelegate?.setBarsHidden(false, animated: true)
-            self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
+            self.chromeDelegate?.omniBar.resignFirstResponder()
+            self.chromeDelegate?.setBarsHidden(false, animated: true)
+
+            // Present the contextual onboarding
+            contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)
 
             if spec == DaxDialogs.BrowsingSpec.withoutTrackers {
-                self?.woShownRecently = true
-                self?.fireWoFollowUp = true
+                self.woShownRecently = true
+                self.fireWoFollowUp = true
             }
         }
     }

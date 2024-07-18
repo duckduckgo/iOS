@@ -321,7 +321,8 @@ import WebKit
                                       tabsModel: tabsModel,
                                       syncPausedStateManager: syncErrorHandler,
                                       privacyProDataReporter: privacyProDataReporter,
-                                      variantManager: variantManager)
+                                      variantManager: variantManager,
+                                      contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager))
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

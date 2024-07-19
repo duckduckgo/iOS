@@ -224,7 +224,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
 
         // Pixel for Views From SERP
         if let url = navigationAction.request.url,
-        if let url = navigdelayationAction.request.url,
             navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,
             duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)

@@ -146,7 +146,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         let message: String
         let cta: String
-        let highlightAddressBar: Bool
+        fileprivate(set) var highlightAddressBar: Bool
         let pixelName: Pixel.Event
         let type: SpecType
         
@@ -507,21 +507,27 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private func trackersBlockedMessage(_ entitiesBlocked: [String]) -> BrowsingSpec? {
         guard !settings.browsingWithTrackersShown else { return nil }
 
+        var spec: BrowsingSpec?
         switch entitiesBlocked.count {
 
         case 0:
-            return nil
-            
+            spec = nil
+
         case 1:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
-            
+            spec = BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
+
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
+            spec = BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
                                                            entitiesBlocked[0],
                                                            entitiesBlocked[1])
         }
+        // New Contextual onboarding doesn't highlight the address bar. This checks prevents to cancel the lottie animation.
+        if isNewOnboarding {
+            spec?.highlightAddressBar = false
+        }
+        return spec
     }
  
     private func blockedEntityNames(_ trackerInfo: TrackerInfo) -> [String]? {

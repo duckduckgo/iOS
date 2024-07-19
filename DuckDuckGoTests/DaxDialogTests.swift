@@ -97,7 +97,7 @@ final class DaxDialog: XCTestCase {
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
-
+        mockVariantManager.isSupportedReturns = false
         let testCases = [
             (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneTracker.format(args: "Google"), line: #line),
             (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMultipleTrackers.format(args: 0, "Google", "Amazon.com"), line: #line),
@@ -129,6 +129,44 @@ final class DaxDialog: XCTestCase {
             XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo), line: UInt(testCase.line))
         }
         
+    }
+
+    func testWhenExperimentAndBrowsingSpecIsWithOneTrackerThenHighlightAddressBarIsFalse() throws {
+        // GIVEN
+        mockVariantManager.isSupportedReturns = true
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
+        privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result.type, .withOneTracker)
+        XCTAssertFalse(result.highlightAddressBar)
+    }
+
+    func testWhenExperimentAndBrowsingSpecIsWithMultipleTrackerThenHighlightAddressBarIsFalse() throws {
+        // GIVEN
+        mockVariantManager.isSupportedReturns = true
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        [URLs.google, URLs.amazon].forEach { tracker in
+            let detectedTracker = detectedTrackerFrom(tracker, pageUrl: URLs.example.absoluteString)
+            privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+        }
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result.type, .withMultipleTrackers)
+        XCTAssertFalse(result.highlightAddressBar)
+    }
+
+    func testWhenExperimentAndBrowsingSpecIsWithMultipleTrackersThenHighlightAddressBarIsFalse() {
+
     }
 
     func testWhenTrackersShownThenFireEducationShown() {

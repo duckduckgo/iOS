@@ -226,7 +226,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Load the URL
             webView.load(URLRequest(url: newURL))
             
-            // Add a delay before resetting to allow the Webview to properly render
+            // Add a short delay to let the webview start the navigation            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.lastHandledVideoID = videoID
                 self.isDuckPlayerTemporarilyDisabled = false

@@ -78,8 +78,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
         case .final:
-            // TODO: Reset flag
-            break
+            settings.browsingFinalDialogShown = flag
         }
     }
     
@@ -137,7 +136,10 @@ final class DaxDialogs: NewTabDialogSpecProvider {
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
-        
+
+        // TODO: Change pixel name
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsWithoutTrackersFollowUp, type: .final)
+
         let message: String
         let cta: String
         let highlightAddressBar: Bool
@@ -219,7 +221,21 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         || settings.browsingWithoutTrackersShown
         || settings.browsingMajorTrackingSiteShown
     }
-    
+
+    private var finalDaxDialogSeen: Bool {
+        settings.browsingFinalDialogShown
+    }
+
+    private var visitedSiteAndFireButtonSeen: Bool {
+        fireButtonBrowsingMessageSeenOrExpired &&
+        firstBrowsingMessageSeen
+    }
+
+    private var shouldDisplayFinalContextualBrowsingDialog: Bool {
+        !finalDaxDialogSeen &&
+        visitedSiteAndFireButtonSeen
+    }
+
     private var fireButtonBrowsingMessageSeenOrExpired: Bool {
         return settings.fireButtonEducationShownOrExpired
     }
@@ -299,7 +315,12 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         settings.fireButtonEducationShownOrExpired = true
         return ActionSheetSpec.fireButtonEducation
     }
-    
+
+    func setFireEducationMessageSeen() {
+        guard isNewOnboarding else { return }
+        settings.fireButtonEducationShownOrExpired = true
+    }
+
     func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
         
@@ -323,7 +344,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         if privacyInfo.url.isDuckDuckGoSearch {
             return searchMessage()
         }
-        
+
         // won't be shown if owned by major tracker message has already been shown
         if isFacebookOrGoogle(privacyInfo.url) {
             return majorTrackerMessage(host)
@@ -345,6 +366,11 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
+
+        // If the user visited a website and saw the fire dialog
+        if shouldDisplayFinalContextualBrowsingDialog {
+            return finalMessage()
+        }
 
         if privacyInfo.url.isDuckDuckGoSearch {
             // If user already visited a site, show after search dialog but don't follow up by suggesting to visit a site.
@@ -466,6 +492,12 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         guard !settings.browsingAfterSearchShown else { return nil }
         settings.browsingAfterSearchShown = true
         return BrowsingSpec.afterSearchWithWebsitesFollowUp
+    }
+
+    private func finalMessage() -> BrowsingSpec? {
+        guard !finalDaxDialogSeen else { return nil }
+        settings.browsingFinalDialogShown = true
+        return BrowsingSpec.final
     }
 
     private func trackersBlockedMessage(_ entitiesBlocked: [String]) -> BrowsingSpec? {

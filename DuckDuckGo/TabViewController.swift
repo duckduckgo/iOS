@@ -2853,6 +2853,7 @@ extension TabViewController: OnboardingNavigationDelegate {
 extension TabViewController: ContextualOnboardingEventDelegate {
 
     func didAcknowledgeContextualOnboardingTrackersDialog() {
+        DaxDialogs.shared.setFireEducationMessageSeen()
         delegate?.tabDidRequestFireButtonPulse(tab: self)
     }
 

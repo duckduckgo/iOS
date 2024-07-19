@@ -337,6 +337,138 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result.type, .afterSearchWithWebsitesFollowUp)
     }
 
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndSearchDone_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingAfterSearchShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithoutTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.amazon)))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook)))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndSearchDone_ThenBrowsingSpecIsNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingAfterSearchShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithoutTracker_ThenBrowsingSpecIsNotFinal() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithTracker_ThenBrowsingSpecIsNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.amazon))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndSearchNotSeen_ThenAfterSearchSpecIsReturned() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.browsingWithTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+
+        // THEN
+        XCTAssertEqual(result, .afterSearch)
+    }
 
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
@@ -359,5 +491,10 @@ final class DaxDialog: XCTestCase {
         return PrivacyInfo(url: url,
                            parentEntity: entityProvider.entity(forHost: url.host!),
                            protectionStatus: protectionStatus)
+    }
+
+    private func makeExperimentSUT(settings: DaxDialogsSettings) -> DaxDialogs {
+        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
     }
 }

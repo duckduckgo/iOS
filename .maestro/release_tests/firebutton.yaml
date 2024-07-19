@@ -6,12 +6,8 @@ tags:
 ---
 
 # Set up 
-- clearState
-- clearKeychain
-- launchApp
-
 - runFlow: 
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:

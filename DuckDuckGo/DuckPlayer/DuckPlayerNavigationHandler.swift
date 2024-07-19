@@ -172,7 +172,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Do not handle the URL if the video was just handled
         if let url = url,
            url.isYoutubeVideo || url.isDuckPlayer,
-           let (videoID, timestamp) = url.youtubeVideoParams,
+           let (videoID, _) = url.youtubeVideoParams,
             lastHandledVideoID == videoID,
             !isDuckPlayerTemporarilyDisabled {
                 return
@@ -198,7 +198,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Load the URL
             webView.load(URLRequest(url: newURL))
             
-            // Add a delay before resetting to allow the Webview to properly render
+            // Add a short delay to let the webview start the navigation
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.lastHandledVideoID = videoID
                 self.isDuckPlayerTemporarilyDisabled = false
@@ -215,7 +215,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Do not handle the URL if the video was just handled
         if let url = navigationAction.request.url,
            url.isYoutubeVideo || url.isDuckPlayer,
-           let (videoID, timestamp) = url.youtubeVideoParams,
+           let (videoID, _) = url.youtubeVideoParams,
             lastHandledVideoID == videoID,
             !isDuckPlayerTemporarilyDisabled {
                 return
@@ -224,6 +224,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
 
         // Pixel for Views From SERP
         if let url = navigationAction.request.url,
+        if let url = navigdelayationAction.request.url,
             navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,
             duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)

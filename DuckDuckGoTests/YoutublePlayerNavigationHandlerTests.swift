@@ -264,5 +264,54 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
      
     }
+    
+    @MainActor
+    func testHandleReloadForDuckPlayerVideoWithDuckPlayerDisabled() {
+        let duckPlayerURL = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+                
+        mockWebView.setCurrentURL(duckPlayerURL)
+        
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.setMode(.disabled)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+
+        handler.handleReload(webView: mockWebView)
+        
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+        
+    }
+    
+    @MainActor
+    func testHandleReloadForNonDuckPlayerVideoWithDuckPlayerEnabled() {
+        let nonDuckPlayerURL = URL(string: "https://www.google.com")!
+        
+        // Simulate the current URL
+        mockWebView.setCurrentURL(nonDuckPlayerURL)
+        
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.setMode(.alwaysAsk)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+
+        handler.handleReload(webView: mockWebView)
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+    }
+    
+    @MainActor
+    func testHandleReloadForNonDuckPlayerVideoWithDuckPlayerDisabled() {
+        let nonDuckPlayerURL = URL(string: "https://www.google.com")!
+        
+        // Simulate the current URL
+        mockWebView.setCurrentURL(nonDuckPlayerURL)
+        
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.setMode(.disabled)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+
+        handler.handleReload(webView: mockWebView)
+        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+    }
 
 }

@@ -1,5 +1,5 @@
 //
-//  FavoritesModel.swift
+//  NewTabPageControllerDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,29 +17,11 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Foundation
 
-protocol FavoritesModel: AnyObject, ObservableObject {
-    var allFavorites: [Favorite] { get }
-    var faviconLoader: FavoritesFaviconLoading? { get }
-
-    var isEmpty: Bool { get }
-    var isCollapsed: Bool { get }
-
-    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
-
-    func faviconMissing()
-
-    // MARK: - Interactions
-
-    func toggleCollapse()
-
-    func favoriteSelected(_ favorite: Favorite)
-    func editFavorite(_ favorite: Favorite)
-    func deleteFavorite(_ favorite: Favorite)
-}
-
-struct FavoritesSlice {
-    let items: [Favorite]
-    let isCollapsible: Bool
+protocol NewTabPageControllerDelegate: AnyObject {
+    func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL)
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
 }

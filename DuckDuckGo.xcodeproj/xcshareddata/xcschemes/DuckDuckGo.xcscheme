@@ -124,13 +124,13 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "VARIANT"
-            value = "md"
+            key = "ONBOARDING"
+            value = "true"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "ONBOARDING"
-            value = "true"
+            key = "VARIANT"
+            value = "ma"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

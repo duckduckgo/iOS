@@ -727,7 +727,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }

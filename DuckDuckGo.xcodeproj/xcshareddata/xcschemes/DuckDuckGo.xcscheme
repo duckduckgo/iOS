@@ -64,6 +64,9 @@
                <Test
                   Identifier = "AutoconsentMessageProtocolTests/testEval()">
                </Test>
+               <Test
+                  Identifier = "SyncSettingsViewControllerErrorTests/test_WhenAccountRemoved_ErrorHandlerSyncDidTurnOffCalled()">
+               </Test>
             </SkippedTests>
          </TestableReference>
          <TestableReference

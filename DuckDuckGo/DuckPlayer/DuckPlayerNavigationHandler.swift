@@ -28,8 +28,7 @@ final class DuckPlayerNavigationHandler {
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
-    
-        var isDuckPlayerTemporarilyDisabled = false
+    var isDuckPlayerTemporarilyDisabled = false
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"

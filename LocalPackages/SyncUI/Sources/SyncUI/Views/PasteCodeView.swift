@@ -96,7 +96,6 @@ public struct PasteCodeView: View {
         .padding()
     }
 
-    @available(iOS 15, *)
     var instructionsString: AttributedString {
         let baseString = UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath, menuItem: UserText.viewTextCodeMenuItem)
         var instructions = AttributedString(baseString)

@@ -22,7 +22,6 @@
 import SwiftUI
 import DesignResourcesKit
 
-@available(iOS 15, *)
 struct NetworkProtectionVPNSettingsView: View {
     @StateObject var viewModel = NetworkProtectionVPNSettingsViewModel()
 

@@ -597,10 +597,8 @@ extension SettingsViewModel {
      
 #if NETWORK_PROTECTION
         case .netP:
-            if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings)
-                pushViewController(legacyViewProvider.netP)
-            }
+            firePixel(.privacyProVPNSettings)
+            pushViewController(legacyViewProvider.netP)
 #endif
         }
     }

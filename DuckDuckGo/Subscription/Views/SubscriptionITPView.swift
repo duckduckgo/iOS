@@ -141,7 +141,6 @@ struct SubscriptionITPView: View {
 }
 
 // Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
-// @available(iOS 15.0, *)
 // struct SubscriptionITPView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        SubscriptionITPView()

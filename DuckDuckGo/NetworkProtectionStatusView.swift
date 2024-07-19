@@ -22,7 +22,6 @@
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 

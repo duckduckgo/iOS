@@ -191,27 +191,19 @@ struct AutofillLoginDetailsView: View {
                 usernameCell()
             } footer: {
                 if !viewModel.isSignedIn {
-                    if #available(iOS 15, *) {
-                        var attributedString: AttributedString {
-                            let text = String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection)
-                            var attributedString = AttributedString(text)
-                            if let range = attributedString.range(of: UserText.autofillEnableEmailProtection) {
-                                attributedString[range].foregroundColor = Color(ThemeManager.shared.currentTheme.buttonTintColor)
-                            }
-                            return attributedString
+                    var attributedString: AttributedString {
+                        let text = String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection)
+                        var attributedString = AttributedString(text)
+                        if let range = attributedString.range(of: UserText.autofillEnableEmailProtection) {
+                            attributedString[range].foregroundColor = Color(ThemeManager.shared.currentTheme.buttonTintColor)
                         }
-                        Text(attributedString)
-                            .font(.footnote)
-                            .lineLimit(nil)
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
-                    } else {
-                        Text(String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection))
-                            .font(.footnote)
-                            .lineLimit(nil)
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
+                        return attributedString
                     }
+                    Text(attributedString)
+                        .font(.footnote)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .onTapGesture {

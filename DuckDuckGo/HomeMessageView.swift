@@ -144,7 +144,7 @@ struct HomeMessageView: View {
 
     @ViewBuilder
     private var subtitle: some View {
-        if #available(iOS 15, *), let attributed = try? AttributedString(markdown: viewModel.subtitle) {
+        if let attributed = try? AttributedString(markdown: viewModel.subtitle) {
             Text(attributed)
                 .daxBodyRegular()
         } else {

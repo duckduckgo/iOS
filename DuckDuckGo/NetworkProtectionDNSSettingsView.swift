@@ -109,7 +109,6 @@ struct NetworkProtectionDNSSettingsView: View {
     }
 }
 
-@available(iOS 15, *)
 private struct ChecklistItem<Content>: View where Content: View {
     let isSelected: Bool
     let action: () -> Void

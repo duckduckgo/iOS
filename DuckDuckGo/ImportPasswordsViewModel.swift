@@ -140,7 +140,6 @@ private extension String {
 
 }
 
-@available(iOS 15, *)
 private extension AttributedString {
 
     mutating func applyFontStyle(forSubstring substring: String, withFont font: Font) {

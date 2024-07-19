@@ -98,8 +98,6 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
         return normalized
     }
     
-    // https://app.asana.com/0/1201011656765697/1201271104639596
-    @available(iOS 15, *)
     func startRecording(resultHandler: @escaping (_ text: String?,
                                                   _ error: Error?,
                                                   _ speechDidFinish: Bool) -> Void,

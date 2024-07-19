@@ -29,9 +29,7 @@ struct VoiceSearchFeedbackView: View {
             voiceFeedbackView
         }
         .onAppear {
-            if #available(iOS 15, *) {
-                speechModel.startSpeechRecognizer()
-            }
+            speechModel.startSpeechRecognizer()
             speechModel.startSilenceAnimation()
         }.onDisappear {
             speechModel.stopSpeechRecognizer()

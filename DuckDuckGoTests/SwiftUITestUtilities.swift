@@ -37,4 +37,3 @@ func find<T: View>(_ type: T.Type, in root: Any) -> T? {
     }
     return nil
 }
-

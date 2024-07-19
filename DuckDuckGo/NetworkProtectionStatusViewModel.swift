@@ -159,6 +159,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         self.dnsSettings = settings.dnsSettings
 
+        updateViewModel(withStatus: statusObserver.recentValue)
+
         setUpIsConnectedStatePublishers()
         setUpToggledStatePublisher()
         setUpStatusMessagePublishers()
@@ -169,6 +171,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpThroughputRefreshTimer()
         setUpErrorPublishers()
 
+        serverInfoObserver.refreshServerInfo()
+
         // Prefetching this now for snappy load times on the locations screens
         Task {
             _ = try? await locationListRepository.fetchLocationList()
@@ -176,30 +180,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpIsConnectedStatePublishers() {
-        let isConnectedPublisher = statusObserver.publisher
-            .map { $0.isConnected }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        isConnectedPublisher
-            .map(Self.titleText(connected:))
-            .assign(to: \.headerTitle, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
-            .map(Self.statusImageID(connected:))
-            .assign(to: \.statusImageID, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
-            .sink { [weak self] isConnected in
-                if !isConnected {
-                    self?.uploadTotal = nil
-                    self?.downloadTotal = nil
-                    self?.throughputUpdateTimer?.invalidate()
-                    self?.throughputUpdateTimer = nil
-                } else {
-                    self?.setUpThroughputRefreshTimer()
-                }
-            }
-            .store(in: &cancellables)
+        statusObserver.publisher.sink { [weak self] status in
+            self?.updateViewModel(withStatus: status)
+        }
+        .store(in: &cancellables)
     }
 
     private func setUpToggledStatePublisher() {
@@ -290,6 +274,31 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
             .store(in: &cancellables)
+    }
+
+    private func updateViewModel(withStatus connectionStatus: ConnectionStatus) {
+        self.headerTitle = Self.titleText(connected: connectionStatus.isConnected)
+        self.statusImageID = Self.statusImageID(connected: connectionStatus.isConnected)
+
+        if !connectionStatus.isConnected {
+            self.uploadTotal = nil
+            self.downloadTotal = nil
+            self.throughputUpdateTimer?.invalidate()
+            self.throughputUpdateTimer = nil
+        } else {
+            self.setUpThroughputRefreshTimer()
+        }
+
+        switch connectionStatus {
+        case .connected:
+            self.isNetPEnabled = true
+        case .connecting:
+            self.isNetPEnabled = true
+            self.resetConnectionInformation()
+        default:
+            self.isNetPEnabled = false
+            self.resetConnectionInformation()
+        }
     }
 
     private func setUpErrorPublishers() {

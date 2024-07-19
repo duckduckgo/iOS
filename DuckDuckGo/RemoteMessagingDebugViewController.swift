@@ -57,9 +57,9 @@ struct RemoteMessagingDebugRootView: View {
         }
         .navigationTitle("\(model.messages.count) Remote Messages")
         .toolbar {
-                Button("Delete All", role: .destructive) {
-                    model.deleteAll()
-                }
+            Button("Delete All", role: .destructive) {
+                model.deleteAll()
+            }
         }
     }
 

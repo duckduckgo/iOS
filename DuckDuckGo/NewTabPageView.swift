@@ -111,7 +111,8 @@ private struct Constant {
                             id: "0",
                             content: .small(titleText: "Title", descriptionText: "Description"),
                             matchingRules: [],
-                            exclusionRules: []
+                            exclusionRules: [],
+                            isMetricsEnabled: false
                         )
                     )
                 ]

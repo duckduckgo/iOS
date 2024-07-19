@@ -358,34 +358,43 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+        
+        func hasTrackers(host: String) -> Bool {
+            isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
+        }
+
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
+
+        if privacyInfo.url.isDuckDuckGoSearch && !settings.browsingAfterSearchShown {
+            return searchMessage()
+        }
+
+        // won't be shown if owned by major tracker message has already been shown
+        if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
+            return majorTrackerMessage(host)
+        }
+
+        // won't be shown if major tracker message has already been shown
+        if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
+            return majorTrackerOwnerMessage(host, owner)
+        }
+
+        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {
+            return trackersBlockedMessage(entityNames)
+        }
+
+        // if non duck duck go search and no trackers found and no tracker message already shown, show no trackers message
+        if !settings.browsingWithoutTrackersShown && !privacyInfo.url.isDuckDuckGoSearch && !hasTrackers(host: host) {
+            return noTrackersMessage()
+        }
 
         // If the user visited a website and saw the fire dialog
         if shouldDisplayFinalContextualBrowsingDialog {
             return finalMessage()
         }
 
-        if privacyInfo.url.isDuckDuckGoSearch {
-            return searchMessage()
-        }
-
-        // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(privacyInfo.url) {
-            return majorTrackerMessage(host)
-        }
-
-        // won't be shown if major tracker message has already been shown
-        if let owner = isOwnedByFacebookOrGoogle(host) {
-            return majorTrackerOwnerMessage(host, owner)
-        }
-
-        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo) {
-            return trackersBlockedMessage(entityNames)
-        }
-
-        // only shown if first time on a non-ddg page and none of the non-ddg messages shown
-        return noTrackersMessage()
+        return nil
     }
 
     func nextHomeScreenMessage() -> HomeScreenSpec? {

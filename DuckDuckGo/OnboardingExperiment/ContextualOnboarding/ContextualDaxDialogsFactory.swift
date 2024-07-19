@@ -37,7 +37,7 @@ typealias ContextualOnboardingDelegate = OnboardingNavigationDelegate & Contextu
 // MARK: - Contextual Dialogs Factory
 
 protocol ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIHostingController<AnyView>
 }
 
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
@@ -47,7 +47,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         self.contextualOnboardingSettings = contextualOnboardingSettings
     }
 
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIViewController {
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIHostingController<AnyView> {
         let rootView: AnyView
         switch spec.type {
         case .afterSearch:
@@ -59,7 +59,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         }
 
         let viewWithBackground = rootView.withOnboardingBackground()
-        let hostingController = UIHostingController(rootView: viewWithBackground)
+        let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
         }

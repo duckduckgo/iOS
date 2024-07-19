@@ -106,7 +106,8 @@ extension TabViewController {
                                                                  bookmarksDatabase: bookmarksDatabase,
                                                                  historyManager: historyManager,
                                                                  syncService: syncService,
-                                                                 contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                                                 contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                                 contextualOnboardingLogic: contextualOnboardingLogic)
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)

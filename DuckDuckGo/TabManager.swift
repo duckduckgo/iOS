@@ -36,6 +36,7 @@ class TabManager {
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
 
     weak var delegate: TabDelegate?
 
@@ -48,14 +49,15 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
-         contextualOnboardingPresenter: ContextualOnboardingPresenting) {
+         contextualOnboardingPresenter: ContextualOnboardingPresenting,
+         contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
-
+        self.contextualOnboardingLogic = contextualOnboardingLogic
         registerForNotifications()
     }
 
@@ -72,7 +74,8 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                              contextualOnboardingLogic: contextualOnboardingLogic)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -145,7 +148,8 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                              contextualOnboardingLogic: contextualOnboardingLogic)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

@@ -321,7 +321,6 @@ class TabSwitcherViewController: UIViewController {
 
         if !isNewOnboarding
             && DaxDialogs.shared.shouldShowFireButtonPulse {
-            ViewHighlighter.hideAll()
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {

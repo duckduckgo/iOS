@@ -35,7 +35,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "bolasport.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "kompas.com"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "tokopedia.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForGB() {
@@ -50,7 +50,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "skysports.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "bbc.co.uk"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForGermany() {
@@ -80,7 +80,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "tsn.ca"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "cbc.ca"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "canadiantire.ca"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForNetherlands() {
@@ -95,7 +95,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "voetbalprimeur.nl"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "nu.nl"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "bol.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://www.woorden.org/woord/eend"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title:  "https://www.woorden.org/woord/eend"))
     }
 
     func testSuggestedSitesForAustralia() {
@@ -110,7 +110,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "afl.com.au"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "abc.net.au"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForSweden() {
@@ -140,7 +140,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "skysports.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "bbc.co.uk"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForUS() {
@@ -155,7 +155,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "ESPN.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "yahoo.com"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 
     func testSuggestedSitesForUnknownCountry() {
@@ -170,6 +170,6 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "ESPN.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "yahoo.com"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "britannica.com/animal/duck"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
 }

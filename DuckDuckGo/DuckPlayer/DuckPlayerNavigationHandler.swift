@@ -28,8 +28,7 @@ final class DuckPlayerNavigationHandler {
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
-    
-        var isDuckPlayerTemporarilyDisabled = false
+    var isDuckPlayerTemporarilyDisabled = false
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -226,7 +225,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Load the URL
             webView.load(URLRequest(url: newURL))
             
-            // Add a short delay to let the webview start the navigation            
+            // Add a short delay to let the webview start the navigation
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.lastHandledVideoID = videoID
                 self.isDuckPlayerTemporarilyDisabled = false

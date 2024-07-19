@@ -164,6 +164,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
         updateData()
         setupCancellables()
+
+        if showBreakageReporter {
+            Pixel.fire(pixel: .autofillLoginsReportAvailable)
+        }
     }
     
  // MARK: Public Methods

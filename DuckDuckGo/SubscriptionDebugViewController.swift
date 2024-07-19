@@ -33,7 +33,7 @@ import NetworkProtection
         AppDependencyProvider.shared.subscriptionManager
     }
 
-    private let reporter = DefaultPrivacyProDataReporter.shared
+    private let reporter = PrivacyProDataReporter.shared
 
     private let titles = [
         Sections.authorization: "Authentication",

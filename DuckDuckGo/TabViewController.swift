@@ -700,7 +700,6 @@ class TabViewController: UIViewController {
         PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
             Pixel.fire(pixel: .browsingMenuFireproof)
             self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
-            DefaultPrivacyProDataReporter.shared.saveFireproofingUsed()
         }
     }
     
@@ -1621,7 +1620,7 @@ extension TabViewController: WKNavigationDelegate {
                navigationAction.isTargetingMainFrame() {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
-                    DefaultPrivacyProDataReporter.shared.saveSearchCount()
+                    PrivacyProDataReporter.shared.saveSearchCount()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

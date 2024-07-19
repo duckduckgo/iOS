@@ -163,7 +163,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func additionalParameters(for messageID: String) -> [String: String] {
-        DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
+        PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
                                                                        with: [PixelParameters.message: "\(messageID)"])
     }
 

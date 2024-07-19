@@ -309,7 +309,7 @@ import WebKit
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
-        DefaultPrivacyProDataReporter.shared.injectTabsModel(tabsModel)
+        PrivacyProDataReporter.shared.injectTabsModel(tabsModel)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
@@ -519,7 +519,7 @@ import WebKit
 
         syncService.scheduler.notifyAppLifecycleEvent()
         
-        DefaultPrivacyProDataReporter.shared.injectSyncService(syncService)
+        PrivacyProDataReporter.shared.injectSyncService(syncService)
 
         fireFailedCompilationsPixelIfNeeded()
 
@@ -549,7 +549,7 @@ import WebKit
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
         Task {
-            await DefaultPrivacyProDataReporter.shared.saveWidgetAdded()
+            await PrivacyProDataReporter.shared.saveWidgetAdded()
         }
     }
 
@@ -661,7 +661,7 @@ import WebKit
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-        DefaultPrivacyProDataReporter.shared.saveApplicationLastSessionEnded()
+        PrivacyProDataReporter.shared.saveApplicationLastSessionEnded()
     }
 
     private func suspendSync() {

@@ -37,28 +37,14 @@ enum PrivacyProPromoParameters: String, CaseIterable {
     case searchUser
 
     /// Pick a randomized subset of parameters each time they are attached to a pixel
-    static func randomizedSubset() -> [PrivacyProPromoParameters] {
-        Array(allCases.shuffled().prefix(Int(allCases.count * 2/3)))
+    static func randomizedSubset(excluding excludedParameters: [PrivacyProPromoParameters] = []) -> [PrivacyProPromoParameters] {
+        let allParameters = Set(allCases).subtracting(Set(excludedParameters))
+        return Array(allParameters.shuffled().prefix(Int(allCases.count * 2/3)))
     }
 }
 
-protocol PrivacyProDataReporting {
-    func isReinstall() -> Bool
-    func isFireButtonUser() -> Bool
-    func isSyncUsed() -> Bool
-    func isFireproofingUsed() -> Bool
-    func isAppOnboardingCompleted() -> Bool
-    func isEmailEnabled() -> Bool
-    func isWidgetAdded() -> Bool
-    func isFrequentUser() -> Bool
-    func isLongTermUser() -> Bool
-    func isAutofillUser() -> Bool
-    func isValidOpenTabsCount() -> Bool
-    func isSearchUser() -> Bool
-}
-
 // swiftlint:disable identifier_name
-final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
+final class PrivacyProDataReporter {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
         static let isWidgetAddedKey = "com.duckduckgo.ios.privacypropromo.WidgetAdded"
@@ -76,7 +62,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         case debug
     }
 
-    public static let shared = DefaultPrivacyProDataReporter()
+    public static let shared = PrivacyProDataReporter()
 
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
@@ -131,10 +117,6 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         tabsModel = model
     }
 
-    private var isReady: Bool {
-        syncService != nil && tabsModel != nil
-    }
-
     /// Collect a randomized subset of parameters iff the Privacy Pro impression/conversion pixels
     /// or the Origin Attribution subscription pixel are being fired
     func randomizedParameters(for useCase: UseCase) -> [String: String] {
@@ -147,14 +129,18 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
             break
         }
 
-        /// Wait for all the injected dependencies to be available
-        if !isReady && !ProcessInfo().arguments.contains("testing") {
-            return randomizedParameters(for: useCase)
-        }
-
         var additionalParameters = [String: String]()
 
-        let randomizedParameters = PrivacyProPromoParameters.randomizedSubset()
+        /// Exclude certain parameters in case the dependencies aren't ready by the time the pixel is fired
+        var excludedParameters = [PrivacyProPromoParameters]()
+        if syncService == nil {
+            excludedParameters.append(.syncUsed)
+        }
+        if tabsModel == nil {
+            excludedParameters.append(.validOpenTabsCount)
+        }
+
+        let randomizedParameters = PrivacyProPromoParameters.randomizedSubset(excluding: excludedParameters)
         for parameter in randomizedParameters {
             let value: Bool
             switch parameter {
@@ -190,12 +176,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isSyncUsed() -> Bool {
-#if DEBUG
-        guard !ProcessInfo().arguments.contains("testing") else {
-            return false
-        }
-#endif
-        return _syncAuthState != .inactive
+        _syncAuthState != .inactive
     }
 
     func isFireproofingUsed() -> Bool {

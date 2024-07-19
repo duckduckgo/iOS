@@ -1,5 +1,5 @@
 //
-//  DefaultPrivacyProDataReporterTests.swift
+//  PrivacyProDataReporterTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import XCTest
 @testable import DDGSync
 @testable import SecureStorage
 
-final class DefaultPrivacyProDataReporterTests: XCTestCase {
+final class PrivacyProDataReporterTests: XCTestCase {
     let testConfig = """
     {
         "readme": "https://github.com/duckduckgo/privacy-configuration",
@@ -50,18 +50,18 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
                                                   localProtection: MockDomainsProtectionStore(),
                                                   internalUserDecider: DefaultInternalUserDecider()).privacyConfig
 
-    let testSuiteName = "DefaultPrivacyProDataReporterTests"
+    let testSuiteName = "PrivacyProDataReporterTests"
     var testDefaults: UserDefaults!
     let mockCalendar = MockCalendar()
     lazy var statisticsStore = StatisticsUserDefaults(groupName: testSuiteName)
 
-    var reporter: DefaultPrivacyProDataReporter!
-    var anotherReporter: DefaultPrivacyProDataReporter!
+    var reporter: PrivacyProDataReporter!
+    var anotherReporter: PrivacyProDataReporter!
 
     override func setUp() {
         super.setUp()
         testDefaults = UserDefaults(suiteName: testSuiteName)
-        reporter = DefaultPrivacyProDataReporter(
+        reporter = PrivacyProDataReporter(
             config: config,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "sc", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
@@ -73,7 +73,7 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
             tabsModel: TabsModel(tabs: [], desktop: false),
             dateGenerator: mockCalendar.now
         )
-        anotherReporter = DefaultPrivacyProDataReporter(
+        anotherReporter = PrivacyProDataReporter(
             config: config,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "ru", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
@@ -156,15 +156,19 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
         XCTAssertTrue(reporter.isSearchUser())
     }
 
-    func testAttachedParameters() async {
-        let params1 = reporter.randomizedParameters(for: .messageID("some_id"))
-        let params2 = reporter.randomizedParameters(for: .origin("some_origin"))
-        let params3 = reporter.randomizedParameters(for: .messageID("test_origin"))
-        let params4 = reporter.randomizedParameters(for: .origin("test_origin"))
-        XCTAssertEqual(params1.count, 0)
-        XCTAssertEqual(params2.count, 0)
-        XCTAssertEqual(params3.count, 8)
-        XCTAssertEqual(params4.count, 8)
+    func testAttachedParameters() {
+        XCTAssertEqual(reporter.randomizedParameters(for: .messageID("some_id")).count, 0)
+        XCTAssertEqual(reporter.randomizedParameters(for: .origin("some_origin")).count, 0)
+        for _ in 0...50 {
+            let params = reporter.randomizedParameters(for: .messageID("test_origin"))
+            XCTAssertLessThanOrEqual(params.count, 8)
+            XCTAssertGreaterThanOrEqual(params.count, 7)
+        }
+        for _ in 0...50 {
+            let params = reporter.randomizedParameters(for: .origin("test_origin"))
+            XCTAssertLessThanOrEqual(params.count, 8)
+            XCTAssertGreaterThanOrEqual(params.count, 7)
+        }
     }
 }
 

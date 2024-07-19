@@ -175,7 +175,7 @@ struct HomeMessageView: View {
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
-                    let additionalParameters = DefaultPrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
+                    let additionalParameters = PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
                         PixelParameters.message: "\(viewModel.messageId)",
                         PixelParameters.sheetResult: "\(result)"
                     ])

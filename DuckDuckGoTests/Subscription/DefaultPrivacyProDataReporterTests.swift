@@ -103,12 +103,6 @@ final class DefaultPrivacyProDataReporterTests: XCTestCase {
         XCTAssertTrue(reporter.isFireButtonUser())
     }
 
-    func testIsFireproofingUsed() {
-        XCTAssertFalse(reporter.isFireproofingUsed())
-        reporter.saveFireproofingUsed()
-        XCTAssertTrue(reporter.isFireproofingUsed())
-    }
-
     func testIsAppOnboardingCompleted() {
         XCTAssertFalse(reporter.isAppOnboardingCompleted())
         XCTAssertTrue(anotherReporter.isAppOnboardingCompleted())

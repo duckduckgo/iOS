@@ -61,7 +61,6 @@ protocol PrivacyProDataReporting {
 final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
-        static let isFireproofingUsedKey = "com.duckduckgo.ios.privacypropromo.FireproofingUsed"
         static let isWidgetAddedKey = "com.duckduckgo.ios.privacypropromo.WidgetAdded"
         static let applicationLastSessionEndedKey = "com.duckduckgo.ios.privacypropromo.ApplicationLastSessionEnded"
         static let searchCountKey = "com.duckduckgo.ios.privacypropromo.SearchCount"
@@ -200,7 +199,7 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     func isFireproofingUsed() -> Bool {
-        userDefaults.bool(forKey: Key.isFireproofingUsedKey, defaultValue: false)
+        _fireproofedDomainsCount > 0
     }
 
     func isAppOnboardingCompleted() -> Bool {
@@ -244,11 +243,6 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
         _searchCount > Self.searchCountThreshold
     }
 
-    func saveFireproofingUsed() {
-        guard !isFireproofingUsed() else { return }
-        userDefaults.set(true, forKey: Key.isFireproofingUsedKey)
-    }
-
     func saveWidgetAdded() async {
         let isInstalled = await appSettings.isWidgetInstalled()
         if isInstalled != isWidgetAdded() {
@@ -281,6 +275,10 @@ final class DefaultPrivacyProDataReporter: PrivacyProDataReporting {
 
     var _fireCount: Int {
         userDefaults.object(forKey: Key.fireCountKey) as? Int ?? 0
+    }
+
+    var _fireproofedDomainsCount: Int {
+        PreserveLogins.shared.allowedDomains.count
     }
 
     var _lastSessionEnded: Date? {

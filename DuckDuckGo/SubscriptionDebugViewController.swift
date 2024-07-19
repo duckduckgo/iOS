@@ -266,19 +266,18 @@ import NetworkProtection
     }
 
     private func showRandomizedParamters() {
-        Task {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .none
-            let reportedParameters = await reporter.randomizedParameters(for: .debug).map { "\($0.key)=\($0.value)" }
-            let message = """
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        let reportedParameters = reporter.randomizedParameters(for: .debug).map { "\($0.key)=\($0.value)" }
+        let message = """
                 isReinstall=\(reporter.isReinstall().toString) (variant=\(reporter._variantName ?? "unknown"))
                 fireButtonUsed=\(reporter.isFireButtonUser().toString) (count=\(reporter._fireCount))
                 syncUsed=\(reporter.isSyncUsed().toString) (state=\(reporter._syncAuthState.rawValue))
-                fireproofingUsed=\(reporter.isFireproofingUsed().toString)
+                fireproofingUsed=\(reporter.isFireproofingUsed().toString) (count=\(reporter._fireproofedDomainsCount))
                 appOnboardingCompleted=\(reporter.isAppOnboardingCompleted().toString)
                 emailEnabled=\(reporter.isEmailEnabled().toString)
-                widgetAdded=\(await reporter.isWidgetAdded().toString)
+                widgetAdded=\(reporter.isWidgetAdded().toString)
                 frequentUser=\(reporter.isFrequentUser().toString) (lastSession=\(dateFormatter.string(from: reporter._lastSessionEnded ?? .distantPast)))
                 longTermUser=\(reporter.isLongTermUser().toString) (installDate=\(dateFormatter.string(from: reporter._installDate ?? .distantPast)))
                 autofillUser=\(reporter.isAutofillUser().toString) (count=\(reporter._accountsCount))
@@ -287,8 +286,7 @@ import NetworkProtection
 
                 Randomized: \(reportedParameters.joined(separator: ", "))
                 """
-            showAlert(title: "", message: message)
-        }
+        showAlert(title: "", message: message)
     }
 
     private func syncAppleIDAccount() {

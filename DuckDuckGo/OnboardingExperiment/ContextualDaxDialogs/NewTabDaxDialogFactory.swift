@@ -27,9 +27,11 @@ protocol NewTabDaxDialogProvider {
 
 class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     var delegate: OnboardingNavigationDelegate?
+    var contextualOnboardingLogic: ContextualOnboardingLogic
 
-    init(delegate: OnboardingNavigationDelegate?) {
+    init(delegate: OnboardingNavigationDelegate?, contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.delegate = delegate
+        self.contextualOnboardingLogic = contextualOnboardingLogic
     }
 
     @ViewBuilder
@@ -90,6 +92,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
                     onDismiss()
                 }).padding()
             }
+        }
+        .onAppear { [weak self] in
+            self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
         }
     }
 }

@@ -25,19 +25,27 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
 
     var factory: NewTabDaxDialogFactory!
     var mockDelegate: CapturingOnboardingNavigationDelegate!
+    var contextualOnboardingLogicMock: ContextualOnboardingLogicMock!
     var onDismissCalled: Bool!
+    var window: UIWindow!
 
     override func setUp() {
         super.setUp()
         mockDelegate = CapturingOnboardingNavigationDelegate()
+        contextualOnboardingLogicMock = ContextualOnboardingLogicMock()
         onDismissCalled = false
-        factory = NewTabDaxDialogFactory(delegate: mockDelegate)
+        factory = NewTabDaxDialogFactory(delegate: mockDelegate, contextualOnboardingLogic: contextualOnboardingLogicMock)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.makeKeyAndVisible()
     }
 
     override func tearDown() {
+        window.isHidden = true
+        window = nil
         factory = nil
         mockDelegate = nil
         onDismissCalled = nil
+        contextualOnboardingLogicMock = nil
         super.tearDown()
     }
 
@@ -73,6 +81,8 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
 
     func testCreateFinalDialogCreatesAnOnboardingFinalDialog() {
         // Given
+        let expectation = XCTestExpectation(description: "action triggered")
+        contextualOnboardingLogicMock.expectation = expectation
         var onDismissedRun = false
         let homeDialog = DaxDialogs.HomeScreenSpec.final
         let onDimsiss = { onDismissedRun = true }
@@ -80,6 +90,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         // When
         let view = factory.createDaxDialog(for: homeDialog, onDismiss: onDimsiss)
         let host = UIHostingController(rootView: view)
+        window.rootViewController = host
         XCTAssertNotNil(host.view)
 
         // Then
@@ -87,9 +98,11 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         XCTAssertNotNil(finalDialog)
         finalDialog?.highFiveAction()
         XCTAssertTrue(onDismissedRun)
+        wait(for: [expectation], timeout: 5.0)
+        XCTAssertTrue(contextualOnboardingLogicMock.didCallsetFinalOnboardingDialogSeen)
     }
 
-    func testCreateAddFavoriteDialogCreatesAnContextualDaxDialog() {
+    func testCreateAddFavoriteDialogCreatesAContextualDaxDialog() {
         // Given
         let homeDialog = DaxDialogs.HomeScreenSpec.addFavorite
 

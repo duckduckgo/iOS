@@ -46,6 +46,7 @@ class MockDependencyProvider: DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionTunnelController: NetworkProtectionTunnelController
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
+    var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
@@ -88,6 +89,7 @@ class MockDependencyProvider: DependencyProvider {
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()
+        serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     }
 }

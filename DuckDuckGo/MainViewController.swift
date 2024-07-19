@@ -738,6 +738,7 @@ class MainViewController: UIViewController {
                                                       homePageMessagesConfiguration: homePageConfiguration)
 
             controller.delegate = self
+            controller.shortcutsDelegate = self
 
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
@@ -2023,6 +2024,32 @@ extension MainViewController: NewTabPageControllerDelegate {
 
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
+    }
+}
+
+extension MainViewController: NewTabPageControllerShortcutsDelegate {
+    func newTabPageDidRequestDownloads(_ controller: NewTabPageViewController) {
+        segueToDownloads()
+    }
+    
+    func newTabPageDidRequestBookmarks(_ controller: NewTabPageViewController) {
+        segueToBookmarks()
+    }
+    
+    func newTabPageDidRequestPasswords(_ controller: NewTabPageViewController) {
+        launchAutofillLogins(source: .newTabPageShortcut)
+    }
+    
+    func newTabPageDidRequestAIChat(_ controller: NewTabPageViewController) {
+        loadUrl(Constant.duckAIURL)
+    }
+    
+    func newTabPageDidRequestSettings(_ controller: NewTabPageViewController) {
+        segueToSettings()
+    }
+
+    private enum Constant {
+        static let duckAIURL = URL(string: "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1")!
     }
 }
 

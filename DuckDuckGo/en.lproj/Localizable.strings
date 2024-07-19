@@ -1579,6 +1579,9 @@ https://duckduckgo.com/mac";
 /* Shortcut title leading to app settings */
 "new.tab.page.shortcut.settings" = "Settings";
 
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "On any site, open the ••• menu and select **Add Favorite** to add it to your new tab page.";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

@@ -31,7 +31,7 @@ final class NewTabPageMessagesModel: ObservableObject {
     private let notificationCenter: NotificationCenter
     private let pixelFiring: PixelFiring.Type
 
-    init(homePageMessagesConfiguration: HomePageMessagesConfiguration = AppDependencyProvider.shared.homePageConfiguration,
+    init(homePageMessagesConfiguration: HomePageMessagesConfiguration,
          notificationCenter: NotificationCenter = .default,
          pixelFiring: PixelFiring.Type = Pixel.self) {
         self.homePageMessagesConfiguration = homePageMessagesConfiguration
@@ -73,7 +73,7 @@ final class NewTabPageMessagesModel: ObservableObject {
     private func homeMessageViewModel(for message: HomeMessage) -> HomeMessageViewModel? {
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(messageId: "", modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
+            return HomeMessageViewModel(messageId: "", sendPixels: false, modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
                 self?.dismissHomeMessage(message)
             } onDidAppear: {
                 // no-op
@@ -90,27 +90,35 @@ final class NewTabPageMessagesModel: ObservableObject {
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        pixelFiring.fire(.remoteMessageActionClicked,
+                                         withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessagePrimaryActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        pixelFiring.fire(.remoteMessagePrimaryActionClicked,
+                                         withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .secondaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message)
                     }
-                    pixelFiring.fire(.remoteMessageSecondaryActionClicked,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        pixelFiring.fire(.remoteMessageSecondaryActionClicked,
+                                         withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .close:
                     self.dismissHomeMessage(message)
-                    pixelFiring.fire(.remoteMessageDismissed,
-                                     withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        pixelFiring.fire(.remoteMessageDismissed,
+                                         withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 }
             } onDidAppear: { [weak self] in

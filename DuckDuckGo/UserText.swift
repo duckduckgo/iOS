@@ -373,9 +373,13 @@ public struct UserText {
     
     public static let cancelDownloadAlertTitle = NSLocalizedString("downloads.cancel-download.alert.title", value: "Cancel download?", comment: "Title for alert when trying to cancel the file download")
     public static let cancelDownloadAlertDescription = NSLocalizedString("downloads.cancel-download.alert.message", value: "Are you sure you want to cancel this download?", comment: "Message for alert when trying to cancel the file download")
-    public static let cancelDownloadAlertResumeAction = NSLocalizedString("downloads.cancel-download.alert.resume", value: "Resume", comment: "Resume download action for alert when trying to cancel the file download")
-    public static let cancelDownloadAlertCancelAction = NSLocalizedString("downloads.cancel-download.alert.cancel", value: "Cancel", comment: "Cancel download action for alert when trying to cancel the file download")
-    
+
+    public static let cancelDownloadAlertCancelAction = NSLocalizedString("downloads.cancel-download.alert.cancel", value: "Cancel", comment: "Cancel download action for downloads")
+    public static let cancelDownloadAlertNoAction = NSLocalizedString("downloads.cancel-download.alert.no", value: "No", comment: "Confirm action for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertYesAction = NSLocalizedString("downloads.cancel-download.alert.yes", value: "Yes", comment: "Confirm action for for alert when trying to cancel the file download")
+
+
+
     public static let downloadsListDeleteAllButton = NSLocalizedString("downloads.downloads-list.delete-all", value: "Delete All", comment: "Button for deleting all items on downloads list")
     public static let messageDownloadFailed = NSLocalizedString("downloads.message.download-failed", value: "Failed to download. Check internet connection.", comment: "Message informing that the download has failed due to connection issues")
     public static let fireButtonInterruptingDownloadsAlertDescription = NSLocalizedString("downloads.fire-button.alert.message", value: "This will also cancel downloads in progress", comment: "Additional alert message shown when there are active downloads when using the fire button")
@@ -1185,8 +1189,35 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let duckPlayerPresentationModalDismissButton = NSLocalizedString("duckplayer.presentation.modal.dismiss-button", value: "Got it!", comment: "Button that will dismiss the modal")
 
     // Home Tab Shortcuts
-    public static let homeTabShortcutBookmarks = NSLocalizedString("home.tab.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
-    public static let homeTabShortcutAIChat = NSLocalizedString("home.tab.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
-    public static let homeTabShortcutVPN = NSLocalizedString("home.tab.shortcut.vpn", value: "VPN", comment: "Shortcut title leading to VPN")
-    public static let homeTabShortcutPasswords = NSLocalizedString("home.tab.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
+    public static let newTabPageShortcutBookmarks = NSLocalizedString("new.tab.page.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
+    public static let newTabPageShortcutAIChat = NSLocalizedString("new.tab.page.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
+    public static let newTabPageShortcutPasswords = NSLocalizedString("new.tab.page.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
+
+    public static let newTabPageShortcutDownloads = NSLocalizedString("new.tab.page.shortcut.downloads", value: "Downloads", comment: "Shortcut title leading to Downloads")
+    public static let newTabPageShortcutSettings = NSLocalizedString("new.tab.page.shortcut.settings", value: "Settings", comment: "Shortcut title leading to app settings")
+
+    // MARK: -  Dax Onboarding Experiment
+    public enum DaxOnboardingExperiment {
+        enum Intro {
+            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.\n\nReady for a better, more private internet?", comment: "The title of the onboarding dialog popup")
+            public static let cta = NSLocalizedString("onboarding.intro.cta", value: "Let’s do it!", comment: "Button to continue the onboarding process")
+        }
+
+        enum BrowsersComparison {
+            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Privacy protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+            public static let cta = NSLocalizedString("onboarding.browsers.cta", value: "Choose Your Browser", comment: "Button to change the default browser")
+
+            enum Features {
+                public static let privateSearch = NSLocalizedString("onboarding.browsers.features.privateSearch.title", value: "Search privately by default", comment: "Message to highlight browser capability of private searches")
+                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd-party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
+                public static let cookiePopups = NSLocalizedString("onboarding.browsers.features.cookiePopups.title", value: "Block cookie pop-ups", comment: "Message to highlight browser capability of blocking cookie pop-ups")
+                public static let creepyAds = NSLocalizedString("onboarding.browsers.features.creepyAds.title", value: "Block creepy ads", comment: "Message to highlight browser capability of blocking creepy ads")
+                public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability ofswiftly erase browsing data")
+            }
+        }
+
+        enum DefaultBrowser {
+            public static let message = NSLocalizedString("onboarding.defaultBrowser.message", value: "Open links with peace of mind, every time.", comment: "Subheader message for the screen to choose DuckDuckGo as default browser")
+        }
+    }
 }

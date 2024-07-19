@@ -47,7 +47,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .fixedSize(horizontal: false, vertical: true)
             .multilineTextAlignment(.center)
             .lineLimit(nil)
-            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
+            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
             .padding(.vertical)
             .padding(.horizontal, fullWidth ? nil : 24)
@@ -85,7 +85,7 @@ public struct SecondaryButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         compactPadding(view: configuration.label)
-            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
+            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
@@ -120,7 +120,7 @@ public struct SecondaryFillButtonStyle: ButtonStyle {
             .fixedSize(horizontal: false, vertical: true)
             .multilineTextAlignment(.center)
             .lineLimit(nil)
-            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
+            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? defaultForegroundColor : foregroundColor)
             .padding(.vertical)
             .padding(.horizontal, fullWidth ? nil : 24)
@@ -174,6 +174,6 @@ public struct GhostButtonStyle: ButtonStyle {
 private enum Consts {
     static let cornerRadius: CGFloat = 8
     static let height: CGFloat = 50
-    static let fontSize: CGFloat = 16
+    static let fontSize: CGFloat = 15
     static let pressedOpacity: CGFloat = 0.7
 }

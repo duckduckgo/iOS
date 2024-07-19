@@ -32,6 +32,7 @@ public struct UserDefaultsWrapper<T> {
         case favorites = "com.duckduckgo.ios.home.favorites"
         case keyboardOnNewTab = "com.duckduckgo.ios.keyboard.newtab"
         case keyboardOnAppLaunch = "com.duckduckgo.ios.keyboard.applaunch"
+        case didCrashDuringCrashHandlersSetUp = "com.duckduckgo.ios.didCrashDuringCrashHandlersSetUp"
 
         case gridViewEnabled = "com.duckduckgo.ios.tabs.grid"
         case gridViewSeen = "com.duckduckgo.ios.tabs.seen"
@@ -149,9 +150,10 @@ public struct UserDefaultsWrapper<T> {
         
         case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         case duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
-
+        
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
 
+        
         // Debug keys
 
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"

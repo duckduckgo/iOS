@@ -32,8 +32,6 @@ class MockDependencyProvider: DependencyProvider {
     var variantManager: VariantManager
     var featureFlagger: FeatureFlagger
     var internalUserDecider: InternalUserDecider
-    var remoteMessagingStore: RemoteMessagingStore
-    var homePageConfiguration: HomePageConfiguration
     var storageCache: StorageCache
     var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
@@ -48,6 +46,7 @@ class MockDependencyProvider: DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionTunnelController: NetworkProtectionTunnelController
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
+    var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
@@ -56,8 +55,6 @@ class MockDependencyProvider: DependencyProvider {
         variantManager = defaultProvider.variantManager
         featureFlagger = defaultProvider.featureFlagger
         internalUserDecider = defaultProvider.internalUserDecider
-        remoteMessagingStore = defaultProvider.remoteMessagingStore
-        homePageConfiguration = defaultProvider.homePageConfiguration
         storageCache = defaultProvider.storageCache
         voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
@@ -92,6 +89,7 @@ class MockDependencyProvider: DependencyProvider {
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()
+        serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     }
 }

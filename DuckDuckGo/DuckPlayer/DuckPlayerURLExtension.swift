@@ -42,8 +42,14 @@ extension URL {
     }
 
     static func youtube(_ videoID: String, timestamp: String? = nil) -> URL {
-        let url = "https://www.youtube.com/watch?v=\(videoID)".url!
-        return url.addingTimestamp(timestamp)
+            #if os(iOS)
+            let baseUrl = "https://m.youtube.com/watch?v=\(videoID)"
+            #else
+            let baseUrl = "https://www.youtube.com/watch?v=\(videoID)"
+            #endif
+
+            let url = URL(string: baseUrl)!
+            return url.addingTimestamp(timestamp)
     }
 
     var isDuckURLScheme: Bool {
@@ -109,6 +115,12 @@ extension URL {
     var isDuckPlayer: Bool {
         let isPrivatePlayer = isDuckURLScheme && host == Self.duckPlayerHost
         return isPrivatePlayer || isYoutubeNoCookie
+        
+    }
+    
+    var isYoutube: Bool {
+        guard let host else { return false }
+        return host == "m.youtube.com" || host == "youtube.com"
         
     }
     

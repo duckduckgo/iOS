@@ -26,7 +26,7 @@ import UserScript
 import Core
 
 /// Values that the Frontend can use to determine the current state.
-struct InitialSetupSettings: Codable {
+struct InitialPlayerSettings: Codable {
     struct PlayerSettings: Codable {
         let pip: PIP
     }
@@ -34,15 +34,35 @@ struct InitialSetupSettings: Codable {
     struct PIP: Codable {
         let status: Status
     }
+    
+    struct Platform: Codable {
+        let name: String
+    }
 
     enum Status: String, Codable {
         case enabled
         case disabled
     }
+    
+    enum Environment: String, Codable {
+        case development
+        case production
+    }
+    
+    enum Locale: String, Codable {
+        case en
+    }
 
     let userValues: UserValues
     let settings: PlayerSettings
+    let platform: Platform
+    let locale: Locale
 }
+
+struct InitialOverlaySettings: Codable {
+    let userValues: UserValues
+}
+
 
 /// Values that the Frontend can use to determine user settings
 public struct UserValues: Codable {
@@ -54,18 +74,28 @@ public struct UserValues: Codable {
     let askModeOverlayHidden: Bool
 }
 
+public enum DuckPlayerReferrer {
+    case youtube, other
+}
+
 protocol DuckPlayerProtocol {
     
     var settings: DuckPlayerSettingsProtocol { get }
+    var hostView: UIViewController? { get }
     
     init(settings: DuckPlayerSettingsProtocol)
 
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func openVideoInDuckPlayer(url: URL, webView: WKWebView)
-    func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable?
+    func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable?
+    func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable?
+    func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    func setHostViewController(_ vc: UIViewController)
 }
-
 
 final class DuckPlayer: DuckPlayerProtocol {
     
@@ -73,9 +103,16 @@ final class DuckPlayer: DuckPlayerProtocol {
     static let commonName = "Duck Player"
         
     private(set) var settings: DuckPlayerSettingsProtocol
+    private(set) var hostView: UIViewController?
     
     init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
+    }
+    
+    // Sets a presenting VC, so DuckPlayer can present the
+    // info sheet directly
+    public func setHostViewController(_ vc: UIViewController) {
+        hostView = vc
     }
     
     // MARK: - Common Message Handlers
@@ -100,9 +137,35 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     @MainActor
-    public func initialSetup(params: Any, message: WKScriptMessage) async -> Encodable? {
+    public func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable? {
         let webView = message.webView
-        return await self.encodedSettings(with: webView)
+        return await self.encodedPlayerSettings(with: webView)
+    }
+    
+    @MainActor
+    public func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable? {
+        let webView = message.webView
+        return await self.encodedPlayerSettings(with: webView)
+    }
+    
+    public func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable? {
+        NotificationCenter.default.post(
+            name: .settingsDeepLinkNotification,
+            object: SettingsViewModel.SettingsDeepLinkSection.duckPlayer,
+            userInfo: nil
+        )
+        return nil
+    }
+    
+    @MainActor
+    public func presentDuckPlayerInfo() {
+        guard let hostView else { return }
+        DuckPlayerModalPresenter().presentDuckPlayerFeatureModal(on: hostView)
+    }
+    
+    public func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable? {
+        await presentDuckPlayerInfo()
+        return nil
     }
 
     private func encodeUserValues() -> UserValues {
@@ -113,14 +176,21 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     @MainActor
-    private func encodedSettings(with webView: WKWebView?) async -> InitialSetupSettings {
+    private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
-        let pip = InitialSetupSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
-
-        let playerSettings = InitialSetupSettings.PlayerSettings(pip: pip)
+        let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
+        let platform = InitialPlayerSettings.Platform(name: "ios")
+        let environment = InitialPlayerSettings.Environment.development
+        let locale = InitialPlayerSettings.Locale.en
+        let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-
-        return InitialSetupSettings(userValues: userValues, settings: playerSettings)
+        return InitialPlayerSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+    }
+    
+    @MainActor
+    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
+        let userValues = encodeUserValues()
+        return InitialOverlaySettings(userValues: userValues)
     }
     
 }

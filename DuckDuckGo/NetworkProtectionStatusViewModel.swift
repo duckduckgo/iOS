@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-
 #if NETWORK_PROTECTION
 
 import Foundation
@@ -68,7 +66,6 @@ struct NetworkProtectionLocationStatusModel {
     }
 }
 
-// swiftlint:disable:next type_body_length
 final class NetworkProtectionStatusViewModel: ObservableObject {
 
     enum Constants {
@@ -106,7 +103,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
-    private let tunnelController: TunnelController
+    private let tunnelController: (TunnelController & TunnelSessionProvider)
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
@@ -160,16 +157,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var downloadTotal: String?
     private var throughputUpdateTimer: Timer?
 
-    var shouldShowFAQ: Bool {
-        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-    }
-
     @Published public var animationsOn: Bool = false
 
-    public init(tunnelController: TunnelController,
+    public init(tunnelController: (TunnelController & TunnelSessionProvider),
                 settings: VPNSettings,
                 statusObserver: ConnectionStatusObserver,
-                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+                serverInfoObserver: ConnectionServerInfoObserver,
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository) {
         self.tunnelController = tunnelController
@@ -184,6 +177,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
 
         self.dnsSettings = settings.dnsSettings
+
+        updateViewModel(withStatus: statusObserver.recentValue)
 
         setUpIsConnectedStatePublishers()
         setUpToggledStatePublisher()
@@ -202,30 +197,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpIsConnectedStatePublishers() {
-        let isConnectedPublisher = statusObserver.publisher
-            .map { $0.isConnected }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        isConnectedPublisher
-            .map(Self.titleText(connected:))
-            .assign(to: \.headerTitle, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
-            .map(Self.statusImageID(connected:))
-            .assign(to: \.statusImageID, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
-            .sink { [weak self] isConnected in
-                if !isConnected {
-                    self?.uploadTotal = Constants.defaultUploadVolume
-                    self?.downloadTotal = Constants.defaultDownloadVolume
-                    // self?.throughputUpdateTimer?.invalidate()
-                    // self?.throughputUpdateTimer = nil
-                } else {
-                    self?.setUpThroughputRefreshTimer()
-                }
-            }
-            .store(in: &cancellables)
+        statusObserver.publisher.sink { [weak self] status in
+            self?.updateViewModel(withStatus: status)
+        }
+        .store(in: &cancellables)
     }
 
     private func setUpToggledStatePublisher() {
@@ -340,6 +315,31 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    private func updateViewModel(withStatus connectionStatus: ConnectionStatus) {
+        self.headerTitle = Self.titleText(connected: connectionStatus.isConnected)
+        self.statusImageID = Self.statusImageID(connected: connectionStatus.isConnected)
+
+        if !connectionStatus.isConnected {
+            self.uploadTotal = nil
+            self.downloadTotal = nil
+            self.throughputUpdateTimer?.invalidate()
+            self.throughputUpdateTimer = nil
+        } else {
+            self.setUpThroughputRefreshTimer()
+        }
+
+        switch connectionStatus {
+        case .connected:
+            self.isNetPEnabled = true
+        case .connecting:
+            self.isNetPEnabled = true
+            self.resetConnectionInformation()
+        default:
+            self.isNetPEnabled = false
+            self.resetConnectionInformation()
+        }
+    }
+
     private func setUpErrorPublishers() {
         guard AppDependencyProvider.shared.internalUserDecider.isInternalUser else {
             return
@@ -394,7 +394,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func refreshDataVolumeTotals() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await tunnelController.activeSession() else {
             return
         }
 
@@ -572,5 +572,3 @@ private extension ConnectionStatus {
 }
 
 #endif
-
-// swiftlint:enable file_length

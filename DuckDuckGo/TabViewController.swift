@@ -41,18 +41,12 @@ import ContentScopeScripts
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class TabViewController: UIViewController {
-// swiftlint:enable type_body_length
 
     private struct Constants {
         static let frameLoadInterruptedErrorCode = 102
-        
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
-        
         static let secGPCHeader = "Sec-GPC"
-
         static let navigationExpectationInterval = 3.0
     }
     
@@ -61,7 +55,8 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorHeader: UILabel!
     @IBOutlet private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
-    
+    var webViewBottomAnchorConstraint: NSLayoutConstraint?
+
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
@@ -298,8 +293,9 @@ class TabViewController: UIViewController {
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
-                                   historyManager: HistoryManager,
-                                   syncService: DDGSyncing) -> TabViewController {
+                                   historyManager: HistoryManaging,
+                                   syncService: DDGSyncing,
+                                   duckPlayerNavigationHandler: DuckNavigationHandling) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -307,7 +303,8 @@ class TabViewController: UIViewController {
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
-                              syncService: syncService)
+                              syncService: syncService,
+                              duckPlayerNavigationHandler: duckPlayerNavigationHandler)
         })
         return controller
     }
@@ -316,24 +313,24 @@ class TabViewController: UIViewController {
         (webView.configuration.userContentController as? UserContentController)!
     }
 
-    let historyManager: HistoryManager
+    let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-    
-    var duckPlayer: DuckPlayerProtocol = DuckPlayer()
-    var youtubeNavigationHandler: DuckNavigationHandling?
+    var duckPlayerNavigationHandler: DuckNavigationHandling
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
-                   historyManager: HistoryManager,
-                   syncService: DDGSyncing) {
+                   historyManager: HistoryManaging,
+                   syncService: DDGSyncing,
+                   duckPlayerNavigationHandler: DuckNavigationHandling) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.duckPlayerNavigationHandler = duckPlayerNavigationHandler
         super.init(coder: aDecoder)
     }
 
@@ -350,9 +347,7 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-        
-        // Setup DuckPlayer navigation handler
-        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
+        registerForAddressBarLocationNotifications()
         
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
@@ -363,7 +358,13 @@ class TabViewController: UIViewController {
 #endif
     }
     
-    
+    private func registerForAddressBarLocationNotifications() {
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(onAddressBarPositionChanged),
+                                               name: AppUserDefaults.Notifications.addressBarPositionChanged,
+                                               object: nil)
+    }
+
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -381,6 +382,16 @@ class TabViewController: UIViewController {
 #endif
     }
 
+    @objc
+    private func onAddressBarPositionChanged() {
+        updateWebViewBottomAnchor()
+    }
+
+    private func updateWebViewBottomAnchor() {
+        let targetHeight = chromeDelegate?.barsMaxHeight ?? 0.0
+        webViewBottomAnchorConstraint?.constant = appSettings.currentAddressBarPosition == .bottom ? -targetHeight : 0
+    }
+
     private func observeNetPConnectionStatusChanges() {
         netPConnectionObserverCancellable = netPConnectionObserver.publisher
             .receive(on: DispatchQueue.main)
@@ -393,6 +404,7 @@ class TabViewController: UIViewController {
         userScripts?.autofillUserScript.emailDelegate = emailManager
 
         woShownRecently = false // don't fire if the user goes somewhere else first
+        updateWebViewBottomAnchor()
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
@@ -448,7 +460,6 @@ class TabViewController: UIViewController {
         userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -457,7 +468,17 @@ class TabViewController: UIViewController {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        
         webViewContainer.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webViewBottomAnchorConstraint!,
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor)
+        ])
+
         webView.scrollView.refreshControl = refreshControl
         // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
         // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`
@@ -659,12 +680,15 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
                         
-            if let handler = youtubeNavigationHandler,
-                let url,
+            if let url,
                 url.isYoutubeVideo,
-                duckPlayer.settings.mode == .enabled {
-                handler.handleURLChange(url: url, webView: webView)
+                duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
+                duckPlayerNavigationHandler.handleURLChange(url: url, webView: webView)
             }
+        }
+                
+        if let url {
+            duckPlayerNavigationHandler.referrer = url.isYoutube ? .youtube : .other
         }
     }
     
@@ -716,8 +740,8 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
-        if let url = webView.url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
-            handler.handleReload(webView: webView)
+        if let url = webView.url, url.isDuckPlayer {
+            duckPlayerNavigationHandler.handleReload(webView: webView)
         } else {
             webView.reload()
         }
@@ -731,8 +755,8 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if let url = url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
-            handler.handleGoBack(webView: webView)
+        if let url = url, url.isDuckPlayer {
+            duckPlayerNavigationHandler.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }
@@ -1469,8 +1493,7 @@ extension TabViewController: WKNavigationDelegate {
 
         return request
     }
-    
-    // swiftlint:disable function_body_length
+
     // swiftlint:disable cyclomatic_complexity
 
     func webView(_ webView: WKWebView,
@@ -1528,7 +1551,9 @@ extension TabViewController: WKNavigationDelegate {
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
-        if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
+        if navigationAction.navigationType != .backForward,
+           navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isDuckDuckGoSearch ?? false) {
             let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
@@ -1598,7 +1623,6 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(decision)
         }
     }
-    // swiftlint:enable function_body_length
     // swiftlint:enable cyclomatic_complexity
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {
@@ -1621,7 +1645,6 @@ extension TabViewController: WKNavigationDelegate {
         return true
     }
 
-    // swiftlint:disable function_body_length
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
@@ -1649,10 +1672,10 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if navigationAction.isTargetingMainFrame(),
-            let handler = youtubeNavigationHandler,
             url.isYoutubeVideo,
-            duckPlayer.settings.mode == .enabled {
-            handler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
+            duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
+            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
+            completion(.allow)
             return
         }
         
@@ -1673,11 +1696,9 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            if let handler = youtubeNavigationHandler {
-                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
-                return
-            }
+            duckPlayerNavigationHandler.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
+            return
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -1688,8 +1709,6 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
-    // swiftlint:enable function_body_length
-    
 
     private func inferLoadContext(for navigationAction: WKNavigationAction) -> BrokenSiteReport.OpenerContext? {
         guard navigationAction.navigationType != .reload else { return nil }
@@ -2328,7 +2347,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autoconsentUserScript.delegate = self
         
         // Setup DuckPlayer
-        userScripts.duckPlayer = duckPlayer
+        userScripts.duckPlayer = duckPlayerNavigationHandler.duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView
         userScripts.youtubePlayerUserScript?.webView = webView
         
@@ -2579,7 +2598,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
-    // swiftlint:disable function_parameter_count
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
@@ -2613,7 +2631,6 @@ extension TabViewController: SecureVaultManagerDelegate {
             completionHandler(nil)
         }
     }
-    // swiftlint:enable function_parameter_count
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
@@ -2637,7 +2654,6 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
-    // swiftlint:disable function_parameter_count
     func presentAutofillPromptViewController(accountMatches: AccountMatches,
                                              domain: String,
                                              trigger: AutofillUserScript.GetTriggerType,
@@ -2679,7 +2695,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
-    // swiftlint:enable function_parameter_count
 
     // Used on macOS to request authentication for individual autofill items
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
@@ -2840,5 +2855,3 @@ extension UserContentController {
     }
 
 }
-
-// swiftlint:enable file_length

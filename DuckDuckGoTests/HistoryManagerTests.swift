@@ -28,85 +28,75 @@ final class HistoryManagerTests: XCTestCase {
 
     let privacyConfig = MockPrivacyConfiguration()
     let privacyConfigManager = MockPrivacyConfigurationManager()
-    var variantManager = MockVariantManager()
-    let internalUserStore = MockInternalUserStoring()
-    var enabledByUser = true
 
-    func test() {
-
-        struct Condition {
-
-            let privacyConfig: Bool
-            let variant: Bool
-            let inRollOut: Bool
-            let internalUser: Bool
-            let expected: Bool
-
+    func testWhenEnabledInPrivacyConfig_ThenFeatureIsEnabled() {
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
         }
 
-        let conditions = [
-            // Users in the experiment should get the feature
-            Condition(privacyConfig: true, variant: true, inRollOut: false, internalUser: false, expected: true),
-            Condition(privacyConfig: true, variant: true, inRollOut: true, internalUser: false, expected: true),
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        db.loadStore()
 
-            // If not previously in the experiment then check for the rollout
-            Condition(privacyConfig: true, variant: false, inRollOut: false, internalUser: false, expected: false),
-            Condition(privacyConfig: true, variant: false, inRollOut: true, internalUser: false, expected: true),
-
-            // Internal users also get the feature
-            Condition(privacyConfig: true, variant: false, inRollOut: false, internalUser: true, expected: true),
-            Condition(privacyConfig: true, variant: false, inRollOut: true, internalUser: true, expected: true),
-
-            // Privacy config is the ultimate on/off switch though
-            Condition(privacyConfig: false, variant: true, inRollOut: true, internalUser: true, expected: false),
-        ]
-
-        for index in conditions.indices {
-            let condition = conditions[index]
-            privacyConfig.isFeatureKeyEnabled = { feature, _ in
-                XCTAssertEqual(feature, .history)
-                return condition.privacyConfig
-            }
-
-            privacyConfig.isSubfeatureKeyEnabled = { subFeature, _ in
-                XCTAssertEqual(subFeature as? HistorySubFeature, HistorySubFeature.onByDefault)
-                return condition.inRollOut
-            }
-
-            internalUserStore.isInternalUser = condition.internalUser
-            privacyConfigManager.privacyConfig = privacyConfig
-            variantManager.isSupportedReturns = condition.variant
-
-            let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
-            let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
-            db.loadStore()
-
-            let historyManager = makeHistoryManager(db) {
-                XCTFail("DB Error \($0)")
-            }
-
-            XCTAssertEqual(condition.expected, historyManager.isHistoryFeatureEnabled(), "\(index): \(condition)")
-
-            if condition.expected {
-                XCTAssertTrue(historyManager.historyCoordinator is HistoryCoordinator)
-            } else {
-                XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
-            }
-
+        let historyManager = makeHistoryManager(db) {
+            XCTFail("DB Error \($0)")
         }
 
+        XCTAssertTrue(historyManager.isHistoryFeatureEnabled())
+        XCTAssertTrue(historyManager.historyCoordinator is HistoryCoordinator)
     }
 
-    func test_WhenUserHasDisabledSetting_ThenDontStoreOrLoadHistory() {
+    func testWhenDisabledInPrivacyConfig_ThenFeatureIsDisabled() {
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return false
+        }
+        
+        privacyConfigManager.privacyConfig = privacyConfig
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        db.loadStore()
+
+        let historyManager = makeHistoryManager(db) {
+            XCTFail("DB Error \($0)")
+        }
+
+        XCTAssertFalse(historyManager.isHistoryFeatureEnabled())
+        XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
+    }
+
+    func test_WhenUserHasDisabledAutocompleteSitesSetting_ThenDontStoreOrLoadHistory() {
 
         privacyConfig.isFeatureKeyEnabled = { feature, _ in
             XCTAssertEqual(feature, .history)
             return true
         }
 
-        internalUserStore.isInternalUser = true
         privacyConfigManager.privacyConfig = privacyConfig
-        enabledByUser = false
+        autocompleteEnabledByUser = false
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        db.loadStore()
+
+        let historyManager = makeHistoryManager(db) {
+            XCTFail("DB Error \($0)")
+        }
+
+        XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
+    }
+
+    func test_WhenUserHasDisabledRecentlyVisitedSitesSetting_ThenDontStoreOrLoadHistory() {
+
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
+        }
+
+        privacyConfigManager.privacyConfig = privacyConfig
+        recentlyVisitedSitesEnabledByUser = false
 
         let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
@@ -120,16 +110,18 @@ final class HistoryManagerTests: XCTestCase {
     }
 
     private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
-        let manager = HistoryManager(privacyConfigManager: privacyConfigManager,
-                              variantManager: variantManager,
-                              database: db,
-                              internalUserDecider: DefaultInternalUserDecider(mockedStore: internalUserStore),
-                              isEnabledByUser: self.isEnabledByUser())
-        return manager
+        let eventMapper = HistoryStoreEventMapper()
+        let store = HistoryStore(context: db.makeContext(concurrencyType: .privateQueueConcurrencyType), eventMapper: eventMapper)
+        let dbCoordinator = HistoryCoordinator(historyStoring: store)
+
+        return HistoryManager(privacyConfigManager: privacyConfigManager,
+                              dbCoordinator: dbCoordinator,
+                              isAutocompleteEnabledByUser: self.autocompleteEnabledByUser,
+                              isRecentlyVisitedSitesEnabledByUser: self.recentlyVisitedSitesEnabledByUser)
+
     }
 
-    private func isEnabledByUser() -> Bool {
-        return enabledByUser
-    }
+    var autocompleteEnabledByUser = true
+    var recentlyVisitedSitesEnabledByUser = true
 
 }

@@ -19,7 +19,6 @@
 
 import Foundation
 
-// swiftlint:disable line_length
 final class UserText {
 
     // MARK: - Network Protection Notifications
@@ -52,4 +51,3 @@ final class UserText {
 
     static let networkProtectionEntitlementExpiredNotificationBody = NSLocalizedString("network.protection.entitlement.expired.notification.body", value: "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "The body of the notification when Privacy Pro subscription expired")
 }
-// swiftlint:enable line_length

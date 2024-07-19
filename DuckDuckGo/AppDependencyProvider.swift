@@ -33,8 +33,6 @@ protocol DependencyProvider {
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
-    var remoteMessagingStore: RemoteMessagingStore { get }
-    var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCache { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
@@ -49,6 +47,7 @@ protocol DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
+    var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
 }
 
@@ -64,13 +63,6 @@ class AppDependencyProvider: DependencyProvider {
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 
-    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(
-        database: Database.shared,
-        errorEvents: RemoteMessagingStoreErrorHandling(),
-        log: .remoteMessaging
-    )
-    lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
-                                                                                  remoteMessagingStore: remoteMessagingStore)
     let storageCache = StorageCache()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
@@ -97,9 +89,9 @@ class AppDependencyProvider: DependencyProvider {
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
+    let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
-    // swiftlint:disable:next function_body_length
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)

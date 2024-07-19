@@ -38,10 +38,7 @@ import SwiftUI
 import NetworkProtection
 #endif
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
-    // swiftlint:enable type_body_length
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -90,6 +87,7 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
+    let homePageConfiguration: HomePageConfiguration
     let homeTabManager: NewTabPageManager
     let tabManager: TabManager
     let previewsSource: TabPreviewsSource
@@ -115,6 +113,7 @@ class MainViewController: UIViewController {
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
     private var urlInterceptorCancellables = Set<AnyCancellable>()
+    private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -159,9 +158,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
-    private var keyboardHeight: CGFloat = 0.0
-    
+
     var postClear: (() -> Void)?
     var clearInProgress = false
     var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
@@ -170,13 +167,14 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    var historyManager: HistoryManager
+    var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-        historyManager: HistoryManager,
+        historyManager: HistoryManaging,
+        homePageConfiguration: HomePageConfiguration,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
         appSettings: AppSettings,
@@ -187,6 +185,7 @@ class MainViewController: UIViewController {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.historyManager = historyManager
+        self.homePageConfiguration = homePageConfiguration
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
@@ -263,6 +262,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
+        subscribeToSettingsDeeplinkNotifications()
         
 #if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()
@@ -553,15 +553,14 @@ class MainViewController: UIViewController {
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
-        var height = keyboardFrame.size.height
+        var keyboardHeight = keyboardFrame.size.height
 
         let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
         let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-        height = intersection.height
+        keyboardHeight = intersection.height
 
-        findInPageBottomLayoutConstraint.constant = height
-        keyboardHeight = height
+        findInPageBottomLayoutConstraint.constant = keyboardHeight
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -574,15 +573,14 @@ class MainViewController: UIViewController {
             }
         }
 
-        let y = self.view.frame.height - height
+        let y = self.view.frame.height - keyboardHeight
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
 
         if self.appSettings.currentAddressBarPosition.isBottom {
-            let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.navigationBarCollectionViewBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarContainerHeight.constant = max(52, keyboardHeight)
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -678,7 +676,7 @@ class MainViewController: UIViewController {
     private func addLaunchTabNotificationObserver() {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self else { return }
-            if let url = URL(string: urlString) {
+            if let url = URL(trimmedAddressBarString: urlString), url.isValid {
                 self.loadUrlInNewTab(url, inheritedAttribution: nil)
             } else {
                 self.loadQuery(urlString)
@@ -728,7 +726,7 @@ class MainViewController: UIViewController {
         
         currentTab?.dismiss()
         removeHomeScreen()
-        AppDependencyProvider.shared.homePageConfiguration.refresh()
+        homePageConfiguration.refresh()
 
         // Access the tab model directly as we don't want to create a new tab controller here
         guard let tabModel = tabManager.model.currentTab else {
@@ -736,12 +734,20 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController()
+            let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
+                                                      syncService: syncService,
+                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                      homePageMessagesConfiguration: homePageConfiguration)
+
+            controller.delegate = self
+            controller.shortcutsDelegate = self
+
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
         } else {
-            let controller = HomeViewController.loadFromStoryboard(model: tabModel,
+            let controller = HomeViewController.loadFromStoryboard(homePageConfiguration: homePageConfiguration,
+                                                                   model: tabModel,
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
@@ -872,6 +878,8 @@ class MainViewController: UIViewController {
                    currentTab?.url?.absoluteString ?? "<nil>")
             return
         }
+        // Make sure that once query is submitted, we don't trigger the non-SERP flow
+        skipSERPFlow = false
         loadUrl(url)
     }
 
@@ -1342,6 +1350,23 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &urlInterceptorCancellables)
+    }
+    
+    private func subscribeToSettingsDeeplinkNotifications() {
+        NotificationCenter.default.publisher(for: .settingsDeepLinkNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.object as? SettingsViewModel.SettingsDeepLinkSection {
+                
+                case .duckPlayer:
+                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
+                        deepLinkTarget = .duckPlayer
+                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
+                default:
+                    return
+                }
+            }
+            .store(in: &settingsDeepLinkcancellables)
     }
 
 #if NETWORK_PROTECTION
@@ -1952,6 +1977,18 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
 }
 
+extension MainViewController {
+    private func handleRequestedURL(_ url: URL) {
+        showKeyboardAfterFireButton?.cancel()
+
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
+    }
+}
+
 extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -1959,13 +1996,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        showKeyboardAfterFireButton?.cancel()
-        
-        if url.isBookmarklet() {
-            executeBookmarklet(url)
-        } else {
-            loadUrl(url)
-        }
+        handleRequestedURL(url)
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
@@ -1999,6 +2030,46 @@ extension MainViewController: HomeControllerDelegate {
         viewCoordinator.navigationBarContainer.alpha = percent
     }
     
+}
+
+extension MainViewController: NewTabPageControllerDelegate {
+    func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL) {
+        handleRequestedURL(url)
+    }
+
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        segueToEditBookmark(favorite)
+    }
+
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        // no-op for now
+    }
+}
+
+extension MainViewController: NewTabPageControllerShortcutsDelegate {
+    func newTabPageDidRequestDownloads(_ controller: NewTabPageViewController) {
+        segueToDownloads()
+    }
+    
+    func newTabPageDidRequestBookmarks(_ controller: NewTabPageViewController) {
+        segueToBookmarks()
+    }
+    
+    func newTabPageDidRequestPasswords(_ controller: NewTabPageViewController) {
+        launchAutofillLogins(source: .newTabPageShortcut)
+    }
+    
+    func newTabPageDidRequestAIChat(_ controller: NewTabPageViewController) {
+        loadUrl(Constant.duckAIURL)
+    }
+    
+    func newTabPageDidRequestSettings(_ controller: NewTabPageViewController) {
+        segueToSettings()
+    }
+
+    private enum Constant {
+        static let duckAIURL = URL(string: "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1")!
+    }
 }
 
 extension MainViewController: TabDelegate {
@@ -2618,5 +2689,3 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
-// swiftlint:enable file_length

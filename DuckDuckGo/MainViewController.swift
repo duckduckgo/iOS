@@ -186,7 +186,8 @@ class MainViewController: UIViewController {
         syncPausedStateManager: any SyncPausedStateManaging,
         privacyProDataReporter: PrivacyProDataReporting,
         variantManager: VariantManager,
-        contextualOnboardingPresenter: ContextualOnboardingPresenting
+        contextualOnboardingPresenter: ContextualOnboardingPresenting,
+        contextualOnboardingLogic: ContextualOnboardingLogic
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -206,7 +207,8 @@ class MainViewController: UIViewController {
                                      historyManager: historyManager,
                                      syncService: syncService,
                                      privacyProDataReporter: privacyProDataReporter,
-                                     contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                     contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                     contextualOnboardingLogic: contextualOnboardingLogic)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()

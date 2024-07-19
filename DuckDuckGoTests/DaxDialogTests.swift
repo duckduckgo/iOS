@@ -97,7 +97,7 @@ final class DaxDialog: XCTestCase {
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
-
+        mockVariantManager.isSupportedReturns = false
         let testCases = [
             (urls: [ URLs.google ], expected: DaxDialogs.BrowsingSpec.withOneTracker.format(args: "Google"), line: #line),
             (urls: [ URLs.google, URLs.amazon ], expected: DaxDialogs.BrowsingSpec.withMultipleTrackers.format(args: 0, "Google", "Amazon.com"), line: #line),
@@ -306,6 +306,112 @@ final class DaxDialog: XCTestCase {
 
     // MARK: - Experiment
 
+    func testWhenExperimentAndBrowsingSpecIsWithOneTrackerThenHighlightAddressBarIsFalse() throws {
+        // GIVEN
+        mockVariantManager.isSupportedReturns = true
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
+        privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result.type, .withOneTracker)
+        XCTAssertFalse(result.highlightAddressBar)
+    }
+
+    func testWhenExperimentAndBrowsingSpecIsWithMultipleTrackerThenHighlightAddressBarIsFalse() throws {
+        // GIVEN
+        mockVariantManager.isSupportedReturns = true
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        [URLs.google, URLs.amazon].forEach { tracker in
+            let detectedTracker = detectedTrackerFrom(tracker, pageUrl: URLs.example.absoluteString)
+            privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+        }
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result.type, .withMultipleTrackers)
+        XCTAssertFalse(result.highlightAddressBar)
+    }
+
+    func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndSearchDialogHasNotBeenSeenThenReturnSpecTypeAfterSearch() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingAfterSearchShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+
+        // THEN
+        XCTAssertEqual(result?.type, .afterSearch)
+    }
+
+    func testWhenExperimentGroupAndURLIsMajorTrackerWebsiteAndMajorTrackerDialogHasNotBeenSeenThenReturnSpecTypeSiteIsMajorTracker() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.facebook)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: privacyInfo)
+
+        // THEN
+        XCTAssertEqual(result?.type, .siteIsMajorTracker)
+    }
+
+    func testWhenExperimentGroupAndURLIsOwnedByMajorTrackerAndMajorTrackerDialogHasNotBeenSeenThenReturnSpecTypeSiteOwnedByMajorTracker() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: privacyInfo)
+
+        // THEN
+        XCTAssertEqual(result?.type, .siteOwnedByMajorTracker)
+    }
+
+    func testWhenExperimentGroupAndURLHasTrackersAndMultipleTrackersDialogHasNotBeenSeenThenReturnSpecTypeWithMultipleTrackers() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = false
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        [URLs.google, URLs.amazon].forEach { url in
+            let detectedTracker = detectedTrackerFrom(url, pageUrl: URLs.example.absoluteString)
+            privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+        }
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: privacyInfo)
+
+        // THEN
+        XCTAssertEqual(result?.type, .withMultipleTrackers)
+    }
+
+    func testWhenExperimentGroupAndURLHasNoTrackersAndIsNotSERPAndNoTrakcersDialogHasNotBeenSeenThenReturnSpecTypeWithoutTrackers() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example))
+
+        // THEN
+        XCTAssertEqual(result?.type, .withoutTrackers)
+    }
+
     func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndHasVisitedWebsiteThenSpecTypeSearchIsReturned() throws {
         try [DaxDialogs.BrowsingSpec.withoutTrackers, .siteIsMajorTracker, .siteOwnedByMajorTracker, .withOneTracker, .withMultipleTrackers].forEach { spec in
             // GIVEN
@@ -323,20 +429,146 @@ final class DaxDialog: XCTestCase {
         }
     }
 
-    func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndHasNotVisitedWebsiteThenSpecTypeSearchWithWebsiteFollowUpIsReturned() throws {
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndSearchDone_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
-        let isExperiment = true
         let settings = InMemoryDaxDialogsSettings()
-        let mockVariantManager = MockVariantManager(isSupportedReturns: isExperiment)
-        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+        settings.browsingAfterSearchShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
 
         // WHEN
         let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
 
         // THEN
-        XCTAssertEqual(result.type, .afterSearchWithWebsitesFollowUp)
+        XCTAssertEqual(result, .final)
     }
 
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithoutTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteWithTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
+        privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
+
+        // WHEN
+        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndSearchDone_ThenBrowsingSpecIsNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingAfterSearchShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithoutTracker_ThenBrowsingSpecIsNotFinal() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteWithTracker_ThenBrowsingSpecIsNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
+        privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: privacyInfo)
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndWebsiteMajorTracker_ThenFinalBrowsingSpecIsReturned() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+        let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: privacyInfo)
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogSeen_AndSearchNotSeen_ThenAfterSearchSpecIsReturned() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithoutTrackersShown = true
+        settings.browsingWithTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = true
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+
+        // THEN
+        XCTAssertEqual(result, .afterSearch)
+    }
 
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
@@ -359,5 +591,10 @@ final class DaxDialog: XCTestCase {
         return PrivacyInfo(url: url,
                            parentEntity: entityProvider.entity(forHost: url.host!),
                            protectionStatus: protectionStatus)
+    }
+
+    private func makeExperimentSUT(settings: DaxDialogsSettings) -> DaxDialogs {
+        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
     }
 }

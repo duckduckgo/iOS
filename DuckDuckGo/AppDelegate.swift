@@ -226,13 +226,14 @@ import WebKit
         
         let variantManager = DefaultVariantManager()
         let historyMessageManager = HistoryMessageManager()
+        let daxDialogs = DaxDialogs.shared
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            DaxDialogs.shared.primeForUse()
+            daxDialogs.primeForUse()
 
             // New users don't see the message
             historyMessageManager.dismiss()
@@ -322,7 +323,8 @@ import WebKit
                                       syncPausedStateManager: syncErrorHandler,
                                       privacyProDataReporter: privacyProDataReporter,
                                       variantManager: variantManager,
-                                      contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager))
+                                      contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
+                                      contextualOnboardingLogic: daxDialogs)
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

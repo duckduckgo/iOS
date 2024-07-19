@@ -57,11 +57,9 @@ struct RemoteMessagingDebugRootView: View {
         }
         .navigationTitle("\(model.messages.count) Remote Messages")
         .toolbar {
-            if #available(iOS 15, *) {
                 Button("Delete All", role: .destructive) {
                     model.deleteAll()
                 }
-            }
         }
     }
 

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/reduce-vpn-manager-instances",
-        "revision" : "e4743054ccbb28aaf0c96558742589f4f95fb7bb"
+        "revision" : "bc7c9637fe9491158a8c8a6ac6183a0e20593431"
       }
     },
     {

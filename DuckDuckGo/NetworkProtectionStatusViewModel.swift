@@ -134,16 +134,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var downloadTotal: String?
     private var throughputUpdateTimer: Timer?
 
-    var shouldShowFAQ: Bool {
-        AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-    }
-
     @Published public var animationsOn: Bool = false
 
     public init(tunnelController: (TunnelController & TunnelSessionProvider),
                 settings: VPNSettings,
                 statusObserver: ConnectionStatusObserver,
-                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+                serverInfoObserver: ConnectionServerInfoObserver,
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository) {
         self.tunnelController = tunnelController
@@ -170,8 +166,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpDNSSettingsPublisher()
         setUpThroughputRefreshTimer()
         setUpErrorPublishers()
-
-        serverInfoObserver.refreshServerInfo()
 
         // Prefetching this now for snappy load times on the locations screens
         Task {

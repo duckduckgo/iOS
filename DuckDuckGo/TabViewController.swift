@@ -296,7 +296,8 @@ class TabViewController: UIViewController {
                                    syncService: DDGSyncing,
                                    duckPlayer: DuckPlayerProtocol,
                                    privacyProDataReporter: PrivacyProDataReporting,
-                                   contextualOnboardingPresenter: ContextualOnboardingPresenting) -> TabViewController {
+                                   contextualOnboardingPresenter: ContextualOnboardingPresenting,
+                                   contextualOnboardingLogic: ContextualOnboardingLogic) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -307,7 +308,8 @@ class TabViewController: UIViewController {
                               syncService: syncService,
                               duckPlayer: duckPlayer,
                               privacyProDataReporter: privacyProDataReporter,
-                              contextualOnboardingPresenter: contextualOnboardingPresenter)
+                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                              contextualOnboardingLogic: contextualOnboardingLogic)
         })
         return controller
     }
@@ -322,6 +324,7 @@ class TabViewController: UIViewController {
     var duckPlayerNavigationHandler: DuckNavigationHandling?
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
+    let contextualOnboardingLogic: ContextualOnboardingLogic
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -331,7 +334,8 @@ class TabViewController: UIViewController {
                    syncService: DDGSyncing,
                    duckPlayer: DuckPlayerProtocol,
                    privacyProDataReporter: PrivacyProDataReporting,
-                   contextualOnboardingPresenter: ContextualOnboardingPresenting) {
+                   contextualOnboardingPresenter: ContextualOnboardingPresenting,
+                   contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -342,6 +346,7 @@ class TabViewController: UIViewController {
         self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
+        self.contextualOnboardingLogic = contextualOnboardingLogic
         super.init(coder: aDecoder)
     }
 
@@ -2836,6 +2841,8 @@ extension TabViewController: OnboardingNavigationDelegate {
 extension TabViewController: ContextualOnboardingEventDelegate {
 
     func didAcknowledgeContextualOnboardingTrackersDialog() {
+        // Store when Fire contextual dialog is shown to decide if final dialog needs to be shown.
+        contextualOnboardingLogic.setFireEducationMessageSeen()
         delegate?.tabDidRequestFireButtonPulse(tab: self)
     }
 

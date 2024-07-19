@@ -74,7 +74,7 @@ final class NetworkProtectionDebugUtilities {
     // MARK: - Snooze
 
     func startSnooze(duration: TimeInterval) async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession() else {
             return
         }
 

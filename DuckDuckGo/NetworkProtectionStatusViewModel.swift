@@ -451,7 +451,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @MainActor
     func startSnooze() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await tunnelController.activeSession() else {
             return
         }
 
@@ -462,7 +462,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @MainActor
     func cancelSnooze() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await tunnelController.activeSession() else {
             return
         }
 

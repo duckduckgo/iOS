@@ -37,6 +37,8 @@ protocol DaxDialogsSettings {
     
     var fireButtonPulseDateShown: Date? { get set }
 
+    var browsingFinalDialogShown: Bool { get set }
+
 }
 
 class DefaultDaxDialogsSettings: DaxDialogsSettings {
@@ -65,6 +67,9 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     @UserDefaultsWrapper(key: .fireButtonPulseDateShown, defaultValue: nil)
     var fireButtonPulseDateShown: Date?
     
+    @UserDefaultsWrapper(key: .daxBrowsingFinalDialogShown, defaultValue: false)
+    var browsingFinalDialogShown: Bool
+
 }
 
 class InMemoryDaxDialogsSettings: DaxDialogsSettings {
@@ -85,4 +90,6 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     
     var fireButtonPulseDateShown: Date?
     
+    var browsingFinalDialogShown = false
+
 }

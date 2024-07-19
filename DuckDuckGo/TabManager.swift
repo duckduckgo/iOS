@@ -37,6 +37,7 @@ class TabManager {
     private var previewsSource: TabPreviewsSource
     private var duckPlayerNavigationHandler: DuckNavigationHandling
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
 
     weak var delegate: TabDelegate?
 
@@ -49,13 +50,15 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
-         contextualOnboardingPresenter: ContextualOnboardingPresenting) {
+         contextualOnboardingPresenter: ContextualOnboardingPresenting,
+         contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
+        self.contextualOnboardingLogic = contextualOnboardingLogic
         
         // Init Duck Player Handler
         self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: DuckPlayer())
@@ -77,7 +80,8 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayerNavigationHandler: duckPlayerNavigationHandler,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                              contextualOnboardingLogic: contextualOnboardingLogic)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -151,7 +155,8 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayerNavigationHandler: duckPlayerNavigationHandler,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter)
+                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                              contextualOnboardingLogic: contextualOnboardingLogic)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

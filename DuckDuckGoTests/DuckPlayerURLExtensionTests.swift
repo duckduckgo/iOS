@@ -24,9 +24,9 @@ import os.log
 final class DuckPlayerURLExtensionTests: XCTestCase {
     
         #if os(iOS)
-        let baseUrl = "https://m.youtube.com/"
+        let baseUrl = "https://m.youtube.com"
         #else
-        let baseUrl = "https://www.youtube.com/"
+        let baseUrl = "https://www.youtube.com"
         #endif
 
     func testIsDuckPlayerScheme() {
@@ -84,7 +84,7 @@ final class DuckPlayerURLExtensionTests: XCTestCase {
         XCTAssertEqual(params?.videoID, "abcdef12345")
         XCTAssertEqual(params?.timestamp, nil)
 
-        let paramsWithTimestamp = "\(baseUrl)watch?v=abcdef12345&t=23s".url!.youtubeVideoParams
+        let paramsWithTimestamp = "\(baseUrl)/watch?v=abcdef12345&t=23s".url!.youtubeVideoParams
         XCTAssertEqual(paramsWithTimestamp?.videoID, "abcdef12345")
         XCTAssertEqual(paramsWithTimestamp?.timestamp, "23s")
 
@@ -116,12 +116,12 @@ final class DuckPlayerURLExtensionTests: XCTestCase {
     }
 
     func testYoutubeURLTimestampValidation() {
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: nil).absoluteString, "\(baseUrl)watch?v=abcdef12345")
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "23s").absoluteString, "\(baseUrl)watch?v=abcdef12345&t=23s")
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "5m5s").absoluteString, "\(baseUrl)watch?v=abcdef12345&t=5m5s")
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "12h400m100s").absoluteString, "\(baseUrl)watch?v=abcdef12345&t=12h400m100s")
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "12h2s2h").absoluteString, "\(baseUrl)watch?v=abcdef12345&t=12h2s2h")
-        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "5m5m5m").absoluteString, "\(baseUrl)watch?v=abcdef12345&t=5m5m5m")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: nil).absoluteString, "\(baseUrl)/watch?v=abcdef12345")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "23s").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=23s")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "5m5s").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=5m5s")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "12h400m100s").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=12h400m100s")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "12h2s2h").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=12h2s2h")
+        XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "5m5m5m").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=5m5m5m")
 
         XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "5").absoluteString, "\(baseUrl)/watch?v=abcdef12345&t=5")
         XCTAssertEqual(URL.youtube("abcdef12345", timestamp: "10d").absoluteString, "\(baseUrl)/watch?v=abcdef12345")

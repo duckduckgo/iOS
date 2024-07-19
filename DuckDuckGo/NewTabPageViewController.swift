@@ -30,6 +30,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
     private let favoritesModel: FavoritesDefaultModel
+    private let shortcutsModel: ShortcutsModel
 
     init(interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
@@ -40,12 +41,15 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
         self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
+        self.shortcutsModel = ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
-                                            favoritesModel: favoritesModel)
+                                            favoritesModel: favoritesModel,
+                                            shortcutsModel: shortcutsModel)
 
         super.init(rootView: newTabPageView)
 
         assignFavoriteModelActions()
+        assignShorcutsModelActions()
     }
 
     // MARK: - Private
@@ -75,12 +79,32 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         }
     }
 
+    private func assignShorcutsModelActions() {
+        shortcutsModel.onShortcutOpened = { [weak self] shortcut in
+            guard let self else { return }
+
+            switch shortcut {
+            case .aiChat:
+                shortcutsDelegate?.newTabPageDidRequestAIChat(self)
+            case .bookmarks:
+                shortcutsDelegate?.newTabPageDidRequestBookmarks(self)
+            case .downloads:
+                shortcutsDelegate?.newTabPageDidRequestDownloads(self)
+            case .passwords:
+                shortcutsDelegate?.newTabPageDidRequestPasswords(self)
+            case .settings:
+                shortcutsDelegate?.newTabPageDidRequestSettings(self)
+            }
+        }
+    }
+
     // MARK: - NewTabPage
 
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var delegate: NewTabPageControllerDelegate?
+    weak var shortcutsDelegate: NewTabPageControllerShortcutsDelegate?
 
     func launchNewSearch() {
 

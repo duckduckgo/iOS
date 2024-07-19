@@ -72,7 +72,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         case Handlers.setUserValues:
             return duckPlayer.setUserValues
         case Handlers.initialSetup:
-            return duckPlayer.initialSetup
+            return duckPlayer.initialSetupPlayer
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

@@ -172,7 +172,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Do not handle the URL if the video was just handled
         if let url = url,
            url.isYoutubeVideo || url.isDuckPlayer,
-           let (videoID, timestamp) = url.youtubeVideoParams,
+           let (videoID, _) = url.youtubeVideoParams,
             lastHandledVideoID == videoID,
             !isDuckPlayerTemporarilyDisabled {
                 return
@@ -215,7 +215,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Do not handle the URL if the video was just handled
         if let url = navigationAction.request.url,
            url.isYoutubeVideo || url.isDuckPlayer,
-           let (videoID, timestamp) = url.youtubeVideoParams,
+           let (videoID, _) = url.youtubeVideoParams,
             lastHandledVideoID == videoID,
             !isDuckPlayerTemporarilyDisabled {
                 return

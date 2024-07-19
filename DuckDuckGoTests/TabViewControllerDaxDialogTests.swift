@@ -26,18 +26,21 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
     private var sut: TabViewController!
     private var delegateMock: MockTabDelegate!
     private var onboardingPresenterMock: ContextualOnboardingPresenterMock!
+    private var onboardingLogicMock: ContextualOnboardingLogicMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         delegateMock = MockTabDelegate()
         onboardingPresenterMock = ContextualOnboardingPresenterMock()
-        sut = .fake(contextualOnboardingPresenter: onboardingPresenterMock)
+        onboardingLogicMock = ContextualOnboardingLogicMock()
+        sut = .fake(contextualOnboardingPresenter: onboardingPresenterMock, contextualOnboardingLogic: onboardingLogicMock)
         sut.delegate = delegateMock
     }
 
     override func tearDownWithError() throws {
         delegateMock = nil
         onboardingPresenterMock = nil
+        onboardingLogicMock = nil
         sut = nil
         try super.tearDownWithError()
     }
@@ -100,6 +103,26 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
+    }
+
+    func testWhenDidAcknowledgedTrackersDialogIsCalledThenSetFireEducationMessageSeenIsCalledOnLogic() {
+        // GIVEN
+        XCTAssertFalse(onboardingLogicMock.didCallSetFireEducationMessageSeen)
+
+        // WHEN
+        sut.didAcknowledgeContextualOnboardingTrackersDialog()
+
+        // THEN
+        XCTAssertTrue(onboardingLogicMock.didCallSetFireEducationMessageSeen)
+    }
+
+}
+
+final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
+    private(set) var didCallSetFireEducationMessageSeen = false
+
+    func setFireEducationMessageSeen() {
+        didCallSetFireEducationMessageSeen = true
     }
 
 }

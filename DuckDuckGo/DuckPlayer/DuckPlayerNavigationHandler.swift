@@ -27,12 +27,9 @@ final class DuckPlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
+    var lastHandledVideoID: String?
     
-    private var isDuckPlayerTemporarilyDisabled = false {
-        didSet {
-            os_log("DP: DuckPlayer Disabled: \(isDuckPlayerTemporarilyDisabled):", log: .duckPlayerLog, type: .debug)
-        }
-    }
+        var isDuckPlayerTemporarilyDisabled = false
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -130,7 +127,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             }
         }
         
-        
         // Daily Unique View Pixel
         if let url = navigationAction.request.url,
            url.isDuckPlayer,
@@ -172,7 +168,16 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     // such as changes triggered via JS
     @MainActor
     func handleURLChange(url: URL?, webView: WKWebView) {
-                
+        
+        // Do not handle the URL if the video was just handled
+        if let url = url,
+           url.isYoutubeVideo || url.isDuckPlayer,
+           let (videoID, timestamp) = url.youtubeVideoParams,
+            lastHandledVideoID == videoID,
+            !isDuckPlayerTemporarilyDisabled {
+                return
+        }
+        
         if let url = url, url.isYoutubeVideo,
             !url.isDuckPlayer,
             let (videoID, timestamp) = url.youtubeVideoParams,
@@ -193,8 +198,9 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Load the URL
             webView.load(URLRequest(url: newURL))
             
-            // Add a delay before resetting to allow the webview to properly render
+            // Add a delay before resetting to allow the Webview to properly render
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.lastHandledVideoID = videoID
                 self.isDuckPlayerTemporarilyDisabled = false
             }
         }
@@ -206,10 +212,16 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
                                webView: WKWebView) {
         
-        if let url = navigationAction.request.url {
-            os_log("DP: Handling decidePolicy for Duck Player with %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+        // Do not handle the URL if the video was just handled
+        if let url = navigationAction.request.url,
+           url.isYoutubeVideo || url.isDuckPlayer,
+           let (videoID, timestamp) = url.youtubeVideoParams,
+            lastHandledVideoID == videoID,
+            !isDuckPlayerTemporarilyDisabled {
+                return
         }
         
+
         // Pixel for Views From SERP
         if let url = navigationAction.request.url,
             navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,

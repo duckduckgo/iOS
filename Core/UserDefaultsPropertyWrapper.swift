@@ -150,7 +150,6 @@ public struct UserDefaultsWrapper<T> {
         
         case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         case duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
-        case duckPlayerLastRenderedVideo = "com.duckduckgo.ios.duckPlayer.lastRenderedVideo"
         
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
 

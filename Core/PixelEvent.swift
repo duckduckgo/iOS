@@ -514,6 +514,7 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnFailedCompilation
 
         case debugBookmarksStructureLost
+        case debugBookmarksStructureNotRecovered
         case debugBookmarksInvalidRoots
         case debugBookmarksValidationFailed
 
@@ -1229,6 +1230,7 @@ extension Pixel.Event {
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
             
         case .debugBookmarksStructureLost: return "m_d_bookmarks_structure_lost"
+        case .debugBookmarksStructureNotRecovered: return "m_d_bookmarks_structure_not_recovered"
         case .debugBookmarksInvalidRoots: return "m_d_bookmarks_invalid_roots"
         case .debugBookmarksValidationFailed: return "m_d_bookmarks_validation_failed"
 

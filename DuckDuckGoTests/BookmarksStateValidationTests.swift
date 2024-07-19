@@ -70,7 +70,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let testContext = dbStack.makeContext(concurrencyType: .privateQueueConcurrencyType)
         testContext.performAndWait {
-            validator.validateInitialState(context: testContext)
+            XCTAssertTrue(validator.validateInitialState(context: testContext))
             validator.validateBookmarksStructure(context: testContext)
         }
     }
@@ -83,7 +83,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let testContext = dbStack.makeContext(concurrencyType: .privateQueueConcurrencyType)
         testContext.performAndWait {
-            validator.validateInitialState(context: testContext)
+            XCTAssertTrue(validator.validateInitialState(context: testContext))
         }
     }
 
@@ -107,7 +107,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let testContext = dbStack.makeContext(concurrencyType: .privateQueueConcurrencyType)
         testContext.performAndWait {
-            validator.validateInitialState(context: testContext)
+            XCTAssertFalse(validator.validateInitialState(context: testContext))
             validator.validateBookmarksStructure(context: testContext)
         }
 
@@ -148,7 +148,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let testContext = dbStack.makeContext(concurrencyType: .privateQueueConcurrencyType)
         testContext.performAndWait {
-            validator.validateInitialState(context: testContext)
+            XCTAssertTrue(validator.validateInitialState(context: testContext))
             validator.validateBookmarksStructure(context: testContext)
         }
 
@@ -188,7 +188,7 @@ class BookmarksStateValidationTests: XCTestCase {
 
         let testContext = dbStack.makeContext(concurrencyType: .privateQueueConcurrencyType)
         testContext.performAndWait {
-            validator.validateInitialState(context: testContext)
+            XCTAssertTrue(validator.validateInitialState(context: testContext))
             validator.validateBookmarksStructure(context: testContext)
         }
 

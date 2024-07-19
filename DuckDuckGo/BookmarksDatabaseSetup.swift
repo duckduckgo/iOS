@@ -44,6 +44,8 @@ struct BookmarksDatabaseSetup {
             switch validationError {
             case .bookmarksStructureLost:
                 DailyPixel.fire(pixel: .debugBookmarksStructureLost, includedParameters: [.appVersion])
+            case .bookmarksStructureNotRecovered:
+                DailyPixel.fire(pixel: .debugBookmarksStructureNotRecovered, includedParameters: [.appVersion])
             case .bookmarksStructureBroken(let additionalParams):
                 DailyPixel.fire(pixel: .debugBookmarksInvalidRoots,
                                 withAdditionalParameters: additionalParams,
@@ -61,10 +63,15 @@ struct BookmarksDatabaseSetup {
         bookmarksDatabase.loadStore { context, error in
             guard let context = assertContext(context, error, crashOnError) else { return }
 
-            validator.validateInitialState(context: context)
+            let isMissingStructure = validator.validateInitialState(context: context)
 
             self.migrateFromLegacyCoreDataStorageIfNeeded(context)
             migrationHappened = self.migrateToFormFactorSpecificFavorites(context, oldFavoritesOrder)
+
+            if isMissingStructure {
+                _ = validator.validateInitialState(context: context,
+                                                   validationError: .bookmarksStructureNotRecovered)
+            }
             // Add new migrations and set migrationHappened flag here. Only the last migration is relevant.
             // Also bump the int passed to the assert function below.
         }

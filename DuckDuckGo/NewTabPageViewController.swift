@@ -18,24 +18,69 @@
 //
 
 import SwiftUI
+import DDGSync
+import Bookmarks
+import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
 
-    init(homePageMessagesConfiguration: HomePageMessagesConfiguration) {
+    private let syncService: DDGSyncing
+    private let syncBookmarksAdapter: SyncBookmarksAdapter
+
+    private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
+
+    private let favoritesModel: FavoritesDefaultModel
+
+    init(interactionModel: FavoritesListInteracting,
+         syncService: DDGSyncing,
+         syncBookmarksAdapter: SyncBookmarksAdapter,
+         homePageMessagesConfiguration: HomePageMessagesConfiguration) {
+
+        self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
+
+        self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
-                                            favoritesModel: FavoritesModel())
+                                            favoritesModel: favoritesModel)
+
         super.init(rootView: newTabPageView)
+
+        assignFavoriteModelActions()
     }
-    
-    @available(*, unavailable)
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+
+    // MARK: - Private
+
+    private func assignFavoriteModelActions() {
+        favoritesModel.onFaviconMissing = { [weak self] in
+            guard let self else { return }
+            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+        }
+
+        favoritesModel.onFavoriteURLSelected = { [weak self] url in
+            guard let self else { return }
+
+            delegate?.newTabPageDidOpenFavoriteURL(self, url: url)
+        }
+
+        favoritesModel.onFavoriteEdit = { [weak self] favorite in
+            guard let self else { return }
+
+            delegate?.newTabPageDidEditFavorite(self, favorite: favorite)
+        }
+
+        favoritesModel.onFavoriteDeleted = { [weak self] favorite in
+            guard let self else { return }
+
+            delegate?.newTabPageDidDeleteFavorite(self, favorite: favorite)
+        }
     }
-    
+
+    // MARK: - NewTabPage
+
     let isDragging: Bool = false
 
     weak var chromeDelegate: BrowserChromeDelegate?
-    weak var delegate: HomeControllerDelegate?
+    weak var delegate: NewTabPageControllerDelegate?
 
     func launchNewSearch() {
 
@@ -63,5 +108,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
     func reloadFavorites() {
 
+    }
+
+    // MARK: -
+
+    @available(*, unavailable)
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

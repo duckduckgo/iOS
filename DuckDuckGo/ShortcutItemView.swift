@@ -37,7 +37,7 @@ struct ShortcutItemView: View {
                     .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
             }
             Text(name)
-                .daxCaption()
+                .font(Font.system(size: 12))
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(alignment: .center)
         }

@@ -17,42 +17,59 @@
 //  limitations under the License.
 //
 
-import Common
-import DesignResourcesKit
-import DuckUI
+import Bookmarks
 import SwiftUI
 
-struct FavoritesView: View {
+struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @ObservedObject var model: FavoritesModel
-    
-    @State var isCollapsed: Bool = true
-    
+    @Environment(\.isLandscapeOrientation) var isLandscape
+
+    @ObservedObject var model: Model
+
+    private let selectionFeedback = UISelectionFeedbackGenerator()
+
     var body: some View {
-        VStack(alignment: .center) {
-            
-            let collapsedMaxItemsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass) * 2
-            
-            let data = isCollapsed ? Array(model.allFavorites.prefix(collapsedMaxItemsCount)) : model.allFavorites
-            
+        VStack(alignment: .center, spacing: 24) {
+
+            let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
+            let result = model.prefixedFavorites(for: columns)
+
             NewTabPageGridView { _ in
-                ForEach(data) { item in
-                    FavoriteItemView(favicon: nil, name: "\(item.id)")
+                ForEach(result.items) { item in
+                    Button(action: {
+                        model.favoriteSelected(item)
+                        selectionFeedback.selectionChanged()
+                    }, label: {
+                        FavoriteItemView(
+                            favorite: item,
+                            faviconLoading: model.faviconLoader,
+                            onMenuAction: { action in
+                                switch action {
+                                case .delete: model.deleteFavorite(item)
+                                case .edit: model.editFavorite(item)
+                                }
+                            })
+                        .background(.clear)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
+                    })
                 }
             }
-            
-            if model.allFavorites.count > collapsedMaxItemsCount {
+
+            if result.isCollapsible {
                 Button(action: {
-                    isCollapsed.toggle()
+                    withAnimation(.easeInOut) {
+                        model.toggleCollapse()
+                    }
                 }, label: {
-                    ToggleExpandButtonView(isIndicatingExpand: isCollapsed).padding()
+                    Image(model.isCollapsed ? .chevronDown : .chevronUp)
+                        .resizable()
                 })
+                .buttonStyle(ToggleExpandButtonStyle())
             }
         }
     }
 }
 
 #Preview {
-    FavoritesView(model: FavoritesModel())
+    FavoritesView(model: FavoritesPreviewModel())
 }

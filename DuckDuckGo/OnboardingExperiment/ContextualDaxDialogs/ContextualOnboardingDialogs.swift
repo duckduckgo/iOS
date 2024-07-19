@@ -130,6 +130,7 @@ struct OnboardingTrackersDoneDialog: View {
 
     @State private var showNextScreen: Bool = false
 
+    let shouldFollowUp: Bool
     let message: NSAttributedString
     let blockedTrackersCTAAction: () -> Void
 
@@ -141,9 +142,11 @@ struct OnboardingTrackersDoneDialog: View {
                         OnboardingFireButtonDialogContent()
                     } else {
                         ContextualDaxDialogContent(message: message, cta: cta) {
-                            withAnimation {
-                                showNextScreen = true
-                                blockedTrackersCTAAction()
+                            blockedTrackersCTAAction()
+                            if shouldFollowUp {
+                                withAnimation {
+                                    showNextScreen = true
+                                }
                             }
                         }
                     }
@@ -212,6 +215,7 @@ struct OnboardingFinalDialog: View {
 
 #Preview("Trackers Dialog") {
     OnboardingTrackersDoneDialog(
+        shouldFollowUp: true,
         message: NSAttributedString(string: """
             Heads up! Instagram.com is owned by Facebook.\n\n
             Facebook’s trackers lurk on about 40% of top websites 😱 but don’t worry!\n\n

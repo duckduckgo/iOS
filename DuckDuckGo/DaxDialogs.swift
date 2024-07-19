@@ -36,6 +36,10 @@ protocol NewTabDialogSpecProvider {
     func dismiss()
 }
 
+protocol ContextualOnboardingLogic {
+    func setFireEducationMessageSeen()
+}
+
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
@@ -44,7 +48,7 @@ extension ContentBlockerRulesManager: EntityProviding {
     
 }
 
-final class DaxDialogs: NewTabDialogSpecProvider {
+final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     
     struct MajorTrackers {
         
@@ -70,7 +74,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         switch spec.type {
         case .withMultipleTrackers, .withOneTracker:
             settings.browsingWithTrackersShown = flag
-        case .afterSearch, .afterSearchWithWebsitesFollowUp:
+        case .afterSearch:
             settings.browsingAfterSearchShown = flag
         case .withoutTrackers:
             settings.browsingWithoutTrackersShown = flag
@@ -78,8 +82,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
         case .final:
-            // TODO: Reset flag
-            break
+            settings.browsingFinalDialogShown = flag
         }
     }
     
@@ -88,7 +91,6 @@ final class DaxDialogs: NewTabDialogSpecProvider {
 
         enum SpecType {
             case afterSearch
-            case afterSearchWithWebsitesFollowUp
             case withoutTrackers
             case siteIsMajorTracker
             case siteOwnedByMajorTracker
@@ -98,20 +100,11 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         }
         // swiftlint:enable nesting
 
-        private static func afterSearch(followUpWithWebsiteSearch: Bool) -> BrowsingSpec {
-            let specType = followUpWithWebsiteSearch ? SpecType.afterSearchWithWebsitesFollowUp : SpecType.afterSearch
-            return BrowsingSpec(
-                message: UserText.daxDialogBrowsingAfterSearch,
-                cta: UserText.daxDialogBrowsingAfterSearchCTA,
-                highlightAddressBar: false,
-                pixelName: .daxDialogsSerp,
-                type: specType
-            )
-        }
-
-        static let afterSearch = afterSearch(followUpWithWebsiteSearch: false)
-
-        static let afterSearchWithWebsitesFollowUp = afterSearch(followUpWithWebsiteSearch: true)
+        static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
+                                              cta: UserText.daxDialogBrowsingAfterSearchCTA,
+                                              highlightAddressBar: false,
+                                              pixelName: .daxDialogsSerp,
+                                              type: .afterSearch)
 
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
@@ -137,10 +130,13 @@ final class DaxDialogs: NewTabDialogSpecProvider {
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
-        
+
+        // TODO: Change pixel name
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsWithoutTrackersFollowUp, type: .final)
+
         let message: String
         let cta: String
-        let highlightAddressBar: Bool
+        fileprivate(set) var highlightAddressBar: Bool
         let pixelName: Pixel.Event
         let type: SpecType
         
@@ -219,7 +215,21 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         || settings.browsingWithoutTrackersShown
         || settings.browsingMajorTrackingSiteShown
     }
-    
+
+    private var finalDaxDialogSeen: Bool {
+        settings.browsingFinalDialogShown
+    }
+
+    private var visitedSiteAndFireButtonSeen: Bool {
+        fireButtonBrowsingMessageSeenOrExpired &&
+        firstBrowsingMessageSeen
+    }
+
+    private var shouldDisplayFinalContextualBrowsingDialog: Bool {
+        !finalDaxDialogSeen &&
+        visitedSiteAndFireButtonSeen
+    }
+
     private var fireButtonBrowsingMessageSeenOrExpired: Bool {
         return settings.fireButtonEducationShownOrExpired
     }
@@ -299,7 +309,12 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         settings.fireButtonEducationShownOrExpired = true
         return ActionSheetSpec.fireButtonEducation
     }
-    
+
+    func setFireEducationMessageSeen() {
+        guard isNewOnboarding else { return }
+        settings.fireButtonEducationShownOrExpired = true
+    }
+
     func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
         
@@ -323,7 +338,7 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         if privacyInfo.url.isDuckDuckGoSearch {
             return searchMessage()
         }
-        
+
         // won't be shown if owned by major tracker message has already been shown
         if isFacebookOrGoogle(privacyInfo.url) {
             return majorTrackerMessage(host)
@@ -343,35 +358,43 @@ final class DaxDialogs: NewTabDialogSpecProvider {
     }
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+        
+        func hasTrackers(host: String) -> Bool {
+            isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
+        }
+
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
 
-        if privacyInfo.url.isDuckDuckGoSearch {
-            // If user already visited a site, show after search dialog but don't follow up by suggesting to visit a site.
-            // Otherwise show after search dialog and follow up by suggesting to visit a site.
-            if nonDDGBrowsingMessageSeen {
-                return searchMessage()
-            } else {
-                return searchMessageWithWebsitesFollowUp()
-            }
+        if privacyInfo.url.isDuckDuckGoSearch && !settings.browsingAfterSearchShown {
+            return searchMessage()
         }
 
         // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(privacyInfo.url) {
+        if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
             return majorTrackerMessage(host)
         }
 
         // won't be shown if major tracker message has already been shown
-        if let owner = isOwnedByFacebookOrGoogle(host) {
+        if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
             return majorTrackerOwnerMessage(host, owner)
         }
 
-        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo) {
+        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {
             return trackersBlockedMessage(entityNames)
         }
 
-        // only shown if first time on a non-ddg page and none of the non-ddg messages shown
-        return noTrackersMessage()
+        // if non duck duck go search and no trackers found and no tracker message already shown, show no trackers message
+        if !settings.browsingWithoutTrackersShown && !privacyInfo.url.isDuckDuckGoSearch && !hasTrackers(host: host) {
+            return noTrackersMessage()
+        }
+
+        // If the user visited a website and saw the fire dialog
+        if shouldDisplayFinalContextualBrowsingDialog {
+            return finalMessage()
+        }
+
+        return nil
     }
 
     func nextHomeScreenMessage() -> HomeScreenSpec? {
@@ -422,7 +445,9 @@ final class DaxDialogs: NewTabDialogSpecProvider {
             return .subsequent
         }
 
-        if firstBrowsingMessageSeen {
+        if firstBrowsingMessageSeen && !finalDaxDialogSeen {
+            // Ensure we don't show the final dialog again in context when the user sees it and vice-versa.
+            settings.browsingFinalDialogShown = true
             return .final
         }
 
@@ -462,30 +487,36 @@ final class DaxDialogs: NewTabDialogSpecProvider {
         return BrowsingSpec.afterSearch
     }
 
-    private func searchMessageWithWebsitesFollowUp() -> BrowsingSpec? {
-        guard !settings.browsingAfterSearchShown else { return nil }
-        settings.browsingAfterSearchShown = true
-        return BrowsingSpec.afterSearchWithWebsitesFollowUp
+    private func finalMessage() -> BrowsingSpec? {
+        guard !finalDaxDialogSeen else { return nil }
+        settings.browsingFinalDialogShown = true
+        return BrowsingSpec.final
     }
 
     private func trackersBlockedMessage(_ entitiesBlocked: [String]) -> BrowsingSpec? {
         guard !settings.browsingWithTrackersShown else { return nil }
 
+        var spec: BrowsingSpec?
         switch entitiesBlocked.count {
 
         case 0:
-            return nil
-            
+            spec = nil
+
         case 1:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
-            
+            spec = BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
+
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
+            spec = BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
                                                            entitiesBlocked[0],
                                                            entitiesBlocked[1])
         }
+        // New Contextual onboarding doesn't highlight the address bar. This checks prevents to cancel the lottie animation.
+        if isNewOnboarding {
+            spec?.highlightAddressBar = false
+        }
+        return spec
     }
  
     private func blockedEntityNames(_ trackerInfo: TrackerInfo) -> [String]? {

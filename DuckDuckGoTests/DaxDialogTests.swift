@@ -361,20 +361,6 @@ final class DaxDialog: XCTestCase {
         }
     }
 
-    func testWhenExperimentGroupAndURLIsDuckDuckGoSearchAndHasNotVisitedWebsiteThenSpecTypeSearchWithWebsiteFollowUpIsReturned() throws {
-        // GIVEN
-        let isExperiment = true
-        let settings = InMemoryDaxDialogsSettings()
-        let mockVariantManager = MockVariantManager(isSupportedReturns: isExperiment)
-        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
-
-        // WHEN
-        let result = try XCTUnwrap(sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
-
-        // THEN
-        XCTAssertEqual(result.type, .afterSearchWithWebsitesFollowUp)
-    }
-
     func testWhenExperimentGroup_AndFireButtonSeen_AndFinalDialogNotSeen_AndSearchDone_ThenFinalBrowsingSpecIsReturned() throws {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()

@@ -74,7 +74,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         switch spec.type {
         case .withMultipleTrackers, .withOneTracker:
             settings.browsingWithTrackersShown = flag
-        case .afterSearch, .afterSearchWithWebsitesFollowUp:
+        case .afterSearch:
             settings.browsingAfterSearchShown = flag
         case .withoutTrackers:
             settings.browsingWithoutTrackersShown = flag
@@ -91,7 +91,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         enum SpecType {
             case afterSearch
-            case afterSearchWithWebsitesFollowUp
             case withoutTrackers
             case siteIsMajorTracker
             case siteOwnedByMajorTracker
@@ -101,20 +100,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         }
         // swiftlint:enable nesting
 
-        private static func afterSearch(followUpWithWebsiteSearch: Bool) -> BrowsingSpec {
-            let specType = followUpWithWebsiteSearch ? SpecType.afterSearchWithWebsitesFollowUp : SpecType.afterSearch
-            return BrowsingSpec(
-                message: UserText.daxDialogBrowsingAfterSearch,
-                cta: UserText.daxDialogBrowsingAfterSearchCTA,
-                highlightAddressBar: false,
-                pixelName: .daxDialogsSerp,
-                type: specType
-            )
-        }
-
-        static let afterSearch = afterSearch(followUpWithWebsiteSearch: false)
-
-        static let afterSearchWithWebsitesFollowUp = afterSearch(followUpWithWebsiteSearch: true)
+        static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
+                                              cta: UserText.daxDialogBrowsingAfterSearchCTA,
+                                              highlightAddressBar: false,
+                                              pixelName: .daxDialogsSerp,
+                                              type: .afterSearch)
 
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
@@ -377,13 +367,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         }
 
         if privacyInfo.url.isDuckDuckGoSearch {
-            // If user already visited a site, show after search dialog but don't follow up by suggesting to visit a site.
-            // Otherwise show after search dialog and follow up by suggesting to visit a site.
-            if nonDDGBrowsingMessageSeen {
-                return searchMessage()
-            } else {
-                return searchMessageWithWebsitesFollowUp()
-            }
+            return searchMessage()
         }
 
         // won't be shown if owned by major tracker message has already been shown
@@ -492,12 +476,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         guard !settings.browsingAfterSearchShown else { return nil }
         settings.browsingAfterSearchShown = true
         return BrowsingSpec.afterSearch
-    }
-
-    private func searchMessageWithWebsitesFollowUp() -> BrowsingSpec? {
-        guard !settings.browsingAfterSearchShown else { return nil }
-        settings.browsingAfterSearchShown = true
-        return BrowsingSpec.afterSearchWithWebsitesFollowUp
     }
 
     private func finalMessage() -> BrowsingSpec? {

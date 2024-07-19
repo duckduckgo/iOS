@@ -36,6 +36,10 @@ protocol NewTabDialogSpecProvider {
     func dismiss()
 }
 
+protocol ContextualOnboardingLogic {
+    func setFireEducationMessageSeen()
+}
+
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
@@ -44,7 +48,7 @@ extension ContentBlockerRulesManager: EntityProviding {
     
 }
 
-final class DaxDialogs: NewTabDialogSpecProvider {
+final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     
     struct MajorTrackers {
         

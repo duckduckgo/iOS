@@ -197,7 +197,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpIsConnectedStatePublishers() {
-        statusObserver.publisher.sink { [weak self] status in
+        statusObserver.publisher.receive(on: DispatchQueue.main).sink { [weak self] status in
             self?.updateViewModel(withStatus: status)
         }
         .store(in: &cancellables)
@@ -455,9 +455,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .seconds(65) // TODO: Change to 20 mins, 1 min is only used for testing
+        let defaultDuration: TimeInterval = .minutes(1) // TODO: Change to 20 mins, 1 min is only used for testing
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
+        NotificationCenter.default.post(name: .VPNSnoozeRefreshed, object: nil)
     }
 
     @MainActor
@@ -468,6 +469,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.cancelSnooze)
+        NotificationCenter.default.post(name: .VPNSnoozeRefreshed, object: nil)
     }
 
     private class func titleText(connected isConnected: Bool) -> String {
@@ -507,7 +509,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         case .connecting, .reasserting:
             return UserText.netPStatusConnecting
         case .snoozing:
-            return "Paused"
+            return "Snoozed"
         }
     }
 

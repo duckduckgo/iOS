@@ -346,7 +346,10 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-                
+        
+        // Register as DuckPlayer host View
+        duckPlayerNavigationHandler.duckPlayer.setHostViewController(self)
+        
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }

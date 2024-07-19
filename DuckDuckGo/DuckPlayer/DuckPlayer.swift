@@ -81,6 +81,7 @@ public enum DuckPlayerReferrer {
 protocol DuckPlayerProtocol {
     
     var settings: DuckPlayerSettingsProtocol { get }
+    var hostView: UIViewController? { get }
     
     init(settings: DuckPlayerSettingsProtocol)
 
@@ -92,6 +93,8 @@ protocol DuckPlayerProtocol {
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable?
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    func setHostViewController(_ vc: UIViewController)
 }
 
 final class DuckPlayer: DuckPlayerProtocol {
@@ -100,9 +103,16 @@ final class DuckPlayer: DuckPlayerProtocol {
     static let commonName = "Duck Player"
         
     private(set) var settings: DuckPlayerSettingsProtocol
+    private(set) var hostView: UIViewController?
     
     init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
+    }
+    
+    // Sets a presenting VC, so DuckPlayer can present the
+    // info sheet directly
+    public func setHostViewController(_ vc: UIViewController) {
+        hostView = vc
     }
     
     // MARK: - Common Message Handlers
@@ -147,8 +157,14 @@ final class DuckPlayer: DuckPlayerProtocol {
         return nil
     }
     
+    @MainActor
+    public func presentDuckPlayerInfo() {
+        guard let hostView else { return }
+        DuckPlayerModalPresenter().presentDuckPlayerFeatureModal(on: hostView)
+    }
+    
     public func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable? {
-        // NOOP, Just prevent the assertion
+        await presentDuckPlayerInfo()
         return nil
     }
 

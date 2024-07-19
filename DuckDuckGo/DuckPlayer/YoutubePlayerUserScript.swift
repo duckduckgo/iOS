@@ -35,6 +35,8 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let setUserValues = "setUserValues"
         static let getUserValues = "getUserValues"
         static let initialSetup = "initialSetup"
+        static let openSettings = "openSettings"
+        static let openInfo = "openInfo"
     }
     
     init(duckPlayer: DuckPlayerProtocol) {
@@ -73,6 +75,10 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
             return duckPlayer.setUserValues
         case Handlers.initialSetup:
             return duckPlayer.initialSetupPlayer
+        case Handlers.openSettings:
+            return duckPlayer.openDuckPlayerSettings
+        case Handlers.openInfo:
+            return duckPlayer.openDuckPlayerInfo
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

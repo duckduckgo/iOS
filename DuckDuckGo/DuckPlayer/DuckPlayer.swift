@@ -81,15 +81,20 @@ public enum DuckPlayerReferrer {
 protocol DuckPlayerProtocol {
     
     var settings: DuckPlayerSettingsProtocol { get }
+    var hostView: UIViewController? { get }
     
     init(settings: DuckPlayerSettingsProtocol)
 
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func openVideoInDuckPlayer(url: URL, webView: WKWebView)
+    func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable?
+    func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> Encodable?
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    func setHostViewController(_ vc: UIViewController)
 }
 
 final class DuckPlayer: DuckPlayerProtocol {
@@ -98,9 +103,16 @@ final class DuckPlayer: DuckPlayerProtocol {
     static let commonName = "Duck Player"
         
     private(set) var settings: DuckPlayerSettingsProtocol
+    private(set) var hostView: UIViewController?
     
     init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
+    }
+    
+    // Sets a presenting VC, so DuckPlayer can present the
+    // info sheet directly
+    public func setHostViewController(_ vc: UIViewController) {
+        hostView = vc
     }
     
     // MARK: - Common Message Handlers
@@ -134,6 +146,26 @@ final class DuckPlayer: DuckPlayerProtocol {
     public func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable? {
         let webView = message.webView
         return await self.encodedPlayerSettings(with: webView)
+    }
+    
+    public func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable? {
+        NotificationCenter.default.post(
+            name: .settingsDeepLinkNotification,
+            object: SettingsViewModel.SettingsDeepLinkSection.duckPlayer,
+            userInfo: nil
+        )
+        return nil
+    }
+    
+    @MainActor
+    public func presentDuckPlayerInfo() {
+        guard let hostView else { return }
+        DuckPlayerModalPresenter().presentDuckPlayerFeatureModal(on: hostView)
+    }
+    
+    public func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable? {
+        await presentDuckPlayerInfo()
+        return nil
     }
 
     private func encodeUserValues() -> UserValues {

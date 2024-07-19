@@ -97,13 +97,17 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
             os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-            Pixel.fire(pixel: .remoteMessageShown,
-                       withAdditionalParameters: additionalParameters(for: remoteMessage.id))
+            if remoteMessage.isMetricsEnabled {
+                Pixel.fire(pixel: .remoteMessageShown,
+                           withAdditionalParameters: additionalParameters(for: remoteMessage.id))
+            }
 
             if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
                 os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
-                Pixel.fire(pixel: .remoteMessageShownUnique,
-                           withAdditionalParameters: additionalParameters(for: remoteMessage.id))
+                if remoteMessage.isMetricsEnabled {
+                    Pixel.fire(pixel: .remoteMessageShownUnique,
+                               withAdditionalParameters: additionalParameters(for: remoteMessage.id))
+                }
                 remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
             }
 

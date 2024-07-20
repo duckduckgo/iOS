@@ -40,7 +40,7 @@ struct NetworkProtectionStatusView: View {
             toggle()
             locationDetails()
 
-            if statusModel.isNetPEnabled && statusModel.hasActiveConnection && !statusModel.isSnoozing && statusModel.ipAddress != nil {
+            if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing && statusModel.ipAddress != nil {
                 connectionDetails()
             }
 
@@ -50,7 +50,7 @@ struct NetworkProtectionStatusView: View {
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
             $0
-                .animation(.default, value: statusModel.hasActiveConnection)
+                .animation(.default, value: statusModel.hasServerInfo)
                 .animation(.default, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
@@ -140,8 +140,8 @@ struct NetworkProtectionStatusView: View {
                 }
             }
             .disabled(statusModel.snoozeRequestPending)
-        } else if statusModel.hasActiveConnection {
-            Button("Pause for 5 minutes") {
+        } else if statusModel.hasServerInfo {
+            Button("Snooze for 1 minute") {
                 Task {
                     await statusModel.startSnooze()
                 }

@@ -493,12 +493,13 @@ public struct UserText {
     static let netPStatusDisconnected = NSLocalizedString("network.protection.status.disconnected", value: "Not connected", comment: "The label for the NetP VPN when disconnected")
     static let netPStatusDisconnecting = NSLocalizedString("network.protection.status.disconnecting", value: "Disconnecting...", comment: "The label for the NetP VPN when disconnecting")
     static let netPStatusConnecting = NSLocalizedString("network.protection.status.connecting", value: "Connecting...", comment: "The label for the NetP VPN when connecting")
+    static let netPStatusPaused = NSLocalizedString("network.protection.status.paused", value: "Paused", comment: "The label for the NetP VPN when paused")
     static func netPStatusConnected(since timeLapsedString: String) -> String {
         let localized = NSLocalizedString("network.protection.status.connected.format", value: "Connected · %@", comment: "The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string")
         return String(format: localized, timeLapsedString)
     }
-    static func netPStatusPaused(until timeLapsedString: String) -> String {
-        let localized = NSLocalizedString("network.protection.status.paused.format", value: "Paused, %@ remaining", comment: "The label for when NetP VPN is paused plus the length of time connected as a 'X min remaining' string")
+    static func netPStatusSnoozing(until timeLapsedString: String) -> String {
+        let localized = NSLocalizedString("network.protection.status.snoozing.format", value: "Snoozing, %@ remaining", comment: "The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00'")
         return String(format: localized, timeLapsedString)
     }
     static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
@@ -900,7 +901,16 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let networkProtectionConnectionFailureNotificationBody = NSLocalizedString("network.protection.failure.notification.body", value: "Network Protection failed to connect. Please try again later.", comment: "The body of the notification shown when Network Protection fails to reconnect")
     static let networkProtectionEntitlementExpiredNotificationBody = NSLocalizedString("network.protection.entitlement.expired.notification.body", value: "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "The body of the notification when Privacy Pro subscription expired")
 
-    // MARK: Settings Screeen
+    static func networkProtectionSnoozedNotificationBody(duration: String) -> String {
+        let localized = NSLocalizedString(
+            "network.protection.snoozed.notification.body",
+            value: "VPN snoozed for %@",
+            comment: "The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes)"
+        )
+        return String(format: localized, duration)
+    }
+
+    // MARK: Settings Screen
 
     public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
     public static let settingsOn = NSLocalizedString("settings.on", value: "On", comment: "Label describing a feature which is turned on")

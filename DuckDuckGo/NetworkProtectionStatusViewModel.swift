@@ -82,17 +82,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private static var snoozeRemainingDateFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute,]
+        formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = .pad
-        formatter.unitsStyle = .brief
-        return formatter
-    }()
-
-    private static var preciseSnoozeRemainingDateFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.second]
-        formatter.zeroFormattingBehavior = .pad
-        formatter.unitsStyle = .brief
         return formatter
     }()
 
@@ -148,7 +139,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Connection Details
 
-    @Published public var hasActiveConnection: Bool = false
+    @Published public var hasServerInfo: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
     @Published public var dnsSettings: NetworkProtectionDNSSettings
@@ -252,6 +243,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                         break
                     }
 
+                    statusUpdatePublishers = [Just(Self.snoozeDurationRemainingMessage(for: endDate, currentDate: Date())).eraseToAnyPublisher()]
                     statusUpdatePublishers.append(Self.timedSnoozeDurationRemainingMessagePublisher(forSnoozeEndDate: endDate))
                 default:
                     break
@@ -311,7 +303,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 $0.serverAddress != nil || $0.serverLocation != nil
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.hasActiveConnection, onWeaklyHeld: self)
+            .assign(to: \.hasServerInfo, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -455,10 +447,9 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .minutes(1) // TODO: Change to 20 mins, 1 min is only used for testing
+        let defaultDuration: TimeInterval = .minutes(1) + .seconds(1) // TODO: Change to 20 mins, 1 min is only used for testing
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
-        NotificationCenter.default.post(name: .VPNSnoozeRefreshed, object: nil)
     }
 
     @MainActor
@@ -469,7 +460,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.cancelSnooze)
-        NotificationCenter.default.post(name: .VPNSnoozeRefreshed, object: nil)
     }
 
     private class func titleText(connected isConnected: Bool) -> String {
@@ -509,7 +499,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         case .connecting, .reasserting:
             return UserText.netPStatusConnecting
         case .snoozing:
-            return "Snoozed"
+            return UserText.netPStatusPaused
         }
     }
 
@@ -525,14 +515,9 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
 
         let timeRemainingInterval = snoozeEndDate.timeIntervalSince(currentDate)
+        let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0:00"
 
-        if timeRemainingInterval < TimeInterval.minutes(1) {
-            let timeRemaining = Self.preciseSnoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0 sec"
-            return UserText.netPStatusPaused(until: timeRemaining)
-        } else {
-            let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0 min"
-            return UserText.netPStatusPaused(until: timeRemaining)
-        }
+        return UserText.netPStatusSnoozing(until: timeRemaining)
     }
 
     private func resetConnectionInformation() {

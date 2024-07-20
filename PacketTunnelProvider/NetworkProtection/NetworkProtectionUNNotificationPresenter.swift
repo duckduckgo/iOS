@@ -107,7 +107,10 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
     }
 
     func showSnoozingNotification(duration: TimeInterval) {
-        let content = notificationContent(body: "VPN is snoozing")
+        let interval = Int(duration)
+        let minutes = (interval / 60) % 60
+        let durationSuffix = (minutes == 1) ? "minute" : "minutes"
+        let content = notificationContent(body: UserText.networkProtectionSnoozedNotificationBody(duration: "\(minutes) \(durationSuffix)"))
         showNotification(.connection, content)
     }
 

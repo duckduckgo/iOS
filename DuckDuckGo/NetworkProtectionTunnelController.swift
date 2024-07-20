@@ -40,6 +40,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
+    private let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
     private var cancellables = Set<AnyCancellable>()
@@ -121,6 +122,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
+        subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
         subscribeToConfigurationChanges()
     }
@@ -369,6 +371,14 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             }
 
         }
+    }
+
+    private func subscribeToSnoozeTimingChanges() {
+        snoozeTimingStore.snoozeTimingChangedSubject
+            .sink {
+                NotificationCenter.default.post(name: .VPNSnoozeRefreshed, object: nil)
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - On Demand

@@ -10,6 +10,9 @@
 /* The title of the notifications shown from Network Protection */
 "network.protection.notification.title" = "DuckDuckGo";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+
 /* The body of the notification shown when Network Protection reconnects successfully */
 "network.protection.success.notification.body" = "Network Protection is On. Your location and online activity are protected.";
 

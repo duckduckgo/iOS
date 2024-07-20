@@ -464,7 +464,7 @@ extension SettingsViewModel {
             case .connected:
                 self.state.networkProtection.status = UserText.netPCellConnected
             case .snoozing:
-                self.state.networkProtection.status = UserText.netPCellPaused
+                self.state.networkProtection.status = UserText.netPCellSnoozing
             default:
                 self.state.networkProtection.status = UserText.netPCellDisconnected
             }

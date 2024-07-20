@@ -521,7 +521,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     private static func snoozeDurationRemainingMessage(for snoozeEndDate: Date, currentDate: Date = Date()) -> String {
         if snoozeEndDate <= currentDate {
-            return UserText.netPCellPaused
+            return UserText.netPCellSnoozing
         }
 
         let timeRemainingInterval = snoozeEndDate.timeIntervalSince(currentDate)

@@ -106,6 +106,11 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         showNotification(.connection, content)
     }
 
+    func showSnoozingNotification(duration: TimeInterval) {
+        let content = notificationContent(body: "VPN is snoozing")
+        showNotification(.connection, content)
+    }
+
     func showSupersededNotification() {
     }
 

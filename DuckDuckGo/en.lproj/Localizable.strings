@@ -1390,8 +1390,8 @@ https://duckduckgo.com/mac";
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
-/* String indicating NetP is paused when viewed from the settings screen */
-"netP.cell.paused" = "Paused";
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "Snoozing";
 
 /* Title for the DuckDuckGo VPN feature in settings */
 "netP.settings.title" = "VPN";

@@ -40,7 +40,7 @@ struct NetworkProtectionStatusView: View {
             toggle()
             locationDetails()
 
-            if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing && statusModel.ipAddress != nil {
+            if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing {
                 connectionDetails()
             }
 

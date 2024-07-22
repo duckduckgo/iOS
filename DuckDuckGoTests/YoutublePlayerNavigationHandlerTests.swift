@@ -239,4 +239,82 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         
         XCTAssertEqual(webView.url?.absoluteString, "duck://player/abc123?t=10s")
     }
+    
+    // MARK: Handle Navigation Tests
+    
+    @MainActor
+    func testAgeRestrictedVideoShouldNotBeHandled() {
+        
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s&embeds_referring_euri=somevalue")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+        XCTAssertEqual(webView.url, nil)
+        
+    }
+    
+    @MainActor
+    func testHandleNavigationLoadsDuckPlayer() {
+        
+        let link = URL(string: "duck://player/12345")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link))
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            XCTAssertEqual(self.webView.url?.absoluteString, "https://www.youtube-nocookie.com/embed/12345")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    
+    }
+    
+    @MainActor
+    func testHandleReloadForDuckPlayerVideo() {
+        let duckPlayerURL = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+                
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        handler.handleReload(webView: mockWebView)
+        
+        if let loadedRequest = mockWebView.lastLoadedRequest {
+            XCTAssertEqual(loadedRequest.url?.scheme, "duck")
+            XCTAssertEqual(loadedRequest.url?.host, "player")
+            XCTAssertEqual(loadedRequest.url?.path, "/abc123")
+            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
+        }
+    }
+    
+    @MainActor
+    func testAttach() {
+        let duckPlayerURL = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+                
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        handler.handleAttach(webView: mockWebView)
+        
+        if let loadedRequest = mockWebView.lastLoadedRequest {
+            XCTAssertEqual(loadedRequest.url?.scheme, "duck")
+            XCTAssertEqual(loadedRequest.url?.host, "player")
+            XCTAssertEqual(loadedRequest.url?.path, "/abc123")
+            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
+        }
+    }
+    
+
 }

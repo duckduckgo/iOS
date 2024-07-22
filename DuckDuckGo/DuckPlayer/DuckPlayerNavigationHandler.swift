@@ -191,12 +191,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             }
         }
         
-        // DuckPlayer is disabled, so we redirect to the video in YouTube
-        if duckPlayer.settings.mode == .disabled {
-            os_log("DP: is Disabled. We should load original video for %s", log: .duckPlayerLog, type: .debug)
-            handleURLChange(url: url, webView: webView)
-            return
-        }
     }
     
     // DecidePolicyFor handler to redirect relevant requests
@@ -212,7 +206,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
         if let (videoID, _) = url.youtubeVideoParams,
-            videoID == lastHandledVideoID {
+           videoID == lastHandledVideoID,
+            !url.hasWatchInYoutubeQueryParameter {
             os_log("DP: DecidePolicy: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
             completion(.cancel)
             return
@@ -254,7 +249,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleGoBack(webView: WKWebView) {
         
+        os_log("DP: Handling Back Navigation", log: .duckPlayerLog, type: .debug)
+        
         lastHandledVideoID = nil
+        webView.stopLoading()
         
         // Check if the back list has items
         guard !webView.backForwardList.backList.isEmpty else {
@@ -273,8 +271,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
         if let nonYoutubeItem = nonYoutubeItem {
+            os_log("DP: Navigating back to %s", log: .duckPlayerLog, type: .debug, nonYoutubeItem.url.absoluteString)
             webView.go(to: nonYoutubeItem)
         } else {
+            os_log("DP: Navigating back to previous page", log: .duckPlayerLog, type: .debug)
             webView.goBack()
         }
     }

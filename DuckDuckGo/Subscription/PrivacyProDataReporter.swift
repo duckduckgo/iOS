@@ -67,7 +67,7 @@ final class PrivacyProDataReporter {
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
     private static let longTermUserThreshold = 30
-    private static let autofillUserThreshold = 5
+    private static let autofillUserThreshold = 10
     private static let openTabsCountThreshold = 3
     private static let searchCountThreshold = 50
 

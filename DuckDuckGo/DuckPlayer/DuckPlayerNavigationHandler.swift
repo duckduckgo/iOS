@@ -27,7 +27,6 @@ final class DuckPlayerNavigationHandler: NSObject {
     
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
-    var isDuckPlayerTemporarilyDisabled = false
     var lastHandledVideoID: String?
     
     private struct Constants {
@@ -96,18 +95,35 @@ final class DuckPlayerNavigationHandler: NSObject {
         performNavigation(duckPlayerRequest, responseHTML: html, webView: webView)
     }
     
-    func hasEmbedsReferringEuriParameter(urlString: String) -> Bool {
-        guard let url = URL(string: urlString),
-              let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let queryItems = components.queryItems else {
-            return false
-        }
+    // Handle URL changes not triggered via Omnibar
+    // such as changes triggered via JS
+    @MainActor
+    private func handleURLChange(url: URL?, webView: WKWebView) {
 
-        for queryItem in queryItems where queryItem.name == Constants.urlInternalReferrer {
-            return true
+        guard let url else { return }
+        
+        if let (videoID, _) = url.youtubeVideoParams,
+            videoID == lastHandledVideoID {
+            os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            return
         }
-
-        return false
+        
+        // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
+         // These should not be handled by DuckPlayer
+        if url.isYoutubeVideo,
+            url.hasWatchInYoutubeQueryParameter {
+                 return
+         }
+                
+        if url.isYoutubeVideo,
+            !url.isDuckPlayer,
+            let (videoID, timestamp) = url.youtubeVideoParams,
+            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            
+            os_log("DP: Handling URL change: %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            webView.load(URLRequest(url: URL.duckPlayer(videoID, timestamp: timestamp)))
+            lastHandledVideoID = videoID
+        }
     }
     
 }
@@ -126,7 +142,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
         // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
-            hasEmbedsReferringEuriParameter(urlString: url.absoluteString) {
+           url.hasWatchInYoutubeQueryParameter {
                 return
         }
         
@@ -139,10 +155,9 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                let queryItems = urlComponents?.queryItems {
                 
                 if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
-                   let id = videoParameterItem.value {
-                        // Disable DP temporarily
-                        isDuckPlayerTemporarilyDisabled = true
-                        handleURLChange(url: URL.youtube(id, timestamp: nil), webView: webView)
+                   let id = videoParameterItem.value,
+                    let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+                        webView.load(URLRequest(url: newURL))
                         return
                 }
             }
@@ -164,7 +179,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // If DuckPlayer is Enabled or in ask mode, render the video
         if url.isDuckURLScheme,
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
-            !isDuckPlayerTemporarilyDisabled {
+            !url.hasWatchInYoutubeQueryParameter {
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
             if #available(iOS 15.0, *) {
                 os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
@@ -181,47 +196,6 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             os_log("DP: is Disabled. We should load original video for %s", log: .duckPlayerLog, type: .debug)
             handleURLChange(url: url, webView: webView)
             return
-        }
-    }
-    
-    // Handle URL changes not triggered via Omnibar
-    // such as changes triggered via JS
-    @MainActor
-    func handleURLChange(url: URL?, webView: WKWebView) {
-
-        guard let url else { return }
-        
-        if let (videoID, _) = url.youtubeVideoParams,
-            videoID == lastHandledVideoID {
-            os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
-            return
-        }
-        
-        // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
-         // These should not be handled by DuckPlayer
-        if url.isYoutubeVideo,
-             hasEmbedsReferringEuriParameter(urlString: url.absoluteString) {
-                 return
-         }
-                
-        if url.isYoutubeVideo,
-            !url.isDuckPlayer,
-            let (videoID, timestamp) = url.youtubeVideoParams,
-            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            
-            os_log("DP: Handling URL change: %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
-            
-            // IF DP is temporarily disabled, load Youtube website
-            if isDuckPlayerTemporarilyDisabled {
-                os_log("DP: Duckplayer is temporarily disabled.  Opening Youtube", log: .duckPlayerLog, type: .debug)
-                webView.load(URLRequest(url: URL.youtube(videoID, timestamp: timestamp)))
-                self.isDuckPlayerTemporarilyDisabled = false
-                lastHandledVideoID = videoID
-            } else {
-                os_log("DP: Duckplayer is NOT disabled.  Opening DuckPlayer", log: .duckPlayerLog, type: .debug)
-                webView.load(URLRequest(url: URL.duckPlayer(videoID, timestamp: timestamp)))
-                lastHandledVideoID = videoID
-            }
         }
     }
     
@@ -247,7 +221,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
          // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
          // These should not be handled by DuckPlayer
          if url.isYoutubeVideo,
-             hasEmbedsReferringEuriParameter(urlString: url.absoluteString) {
+            url.hasWatchInYoutubeQueryParameter {
                 completion(.allow)
                 return
          }

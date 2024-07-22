@@ -32,6 +32,8 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     var mockNavigationDelegate: MockWKNavigationDelegate!
     var mockAppSettings: AppSettingsMock!
     var mockPrivacyConfig: PrivacyConfigurationManagerMock!
+    var playerSettings: MockDuckPlayerSettings!
+    var player: MockDuckPlayer!
     
     override func setUp() {
         super.setUp()
@@ -92,226 +94,149 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         XCTAssertEqual(html, expectedHtml)
     }
     
-    // MARK: handleURLChange tests
-    @MainActor
-    func testHandleURLChangeDuckPlayerEnabled() {
-        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        
-        handler.handleURLChange(url: youtubeURL, webView: mockWebView)
-        
-        XCTAssertNotNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
-        
-        if let loadedRequest = mockWebView.lastLoadedRequest {
-            XCTAssertEqual(loadedRequest.url?.scheme, "duck")
-            XCTAssertEqual(loadedRequest.url?.host, "player")
-            XCTAssertEqual(loadedRequest.url?.path, "/abc123")
-            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
-        }
-        
-    }
+    
+   // MARK: - Decide policyFor Tests
     
     @MainActor
-    func testHandleURLChangeDuckPlayerDisabled() {
-        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
+    func testDecidePolicyForVideoWasAlreadyHandled() {
         
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.disabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        
-        handler.handleURLChange(url: youtubeURL, webView: mockWebView)
-        
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request NOT to be loaded")
-        
-    }
-    
-    @MainActor
-    func testHandleURLChangeDuckPlayerTemporarilyDisabled() {
-        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        
-        handler.isDuckPlayerTemporarilyDisabled = true
-        
-        handler.handleURLChange(url: youtubeURL, webView: mockWebView)
-        
-        XCTAssertNotNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
-        
-        if let loadedRequest = mockWebView.lastLoadedRequest {
-            XCTAssertEqual(loadedRequest.url?.scheme, "https")
-            XCTAssertEqual(loadedRequest.url?.host, "m.youtube.com")
-            XCTAssertEqual(loadedRequest.url?.path, "/watch")
-            XCTAssertEqual(loadedRequest.url?.query?.contains("v=abc123"), true)
-            XCTAssertEqual(loadedRequest.url?.query?.contains("t=10s"), true)
-        }
-    }
-    
-    @MainActor
-    func testHandleURLChangeNonYouTubeURL() {
-        let nonYouTubeURL = URL(string: "https://www.google.com")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        
-        handler.handleURLChange(url: nonYouTubeURL, webView: mockWebView)
-        
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request NOT to be loaded")
-    }
-    
-    @MainActor
-    func testHandleNavigationOpenInYoutubeLink() {
-        let duckURL = URL(string: "duck://player/openInYoutube?v=12345")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: duckURL))
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        
-        handler.handleNavigation(navigationAction, webView: mockWebView)
-        
-        XCTAssertTrue(handler.isDuckPlayerTemporarilyDisabled, "Expected DuckPlayer to be temporarily disabled")
-        XCTAssertNotNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
-        
-        if let loadedRequest = mockWebView.lastLoadedRequest {
-            XCTAssertEqual(loadedRequest.url?.scheme, "https")
-            XCTAssertEqual(loadedRequest.url?.host, "m.youtube.com")
-            XCTAssertEqual(loadedRequest.url?.path, "/watch")
-            XCTAssertEqual(loadedRequest.url?.query?.contains("v=12345"), true)
-        }
-    }
-    
-    @MainActor
-    func testHandleNavigationDuckPlayerEnabledAlreadyInDuckPlayer() {
-        let duckPlayerURL = URL(string: "duck://player/CYTASDSD")!
-        
-        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL))
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings)
-        player.settings.setMode(.enabled)
-        
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-        handler.handleNavigation(navigationAction, webView: mockWebView)
-        
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
-        
-    }
-    
-    
-    @MainActor
-    func testHandleNavigationDuckPlayerDisabled() {
-        let duckPlayerURL = URL(string: "duck://player/CUIUIIUI")!
-        
-        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL))
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.disabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-                
-        handler.handleNavigation(navigationAction, webView: mockWebView)
-        
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
-        
-    }
-    
-    @MainActor
-    func testHandleDecidePolicyForVideoJustHandled() {
         let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
         let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
         let player = MockDuckPlayer(settings: playerSettings)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        var navigationPolicy: WKNavigationActionPolicy?
         
-        // Call handleDecidePolicyFor twice with the same URL to simulate handling the same video twice
-        handler.handleDecidePolicyFor(navigationAction, webView: mockWebView)
+        handler.lastHandledVideoID = "abc123"
         
-        // Wait for 0.8 seconds to simulate the time delay
-        let expectation = self.expectation(description: "Wait for 0.8 seconds")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-            handler.handleDecidePolicyFor(navigationAction, webView: self.mockWebView)
+        handler.handleDecidePolicyFor(navigationAction, completion: { policy in
+            navigationPolicy = policy
             expectation.fulfill()
-        }
+        }, webView: mockWebView)
         
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
         
-        // Verify that the second call did not load a new request
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected no new request to be loaded since video was just handled")
+        XCTAssertEqual(navigationPolicy, .cancel, "Expected navigation policy to be .cancel")
+
     }
     
     @MainActor
-    func testHandleDecidePolicyForTransformYoutubeURL() {
+    func testDecidePolicyForVideosThatShouldLoadInYoutube() {
         
-        let youtubeURL = URL(string: "https://m.youtube.com/watch?v=abc123&t=10s")!
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s&embeds_referring_euri=somevalue")!
         let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.enabled)
         let player = MockDuckPlayer(settings: playerSettings)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        var navigationPolicy: WKNavigationActionPolicy?
         
-        handler.handleDecidePolicyFor(navigationAction, webView: mockWebView)
+        handler.handleDecidePolicyFor(navigationAction, completion: { policy in
+            navigationPolicy = policy
+            expectation.fulfill()
+        }, webView: mockWebView)
         
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request to be loaded")
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertEqual(navigationPolicy, .allow, "Expected navigation policy to be .allow")
+
+    }
+    
+    @MainActor
+    func testDecidePolicyForVideosThatShouldLoadInDuckPlayer() {
+        
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        var navigationPolicy: WKNavigationActionPolicy?
+        
+        handler.handleDecidePolicyFor(navigationAction, completion: { policy in
+            navigationPolicy = policy
+            expectation.fulfill()
+        }, webView: mockWebView)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertEqual(navigationPolicy, .cancel, "Expected navigation policy to be .cancel")
+
+    }
+    
+    @MainActor
+    func testDecidePolicyForOtherURLThatShouldLoadNormally() {
+        
+        let youtubeURL = URL(string: "https://www.google.com/")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
+        let expectation = self.expectation(description: "Completion handler called")
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        var navigationPolicy: WKNavigationActionPolicy?
+        
+        handler.handleDecidePolicyFor(navigationAction, completion: { policy in
+            navigationPolicy = policy
+            expectation.fulfill()
+        }, webView: mockWebView)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        XCTAssertEqual(navigationPolicy, .allow, "Expected navigation policy to be .allow")
+
+    }
+    
+    // MARK: - HandleJS Navigation Tests
+    
+    @MainActor
+    func testJSNavigationForVideoWasAlreadyHandled() {
      
+        let url: URL = URL(string: "https://www.example.com/")!
+        webView.load(URLRequest(url: url))
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
+       
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        
+        handler.lastHandledVideoID = "abc123"
+        handler.handleJSNavigation(url: youtubeURL, webView: webView)
+        
+        XCTAssertEqual(webView.url?.absoluteString, url.absoluteString)
     }
     
     @MainActor
-    func testHandleReloadForDuckPlayerVideoWithDuckPlayerDisabled() {
-        let duckPlayerURL = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+    func testJSNavigationForVideoThatShouldLoadInYoutube() {
+        
+        let url: URL = URL(string: "https://www.example.com/")!
+        webView.load(URLRequest(url: url))
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s&embeds_referring_euri=somevalue")!
+       
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
                 
-        mockWebView.setCurrentURL(duckPlayerURL)
+        handler.handleJSNavigation(url: youtubeURL, webView: webView)
         
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.disabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-
-        handler.handleReload(webView: mockWebView)
-        
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
-        
+        XCTAssertEqual(webView.url?.absoluteString, url.absoluteString)
     }
     
     @MainActor
-    func testHandleReloadForNonDuckPlayerVideoWithDuckPlayerEnabled() {
-        let nonDuckPlayerURL = URL(string: "https://www.google.com")!
+    func testJSNavigationForVideoThatShouldLoadInDuckPlayer() {
         
-        // Simulate the current URL
-        mockWebView.setCurrentURL(nonDuckPlayerURL)
-        
+        let url: URL = URL(string: "https://www.example.com/")!
+        webView.load(URLRequest(url: url))
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123&t=10s")!
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.alwaysAsk)
+        playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-
-        handler.handleReload(webView: mockWebView)
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
-    }
-    
-    @MainActor
-    func testHandleReloadForNonDuckPlayerVideoWithDuckPlayerDisabled() {
-        let nonDuckPlayerURL = URL(string: "https://www.google.com")!
+                
+        handler.handleJSNavigation(url: youtubeURL, webView: webView)
         
-        // Simulate the current URL
-        mockWebView.setCurrentURL(nonDuckPlayerURL)
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.setMode(.disabled)
-        let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
-
-        handler.handleReload(webView: mockWebView)
-        XCTAssertNil(mockWebView.lastLoadedRequest, "Expected a new request not to be loaded")
+        XCTAssertEqual(webView.url?.absoluteString, "duck://player/abc123?t=10s")
     }
-
 }

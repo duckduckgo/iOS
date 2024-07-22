@@ -124,6 +124,33 @@ extension URL {
         
     }
     
+    func addingWatchInYoutubeQueryParameter() -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        
+        var queryItems = components.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "embeds_referring_euri", value: "some_value"))
+        components.queryItems = queryItems
+        
+        return components.url
+    }
+    
+    var hasWatchInYoutubeQueryParameter: Bool {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            return false
+        }
+        
+        for queryItem in queryItems {
+            if queryItem.name == "embeds_referring_euri" {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     private func addingTimestamp(_ timestamp: String?) -> URL {
         guard let timestamp = timestamp,
               let regex = try? NSRegularExpression(pattern: "^(\\d+[smh]?)+$"),

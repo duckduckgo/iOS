@@ -295,7 +295,7 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayerNavigationHandler: DuckNavigationHandling) -> TabViewController {
+                                   duckPlayerNavigationHandler: DuckNavigationHandling = DuckPlayerNavigationHandler()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -682,14 +682,18 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
-                        
+            
+            // decideForPolicy is not called for JS navigation
+            // This ensures DuckPlayer works on internal JS navigation based on
+            // URL Changes
+            
             if let url,
                 url.isYoutubeVideo,
                 duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler.handleURLChange(url: url, webView: webView)
+                duckPlayerNavigationHandler.handleJSNavigation(url: url, webView: webView)
             }
+             
         }
-                
         if let url {
             duckPlayerNavigationHandler.referrer = url.isYoutube ? .youtube : .other
         }
@@ -1677,8 +1681,9 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(),
             url.isYoutubeVideo,
             duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
-            completion(.allow)
+            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction,
+                                                              completion: completion,
+                                                              webView: webView)
             return
         }
         

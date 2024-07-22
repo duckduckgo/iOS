@@ -718,6 +718,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         })
         cell.embed(in: self, withView: contentView)
         cell.backgroundColor = UIColor(designSystemColor: .surface)
+        cell.selectionStyle = .none
         return cell
     }
 }

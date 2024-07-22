@@ -634,6 +634,7 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
+        case duckPlayer
         // Add other cases as needed
 
         var id: String {
@@ -642,6 +643,7 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
+            case .duckPlayer: return "duckPlayer"
             // Ensure all cases are covered
             }
         }
@@ -727,7 +729,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }
@@ -790,4 +792,9 @@ extension SettingsViewModel {
         }
     }
     
+}
+
+// Deeplink notification handling
+extension NSNotification.Name {
+    static let settingsDeepLinkNotification: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.settingsDeepLink")
 }

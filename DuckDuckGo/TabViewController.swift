@@ -55,7 +55,8 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorHeader: UILabel!
     @IBOutlet private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
-    
+    var webViewBottomAnchorConstraint: NSLayoutConstraint?
+
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     private let instrumentation = TabInstrumentation()
@@ -293,7 +294,8 @@ class TabViewController: UIViewController {
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
-                                   syncService: DDGSyncing) -> TabViewController {
+                                   syncService: DDGSyncing,
+                                   duckPlayerNavigationHandler: DuckNavigationHandling) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -301,7 +303,8 @@ class TabViewController: UIViewController {
                               appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
-                              syncService: syncService)
+                              syncService: syncService,
+                              duckPlayerNavigationHandler: duckPlayerNavigationHandler)
         })
         return controller
     }
@@ -312,22 +315,22 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-
-    var duckPlayer: DuckPlayerProtocol = DuckPlayer()
-    var youtubeNavigationHandler: DuckNavigationHandling?
+    var duckPlayerNavigationHandler: DuckNavigationHandling
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   duckPlayerNavigationHandler: DuckNavigationHandling) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.duckPlayerNavigationHandler = duckPlayerNavigationHandler
         super.init(coder: aDecoder)
     }
 
@@ -344,10 +347,8 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
+        registerForAddressBarLocationNotifications()
         registerForAutofillNotifications()
-
-        // Setup DuckPlayer navigation handler
-        self.youtubeNavigationHandler = YoutubePlayerNavigationHandler(duckPlayer: duckPlayer)
         
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
@@ -358,7 +359,13 @@ class TabViewController: UIViewController {
 #endif
     }
     
-    
+    private func registerForAddressBarLocationNotifications() {
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(onAddressBarPositionChanged),
+                                               name: AppUserDefaults.Notifications.addressBarPositionChanged,
+                                               object: nil)
+    }
+
     @available(iOS 16.4, *)
     private func registerForInspectableWebViewNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -376,6 +383,16 @@ class TabViewController: UIViewController {
 #endif
     }
 
+    @objc
+    private func onAddressBarPositionChanged() {
+        updateWebViewBottomAnchor()
+    }
+
+    private func updateWebViewBottomAnchor() {
+        let targetHeight = chromeDelegate?.barsMaxHeight ?? 0.0
+        webViewBottomAnchorConstraint?.constant = appSettings.currentAddressBarPosition == .bottom ? -targetHeight : 0
+    }
+
     private func observeNetPConnectionStatusChanges() {
         netPConnectionObserverCancellable = netPConnectionObserver.publisher
             .receive(on: DispatchQueue.main)
@@ -388,9 +405,13 @@ class TabViewController: UIViewController {
         userScripts?.autofillUserScript.emailDelegate = emailManager
 
         woShownRecently = false // don't fire if the user goes somewhere else first
+        updateWebViewBottomAnchor()
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
+
+        // Link DuckPlayer to current Tab
+        duckPlayerNavigationHandler.duckPlayer.setHostViewController(self)
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -443,7 +464,6 @@ class TabViewController: UIViewController {
         userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -452,7 +472,17 @@ class TabViewController: UIViewController {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
+
         webViewContainer.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webViewBottomAnchorConstraint!,
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor)
+        ])
+
         webView.scrollView.refreshControl = refreshControl
         // Be sure to set `tintColor` after the control is attached to ScrollView otherwise haptics are gone.
         // We don't have to care about it for this control instance the next time `setRefreshControlEnabled`
@@ -654,18 +684,15 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
                         
-            if let handler = youtubeNavigationHandler,
-                let url,
+            if let url,
                 url.isYoutubeVideo,
-                duckPlayer.settings.mode == .enabled {
-                handler.handleURLChange(url: url, webView: webView)
+                duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
+                duckPlayerNavigationHandler.handleURLChange(url: url, webView: webView)
             }
         }
                 
-        if var handler = youtubeNavigationHandler,
-            let url {
-            handler.referrer = url.isYoutube ? .youtube : .other
-            
+        if let url {
+            duckPlayerNavigationHandler.referrer = url.isYoutube ? .youtube : .other
         }
     }
     
@@ -717,8 +744,8 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
-        if let url = webView.url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
-            handler.handleReload(webView: webView)
+        if let url = webView.url, url.isDuckPlayer {
+            duckPlayerNavigationHandler.handleReload(webView: webView)
         } else {
             webView.reload()
         }
@@ -732,8 +759,8 @@ class TabViewController: UIViewController {
     func goBack() {
         dismissJSAlertIfNeeded()
         
-        if let url = url, url.isDuckPlayer, let handler = youtubeNavigationHandler {
-            handler.handleGoBack(webView: webView)
+        if let url = url, url.isDuckPlayer {
+            duckPlayerNavigationHandler.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }
@@ -1649,10 +1676,10 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if navigationAction.isTargetingMainFrame(),
-            let handler = youtubeNavigationHandler,
             url.isYoutubeVideo,
-            duckPlayer.settings.mode == .enabled {
-            handler.handleDecidePolicyFor(navigationAction, completion: completion, webView: webView)
+            duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
+            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
+            completion(.allow)
             return
         }
         
@@ -1673,12 +1700,10 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            if let handler = youtubeNavigationHandler {
-                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
-                return
-            }
+            duckPlayerNavigationHandler.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
-            
+            return
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -2354,7 +2379,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autoconsentUserScript.delegate = self
         
         // Setup DuckPlayer
-        userScripts.duckPlayer = duckPlayer
+        userScripts.duckPlayer = duckPlayerNavigationHandler.duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView
         userScripts.youtubePlayerUserScript?.webView = webView
         

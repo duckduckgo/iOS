@@ -635,6 +635,7 @@ extension SettingsViewModel {
         case itr
         case subscriptionFlow(origin: String? = nil)
         case restoreFlow
+        case duckPlayer
         // Add other cases as needed
 
         var id: String {
@@ -644,6 +645,7 @@ extension SettingsViewModel {
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
             case .restoreFlow: return "restoreFlow"
+            case .duckPlayer: return "duckPlayer"
             // Ensure all cases are covered
             }
         }
@@ -792,4 +794,9 @@ extension SettingsViewModel {
         }
     }
     
+}
+
+// Deeplink notification handling
+extension NSNotification.Name {
+    static let settingsDeepLinkNotification: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.settingsDeepLink")
 }

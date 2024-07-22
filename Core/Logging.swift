@@ -31,6 +31,7 @@ public extension OSLog {
         case autoconsentLog = "DDG Autoconsent"
         case configurationLog = "DDG Configuration"
         case syncLog = "DDG Sync"
+        case duckPlayerLog = "Duck Player"
     }
 
     @OSLogWrapper(.generalLog) static var generalLog
@@ -40,6 +41,7 @@ public extension OSLog {
     @OSLogWrapper(.autoconsentLog) static var autoconsentLog
     @OSLogWrapper(.configurationLog) static var configurationLog
     @OSLogWrapper(.syncLog) static var syncLog
+    @OSLogWrapper(.duckPlayerLog) static var duckPlayerLog
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // To activate Logging Categories add categories here:
@@ -50,7 +52,8 @@ public extension OSLog {
         .adAttributionLog,
         .lifecycleLog,
         .configurationLog,
-        .syncLog
+        .syncLog,
+        .duckPlayerLog
     ]
 #endif
 

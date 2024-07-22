@@ -526,7 +526,8 @@ import WebKit
             await vpnWorkaround.installRedditSessionWorkaround()
 
             if #available(iOS 17.0, *) {
-                await VPNSnoozeLiveActivityManager.shared.toggleLiveActivity()
+                // TODO: Update Live Activity depending on snooze state
+                // await VPNSnoozeLiveActivityManager.shared.toggleLiveActivity()
             }
         }
 

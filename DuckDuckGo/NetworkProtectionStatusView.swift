@@ -138,7 +138,7 @@ struct NetworkProtectionStatusView: View {
             }
             .disabled(statusModel.snoozeRequestPending)
         } else if statusModel.hasServerInfo {
-            Button("Snooze for 1 minute") {
+            Button("Snooze for 2 minutes") {
                 Task {
                     await statusModel.startSnooze()
                 }

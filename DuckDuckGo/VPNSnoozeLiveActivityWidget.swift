@@ -27,10 +27,10 @@ struct VPNSnoozeLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: VPNSnoozeActivityAttributes.self) { context in
             if context.isStale {
-                VPNSnoozeActivityView(text: "VPN snooze has ended")
+                Text("VPN snooze has ended")
                     .padding()
             } else {
-                VPNSnoozeActivityView(text: "VPN snooze is active")
+                Text("VPN snooze is active")
                     .padding()
             }
         } dynamicIsland: { context in
@@ -44,53 +44,53 @@ struct VPNSnoozeLiveActivity: Widget {
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    VPNSnoozeActivityView(text: "VPN")
+                    Image("vpn-off")
                 }
 
-                DynamicIslandExpandedRegion(.trailing) {
+                DynamicIslandExpandedRegion(.center) {
                     if let range {
-                        Button("Resume") {
-                            print("Resume")
+                        Group {
+                            Text("Reconnecting in ") +
+                            Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
+                                .foregroundStyle(Color(uiColor: UIColor.yellow60))
                         }
+                            .multilineTextAlignment(.center)
                     } else {
-                        Button("Dismiss") {
-                            print("Dismiss")
-                        }
+                        Text("VPN snooze has ended")
                     }
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
                     if context.isStale {
-                        VPNSnoozeActivityView(text: "VPN snooze has ended")
+                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                            Text("Dismiss")
+                                .frame(maxWidth: .infinity)
+                        })
                     } else {
-                        VPNSnoozeActivityView(text: "VPN snooze is active")
+                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                            Text("Resume VPN")
+                                .frame(maxWidth: .infinity)
+                        })
                     }
                 }
             } compactLeading: {
-                VPNSnoozeActivityView(text: "VPN")
+                Image("vpn-off-compact")
             } compactTrailing: {
                 if let range {
                     Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                        .frame(minWidth: 0, maxWidth: 65)
+                        .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                        .frame(minWidth: 0, maxWidth: 55)
                         .multilineTextAlignment(.trailing)
                 } else {
-                    Text("X")
+                    Text("0:00")
+                        .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                        .frame(minWidth: 0, maxWidth: 55)
+                        .multilineTextAlignment(.trailing)
                 }
             } minimal: {
-                VPNSnoozeActivityView(text: "M")
+                Image("vpn-off-compact")
             }
         }
     }
 
-}
-
-@available(iOS 17.0, *)
-struct VPNSnoozeActivityView: View {
-    let text: String
-
-    var body: some View {
-        HStack {
-            Text(text)
-        }
-    }
 }

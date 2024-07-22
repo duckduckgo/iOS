@@ -48,6 +48,8 @@ struct DisableVPNIntent: AppIntent {
             manager.connection.stopVPNTunnel()
 
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+
             var iterations = 0
 
             while iterations <= 10 {
@@ -92,6 +94,8 @@ struct EnableVPNIntent: AppIntent {
             try manager.connection.startVPNTunnel()
 
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+            
             var iterations = 0
 
             while iterations <= 10 {
@@ -127,13 +131,13 @@ struct CancelSnoozeVPNIntent: AppIntent {
     func perform() async throws -> some IntentResult {
         do {
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-
             guard let manager = managers.first, let session = manager.connection as? NETunnelProviderSession else {
                 return .result()
             }
 
             try? await session.sendProviderMessage(.cancelSnooze)
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
 
             return .result()
         } catch {
@@ -141,4 +145,25 @@ struct CancelSnoozeVPNIntent: AppIntent {
         }
     }
 
+}
+
+@available(iOS 17.0, *)
+struct CancelSnoozeLiveActivityAppIntent: LiveActivityIntent {
+
+    static var title: LocalizedStringResource = "Cancel Snooze"
+    static var isDiscoverable: Bool = false
+    static var openAppWhenRun: Bool = false
+
+    func perform() async throws -> some IntentResult {
+        let managers = try await NETunnelProviderManager.loadAllFromPreferences()
+        guard let manager = managers.first, let session = manager.connection as? NETunnelProviderSession else {
+            return .result()
+        }
+
+        try? await session.sendProviderMessage(.cancelSnooze)
+        await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+
+        return .result()
+    }
 }

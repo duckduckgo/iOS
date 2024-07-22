@@ -24,39 +24,27 @@ import ActivityKit
 final class VPNSnoozeLiveActivityManager: ObservableObject {
     static let shared = VPNSnoozeLiveActivityManager()
 
-    func toggleLiveActivity() async {
-        if Activity<VPNSnoozeActivityAttributes>.activities.isEmpty {
-            await startNewLiveActivity()
-        } else {
-            await cancelAllRunningActivities()
-        }
-    }
-
-    func start() async {
+    func start(endDate: Date) async {
         await cancelAllRunningActivities()
-        await startNewLiveActivity()
+        await startNewLiveActivity(endDate: endDate)
     }
 
-    private func startNewLiveActivity() async {
+    private func startNewLiveActivity(endDate: Date) async {
         guard Activity<VPNSnoozeActivityAttributes>.activities.isEmpty else {
             return
         }
 
-        let endDate = Date().addingTimeInterval(.seconds(120))
         let attributes = VPNSnoozeActivityAttributes(endDate: endDate)
-
         let initialContentState = ActivityContent(
             state: VPNSnoozeActivityAttributes.ContentState(endDate: endDate),
             staleDate: endDate
         )
 
         do {
-            let activity = try Activity.request(
+            _ = try Activity.request(
                 attributes: attributes,
                 content: initialContentState
             )
-
-            print("DEBUG: Started activity successfully")
         } catch {
             print("DEBUG: Failed to start activity with error: \(error.localizedDescription)")
         }

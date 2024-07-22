@@ -445,9 +445,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .minutes(1) + .seconds(1) // TODO: Change to 20 mins, 1 min is only used for testing
+        let defaultDuration: TimeInterval = .minutes(2) + .seconds(1) // TODO: Change to 20 mins, 2 min is only used for testing
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
+
+        if #available(iOS 17.0, *) {
+            await VPNSnoozeLiveActivityManager.shared.start(endDate: Date().addingTimeInterval(defaultDuration))
+        }
     }
 
     @MainActor
@@ -458,6 +462,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.cancelSnooze)
+
+        if #available(iOS 17.0, *) {
+            await VPNSnoozeLiveActivityManager.shared.cancelAllRunningActivities()
+        }
     }
 
     private class func titleText(connected isConnected: Bool) -> String {

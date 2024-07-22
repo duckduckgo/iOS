@@ -164,8 +164,8 @@ struct VPNStatusView: View {
 
                 switch status {
                 case .connected:
-                    let buttonTitle = snoozeTimingStore.isSnoozing ? "Resume" : UserText.vpnWidgetDisconnectButton
-                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : DisableVPNIntent()
+                    let buttonTitle = snoozeTimingStore.isSnoozing ? "Resume" : "Snooze"
+                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : StartSnoozeVPNIntent()
 
                     Button(buttonTitle, intent: intent)
                         .font(.system(size: 14, weight: .semibold))

@@ -39,6 +39,8 @@ struct VPNSnoozeLiveActivity: Widget {
                         Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
                             Text("Dismiss")
                         })
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color("WidgetLiveActivityButtonColor"))
                     }
                 } else if let range = self.range(from: context.state.endDate) {
                     HStack {
@@ -53,6 +55,8 @@ struct VPNSnoozeLiveActivity: Widget {
                         Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
                             Text("Resume")
                         })
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color("WidgetLiveActivityButtonColor"))
                     }
                 }
             }
@@ -69,7 +73,7 @@ struct VPNSnoozeLiveActivity: Widget {
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Image("vpn-off")
+                    Image("vpn-off-live-activity")
                 }
 
                 DynamicIslandExpandedRegion(.center) {
@@ -89,13 +93,21 @@ struct VPNSnoozeLiveActivity: Widget {
                     if context.isStale {
                         Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
                             Text("Dismiss")
+                                .font(Font.system(size: 18, weight: .semibold))
+                                .foregroundColor(Color.white)
                                 .frame(maxWidth: .infinity)
                         })
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color("WidgetLiveActivityButtonColor"))
                     } else {
                         Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
                             Text("Resume VPN")
+                                .font(Font.system(size: 18, weight: .semibold))
+                                .foregroundColor(Color.white)
                                 .frame(maxWidth: .infinity)
                         })
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color("WidgetLiveActivityButtonColor"))
                     }
                 }
             } compactLeading: {

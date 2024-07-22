@@ -229,6 +229,13 @@
 		4BCBE45E2BA7E81F00FC75A1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBE45D2BA7E81F00FC75A1 /* PrivacyInfo.xcprivacy */; };
 		4BCBE4602BA7E87100FC75A1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBE45F2BA7E87100FC75A1 /* PrivacyInfo.xcprivacy */; };
 		4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */; };
+		4BCD146D2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */; };
+		4BD96E062C4DBC93003BC32C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
+		4BD96E092C4DCDD2003BC32C /* VPNSnoozeLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E082C4DCDD2003BC32C /* VPNSnoozeLiveActivity.swift */; };
+		4BD96E0B2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E0A2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift */; };
+		4BD96E0E2C4DCFD7003BC32C /* VPNSnoozeLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E0C2C4DCEAA003BC32C /* VPNSnoozeLiveActivityWidget.swift */; };
+		4BD96E0F2C4DCFEB003BC32C /* VPNSnoozeLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E082C4DCDD2003BC32C /* VPNSnoozeLiveActivity.swift */; };
+		4BD96E102C4DF329003BC32C /* VPNSnoozeLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E0A2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BE67B012B96B741007335F7 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B002B96B741007335F7 /* Common */; };
 		4BE67B032B96B864007335F7 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B022B96B864007335F7 /* ContentBlocking */; };
@@ -1400,6 +1407,10 @@
 		4BCBE45D2BA7E81F00FC75A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4BCBE45F2BA7E87100FC75A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTermsAndConditionsStore.swift; sourceTree = "<group>"; };
+		4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessControllerTests.swift; sourceTree = "<group>"; };
+		4BD96E082C4DCDD2003BC32C /* VPNSnoozeLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNSnoozeLiveActivity.swift; sourceTree = "<group>"; };
+		4BD96E0A2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNSnoozeLiveActivityManager.swift; sourceTree = "<group>"; };
+		4BD96E0C2C4DCEAA003BC32C /* VPNSnoozeLiveActivityWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNSnoozeLiveActivityWidget.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		4BF3E4AE2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNRedditSessionWorkaround.swift; sourceTree = "<group>"; };
 		560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorMessage.swift; sourceTree = "<group>"; };
@@ -2846,6 +2857,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8512EA5124ED30D20073EE19 /* SwiftUI.framework in Frameworks */,
+				4BD96E062C4DBC93003BC32C /* NetworkExtension.framework in Frameworks */,
 				85DF714624F7FE6100C89288 /* Core.framework in Frameworks */,
 				8512EA4F24ED30D20073EE19 /* WidgetKit.framework in Frameworks */,
 				4BBBBA872B02E85400D965DA /* DesignResourcesKit in Frameworks */,
@@ -3473,6 +3485,16 @@
 				BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */,
 			);
 			name = VPN;
+			sourceTree = "<group>";
+		};
+		4BD96E072C4DCCD1003BC32C /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				4BD96E082C4DCDD2003BC32C /* VPNSnoozeLiveActivity.swift */,
+				4BD96E0A2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift */,
+				4BD96E0C2C4DCEAA003BC32C /* VPNSnoozeLiveActivityWidget.swift */,
+			);
+			name = LiveActivity;
 			sourceTree = "<group>";
 		};
 		566B736E2BECD3DC00FF1959 /* Utilities */ = {
@@ -5056,6 +5078,7 @@
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
+				4BD96E072C4DCCD1003BC32C /* LiveActivity */,
 				4B37E04E2B928C91009E81CA /* Resources */,
 				EE01EB412AFC1DE10096AAC9 /* PreferredLocation */,
 				EE9D68CF2AE00CE000B55EF4 /* VPNSettings */,
@@ -7022,6 +7045,7 @@
 				D62EC3C22C248AF800FC9D04 /* DuckNavigationHandling.swift in Sources */,
 				9FB027142C252E0C009EA190 /* OnboardingView+BrowsersComparisonContent.swift in Sources */,
 				D664C7B62B289AA200CBFA76 /* SubscriptionFlowViewModel.swift in Sources */,
+				4BD96E0B2C4DCE55003BC32C /* VPNSnoozeLiveActivityManager.swift in Sources */,
 				1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */,
 				C1836CE12C359EC90016D057 /* AutofillBreakageReportCellContentView.swift in Sources */,
 				6F9FFE282C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift in Sources */,
@@ -7463,7 +7487,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				853273AE24FEF49600E3C778 /* ColorExtension.swift in Sources */,
+				4BD96E0F2C4DCFEB003BC32C /* VPNSnoozeLiveActivity.swift in Sources */,
 				373608932ABB432600629E7F /* FavoritesDisplayMode+UserDefaults.swift in Sources */,
+				4BD96E102C4DF329003BC32C /* VPNSnoozeLiveActivityManager.swift in Sources */,
 				853273B324FF114700E3C778 /* DeepLinks.swift in Sources */,
 				853273B424FFB36100E3C778 /* UIColorExtension.swift in Sources */,
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
@@ -7471,6 +7497,7 @@
 				4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
 				85DB12EB2A1FE2A4000A4A72 /* LockScreenWidgets.swift in Sources */,
+				4BD96E0E2C4DCFD7003BC32C /* VPNSnoozeLiveActivityWidget.swift in Sources */,
 				8544C37C250B827300A0FE73 /* UserText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

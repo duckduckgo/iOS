@@ -143,6 +143,7 @@ struct NetworkProtectionStatusView: View {
                     await statusModel.startSnooze()
                 }
             }
+            .foregroundStyle(Color(designSystemColor: .accent))
             .disabled(statusModel.snoozeRequestPending)
         }
     }

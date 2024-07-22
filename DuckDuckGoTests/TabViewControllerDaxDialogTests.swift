@@ -119,10 +119,17 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
 }
 
 final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
+    var expectation: XCTestExpectation?
     private(set) var didCallSetFireEducationMessageSeen = false
+    private(set) var didCallsetFinalOnboardingDialogSeen = false
 
     func setFireEducationMessageSeen() {
         didCallSetFireEducationMessageSeen = true
+    }
+
+    func setFinalOnboardingDialogSeen() {
+        didCallsetFinalOnboardingDialogSeen = true
+        expectation?.fulfill()
     }
 
 }

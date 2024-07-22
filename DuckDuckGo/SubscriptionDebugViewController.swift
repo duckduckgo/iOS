@@ -147,8 +147,8 @@ import NetworkProtection
             case .none:
                 break
             }
-		case .none:
-			break
+        case .none:
+            break
         }
 
         return cell

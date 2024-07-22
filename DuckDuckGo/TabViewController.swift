@@ -857,7 +857,9 @@ class TabViewController: UIViewController {
 
     @IBSegueAction
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
-        PrivacyDashboardViewController(coder: coder,
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self, animated: false)
+
+        return PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        entryPoint: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
@@ -2881,7 +2883,7 @@ extension TabViewController: ContextualOnboardingEventDelegate {
     }
 
     func didShowContextualOnboardingTrackersDialog() {
-        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self, animated: true)
     }
 
     func didTapDismissContextualOnboardingAction() {

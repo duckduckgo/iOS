@@ -575,7 +575,7 @@
 "autofill.settings.report.not.working.confirmation.message" = "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.";
 
 /* Title for the confirmation prompt when reporting autofill is not working for a website */
-"autofill.settings.report.not.working.confirmation.title" = "Report Autofill not Working on %@";
+"autofill.settings.report.not.working.confirmation.title" = "Report Autofill not Working on %@?";
 
 /* Message shown to user when they submit a report that autofill is not working for a website */
 "autofill.settings.report.not.working.sent.confirmation" = "Thank you! Your report will help us make DuckDuckGo better for everyone.";

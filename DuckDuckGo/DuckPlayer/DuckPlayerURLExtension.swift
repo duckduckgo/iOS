@@ -142,10 +142,8 @@ extension URL {
             return false
         }
         
-        for queryItem in queryItems {
-            if queryItem.name == "embeds_referring_euri" {
-                return true
-            }
+        for queryItem in queryItems where queryItem.name == "embeds_referring_euri" {
+            return true
         }
         
         return false

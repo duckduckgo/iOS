@@ -51,7 +51,6 @@ import NetworkProtection
         case restoreSubscription
         case showAccountDetails
         case clearAuthData
-        case injectCredentials
     }
     
     enum SubscriptionRows: Int, CaseIterable {
@@ -94,8 +93,6 @@ import NetworkProtection
                 cell.textLabel?.text = "Clear Authorization Data (Sign out)"
             case .showAccountDetails:
                 cell.textLabel?.text = "Show Account Details"
-            case .injectCredentials:
-                cell.textLabel?.text = "Simulate Authentication (Inject Fake token)"
             case .none:
                 break
             }
@@ -157,7 +154,6 @@ import NetworkProtection
             case .restoreSubscription: openSubscriptionRestoreFlow()
             case .clearAuthData: clearAuthData()
             case .showAccountDetails: showAccountDetails()
-            case .injectCredentials: injectCredentials()
             default: break
             }
         case .appstore:
@@ -239,13 +235,6 @@ import NetworkProtection
     private func clearAuthData() {
         subscriptionManager.accountManager.signOut()
         showAlert(title: "Data cleared!")
-    }
-    
-    private func injectCredentials() {
-        subscriptionManager.accountManager.storeAccount(token: "a-fake-token",
-                                    email: "a.fake@email.com",
-                                    externalID: "666")
-        showAccountDetails()
     }
     
     private func showAccountDetails() {

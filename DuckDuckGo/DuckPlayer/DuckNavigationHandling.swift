@@ -29,6 +29,7 @@ protocol DuckNavigationHandling {
                                webView: WKWebView)
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
+    func handleAttach(webView: WKWebView)
 }
 
 extension WKWebView {

@@ -320,4 +320,16 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             webView.reload()
         }
     }
+    
+    @MainActor
+    func handleAttach(webView: WKWebView) {
+        
+        if let url = webView.url, url.isDuckPlayer,
+            !url.isDuckURLScheme,
+            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            os_log("DP: Handling Initial Load of a video for %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            handleReload(webView: webView)
+        }
+        
+    }
 }

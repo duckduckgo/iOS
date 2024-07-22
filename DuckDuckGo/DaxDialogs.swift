@@ -142,15 +142,21 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         let type: SpecType
         
         func format(args: CVarArg...) -> BrowsingSpec {
-            self.format(message: message, args: args)
+            format(message: message, args: args)
         }
 
         func format(message: String, args: CVarArg...) -> BrowsingSpec {
-            BrowsingSpec(message: String(format: message, arguments: args),
-                                cta: cta,
-                                highlightAddressBar: highlightAddressBar,
-                                pixelName: pixelName,
-                                type: type)
+            withUpdatedMessage(String(format: message, arguments: args))
+        }
+
+        func withUpdatedMessage(_ message: String) -> BrowsingSpec {
+            BrowsingSpec(
+                message: message,
+                cta: cta,
+                highlightAddressBar: highlightAddressBar,
+                pixelName: pixelName,
+                type: type
+            )
         }
     }
     

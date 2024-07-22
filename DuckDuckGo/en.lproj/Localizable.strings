@@ -728,7 +728,7 @@
 "contextual.onboarding.try-a-site.title" = "Try visiting a site!";
 
 /* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
-"contextual.onboarding.try-fire-button.message" = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 👇";
+"contextual.onboarding.try-fire-button.message" = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥";
 
 /* Browser Search query for how to say duck in english */
 "contextual.onboarding.try-search.option1-English" = "how to say “duck” in spanish";

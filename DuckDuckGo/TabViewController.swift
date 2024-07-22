@@ -408,6 +408,9 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
+        
+        // Link DuckPlayer to current Tab
+        duckPlayerNavigationHandler.duckPlayer.setHostViewController(self)
     }
 
     override func buildActivities() -> [UIActivity] {

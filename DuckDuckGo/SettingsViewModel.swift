@@ -634,6 +634,7 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
+        case restoreFlow
         case duckPlayer
         // Add other cases as needed
 
@@ -643,6 +644,7 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
+            case .restoreFlow: return "restoreFlow"
             case .duckPlayer: return "duckPlayer"
             // Ensure all cases are covered
             }

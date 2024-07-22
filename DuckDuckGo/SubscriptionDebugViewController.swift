@@ -35,27 +35,27 @@ import NetworkProtection
 
     private let titles = [
         Sections.authorization: "Authentication",
-        Sections.subscription: "Subscription",
+        Sections.api: "Make API Call",
         Sections.appstore: "App Store",
         Sections.environment: "Environment",
     ]
 
     enum Sections: Int, CaseIterable {
         case authorization
-        case subscription
+        case api
         case appstore
         case environment
     }
 
     enum AuthorizationRows: Int, CaseIterable {
-        case showAccountDetails
+        case restoreSubscription
         case clearAuthData
-        case injectCredentials
+        case showAccountDetails
     }
     
     enum SubscriptionRows: Int, CaseIterable {
         case validateToken
-        case getEntitlements
+        case checkEntitlements
         case getSubscription
     }
     
@@ -87,35 +87,34 @@ import NetworkProtection
 
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
+            case .restoreSubscription:
+                cell.textLabel?.text = "I Have a Subscription"
             case .clearAuthData:
-                cell.textLabel?.text = "Clear Authorization Data (Sign out)"
+                cell.textLabel?.text = "Remove Subscription From This Device"
             case .showAccountDetails:
                 cell.textLabel?.text = "Show Account Details"
-            case .injectCredentials:
-                cell.textLabel?.text = "Simulate Authentication (Inject Fake token)"
             case .none:
                 break
             }
 
-        case.none:
-            break
+        case .api:
+            switch SubscriptionRows(rawValue: indexPath.row) {
+            case .validateToken:
+                cell.textLabel?.text = "Validate Token"
+            case .checkEntitlements:
+                cell.textLabel?.text = "Check Entitlements"
+            case .getSubscription:
+                cell.textLabel?.text = "Get Subscription Details"
+
+            case .none:
+                break
+            }
+
         
         case .appstore:
             switch AppStoreRows(rawValue: indexPath.row) {
             case .syncAppStoreAccount:
                 cell.textLabel?.text = "Sync App Store Account"
-            case .none:
-                break
-            }
-            
-        case .subscription:
-            switch SubscriptionRows(rawValue: indexPath.row) {
-            case .validateToken:
-                cell.textLabel?.text = "Validate Token"
-            case .getSubscription:
-                cell.textLabel?.text = "Get subscription details"
-            case .getEntitlements:
-                cell.textLabel?.text = "Get Entitlements"
             case .none:
                 break
             }
@@ -132,14 +131,18 @@ import NetworkProtection
             case .none:
                 break
             }
+
+        case.none:
+            break
         }
+
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .authorization: return AuthorizationRows.allCases.count
-        case .subscription: return SubscriptionRows.allCases.count
+        case .api: return SubscriptionRows.allCases.count
         case .appstore: return AppStoreRows.allCases.count
         case .environment: return EnvironmentRows.allCases.count
         case .none: return 0
@@ -151,9 +154,9 @@ import NetworkProtection
         switch Sections(rawValue: indexPath.section) {
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
+            case .restoreSubscription: openSubscriptionRestoreFlow()
             case .clearAuthData: clearAuthData()
             case .showAccountDetails: showAccountDetails()
-            case .injectCredentials: injectCredentials()
             default: break
             }
         case .appstore:
@@ -161,11 +164,11 @@ import NetworkProtection
             case .syncAppStoreAccount: syncAppleIDAccount()
             default: break
             }
-        case .subscription:
+        case .api:
             switch SubscriptionRows(rawValue: indexPath.row) {
             case .validateToken: validateToken()
-            case .getSubscription: getSubscription()
-            case .getEntitlements: getEntitlements()
+            case .checkEntitlements: checkEntitlements()
+            case .getSubscription: getSubscriptionDetails()
             default: break
             }
         case .environment:
@@ -221,16 +224,28 @@ import NetworkProtection
 //    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
+
+    private func openSubscriptionRestoreFlow() {
+        guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
+
+        
+        if let navigationController = mainVC.presentedViewController as? UINavigationController {
+            
+            navigationController.popToRootViewController {
+                if navigationController.viewControllers.first is SettingsHostingController {
+                    mainVC.segueToSubscriptionRestoreFlow()
+                } else {
+                    navigationController.dismiss(animated: true, completion: {
+                        mainVC.segueToSubscriptionRestoreFlow()
+                    })
+                }
+            }
+        }
+    }
+
     private func clearAuthData() {
         subscriptionManager.accountManager.signOut()
         showAlert(title: "Data cleared!")
-    }
-    
-    private func injectCredentials() {
-        subscriptionManager.accountManager.storeAccount(token: "a-fake-token",
-                                    email: "a.fake@email.com",
-                                    externalID: "666")
-        showAccountDetails()
     }
     
     private func showAccountDetails() {
@@ -271,7 +286,7 @@ import NetworkProtection
         }
     }
     
-    private func getSubscription() {
+    private func getSubscriptionDetails() {
         Task {
             guard let token = subscriptionManager.accountManager.accessToken else {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
@@ -287,7 +302,7 @@ import NetworkProtection
         }
     }
     
-    private func getEntitlements() {
+    private func checkEntitlements() {
         Task {
             var results: [String] = []
             guard subscriptionManager.accountManager.accessToken != nil else {

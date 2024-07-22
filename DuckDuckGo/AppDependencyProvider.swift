@@ -47,6 +47,7 @@ protocol DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
+    var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
 }
 
@@ -88,6 +89,7 @@ class AppDependencyProvider: DependencyProvider {
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
+    let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
     init() {

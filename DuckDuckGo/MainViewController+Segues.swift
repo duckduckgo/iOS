@@ -246,6 +246,14 @@ extension MainViewController {
         }
     }
 
+    func segueToSubscriptionRestoreFlow() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .restoreFlow)
+        }
+    }
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()

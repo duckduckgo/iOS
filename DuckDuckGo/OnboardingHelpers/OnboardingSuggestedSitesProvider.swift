@@ -107,7 +107,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         case .germany: site = "https://www.duden.de/rechtschreibung/Ente"
         case .netherlands: site = "https://www.woorden.org/woord/eend"
         case .sweden: site = "https://www.synonymer.se/sv-syn/anka"
-        default: site = "britannica.com/animal/duck"
+        default: site = "https:britannica.com/animal/duck"
         }
         return ContextualOnboardingListItem.surprise(title: site)
     }

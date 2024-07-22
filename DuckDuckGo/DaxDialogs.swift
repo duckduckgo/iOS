@@ -38,6 +38,7 @@ protocol NewTabDialogSpecProvider {
 
 protocol ContextualOnboardingLogic {
     func setFireEducationMessageSeen()
+    func setFinalOnboardingDialogSeen()
 }
 
 extension ContentBlockerRulesManager: EntityProviding {
@@ -315,6 +316,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         settings.fireButtonEducationShownOrExpired = true
     }
 
+    func setFinalOnboardingDialogSeen() {
+        guard isNewOnboarding else { return }
+        settings.browsingFinalDialogShown = true
+    }
+
     func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
         
@@ -445,12 +451,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             return .subsequent
         }
 
-        if firstBrowsingMessageSeen && !finalDaxDialogSeen {
-            // Ensure we don't show the final dialog again in context when the user sees it and vice-versa.
-            settings.browsingFinalDialogShown = true
+        if settings.fireButtonEducationShownOrExpired && !finalDaxDialogSeen {
             return .final
         }
-
+        
         return nil
     }
 

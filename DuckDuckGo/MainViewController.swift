@@ -761,7 +761,7 @@ class MainViewController: UIViewController {
             viewCoordinator.logoContainer.isHidden = true
             adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
         } else {
-            let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self)
+            let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared)
             let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
                                                             model: tabModel,
                                                             favoritesViewModel: favoritesViewModel,

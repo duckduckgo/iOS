@@ -95,7 +95,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "voetbalprimeur.nl"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "nu.nl"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "bol.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title:  "https://www.woorden.org/woord/eend"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://www.woorden.org/woord/eend"))
     }
 
     func testSuggestedSitesForAustralia() {

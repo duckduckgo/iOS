@@ -1212,7 +1212,7 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.try-a-search.message", value: "Your DuckDuckGo searches are always anonymous.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous")
             static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
             static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "We’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
-            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! ☝️", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
+            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 👇", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
             static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
             static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.first-search-done.message", value: "That’s DuckDuckGo Search. Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
             static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
@@ -1225,6 +1225,9 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let tryASearchOption3 = NSLocalizedString("contextual.onboarding.try-search.option3", value: "local weather", comment: "Browser Search query for local weather")
             static let tryASearchOptionSurpriseMeEnglish = NSLocalizedString("contextual.onboarding.try-search.surprise-me-english", value: "chocolate chip cookie recipes", comment: "Browser Search query for chocolate chip cookie recipes")
             static let tryASearchOptionSurpriseMeInternational = NSLocalizedString("contextual.onboarding.try-search.surprise-me-international", value: "dinner recipes", comment: "Browser Search query for dinner recipes")
+
+            static let daxDialogBrowsingWithOneTracker = NSLocalizedString("dax.onboarding.experiment.browsing.one.tracker", value: "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ Tap the shield for more info.", comment: "Parameter is domain name (string)")
+            static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("dax.onboarding.experiment.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
         }
     }
 }

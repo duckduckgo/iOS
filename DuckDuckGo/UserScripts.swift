@@ -23,6 +23,7 @@ import BrowserServicesKit
 import TrackerRadarKit
 import UserScript
 import WebKit
+import SSLErrors
 
 final class UserScripts: UserScriptsProvider {
 
@@ -42,6 +43,7 @@ final class UserScripts: UserScriptsProvider {
     }
     var youtubeOverlayScript: YoutubeOverlayUserScript?
     var youtubePlayerUserScript: YoutubePlayerUserScript?
+    var sslErrorPageUserScript: SSLErrorPageUserScript?
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -64,13 +66,15 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
-        
+
         // Special pages - Such as Duck Player
         specialPages = SpecialPagesUserScript()
         if let specialPages {
             userScripts.append(specialPages)
         }
-        
+        sslErrorPageUserScript = SSLErrorPageUserScript()
+        sslErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
+
     }
     
 

@@ -36,6 +36,8 @@ import Networking
 import SecureStorage
 import History
 import ContentScopeScripts
+import SSLErrors
+import Navigation
 
 #if NETWORK_PROTECTION
 import NetworkProtection
@@ -172,6 +174,11 @@ class TabViewController: UIViewController {
                                                       favicons: Favicons.shared)
 
     private let refreshControl = UIRefreshControl()
+
+    // TODO
+    private let certificateTrustEvaluator: CertificateTrustEvaluating
+    var isCertificateValid: Bool?
+    private var shouldBypassSSLError = false
 
     let syncService: DDGSyncing
 
@@ -321,13 +328,16 @@ class TabViewController: UIViewController {
                    appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   certificateTrustEvaluator: CertificateTrustEvaluating = CertificateTrustEvaluator()
+    ) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.certificateTrustEvaluator = certificateTrustEvaluator
         super.init(coder: aDecoder)
     }
 
@@ -1098,6 +1108,7 @@ extension TabViewController: LoginFormDetectionDelegate {
     
 }
 
+
 // MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
     
@@ -1106,6 +1117,8 @@ extension TabViewController: WKNavigationDelegate {
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
+        } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            handleServerTrustChallenge(challenge, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
         }
@@ -1132,7 +1145,41 @@ extension TabViewController: WKNavigationDelegate {
         
         delegate?.tab(self, didRequestPresentingAlert: alert)
     }
-    
+
+    // TODO
+    private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
+                                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        guard shouldBypassSSLError,
+              let credential = URLCredentialCreator().urlCredential(from: challenge.protectionSpace.serverTrust) else { //todo DI
+            completionHandler(.performDefaultHandling, nil)
+            return
+        }
+        shouldBypassSSLError = false
+        completionHandler(.useCredential, credential)
+    }
+
+    @MainActor
+    private func loadSSLErrorHTML(url: URL, alternate: Bool, errorCode: Int) {
+        let html = SSLErrorPageHTMLTemplate(domain: url.host ?? url.absoluteString, errorCode: errorCode).makeHTMLFromTemplate()
+        loadHTML(html: html, url: url, alternate: alternate)
+    }
+
+    @MainActor
+    private func loadErrorHTML(_ error: WKError, header: String, forUnreachableURL url: URL, alternate: Bool) {
+        let html = ErrorPageHTMLTemplate(error: error, header: header).makeHTMLFromTemplate()
+        loadHTML(html: html, url: url, alternate: alternate)
+    }
+
+    @MainActor
+    private func loadHTML(html: String, url: URL, alternate: Bool) {
+        if alternate {
+            webView?.loadHTMLString(html, baseURL: url)
+//            webView?.loadAlternateHTML(html, baseURL: .error, forUnreachableURL: url) // error on macos side (two times called)
+        } else {
+            webView?.setDocumentHtml(html)
+        }
+    }
+
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
 
         if let url = webView.url {
@@ -1442,6 +1489,12 @@ extension TabViewController: WKNavigationDelegate {
         // wait before showing errors in case they recover automatically
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showErrorNow()
+        }
+
+        if error.code == NSURLErrorServerCertificateUntrusted {
+            userScripts?.sslErrorPageUserScript?.delegate = self
+            userScripts?.sslErrorPageUserScript?.failingURL = error.failedUrl
+            loadSSLErrorHTML(url: error.failedUrl!, alternate: true, errorCode: error.code) //todo force opt
         }
     }
 
@@ -2822,6 +2875,10 @@ extension WKWebView {
         evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
     }
 
+    func setDocumentHtml(_ html: String) {
+        self.evaluateJavaScript("document.open(); document.write('\(html)'); document.close()", in: nil, in: .defaultClient)
+    }
+
 }
 
 extension UserContentController {
@@ -2830,6 +2887,39 @@ extension UserContentController {
     public convenience init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.init(assetsPublisher: ContentBlocking.shared.contentBlockingUpdating.userContentBlockingAssets,
                   privacyConfigurationManager: privacyConfigurationManager)
+    }
+
+}
+
+// TODO
+protocol URLCredentialCreating {
+
+    func urlCredential(from trust: SecTrust?) -> URLCredential?
+
+}
+
+struct URLCredentialCreator: URLCredentialCreating {
+
+    func urlCredential(from trust: SecTrust?) -> URLCredential? {
+        guard let trust else { return nil }
+        return URLCredential(trust: trust)
+    }
+
+}
+
+extension TabViewController: SSLErrorPageUserScriptDelegate {
+
+    func leaveSite() {
+        guard webView?.canGoBack == true else {
+            delegate?.tabDidRequestClose(self)
+            return
+        }
+        _ = webView?.goBack()
+    }
+
+    func visitSite() {
+        shouldBypassSSLError = true
+        _ = webView.reload()
     }
 
 }

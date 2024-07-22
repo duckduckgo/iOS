@@ -113,6 +113,7 @@ class MainViewController: UIViewController {
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
     private var urlInterceptorCancellables = Set<AnyCancellable>()
+    private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     
 #if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
@@ -157,9 +158,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
-    private var keyboardHeight: CGFloat = 0.0
-    
+
     var postClear: (() -> Void)?
     var clearInProgress = false
     var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
@@ -263,6 +262,7 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
+        subscribeToSettingsDeeplinkNotifications()
         
 #if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()
@@ -553,15 +553,14 @@ class MainViewController: UIViewController {
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
-        var height = keyboardFrame.size.height
+        var keyboardHeight = keyboardFrame.size.height
 
         let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
         let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-        height = intersection.height
+        keyboardHeight = intersection.height
 
-        findInPageBottomLayoutConstraint.constant = height
-        keyboardHeight = height
+        findInPageBottomLayoutConstraint.constant = keyboardHeight
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -574,15 +573,14 @@ class MainViewController: UIViewController {
             }
         }
 
-        let y = self.view.frame.height - height
+        let y = self.view.frame.height - keyboardHeight
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
 
         if self.appSettings.currentAddressBarPosition.isBottom {
-            let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.navigationBarCollectionViewBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarContainerHeight.constant = max(52, keyboardHeight)
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -742,6 +740,7 @@ class MainViewController: UIViewController {
                                                       homePageMessagesConfiguration: homePageConfiguration)
 
             controller.delegate = self
+            controller.shortcutsDelegate = self
 
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
@@ -1351,6 +1350,23 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &urlInterceptorCancellables)
+    }
+    
+    private func subscribeToSettingsDeeplinkNotifications() {
+        NotificationCenter.default.publisher(for: .settingsDeepLinkNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.object as? SettingsViewModel.SettingsDeepLinkSection {
+                
+                case .duckPlayer:
+                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
+                        deepLinkTarget = .duckPlayer
+                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
+                default:
+                    return
+                }
+            }
+            .store(in: &settingsDeepLinkcancellables)
     }
 
 #if NETWORK_PROTECTION
@@ -2027,6 +2043,32 @@ extension MainViewController: NewTabPageControllerDelegate {
 
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
+    }
+}
+
+extension MainViewController: NewTabPageControllerShortcutsDelegate {
+    func newTabPageDidRequestDownloads(_ controller: NewTabPageViewController) {
+        segueToDownloads()
+    }
+    
+    func newTabPageDidRequestBookmarks(_ controller: NewTabPageViewController) {
+        segueToBookmarks()
+    }
+    
+    func newTabPageDidRequestPasswords(_ controller: NewTabPageViewController) {
+        launchAutofillLogins(source: .newTabPageShortcut)
+    }
+    
+    func newTabPageDidRequestAIChat(_ controller: NewTabPageViewController) {
+        loadUrl(Constant.duckAIURL)
+    }
+    
+    func newTabPageDidRequestSettings(_ controller: NewTabPageViewController) {
+        segueToSettings()
+    }
+
+    private enum Constant {
+        static let duckAIURL = URL(string: "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1")!
     }
 }
 

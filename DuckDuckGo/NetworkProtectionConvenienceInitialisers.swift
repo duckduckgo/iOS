@@ -28,7 +28,7 @@ import Subscription
 
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
-        try? await ConnectionSessionUtilities.activeSession()
+        return await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession()
     }
 }
 

@@ -220,9 +220,3 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
     }
 
 }
-
-extension MockTunnelController: TunnelSessionProvider {
-    public func activeSession() async -> NETunnelProviderSession? {
-        nil
-    }
-}

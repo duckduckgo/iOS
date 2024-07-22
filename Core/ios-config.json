@@ -414,13 +414,6 @@
             },
             "hash": "bd604dcd1f7bb584185f0c1cb94a5771"
         },
-        "autofillBreakageReporter": {
-            "state": "enabled",
-            "settings": {
-                "monitorIntervalDays": 42
-            },
-            "exceptions": []
-        },
         "brokenSiteReportExperiment": {
             "exceptions": [],
             "state": "enabled",

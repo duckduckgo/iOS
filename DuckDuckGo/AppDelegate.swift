@@ -524,6 +524,10 @@ import WebKit
             await stopAndRemoveVPNIfNotAuthenticated()
             await refreshShortcuts()
             await vpnWorkaround.installRedditSessionWorkaround()
+
+            if #available(iOS 17.0, *) {
+                await VPNSnoozeLiveActivityManager.shared.start()
+            }
         }
 
         AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in

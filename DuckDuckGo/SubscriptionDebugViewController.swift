@@ -48,6 +48,7 @@ import NetworkProtection
     }
 
     enum AuthorizationRows: Int, CaseIterable {
+        case restoreSubscription
         case showAccountDetails
         case clearAuthData
         case injectCredentials
@@ -87,6 +88,8 @@ import NetworkProtection
 
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
+            case .restoreSubscription:
+                cell.textLabel?.text = "I Have a Subscription"
             case .clearAuthData:
                 cell.textLabel?.text = "Clear Authorization Data (Sign out)"
             case .showAccountDetails:
@@ -151,6 +154,7 @@ import NetworkProtection
         switch Sections(rawValue: indexPath.section) {
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
+            case .restoreSubscription: openSubscriptionRestoreFlow()
             case .clearAuthData: clearAuthData()
             case .showAccountDetails: showAccountDetails()
             case .injectCredentials: injectCredentials()
@@ -221,6 +225,17 @@ import NetworkProtection
 //    func showAlert(title: String, message: String, alternativeAction)
 
     // MARK: Account Status Actions
+
+    private func openSubscriptionRestoreFlow() {
+        guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
+
+        if let navigationController = mainVC.presentedViewController as? UINavigationController {
+            navigationController.popToRootViewController {
+                mainVC.segueToSubscriptionRestoreFlow()
+            }
+        }
+    }
+
     private func clearAuthData() {
         subscriptionManager.accountManager.signOut()
         showAlert(title: "Data cleared!")
@@ -331,4 +346,29 @@ import NetworkProtection
             NetworkProtectionLocationListCompositeRepository.clearCache()
         }
     }
+}
+
+extension UINavigationController {
+
+    func popToRootViewController(animated: Bool = true, completion: @escaping ()->()) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        self.popToRootViewController(animated: animated)
+        CATransaction.commit()
+    }
+
+    func popViewControllerWithHandler(animated: Bool = true, completion: @escaping ()->()) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        self.popViewController(animated: animated)
+        CATransaction.commit()
+    }
+
+    func pushViewController(viewController: UIViewController, animated: Bool = true,  completion: @escaping ()->()) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        self.pushViewController(viewController, animated: animated)
+        CATransaction.commit()
+    }
+
 }

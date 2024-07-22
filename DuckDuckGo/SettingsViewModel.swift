@@ -634,6 +634,7 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
+        case restoreFlow
         // Add other cases as needed
 
         var id: String {
@@ -642,6 +643,7 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
+            case .restoreFlow: return "restoreFlow"
             // Ensure all cases are covered
             }
         }

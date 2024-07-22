@@ -102,6 +102,13 @@ struct SettingsRootView: View {
                 }
             }
         })
+
+        .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                shouldDisplayDeepLinkSheet = false
+                shouldDisplayDeepLinkPush = false
+            }
+        }
     }
 
     // MARK: DeepLink Views
@@ -117,6 +124,10 @@ struct SettingsRootView: View {
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+        case .restoreFlow:
+            SubscriptionContainerViewFactory.makeEmailFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                           subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                           onDisappear: {})
         default:
             EmptyView()
         }

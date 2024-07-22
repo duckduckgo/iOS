@@ -23,7 +23,7 @@ import WebKit
 import Core
 import Common
 
-final class DuckPlayerNavigationHandler: NSObject {
+final class DuckPlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other

@@ -284,6 +284,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     func handleReload(webView: WKWebView) {
         
         lastHandledVideoID = nil
+        webView.stopLoading()
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,

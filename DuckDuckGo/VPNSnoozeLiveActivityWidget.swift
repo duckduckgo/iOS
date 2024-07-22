@@ -24,15 +24,40 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct VPNSnoozeLiveActivity: Widget {
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: VPNSnoozeActivityAttributes.self) { context in
-            if context.isStale {
-                Text("VPN snooze has ended")
-                    .padding()
-            } else {
-                Text("VPN snooze is active")
-                    .padding()
+            Group {
+                if context.isStale {
+                    HStack {
+                        Image("vpn-off")
+
+                        Text("VPN snooze has ended")
+                            .foregroundStyle(Color(designSystemColor: .textPrimary))
+
+                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                            Text("Dismiss")
+                        })
+                    }
+                } else if let range = self.range(from: context.state.endDate) {
+                    HStack {
+                        Image("vpn-off")
+
+                        Text("Reconnecting in ")
+                            .foregroundStyle(Color(designSystemColor: .textPrimary))
+                        +
+                        Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
+                            .foregroundStyle(Color(uiColor: UIColor.yellow60))
+
+                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                            Text("Resume")
+                        })
+                    }
+                }
             }
+            .padding()
+            .activityBackgroundTint(Color.secondary)
         } dynamicIsland: { context in
             let startDate = Date()
             let endDate = context.state.endDate
@@ -90,6 +115,16 @@ struct VPNSnoozeLiveActivity: Widget {
             } minimal: {
                 Image("vpn-off-compact")
             }
+        }
+    }
+
+    private func range(from endDate: Date) -> ClosedRange<Date>? {
+        let startDate = Date()
+
+        if startDate <= endDate {
+            return startDate...endDate
+        } else {
+            return nil
         }
     }
 

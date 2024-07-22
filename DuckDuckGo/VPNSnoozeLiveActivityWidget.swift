@@ -27,14 +27,20 @@ struct VPNSnoozeLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: VPNSnoozeActivityAttributes.self) { context in
             if context.isStale {
-                VPNSnoozeActivityView(text: "Main - Stale")
+                VPNSnoozeActivityView(text: "VPN snooze has ended")
                     .padding()
             } else {
-                VPNSnoozeActivityView(text: "Main - Active")
+                VPNSnoozeActivityView(text: "VPN snooze is active")
                     .padding()
             }
         } dynamicIsland: { context in
-            let range = Date()...context.state.endDate
+            let startDate = Date()
+            let endDate = context.state.endDate
+            var range: ClosedRange<Date>?
+
+            if startDate <= endDate {
+                range = startDate...endDate
+            }
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
@@ -42,24 +48,34 @@ struct VPNSnoozeLiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                        .frame(minWidth: 0, maxWidth: 65)
-                        .multilineTextAlignment(.trailing)
+                    if let range {
+                        Button("Resume") {
+                            print("Resume")
+                        }
+                    } else {
+                        Button("Dismiss") {
+                            print("Dismiss")
+                        }
+                    }
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
                     if context.isStale {
-                        VPNSnoozeActivityView(text: "Stale")
+                        VPNSnoozeActivityView(text: "VPN snooze has ended")
                     } else {
-                        VPNSnoozeActivityView(text: "Active")
+                        VPNSnoozeActivityView(text: "VPN snooze is active")
                     }
                 }
             } compactLeading: {
                 VPNSnoozeActivityView(text: "VPN")
             } compactTrailing: {
-                Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                    .frame(minWidth: 0, maxWidth: 65)
-                    .multilineTextAlignment(.trailing)
+                if let range {
+                    Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
+                        .frame(minWidth: 0, maxWidth: 65)
+                        .multilineTextAlignment(.trailing)
+                } else {
+                    Text("X")
+                }
             } minimal: {
                 VPNSnoozeActivityView(text: "M")
             }

@@ -228,9 +228,17 @@ import NetworkProtection
     private func openSubscriptionRestoreFlow() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
 
+        
         if let navigationController = mainVC.presentedViewController as? UINavigationController {
+            
             navigationController.popToRootViewController {
-                mainVC.segueToSubscriptionRestoreFlow()
+                if navigationController.viewControllers.first is SettingsHostingController {
+                    mainVC.segueToSubscriptionRestoreFlow()
+                } else {
+                    navigationController.dismiss(animated: true, completion: {
+                        mainVC.segueToSubscriptionRestoreFlow()
+                    })
+                }
             }
         }
     }

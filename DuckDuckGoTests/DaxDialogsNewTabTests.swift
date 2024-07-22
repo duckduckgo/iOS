@@ -28,7 +28,8 @@ final class DaxDialogsNewTabTests: XCTestCase {
 
     override func setUp() {
         settings = MockDaxDialogsSettings()
-        daxDialogs = DaxDialogs(settings: settings, entityProviding: MockEntityProvider())
+        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        daxDialogs = DaxDialogs(settings: settings, entityProviding: MockEntityProvider(), variantManager: mockVariantManager)
     }
 
     override func tearDown() {
@@ -70,43 +71,56 @@ final class DaxDialogsNewTabTests: XCTestCase {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingMajorTrackingSiteShown = true
-        XCTAssertFalse(settings.browsingFinalDialogShown)
+        settings.fireButtonEducationShownOrExpired = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
 
         // THEN
         XCTAssertEqual(homeScreenMessage, .final)
-        XCTAssertTrue(settings.browsingFinalDialogShown)
     }
 
-    func testIfBrowsingAfterSearchShown_andBrowsingWithTrackersShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
+    func testIfBrowsingAfterSearchShown_andBrowsingWithTrackersShown_andFireAnimationShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingWithTrackersShown = true
-        XCTAssertFalse(settings.browsingFinalDialogShown)
+        settings.fireButtonEducationShownOrExpired = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
 
         // THEN
         XCTAssertEqual(homeScreenMessage, .final)
-        XCTAssertTrue(settings.browsingFinalDialogShown)
     }
 
-    func testIfBrowsingAfterSearchShown_andBrowsingWithoutTrackersShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
+    func testIfBrowsingAfterSearchShown_andBrowsingWithoutTrackersShown_andFireAnimationShown_OnNextHomeScreenMessageNew_ReturnsFinal() {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingWithoutTrackersShown = true
-        XCTAssertFalse(settings.browsingFinalDialogShown)
+        settings.fireButtonEducationShownOrExpired = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
 
         // THEN
         XCTAssertEqual(homeScreenMessage, .final)
-        XCTAssertTrue(settings.browsingFinalDialogShown)
     }
+
+    func testIfBrowsingAfterSearchShown_andTrackersDialogsShown_andFirreButtonFialogNotShown_OnNextHomeScreenMessageNew_ReturnsNil() {
+        // GIVEN
+        settings.browsingAfterSearchShown = true
+        settings.browsingWithoutTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = true
+        settings.browsingWithTrackersShown = true
+
+        // WHEN
+        let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertNil(homeScreenMessage)
+        XCTAssertFalse(settings.browsingFinalDialogShown)
+    }
+
 
     func testIfBrowsingAfterSearchShown_andBrowsingMajorTrackingSiteShown_andFinalDialogAlreadyShown_OnNextHomeScreenMessageNew_ReturnsNil() {
         // GIVEN

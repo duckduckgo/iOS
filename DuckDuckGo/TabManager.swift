@@ -35,7 +35,7 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-    private var duckPlayerNavigationHandler: DuckNavigationHandling
+    private var duckPlayer: DuckPlayerProtocol
 
     weak var delegate: TabDelegate?
 
@@ -47,16 +47,15 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         duckPlayer: DuckPlayer = DuckPlayer()) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
+        self.duckPlayer = duckPlayer
         
-        // Init Duck Player Handler
-        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: DuckPlayer())
-
         registerForNotifications()
     }
 
@@ -73,7 +72,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayerNavigationHandler: duckPlayerNavigationHandler)
+                                                              duckPlayer: duckPlayer)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -146,7 +145,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayerNavigationHandler: duckPlayerNavigationHandler)
+                                                              duckPlayer: duckPlayer)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

@@ -64,6 +64,43 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         XCTAssertNotNil(parent.capturedChild)
     }
 
+    func testWhenPresentContextualOnboardingForFireEducational_andBarAtTheTop_TheMessageHandPointsInTheRightDirection() throws {
+        // GIVEN
+        var variantManagerMock = MockVariantManager()
+        variantManagerMock.isSupportedBlock = { feature in
+            feature == .newOnboardingIntro
+        }
+        let appSettings = AppSettingsMock()
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, appSettings: appSettings)
+        let parent = TabViewControllerMock()
+
+        // WHEN
+        sut.presentContextualOnboarding(for: .withOneTracker, in: parent)
+        let view = try XCTUnwrap(find(OnboardingTrackersDoneDialog.self, in: parent))
+
+        // THEN
+        XCTAssertTrue(view.message.string.contains("☝️"))
+    }
+
+    func testWhenPresentContextualOnboardingForFireEducational_andBarAtTheBottom_TheMessageHandPointsInTheRightDirection() throws {
+        // GIVEN
+        var variantManagerMock = MockVariantManager()
+        variantManagerMock.isSupportedBlock = { feature in
+            feature == .newOnboardingIntro
+        }
+        let appSettings = AppSettingsMock()
+        appSettings.currentAddressBarPosition = .bottom
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, appSettings: appSettings)
+        let parent = TabViewControllerMock()
+
+        // WHEN
+        sut.presentContextualOnboarding(for: .withOneTracker, in: parent)
+        let view = try XCTUnwrap(find(OnboardingTrackersDoneDialog.self, in: parent))
+
+        // THEN
+        XCTAssertTrue(view.message.string.contains("👇"))
+    }
+
     func testWhenDismissContextualOnboardingAndVariantSupportsNewOnboardingIntroThenContextualOnboardingIsDismissed() {
         // GIVEN
         let expectation = self.expectation(description: #function)

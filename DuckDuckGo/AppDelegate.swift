@@ -106,12 +106,6 @@ import WebKit
 
     override init() {
         super.init()
-
-        if !didCrashDuringCrashHandlersSetUp {
-            didCrashDuringCrashHandlersSetUp = true
-            CrashLogMessageExtractor.setUp()
-            didCrashDuringCrashHandlersSetUp = false
-        }
     }
 
     // swiftlint:disable:next function_body_length

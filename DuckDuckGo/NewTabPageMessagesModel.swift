@@ -30,13 +30,16 @@ final class NewTabPageMessagesModel: ObservableObject {
     private let homePageMessagesConfiguration: HomePageMessagesConfiguration
     private let notificationCenter: NotificationCenter
     private let pixelFiring: PixelFiring.Type
+    private let privacyProDataReporter: PrivacyProDataReporting?
 
     init(homePageMessagesConfiguration: HomePageMessagesConfiguration,
          notificationCenter: NotificationCenter = .default,
-         pixelFiring: PixelFiring.Type = Pixel.self) {
+         pixelFiring: PixelFiring.Type = Pixel.self,
+         privacyProDataReporter: PrivacyProDataReporting? = nil) {
         self.homePageMessagesConfiguration = homePageMessagesConfiguration
         self.notificationCenter = notificationCenter
         self.pixelFiring = pixelFiring
+        self.privacyProDataReporter = privacyProDataReporter
     }
 
     func load() {
@@ -77,9 +80,11 @@ final class NewTabPageMessagesModel: ObservableObject {
                 self?.dismissHomeMessage(message)
             } onDidAppear: {
                 // no-op
+            } onWillFirePixel: { _, _ in
+                [:]
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
                 guard let action,
                       let self else { return }
 
@@ -127,7 +132,7 @@ final class NewTabPageMessagesModel: ObservableObject {
     }
 
     private func additionalParameters(for messageID: String) -> [String: String] {
-        PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
-                                                                       with: [PixelParameters.message: "\(messageID)"])
+        privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID),
+                                                          with: [PixelParameters.message: "\(messageID)"]) ?? [:]
     }
 }

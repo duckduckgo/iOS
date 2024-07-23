@@ -33,7 +33,8 @@ import NetworkProtection
         AppDependencyProvider.shared.subscriptionManager
     }
 
-    private let reporter = PrivacyProDataReporter.shared
+    // swiftlint:disable:next force_cast
+    private let reporter = (UIApplication.shared.delegate as! AppDelegate).privacyProDataReporter as! PrivacyProDataReporter
 
     private let titles = [
         Sections.authorization: "Authentication",

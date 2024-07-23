@@ -297,7 +297,8 @@ extension MainViewController {
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
-                                                  syncPausedStateManager: syncPausedStateManager)
+                                                  syncPausedStateManager: syncPausedStateManager,
+                                                  privacyProDataReporter: privacyProDataReporter)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,

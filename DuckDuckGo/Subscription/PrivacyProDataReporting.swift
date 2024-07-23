@@ -1,5 +1,5 @@
 //
-//  PrivacyProDataReporter.swift
+//  PrivacyProDataReporting.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -43,8 +43,39 @@ enum PrivacyProPromoParameters: String, CaseIterable {
     }
 }
 
+enum PrivacyProDataReportingUseCase {
+    case messageID(String)
+    case origin(String?)
+    case debug
+}
+
+protocol PrivacyProDataReporting {
+    func isReinstall() -> Bool
+    func isFireButtonUser() -> Bool
+    func isSyncUsed() -> Bool
+    func isFireproofingUsed() -> Bool
+    func isAppOnboardingCompleted() -> Bool
+    func isEmailEnabled() -> Bool
+    func isWidgetAdded() -> Bool
+    func isFrequentUser() -> Bool
+    func isLongTermUser() -> Bool
+    func isAutofillUser() -> Bool
+    func isValidOpenTabsCount() -> Bool
+    func isSearchUser() -> Bool
+
+    func injectSyncService(_ service: DDGSync)
+    func injectTabsModel(_ model: TabsModel)
+    func saveFireCount()
+    func saveWidgetAdded() async
+    func saveApplicationLastSessionEnded()
+    func saveSearchCount()
+
+    func randomizedParameters(for useCase: PrivacyProDataReportingUseCase) -> [String: String]
+    func mergeRandomizedParameters(for useCase: PrivacyProDataReportingUseCase, with parameters: [String: String]) -> [String: String]
+}
+
 // swiftlint:disable identifier_name
-final class PrivacyProDataReporter {
+final class PrivacyProDataReporter: PrivacyProDataReporting {
     enum Key {
         static let fireCountKey = "com.duckduckgo.ios.privacypropromo.FireCount"
         static let isWidgetAddedKey = "com.duckduckgo.ios.privacypropromo.WidgetAdded"
@@ -56,14 +87,6 @@ final class PrivacyProDataReporter {
         static let includedOrigins = "origins"
     }
 
-    enum UseCase {
-        case messageID(String)
-        case origin(String?)
-        case debug
-    }
-
-    public static let shared = PrivacyProDataReporter()
-
     private static let fireCountThreshold = 5
     private static let frequentUserThreshold = 2
     private static let longTermUserThreshold = 30
@@ -71,9 +94,11 @@ final class PrivacyProDataReporter {
     private static let openTabsCountThreshold = 3
     private static let searchCountThreshold = 50
 
-    private lazy var includedOrigins = config.settings(for: .additionalCampaignPixelParams)[Constants.includedOrigins] as? [String]
+    private lazy var includedOrigins = configurationManager
+        .privacyConfig
+        .settings(for: .additionalCampaignPixelParams)[Constants.includedOrigins] as? [String]
 
-    private let config: PrivacyConfiguration
+    private let configurationManager: PrivacyConfigurationManaging
     private let variantManager: VariantManager
     private let userDefaults: UserDefaults
     private let emailManager: EmailManager
@@ -85,7 +110,7 @@ final class PrivacyProDataReporter {
     private var tabsModel: TabsModel?
     private let dateGenerator: () -> Date
 
-    init(config: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
+    init(configurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          variantManager: VariantManager = DefaultVariantManager(),
          userDefaults: UserDefaults = .app,
          emailManager: EmailManager = EmailManager(),
@@ -96,7 +121,7 @@ final class PrivacyProDataReporter {
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,
          dateGenerator: @escaping () -> Date = Date.init) {
-        self.config = config
+        self.configurationManager = configurationManager
         self.variantManager = variantManager
         self.userDefaults = userDefaults
         self.emailManager = emailManager
@@ -119,7 +144,7 @@ final class PrivacyProDataReporter {
 
     /// Collect a randomized subset of parameters iff the Privacy Pro impression/conversion pixels
     /// or the Origin Attribution subscription pixel are being fired
-    func randomizedParameters(for useCase: UseCase) -> [String: String] {
+    func randomizedParameters(for useCase: PrivacyProDataReportingUseCase) -> [String: String] {
         switch useCase {
         case .messageID(let messageID):
             guard let includedOrigins, includedOrigins.contains(messageID) else { return [:] }
@@ -163,7 +188,8 @@ final class PrivacyProDataReporter {
         return additionalParameters
     }
 
-    func mergeRandomizedParameters(for useCase: UseCase, with parameters: [String: String]) -> [String: String] {
+    func mergeRandomizedParameters(for useCase: PrivacyProDataReportingUseCase,
+                                   with parameters: [String: String]) -> [String: String] {
         randomizedParameters(for: useCase).merging(parameters) { $1 }
     }
 

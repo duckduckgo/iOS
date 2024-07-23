@@ -175,12 +175,12 @@ struct HomeMessageView: View {
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
-                    let additionalParameters = PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
-                        PixelParameters.message: "\(viewModel.messageId)",
-                        PixelParameters.sheetResult: "\(result)"
-                    ])
+//                    let additionalParameters = viewModel.privacy .shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
+//                        PixelParameters.message: "\(viewModel.messageId)",
+//                        PixelParameters.sheetResult: "\(result)"
+//                    ])
 
-                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
+//                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
                 }
                 .modifier(ActivityViewPresentationModifier())
             }
@@ -329,27 +329,27 @@ struct HomeMessageView_Previews: PreviewProvider {
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Small",
                                                             sendPixels: false,
                                                             modelType: small,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onWillFirePixel: { _, _ in [:] }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Critical",
                                                             sendPixels: false,
                                                             modelType: critical,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onWillFirePixel: { _, _ in [:] }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Single",
                                                             sendPixels: false,
                                                             modelType: bigSingle,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onWillFirePixel: { _, _ in [:] }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Two",
                                                             sendPixels: false,
                                                             modelType: bigTwo,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onWillFirePixel: { _, _ in [:] }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Promo",
                                                             sendPixels: false,
                                                             modelType: promo,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onWillFirePixel: { _, _ in [:] }))
         }
         .frame(height: 200)
         .padding(.horizontal)

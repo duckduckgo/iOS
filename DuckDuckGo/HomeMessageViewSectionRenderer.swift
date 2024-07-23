@@ -42,12 +42,14 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private weak var controller: HomeViewController?
     
     private let homePageConfiguration: HomePageConfiguration
-    
-    init(homePageConfiguration: HomePageConfiguration) {
+    private let privacyProDataReporter: PrivacyProDataReporting?
+
+    init(homePageConfiguration: HomePageConfiguration, privacyProDataReporter: PrivacyProDataReporting?) {
         self.homePageConfiguration = homePageConfiguration
+        self.privacyProDataReporter = privacyProDataReporter
         super.init()
     }
-    
+
     func install(into controller: HomeViewController) {
         self.controller = controller
         hideLogoIfThereAreMessagesToDisplay()
@@ -113,9 +115,11 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             } onDidAppear: {
                 // no-op
+            } onWillFirePixel: { _, _ in
+                [:]
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
                 guard let action,
                       let self else { return }
 
@@ -163,8 +167,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func additionalParameters(for messageID: String) -> [String: String] {
-        PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
-                                                                       with: [PixelParameters.message: "\(messageID)"])
+        privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID), 
+                                                          with: [PixelParameters.message: "\(messageID)"]) ?? [:]
     }
 
     private func dismissHomeMessage(_ message: HomeMessage,

@@ -45,12 +45,16 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     
     private var homeMessageStorage: HomeMessageStorage
     private var remoteMessagingClient: RemoteMessagingClient
+    private let privacyProDataReporter: PrivacyProDataReporting?
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil, remoteMessagingClient: RemoteMessagingClient) {
+    init(variantManager: VariantManager? = nil, 
+         remoteMessagingClient: RemoteMessagingClient,
+         privacyProDataReporter: PrivacyProDataReporting?) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingClient = remoteMessagingClient
+        self.privacyProDataReporter = privacyProDataReporter
         homeMessages = buildHomeMessages()
     }
 
@@ -118,7 +122,7 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     }
 
     private func additionalParameters(for messageID: String) -> [String: String] {
-        PrivacyProDataReporter.shared.mergeRandomizedParameters(for: .messageID(messageID),
-                                                                       with: [PixelParameters.message: "\(messageID)"])
+        privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID),
+                                                          with: [PixelParameters.message: "\(messageID)"]) ?? [:]
     }
 }

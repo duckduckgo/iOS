@@ -566,7 +566,7 @@
 "autofill.save-password.save.CTA" = "Save Password";
 
 /* Title for the button to report that autofill is not working on a site in autofill settings */
-"autofill.settings.report.not.working.button.title" = "Report a problem with Autofill";
+"autofill.settings.report.not.working.button.title" = "Report a problem with autofill";
 
 /* Button title for the confirmation prompt when reporting autofill is not working for a website */
 "autofill.settings.report.not.working.confirmation.button" = "Send Report";

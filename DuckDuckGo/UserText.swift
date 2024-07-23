@@ -692,7 +692,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let autofillSettingsReportNotWorkingTitle = NSLocalizedString("autofill.settings.report.not.working.title", value:"Autofill not working?", comment: "Title for the row to report that autofill is not working on a site in autofill settings")
     public static let autofillSettingsReportNotWorkingSubtitle = NSLocalizedString("autofill.settings.report.not.working.subtitle", value:"Anonymously report autofill not working on this site. Passwords are never shared.", comment: "Subtitle for the row to report that autofill is not working on a site in autofill settings")
-    public static let autofillSettingsReportNotWorkingButtonTitle = NSLocalizedString("autofill.settings.report.not.working.button.title", value:"Report a problem with Autofill", comment: "Title for the button to report that autofill is not working on a site in autofill settings")
+    public static let autofillSettingsReportNotWorkingButtonTitle = NSLocalizedString("autofill.settings.report.not.working.button.title", value:"Report a problem with autofill", comment: "Title for the button to report that autofill is not working on a site in autofill settings")
     public static func autofillSettingsReportNotWorkingConfirmationPromptTitle(for site: String) -> String {
         let message = NSLocalizedString("autofill.settings.report.not.working.confirmation.title", value: "Report autofill not working on %@?", comment: "Title for the confirmation prompt when reporting autofill is not working for a website")
         return message.format(arguments: site)

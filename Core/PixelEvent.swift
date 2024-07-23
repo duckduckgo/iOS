@@ -735,11 +735,8 @@ extension Pixel {
         case duckPlayerOverlayYoutubeImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
-        case duckPlayerSettingAlwaysOverlaySERP
         case duckPlayerSettingAlwaysOverlayYoutube
         case duckPlayerSettingAlwaysSettings
-        case duckPlayerSettingNeverOverlaySERP
-        case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube

@@ -32,7 +32,6 @@ final class MockTabDelegate: TabDelegate {
     private(set) var didRequestLoadURLCalled = false
     private(set) var capturedURL: URL?
     private(set) var didRequestFireButtonPulseCalled = false
-    private(set) var didRequestPrivacyDashboardButtonPulseCalled = false
     private(set) var tabDidRequestPrivacyDashboardButtonPulseCalled = false
     private(set) var privacyDashboardAnimated: Bool?
 

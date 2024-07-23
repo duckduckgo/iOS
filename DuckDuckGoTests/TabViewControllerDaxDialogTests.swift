@@ -74,13 +74,13 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
 
     func testWhenDidShowTrackersDialogIsCalledThenTabDidRequestPrivacyDashboardButtonPulseIsCalledOnDelegate() {
         // GIVEN
-        XCTAssertFalse(delegateMock.didRequestPrivacyDashboardButtonPulseCalled)
+        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
 
         // WHEN
         sut.didShowContextualOnboardingTrackersDialog()
 
         // THEN
-        XCTAssertTrue(delegateMock.didRequestPrivacyDashboardButtonPulseCalled)
+        XCTAssertTrue(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
     }
 
     func testWhenDidAcknowledgeTrackersDialogIsCalledThenTabDidRequestFireButtonPulseIsCalledOnDelegate() {

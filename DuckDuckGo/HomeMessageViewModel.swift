@@ -125,7 +125,7 @@ struct HomeMessageViewModel {
     
     let onDidClose: (ButtonAction?) -> Void
     let onDidAppear: () -> Void
-    let onWillFirePixel: ((_ useCase: PrivacyProDataReportingUseCase, _ params: [String: String]) -> [String: String])?
+    let onAttachAdditionalParameters: ((_ useCase: PrivacyProDataReportingUseCase, _ params: [String: String]) -> [String: String])?
 
     func mapActionToViewModel(remoteAction: RemoteAction,
                               buttonAction: HomeMessageViewModel.ButtonAction,

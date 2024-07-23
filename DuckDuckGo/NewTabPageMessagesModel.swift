@@ -80,8 +80,8 @@ final class NewTabPageMessagesModel: ObservableObject {
                 self?.dismissHomeMessage(message)
             } onDidAppear: {
                 // no-op
-            } onWillFirePixel: { _, _ in
-                [:]
+            } onAttachAdditionalParameters: { _, params in
+                params
             }
         case .remoteMessage(let remoteMessage):
             return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in

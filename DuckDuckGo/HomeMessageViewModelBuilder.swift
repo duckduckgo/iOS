@@ -44,7 +44,7 @@ struct HomeMessageViewModelBuilder {
             modelType: content,
             onDidClose: onDidClose,
             onDidAppear: onDidAppear,
-            onWillFirePixel: { useCase, params in
+            onAttachAdditionalParameters: { useCase, params in
                 privacyProDataReporter?.mergeRandomizedParameters(for: useCase, with: params) ?? [:]
             }
         )

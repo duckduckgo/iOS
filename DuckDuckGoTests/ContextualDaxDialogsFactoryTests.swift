@@ -68,6 +68,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(delegate.didCallDidTapDismissContextualOnboardingAction)
+        XCTAssertFalse(delegate.didCallDidAcknowledgeContextualOnboardingSearch)
     }
 
     func test_WhenMakeViewForAfterSearchSpec_AndActionIsTapped_AndTrackersDialogHasNotShown_ThenDidTapDismissContextualOnboardingActionIsCalledOnDelegate() throws {
@@ -83,6 +84,26 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
 
         // THEN
         XCTAssertFalse(delegate.didCallDidTapDismissContextualOnboardingAction)
+        XCTAssertTrue(delegate.didCallDidAcknowledgeContextualOnboardingSearch)
+    }
+
+    // MARK: - Visit Website
+
+    func test_WhenMakeViewForVisitWebsiteSpec_AndActionIsTapped_AndTrackersDialogHasShown_ThenNavigateToActionIsCalledOnDelegate() throws {
+        // GIVEN
+        settingsMock.userHasSeenTrackersDialog = true
+        let spec = DaxDialogs.BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .onboardingIntroShownUnique, type: .visitWebsite)
+        let result = sut.makeView(for: spec, delegate: delegate)
+        let view = try XCTUnwrap(find(OnboardingTryVisitingSiteDialog.self, in: result))
+        XCTAssertFalse(delegate.didCallDidTapDismissContextualOnboardingAction)
+
+        // WHEN
+        let urlString = "some.site"
+        view.viewModel.listItemPressed(ContextualOnboardingListItem.site(title: urlString))
+
+        // THEN
+        XCTAssertTrue(delegate.didCallNavigateToURL)
+        XCTAssertEqual(delegate.urlToNavigateTo, URL(string: urlString))
     }
 
     // MARK: - Trackers
@@ -133,6 +154,20 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         }
     }
 
+    // MARK: - Fire
+    func test_WhenMakeViewFire_ThenReturnViewOnboardingFireDialog() throws {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .onboardingIntroShownUnique, type: .fire)
+
+        // WHEN
+        let result = sut.makeView(for: spec, delegate: delegate)
+
+        // THEN
+        let view = try XCTUnwrap(find(OnboardingFireDialog.self, in: result))
+        XCTAssertNotNil(view)
+    }
+
+
     // MARK: - Final
 
     func test_WhenMakeViewForFinalSpec_ThenReturnViewOnboardingFinalDialog() throws {
@@ -174,6 +209,8 @@ final class ContextualOnboardingDelegateMock: ContextualOnboardingDelegate {
     private(set) var didCallDidTapDismissContextualOnboardingAction = false
     private(set) var didCallSearchForQuery = false
     private(set) var didCallNavigateToURL = false
+    private(set) var didCallDidAcknowledgeContextualOnboardingSearch = false
+    private(set) var urlToNavigateTo: URL?
 
     func didShowContextualOnboardingTrackersDialog() {
         didCallDidShowContextualOnboardingTrackersDialog = true
@@ -193,10 +230,11 @@ final class ContextualOnboardingDelegateMock: ContextualOnboardingDelegate {
     
     func navigateTo(url: URL) {
         didCallNavigateToURL = true
+        urlToNavigateTo = url
     }
 
     func didAcknowledgeContextualOnboardingSearch() {
-        
+        didCallDidAcknowledgeContextualOnboardingSearch = true
     }
 
 }

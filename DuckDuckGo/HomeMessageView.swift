@@ -175,12 +175,12 @@ struct HomeMessageView: View {
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
-//                    let additionalParameters = viewModel.privacy .shared.mergeRandomizedParameters(for: .messageID(viewModel.messageId), with: [
-//                        PixelParameters.message: "\(viewModel.messageId)",
-//                        PixelParameters.sheetResult: "\(result)"
-//                    ])
-
-//                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
+                    var additionalParameters = [
+                        PixelParameters.message: "\(viewModel.messageId)",
+                        PixelParameters.sheetResult: "\(result)"
+                    ]
+                    additionalParameters = viewModel.onWillFirePixel?(.messageID(viewModel.messageId), additionalParameters) ?? additionalParameters
+                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
                 }
                 .modifier(ActivityViewPresentationModifier())
             }

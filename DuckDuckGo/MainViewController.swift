@@ -120,7 +120,7 @@ class MainViewController: UIViewController {
     private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
-    let privacyProDataReporter: PrivacyProDataReporting?
+    let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     
@@ -183,7 +183,7 @@ class MainViewController: UIViewController {
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
         syncPausedStateManager: any SyncPausedStateManaging,
-        privacyProDataReporter: PrivacyProDataReporting?
+        privacyProDataReporter: PrivacyProDataReporting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -2511,7 +2511,7 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
             self.refreshUIAfterClear()
         } completion: {
-            self.privacyProDataReporter?.saveFireCount()
+            self.privacyProDataReporter.saveFireCount()
 
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {

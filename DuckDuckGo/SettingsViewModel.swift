@@ -347,7 +347,7 @@ final class SettingsViewModel: ObservableObject {
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging,
-         privacyProDataReporter: PrivacyProDataReporting?) {
+         privacyProDataReporter: PrivacyProDataReporting) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider

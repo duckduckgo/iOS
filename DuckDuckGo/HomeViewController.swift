@@ -77,7 +77,7 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
-    let privacyProDataReporter: PrivacyProDataReporting?
+    let privacyProDataReporter: PrivacyProDataReporting
 
     static func loadFromStoryboard(
         homePageConfiguration: HomePageConfiguration,
@@ -86,7 +86,7 @@ class HomeViewController: UIViewController, NewTabPage {
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        privacyProDataReporter: PrivacyProDataReporting?
+        privacyProDataReporter: PrivacyProDataReporting
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -112,7 +112,7 @@ class HomeViewController: UIViewController, NewTabPage {
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        privacyProDataReporter: PrivacyProDataReporting?
+        privacyProDataReporter: PrivacyProDataReporting
     ) {
         self.homePageConfiguration = homePageConfiguration
         self.tabModel = tabModel

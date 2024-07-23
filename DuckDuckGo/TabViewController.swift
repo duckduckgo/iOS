@@ -143,7 +143,7 @@ class TabViewController: UIViewController {
     }
 #endif
 
-    let privacyProDataReporter: PrivacyProDataReporting?
+    let privacyProDataReporter: PrivacyProDataReporting
 
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
@@ -298,7 +298,7 @@ class TabViewController: UIViewController {
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
                                    duckPlayerNavigationHandler: DuckNavigationHandling,
-                                   privacyProDataReporter: PrivacyProDataReporting?) -> TabViewController {
+                                   privacyProDataReporter: PrivacyProDataReporting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -328,7 +328,7 @@ class TabViewController: UIViewController {
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
                    duckPlayerNavigationHandler: DuckNavigationHandling,
-                   privacyProDataReporter: PrivacyProDataReporting?) {
+                   privacyProDataReporter: PrivacyProDataReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -1625,7 +1625,7 @@ extension TabViewController: WKNavigationDelegate {
                navigationAction.isTargetingMainFrame() {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
-                    privacyProDataReporter?.saveSearchCount()
+                    privacyProDataReporter.saveSearchCount()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

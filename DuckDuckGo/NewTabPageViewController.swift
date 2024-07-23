@@ -36,7 +36,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
-         privacyProDataReporting: PrivacyProDataReporting?) {
+         privacyProDataReporting: PrivacyProDataReporting? = nil) {
 
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter

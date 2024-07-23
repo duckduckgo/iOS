@@ -107,7 +107,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         self.appStoreRestoreFlow = appStoreRestoreFlow
         self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
-        self.privacyProDataReporter = privacyProDataReporter
+        self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
     }
 
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI

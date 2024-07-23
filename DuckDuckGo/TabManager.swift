@@ -36,7 +36,7 @@ class TabManager {
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
     private var duckPlayerNavigationHandler: DuckNavigationHandling
-    private let privacyProDataReporter: PrivacyProDataReporting?
+    private let privacyProDataReporter: PrivacyProDataReporting
 
     weak var delegate: TabDelegate?
 
@@ -49,7 +49,7 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
-         privacyProDataReporter: PrivacyProDataReporting?) {
+         privacyProDataReporter: PrivacyProDataReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase

@@ -92,7 +92,7 @@ import WebKit
 
     private var autofillPixelReporter: AutofillPixelReporter?
 
-    var privacyProDataReporter: PrivacyProDataReporting?
+    var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle
 
@@ -280,6 +280,8 @@ import WebKit
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
+        privacyProDataReporter = PrivacyProDataReporter()
+
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
             .sink { [weak syncService] _ in
@@ -308,13 +310,11 @@ import WebKit
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
 
-        privacyProDataReporter = PrivacyProDataReporter()
-
         let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
-        privacyProDataReporter?.injectTabsModel(tabsModel)
+        privacyProDataReporter.injectTabsModel(tabsModel)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
@@ -525,7 +525,7 @@ import WebKit
 
         syncService.scheduler.notifyAppLifecycleEvent()
         
-        privacyProDataReporter?.injectSyncService(syncService)
+        privacyProDataReporter.injectSyncService(syncService)
 
         fireFailedCompilationsPixelIfNeeded()
 
@@ -555,7 +555,7 @@ import WebKit
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
         Task {
-            await privacyProDataReporter?.saveWidgetAdded()
+            await privacyProDataReporter.saveWidgetAdded()
         }
     }
 
@@ -667,7 +667,7 @@ import WebKit
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-        privacyProDataReporter?.saveApplicationLastSessionEnded()
+        privacyProDataReporter.saveApplicationLastSessionEnded()
     }
 
     private func suspendSync() {

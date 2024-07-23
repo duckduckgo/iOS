@@ -306,17 +306,17 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private var fireButtonPulseTimer: Timer?
     private static let timeToFireButtonExpire: TimeInterval = 1 * 60 * 60
     
-    var lastVisitedOnboardingWebsiteURLPath: String? {
+    private var lastVisitedOnboardingWebsiteURLPath: String? {
         guard isNewOnboarding else { return nil }
         return settings.lastVisitedOnboardingWebsiteURLPath
     }
 
-    func saveLastVisitedOnboardingWebsite(url: URL?) {
+    private func saveLastVisitedOnboardingWebsite(url: URL?) {
         guard isNewOnboarding, let url = url else { return }
         settings.lastVisitedOnboardingWebsiteURLPath = url.absoluteString
     }
 
-    func removeLastVisitedOnboardingWebsite() {
+    private func removeLastVisitedOnboardingWebsite() {
         guard isNewOnboarding else { return }
         settings.lastVisitedOnboardingWebsiteURLPath = nil
     }
@@ -356,7 +356,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case BrowsingSpec.SpecType.fire.rawValue:
             return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .fire)
         case BrowsingSpec.SpecType.final.rawValue:
-            return BrowsingSpec.final
+            return nil
         default: return nil
         }
     }
@@ -493,7 +493,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         if let spec {
             saveLastShownDaxDialog(specType: spec.type)
-            DaxDialogs.shared.saveLastVisitedOnboardingWebsite(url: privacyInfo.url)
+            saveLastVisitedOnboardingWebsite(url: privacyInfo.url)
         } else {
             removeLastVisitedOnboardingWebsite()
             removeLastShownDaxDialog()

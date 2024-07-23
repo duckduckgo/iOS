@@ -44,11 +44,11 @@ final class PrivacyProDataReporterTests: XCTestCase {
         }
     }
     """.data(using: .utf8)!
-    lazy var config = PrivacyConfigurationManager(fetchedETag: nil,
-                                                  fetchedData: nil,
-                                                  embeddedDataProvider: MockEmbeddedDataProvider(data: testConfig, etag: "etag"),
-                                                  localProtection: MockDomainsProtectionStore(),
-                                                  internalUserDecider: DefaultInternalUserDecider()).privacyConfig
+    lazy var configManager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                         fetchedData: nil,
+                                                         embeddedDataProvider: MockEmbeddedDataProvider(data: testConfig, etag: "etag"),
+                                                         localProtection: MockDomainsProtectionStore(),
+                                                         internalUserDecider: DefaultInternalUserDecider())
 
     let testSuiteName = "PrivacyProDataReporterTests"
     var testDefaults: UserDefaults!
@@ -62,7 +62,7 @@ final class PrivacyProDataReporterTests: XCTestCase {
         super.setUp()
         testDefaults = UserDefaults(suiteName: testSuiteName)
         reporter = PrivacyProDataReporter(
-            config: config,
+            configurationManager: configManager,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "sc", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
             emailManager: EmailManager(storage: MockEmailStorage.mock),
@@ -74,7 +74,7 @@ final class PrivacyProDataReporterTests: XCTestCase {
             dateGenerator: mockCalendar.now
         )
         anotherReporter = PrivacyProDataReporter(
-            config: config,
+            configurationManager: configManager,
             variantManager: MockVariantManager(currentVariant: VariantIOS(name: "ru", weight: 0, isIncluded: VariantIOS.When.always, features: [])),
             userDefaults: testDefaults,
             emailManager: EmailManager(storage: MockEmailStorage.anotherMock),

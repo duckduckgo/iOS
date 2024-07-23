@@ -167,7 +167,9 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func additionalParameters(for messageID: String) -> [String: String] {
-        privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID), with: [PixelParameters.message: "\(messageID)"]) ?? [:]
+        let defaultParameters = [PixelParameters.message: "\(messageID)"]
+        return privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID),
+                                                                 with: defaultParameters) ?? defaultParameters
     }
 
     private func dismissHomeMessage(_ message: HomeMessage,

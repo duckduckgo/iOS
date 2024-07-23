@@ -45,7 +45,7 @@ struct HomeMessageViewModelBuilder {
             onDidClose: onDidClose,
             onDidAppear: onDidAppear,
             onAttachAdditionalParameters: { useCase, params in
-                privacyProDataReporter?.mergeRandomizedParameters(for: useCase, with: params) ?? [:]
+                privacyProDataReporter?.mergeRandomizedParameters(for: useCase, with: params) ?? params
             }
         )
     }

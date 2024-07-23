@@ -116,6 +116,30 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertTrue(onboardingLogicMock.didCallSetFireEducationMessageSeen)
     }
 
+    func testWhenDidAcknowledgeContextualOnboardingSearchIsCalledThenSetSearchMessageSeenOnLogic() {
+        // GIVEN
+        XCTAssertFalse(onboardingLogicMock.didCallsetsetSearchMessageSeen)
+
+        // WHEN
+        sut.didAcknowledgeContextualOnboardingSearch()
+
+        // THEN
+        XCTAssertTrue(onboardingLogicMock.didCallsetsetSearchMessageSeen)
+    }
+
+    func testWhenDidShowContextualOnboardingTrackersDialog_ShieldIconAnimationActivated() {
+        // GIVEN
+        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
+        XCTAssertNil(delegateMock.privacyDashboardAnimated)
+
+        // WHEN
+        sut.didShowContextualOnboardingTrackersDialog()
+
+        // THEN
+        XCTAssertTrue(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
+        XCTAssertTrue(delegateMock.privacyDashboardAnimated ?? false)
+    }
+
     func testOnPrivacyDashboardShown_ShieldIconAnimationRemoved() {
         // GIVEN
         XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)

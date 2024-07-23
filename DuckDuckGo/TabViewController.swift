@@ -1373,7 +1373,6 @@ extension TabViewController: WKNavigationDelegate {
             scheduleTrackerNetworksAnimation(collapsing: true)
             return
         }
-
         guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
 
             // Dismiss Contextual onboarding if there's no message to show.
@@ -1406,7 +1405,6 @@ extension TabViewController: WKNavigationDelegate {
 
             self.chromeDelegate?.omniBar.resignFirstResponder()
             self.chromeDelegate?.setBarsHidden(false, animated: true)
-
 
             // Present the contextual onboarding
             contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)

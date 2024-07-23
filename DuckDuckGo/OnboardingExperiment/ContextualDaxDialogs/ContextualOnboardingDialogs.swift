@@ -120,6 +120,19 @@ struct OnboardingFirstSearchDoneDialog: View {
     }
 }
 
+struct OnboardingFireDialog: View {
+   
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .left) {
+                VStack {
+                    OnboardingFireButtonDialogContent()
+                }
+            }
+        }
+    }
+}
+
 struct OnboardingTrackersDoneDialog: View {
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
 

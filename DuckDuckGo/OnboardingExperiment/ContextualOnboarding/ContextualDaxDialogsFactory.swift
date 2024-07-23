@@ -53,8 +53,12 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         switch spec.type {
         case .afterSearch:
             rootView = AnyView(afterSearchDialog(shouldFollowUpToWebsiteSearch: !contextualOnboardingSettings.userHasSeenTrackersDialog, delegate: delegate))
+        case .visitWebsite:
+            rootView = AnyView(tryVisitingSiteDialog(delegate: delegate))
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
             rootView = AnyView(withTrackersDialog(for: spec, shouldFollowUpToFireDialog: !contextualOnboardingSettings.userHasSeenFireDialog, delegate: delegate))
+        case .fire:
+            rootView = AnyView(OnboardingFireDialog())
         case .final:
             rootView = AnyView(endOfJourneyDialog(delegate: delegate))
         }
@@ -81,6 +85,11 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             }
         }
         return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
+    }
+
+    private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
+        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
     }
 
     private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, shouldFollowUpToFireDialog: Bool, delegate: ContextualOnboardingDelegate) -> some View {

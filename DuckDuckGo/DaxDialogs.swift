@@ -78,11 +78,15 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             settings.browsingWithTrackersShown = flag
         case .afterSearch:
             settings.browsingAfterSearchShown = flag
+        case .visitWebsite:
+            break
         case .withoutTrackers:
             settings.browsingWithoutTrackersShown = flag
         case .siteIsMajorTracker, .siteOwnedByMajorTracker:
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
+        case .fire:
+            settings.fireButtonEducationShownOrExpired = flag
         case .final:
             settings.browsingFinalDialogShown = flag
         }
@@ -93,11 +97,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         enum SpecType: String {
             case afterSearch
+            case visitWebsite
             case withoutTrackers
             case siteIsMajorTracker
             case siteOwnedByMajorTracker
             case withOneTracker
             case withMultipleTrackers
+            case fire
             case final
         }
         // swiftlint:enable nesting
@@ -334,6 +340,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         switch dialogType {
         case BrowsingSpec.SpecType.afterSearch.rawValue:
             return BrowsingSpec.afterSearch
+        case BrowsingSpec.SpecType.visitWebsite.rawValue:
+            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .visitWebsite)
         case BrowsingSpec.SpecType.withoutTrackers.rawValue:
             return BrowsingSpec.withoutTrackers
         case BrowsingSpec.SpecType.siteIsMajorTracker.rawValue:
@@ -345,6 +353,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case BrowsingSpec.SpecType.withOneTracker.rawValue, BrowsingSpec.SpecType.withMultipleTrackers.rawValue:
             guard let entityNames = blockedEntityNames(privacyInfo.trackerInfo) else { return nil }
             return trackersBlockedMessage(entityNames)
+        case BrowsingSpec.SpecType.fire.rawValue:
+            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .fire)
         case BrowsingSpec.SpecType.final.rawValue:
             return BrowsingSpec.final
         default: return nil
@@ -379,13 +389,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     func setSearchMessageSeen() {
         guard isNewOnboarding else { return }
-        removeLastShownDaxDialog()
+        saveLastShownDaxDialog(specType: .visitWebsite)
     }
 
     func setFireEducationMessageSeen() {
         guard isNewOnboarding else { return }
         settings.fireButtonEducationShownOrExpired = true
-        removeLastShownDaxDialog()
+        saveLastShownDaxDialog(specType: .fire)
     }
 
     func setFinalOnboardingDialogSeen() {

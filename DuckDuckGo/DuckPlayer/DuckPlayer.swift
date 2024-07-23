@@ -128,7 +128,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         // Fire Pixels
         switch userValues.duckPlayerMode {
         case .enabled:
-            Pixel.fire(pixel: Pixel.Event.duckPlayerSettingAlwaysOverlayYoutube, debounce: 2)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerSettingAlwaysDuckPlayer, debounce: 2)
         default:
             break
         }

@@ -39,6 +39,10 @@ protocol DaxDialogsSettings {
 
     var browsingFinalDialogShown: Bool { get set }
 
+    var lastVisitedOnboardingWebsiteURLPath: String? { get set }
+
+    var lastShownContextualOnboardingDialogType: String? { get set }
+
 }
 
 class DefaultDaxDialogsSettings: DaxDialogsSettings {
@@ -70,6 +74,12 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     @UserDefaultsWrapper(key: .daxBrowsingFinalDialogShown, defaultValue: false)
     var browsingFinalDialogShown: Bool
 
+    @UserDefaultsWrapper(key: .daxLastVisitedOnboardingWebsite, defaultValue: nil)
+    var lastVisitedOnboardingWebsiteURLPath: String?
+
+    @UserDefaultsWrapper(key: .daxLastShownContextualOnboardingDialogType, defaultValue: nil)
+    var lastShownContextualOnboardingDialogType: String?
+
 }
 
 class InMemoryDaxDialogsSettings: DaxDialogsSettings {
@@ -91,5 +101,9 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     var fireButtonPulseDateShown: Date?
     
     var browsingFinalDialogShown = false
+
+    var lastVisitedOnboardingWebsiteURLPath: String?
+
+    var lastShownContextualOnboardingDialogType: String?
 
 }

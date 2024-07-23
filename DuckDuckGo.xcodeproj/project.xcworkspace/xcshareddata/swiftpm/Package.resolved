@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "b2f5a7159088ff5c4fd2eeaa4dcf5c001fc8f7fb",
-        "version" : "175.0.0"
+        "branch" : "dominik/rmf-track-shown-messages",
+        "revision" : "0cdf15972c53c1037772c52c6d91eb39a1df6798"
       }
     },
     {

@@ -119,7 +119,14 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 params
             }
         case .remoteMessage(let remoteMessage):
+            let onDidAppear = { [weak self] in
+                self?.homePageConfiguration.didAppear(message)
+            }
+            if controller?.collectionView.window != nil {
+                onDidAppear()
+            }
             return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
+
                 guard let action,
                       let self else { return }
 
@@ -160,8 +167,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     }
 
                 }
-            } onDidAppear: { [weak self] in
-                self?.homePageConfiguration.didAppear(message)
+            } onDidAppear: {
+                onDidAppear()
             }
         }
     }

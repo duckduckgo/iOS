@@ -8,10 +8,8 @@ appId: com.duckduckgo.mobile.ios
 ---
 
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load a website
 - assertVisible:

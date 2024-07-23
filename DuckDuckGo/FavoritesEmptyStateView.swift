@@ -21,7 +21,8 @@ import SwiftUI
 
 struct FavoritesEmptyStateView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+    @Environment(\.isLandscapeOrientation) var isLandscape
+
     @State var headerPadding: CGFloat = 10
 
     var body: some View {
@@ -41,7 +42,7 @@ struct FavoritesEmptyStateView: View {
                     })
                 )
                 .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass))
+                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape))
                     let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
                     let leftoverWidth = fullWidth - allColumnsWidth
                     let spacingSize = leftoverWidth / (columnsCount)

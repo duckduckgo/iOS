@@ -19,38 +19,25 @@
 
 import SwiftUI
 
-enum Shortcut: Int, CaseIterable, Equatable, Identifiable {
-    var id: Int { rawValue }
-
-    case bookmarks, aiChat, vpn, passwords
-
-    var name: String {
-        switch self {
-        case .bookmarks:
-            UserText.homeTabShortcutBookmarks
-        case .aiChat:
-            UserText.homeTabShortcutAIChat
-        case .vpn:
-            UserText.homeTabShortcutVPN
-        case .passwords:
-            UserText.homeTabShortcutPasswords
-        }
-    }
-}
-
 struct ShortcutsView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State var enabledShortcuts: [Shortcut] = Array(Shortcut.allCases.prefix(upTo: 3))
+    @ObservedObject private(set) var model: ShortcutsModel
 
     var body: some View {
         NewTabPageGridView { _ in
-            ForEach(enabledShortcuts) { shortcut in
-                ShortcutItemView(name: shortcut.name)
+            ForEach(model.enabledShortcuts) { shortcut in
+                Button {
+                    model.openShortcut(shortcut)
+                } label: {
+                    ShortcutItemView(shortcut: shortcut, accessoryType: nil)
+                }
             }
         }
     }
 }
 
 #Preview {
-    ShortcutsView()
+    ScrollView {
+        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()))
+    }
+    .background(Color(designSystemColor: .background))
 }

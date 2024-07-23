@@ -10,6 +10,14 @@ on:
         description: "Asana task URL"
         required: false
         type: string
+      build-type:
+        description: "Build Configuration"
+        type: choice
+        required: true
+        default: 'Alpha'
+        options:
+           - Alpha
+           - Release
 
 jobs:
   make-adhoc:
@@ -41,10 +49,15 @@ jobs:
           APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
+          lane_to_use="adhoc"
+          if [[ "${{ github.event.inputs.build-type }}" == "Release" ]]; then
+            lane_to_use="release_adhoc"
+          fi
+          
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
-            bundle exec fastlane adhoc suffix:${{ github.event.inputs.suffix }}
+            bundle exec fastlane ${lane_to_use} suffix:${{ github.event.inputs.suffix }}
           else
-            bundle exec fastlane adhoc
+            bundle exec fastlane ${lane_to_use}
           fi
 
       - name: Set filenames

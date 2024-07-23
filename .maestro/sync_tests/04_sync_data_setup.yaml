@@ -5,17 +5,9 @@ name: 04_sync_data_setup
 
 ---
 
-# Clear and launch
-- clearState
-- launchApp
-
-# Run onboarding Flow
+# Set up 
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Add local favorite and bookmark
 - runFlow:

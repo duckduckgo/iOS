@@ -109,7 +109,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(messageId: "", modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
+            return HomeMessageViewModel(messageId: "", sendPixels: false, modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             } onDidAppear: {
                 // no-op
@@ -126,27 +126,35 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    Pixel.fire(pixel: .remoteMessageActionClicked,
-                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        Pixel.fire(pixel: .remoteMessageActionClicked,
+                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    Pixel.fire(pixel: .remoteMessagePrimaryActionClicked,
-                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        Pixel.fire(pixel: .remoteMessagePrimaryActionClicked,
+                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .secondaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    Pixel.fire(pixel: .remoteMessageSecondaryActionClicked,
-                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        Pixel.fire(pixel: .remoteMessageSecondaryActionClicked,
+                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 case .close:
                     self.dismissHomeMessage(message, at: indexPath, in: collectionView)
-                    Pixel.fire(pixel: .remoteMessageDismissed,
-                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    if remoteMessage.isMetricsEnabled {
+                        Pixel.fire(pixel: .remoteMessageDismissed,
+                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                    }
 
                 }
             } onDidAppear: { [weak self] in

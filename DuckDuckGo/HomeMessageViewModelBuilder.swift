@@ -37,7 +37,13 @@ struct HomeMessageViewModelBuilder {
                       onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
-        return HomeMessageViewModel(messageId: remoteMessage.id, modelType: content, onDidClose: onDidClose, onDidAppear: onDidAppear)
+        return HomeMessageViewModel(
+            messageId: remoteMessage.id,
+            sendPixels: remoteMessage.isMetricsEnabled,
+            modelType: content,
+            onDidClose: onDidClose,
+            onDidAppear: onDidAppear
+        )
     }
 
 }

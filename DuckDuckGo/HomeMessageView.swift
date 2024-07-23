@@ -327,22 +327,27 @@ struct HomeMessageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Small",
+                                                            sendPixels: false,
                                                             modelType: small,
                                                             onDidClose: { _ in }, onDidAppear: {}))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Critical",
+                                                            sendPixels: false,
                                                             modelType: critical,
                                                             onDidClose: { _ in }, onDidAppear: {}))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Single",
+                                                            sendPixels: false,
                                                             modelType: bigSingle,
                                                             onDidClose: { _ in }, onDidAppear: {}))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Two",
+                                                            sendPixels: false,
                                                             modelType: bigTwo,
                                                             onDidClose: { _ in }, onDidAppear: {}))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Promo",
+                                                            sendPixels: false,
                                                             modelType: promo,
                                                             onDidClose: { _ in }, onDidAppear: {}))
         }

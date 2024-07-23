@@ -3,14 +3,10 @@ tags:
     - adClick
 
 ---
-- clearState
-- launchApp
+
+# Set up
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:

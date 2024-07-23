@@ -1,0 +1,14 @@
+<svg fill="none" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Bookmarks-Color-32_svg__a)">
+    <path fill="#C18010" d="M6 4a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z"/>
+    <path fill="#FFF0C2" d="M4 6.5a5 5 0 0 1 5-5h17A2.5 2.5 0 0 1 28.5 4v24a2.5 2.5 0 0 1-2.5 2.5H9a5 5 0 0 1-5-5z"/>
+    <path fill="#E2A412" d="M2 7.5A7.5 7.5 0 0 1 9.5 0h13a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4h-13A7.5 7.5 0 0 1 2 24.5z"/>
+    <path fill="#C18010" d="M9.5 32H6a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h3.5z"/>
+    <path fill="#3969EF" d="M23 0h-7v14.518a1 1 0 0 0 1.594.804l1.312-.97a1 1 0 0 1 1.188 0l1.312.97A1 1 0 0 0 23 14.518z"/>
+  </g>
+  <defs>
+    <clipPath id="Bookmarks-Color-32_svg__a">
+      <path fill="#fff" d="M0 0h32v32H0z"/>
+    </clipPath>
+  </defs>
+</svg>

@@ -107,7 +107,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         case Handlers.sendDuckPlayerPixel:
             return handleSendJSPixel
         case Handlers.initialSetup:
-            return duckPlayer.initialSetup
+            return duckPlayer.initialSetupOverlay
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
             // TODO: Send pixel here

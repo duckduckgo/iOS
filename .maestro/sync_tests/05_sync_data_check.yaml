@@ -8,17 +8,10 @@ name: 05_sync_data_check
 #            and it will fail if 04 is not executed before. 
 #            The test is split in two different flow to accomodate 
 #            for Maestro CI max execution time. 
-# Clear and launch
-- clearState
-- launchApp
 
-# Run onboarding Flow
+# Set up 
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 #  Copy Recovery Code
 - tapOn: Settings

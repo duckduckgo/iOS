@@ -33,6 +33,7 @@ enum AutofillSettingsSource: String {
     case appIconShortcut = "app_icon_shortcut"
     case homeScreenWidget = "home_screen_widget"
     case lockScreenWidget = "lock_screen_widget"
+    case newTabPageShortcut = "new_tab_page_shortcut"
 }
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {

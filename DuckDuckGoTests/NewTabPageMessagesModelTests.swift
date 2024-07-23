@@ -186,6 +186,63 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
+    func testDoesNotFirePixelOnCloseWhenMetricsAreDisabled() throws {
+        let sut = createSUT()
+        messagesConfiguration.homeMessages = [
+            .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
+        ]
+        sut.load()
+
+        let model = try XCTUnwrap(sut.homeMessageViewModels.first)
+
+        model.onDidClose(.close)
+
+        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastParams)
+    }
+
+    func testDoesNotFirePixelOnActionWhenMetricsAreDisabled() throws {
+        let sut = createSUT()
+        messagesConfiguration.homeMessages = [
+            .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
+        ]
+        sut.load()
+
+        let model = try XCTUnwrap(sut.homeMessageViewModels.first)
+        model.onDidClose(.action(isShare: false))
+
+        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastParams)
+    }
+
+    func testDoesNotFirePixelOnPrimaryActionWhenMetricsAreDisabled() throws {
+        let sut = createSUT()
+        messagesConfiguration.homeMessages = [
+            .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
+        ]
+        sut.load()
+
+        let model = try XCTUnwrap(sut.homeMessageViewModels.first)
+        model.onDidClose(.primaryAction(isShare: false))
+
+        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastParams)
+    }
+
+    func testDoesNotFirePixelOnSecondaryActionWhenMetricsAreDisabled() throws {
+        let sut = createSUT()
+        messagesConfiguration.homeMessages = [
+            .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
+        ]
+        sut.load()
+
+        let model = try XCTUnwrap(sut.homeMessageViewModels.first)
+        model.onDidClose(.secondaryAction(isShare: false))
+
+        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastParams)
+    }
+
     private func createSUT() -> NewTabPageMessagesModel {
         NewTabPageMessagesModel(homePageMessagesConfiguration: messagesConfiguration,
                                 notificationCenter: notificationCenter,
@@ -217,7 +274,15 @@ private class HomePageMessagesConfigurationMock: HomePageMessagesConfiguration {
 }
 
 private extension HomeMessage {
-    static func mockRemote(withType type: RemoteMessageModelType) -> Self {
-        HomeMessage.remoteMessage(remoteMessage: .init(id: "foo", content: type, matchingRules: [], exclusionRules: []))
+    static func mockRemote(withType type: RemoteMessageModelType, isMetricsEnabled: Bool = true) -> Self {
+        HomeMessage.remoteMessage(
+            remoteMessage: .init(
+                id: "foo",
+                content: type,
+                matchingRules: [],
+                exclusionRules: [],
+                isMetricsEnabled: isMetricsEnabled
+            )
+        )
     }
 }

@@ -31,6 +31,7 @@ struct HomeMessageViewModel {
     }
 
     let messageId: String
+    let sendPixels: Bool
     let modelType: RemoteMessageModelType
 
     var image: String? {

@@ -33,6 +33,7 @@ struct NetworkProtectionRootView: View {
         statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
                                                            settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
+                                                           serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository)
     }
     var body: some View {

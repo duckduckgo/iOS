@@ -5,10 +5,11 @@ tags:
 
 ---
 
-# Set up 
-- clearState
+# Set up  - custom setup
 - launchApp:
     appId: "com.duckduckgo.mobile.ios"
+    clearState: true
+    clearKeychain: true
     arguments: 
        "autoclear-ui-test": true
 

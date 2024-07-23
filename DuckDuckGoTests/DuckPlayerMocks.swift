@@ -110,6 +110,26 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
 }
 
 final class MockDuckPlayer: DuckPlayerProtocol {
+    var hostView: UIViewController?
+    
+    func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func setHostViewController(_ vc: UIViewController) {}
+    
+    func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
     var settings: any DuckPlayerSettingsProtocol
     
     init(settings: DuckPlayerSettingsProtocol) {

@@ -24,16 +24,14 @@ struct ShortcutAccessoryView: View {
     let accessoryType: ShortcutAccessoryType
 
     var body: some View {
-        ZStack {
-            Circle()
-                .foregroundStyle(accessoryType.backgroundColor)
-            Image(accessoryType.iconResource)
-                .resizable()
-                .padding(4)
-                .foregroundColor(accessoryType.foregroundColor)
-                .aspectRatio(contentMode: .fit)
-        }
-        .shadow(color: .shade(0.15), radius: 1, y: 1)
+        Circle()
+            .foregroundStyle(accessoryType.backgroundColor)
+            .overlay {
+                Image(accessoryType.iconResource)
+                    .foregroundColor(accessoryType.foregroundColor)
+                    .aspectRatio(contentMode: .fit)
+            }
+            .shadow(color: .shade(0.15), radius: 1, y: 1)
     }
 }
 
@@ -46,9 +44,9 @@ private extension ShortcutAccessoryType {
     var iconResource: ImageResource {
         switch self {
         case .selected:
-            return .check24
+            return .check16Alt
         case .add:
-            return .add24
+            return .add16
         }
     }
 

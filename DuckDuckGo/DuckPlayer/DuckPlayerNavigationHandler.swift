@@ -157,6 +157,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
                    let id = videoParameterItem.value,
                     let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+                        Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube, debounce: 2)
                         webView.load(URLRequest(url: newURL))
                         return
                 }

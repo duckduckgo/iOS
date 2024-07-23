@@ -566,7 +566,7 @@
 "autofill.save-password.save.CTA" = "Save Password";
 
 /* Title for the button to report that autofill is not working on a site in autofill settings */
-"autofill.settings.report.not.working.button.title" = "Send Anonymous Report";
+"autofill.settings.report.not.working.button.title" = "Report a problem with Autofill";
 
 /* Button title for the confirmation prompt when reporting autofill is not working for a website */
 "autofill.settings.report.not.working.confirmation.button" = "Send Report";
@@ -575,7 +575,7 @@
 "autofill.settings.report.not.working.confirmation.message" = "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.";
 
 /* Title for the confirmation prompt when reporting autofill is not working for a website */
-"autofill.settings.report.not.working.confirmation.title" = "Report Autofill not Working on %@?";
+"autofill.settings.report.not.working.confirmation.title" = "Report autofill not working on %@?";
 
 /* Message shown to user when they submit a report that autofill is not working for a website */
 "autofill.settings.report.not.working.sent.confirmation" = "Thank you! Your report will help us make DuckDuckGo better for everyone.";

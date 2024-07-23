@@ -692,9 +692,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public static let autofillSettingsReportNotWorkingTitle = NSLocalizedString("autofill.settings.report.not.working.title", value:"Autofill not working?", comment: "Title for the row to report that autofill is not working on a site in autofill settings")
     public static let autofillSettingsReportNotWorkingSubtitle = NSLocalizedString("autofill.settings.report.not.working.subtitle", value:"Anonymously report autofill not working on this site. Passwords are never shared.", comment: "Subtitle for the row to report that autofill is not working on a site in autofill settings")
-    public static let autofillSettingsReportNotWorkingButtonTitle = NSLocalizedString("autofill.settings.report.not.working.button.title", value:"Send Anonymous Report", comment: "Title for the button to report that autofill is not working on a site in autofill settings")
+    public static let autofillSettingsReportNotWorkingButtonTitle = NSLocalizedString("autofill.settings.report.not.working.button.title", value:"Report a problem with Autofill", comment: "Title for the button to report that autofill is not working on a site in autofill settings")
     public static func autofillSettingsReportNotWorkingConfirmationPromptTitle(for site: String) -> String {
-        let message = NSLocalizedString("autofill.settings.report.not.working.confirmation.title", value: "Report Autofill not Working on %@?", comment: "Title for the confirmation prompt when reporting autofill is not working for a website")
+        let message = NSLocalizedString("autofill.settings.report.not.working.confirmation.title", value: "Report autofill not working on %@?", comment: "Title for the confirmation prompt when reporting autofill is not working for a website")
         return message.format(arguments: site)
     }
     public static let autofillSettingsReportNotWorkingConfirmationPromptMessage = NSLocalizedString("autofill.settings.report.not.working.confirmation.message", value: "Reports sent to DuckDuckGo are anonymous and do not include your username, password, or any other personally identifiable information.\n\nThe report only includes the website url and and the status of some autofill settings.", comment: "Message for the confirmation prompt when reporting autofill is not working for a website")

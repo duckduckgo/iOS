@@ -115,6 +115,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
 }
 
 final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
+    
     var daxDialogsStackView: UIStackView = UIStackView()
     var webViewContainerView: UIView  = UIView()
     var daxContextualOnboardingController: UIViewController?
@@ -166,6 +167,10 @@ final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
     func navigateTo(url: URL) {
         didCallNavigateToURL = true
         capturedURL = url
+    }
+
+    func didAcknowledgeContextualOnboardingSearch() {
+        
     }
 
 }

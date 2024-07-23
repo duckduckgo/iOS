@@ -33,6 +33,8 @@ final class MockTabDelegate: TabDelegate {
     private(set) var capturedURL: URL?
     private(set) var didRequestFireButtonPulseCalled = false
     private(set) var didRequestPrivacyDashboardButtonPulseCalled = false
+    private(set) var tabDidRequestPrivacyDashboardButtonPulseCalled = false
+    private(set) var privacyDashboardAnimated: Bool?
 
 
     func tabWillRequestNewTab(_ tab: DuckDuckGo.TabViewController) -> UIKeyModifierFlags? { nil }
@@ -82,7 +84,8 @@ final class MockTabDelegate: TabDelegate {
     }
 
     func tabDidRequestPrivacyDashboardButtonPulse(tab: DuckDuckGo.TabViewController, animated: Bool) {
-        didRequestPrivacyDashboardButtonPulseCalled = true
+        tabDidRequestPrivacyDashboardButtonPulseCalled = true
+        privacyDashboardAnimated = animated
     }
 
     func tabDidRequestSearchBarRect(tab: DuckDuckGo.TabViewController) -> CGRect { .zero }

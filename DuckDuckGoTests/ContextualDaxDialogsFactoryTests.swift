@@ -195,4 +195,8 @@ final class ContextualOnboardingDelegateMock: ContextualOnboardingDelegate {
         didCallNavigateToURL = true
     }
 
+    func didAcknowledgeContextualOnboardingSearch() {
+        
+    }
+
 }

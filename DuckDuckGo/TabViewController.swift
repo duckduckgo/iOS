@@ -1374,8 +1374,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        guard let spec = daxBrowsingSpec(for: privacyInfo) else {
-            DaxDialogs.shared.removeLastVisitedOnboardingWebsite()
+        guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
 
             // Dismiss Contextual onboarding if there's no message to show.
             contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
@@ -1408,8 +1407,7 @@ extension TabViewController: WKNavigationDelegate {
             self.chromeDelegate?.omniBar.resignFirstResponder()
             self.chromeDelegate?.setBarsHidden(false, animated: true)
 
-            // Save the last onboarding website visited to show Dax if the user kills the App and restart during the onboarding.
-            DaxDialogs.shared.saveLastVisitedOnboardingWebsite(url: daxDialogSourceURL)
+
             // Present the contextual onboarding
             contextualOnboardingPresenter.presentContextualOnboarding(for: spec, in: self)
 
@@ -1419,25 +1417,6 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
     }
-
-    private func daxBrowsingSpec(for privacyInfo: PrivacyInfo) -> DaxDialogs.BrowsingSpec? {
-        // If old onboarding re-use existing behaviour
-        guard DefaultVariantManager().isSupported(feature: .newOnboardingIntro) else {
-            return DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo)
-        }
-
-        // If new onboarding...
-        let spec: DaxDialogs.BrowsingSpec?
-        // If the user refreshed the web page or restarted the App while onboarding show last Dax that was shown. Otherwise compute next dialog to show.
-        if let lastVisitedOnboardingWebsitePath = DaxDialogs.shared.lastVisitedOnboardingWebsiteURLPath, lastVisitedOnboardingWebsitePath == url?.absoluteString {
-            spec = DaxDialogs.shared.lastShownDaxDialog(privacyInfo: privacyInfo)
-        } else {
-            spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo)
-        }
-
-        return spec
-    }
-
 
     private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {

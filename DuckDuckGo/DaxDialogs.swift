@@ -335,7 +335,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         settings.lastShownContextualOnboardingDialogType = nil
     }
 
-    func lastShownDaxDialog(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+    private func lastShownDaxDialog(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard let dialogType = lastShownDaxDialogType else { return  nil }
         switch dialogType {
         case BrowsingSpec.SpecType.afterSearch.rawValue:
@@ -404,12 +404,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
-        guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
-        
-        let message = if isNewOnboarding {
-            nextBrowsingMessageExperiment(privacyInfo: privacyInfo)
+
+        var message: BrowsingSpec?
+        if isNewOnboarding {
+            message = nextBrowsingMessageExperiment(privacyInfo: privacyInfo)
         } else {
-            nextBrowsingMessage(privacyInfo: privacyInfo)
+            guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
+            message = nextBrowsingMessage(privacyInfo: privacyInfo)
         }
 
         if message != nil {
@@ -446,6 +447,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+
+        if let lastVisitedOnboardingWebsiteURLPath,
+            compareUrls(url1: URL(string: lastVisitedOnboardingWebsiteURLPath), url2: privacyInfo.url) {
+            return lastShownDaxDialog(privacyInfo: privacyInfo)
+        }
 
         func hasTrackers(host: String) -> Bool {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
@@ -487,7 +493,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         if let spec {
             saveLastShownDaxDialog(specType: spec.type)
+            DaxDialogs.shared.saveLastVisitedOnboardingWebsite(url: privacyInfo.url)
         } else {
+            removeLastVisitedOnboardingWebsite()
             removeLastShownDaxDialog()
         }
 
@@ -641,5 +649,32 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private func isOwnedByFacebookOrGoogle(_ host: String) -> Entity? {
         guard let entity = entityProviding.entity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
+    }
+
+    private func compareUrls(url1: URL?, url2: URL?) -> Bool {
+        guard let url1, let url2 else { return false }
+
+        if url1 == url2 {
+            return true
+        }
+
+        guard url1.isDuckDuckGoSearch && url2.isDuckDuckGoSearch else { return false }
+
+        // Extract 'q' parameter from both URLs
+        let queryValue1 = URLComponents(url: url1, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
+        let queryValue2 = URLComponents(url: url2, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
+
+        let normalizedQuery1 = queryValue1?
+            .replacingOccurrences(of: "+", with: " ")
+            .replacingOccurrences(of: "%20", with: " ")
+        let normalizedQuery2 = queryValue2?
+            .replacingOccurrences(of: "+", with: " ")
+            .replacingOccurrences(of: "%20", with: " ")
+        
+        if normalizedQuery1 == normalizedQuery2 {
+            return true
+        }
+
+        return false
     }
 }

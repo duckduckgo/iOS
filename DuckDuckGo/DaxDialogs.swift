@@ -256,7 +256,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
     
     var shouldShowFireButtonPulse: Bool {
-        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        if isNewOnboarding {
+            nonDDGBrowsingMessageSeen && fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        } else {
+            nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        }
     }
 
     func isStillOnboarding() -> Bool {

@@ -65,7 +65,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "bundesliga.de"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "tagesschau.de"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "galeria.de"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://dict.leo.org/german-english/Ente"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://duden.de"))
     }
 
     func testSuggestedSitesForCanada() {

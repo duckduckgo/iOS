@@ -105,7 +105,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
     private var surpriseMe: ContextualOnboardingListItem {
         let site: String
         switch Countries(rawValue: country) {
-        case .germany: site = "https://dict.leo.org/german-english/Ente"
+        case .germany: site = "https://duden.de"
         case .netherlands: site = "https://www.woorden.org/woord/eend"
         case .sweden: site = "https://www.synonymer.se/sv-syn/anka"
         default: site = "https:britannica.com/animal/duck"

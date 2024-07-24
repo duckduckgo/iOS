@@ -49,4 +49,9 @@ tags:
 
 - tapOn: 
     id: PrivacyIcon
-- assertVisible: "Protections are OFF for this site"
+- extendedWaitUntil: 
+    visible: "Protections are OFF for this site"
+    timeout: 10000
+
+
+

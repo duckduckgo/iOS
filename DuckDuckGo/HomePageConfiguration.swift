@@ -49,7 +49,7 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil, 
+    init(variantManager: VariantManager? = nil,
          remoteMessagingClient: RemoteMessagingClient,
          privacyProDataReporter: PrivacyProDataReporting) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)

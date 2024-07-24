@@ -133,7 +133,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
     private func additionalParameters(for messageID: String) -> [String: String] {
         let defaultParameters = [PixelParameters.message: "\(messageID)"]
-        return privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID), 
+        return privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID),
                                                                  with: defaultParameters) ?? defaultParameters
     }
 }

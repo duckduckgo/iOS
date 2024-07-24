@@ -328,7 +328,7 @@ class TabViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
-                   duckPlayer: DuckPlayerProtocol
+                   duckPlayer: DuckPlayerProtocol,
                    privacyProDataReporter: PrivacyProDataReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings

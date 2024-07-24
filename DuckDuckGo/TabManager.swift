@@ -36,6 +36,7 @@ class TabManager {
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
     private var duckPlayer: DuckPlayerProtocol
+    private var privacyProDataReporter: PrivacyProDataReporting
 
     weak var delegate: TabDelegate?
 
@@ -57,11 +58,6 @@ class TabManager {
         self.syncService = syncService
         self.duckPlayer = duckPlayer
         self.privacyProDataReporter = privacyProDataReporter
-
-        // Init Duck Player Handler
-        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: DuckPlayer())
-
->>>>>>> daniel/duckplayer/9.navigation.updates
         registerForNotifications()
     }
 
@@ -78,7 +74,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayer: duckPlayer)
+                                                              duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
@@ -152,7 +148,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayer: duckPlayer)
+                                                              duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,

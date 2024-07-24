@@ -671,10 +671,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             .replacingOccurrences(of: "+", with: " ")
             .replacingOccurrences(of: "%20", with: " ")
         
-        if normalizedQuery1 == normalizedQuery2 {
-            return true
-        }
-
-        return false
+        return normalizedQuery1 == normalizedQuery2
     }
 }

@@ -297,7 +297,7 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayerNavigationHandler: DuckNavigationHandling,
+                                   duckPlayerNavigationHandler: DuckNavigationHandling = DuckPlayerNavigationHandler(),
                                    privacyProDataReporter: PrivacyProDataReporting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -523,6 +523,12 @@ class TabViewController: UIViewController {
                 // break a js-initiated popup request such as printing from a popup
                 guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
+                
+                
+                if let handler = self?.duckPlayerNavigationHandler,
+                    let webView = self?.webView {
+                    handler.handleAttach(webView: webView)
+                }
             })
         }
 
@@ -688,14 +694,18 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
-                        
+            
+            // decideForPolicy is not called for JS navigation
+            // This ensures DuckPlayer works on internal JS navigation based on
+            // URL Changes
+            
             if let url,
                 url.isYoutubeVideo,
                 duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler.handleURLChange(url: url, webView: webView)
+                duckPlayerNavigationHandler.handleJSNavigation(url: url, webView: webView)
             }
+             
         }
-                
         if let url {
             duckPlayerNavigationHandler.referrer = url.isYoutube ? .youtube : .other
         }
@@ -765,6 +775,7 @@ class TabViewController: UIViewController {
         dismissJSAlertIfNeeded()
         
         if let url = url, url.isDuckPlayer {
+            webView.stopLoading()
             duckPlayerNavigationHandler.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
             return
@@ -1684,8 +1695,9 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(),
             url.isYoutubeVideo,
             duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
-            completion(.allow)
+            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction,
+                                                              completion: completion,
+                                                              webView: webView)
             return
         }
         

@@ -120,6 +120,8 @@ class MainViewController: UIViewController {
     private var vpnCancellables = Set<AnyCancellable>()
 #endif
 
+    let privacyProDataReporter: PrivacyProDataReporting
+
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
@@ -180,7 +182,8 @@ class MainViewController: UIViewController {
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
-        syncPausedStateManager: any SyncPausedStateManaging
+        syncPausedStateManager: any SyncPausedStateManaging,
+        privacyProDataReporter: PrivacyProDataReporting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -198,8 +201,10 @@ class MainViewController: UIViewController {
                                      previewsSource: previewsSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
-                                     syncService: syncService)
+                                     syncService: syncService,
+                                     privacyProDataReporter: privacyProDataReporter)
         self.syncPausedStateManager = syncPausedStateManager
+        self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
 
         super.init(nibName: nil, bundle: nil)
@@ -737,7 +742,8 @@ class MainViewController: UIViewController {
             let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
-                                                      homePageMessagesConfiguration: homePageConfiguration)
+                                                      homePageMessagesConfiguration: homePageConfiguration,
+                                                      privacyProDataReporting: privacyProDataReporter)
 
             controller.delegate = self
             controller.shortcutsDelegate = self
@@ -751,7 +757,8 @@ class MainViewController: UIViewController {
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
-                                                                   syncDataProviders: syncDataProviders)
+                                                                   syncDataProviders: syncDataProviders,
+                                                                   privacyProDataReporter: privacyProDataReporter)
 
             controller.delegate = self
             controller.chromeDelegate = self
@@ -2504,6 +2511,8 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
             self.refreshUIAfterClear()
         } completion: {
+            self.privacyProDataReporter.saveFireCount()
+
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()

@@ -42,12 +42,14 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private weak var controller: HomeViewController?
     
     private let homePageConfiguration: HomePageConfiguration
-    
-    init(homePageConfiguration: HomePageConfiguration) {
+    private let privacyProDataReporter: PrivacyProDataReporting?
+
+    init(homePageConfiguration: HomePageConfiguration, privacyProDataReporter: PrivacyProDataReporting?) {
         self.homePageConfiguration = homePageConfiguration
+        self.privacyProDataReporter = privacyProDataReporter
         super.init()
     }
-    
+
     func install(into controller: HomeViewController) {
         self.controller = controller
         hideLogoIfThereAreMessagesToDisplay()
@@ -113,12 +115,13 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             } onDidAppear: {
                 // no-op
+            } onAttachAdditionalParameters: { _, params in
+                params
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
-
+            return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
                 guard let action,
-                        let self else { return }
+                      let self else { return }
 
                 switch action {
 
@@ -128,7 +131,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     }
                     if remoteMessage.isMetricsEnabled {
                         Pixel.fire(pixel: .remoteMessageActionClicked,
-                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                                   withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
                     }
 
                 case .primaryAction(let isSharing):
@@ -137,7 +140,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     }
                     if remoteMessage.isMetricsEnabled {
                         Pixel.fire(pixel: .remoteMessagePrimaryActionClicked,
-                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                                   withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
                     }
 
                 case .secondaryAction(let isSharing):
@@ -146,14 +149,14 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     }
                     if remoteMessage.isMetricsEnabled {
                         Pixel.fire(pixel: .remoteMessageSecondaryActionClicked,
-                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                                   withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
                     }
 
                 case .close:
                     self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     if remoteMessage.isMetricsEnabled {
                         Pixel.fire(pixel: .remoteMessageDismissed,
-                                   withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                                   withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))
                     }
 
                 }
@@ -162,7 +165,13 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             }
         }
     }
-    
+
+    private func additionalParameters(for messageID: String) -> [String: String] {
+        let defaultParameters = [PixelParameters.message: "\(messageID)"]
+        return privacyProDataReporter?.mergeRandomizedParameters(for: .messageID(messageID),
+                                                                 with: defaultParameters) ?? defaultParameters
+    }
+
     private func dismissHomeMessage(_ message: HomeMessage,
                                     at indexPath: IndexPath,
                                     in collectionView: UICollectionView) {

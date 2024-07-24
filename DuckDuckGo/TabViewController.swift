@@ -36,10 +36,7 @@ import Networking
 import SecureStorage
 import History
 import ContentScopeScripts
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 class TabViewController: UIViewController {
 
@@ -126,8 +123,7 @@ class TabViewController: UIViewController {
         return AppDependencyProvider.shared.subscriptionManager.canPurchase
     }
     private var currentlyLoadedURL: URL?
-    
-#if NETWORK_PROTECTION
+
     private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
@@ -141,7 +137,6 @@ class TabViewController: UIViewController {
 
         return false
     }
-#endif
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -361,9 +356,7 @@ class TabViewController: UIViewController {
             registerForInspectableWebViewNotifications()
         }
 
-#if NETWORK_PROTECTION
         observeNetPConnectionStatusChanges()
-#endif
     }
     
     private func registerForAddressBarLocationNotifications() {
@@ -1308,11 +1301,9 @@ extension TabViewController: WKNavigationDelegate {
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
 
-#if NETWORK_PROTECTION
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
-#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {

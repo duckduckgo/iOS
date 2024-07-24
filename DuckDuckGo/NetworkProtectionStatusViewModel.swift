@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import Combine
 import NetworkProtection
@@ -464,5 +462,3 @@ private extension ConnectionStatus {
         }
     }
 }
-
-#endif

@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 
 @available(iOS 15, *)
@@ -52,6 +50,3 @@ extension NetworkProtectionRootViewController {
     }
 
 }
-
-
-#endif

@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 
 public extension UserDefaults {
@@ -36,5 +34,3 @@ public enum NetworkProtectionUserDefaultKeys {
     public static let lastSelectedServerCity = "com.duckduckgo.network-protection.last-selected-server-city"
 
 }
-
-#endif

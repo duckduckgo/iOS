@@ -18,15 +18,6 @@
 //
 
 import UIKit
-
-#if !NETWORK_PROTECTION
-
-final class NetworkProtectionDebugViewController: UITableViewController {
-    // Just an empty VC
-}
-
-#else
-
 import Common
 import Network
 import NetworkExtension
@@ -731,5 +722,3 @@ extension NWConnection {
     }
 
 }
-
-#endif

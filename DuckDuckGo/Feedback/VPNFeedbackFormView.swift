@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 import NetworkProtection
 
@@ -230,5 +228,3 @@ private struct VPNFeedbackFormButtonStyle: ButtonStyle {
     }
 
 }
-
-#endif

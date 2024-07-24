@@ -50,7 +50,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                     }
 
                     // MARK: Favorites
-                    if !favoritesModel.isEmpty {
+                    if favoritesModel.isEmpty {
                         FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
                             .padding(Constant.sectionPadding)
                     } else {

@@ -74,7 +74,7 @@ struct AutofillLoginDetailsView: View {
                 viewModel.selectedCell = nil
             }))
         .listStyle(.insetGrouped)
-        .animation(.easeInOut)
+        .animation(.easeInOut, value: viewModel.viewMode)
     }
     
     private var editingContentView: some View {

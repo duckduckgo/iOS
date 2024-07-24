@@ -48,14 +48,20 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
-         duckPlayer: DuckPlayer = DuckPlayer()) {
+         duckPlayer: DuckPlayer = DuckPlayer(),
+         privacyProDataReporter: PrivacyProDataReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
         self.duckPlayer = duckPlayer
-        
+        self.privacyProDataReporter = privacyProDataReporter
+
+        // Init Duck Player Handler
+        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: DuckPlayer())
+
+>>>>>>> daniel/duckplayer/9.navigation.updates
         registerForNotifications()
     }
 
@@ -73,6 +79,7 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayer: duckPlayer)
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -146,6 +153,7 @@ class TabManager {
                                                               historyManager: historyManager,
                                                               syncService: syncService,
                                                               duckPlayer: duckPlayer)
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

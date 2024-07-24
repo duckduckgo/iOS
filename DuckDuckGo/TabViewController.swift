@@ -143,6 +143,8 @@ class TabViewController: UIViewController {
     }
 #endif
 
+    let privacyProDataReporter: PrivacyProDataReporting
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
@@ -295,7 +297,8 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayer: DuckPlayerProtocol) -> TabViewController {
+                                   duckPlayer: DuckPlayerProtocol,
+                                   privacyProDataReporter: PrivacyProDataReporting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -304,7 +307,8 @@ class TabViewController: UIViewController {
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
                               syncService: syncService,
-                              duckPlayer: duckPlayer)
+                              duckPlayer: duckPlayer,
+                              privacyProDataReporter: privacyProDataReporter)
         })
         return controller
     }
@@ -324,7 +328,8 @@ class TabViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
-                   duckPlayer: DuckPlayerProtocol) {
+                   duckPlayer: DuckPlayerProtocol
+                   privacyProDataReporter: PrivacyProDataReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -333,6 +338,7 @@ class TabViewController: UIViewController {
         self.syncService = syncService
         self.duckPlayer = duckPlayer
         self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
+        self.privacyProDataReporter = privacyProDataReporter
         super.init(coder: aDecoder)
     }
 
@@ -1632,6 +1638,7 @@ extension TabViewController: WKNavigationDelegate {
                navigationAction.isTargetingMainFrame() {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
+                    privacyProDataReporter.saveSearchCount()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

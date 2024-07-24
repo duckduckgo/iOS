@@ -44,6 +44,7 @@ final class SettingsViewModel: ObservableObject {
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
+    let privacyProDataReporter: PrivacyProDataReporting?
 
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
@@ -345,7 +346,8 @@ final class SettingsViewModel: ObservableObject {
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
-         syncPausedStateManager: any SyncPausedStateManaging) {
+         syncPausedStateManager: any SyncPausedStateManaging,
+         privacyProDataReporter: PrivacyProDataReporting) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -354,6 +356,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
+        self.privacyProDataReporter = privacyProDataReporter
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()

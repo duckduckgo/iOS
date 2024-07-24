@@ -1149,13 +1149,12 @@ extension TabViewController: WKNavigationDelegate {
     // TODO
     private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
                                             completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        guard shouldBypassSSLError,
-              let credential = URLCredentialCreator().urlCredential(from: challenge.protectionSpace.serverTrust) else { //todo DI
+        guard shouldBypassSSLError, let trust = challenge.protectionSpace.serverTrust else {
             completionHandler(.performDefaultHandling, nil)
             return
         }
         shouldBypassSSLError = false
-        completionHandler(.useCredential, credential)
+        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 
     @MainActor
@@ -2887,22 +2886,6 @@ extension UserContentController {
     public convenience init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.init(assetsPublisher: ContentBlocking.shared.contentBlockingUpdating.userContentBlockingAssets,
                   privacyConfigurationManager: privacyConfigurationManager)
-    }
-
-}
-
-// TODO
-protocol URLCredentialCreating {
-
-    func urlCredential(from trust: SecTrust?) -> URLCredential?
-
-}
-
-struct URLCredentialCreator: URLCredentialCreating {
-
-    func urlCredential(from trust: SecTrust?) -> URLCredential? {
-        guard let trust else { return nil }
-        return URLCredential(trust: trust)
     }
 
 }

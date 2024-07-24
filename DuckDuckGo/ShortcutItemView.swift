@@ -21,7 +21,8 @@ import DesignResourcesKit
 import SwiftUI
 
 struct ShortcutItemView: View {
-    let name: String
+    let shortcut: NewTabPageShortcut
+    let accessoryType: ShortcutAccessoryType?
 
     var body: some View {
         VStack(spacing: 6) {
@@ -31,19 +32,80 @@ struct ShortcutItemView: View {
                     .shadow(color: .shade(0.12), radius: 0.5, y: 1)
                     .aspectRatio(1, contentMode: .fit)
                     .frame(width: NewTabPageGrid.Item.edgeSize)
-                Image("Login-32-Color")
+                Image(shortcut.imageResource)
                     .resizable()
-                    .aspectRatio(1.0, contentMode: .fit)
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
             }
-            Text(name)
+            .overlay(alignment: .topTrailing) {
+                if let accessoryType {
+                    ShortcutAccessoryView(accessoryType: accessoryType)
+                        .frame(width: Constant.accessorySize)
+                        .offset(Constant.accessoryOffset)
+                }
+            }
+            Text(shortcut.name)
                 .font(Font.system(size: 12))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .top)
+        }
+    }
+
+    private enum Constant {
+        static let accessorySize = 24.0
+        static let accessoryOffset = CGSize(width: 6, height: -6)
+    }
+}
+
+private extension NewTabPageShortcut {
+    var name: String {
+        switch self {
+        case .bookmarks:
+            UserText.newTabPageShortcutBookmarks
+        case .aiChat:
+            UserText.newTabPageShortcutAIChat
+        case .passwords:
+            UserText.newTabPageShortcutPasswords
+        case .downloads:
+            UserText.newTabPageShortcutDownloads
+        case .settings:
+            UserText.newTabPageShortcutSettings
+        }
+    }
+
+    var imageResource: ImageResource {
+        switch self {
+        case .bookmarks:
+            return .bookmarksColor32
+        case .aiChat:
+            return .aiChatColor32
+        case .passwords:
+            return .passwordsAutofillColor32
+        case .downloads:
+            return .downloadsColor32
+        case .settings:
+            return .settingsColor32
         }
     }
 }
 
 #Preview {
-    ShortcutItemView(name: "Shortcut")
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+        let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
+
+        ForEach(accessoryTypes, id: \.?.hashValue) { type in
+            Section {
+                ForEach(NewTabPageShortcut.allCases) { shortcut in
+                    ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                }
+
+            } footer: {
+                Spacer(minLength: 12)
+                Divider()
+                Spacer(minLength: 12)
+            }
+        }
+    }).padding(8)
 }

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "278f486e71131ee8e36df4180518b0f74843d47e",
-        "version" : "171.2.3"
+        "revision" : "6c095d0c62dc00cf848ee100912b12767c92683b",
+        "version" : "175.0.1"
       }
     },
     {
@@ -138,7 +138,7 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
         "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
         "version" : "1.4.0"

@@ -93,6 +93,13 @@ struct SettingsRootView: View {
                 }
             }
         })
+
+        .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                shouldDisplayDeepLinkSheet = false
+                shouldDisplayDeepLinkPush = false
+            }
+        }
     }
 
     // MARK: DeepLink Views
@@ -106,7 +113,14 @@ struct SettingsRootView: View {
         case let .subscriptionFlow(origin):
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
-                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                               privacyProDataReporter: viewModel.privacyProDataReporter)
+        case .restoreFlow:
+            SubscriptionContainerViewFactory.makeEmailFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                           subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                           onDisappear: {})
+        case .duckPlayer:
+            SettingsDuckPlayerView().environmentObject(viewModel)
         default:
             EmptyView()
         }

@@ -42,8 +42,14 @@ extension URL {
     }
 
     static func youtube(_ videoID: String, timestamp: String? = nil) -> URL {
-        let url = "https://www.youtube.com/watch?v=\(videoID)".url!
-        return url.addingTimestamp(timestamp)
+            #if os(iOS)
+            let baseUrl = "https://m.youtube.com/watch?v=\(videoID)"
+            #else
+            let baseUrl = "https://www.youtube.com/watch?v=\(videoID)"
+            #endif
+
+            let url = URL(string: baseUrl)!
+            return url.addingTimestamp(timestamp)
     }
 
     var isDuckURLScheme: Bool {
@@ -116,6 +122,31 @@ extension URL {
         guard let host else { return false }
         return host == "m.youtube.com" || host == "youtube.com"
         
+    }
+    
+    func addingWatchInYoutubeQueryParameter() -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        
+        var queryItems = components.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "embeds_referring_euri", value: "some_value"))
+        components.queryItems = queryItems
+        
+        return components.url
+    }
+    
+    var hasWatchInYoutubeQueryParameter: Bool {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            return false
+        }
+        
+        for queryItem in queryItems where queryItem.name == "embeds_referring_euri" {
+            return true
+        }
+        
+        return false
     }
     
     private func addingTimestamp(_ timestamp: String?) -> URL {

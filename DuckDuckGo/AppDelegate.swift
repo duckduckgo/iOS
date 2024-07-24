@@ -92,6 +92,8 @@ import WebKit
 
     private var autofillPixelReporter: AutofillPixelReporter?
 
+    var privacyProDataReporter: PrivacyProDataReporting!
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -106,12 +108,6 @@ import WebKit
 
     override init() {
         super.init()
-
-        if !didCrashDuringCrashHandlersSetUp {
-            didCrashDuringCrashHandlersSetUp = true
-            CrashLogMessageExtractor.setUp()
-            didCrashDuringCrashHandlersSetUp = false
-        }
     }
 
     // swiftlint:disable:next function_body_length
@@ -278,6 +274,8 @@ import WebKit
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
+        privacyProDataReporter = PrivacyProDataReporter()
+
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
             .sink { [weak syncService] _ in
@@ -303,11 +301,14 @@ import WebKit
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
-                                                      remoteMessagingClient: remoteMessagingClient)
+                                                      remoteMessagingClient: remoteMessagingClient,
+                                                      privacyProDataReporter: privacyProDataReporter)
 
         let previewsSource = TabPreviewsSource()
         let historyManager = makeHistoryManager()
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
+
+        privacyProDataReporter.injectTabsModel(tabsModel)
 
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
@@ -318,7 +319,8 @@ import WebKit
                                       appSettings: AppDependencyProvider.shared.appSettings,
                                       previewsSource: previewsSource,
                                       tabsModel: tabsModel,
-                                      syncPausedStateManager: syncErrorHandler)
+                                      syncPausedStateManager: syncErrorHandler,
+                                      privacyProDataReporter: privacyProDataReporter)
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main
@@ -516,6 +518,9 @@ import WebKit
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
+        
+        privacyProDataReporter.injectSyncService(syncService)
+
         fireFailedCompilationsPixelIfNeeded()
 
 #if NETWORK_PROTECTION
@@ -542,6 +547,10 @@ import WebKit
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
+
+        Task {
+            await privacyProDataReporter.saveWidgetAdded()
+        }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -652,6 +661,7 @@ import WebKit
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+        privacyProDataReporter.saveApplicationLastSessionEnded()
     }
 
     private func suspendSync() {

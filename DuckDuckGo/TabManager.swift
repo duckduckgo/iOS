@@ -35,6 +35,8 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
+    private var duckPlayer: DuckPlayerProtocol
+    private var privacyProDataReporter: PrivacyProDataReporting
 
     weak var delegate: TabDelegate?
 
@@ -46,13 +48,16 @@ class TabManager {
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         duckPlayer: DuckPlayer = DuckPlayer(),
+         privacyProDataReporter: PrivacyProDataReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
-
+        self.duckPlayer = duckPlayer
+        self.privacyProDataReporter = privacyProDataReporter
         registerForNotifications()
     }
 
@@ -68,7 +73,9 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              duckPlayer: duckPlayer,
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -140,7 +147,9 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
-                                                              syncService: syncService)
+                                                              syncService: syncService,
+                                                              duckPlayer: duckPlayer,
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

@@ -24,12 +24,14 @@ import RemoteMessaging
 struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    @ObservedObject var messagesModel: NewTabPageMessagesModel
-    @ObservedObject var favoritesModel: FavoritesModelType
+    @ObservedObject private var messagesModel: NewTabPageMessagesModel
+    @ObservedObject private var favoritesModel: FavoritesModelType
+    @ObservedObject private var shortcutsModel: ShortcutsModel
 
-    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType) {
+    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType, shortcutsModel: ShortcutsModel) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
+        self.shortcutsModel = shortcutsModel
 
         self.messagesModel.load()
     }
@@ -55,8 +57,10 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                     }
 
                     // MARK: Shortcuts
-                    ShortcutsView()
-                        .padding(Constant.sectionPadding)
+                    if !shortcutsModel.enabledShortcuts.isEmpty {
+                        ShortcutsView(model: shortcutsModel)
+                            .padding(Constant.sectionPadding)
+                    }
 
                     Spacer()
 
@@ -97,7 +101,8 @@ private struct Constant {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel()
+        favoritesModel: FavoritesPreviewModel(),
+        shortcutsModel: ShortcutsModel()
     )
 }
 
@@ -111,13 +116,15 @@ private struct Constant {
                             id: "0",
                             content: .small(titleText: "Title", descriptionText: "Description"),
                             matchingRules: [],
-                            exclusionRules: []
+                            exclusionRules: [],
+                            isMetricsEnabled: false
                         )
                     )
                 ]
             )
         ),
-        favoritesModel: FavoritesPreviewModel()
+        favoritesModel: FavoritesPreviewModel(),
+        shortcutsModel: ShortcutsModel()
     )
 }
 
@@ -138,5 +145,11 @@ private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration 
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
         homeMessages = homeMessages.dropLast()
+    }
+}
+
+private extension ShortcutsModel {
+    convenience init() {
+        self.init(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
     }
 }

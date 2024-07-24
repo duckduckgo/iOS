@@ -93,7 +93,8 @@ struct SettingsSubscriptionView: View {
             
             let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
                                                                                    navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                                   subscriptionManager: subscriptionManager
+                                                                                   subscriptionManager: subscriptionManager,
+                                                                                   privacyProDataReporter: viewModel.privacyProDataReporter
             ).navigationViewStyle(.stack)
             let restoreView = SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
                                                                                subscriptionManager: subscriptionManager)
@@ -130,7 +131,8 @@ struct SettingsSubscriptionView: View {
                         
             let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
                                                                                    navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                                   subscriptionManager: subscriptionManager
+                                                                                   subscriptionManager: subscriptionManager,
+                                                                                   privacyProDataReporter: viewModel.privacyProDataReporter
             ).navigationViewStyle(.stack)
             NavigationLink(
                 destination: subscribeView,

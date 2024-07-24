@@ -296,7 +296,8 @@ import WebKit
             errorEvents: RemoteMessagingStoreErrorHandling(),
             remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
                 privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager
-            )
+            ),
+            duckPlayerStorage: DefaultDuckPlayerStorage()
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 

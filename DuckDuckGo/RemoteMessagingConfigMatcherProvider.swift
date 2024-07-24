@@ -34,15 +34,18 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
     init(
         bookmarksDatabase: CoreDataDatabase,
         appSettings: AppSettings,
-        internalUserDecider: InternalUserDecider
+        internalUserDecider: InternalUserDecider,
+        duckPlayerStorage: DuckPlayerStorage
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
         self.internalUserDecider = internalUserDecider
+        self.duckPlayerStorage = duckPlayerStorage
     }
 
     let bookmarksDatabase: CoreDataDatabase
     let appSettings: AppSettings
+    let duckPlayerStorage: DuckPlayerStorage
     let internalUserDecider: InternalUserDecider
 
     func refreshConfigMatcher(using store: RemoteMessagingStoring) async -> RemoteMessagingConfigMatcher {
@@ -71,6 +74,14 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         var isPrivacyProSubscriptionActive: Bool = false
         var isPrivacyProSubscriptionExpiring: Bool = false
         var isPrivacyProSubscriptionExpired: Bool = false
+
+        var isDuckPlayerOnboarded: Bool {
+            duckPlayerStorage.duckPlayerOnboarded
+        }
+        var isDuckPlayerEnabled: Bool {
+            appSettings.duckPlayerMode != .disabled
+        }
+        
         let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
         if let accessToken = subscriptionManager.accountManager.accessToken {
@@ -132,6 +143,8 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                                                        isPrivacyProSubscriptionActive: isPrivacyProSubscriptionActive,
                                                        isPrivacyProSubscriptionExpiring: isPrivacyProSubscriptionExpiring,
                                                        isPrivacyProSubscriptionExpired: isPrivacyProSubscriptionExpired,
+                                                       isDuckPlayerOnboarded: isDuckPlayerOnboarded,
+                                                       isDuckPlayerEnabled: isDuckPlayerEnabled,
                                                        dismissedMessageIds: dismissedMessageIds),
             percentileStore: RemoteMessagingPercentileUserDefaultsStore(keyValueStore: UserDefaults.standard),
             surveyActionMapper: surveyActionMapper,

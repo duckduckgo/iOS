@@ -38,7 +38,7 @@ typealias ContextualOnboardingDelegate = OnboardingNavigationDelegate & Contextu
 // MARK: - Contextual Dialogs Factory
 
 protocol ContextualDaxDialogsFactory {
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIHostingController<AnyView>
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView>
 }
 
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
@@ -48,15 +48,28 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         self.contextualOnboardingSettings = contextualOnboardingSettings
     }
 
-    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate) -> UIHostingController<AnyView> {
+    func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView> {
         let rootView: AnyView
         switch spec.type {
         case .afterSearch:
-            rootView = AnyView(afterSearchDialog(shouldFollowUpToWebsiteSearch: !contextualOnboardingSettings.userHasSeenTrackersDialog, delegate: delegate))
+            rootView = AnyView(
+                afterSearchDialog(
+                shouldFollowUpToWebsiteSearch: !contextualOnboardingSettings.userHasSeenTrackersDialog,
+                delegate: delegate,
+                onSizeUpdate: onSizeUpdate
+                )
+            )
         case .visitWebsite:
             rootView = AnyView(tryVisitingSiteDialog(delegate: delegate))
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
-            rootView = AnyView(withTrackersDialog(for: spec, shouldFollowUpToFireDialog: !contextualOnboardingSettings.userHasSeenFireDialog, delegate: delegate))
+            rootView = AnyView(
+                withTrackersDialog(
+                    for: spec, 
+                    shouldFollowUpToFireDialog: !contextualOnboardingSettings.userHasSeenFireDialog,
+                    delegate: delegate,
+                    onSizeUpdate: onSizeUpdate
+                )
+            )
         case .fire:
             rootView = AnyView(OnboardingFireDialog())
         case .final:
@@ -72,11 +85,13 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         return hostingController
     }
 
-    private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate) -> some View {
+    private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
+
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
             { [weak delegate] in
+                onSizeUpdate()
                 delegate?.didAcknowledgeContextualOnboardingSearch()
             }
         } else {
@@ -84,6 +99,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
                 delegate?.didTapDismissContextualOnboardingAction()
             }
         }
+
         return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
     }
 
@@ -92,13 +108,14 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
     }
 
-    private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, shouldFollowUpToFireDialog: Bool, delegate: ContextualOnboardingDelegate) -> some View {
+    private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, shouldFollowUpToFireDialog: Bool, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> some View {
         let attributedMessage = spec.message.attributedStringFromMarkdown(color: ThemeManager.shared.currentTheme.daxDialogTextColor)
         return OnboardingTrackersDoneDialog(shouldFollowUp: shouldFollowUpToFireDialog, message: attributedMessage, blockedTrackersCTAAction: { [weak self, weak delegate] in
             // If the user has not seen the fire dialog yet proceed to the fire dialog, otherwise dismiss the dialog.
             if self?.contextualOnboardingSettings.userHasSeenFireDialog == true {
                 delegate?.didTapDismissContextualOnboardingAction()
             } else {
+                onSizeUpdate()
                 delegate?.didAcknowledgeContextualOnboardingTrackersDialog()
             }
         })

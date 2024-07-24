@@ -62,10 +62,10 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         let sitesList = sut.list
 
         // THEN
-        XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "kicker.de"))
+        XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "bundesliga.de"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "tagesschau.de"))
-        XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://www.duden.de/rechtschreibung/Ente"))
+        XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "galeria.de"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://dict.leo.org/german-english/Ente"))
     }
 
     func testSuggestedSitesForCanada() {
@@ -78,7 +78,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "tsn.ca"))
-        XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "cbc.ca"))
+        XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "ctvnews.ca"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "canadiantire.ca"))
         XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }
@@ -108,7 +108,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "afl.com.au"))
-        XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "abc.net.au"))
+        XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "yahoo.com"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "eBay.com"))
         XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "britannica.com/animal/duck"))
     }

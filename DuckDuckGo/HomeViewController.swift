@@ -77,13 +77,16 @@ class HomeViewController: UIViewController, NewTabPage {
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
+    let privacyProDataReporter: PrivacyProDataReporting
+
     static func loadFromStoryboard(
         homePageConfiguration: HomePageConfiguration,
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        privacyProDataReporter: PrivacyProDataReporting
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -94,7 +97,8 @@ class HomeViewController: UIViewController, NewTabPage {
                 favoritesViewModel: favoritesViewModel,
                 appSettings: appSettings,
                 syncService: syncService,
-                syncDataProviders: syncDataProviders
+                syncDataProviders: syncDataProviders,
+                privacyProDataReporter: privacyProDataReporter
             )
         })
         return controller
@@ -107,7 +111,8 @@ class HomeViewController: UIViewController, NewTabPage {
         favoritesViewModel: FavoritesListInteracting,
         appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        privacyProDataReporter: PrivacyProDataReporting
     ) {
         self.homePageConfiguration = homePageConfiguration
         self.tabModel = tabModel
@@ -115,6 +120,7 @@ class HomeViewController: UIViewController, NewTabPage {
         self.appSettings = appSettings
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
+        self.privacyProDataReporter = privacyProDataReporter
 
         super.init(coder: coder)
     }

@@ -26,7 +26,7 @@ final class HomeMessageCollectionViewCell: SwiftUICollectionViewCell<HomeMessage
     static let maximumWidthPad: CGFloat = 455
     
     static var reuseIdentifier = "HomeMessageCell"
-    
+
     func configure(with viewModel: HomeMessageViewModel, parent: UIViewController) {
         embed(in: parent, withView: HomeMessageView(viewModel: viewModel))
         host?.view.frame = contentView.bounds

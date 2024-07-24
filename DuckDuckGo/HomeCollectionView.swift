@@ -87,7 +87,8 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: renderer)
 
             case .homeMessage:
-                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
+                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration,
+                                                                           privacyProDataReporter: controller.privacyProDataReporter))
             }
 
         }

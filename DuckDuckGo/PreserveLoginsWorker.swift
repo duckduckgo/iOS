@@ -35,7 +35,7 @@ struct PreserveLoginsWorker {
         if isAutofillEnabled && autofillShouldBlockPrompt(saveLoginPromptLastDismissed, saveLoginPromptIsPresenting: saveLoginPromptIsPresenting) {
             return false
         }
-        if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first, window.subviews.contains(where: { $0 is ActionMessageView }) {
+        if let window = UIApplication.shared.firstKeyWindow, window.subviews.contains(where: { $0 is ActionMessageView }) {
             // if an ActionMessageView is currently displayed wait before prompting to fireproof
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.promptToFireproof(domain)

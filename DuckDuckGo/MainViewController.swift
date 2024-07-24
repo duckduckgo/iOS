@@ -151,7 +151,7 @@ class MainViewController: UIViewController {
     }
     
     var searchBarRect: CGRect {
-        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        let view = UIApplication.shared.firstKeyWindow?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
     

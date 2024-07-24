@@ -801,7 +801,7 @@ import WebKit
     }
     
     private func tryToObtainOverlayWindow() {
-        for window in UIApplication.shared.windows where window.rootViewController is BlankSnapshotViewController {
+        for window in UIApplication.shared.foregroundSceneWindows where window.rootViewController is BlankSnapshotViewController {
             overlayWindow = window
             return
         }

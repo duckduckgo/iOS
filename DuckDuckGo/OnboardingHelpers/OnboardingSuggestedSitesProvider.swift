@@ -61,7 +61,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         switch Countries(rawValue: country) {
         case .indonesia: site = "bolasport.com"
         case .gb: site = "skysports.com"
-        case .germany: site = "kicker.de"
+        case .germany: site = "bundesliga.de"
         case .canada: site = "tsn.ca"
         case .netherlands: site = "voetbalprimeur.nl"
         case .australia: site = "afl.com.au"
@@ -78,9 +78,9 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         case .indonesia: site = "kompas.com"
         case .gb: site = "bbc.co.uk"
         case .germany: site = "tagesschau.de"
-        case .canada: site = "cbc.ca"
+        case .canada: site = "ctvnews.ca"
         case .netherlands: site = "nu.nl"
-        case .australia: site = "abc.net.au"
+        case .australia: site = "yahoo.com"
         case .sweden: site = "dn.se"
         case .ireland: site = "bbc.co.uk"
         default: site = "yahoo.com"
@@ -92,7 +92,8 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         let site: String
         switch Countries(rawValue: country) {
         case .indonesia: site = "tokopedia.com"
-        case .gb, .germany, .australia, .ireland: site = "eBay.com"
+        case .gb, .australia, .ireland: site = "eBay.com"
+        case .germany: site = "galeria.de"
         case .canada: site = "canadiantire.ca"
         case .netherlands: site = "bol.com"
         case .sweden: site = "tradera.com"
@@ -104,7 +105,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
     private var surpriseMe: ContextualOnboardingListItem {
         let site: String
         switch Countries(rawValue: country) {
-        case .germany: site = "https://www.duden.de/rechtschreibung/Ente"
+        case .germany: site = "https://dict.leo.org/german-english/Ente"
         case .netherlands: site = "https://www.woorden.org/woord/eend"
         case .sweden: site = "https://www.synonymer.se/sv-syn/anka"
         default: site = "https:britannica.com/animal/duck"

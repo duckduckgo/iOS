@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "daniel/broker.async",
-        "revision" : "f822304d67e4c6625c4a9ea3e6e767439b0f71fc"
+        "revision" : "6c095d0c62dc00cf848ee100912b12767c92683b",
+        "version" : "175.0.1"
       }
     },
     {

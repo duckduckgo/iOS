@@ -123,6 +123,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 self?.homePageConfiguration.didAppear(message)
             }
             if controller?.collectionView.window != nil {
+                // call didAppear here to support marking messages as shown when they appear on the new tab page
+                // as a result of refreshing a config while the user was on a new tab page already.
                 onDidAppear()
             }
             return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in

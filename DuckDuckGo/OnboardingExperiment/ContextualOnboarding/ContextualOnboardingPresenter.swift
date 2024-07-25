@@ -85,9 +85,7 @@ private extension ContextualOnboardingPresenter {
         let platformSpecificSpec = spec.withUpdatedMessage(platformSpecificMessage)
         // Ask the Dax Dialogs Factory for a view for the given spec
         let controller = daxDialogsFactory.makeView(for: platformSpecificSpec, delegate: vc, onSizeUpdate: { [weak vc] in
-            if #available(iOS 16.0, *) {
-                // Do nothing as in iOS 16 we can use `hostingController.sizingOptions = [.intrinsicContentSize]`
-            } else {
+            if #unavailable(iOS 16.0) {
                 // For iOS 15 and below invalidate the intrinsic content size manually so the UIKit view will re-size accordingly to SwiftUI view.
                 vc?.daxContextualOnboardingController?.view.invalidateIntrinsicContentSize()
             }

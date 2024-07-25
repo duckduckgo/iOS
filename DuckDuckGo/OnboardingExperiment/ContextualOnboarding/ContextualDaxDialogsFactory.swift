@@ -64,7 +64,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
             rootView = AnyView(
                 withTrackersDialog(
-                    for: spec, 
+                    for: spec,
                     shouldFollowUpToFireDialog: !contextualOnboardingSettings.userHasSeenFireDialog,
                     delegate: delegate,
                     onSizeUpdate: onSizeUpdate

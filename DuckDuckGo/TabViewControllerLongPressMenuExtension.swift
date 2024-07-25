@@ -106,7 +106,7 @@ extension TabViewController {
                                                                  bookmarksDatabase: bookmarksDatabase,
                                                                  historyManager: historyManager,
                                                                  syncService: syncService,
-                                                                 duckPlayerNavigationHandler: duckPlayerNavigationHandler,
+                                                                 duckPlayer: duckPlayer,
                                                                  privacyProDataReporter: privacyProDataReporter)
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()

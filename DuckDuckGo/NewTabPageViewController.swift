@@ -41,11 +41,16 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
-        self.shortcutsModel = ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
-        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting),
+        let shortcutsPreferencesStorage = InMemoryShortcutsPreferencesStorage()
+        let newTabPagePreferencesStorage = InMemoryNewTabPageSectionsPreferencesStorage()
+        favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
+        shortcutsModel = ShortcutsModel(shortcutsPreferencesStorage: shortcutsPreferencesStorage)
+        let messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
+        let preferencesModel = NewTabPagePreferencesModel(newTabPagePreferencesStorage: newTabPagePreferencesStorage)
+        let newTabPageView = NewTabPageView(messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
-                                            shortcutsModel: shortcutsModel)
+                                            shortcutsModel: shortcutsModel,
+                                            preferencesModel: preferencesModel)
 
         super.init(rootView: newTabPageView)
 

@@ -512,13 +512,12 @@ extension TabSwitcherViewController: TabObserver {
             return
         }
 
-        if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
-            if #available(iOS 15.0, *) {
-                collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
-            } else {
-                collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        collectionView.performBatchUpdates({}, completion: { [weak self] completed in
+            guard completed, let self = self else { return }
+            if let index = self.tabsModel.indexOf(tab: tab), index < self.collectionView.numberOfItems(inSection: 0) {
+                self.collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
             }
-        }
+        })
     }
 }
 

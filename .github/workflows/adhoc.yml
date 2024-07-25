@@ -21,7 +21,7 @@ on:
 
 jobs:
   make-adhoc:
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
     name: Make ad-hoc build
 
     steps:

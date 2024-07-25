@@ -43,7 +43,8 @@ struct NewTabPagePreferencesView: View {
                         Text(UserText.newTabPagePreferencesShortcutsHeaderTitle)
                     } footer: {
                         // Placed in footer since Section adds a group layer, which we don't want here.
-                        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()))
+                        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()),
+                                      editingEnabled: true)
                             .padding(.horizontal, -24) // Required to adjust for the group inset
                     }
                 }

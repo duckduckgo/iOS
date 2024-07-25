@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Отмени";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Отключете, за да използвате запазена парола";
+"autofill.logins.prompt.auth.reason" = "Отключете устройството, за да използвате запазена парола";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "От този уебсайт";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Запазване на паролата";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Изпращане на доклад";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Докладите, изпратени до DuckDuckGo, са анонимни и не включват вашите потребителско име, парола или друга лична информация.\n\nДокладът съдържа само URL адреса на уебсайта и статуса на някои настройки за автоматично попълване.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Искате ли да докладвате, че автоматичното попълване не работи на %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Благодарим ви! Вашето докладване ще ни помогне да направим DuckDuckGo по-добър за всички.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Анонимно докладвайте, че автоматичното попълване не работи на този сайт. Паролите никога няма да бъдат споделяни.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Не работи ли автоматичното попълване?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Показване на паролата";

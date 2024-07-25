@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Anuluj";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Odblokuj, aby użyć zapisanego hasła";
+"autofill.logins.prompt.auth.reason" = "Odblokuj urządzenie, aby użyć zapisanego hasła";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Z tej strony";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Zapisz hasło";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Wyślij raport";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Zgłoszenia wysyłane do DuckDuckGo są anonimowe i nie zawierają nazwy użytkownika, hasła ani żadnych innych informacji umożliwiających identyfikację.\n\nRaport zawiera tylko adres URL witryny i stan niektórych ustawień autouzupełniania.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Zgłosić, że autouzupełnianie nie działa na %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Dziękujemy! Twoje zgłoszenie pomoże ulepszyć DuckDuckGo u wszystkich użytkowników.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Zgłoś anonimowo, że autouzupełnianie nie działa w tej witrynie. Hasła nigdy nie są udostępniane.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Autouzupełnianie nie działa?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaż hasło";

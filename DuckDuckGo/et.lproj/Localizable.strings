@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Tühista";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Ava salvestatud parooli kasutamiseks";
+"autofill.logins.prompt.auth.reason" = "Ava seade salvestatud parooli kasutamiseks";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Sellelt veebisaidilt";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvesta parool";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Saada aruanne";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "DuckDuckGo'le saadetud aruanded on anonüümsed ega sisalda sinu kasutajanime, parooli ega muid isikuandmeid.\n\nAruanne sisaldab ainult veebisaidi url-i ja mõne automaatse täitmise sätete olekut.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Teata, et automaatne täitmine ei tööta saidil %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Aitäh! Sinu aruanne aitab meil muuta DuckDuckGo kõigi jaoks paremaks.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Teata anonüümselt, et automaatne täitmine sellel saidil ei tööta. Paroole ei jagata kunagi.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Kas automaatne täitmine ei tööta?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Kuva parool";

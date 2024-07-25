@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Annuler";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser le mot de passe enregistré";
+"autofill.logins.prompt.auth.reason" = "Déverrouiller l'appareil pour utiliser le mot de passe enregistré";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "À partir de ce site Web";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Enregistrer le mot de passe";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Envoyer un rapport";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Anonymes, les signalements envoyés à DuckDuckGo n'incluent ni votre nom d'utilisateur, ni votre mot de passe, ni aucune autre information personnellement identifiable.\n\nLe signalement inclut uniquement l'URL du site Web et l'état de certains paramètres de saisie automatique.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "La saisie automatique du signalement ne fonctionne pas sur %@ ?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Merci ! Votre signalement nous aidera à améliorer DuckDuckGo pour tous.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "La saisie automatique du signalement ne fonctionne pas sur ce site. Les mots de passe ne sont jamais partagés.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "La saisie automatique ne fonctionne pas ?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Afficher le mot de passe";

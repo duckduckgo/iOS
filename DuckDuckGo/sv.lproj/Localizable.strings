@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Avbryt";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Lås upp för att använda sparat lösenord";
+"autofill.logins.prompt.auth.reason" = "Lås upp enheten för att använda sparat lösenord";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Från den här webbplatsen";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Spara lösenord";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Skicka anmälan";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Rapporter som skickas till DuckDuckGo är anonyma och innehåller inte ditt användarnamn, lösenord eller någon annan personligt identifierbar information.\n\nRapporten innehåller endast webbplatsens webbadress och status för vissa inställningar för automatisk ifyllning.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Rapportera att automatisk ifyllning inte fungerar på %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Tack! Din rapport hjälper oss att göra DuckDuckGo bättre för alla.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Rapportera anonymt att automatisk ifyllning inte fungerar på den här webbplatsen. Lösenord delas aldrig.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Automatisk ifyllning fungerar inte?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Visa lösenord";

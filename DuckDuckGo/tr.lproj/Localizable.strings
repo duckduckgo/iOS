@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "İptal";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Kayıtlı şifreyi kullanmak için kilidi açın";
+"autofill.logins.prompt.auth.reason" = "Kayıtlı şifreyi kullanmak için cihazın kilidini açın";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Bu web sitesinden";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Şifre Kaydet";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Rapor gönder";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "DuckDuckGo'ya gönderilen raporlar anonimdir ve kullanıcı adınızı, şifrenizi veya diğer kişisel olarak tanımlanabilir bilgilerinizi içermez.\n\nRapor yalnızca web sitesi URL'sini ve bazı otomatik doldurma ayarlarının durumunu içerir.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "%@ üzerinde otomatik doldurmanın çalışmadığı bildirilsin mi?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Teşekkür ederiz! Raporunuz DuckDuckGo'yu herkes için daha iyi hale getirmemize yardımcı olacak.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Otomatik doldurmanın bu sitede çalışmadığını anonim olarak bildirin. Şifreler asla paylaşılmaz.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Otomatik doldurma çalışmıyor mu?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Parolayı göster";

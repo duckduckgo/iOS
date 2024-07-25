@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Prekliči";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Odkleni za uporabo shranjenega gesla";
+"autofill.logins.prompt.auth.reason" = "Odklenite napravo, če želite uporabiti shranjeno geslo";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "S tega spletnega mesta";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Shrani geslo";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Pošljite poročilo";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Poročila, poslana DuckDuckGo, so anonimna in ne vključujejo vašega uporabniškega imena, gesla ali drugih osebnih podatkov, ki omogočajo individualno prepoznavanje.\n\nPoročilo vključuje samo URL spletnega mesta in stanje nekaterih nastavitev samodejnega izpolnjevanja.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Poročilo o samodejnem izpolnjevanju ne deluje na spletnem mestu %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Hvala! Vaše poročilo nam bo pomagalo izboljšati DuckDuckGo za vse.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anonimno prijavite, da samodejno izpolnjevanje ne deluje na tem spletnem mestu. Gesla niso nikoli deljena.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Samodejno izpolnjevanje ne deluje?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Prikaži geslo";

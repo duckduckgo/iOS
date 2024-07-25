@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Cancelar";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Desbloquear para usar la contraseña guardada";
+"autofill.logins.prompt.auth.reason" = "Desbloquea el dispositivo para usar la contraseña guardada";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Desde este sitio web";
@@ -567,6 +567,24 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Guardar contraseña";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Enviar informe";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Los informes que se envían a DuckDuckGo son anónimos y no incluyen tu nombre de usuario, contraseña ni ninguna otra información de identificación personal.\n\nEl informe solo incluye la URL del sitio web y el estado de algunas configuraciones de Autocompletar.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "¿Autocompletar informes no funciona en %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "¡Gracias! Tu informe ayuda a que DuckDuckGo sea mejor para todos.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Informar de forma anónima de que la función Autocompletar no funciona en esta página. Las contraseñas nunca se comparten.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "¿La función Autocompletar no funciona?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar contraseña";

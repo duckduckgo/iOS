@@ -22,7 +22,15 @@ import CoreData
 import Bookmarks
 import Persistence
 
-public class BookmarksStateValidation {
+public protocol BookmarksStateValidation {
+
+    func validateInitialState(context: NSManagedObjectContext,
+                              validationError: BookmarksStateValidator.ValidationError) -> Bool
+
+    func validateBookmarksStructure(context: NSManagedObjectContext)
+}
+
+public class BookmarksStateValidator: BookmarksStateValidation {
 
     enum Constants {
         static let bookmarksDBIsInitialized = "bookmarksDBIsInitialized"
@@ -45,7 +53,7 @@ public class BookmarksStateValidation {
     }
 
     public func validateInitialState(context: NSManagedObjectContext,
-                                     validationError: ValidationError = .bookmarksStructureLost) -> Bool {
+                                     validationError: ValidationError) -> Bool {
         guard keyValueStore.object(forKey: Constants.bookmarksDBIsInitialized) != nil else { return true }
 
         let fetch = BookmarkEntity.fetchRequest()

@@ -54,7 +54,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             database: db,
             errorEvents: nil,
             remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
-        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient)
+        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
         let dependencies = HomePageDependencies(
             homePageConfiguration: homePageConfiguration,
             model: Tab(),
@@ -62,6 +62,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             appSettings: AppSettingsMock(),
             syncService: MockDDGSyncing(authState: .active, isSyncInProgress: false),
             syncDataProviders: dataProviders,
+            privacyProDataReporter: MockPrivacyProDataReporter(),
             variantManager: variantManager,
             newTabDialogFactory: dialogFactory,
             newTabDialogTypeProvider: specProvider)

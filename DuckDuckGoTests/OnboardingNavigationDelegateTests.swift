@@ -53,7 +53,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             database: db,
             errorEvents: nil,
             remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
-        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient)
+        let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
         let tabsModel = TabsModel(desktop: true)
         mainVC = MainViewController(
             bookmarksDatabase: db,
@@ -66,6 +66,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             previewsSource: TabPreviewsSource(),
             tabsModel: tabsModel,
             syncPausedStateManager: CapturingSyncPausedStateManager(),
+            privacyProDataReporter: MockPrivacyProDataReporter(),
             variantManager: MockVariantManager(),
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: ContextualOnboardingLogicMock())

@@ -2258,8 +2258,12 @@ extension MainViewController: TabDelegate {
         showFireButtonPulse()
     }
     
-    func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController) {
-        showPrivacyDashboardButtonPulse()
+    func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController, animated: Bool) {
+        if animated {
+            showPrivacyDashboardButtonPulse()
+        } else {
+            dismissPrivacyDashboardButtonPulse()
+        }
     }
 
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
@@ -2581,9 +2585,11 @@ extension MainViewController: AutoClearWorker {
     }
 
     private func showPrivacyDashboardButtonPulse() {
-        // TODO:
-        // 1. Wait for Lottie Tracker animation to complete
-        // 2. Animate Privacy Icon with pulsing animation similar to `showFireButtonPulse()`.
+        viewCoordinator.omniBar.showOrScheduleOnboardingPrivacyIconAnimation()
+    }
+
+    private func dismissPrivacyDashboardButtonPulse() {
+        viewCoordinator.omniBar.dismissOnboardingPrivacyIconAnimation()
     }
 
 }

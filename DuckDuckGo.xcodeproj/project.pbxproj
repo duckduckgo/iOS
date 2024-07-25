@@ -663,6 +663,7 @@
 		9F4CC51D2C48D240006A96EB /* CoreDataDatabaseTestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC51C2C48D240006A96EB /* CoreDataDatabaseTestUtilities.swift */; };
 		9F4CC51F2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC51E2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift */; };
 		9F4CC5242C4A4F0D006A96EB /* SwiftUITestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5232C4A4F0D006A96EB /* SwiftUITestUtilities.swift */; };
+		9F4CC5272C4E230C006A96EB /* PrivacyIconContextualOnboardingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5262C4E230C006A96EB /* PrivacyIconContextualOnboardingAnimator.swift */; };
 		9F5E5AAC2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */; };
 		9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */; };
 		9F5E5AB22C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */; };
@@ -2385,6 +2386,7 @@
 		9F4CC51C2C48D240006A96EB /* CoreDataDatabaseTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDatabaseTestUtilities.swift; sourceTree = "<group>"; };
 		9F4CC51E2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialogsFactoryTests.swift; sourceTree = "<group>"; };
 		9F4CC5232C4A4F0D006A96EB /* SwiftUITestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITestUtilities.swift; sourceTree = "<group>"; };
+		9F4CC5262C4E230C006A96EB /* PrivacyIconContextualOnboardingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconContextualOnboardingAnimator.swift; sourceTree = "<group>"; };
 		9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialogsFactory.swift; sourceTree = "<group>"; };
 		9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenter.swift; sourceTree = "<group>"; };
 		9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterTests.swift; sourceTree = "<group>"; };
@@ -4500,6 +4502,14 @@
 			name = Onboarding;
 			sourceTree = "<group>";
 		};
+		9F4CC5252C4E22F9006A96EB /* ContextualOnboarding */ = {
+			isa = PBXGroup;
+			children = (
+				9F4CC5262C4E230C006A96EB /* PrivacyIconContextualOnboardingAnimator.swift */,
+			);
+			name = ContextualOnboarding;
+			sourceTree = "<group>";
+		};
 		9F5E5AAA2C3D0FAA00165F54 /* ContextualOnboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -5732,6 +5742,7 @@
 				1EEF123E2850A68A003DDE57 /* PrivacyInfoContainerView.swift */,
 				1E7A71152934E4C700B7EA19 /* OmniBarNotifications */,
 				1EE411F42857C5130003FE64 /* PrivacyIconAndTrackers */,
+				9F4CC5252C4E22F9006A96EB /* ContextualOnboarding */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -7400,6 +7411,7 @@
 				C1B7B52528941F2A0098FD6A /* RemoteMessagingClient.swift in Sources */,
 				3132FA2827A0788400DD7A12 /* PassKitPreviewHelper.swift in Sources */,
 				6FA343922C3D3C3B00470677 /* FavoriteIconView.swift in Sources */,
+				9F4CC5272C4E230C006A96EB /* PrivacyIconContextualOnboardingAnimator.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
 				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
 				1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */,

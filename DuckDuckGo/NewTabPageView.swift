@@ -27,11 +27,18 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
     @ObservedObject private var favoritesModel: FavoritesModelType
     @ObservedObject private var shortcutsModel: ShortcutsModel
+    @ObservedObject private var preferencesModel: NewTabPagePreferencesModel
 
-    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType, shortcutsModel: ShortcutsModel) {
+    @State private var isShowingPreferences: Bool = false
+
+    init(messagesModel: NewTabPageMessagesModel,
+         favoritesModel: FavoritesModelType,
+         shortcutsModel: ShortcutsModel,
+         preferencesModel: NewTabPagePreferencesModel) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
         self.shortcutsModel = shortcutsModel
+        self.preferencesModel = preferencesModel
 
         self.messagesModel.load()
     }
@@ -82,6 +89,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             }
             .background(Color(designSystemColor: .background))
         }
+        .sheet(isPresented: $isShowingPreferences, content: {
+            NewTabPagePreferencesView(model: preferencesModel)
+        })
     }
 }
 
@@ -102,7 +112,8 @@ private struct Constant {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
-        shortcutsModel: ShortcutsModel()
+        shortcutsModel: ShortcutsModel(),
+        preferencesModel: NewTabPagePreferencesModel()
     )
 }
 
@@ -124,7 +135,8 @@ private struct Constant {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
-        shortcutsModel: ShortcutsModel()
+        shortcutsModel: ShortcutsModel(),
+        preferencesModel: NewTabPagePreferencesModel()
     )
 }
 
@@ -151,5 +163,11 @@ private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration 
 private extension ShortcutsModel {
     convenience init() {
         self.init(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
+    }
+}
+
+private extension NewTabPagePreferencesModel {
+    convenience init() {
+        self.init(newTabPagePreferencesStorage: InMemoryNewTabPageSectionsPreferencesStorage())
     }
 }

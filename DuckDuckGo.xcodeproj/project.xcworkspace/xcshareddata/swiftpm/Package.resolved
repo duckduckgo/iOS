@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "fc03a7c3bf6cd25cf286f8f5a6cfe9ec3d35305a",
-        "version" : "176.0.0"
+        "branch" : "bunn/duckplayer/rmf",
+        "revision" : "24564578be47cbae049456d9a4a5bd56bad49ee3"
       }
     },
     {

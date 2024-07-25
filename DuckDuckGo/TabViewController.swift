@@ -857,7 +857,9 @@ class TabViewController: UIViewController {
 
     @IBSegueAction
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
-        PrivacyDashboardViewController(coder: coder,
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self, animated: false)
+
+        return PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        entryPoint: .dashboard,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
@@ -1375,6 +1377,8 @@ extension TabViewController: WKNavigationDelegate {
         guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
             // Dismiss Contextual onboarding if there's no message to show.
             contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+            // Dismiss privacy dashbooard pulse animation when no browsing dialog to show.
+            delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self, animated: false)
 
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
@@ -2881,7 +2885,7 @@ extension TabViewController: ContextualOnboardingEventDelegate {
     }
 
     func didShowContextualOnboardingTrackersDialog() {
-        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self)
+        delegate?.tabDidRequestPrivacyDashboardButtonPulse(tab: self, animated: true)
     }
 
     func didTapDismissContextualOnboardingAction() {

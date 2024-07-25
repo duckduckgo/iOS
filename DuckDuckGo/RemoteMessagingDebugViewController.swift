@@ -21,6 +21,7 @@ import UIKit
 import SwiftUI
 import RemoteMessaging
 import Core
+import CoreData
 import Combine
 import Persistence
 
@@ -38,33 +39,48 @@ struct RemoteMessagingDebugRootView: View {
 
     var body: some View {
         List {
-            Section {
-                ForEach(model.messages, id: \.id) { entry in
-                    VStack(alignment: .leading) {
-                        Text(entry.id ?? "")
-                            .font(.system(size: 14))
-                        Text(entry.message ?? "")
-                            .font(.system(size: 12))
-                        Text("Shown: \(String(describing: entry.shown))")
-                            .font(.system(size: 10))
-                        Text("Status: \(statusString(for: entry.status))")
-                            .font(.system(size: 10))
+            if !model.messages.isEmpty {
+                Section {
+                    ForEach(model.messages, id: \.id) { message in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("ID: \(message.id) | \(message.shown) | \(message.status)")
+                                .font(.system(size: 15))
+                            Text(message.json ?? "")
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color.gray70)
+                        }
                     }
+                } footer: {
+                    Text("This list contains messages that have been shown plus at most 1 message that is scheduled for showing. There may be more messages in the config that will be presented, but they haven't been processed yet.")
                 }
-            } footer: {
-                Text("This list contains messages that have been shown plus at most 1 message that is scheduled for showing. There may be more messages in the config that will be presented, but they haven't been processed yet.")
+            }
+            Section {
+                Button("Refresh Config", action: model.refreshConfig)
             }
         }
-        .navigationTitle("\(model.messages.count) Remote Messages")
+        .navigationTitle("\(model.messages.count) Remote Message(s)")
         .toolbar {
-            Button("Delete All", role: .destructive) {
-                model.deleteAll()
-            }
+            Button("Delete All", role: .destructive, action: model.deleteAll)
+                .disabled(model.messages.isEmpty)
         }
+    }
+}
+
+struct MessageDebugModel {
+    var id: String
+    var shown: String
+    var status: String
+    var json: String?
+
+    init(_ message: RemoteMessageManagedObject) {
+        id = message.id ?? "?"
+        shown = message.shown ? "shown" : "not shown"
+        status = Self.statusString(for: message.status)
+        json = message.message
     }
 
     /// This should be kept in sync with `RemoteMessageStatus` private enum from BSK
-    private func statusString(for status: NSNumber?) -> String {
+    private static func statusString(for status: NSNumber?) -> String {
         switch status?.int16Value {
         case 0:
             return "scheduled"
@@ -80,17 +96,24 @@ struct RemoteMessagingDebugRootView: View {
 
 class RemoteMessagingDebugViewModel: ObservableObject {
 
-    @Published var messages: [RemoteMessageManagedObject] = []
+    @Published var messages: [MessageDebugModel] = []
 
     let database: CoreDataDatabase
 
     init() {
         database = Database.shared
         fetchMessages()
+
+        notificationCancellable = NotificationCenter.default.publisher(for: RemoteMessagingStore.Notifications.remoteMessagesDidChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.fetchMessages()
+            }
     }
 
     func deleteAll() {
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        context.refreshAllObjects()
         context.deleteAll(entityDescriptions: [
             RemoteMessageManagedObject.entity(in: context),
             RemoteMessagingConfigManagedObject.entity(in: context)
@@ -104,10 +127,17 @@ class RemoteMessagingDebugViewModel: ObservableObject {
         fetchMessages()
     }
 
+    func refreshConfig() {
+        (UIApplication.shared.delegate as? AppDelegate)?.refreshRemoteMessages()
+    }
+
     func fetchMessages() {
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        context.refreshAllObjects()
         let fetchRequest = RemoteMessageManagedObject.fetchRequest()
         fetchRequest.returnsObjectsAsFaults = false
-        messages = (try? context.fetch(fetchRequest)) ?? []
+        messages = ((try? context.fetch(fetchRequest)) ?? []).map(MessageDebugModel.init)
     }
+
+    private var notificationCancellable: AnyCancellable?
 }

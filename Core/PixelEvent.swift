@@ -449,11 +449,8 @@ extension Pixel {
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
         case dbRemoteMessagingSaveConfigError
-        case dbRemoteMessagingInvalidateConfigError
-        case dbRemoteMessagingSaveMessageError
         case dbRemoteMessagingUpdateMessageShownError
         case dbRemoteMessagingUpdateMessageStatusError
-        case dbRemoteMessagingDeleteScheduledMessageError
         case dbLocalAuthenticationError
         
         case configurationFetchInfo
@@ -687,12 +684,6 @@ extension Pixel {
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
 
-        // Other settings
-        case settingsKeyboardOnNewTabOn
-        case settingsKeyboardOnNewTabOff
-        case settingsKeyboardOnAppLaunchOn
-        case settingsKeyboardOnAppLaunchOff
-
         // Web pixels
         case privacyProOfferMonthlyPriceClick
         case privacyProOfferYearlyPriceClick
@@ -794,11 +785,6 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
-        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
-        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
-        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
-        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
-
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -1169,11 +1155,8 @@ extension Pixel.Event {
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"
         case .dbRemoteMessagingSaveConfigError: return "m_d_db_rm_save_config"
-        case .dbRemoteMessagingInvalidateConfigError: return "m_d_db_rm_invalidate_config"
-        case .dbRemoteMessagingSaveMessageError: return "m_d_db_rm_save_message"
         case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
-        case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
         case .dbLocalAuthenticationError: return "m_d_local_auth_error"
             
         case .debugBookmarksMigratedMoreThanOnce: return "m_debug_bookmarks_migrated-more-than-once"

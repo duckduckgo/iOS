@@ -35,14 +35,15 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     init(interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
-         homePageMessagesConfiguration: HomePageMessagesConfiguration) {
+         homePageMessagesConfiguration: HomePageMessagesConfiguration,
+         privacyProDataReporting: PrivacyProDataReporting? = nil) {
 
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
         self.favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         self.shortcutsModel = ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
-        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration),
+        let newTabPageView = NewTabPageView(messagesModel: NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting),
                                             favoritesModel: favoritesModel,
                                             shortcutsModel: shortcutsModel)
 

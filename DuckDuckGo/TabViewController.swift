@@ -143,6 +143,8 @@ class TabViewController: UIViewController {
     }
 #endif
 
+    let privacyProDataReporter: PrivacyProDataReporting
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
@@ -295,7 +297,8 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayerNavigationHandler: DuckNavigationHandling) -> TabViewController {
+                                   duckPlayer: DuckPlayerProtocol,
+                                   privacyProDataReporter: PrivacyProDataReporting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -304,7 +307,8 @@ class TabViewController: UIViewController {
                               bookmarksDatabase: bookmarksDatabase,
                               historyManager: historyManager,
                               syncService: syncService,
-                              duckPlayerNavigationHandler: duckPlayerNavigationHandler)
+                              duckPlayer: duckPlayer,
+                              privacyProDataReporter: privacyProDataReporter)
         })
         return controller
     }
@@ -315,7 +319,8 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-    var duckPlayerNavigationHandler: DuckNavigationHandling
+    var duckPlayer: DuckPlayerProtocol
+    var duckPlayerNavigationHandler: DuckNavigationHandling?
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -323,14 +328,17 @@ class TabViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
-                   duckPlayerNavigationHandler: DuckNavigationHandling) {
+                   duckPlayer: DuckPlayerProtocol,
+                   privacyProDataReporter: PrivacyProDataReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
-        self.duckPlayerNavigationHandler = duckPlayerNavigationHandler
+        self.duckPlayer = duckPlayer
+        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
+        self.privacyProDataReporter = privacyProDataReporter
         super.init(coder: aDecoder)
     }
 
@@ -410,7 +418,7 @@ class TabViewController: UIViewController {
         tabModel.viewed = true
         
         // Link DuckPlayer to current Tab
-        duckPlayerNavigationHandler.duckPlayer.setHostViewController(self)
+        duckPlayerNavigationHandler?.duckPlayer.setHostViewController(self)
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -517,6 +525,12 @@ class TabViewController: UIViewController {
                 // break a js-initiated popup request such as printing from a popup
                 guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
+                
+                
+                if let handler = self?.duckPlayerNavigationHandler,
+                    let webView = self?.webView {
+                    handler.handleAttach(webView: webView)
+                }
             })
         }
 
@@ -682,16 +696,20 @@ class TabViewController: UIViewController {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
-                        
+            
+            // decideForPolicy is not called for JS navigation
+            // This ensures DuckPlayer works on internal JS navigation based on
+            // URL Changes
+            
             if let url,
                 url.isYoutubeVideo,
-                duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler.handleURLChange(url: url, webView: webView)
+               duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+                duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
             }
+             
         }
-                
         if let url {
-            duckPlayerNavigationHandler.referrer = url.isYoutube ? .youtube : .other
+            duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
         }
     }
     
@@ -744,7 +762,7 @@ class TabViewController: UIViewController {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
         if let url = webView.url, url.isDuckPlayer {
-            duckPlayerNavigationHandler.handleReload(webView: webView)
+            duckPlayerNavigationHandler?.handleReload(webView: webView)
         } else {
             webView.reload()
         }
@@ -759,7 +777,8 @@ class TabViewController: UIViewController {
         dismissJSAlertIfNeeded()
         
         if let url = url, url.isDuckPlayer {
-            duckPlayerNavigationHandler.handleGoBack(webView: webView)
+            webView.stopLoading()
+            duckPlayerNavigationHandler?.handleGoBack(webView: webView)
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }
@@ -1619,6 +1638,7 @@ extension TabViewController: WKNavigationDelegate {
                navigationAction.isTargetingMainFrame() {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
+                    privacyProDataReporter.saveSearchCount()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)
@@ -1676,9 +1696,10 @@ extension TabViewController: WKNavigationDelegate {
         
         if navigationAction.isTargetingMainFrame(),
             url.isYoutubeVideo,
-            duckPlayerNavigationHandler.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler.handleDecidePolicyFor(navigationAction, webView: webView)
-            completion(.allow)
+           duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+            duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
+                                                              completion: completion,
+                                                              webView: webView)
             return
         }
         
@@ -1699,7 +1720,7 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler.handleNavigation(navigationAction, webView: webView)
+            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
             
@@ -2350,7 +2371,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autoconsentUserScript.delegate = self
         
         // Setup DuckPlayer
-        userScripts.duckPlayer = duckPlayerNavigationHandler.duckPlayer
+        userScripts.duckPlayer = duckPlayerNavigationHandler?.duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView
         userScripts.youtubePlayerUserScript?.webView = webView
         

@@ -10197,8 +10197,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "bartek/data-debugging";
-				kind = branch;
+				kind = revision;
+				revision = 7eae08a34b8e5294ab40d02704f54d71498cd8cb;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

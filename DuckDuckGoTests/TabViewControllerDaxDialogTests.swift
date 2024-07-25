@@ -153,6 +153,30 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertFalse(delegateMock.privacyDashboardAnimated ?? true)
     }
 
+    func testWhenDismissContextualDaxFireDialog_andNewOnboarding_andFireDialogPresented_ThenAskPresenterToDismissDialog() {
+        // GIVEN
+        onboardingLogicMock.isShowingFireDialog = true
+        XCTAssertFalse(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
+
+        // WHEN
+        sut.dismissContextualDaxFireDialog()
+
+        // THEN
+        XCTAssertTrue(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
+    }
+
+    func testWhenDismissContextualDaxFireDialog_andNewOnboarding_andFireDialogIsNotPresented_ThenDoNotAskPresenterToDismissDialog() {
+        // GIVEN
+        onboardingLogicMock.isShowingFireDialog = false
+        XCTAssertFalse(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
+
+        // WHEN
+        sut.dismissContextualDaxFireDialog()
+
+        // THEN
+        XCTAssertFalse(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
+    }
+
 }
 
 final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
@@ -161,6 +185,8 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     private(set) var didCallSetFireEducationMessageSeen = false
     private(set) var didCallsetFinalOnboardingDialogSeen = false
     private(set) var didCallsetsetSearchMessageSeen = false
+
+    var isShowingFireDialog: Bool = false
 
     func setFireEducationMessageSeen() {
         didCallSetFireEducationMessageSeen = true

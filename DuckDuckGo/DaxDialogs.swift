@@ -37,6 +37,7 @@ protocol NewTabDialogSpecProvider {
 }
 
 protocol ContextualOnboardingLogic {
+    var isShowingFireDialog: Bool { get }
     func setSearchMessageSeen()
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
@@ -251,7 +252,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private var fireButtonBrowsingMessageSeenOrExpired: Bool {
         return settings.fireButtonEducationShownOrExpired
     }
-    
+
+    var isShowingFireDialog: Bool {
+        guard isNewOnboarding, let lastShownDaxDialogType else { return false }
+        return BrowsingSpec.SpecType(rawValue: lastShownDaxDialogType) == .fire
+    }
+
     var isEnabled: Bool {
         // skip dax dialogs in integration tests
         guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }

@@ -736,7 +736,12 @@ class TabViewController: UIViewController {
     func disableFireproofingForDomain(_ domain: String) {
         preserveLoginsWorker?.handleUserDisablingFireproofing(forDomain: domain)
     }
-    
+
+    func dismissContextualDaxFireDialog() {
+        guard contextualOnboardingLogic.isShowingFireDialog else { return }
+        contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+    }
+
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false

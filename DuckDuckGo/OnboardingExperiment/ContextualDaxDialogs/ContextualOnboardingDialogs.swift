@@ -168,7 +168,6 @@ struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
-    let imageName = "Success-128"
     
     let highFiveAction: () -> Void
 
@@ -178,7 +177,6 @@ struct OnboardingFinalDialog: View {
                 ContextualDaxDialogContent(
                     title: title,
                     message: message,
-                    imageName: imageName,
                     cta: cta,
                     action: highFiveAction
                 )

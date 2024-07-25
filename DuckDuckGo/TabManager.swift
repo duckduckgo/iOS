@@ -35,8 +35,8 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-    private var duckPlayerNavigationHandler: DuckNavigationHandling
-    private let privacyProDataReporter: PrivacyProDataReporting
+    private var duckPlayer: DuckPlayerProtocol
+    private var privacyProDataReporter: PrivacyProDataReporting
 
     weak var delegate: TabDelegate?
 
@@ -49,17 +49,15 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
+         duckPlayer: DuckPlayer = DuckPlayer(),
          privacyProDataReporter: PrivacyProDataReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
+        self.duckPlayer = duckPlayer
         self.privacyProDataReporter = privacyProDataReporter
-
-        // Init Duck Player Handler
-        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: DuckPlayer())
-
         registerForNotifications()
     }
 
@@ -76,7 +74,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayerNavigationHandler: duckPlayerNavigationHandler,
+                                                              duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
@@ -150,7 +148,7 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayerNavigationHandler: duckPlayerNavigationHandler,
+                                                              duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,

@@ -35,7 +35,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol, 
+    init(duckPlayer: DuckPlayerProtocol,
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
         self.duckPlayer = duckPlayer

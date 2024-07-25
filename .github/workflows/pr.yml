@@ -39,7 +39,7 @@ jobs:
 
     name: Unit Tests
 
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
     timeout-minutes: 15
 
     outputs:
@@ -132,7 +132,7 @@ jobs:
     # Dependabot doesn't have access to all secrets, so we skip this job
     if: github.actor != 'dependabot[bot]'
 
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
     timeout-minutes: 30
 
     steps:

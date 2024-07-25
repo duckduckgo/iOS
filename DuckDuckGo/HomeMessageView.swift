@@ -49,8 +49,6 @@ struct HomeMessageView: View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 8) {
                 Group {
-                    topText
-
                     if case .promoSingleAction = viewModel.modelType {
                         title
                             .daxTitle3()
@@ -112,17 +110,6 @@ struct HomeMessageView: View {
         }
         .frame(width: Const.Size.closeButtonWidth, height: Const.Size.closeButtonWidth)
         .contentShape(Rectangle())
-    }
-    
-    private var topText: some View {
-        Group {
-            if let topText = viewModel.topText {
-                Text(topText)
-                    .font(Font(uiFont: Const.Font.topText))
-            } else {
-                EmptyView()
-            }
-        }
     }
     
     private var image: some View {

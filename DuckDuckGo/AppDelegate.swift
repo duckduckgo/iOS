@@ -637,7 +637,8 @@ import WebKit
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
-    private func refreshRemoteMessages() {
+    /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
+    func refreshRemoteMessages() {
         Task {
             try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
         }

@@ -49,11 +49,6 @@ struct HomeMessageViewModel {
         }
     }
     
-    var topText: String? {
-        // actually unused!
-        return nil
-    }
-    
     var title: String {
         switch modelType {
         case .small(let titleText, _):

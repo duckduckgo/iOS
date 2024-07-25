@@ -180,22 +180,3 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         NotificationCenter.default.removeObserver(self)
     }
 }
-
-//TODO:
-#warning("Move this to another file")
-import Common
-
-protocol DuckPlayerStorage {
-    /// Description: Checks whether the user has seen and interacted with (i.e. clicked any button) the Duck Player overlay on a YouTube video.
-    /// https://app.asana.com/0/1207619243206445/1207785962765265/f
-    var userInteractedWithDuckPlayer: Bool { get set }
-}
-
-struct DefaultDuckPlayerStorage: DuckPlayerStorage {
-    @UserDefaultsWrapper(key: .userInteractedWithDuckPlayer, defaultValue: false)
-    var userInteractedWithDuckPlayer: Bool {
-        didSet {
-            os_log("DP: Flagging userInteractedWithDuckPlayer [%@]", log: .duckPlayerLog, type: .debug, userInteractedWithDuckPlayer ? "true" : "false")
-        }
-    }
-}

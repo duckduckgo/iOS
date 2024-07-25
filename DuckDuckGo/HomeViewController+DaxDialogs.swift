@@ -52,10 +52,10 @@ extension HomeViewController {
     }
 
     func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
-        dismissHostingController()
+        dismissHostingController(didFinishNTPOnboarding: false)
         let onDismiss = {
             dialogProvider.dismiss()
-            self.dismissHostingController()
+            self.dismissHostingController(didFinishNTPOnboarding: true)
         }
         guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
         let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
@@ -75,10 +75,12 @@ extension HomeViewController {
         configureCollectionView()
     }
 
-    private func dismissHostingController() {
+    private func dismissHostingController(didFinishNTPOnboarding: Bool) {
         hostingController?.willMove(toParent: nil)
         hostingController?.view.removeFromSuperview()
         hostingController?.removeFromParent()
-        delegate?.home(self, didRequestHideLogo: false)
+        if didFinishNTPOnboarding {
+            delegate?.home(self, didRequestHideLogo: false)
+        }
     }
 }

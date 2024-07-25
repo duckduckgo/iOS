@@ -471,29 +471,19 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         if privacyInfo.url.isDuckDuckGoSearch && !settings.browsingAfterSearchShown {
             spec = searchMessage()
-        }
-
-        // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
+        } else if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
+            // won't be shown if owned by major tracker message has already been shown
             spec = majorTrackerMessage(host)
-        }
-
-        // won't be shown if major tracker message has already been shown
-        if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
+        } else if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
+            // won't be shown if major tracker message has already been shown
             spec = majorTrackerOwnerMessage(host, owner)
-        }
-
-        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {
+        } else if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {
             spec = trackersBlockedMessage(entityNames)
-        }
-
-        // if non duck duck go search and no trackers found and no tracker message already shown, show no trackers message
-        if !settings.browsingWithoutTrackersShown && !privacyInfo.url.isDuckDuckGoSearch && !hasTrackers(host: host) {
+        } else if !settings.browsingWithoutTrackersShown && !privacyInfo.url.isDuckDuckGoSearch && !hasTrackers(host: host) {
+            // if non duck duck go search and no trackers found and no tracker message already shown, show no trackers message
             spec = noTrackersMessage()
-        }
-
-        // If the user visited a website and saw the fire dialog
-        if shouldDisplayFinalContextualBrowsingDialog {
+        } else if shouldDisplayFinalContextualBrowsingDialog {
+            // If the user visited a website and saw the fire dialog
             spec = finalMessage()
         }
 
@@ -663,11 +653,20 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             return true
         }
 
-        guard url1.isDuckDuckGoSearch && url2.isDuckDuckGoSearch else { return false }
+        return url1.isSameDuckDuckGoSearchURL(other: url2)
+    }
+}
+
+extension URL {
+
+    func isSameDuckDuckGoSearchURL(other: URL?) -> Bool {
+        guard let other else { return false }
+
+        guard isDuckDuckGoSearch && other.isDuckDuckGoSearch else { return false }
 
         // Extract 'q' parameter from both URLs
-        let queryValue1 = URLComponents(url: url1, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
-        let queryValue2 = URLComponents(url: url2, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
+        let queryValue1 = URLComponents(url: self, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
+        let queryValue2 = URLComponents(url: other, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "q" })?.value
 
         let normalizedQuery1 = queryValue1?
             .replacingOccurrences(of: "+", with: " ")

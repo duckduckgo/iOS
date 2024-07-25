@@ -35,6 +35,7 @@ struct OnboardingTrySearchDialog: View {
                     listAction: viewModel.listItemPressed
                 )
             }
+            .padding()
         }
     }
 }
@@ -48,6 +49,7 @@ struct OnboardingTryVisitingSiteDialog: View {
             DaxDialogView(logoPosition: logoPosition) {
                 OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
             }
+            .padding()
         }
     }
 }
@@ -116,6 +118,7 @@ struct OnboardingFirstSearchDoneDialog: View {
                     }
                 }
             }
+            .padding()
         }
     }
 }
@@ -129,6 +132,7 @@ struct OnboardingFireDialog: View {
                     OnboardingFireButtonDialogContent()
                 }
             }
+            .padding()
         }
     }
 }
@@ -160,6 +164,7 @@ struct OnboardingTrackersDoneDialog: View {
                     }
                 }
             }
+            .padding()
         }
     }
 }
@@ -181,6 +186,7 @@ struct OnboardingFinalDialog: View {
                     action: highFiveAction
                 )
             }
+            .padding()
         }
     }
 }

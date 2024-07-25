@@ -137,9 +137,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 private extension View {
 
     func withOnboardingBackground() -> some View {
-        self
-            .padding()
-            .background(OnboardingBackground())
+        self.background(OnboardingBackground())
     }
 
 }

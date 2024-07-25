@@ -55,7 +55,6 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         let viewModel = OnboardingSearchSuggestionsViewModel(delegate: delegate)
         return FadeInView {
             OnboardingTrySearchDialog(viewModel: viewModel)
-                .padding()
         }
         .background(
             OnboardingBackground()
@@ -64,11 +63,8 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createSubsequentDialog() -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, delegate: delegate)
-        return ScrollView(.vertical) {
-            FadeInView {
-                OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
-                    .padding()
-            }
+        return FadeInView {
+            OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
         }
         .background(
             OnboardingBackground()
@@ -76,22 +72,19 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createAddFavoriteDialog(message: String) -> some View {
-        return FadeInView {
+        FadeInView {
             DaxDialogView(logoPosition: .top) {
                 ContextualDaxDialogContent(message: NSAttributedString(string: message))
-
             }
             .padding()
         }
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        return ScrollView(.vertical) {
-            FadeInView {
-                OnboardingFinalDialog(highFiveAction: {
-                    onDismiss()
-                }).padding()
-            }
+        FadeInView {
+            OnboardingFinalDialog(highFiveAction: {
+                onDismiss()
+            })
         }
         .onAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

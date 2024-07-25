@@ -259,6 +259,7 @@
 		6F03CB072C32F173004179A8 /* PixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB062C32F173004179A8 /* PixelFiring.swift */; };
 		6F03CB092C32F331004179A8 /* PixelFiringAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB082C32F331004179A8 /* PixelFiringAsync.swift */; };
 		6F0FEF6B2C516D540090CDE4 /* NewTabPageSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FEF6A2C516D540090CDE4 /* NewTabPageSettingsStorage.swift */; };
+		6F0FEF6D2C52639E0090CDE4 /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FEF6C2C52639E0090CDE4 /* ReorderableForEach.swift */; };
 		6F35379E2C4AAF2E009F8717 /* NewTabPagePreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F35379D2C4AAF2E009F8717 /* NewTabPagePreferencesView.swift */; };
 		6F3537A02C4AAFD2009F8717 /* NTPPreferencesSectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F35379F2C4AAFD2009F8717 /* NTPPreferencesSectionItemView.swift */; };
 		6F3537A22C4AB97A009F8717 /* NewTabPagePreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3537A12C4AB97A009F8717 /* NewTabPagePreferencesModel.swift */; };
@@ -1424,6 +1425,7 @@
 		6F03CB062C32F173004179A8 /* PixelFiring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFiring.swift; sourceTree = "<group>"; };
 		6F03CB082C32F331004179A8 /* PixelFiringAsync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFiringAsync.swift; sourceTree = "<group>"; };
 		6F0FEF6A2C516D540090CDE4 /* NewTabPageSettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageSettingsStorage.swift; sourceTree = "<group>"; };
+		6F0FEF6C2C52639E0090CDE4 /* ReorderableForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderableForEach.swift; sourceTree = "<group>"; };
 		6F35379D2C4AAF2E009F8717 /* NewTabPagePreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPagePreferencesView.swift; sourceTree = "<group>"; };
 		6F35379F2C4AAFD2009F8717 /* NTPPreferencesSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTPPreferencesSectionItemView.swift; sourceTree = "<group>"; };
 		6F3537A12C4AB97A009F8717 /* NewTabPagePreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPagePreferencesModel.swift; sourceTree = "<group>"; };
@@ -3633,6 +3635,7 @@
 				6F5CC0802C2AFFE400AFC840 /* ToggleExpandButtonView.swift */,
 				6F96FF0F2C2B128500162692 /* NewTabPageCustomizeButtonView.swift */,
 				6FB2A67D2C2DAFB4004D20C8 /* NewTabPageGridView.swift */,
+				6F0FEF6C2C52639E0090CDE4 /* ReorderableForEach.swift */,
 				6F3537A32C4AC140009F8717 /* NTPDaxLogoView.swift */,
 			);
 			name = Subviews;
@@ -6796,6 +6799,7 @@
 				31DE43C42C2C60E800F8C51F /* DuckPlayerModalPresenter.swift in Sources */,
 				37FCAAC029930E26000E420A /* FailedAssertionView.swift in Sources */,
 				4BBBBA922B03291700D965DA /* VPNWaitlistUserText.swift in Sources */,
+				6F0FEF6D2C52639E0090CDE4 /* ReorderableForEach.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				6FB2A67C2C2D9DF0004D20C8 /* FavoritesEmptyStateView.swift in Sources */,
 				1E162605296840D80004127F /* Triangle.swift in Sources */,

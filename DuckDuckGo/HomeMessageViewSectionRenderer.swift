@@ -119,7 +119,16 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 params
             }
         case .remoteMessage(let remoteMessage):
+            let onDidAppear = { [weak self] in
+                self?.homePageConfiguration.didAppear(message)
+            }
+
+            // call didAppear here to support marking messages as shown when they appear on the new tab page
+            // as a result of refreshing a config while the user was on a new tab page already.
+            onDidAppear()
+
             return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
+
                 guard let action,
                       let self else { return }
 
@@ -160,8 +169,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     }
 
                 }
-            } onDidAppear: { [weak self] in
-                self?.homePageConfiguration.didAppear(message)
+            } onDidAppear: {
+                onDidAppear()
             }
         }
     }

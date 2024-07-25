@@ -449,11 +449,8 @@ extension Pixel {
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
         case dbRemoteMessagingSaveConfigError
-        case dbRemoteMessagingInvalidateConfigError
-        case dbRemoteMessagingSaveMessageError
         case dbRemoteMessagingUpdateMessageShownError
         case dbRemoteMessagingUpdateMessageStatusError
-        case dbRemoteMessagingDeleteScheduledMessageError
         case dbLocalAuthenticationError
         
         case configurationFetchInfo
@@ -1169,11 +1166,8 @@ extension Pixel.Event {
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"
         case .dbRemoteMessagingSaveConfigError: return "m_d_db_rm_save_config"
-        case .dbRemoteMessagingInvalidateConfigError: return "m_d_db_rm_invalidate_config"
-        case .dbRemoteMessagingSaveMessageError: return "m_d_db_rm_save_message"
         case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
-        case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
         case .dbLocalAuthenticationError: return "m_d_local_auth_error"
             
         case .debugBookmarksMigratedMoreThanOnce: return "m_debug_bookmarks_migrated-more-than-once"

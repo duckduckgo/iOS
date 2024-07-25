@@ -49,11 +49,16 @@ struct OnboardingSiteSuggestionsViewModel {
     weak var delegate: OnboardingNavigationDelegate?
 
     init(
+        title: String,
         suggestedSitesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(),
-        delegate: OnboardingNavigationDelegate? = nil) {
+        delegate: OnboardingNavigationDelegate? = nil
+    ) {
+        self.title = title
         self.suggestedSitesProvider = suggestedSitesProvider
         self.delegate = delegate
     }
+
+    let title: String
 
     var itemsList: [ContextualOnboardingListItem] {
         suggestedSitesProvider.list

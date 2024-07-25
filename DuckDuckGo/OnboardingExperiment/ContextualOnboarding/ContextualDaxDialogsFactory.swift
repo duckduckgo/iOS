@@ -86,7 +86,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
 
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
@@ -104,7 +104,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
         return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
     }
 

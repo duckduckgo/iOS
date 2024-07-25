@@ -48,7 +48,7 @@ I blocked them!
 ☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
 		</dict>
 	</dict>
-	<key>dax.onboarding.experiment.browsing.multiple.trackers</key>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%1#@count@</string>
@@ -59,21 +59,15 @@ I blocked them!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
-
-I blocked them!
+			<string>*%2$@, %3$@* and *1 other* were trying to track you here. I blocked them!
 
 ☝️ Tap the shield for more info.</string>
 			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
-
-I blocked them!
+			<string>*%2$@ and %3$@* were trying to track you here. I blocked them!
 
 ☝️ Tap the shield for more info.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%d others* were trying to track you here.
-
-I blocked them!
+			<string>*%2$@, %3$@* and *%d others* were trying to track you here. I blocked them!
 
 ☝️ Tap the shield for more info.</string>
 		</dict>

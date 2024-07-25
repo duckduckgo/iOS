@@ -53,13 +53,13 @@ struct OnboardingTryVisitingSiteDialog: View {
 }
 
 struct OnboardingTryVisitingSiteDialogContent: View {
-    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle
     let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
+
     let viewModel: OnboardingSiteSuggestionsViewModel
 
     var body: some View {
         ContextualDaxDialogContent(
-            title: title,
+            title: viewModel.title,
             message: message,
             list: viewModel.itemsList,
             listAction: viewModel.listItemPressed)
@@ -195,12 +195,12 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("Try Site Top") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel())
+    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle))
         .padding()
 }
 
 #Preview("Try Site Left") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel())
+    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle))
         .padding()
 }
 
@@ -212,7 +212,7 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle), gotItAction: {})
         .padding()
 }
 

@@ -63,7 +63,7 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createSubsequentDialog() -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, delegate: delegate)
         return ScrollView(.vertical) {
             FadeInView {
                 OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)

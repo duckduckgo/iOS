@@ -749,7 +749,7 @@
 "contextual.onboarding.try-a-site.title" = "Try visiting a site!";
 
 /* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
-"contextual.onboarding.try-fire-button.message" = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! ☝️";
+"contextual.onboarding.try-fire-button.message" = "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥";
 
 /* Browser Search query for how to say duck in english */
 "contextual.onboarding.try-search.option1-English" = "how to say “duck” in spanish";
@@ -843,6 +843,12 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.without.trackers.cta" = "Got It";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.experiment.browsing.multiple.trackers" = "dax.onboarding.experiment.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.experiment.browsing.one.tracker" = "*%1$@* was trying to track you here.\n\nI blocked them!\n\n☝️ Tap the shield for more info.";
 
 /* Encourage user to try clearing data with the fire button */
 "dax.onboarding.fire.button" = "Personal data can build up in your browser. Yuck. Use the Fire Button to burn it all away. Give it a try now! 👇";

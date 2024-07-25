@@ -81,7 +81,7 @@ struct ContextualOnboardingListView: View {
                         Spacer()
                     }
                 })
-                .buttonStyle(SecondaryButtonStyle(compact: true))
+                .buttonStyle(GhostButtonStyle(compact: true))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .inset(by: 0.5)

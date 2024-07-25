@@ -43,57 +43,97 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         self.messagesModel.load()
     }
 
+    private var messagesSectionView: some View {
+        ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
+            HomeMessageView(viewModel: messageModel)
+                .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
+                .padding(16)
+        }
+    }
+
+    private var favoritesSectionView: some View {
+        Group {
+            if favoritesModel.isEmpty {
+                FavoritesEmptyStateView()
+            } else {
+                FavoritesView(model: favoritesModel)
+            }
+        }
+        .sectionPadding()
+    }
+
+    @ViewBuilder
+    private var shortcutsSectionView: some View {
+        if isShortcutsSectionVisible {
+            ShortcutsView(model: shortcutsModel)
+                .sectionPadding()
+        }
+    }
+
+    private var customizeButtonView: some View {
+        HStack {
+            Spacer()
+
+            Button(action: {
+                isShowingPreferences = true
+            }, label: {
+                NewTabPageCustomizeButtonView()
+                // Needed to reduce default button margins
+                    .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
+            }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                .padding(.top, 40)
+        }.sectionPadding()
+    }
+
+    private var isAnySectionEnabled: Bool {
+        !preferencesModel.visibleSections.isEmpty
+    }
+
+    private var isShortcutsSectionVisible: Bool {
+        !shortcutsModel.enabledShortcuts.isEmpty
+    }
+
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack {
-                    // MARK: Messages
-                    ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
-                        HomeMessageView(viewModel: messageModel)
-                            .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                            .padding(16)
-                    }
+                    messagesSectionView
 
-                    // MARK: Favorites
-                    if favoritesModel.isEmpty {
-                        FavoritesEmptyStateView()
-                            .padding(Constant.sectionPadding)
+                    if isAnySectionEnabled {
+                        ForEach(preferencesModel.visibleSections, id: \.rawValue) { section in
+                            switch section {
+                            case .favorites:
+                                favoritesSectionView
+                            case .shortcuts:
+                                shortcutsSectionView
+                            }
+                        }
                     } else {
-                        FavoritesView(model: favoritesModel)
-                            .padding(Constant.sectionPadding)
-                    }
-
-                    // MARK: Shortcuts
-                    if !shortcutsModel.enabledShortcuts.isEmpty {
-                        ShortcutsView(model: shortcutsModel)
-                            .padding(Constant.sectionPadding)
+                        // MARK: Dax Logo
+                        Spacer()
+                        NTPDaxLogoView()
                     }
 
                     Spacer()
 
                     // MARK: Customize button
-                    HStack {
-                        Spacer()
-
-                        Button(action: {
-                        }, label: {
-                            NewTabPageCustomizeButtonView()
-                            // Needed to reduce default button margins
-                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
-                        }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                            .padding(Constant.sectionPadding)
-                            .padding(.top, 40)
-                    }
+                    customizeButtonView
                 }
                 .frame(minHeight: proxy.frame(in: .local).size.height)
             }
-            .background(Color(designSystemColor: .background))
         }
+        .background(Color(designSystemColor: .background))
         .sheet(isPresented: $isShowingPreferences, content: {
             NewTabPagePreferencesView(model: preferencesModel)
         })
     }
 }
+
+private extension View {
+        func sectionPadding() -> some View {
+            self.padding(Constant.sectionPadding)
+        }
+    }
 
 private struct Constant {
     static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)

@@ -124,6 +124,15 @@ final class DuckPlayer: DuckPlayerProtocol {
         }
         settings.setMode(userValues.duckPlayerMode)
         settings.setOverlayHidden(userValues.askModeOverlayHidden)
+        
+        // Fire Pixels
+        switch userValues.duckPlayerMode {
+        case .enabled:
+            Pixel.fire(pixel: Pixel.Event.duckPlayerSettingAlwaysDuckPlayer, debounce: 2)
+        default:
+            break
+        }
+        
         return userValues
     }
         

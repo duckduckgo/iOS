@@ -728,7 +728,7 @@
 "contextual.onboarding.try-a-search.message" = "Your DuckDuckGo searches are always anonymous.";
 
 /* Title of a popover on the browser that invites the user to try a search */
-"contextual.onboarding.try-a-search.title" = "Try a search!";
+"contextual.onboarding.try-a-search.title" = "Ready to get started?\nTry a search!";
 
 /* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
 "contextual.onboarding.try-a-site.message" = "I’ll block trackers so they can’t spy on you.";

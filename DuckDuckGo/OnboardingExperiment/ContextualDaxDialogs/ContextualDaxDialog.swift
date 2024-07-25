@@ -44,7 +44,7 @@ struct ContextualDaxDialogContent: View {
     @State private var timerCancellable: AnyCancellable?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 16) {
             titleView
                 .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
             messageView

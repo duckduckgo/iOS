@@ -46,7 +46,7 @@ struct DaxDialogView<Content: View>: View {
 
     @State private var logoPosition: DaxDialogLogoPosition
 
-    private let matchLogoAnimation: (id: String, namespace: Namespace.ID)
+    private let matchLogoAnimation: (id: String, namespace: Namespace.ID)?
     private let showDialogBox: Binding<Bool>
     private let cornerRadius: CGFloat
     private let arrowSize: CGSize
@@ -55,7 +55,7 @@ struct DaxDialogView<Content: View>: View {
 
     init(
         logoPosition: DaxDialogLogoPosition,
-        matchLogoAnimation: (String, Namespace.ID) = ("", Namespace().wrappedValue),
+        matchLogoAnimation: (String, Namespace.ID)? = nil,
         showDialogBox: Binding<Bool> = .constant(true),
         cornerRadius: CGFloat = 16.0,
         arrowSize: CGSize = .init(width: 16.0, height: 8.0),
@@ -109,12 +109,18 @@ struct DaxDialogView<Content: View>: View {
         Metrics.stackSpacing + arrowSize.height
     }
 
+    @ViewBuilder
     private var daxLogo: some View {
-        Image(.daxIconExperiment)
+        let icon = Image(.daxIconExperiment)
             .resizable()
-            .matchedGeometryEffect(id: matchLogoAnimation.id, in: matchLogoAnimation.namespace)
             .aspectRatio(contentMode: .fill)
             .frame(width: Metrics.DaxLogo.size, height: Metrics.DaxLogo.size)
+
+        if let matchLogoAnimation {
+            icon.matchedGeometryEffect(id: matchLogoAnimation.id, in: matchLogoAnimation.namespace)
+        } else {
+            icon
+        }
     }
 
     private var wrappedContent: some View {

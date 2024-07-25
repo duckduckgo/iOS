@@ -142,11 +142,21 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         let type: SpecType
         
         func format(args: CVarArg...) -> BrowsingSpec {
-            return BrowsingSpec(message: String(format: message, arguments: args),
-                                cta: cta,
-                                highlightAddressBar: highlightAddressBar,
-                                pixelName: pixelName,
-                                type: type)
+            format(message: message, args: args)
+        }
+
+        func format(message: String, args: CVarArg...) -> BrowsingSpec {
+            withUpdatedMessage(String(format: message, arguments: args))
+        }
+
+        func withUpdatedMessage(_ message: String) -> BrowsingSpec {
+            BrowsingSpec(
+                message: message,
+                cta: cta,
+                highlightAddressBar: highlightAddressBar,
+                pixelName: pixelName,
+                type: type
+            )
         }
     }
     
@@ -246,7 +256,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
     
     var shouldShowFireButtonPulse: Bool {
-        return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        if isNewOnboarding {
+            nonDDGBrowsingMessageSeen && fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        } else {
+            nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+        }
     }
 
     func isStillOnboarding() -> Bool {
@@ -508,13 +522,21 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         case 1:
             settings.browsingWithTrackersShown = true
-            spec = BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
+            let args = entitiesBlocked[0]
+            spec = if isNewOnboarding {
+                BrowsingSpec.withOneTracker.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker, args: args)
+            } else {
+                BrowsingSpec.withOneTracker.format(args: args)
+            }
 
         default:
             settings.browsingWithTrackersShown = true
-            spec = BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
-                                                           entitiesBlocked[0],
-                                                           entitiesBlocked[1])
+            let args: [CVarArg] = [entitiesBlocked.count - 2, entitiesBlocked[0], entitiesBlocked[1]]
+            spec = if isNewOnboarding {
+                BrowsingSpec.withMultipleTrackers.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers, args: args)
+            } else {
+                BrowsingSpec.withMultipleTrackers.format(args: args)
+            }
         }
         // New Contextual onboarding doesn't highlight the address bar. This checks prevents to cancel the lottie animation.
         if isNewOnboarding {

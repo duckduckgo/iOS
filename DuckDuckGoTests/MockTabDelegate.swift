@@ -81,7 +81,7 @@ final class MockTabDelegate: TabDelegate {
         didRequestFireButtonPulseCalled = true
     }
 
-    func tabDidRequestPrivacyDashboardButtonPulse(tab: DuckDuckGo.TabViewController) {
+    func tabDidRequestPrivacyDashboardButtonPulse(tab: DuckDuckGo.TabViewController, animated: Bool) {
         didRequestPrivacyDashboardButtonPulseCalled = true
     }
 

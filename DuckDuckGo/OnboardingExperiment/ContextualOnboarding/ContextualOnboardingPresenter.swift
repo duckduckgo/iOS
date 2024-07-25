@@ -34,10 +34,16 @@ protocol ContextualOnboardingPresenting {
 final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     private let variantManager: VariantManager
     private let daxDialogsFactory: ContextualDaxDialogsFactory
+    private let appSettings: AppSettings
 
-    init(variantManager: VariantManager, daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory()) {
+    init(
+        variantManager: VariantManager,
+        daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(),
+        appSettings: AppSettings = AppUserDefaults()
+    ) {
         self.variantManager = variantManager
         self.daxDialogsFactory = daxDialogsFactory
+        self.appSettings = appSettings
     }
 
     func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
@@ -71,8 +77,14 @@ private extension ContextualOnboardingPresenter {
             $0.removeFromSuperview()
         }
 
+        // Adjust message hand emoji based on address bar position
+        let platformSpecificMessage = spec.message.replacingOccurrences(
+            of: "☝️",
+            with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️"
+        )
+        let platformSpecificSpec = spec.withUpdatedMessage(platformSpecificMessage)
         // Ask the Dax Dialogs Factory for a view for the given spec
-        let controller = daxDialogsFactory.makeView(for: spec, delegate: vc)
+        let controller = daxDialogsFactory.makeView(for: platformSpecificSpec, delegate: vc)
         controller.view.isHidden = true
         controller.view.alpha = 0
 

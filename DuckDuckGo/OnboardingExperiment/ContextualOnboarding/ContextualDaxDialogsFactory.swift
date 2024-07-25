@@ -23,6 +23,7 @@ import SwiftUI
 
 /// A delegate to inform about specific events happening during the contextual onboarding.
 protocol ContextualOnboardingEventDelegate: AnyObject {
+    func didAcknowledgeContextualOnboardingSearch()
     /// Inform the delegate that a dialog for blocked trackers have been shown to the user.
     func didShowContextualOnboardingTrackersDialog()
     /// Inform the delegate that the user did acknowledge the dialog for blocked trackers.
@@ -52,8 +53,12 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         switch spec.type {
         case .afterSearch:
             rootView = AnyView(afterSearchDialog(shouldFollowUpToWebsiteSearch: !contextualOnboardingSettings.userHasSeenTrackersDialog, delegate: delegate))
+        case .visitWebsite:
+            rootView = AnyView(tryVisitingSiteDialog(delegate: delegate))
         case .siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withOneTracker, .withoutTrackers:
             rootView = AnyView(withTrackersDialog(for: spec, shouldFollowUpToFireDialog: !contextualOnboardingSettings.userHasSeenFireDialog, delegate: delegate))
+        case .fire:
+            rootView = AnyView(OnboardingFireDialog())
         case .final:
             rootView = AnyView(endOfJourneyDialog(delegate: delegate))
         }
@@ -70,8 +75,21 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate) -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
-        let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch { {} } else { { [weak delegate] in delegate?.didTapDismissContextualOnboardingAction() } }
+        let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
+            { [weak delegate] in
+                delegate?.didAcknowledgeContextualOnboardingSearch()
+            }
+        } else {
+            { [weak delegate] in
+                delegate?.didTapDismissContextualOnboardingAction()
+            }
+        }
         return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
+    }
+
+    private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
+        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
     }
 
     private func withTrackersDialog(for spec: DaxDialogs.BrowsingSpec, shouldFollowUpToFireDialog: Bool, delegate: ContextualOnboardingDelegate) -> some View {

@@ -51,6 +51,8 @@ public struct UserDefaultsWrapper<T> {
         case daxFireButtonEducationShownOrExpired = "com.duckduckgo.ios.daxfireButtonEducationShownOrExpired"
         case fireButtonPulseDateShown = "com.duckduckgo.ios.fireButtonPulseDateShown"
         case daxBrowsingFinalDialogShown = "com.duckduckgo.ios.daxOnboardingFinalDialogSeen"
+        case daxLastVisitedOnboardingWebsite = "com.duckduckgo.ios.daxOnboardingLastVisitedWebsite"
+        case daxLastShownContextualOnboardingDialogType = "com.duckduckgo.ios.daxLastShownContextualOnboardingDialogType"
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
         case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"

@@ -106,20 +106,28 @@ struct OnboardingFirstSearchDoneDialog: View {
                         OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
                     } else {
                         ContextualDaxDialogContent(message: message, cta: cta) {
-                            buttonAction()
+                            gotItAction()
+                            withAnimation {
+                                if shouldFollowUp {
+                                    showNextScreen = true
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
+}
 
-    private func buttonAction() {
-        withAnimation {
-            if shouldFollowUp {
-                showNextScreen = true
-            } else {
-                gotItAction()
+struct OnboardingFireDialog: View {
+   
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .left) {
+                VStack {
+                    OnboardingFireButtonDialogContent()
+                }
             }
         }
     }

@@ -38,7 +38,7 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
 
     init(
         variantManager: VariantManager,
-        daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(),
+        daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: DaxDialogs.shared),
         appSettings: AppSettings = AppUserDefaults()
     ) {
         self.variantManager = variantManager

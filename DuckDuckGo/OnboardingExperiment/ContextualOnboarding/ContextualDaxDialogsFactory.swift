@@ -43,9 +43,11 @@ protocol ContextualDaxDialogsFactory {
 
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
 
-    init(contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings()) {
+    init(contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(), contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
+        self.contextualOnboardingLogic = contextualOnboardingLogic
     }
 
     func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView> {
@@ -128,6 +130,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         OnboardingFinalDialog(highFiveAction: { [weak delegate] in
             delegate?.didTapDismissContextualOnboardingAction()
         })
+        .onAppear { [weak self] in
+            self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
+        }
     }
 
 }

@@ -600,7 +600,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     private func finalMessage() -> BrowsingSpec? {
         guard !finalDaxDialogSeen else { return nil }
-        settings.browsingFinalDialogShown = true
         return BrowsingSpec.final
     }
 

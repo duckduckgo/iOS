@@ -218,7 +218,10 @@ class HomeViewController: UIViewController, NewTabPage {
     
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        presentNextDaxDialog()
+        if !variantManager.isSupported(feature: .newOnboardingIntro) {
+            // In the new onboarding this gets called twice (viewDidAppear in Tab) which then reset the spec to nil.
+            presentNextDaxDialog()
+        }
     }
     
     @IBAction func launchSettings() {

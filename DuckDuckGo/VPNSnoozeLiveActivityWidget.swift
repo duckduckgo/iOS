@@ -73,43 +73,86 @@ struct VPNSnoozeLiveActivity: Widget {
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Image("vpn-off-live-activity")
-                }
+                    HStack {
+                        Image("vpn-off-live-activity")
 
-                DynamicIslandExpandedRegion(.center) {
-                    if let range {
-                        Group {
-                            Text("Reconnecting in ") +
-                            Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                                .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                        VStack(alignment: .leading) {
+                            Text("VPN Snoozed")
+
+                            if let range {
+                                Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
+                                    .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                            } else {
+                                Text("")
+                            }
                         }
-                            .multilineTextAlignment(.center)
-                    } else {
-                        Text("VPN snooze has ended")
+
+                        Spacer()
+                    }
+                    .dynamicIsland(verticalPlacement: .belowIfTooWide)
+                    .padding(.bottom, 15)
+                }
+
+                DynamicIslandExpandedRegion(.trailing) {
+                    VStack(alignment: .center) {
+                        Spacer()
+
+                        if context.isStale {
+                            Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                                Text("Dismiss")
+                                    .font(Font.system(size: 18, weight: .semibold))
+                                    .foregroundColor(Color.white)
+                            })
+                            .buttonStyle(.borderedProminent)
+                            .tint(Color("WidgetLiveActivityButtonColor"))
+                        } else {
+                            Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                                Text("Resume")
+                                    .font(Font.system(size: 18, weight: .semibold))
+                                    .foregroundColor(Color.white)
+                            })
+                            .buttonStyle(.borderedProminent)
+                            .tint(Color("WidgetLiveActivityButtonColor"))
+                        }
+
+                        Spacer()
                     }
                 }
 
-                DynamicIslandExpandedRegion(.bottom) {
-                    if context.isStale {
-                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                            Text("Dismiss")
-                                .font(Font.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color("WidgetLiveActivityButtonColor"))
-                    } else {
-                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                            Text("Resume VPN")
-                                .font(Font.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color("WidgetLiveActivityButtonColor"))
-                    }
-                }
+//                DynamicIslandExpandedRegion(.center, priority: 0.0) {
+//                    if let range {
+//                        Group {
+//                            Text("Reconnecting in ") +
+//                            Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
+//                                .foregroundStyle(Color(uiColor: UIColor.yellow60))
+//                        }
+//                            .multilineTextAlignment(.center)
+//                    } else {
+//                        Text("VPN snooze has ended")
+//                    }
+//                }
+
+//                DynamicIslandExpandedRegion(.bottom) {
+//                    if context.isStale {
+//                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+//                            Text("Dismiss")
+//                                .font(Font.system(size: 18, weight: .semibold))
+//                                .foregroundColor(Color.white)
+//                                .frame(maxWidth: .infinity)
+//                        })
+//                        .buttonStyle(.borderedProminent)
+//                        .tint(Color("WidgetLiveActivityButtonColor"))
+//                    } else {
+//                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+//                            Text("Resume VPN")
+//                                .font(Font.system(size: 18, weight: .semibold))
+//                                .foregroundColor(Color.white)
+//                                .frame(maxWidth: .infinity)
+//                        })
+//                        .buttonStyle(.borderedProminent)
+//                        .tint(Color("WidgetLiveActivityButtonColor"))
+//                    }
+//                }
             } compactLeading: {
                 Image("vpn-off-compact")
             } compactTrailing: {

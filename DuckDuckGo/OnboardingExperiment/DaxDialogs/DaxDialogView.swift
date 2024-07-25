@@ -109,7 +109,7 @@ struct DaxDialogView<Content: View>: View {
     }
 
     private var daxLogo: some View {
-        Image(.daxIcon)
+        Image(.daxIconExperiment)
             .resizable()
             .matchedGeometryEffect(id: matchLogoAnimation.id, in: matchLogoAnimation.namespace)
             .aspectRatio(contentMode: .fill)

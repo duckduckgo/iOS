@@ -36,6 +36,7 @@ class TabManager {
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
     private var duckPlayer: DuckPlayerProtocol
+    private var privacyProDataReporter: PrivacyProDataReporting
 
     weak var delegate: TabDelegate?
 
@@ -48,14 +49,15 @@ class TabManager {
          bookmarksDatabase: CoreDataDatabase,
          historyManager: HistoryManaging,
          syncService: DDGSyncing,
-         duckPlayer: DuckPlayer = DuckPlayer()) {
+         duckPlayer: DuckPlayer = DuckPlayer(),
+         privacyProDataReporter: PrivacyProDataReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.syncService = syncService
         self.duckPlayer = duckPlayer
-        
+        self.privacyProDataReporter = privacyProDataReporter
         registerForNotifications()
     }
 
@@ -72,7 +74,8 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayer: duckPlayer)
+                                                              duckPlayer: duckPlayer,
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -145,7 +148,8 @@ class TabManager {
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
                                                               syncService: syncService,
-                                                              duckPlayer: duckPlayer)
+                                                              duckPlayer: duckPlayer,
+                                                              privacyProDataReporter: privacyProDataReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

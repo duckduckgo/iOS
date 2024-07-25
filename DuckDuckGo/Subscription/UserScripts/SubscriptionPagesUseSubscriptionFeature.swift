@@ -94,17 +94,20 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let appStorePurchaseFlow: AppStorePurchaseFlow
     private let appStoreRestoreFlow: AppStoreRestoreFlow
     private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
+    private let privacyProDataReporter: PrivacyProDataReporting?
 
     init(subscriptionManager: SubscriptionManager,
          subscriptionAttributionOrigin: String?,
          appStorePurchaseFlow: AppStorePurchaseFlow,
          appStoreRestoreFlow: AppStoreRestoreFlow,
-         appStoreAccountManagementFlow: AppStoreAccountManagementFlow) {
+         appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
+         privacyProDataReporter: PrivacyProDataReporting? = nil) {
         self.subscriptionManager = subscriptionManager
         self.appStorePurchaseFlow = appStorePurchaseFlow
         self.appStoreRestoreFlow = appStoreRestoreFlow
         self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
+        self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
     }
 
     // Transaction Status and errors are observed from ViewModels to handle errors in the UI
@@ -264,7 +267,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case .success(let purchaseUpdate):
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-            Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin)
+            Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
             setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
         case .failure:
@@ -441,13 +444,16 @@ private extension Pixel {
         static let locale = "locale"
     }
 
-    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current) {
+    static func fireAttribution(pixel: Pixel.Event, origin: String?, locale: Locale = .current, privacyProDataReporter: PrivacyProDataReporting?) {
         var parameters: [String: String] = [:]
         parameters[AttributionParameters.locale] = locale.identifier
         if let origin {
             parameters[AttributionParameters.origin] = origin
         }
-        Self.fire(pixel: pixel, withAdditionalParameters: parameters)
+        Self.fire(
+            pixel: pixel,
+            withAdditionalParameters: privacyProDataReporter?.mergeRandomizedParameters(for: .origin(origin), with: parameters) ?? parameters
+        )
     }
 
 }

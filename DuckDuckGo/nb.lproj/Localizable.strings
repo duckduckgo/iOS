@@ -568,6 +568,9 @@
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Lagre passordet";
 
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Rapporter et problem med Autofyll";
+
 /* Button title for the confirmation prompt when reporting autofill is not working for a website */
 "autofill.settings.report.not.working.confirmation.button" = "Send rapport";
 

@@ -568,6 +568,9 @@
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
 
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Αναφέρετε ένα πρόβλημα με την Αυτόματη συμπλήρωση";
+
 /* Button title for the confirmation prompt when reporting autofill is not working for a website */
 "autofill.settings.report.not.working.confirmation.button" = "Αποστολή Αναφοράς";
 

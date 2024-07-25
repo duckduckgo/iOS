@@ -39,7 +39,14 @@ public class LegacyBookmarksStoreMigration {
             }
         } else {
             // Initialize structure if needed
-            BookmarkUtils.prepareLegacyFoldersStructure(in: context)
+            do {
+                try BookmarkUtils.prepareLegacyFoldersStructure(in: context)
+            } catch {
+                Pixel.fire(pixel: .debugBookmarksInitialStructureQueryFailed, error: error)
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not prepare Bookmarks DB structure")
+            }
+
             if context.hasChanges {
                 do {
                     try context.save(onErrorFire: .bookmarksCouldNotPrepareDatabase)
@@ -178,7 +185,7 @@ public class LegacyBookmarksStoreMigration {
         } catch {
             destination.reset()
 
-            BookmarkUtils.prepareLegacyFoldersStructure(in: destination)
+            try? BookmarkUtils.prepareLegacyFoldersStructure(in: destination)
             do {
                 try destination.save(onErrorFire: .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration)
             } catch {

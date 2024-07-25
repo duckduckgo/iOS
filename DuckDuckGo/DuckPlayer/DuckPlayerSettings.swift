@@ -183,14 +183,27 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
 
 //TODO:
 #warning("Move this to another file")
+import Common
 
 protocol DuckPlayerStorage {
     /// whether the user interacted with Duck Player (saw the overlay at least once)
     /// https://app.asana.com/0/72649045549333/1207583449779628/f
-    var duckPlayerOnboarded: Bool { get }
+    var userInteractedWithDuckPlayer: Bool { get set }
+    var duckPlayerPlayedAtLeastOnce: Bool { get set}
 }
 
 struct DefaultDuckPlayerStorage: DuckPlayerStorage {
-    @UserDefaultsWrapper(key: .duckPlayerOnboarded, defaultValue: false)
-    var duckPlayerOnboarded: Bool
+    @UserDefaultsWrapper(key: .userInteractedWithDuckPlayer, defaultValue: false)
+    var userInteractedWithDuckPlayer: Bool {
+        didSet {
+            os_log("DP: Flagging userInteractedWithDuckPlayer [%@]", log: .duckPlayerLog, type: .debug, userInteractedWithDuckPlayer ? "true" : "false")
+        }
+    }
+
+    @UserDefaultsWrapper(key: .duckPlayerPlayedAtLeastOnce, defaultValue: false)
+    var duckPlayerPlayedAtLeastOnce: Bool {
+        didSet {
+            os_log("DP: Flagging duckPlayerPlayedAtLeastOnce [%@]", log: .duckPlayerLog, type: .debug, duckPlayerPlayedAtLeastOnce ? "true" : "false")
+        }
+    }
 }

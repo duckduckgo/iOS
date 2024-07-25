@@ -83,7 +83,6 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressMask.bounds = calculateProgressMaskRect()
         progressMask.opacity = 1
         CATransaction.commit()
-        CATransaction.flush()
         
         startGradientAnimation()
     }

@@ -76,7 +76,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         var isPrivacyProSubscriptionExpired: Bool = false
 
         var isDuckPlayerOnboarded: Bool {
-            duckPlayerStorage.userInteractedWithDuckPlayer || duckPlayerStorage.duckPlayerPlayedAtLeastOnce
+            duckPlayerStorage.userInteractedWithDuckPlayer
         }
         var isDuckPlayerEnabled: Bool {
             appSettings.duckPlayerMode != .disabled

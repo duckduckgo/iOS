@@ -28,8 +28,6 @@ final class DuckPlayerNavigationHandler {
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
-    
-    private var duckPlayerStorage: DuckPlayerStorage
 
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -47,10 +45,8 @@ final class DuckPlayerNavigationHandler {
         static let urlInternalReferrer = "embeds_referring_euri"
     }
     
-    init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
-         duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
+    init(duckPlayer: DuckPlayerProtocol = DuckPlayer()) {
         self.duckPlayer = duckPlayer
-        self.duckPlayerStorage = duckPlayerStorage
     }
     
     static var htmlTemplatePath: String {
@@ -88,7 +84,6 @@ final class DuckPlayerNavigationHandler {
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
         // iOS 14 will be soon dropped out (and it does not support simulatedRequests)
-        duckPlayerStorage.duckPlayerPlayedAtLeastOnce = true
         if #available(iOS 15.0, *) {
             webView.loadSimulatedRequest(request, responseHTML: responseHTML)
         }

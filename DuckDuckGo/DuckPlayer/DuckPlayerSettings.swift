@@ -186,10 +186,9 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
 import Common
 
 protocol DuckPlayerStorage {
-    /// whether the user interacted with Duck Player (saw the overlay at least once)
-    /// https://app.asana.com/0/72649045549333/1207583449779628/f
+    /// Description: Checks whether the user has seen and interacted with (i.e. clicked any button) the Duck Player overlay on a YouTube video.
+    /// https://app.asana.com/0/1207619243206445/1207785962765265/f
     var userInteractedWithDuckPlayer: Bool { get set }
-    var duckPlayerPlayedAtLeastOnce: Bool { get set}
 }
 
 struct DefaultDuckPlayerStorage: DuckPlayerStorage {
@@ -197,13 +196,6 @@ struct DefaultDuckPlayerStorage: DuckPlayerStorage {
     var userInteractedWithDuckPlayer: Bool {
         didSet {
             os_log("DP: Flagging userInteractedWithDuckPlayer [%@]", log: .duckPlayerLog, type: .debug, userInteractedWithDuckPlayer ? "true" : "false")
-        }
-    }
-
-    @UserDefaultsWrapper(key: .duckPlayerPlayedAtLeastOnce, defaultValue: false)
-    var duckPlayerPlayedAtLeastOnce: Bool {
-        didSet {
-            os_log("DP: Flagging duckPlayerPlayedAtLeastOnce [%@]", log: .duckPlayerLog, type: .debug, duckPlayerPlayedAtLeastOnce ? "true" : "false")
         }
     }
 }

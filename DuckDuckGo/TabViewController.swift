@@ -298,6 +298,7 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
+                                   onboardingPixelReporter: OnboardingPixelReporter = OnboardingPixelReporter(),
                                    daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -311,6 +312,7 @@ class TabViewController: UIViewController {
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                               contextualOnboardingLogic: contextualOnboardingLogic,
+                              onboardingPixelReporter: onboardingPixelReporter,
                               daysSinceInstallProvider: daysSinceInstallProvider
             )
         })
@@ -329,6 +331,7 @@ class TabViewController: UIViewController {
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
     let daysSinceInstallProvider: DaysSinceInstallProviding
+    let onboardingPixelReporter: OnboardingPixelReporter
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -340,6 +343,7 @@ class TabViewController: UIViewController {
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
+                   onboardingPixelReporter: OnboardingPixelReporter,
                    daysSinceInstallProvider: DaysSinceInstallProviding) {
         self.tabModel = tabModel
         self.appSettings = appSettings
@@ -352,6 +356,7 @@ class TabViewController: UIViewController {
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.onboardingPixelReporter = onboardingPixelReporter
         self.daysSinceInstallProvider = daysSinceInstallProvider
         super.init(coder: aDecoder)
     }
@@ -1321,7 +1326,8 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
-        
+        onboardingPixelReporter.trackSecondSiteVisit()
+
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()

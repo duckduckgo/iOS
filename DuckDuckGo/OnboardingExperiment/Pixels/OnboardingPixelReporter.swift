@@ -80,15 +80,19 @@ final class OnboardingPixelReporter {
     private let pixel: OnboardingPixelFiring.Type
     private let uniquePixel: OnboardingPixelFiring.Type
     private let daysSinceInstallProvider: DaysSinceInstallProviding
+    private let userDefaults: UserDefaults
+    private let siteVisitedUserDefaultsKey = "com.duckduckgo.ios.site-visited"
 
     init(
         pixel: OnboardingPixelFiring.Type = Pixel.self,
         uniquePixel: OnboardingPixelFiring.Type = UniquePixel.self,
-        daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider()
+        daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider(),
+        userDefaults: UserDefaults = UserDefaults.standard
     ) {
         self.pixel = pixel
         self.uniquePixel = uniquePixel
         self.daysSinceInstallProvider = daysSinceInstallProvider
+        self.userDefaults = userDefaults
     }
 
     private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
@@ -175,7 +179,11 @@ extension OnboardingPixelReporter: OnboardingCustomSearchPixelReporting {
     }
     
     func trackSecondSiteVisit() {
-        fire(event: .onboardingContextualSecondSiteVisitUnique, unique: true)
+        if userDefaults.bool(forKey: siteVisitedUserDefaultsKey) {
+            fire(event: .onboardingContextualSecondSiteVisitUnique, unique: true)
+        } else {
+            userDefaults.set(true, forKey: siteVisitedUserDefaultsKey)
+        }
     }
 
 }

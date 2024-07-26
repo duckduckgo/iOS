@@ -34,6 +34,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     var mockPrivacyConfig: PrivacyConfigurationManagerMock!
     var playerSettings: MockDuckPlayerSettings!
     var player: MockDuckPlayer!
+    var featureFlagger: FeatureFlagger!
     
     override func setUp() {
         super.setUp()
@@ -42,7 +43,9 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         mockNavigationDelegate = MockWKNavigationDelegate()
         mockAppSettings = AppSettingsMock()
         mockPrivacyConfig = PrivacyConfigurationManagerMock()
+        featureFlagger = MockDuckPlayerFeatureFlagger()
         webView.navigationDelegate = mockNavigationDelegate
+        
     }
     
     override func tearDown() {
@@ -129,7 +132,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let expectation = self.expectation(description: "Completion handler called")
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         var navigationPolicy: WKNavigationActionPolicy?
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
@@ -152,7 +155,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         var navigationPolicy: WKNavigationActionPolicy?
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
@@ -175,7 +178,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         var navigationPolicy: WKNavigationActionPolicy?
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
@@ -200,7 +203,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
        
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         
         handler.lastHandledVideoID = "abc123"
         handler.handleJSNavigation(url: youtubeURL, webView: webView)
@@ -217,7 +220,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
        
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
                 
         handler.handleJSNavigation(url: youtubeURL, webView: webView)
         
@@ -233,7 +236,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
                 
         handler.handleJSNavigation(url: youtubeURL, webView: webView)
         
@@ -250,7 +253,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         
         handler.handleNavigation(navigationAction, webView: webView)
         XCTAssertEqual(webView.url, nil)
@@ -265,7 +268,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         
         handler.handleNavigation(navigationAction, webView: webView)
                 
@@ -287,7 +290,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         handler.handleReload(webView: mockWebView)
         
         if let loadedRequest = mockWebView.lastLoadedRequest {
@@ -305,7 +308,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         handler.handleAttach(webView: mockWebView)
         
         if let loadedRequest = mockWebView.lastLoadedRequest {

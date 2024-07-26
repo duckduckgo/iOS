@@ -151,7 +151,7 @@ class MainViewController: UIViewController {
     }
     
     var searchBarRect: CGRect {
-        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        let view = UIApplication.shared.firstKeyWindow?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
     
@@ -2674,17 +2674,10 @@ extension MainViewController {
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             
-            if #available(iOS 15.0, *) {
-                return UIAction(title: historyItem.title,
-                                subtitle: historyItem.sanitizedURLForDisplay,
-                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
-            } else {
-                return  UIAction(title: historyItem.title,
-                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
+            return UIAction(title: historyItem.title,
+                            subtitle: historyItem.sanitizedURLForDisplay,
+                            discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                self?.loadBackForwardItem(historyItem.backForwardItem)
             }
         }
         

@@ -71,7 +71,6 @@ struct CompleteDownloadRow: View {
         }
         .accessibilityLabel(UserText.actionShare)
         .buttonStyle(.plain)
-        .animation(nil)
         .background(
             GeometryReader { geometryProxy in
                 Color.clear

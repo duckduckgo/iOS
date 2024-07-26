@@ -21,7 +21,6 @@
 
 import SwiftUI
 
-@available(iOS 15, *)
 final class NetworkProtectionRootViewController: UIHostingController<NetworkProtectionRootView> {
 
     init() {
@@ -40,7 +39,6 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
     }
 }
 
-@available(iOS 15, *)
 extension NetworkProtectionRootViewController {
 
     private func decorate() {

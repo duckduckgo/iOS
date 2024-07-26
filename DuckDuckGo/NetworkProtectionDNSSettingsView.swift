@@ -22,7 +22,6 @@
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15.0, *)
 struct NetworkProtectionDNSSettingsView: View {
     @StateObject var viewModel = NetworkProtectionDNSSettingsViewModel(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
     @Environment(\.dismiss) private var dismiss
@@ -110,7 +109,6 @@ struct NetworkProtectionDNSSettingsView: View {
     }
 }
 
-@available(iOS 15, *)
 private struct ChecklistItem<Content>: View where Content: View {
     let isSelected: Bool
     let action: () -> Void

@@ -124,7 +124,7 @@ class ActionMessageView: UIView {
                                 presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
                                 onAction: @escaping () -> Void = {},
                                 onDidDismiss: @escaping () -> Void = {}) {
-        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
+        guard let window = UIApplication.shared.firstKeyWindow else { return }
         
         dismissAllMessages()
                 

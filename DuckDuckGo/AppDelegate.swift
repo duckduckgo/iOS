@@ -802,7 +802,7 @@ import WebKit
     }
     
     private func tryToObtainOverlayWindow() {
-        for window in UIApplication.shared.windows where window.rootViewController is BlankSnapshotViewController {
+        for window in UIApplication.shared.foregroundSceneWindows where window.rootViewController is BlankSnapshotViewController {
             overlayWindow = window
             return
         }
@@ -1007,10 +1007,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Task {
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
                hasEntitlements {
-                if #available(iOS 15, *) {
-                    let networkProtectionRoot = NetworkProtectionRootViewController()
-                    presentSettings(with: networkProtectionRoot)
-                }
+                let networkProtectionRoot = NetworkProtectionRootViewController()
+                presentSettings(with: networkProtectionRoot)
             } else {
                 (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }

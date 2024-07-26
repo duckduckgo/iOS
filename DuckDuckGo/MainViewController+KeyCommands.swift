@@ -111,10 +111,8 @@ extension MainViewController {
         ]
 
         let commands = [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
-        if #available(iOS 15, *) {
-            commands.forEach {
-                $0.wantsPriorityOverSystemBehavior = true
-            }
+        commands.forEach {
+            $0.wantsPriorityOverSystemBehavior = true
         }
         return commands
     }

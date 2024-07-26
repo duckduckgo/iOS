@@ -600,10 +600,8 @@ extension SettingsViewModel {
      
 #if NETWORK_PROTECTION
         case .netP:
-            if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings)
-                pushViewController(legacyViewProvider.netP)
-            }
+            firePixel(.privacyProVPNSettings)
+            pushViewController(legacyViewProvider.netP)
 #endif
         }
     }
@@ -753,12 +751,10 @@ extension SettingsViewModel {
         subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
                                                                              object: nil,
                                                                              queue: .main) { [weak self] _ in
-            if #available(iOS 15.0, *) {
-                guard let strongSelf = self else { return }
-                Task {
-                    strongSelf.subscriptionStateCache.reset()
-                    await strongSelf.setupSubscriptionEnvironment()
-                }
+            guard let strongSelf = self else { return }
+            Task {
+                strongSelf.subscriptionStateCache.reset()
+                await strongSelf.setupSubscriptionEnvironment()
             }
         }
         
@@ -772,7 +768,6 @@ extension SettingsViewModel {
         
     }
     
-    @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,

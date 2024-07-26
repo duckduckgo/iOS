@@ -42,15 +42,12 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
     }
     
     init() {
-        // https://app.asana.com/0/1201011656765697/1201271104639596
-        if #available(iOS 15.0, *) {
 #if targetEnvironment(simulator)
             isSpeechRecognizerAvailable = true
 #else
             speechRecognizer.delegate = self
             isSpeechRecognizerAvailable = speechRecognizer.isAvailable
 #endif
-        }
     }
     
     func migrateSettingsFlagIfNecessary() {

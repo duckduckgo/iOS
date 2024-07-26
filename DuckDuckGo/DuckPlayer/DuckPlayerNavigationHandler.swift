@@ -166,6 +166,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
                    let id = videoParameterItem.value,
                     let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+                        Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
                         webView.load(URLRequest(url: newURL))
                         return
                 }
@@ -182,7 +183,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Pixel for Views From Youtube
         if referrer == .youtube,
             duckPlayer.settings.mode == .enabled {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic, debounce: 2)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
         
         // If DuckPlayer is Enabled or in ask mode, render the video

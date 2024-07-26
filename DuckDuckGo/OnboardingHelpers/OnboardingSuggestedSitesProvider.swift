@@ -18,9 +18,11 @@
 //
 
 import Foundation
+import Core
 
 protocol OnboardingSuggestionsItemsProviding {
     var list: [ContextualOnboardingListItem] { get }
+    func pixelEventFor(item: ContextualOnboardingListItem) -> Pixel.Event?
 }
 
 struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
@@ -110,5 +112,21 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         default: site = "https:britannica.com/animal/duck"
         }
         return ContextualOnboardingListItem.surprise(title: site)
+    }
+
+    func pixelEventFor(item: ContextualOnboardingListItem) -> Pixel.Event? {
+        if item == option1 {
+            return .onboardingVisitSiteEspn
+        }
+        if item == option2 {
+            return .onboardingVisitSiteYahoo
+        }
+        if item == option3 {
+            return .onboardingVisitSiteEbay
+        }
+        if item == surpriseMe {
+            return .onboardingVisitSiteSurpriseMe
+        }
+        return nil
     }
 }

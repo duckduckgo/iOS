@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 protocol OnboardingRegionAndLanguageProvider {
     var regionCode: String? { get }
@@ -80,6 +81,22 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
         }
         return ContextualOnboardingListItem.surprise(title: search)
+    }
+
+    func pixelEventFor(item: ContextualOnboardingListItem) -> Pixel.Event? {
+        if item == option1 {
+            return .onboardingSearchSayDuck
+        }
+        if item == option2 {
+            return .onboardingSearchMightyDuck
+        }
+        if item == option3 {
+            return .onboardingSearchWeather
+        }
+        if item == surpriseMe {
+            return .onboardingSearchSurpriseMe
+        }
+        return nil
     }
 
 }

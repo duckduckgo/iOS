@@ -142,6 +142,18 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingSearchSayDuck
+        case onboardingSearchMightyDuck
+        case onboardingSearchWeather
+        case onboardingSearchSurpriseMe
+        case onboardingSearchCustom
+        case onboardingVisitSiteEspn
+        case onboardingVisitSiteYahoo
+        case onboardingVisitSiteEbay
+        case onboardingVisitSiteSurpriseMe
+        case onboardingVisitSiteCustom
+        case onboardingFinished
+        case secondSiteVisit
 
         case daxDialogsSerp
         case daxDialogsWithoutTrackers
@@ -881,7 +893,19 @@ extension Pixel.Event {
             
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
-        case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+        case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed_unique"
+        case .onboardingSearchSayDuck: return "m_onboarding_search_say_duck_u"
+        case .onboardingSearchMightyDuck: return "m_onboarding_search_mighty_duck_u"
+        case .onboardingSearchWeather: return "m_onboarding_search_weather_u"
+        case .onboardingSearchSurpriseMe: return "m_onboarding_search_surprise_me_u"
+        case .onboardingSearchCustom: return "m_onboarding_search_custom_u"
+        case .onboardingVisitSiteEspn: return "m_onboarding_visit_site_espn_u"
+        case .onboardingVisitSiteYahoo: return "m_onboarding_visit_site_yahoo_u"
+        case .onboardingVisitSiteEbay: return "m_onboarding_visit_site_ebay_u"
+        case .onboardingVisitSiteSurpriseMe: return "m_onboarding_visit_site_surprise_me_u"
+        case .onboardingVisitSiteCustom: return "m_onboarding_visit_site_custom_u"
+        case .onboardingFinished: return "m_onboarding_finished_u"
+        case .secondSiteVisit: return "m_second_sitevisit_u"
 
         case .daxDialogsSerp: return "m_dx_s"
         case .daxDialogsWithoutTrackers: return "m_dx_wo"

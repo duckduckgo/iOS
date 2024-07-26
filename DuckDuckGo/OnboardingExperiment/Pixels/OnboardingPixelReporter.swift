@@ -60,7 +60,7 @@ final class OnboardingPixelReporter {
         self.uniquePixel = uniquePixel
     }
 
-    private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
+    func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
         let parameters: [Pixel.QueryParameters] = [.appVersion, .atb]
         if unique {
             uniquePixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: parameters)

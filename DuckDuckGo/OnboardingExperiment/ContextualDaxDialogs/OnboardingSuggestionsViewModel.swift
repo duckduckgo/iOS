@@ -26,34 +26,42 @@ protocol OnboardingNavigationDelegate: AnyObject {
 
 struct OnboardingSearchSuggestionsViewModel {
     let suggestedSearchesProvider: OnboardingSuggestionsItemsProviding
+    let reporter: OnboardingPixelReporter
     weak var delegate: OnboardingNavigationDelegate?
 
     init(
         suggestedSearchesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSearchesProvider(),
-        delegate: OnboardingNavigationDelegate? = nil) {
-        self.suggestedSearchesProvider = suggestedSearchesProvider
-        self.delegate = delegate
-    }
+        delegate: OnboardingNavigationDelegate? = nil,
+        reporter: OnboardingPixelReporter = OnboardingPixelReporter()) {
+            self.suggestedSearchesProvider = suggestedSearchesProvider
+            self.delegate = delegate
+            self.reporter = reporter
+        }
 
     var itemsList: [ContextualOnboardingListItem] {
         suggestedSearchesProvider.list
     }
-
+    
     func listItemPressed(_ item: ContextualOnboardingListItem) {
         delegate?.searchFor(item.title)
+        guard let event = suggestedSearchesProvider.pixelEventFor(item: item) else { return }
+        reporter.fire(event: event, unique: true)
     }
 }
 
 struct OnboardingSiteSuggestionsViewModel {
     let suggestedSitesProvider: OnboardingSuggestionsItemsProviding
+    let reporter: OnboardingPixelReporter
     weak var delegate: OnboardingNavigationDelegate?
 
     init(
         suggestedSitesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(),
-        delegate: OnboardingNavigationDelegate? = nil) {
-        self.suggestedSitesProvider = suggestedSitesProvider
-        self.delegate = delegate
-    }
+        delegate: OnboardingNavigationDelegate? = nil,
+        reporter: OnboardingPixelReporter = OnboardingPixelReporter()) {
+            self.suggestedSitesProvider = suggestedSitesProvider
+            self.delegate = delegate
+            self.reporter = reporter
+        }
 
     var itemsList: [ContextualOnboardingListItem] {
         suggestedSitesProvider.list
@@ -62,5 +70,7 @@ struct OnboardingSiteSuggestionsViewModel {
     func listItemPressed(_ item: ContextualOnboardingListItem) {
         guard let url = URL(string: item.title) else { return }
         delegate?.navigateTo(url: url)
+        guard let event = suggestedSitesProvider.pixelEventFor(item: item) else { return }
+        reporter.fire(event: event, unique: true)
     }
 }

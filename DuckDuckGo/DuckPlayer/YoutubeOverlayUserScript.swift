@@ -76,6 +76,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let openDuckPlayer = "openDuckPlayer"
         static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
         static let initialSetup = "initialSetup"
+        static let openInfo = "openInfo"
     }
 
     weak var broker: UserScriptMessageBroker?
@@ -108,6 +109,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             return handleSendJSPixel
         case Handlers.initialSetup:
             return duckPlayer.initialSetupOverlay
+        case Handlers.openInfo:
+            return duckPlayer.openDuckPlayerInfo
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
             // TODO: Send pixel here

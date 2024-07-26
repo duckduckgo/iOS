@@ -162,6 +162,7 @@ final class SaveLoginViewModel: ObservableObject {
     
     func cancelButtonPressed() {
         dismissButtonWasPressed = true
+        // autofillFirstTimeUser = false TODO: Determine whether this is right
         cancel()
     }
     

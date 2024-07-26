@@ -187,7 +187,7 @@ struct SaveLoginView: View {
                 featuresListItem(
                     imageTitle: "Lock-Color-24",
                     title: UserText.autofillOnboardingKeyFeaturesSecureStorageTitle,
-                    subtitle: UserText.autofillOnboardingKeyFeaturesSecureStorageDescription
+                    subtitle: viewModel.secureStorageDescription
                 )
                 featuresListItem(
                     imageTitle: "Sync-Color-24",

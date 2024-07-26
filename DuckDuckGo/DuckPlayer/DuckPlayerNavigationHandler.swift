@@ -22,12 +22,14 @@ import ContentScopeScripts
 import WebKit
 import Core
 import Common
+import BrowserServicesKit
 
 final class DuckPlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
+    var featureFlagger: FeatureFlagger
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -45,8 +47,10 @@ final class DuckPlayerNavigationHandler {
         static let urlInternalReferrer = "embeds_referring_euri"
     }
     
-    init(duckPlayer: DuckPlayerProtocol = DuckPlayer()) {
+    init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.duckPlayer = duckPlayer
+        self.featureFlagger = featureFlagger
     }
     
     static var htmlTemplatePath: String {
@@ -99,6 +103,10 @@ final class DuckPlayerNavigationHandler {
 
         guard let url else { return }
         
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
+        
         if let (videoID, _) = url.youtubeVideoParams,
             videoID == lastHandledVideoID {
             os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
@@ -135,6 +143,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
        
         guard let url = navigationAction.request.url else { return }
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
         
         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
         // These should not be handled by DuckPlayer
@@ -201,6 +213,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             return
         }
         
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            completion(.allow)
+            return
+        }
+        
         if let (videoID, _) = url.youtubeVideoParams,
            videoID == lastHandledVideoID,
             !url.hasWatchInYoutubeQueryParameter {
@@ -239,6 +256,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     
     @MainActor
     func handleJSNavigation(url: URL?, webView: WKWebView) {
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
+        
         handleURLChange(url: url, webView: webView)
     }
     
@@ -246,6 +268,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     func handleGoBack(webView: WKWebView) {
         
         os_log("DP: Handling Back Navigation", log: .duckPlayerLog, type: .debug)
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            webView.goBack()
+            return
+        }
         
         lastHandledVideoID = nil
         webView.stopLoading()
@@ -279,6 +306,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleReload(webView: WKWebView) {
         
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            webView.reload()
+            return
+        }
+        
         lastHandledVideoID = nil
         webView.stopLoading()
         if let url = webView.url, url.isDuckPlayer,
@@ -294,6 +326,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     
     @MainActor
     func handleAttach(webView: WKWebView) {
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
         
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,

@@ -66,7 +66,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ViewBuilder
     private var shortcutsSectionView: some View {
         if isShortcutsSectionVisible {
-            ShortcutsView(model: shortcutsModel)
+            ShortcutsView(model: shortcutsModel, editingEnabled: false)
                 .sectionPadding()
         }
     }
@@ -130,7 +130,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             })
         })
         .sheet(isPresented: $isShowingPreferences, content: {
-            NewTabPagePreferencesView(model: preferencesModel)
+            NavigationView {
+                NewTabPagePreferencesView(model: preferencesModel, shortcutsModel: shortcutsModel)
+            }
         })
     }
 }

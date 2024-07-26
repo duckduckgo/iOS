@@ -98,6 +98,9 @@ struct SaveLoginView: View {
                     contentView
                     Spacer()
                 }
+                if case .newUser = layoutType {
+                    featuresView.padding([.bottom], 16)
+                }
                 ctaView
                 bottomSpacer
             }
@@ -132,7 +135,81 @@ struct SaveLoginView: View {
         }
     }
 
-    private var ctaView: some View {
+    @ViewBuilder private func featuresListItem(imageTitle: String, title: String, subtitle: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(imageTitle).frame(width: 24, height: 24)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(
+                        .custom("SF Pro Text",
+                                size: 13)
+                        .weight(.bold)
+                    )
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                Text(subtitle)
+                    .font(
+                        .custom("SF Pro Text",
+                                size: 13)
+                    )
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+        }
+        .padding(0)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+
+    @ViewBuilder private var featuresView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .center, spacing: 10) {
+                Text("Key Features")
+                    .font(Font.custom("SF Pro Text", size: 12))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                    .frame(width: 255, alignment: .top)
+            }
+            .padding(.horizontal, 0)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .center)
+            Rectangle()
+                .fill(Color(designSystemColor: .container))
+                .frame(height: 1)
+            VStack(alignment: .leading, spacing: 12) {
+                featuresListItem(
+                    imageTitle: "Autofill-Color-24",
+                    title: "Seamless sign-ins",
+                    subtitle: "No need to remember login info."
+                )
+                featuresListItem(
+                    imageTitle: "Lock-Color-24",
+                    title: "Secure storage",
+                    subtitle: "Passwords are encrypted, stored on device, and locked with Face ID or passcode."
+                )
+                featuresListItem(
+                    imageTitle: "Sync-Color-24",
+                    title: "Sync between devices",
+                    subtitle: "End-to-end encrypted and easy to set up when you’re ready."
+                )
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 16)
+        }
+        .padding(0)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .inset(by: 0.5)
+                .stroke(Color(designSystemColor: .container), lineWidth: 1)
+            )
+    }
+
+    @ViewBuilder private var ctaView: some View {
         VStack(spacing: Const.Size.ctaVerticalSpacing) {
             AutofillViews.PrimaryButton(title: confirmButton,
                                         action: viewModel.save)

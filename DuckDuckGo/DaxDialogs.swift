@@ -39,6 +39,9 @@ protocol NewTabDialogSpecProvider {
 protocol ContextualOnboardingLogic {
     var isShowingFireDialog: Bool { get }
     var shouldShowPrivacyButtonPulse: Bool { get }
+    var isShowingSearchSuggestions: Bool { get }
+    var isShowingSitesSuggestions: Bool { get }
+
     func setSearchMessageSeen()
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
@@ -206,6 +209,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     // So we can avoid showing two dialogs for the same page
     private var lastURLDaxDialogReturnedFor: URL?
 
+    private var currentHomeSpec: HomeScreenSpec?
+
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
          entityProviding: EntityProviding,
@@ -251,6 +256,16 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private var shouldDisplayFinalContextualBrowsingDialog: Bool {
         !finalDaxDialogSeen &&
         visitedSiteAndFireButtonSeen
+    }
+
+    var isShowingSearchSuggestions: Bool {
+        guard isNewOnboarding else { return false }
+        return currentHomeSpec == .initial
+    }
+
+    var isShowingSitesSuggestions: Bool {
+        guard isNewOnboarding else { return false }
+        return lastShownDaxDialogType.flatMap(BrowsingSpec.SpecType.init(rawValue:)) == .visitWebsite || currentHomeSpec == .subsequent
     }
 
     var isEnabled: Bool {
@@ -482,6 +497,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
 
+        // Reset current home spec when navigating
+        currentHomeSpec = nil
+
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
 
         guard let host = privacyInfo.domain else { return nil }
@@ -528,7 +546,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func nextHomeScreenMessageNew() -> HomeScreenSpec? {
-        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else { return nil }
+        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else {
+            currentHomeSpec = nil
+            return nil
+        }
+        currentHomeSpec = homeScreenSpec
         return homeScreenSpec
     }
 

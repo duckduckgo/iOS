@@ -27,12 +27,16 @@ protocol OnboardingNavigationDelegate: AnyObject {
 struct OnboardingSearchSuggestionsViewModel {
     let suggestedSearchesProvider: OnboardingSuggestionsItemsProviding
     weak var delegate: OnboardingNavigationDelegate?
+    private let pixelReporter: OnboardingSearchSuggestionsPixelReporting
 
     init(
         suggestedSearchesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSearchesProvider(),
-        delegate: OnboardingNavigationDelegate? = nil) {
+        delegate: OnboardingNavigationDelegate? = nil,
+        pixelReporter: OnboardingSearchSuggestionsPixelReporting = OnboardingPixelReporter()
+    ) {
         self.suggestedSearchesProvider = suggestedSearchesProvider
         self.delegate = delegate
+        self.pixelReporter = pixelReporter
     }
 
     var itemsList: [ContextualOnboardingListItem] {
@@ -40,22 +44,44 @@ struct OnboardingSearchSuggestionsViewModel {
     }
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {
+        firePixel(for: item)
         delegate?.searchFor(item.title)
+    }
+
+    // Temporary pixels, they will be removed.
+    // This avoid refactoring `OnboardingSuggestedSearchesProvider` and `ContextualOnboardingListItem` when removing the pixels
+    // This is covered by tests
+    private func firePixel(for item: ContextualOnboardingListItem) {
+        guard let index = itemsList.firstIndex(of: item) else { return }
+        switch index {
+        case 0:
+            pixelReporter.trackSearchSuggestionSayDuck()
+        case 1:
+            pixelReporter.trackSearchSuggestionMightyDuck()
+        case 2:
+            pixelReporter.trackSearchSuggestionWeather()
+        case 3:
+            pixelReporter.trackSearchSuggestionSurpriseMe()
+        default: break
+        }
     }
 }
 
 struct OnboardingSiteSuggestionsViewModel {
     let suggestedSitesProvider: OnboardingSuggestionsItemsProviding
     weak var delegate: OnboardingNavigationDelegate?
+    private let pixelReporter: OnboardingSiteSuggestionsPixelReporting
 
     init(
         title: String,
         suggestedSitesProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(),
         delegate: OnboardingNavigationDelegate? = nil
+        pixelReporter: OnboardingSiteSuggestionsPixelReporting = OnboardingPixelReporter()
     ) {
         self.title = title
         self.suggestedSitesProvider = suggestedSitesProvider
         self.delegate = delegate
+        self.pixelReporter = pixelReporter
     }
 
     let title: String
@@ -66,6 +92,26 @@ struct OnboardingSiteSuggestionsViewModel {
 
     func listItemPressed(_ item: ContextualOnboardingListItem) {
         guard let url = URL(string: item.title) else { return }
+        firePixel(for: item)
         delegate?.navigateTo(url: url)
     }
+
+    // Temporary pixels, they will be removed.
+    // This avoid refactoring `OnboardingSuggestedSitesProvider` and `ContextualOnboardingListItem` when removing the pixels
+    // This is covered by tests
+    private func firePixel(for item: ContextualOnboardingListItem) {
+        guard let index = itemsList.firstIndex(of: item) else { return }
+        switch index {
+        case 0:
+            pixelReporter.trackSiteSuggestionESPN()
+        case 1:
+            pixelReporter.trackSiteSuggestionYahoo()
+        case 2:
+            pixelReporter.trackSiteSuggestionEbay()
+        case 3:
+            pixelReporter.trackSiteSuggestionSurpriseMe()
+        default: break
+        }
+    }
+
 }

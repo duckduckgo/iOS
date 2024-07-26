@@ -297,7 +297,8 @@ class TabViewController: UIViewController {
                                    duckPlayer: DuckPlayerProtocol,
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
-                                   contextualOnboardingLogic: ContextualOnboardingLogic) -> TabViewController {
+                                   contextualOnboardingLogic: ContextualOnboardingLogic,
+                                   daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -309,7 +310,9 @@ class TabViewController: UIViewController {
                               duckPlayer: duckPlayer,
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                              contextualOnboardingLogic: contextualOnboardingLogic)
+                              contextualOnboardingLogic: contextualOnboardingLogic,
+                              daysSinceInstallProvider: daysSinceInstallProvider
+            )
         })
         return controller
     }
@@ -325,6 +328,7 @@ class TabViewController: UIViewController {
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
+    let daysSinceInstallProvider: DaysSinceInstallProviding
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -335,7 +339,8 @@ class TabViewController: UIViewController {
                    duckPlayer: DuckPlayerProtocol,
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
-                   contextualOnboardingLogic: ContextualOnboardingLogic) {
+                   contextualOnboardingLogic: ContextualOnboardingLogic,
+                   daysSinceInstallProvider: DaysSinceInstallProviding) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -347,6 +352,7 @@ class TabViewController: UIViewController {
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.daysSinceInstallProvider = daysSinceInstallProvider
         super.init(coder: aDecoder)
     }
 
@@ -922,7 +928,13 @@ class TabViewController: UIViewController {
     }
 
     func showPrivacyDashboard() {
-        Pixel.fire(pixel: .privacyDashboardOpened)
+        func firePrivacyDashboardOpenPixel() {
+            let additionalParameters = daysSinceInstallProvider.daysSinceInstall
+                .flatMap { [PixelParameters.daysSinceInstall: String($0)] } ?? [:]
+            UniquePixel.fire(pixel: .privacyDashboardOpened, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion, .atb])
+        }
+
+        firePrivacyDashboardOpenPixel()
         performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
 

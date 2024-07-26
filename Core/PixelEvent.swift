@@ -142,6 +142,17 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingContextualSearchSayDuckUnique
+        case onboardingContextualSearchMightyDuckUnique
+        case onboardingContextualSearchWeatherUnique
+        case onboardingContextualSearchSurpriseMeUnique
+        case onboardingContextualSearchCustomUnique
+        case onboardingContextualSiteESPNUnique
+        case onboardingContextualSiteYahooUnique
+        case onboardingContextualSiteEbayUnique
+        case onboardingContextualSiteSurpriseMeUnique
+        case onboardingContextualSiteCustomUnique
+        case onboardingContextualSecondSiteVisitUnique
 
         case daxDialogsSerp
         case daxDialogsWithoutTrackers
@@ -865,6 +876,17 @@ extension Pixel.Event {
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+        case .onboardingContextualSearchSayDuckUnique: return "m_onboarding_search_say_duck_unique"
+        case .onboardingContextualSearchMightyDuckUnique: return "m_onboarding_search_mighty_duck_unique"
+        case .onboardingContextualSearchWeatherUnique: return "m_onboarding_search_weather_unique"
+        case .onboardingContextualSearchSurpriseMeUnique: return "m_onboarding_search_surprise_me_unique"
+        case .onboardingContextualSearchCustomUnique: return "m_onboarding_search_custom_unique"
+        case .onboardingContextualSiteESPNUnique: return "m_onboarding_visit_site_espn_unique"
+        case .onboardingContextualSiteYahooUnique: return "m_onboarding_visit_site_yahoo_unique"
+        case .onboardingContextualSiteEbayUnique: return "m_onboarding_visit_site_ebay_unique"
+        case .onboardingContextualSiteSurpriseMeUnique: return "m_onboarding_visit_site_surprise_me_unique"
+        case .onboardingContextualSiteCustomUnique: return "m_onboarding_visit_site_custom_unique"
+        case .onboardingContextualSecondSiteVisitUnique: return "m_second_sitevisit_unique"
 
         case .daxDialogsSerp: return "m_dx_s"
         case .daxDialogsWithoutTrackers: return "m_dx_wo"

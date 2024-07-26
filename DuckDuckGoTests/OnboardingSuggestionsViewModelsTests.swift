@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import Core
 @testable import DuckDuckGo
 
 final class OnboardingSuggestionsViewModelsTests: XCTestCase {
@@ -25,17 +26,20 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
     var navigationDelegate: CapturingOnboardingNavigationDelegate!
     var searchSuggestionsVM: OnboardingSearchSuggestionsViewModel!
     var siteSuggestionsVM: OnboardingSiteSuggestionsViewModel!
+    var pixelReporterMock: OnboardingSuggestionsPixelReporterMock!
 
     override func setUp() {
         suggestionsProvider = MockOnboardingSuggestionsProvider()
         navigationDelegate = CapturingOnboardingNavigationDelegate()
-        searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate)
-        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate)
+        pixelReporterMock = OnboardingSuggestionsPixelReporterMock()
+        searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
+        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
     }
 
     override func tearDown() {
         suggestionsProvider = nil
         navigationDelegate = nil
+        pixelReporterMock = nil
         searchSuggestionsVM = nil
         siteSuggestionsVM = nil
     }
@@ -93,6 +97,60 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
         XCTAssertEqual(navigationDelegate.urlToNavigateTo, URL(string: randomItem.title))
     }
 
+    // MARK: - Pixels
+
+    func testWhenSearchSuggestionsTapped_ThenPixelReporterIsCalled() {
+        // GIVEN
+        let searches: [ContextualOnboardingListItem] = [
+            ContextualOnboardingListItem.search(title: "First"),
+            ContextualOnboardingListItem.search(title: "Second"),
+            ContextualOnboardingListItem.search(title: "Third"),
+            ContextualOnboardingListItem.surprise(title: "Surprise"),
+        ]
+        suggestionsProvider.list = searches
+        XCTAssertFalse(pixelReporterMock.didCallTrackSearchSayDuck)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSearchMightyDuck)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSearchWeather)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSearchSurpriseMe)
+
+        // WHEN
+        searches.forEach { searchItem in
+            searchSuggestionsVM.listItemPressed(searchItem)
+        }
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackSearchSayDuck)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSearchMightyDuck)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSearchWeather)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSearchSurpriseMe)
+    }
+
+    func testWhenSiteSuggestionsTapped_ThenPixelReporterIsCalled() {
+        // GIVEN
+        let searches: [ContextualOnboardingListItem] = [
+            ContextualOnboardingListItem.site(title: "First"),
+            ContextualOnboardingListItem.site(title: "Second"),
+            ContextualOnboardingListItem.site(title: "Third"),
+            ContextualOnboardingListItem.surprise(title: "Surprise"),
+        ]
+        suggestionsProvider.list = searches
+        XCTAssertFalse(pixelReporterMock.didCallTrackSiteESPN)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSiteYahoo)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSiteEbay)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSiteSurpriseMe)
+
+        // WHEN
+        searches.forEach { searchItem in
+            siteSuggestionsVM.listItemPressed(searchItem)
+        }
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackSiteESPN)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSiteYahoo)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSiteEbay)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSiteSurpriseMe)
+    }
+
 }
 
 class MockOnboardingSuggestionsProvider: OnboardingSuggestionsItemsProviding {
@@ -110,4 +168,49 @@ class CapturingOnboardingNavigationDelegate: OnboardingNavigationDelegate {
     func navigateTo(url: URL) {
         urlToNavigateTo = url
     }
+}
+
+final class OnboardingSuggestionsPixelReporterMock: OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting {
+    private(set) var didCallTrackSearchSayDuck = false
+    private(set) var didCallTrackSearchMightyDuck = false
+    private(set) var didCallTrackSearchWeather = false
+    private(set) var didCallTrackSearchSurpriseMe = false
+
+    private(set) var didCallTrackSiteESPN = false
+    private(set) var didCallTrackSiteYahoo = false
+    private(set) var didCallTrackSiteEbay = false
+    private(set) var didCallTrackSiteSurpriseMe = false
+
+    func trackSearchSuggestionSayDuck() {
+        didCallTrackSearchSayDuck = true
+    }
+
+    func trackSearchSuggestionMightyDuck() {
+        didCallTrackSearchMightyDuck = true
+    }
+
+    func trackSearchSuggestionWeather() {
+        didCallTrackSearchWeather = true
+    }
+
+    func trackSearchSuggestionSurpriseMe() {
+        didCallTrackSearchSurpriseMe = true
+    }
+
+    func trackSiteSuggestionESPN() {
+        didCallTrackSiteESPN = true
+    }
+    
+    func trackSiteSuggestionYahoo() {
+        didCallTrackSiteYahoo = true
+    }
+    
+    func trackSiteSuggestionEbay() {
+        didCallTrackSiteEbay = true
+    }
+    
+    func trackSiteSuggestionSurpriseMe() {
+        didCallTrackSiteSurpriseMe = true
+    }
+
 }

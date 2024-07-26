@@ -103,6 +103,7 @@ class MainViewController: UIViewController {
     private let variantManager: VariantManager
     private let tutorialSettings: TutorialSettings
     private let contextualOnboardingLogic: ContextualOnboardingLogic
+    private let contextualOnboardingPixelReporting: OnboardingCustomSearchPixelReporting
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -184,6 +185,7 @@ class MainViewController: UIViewController {
         variantManager: VariantManager,
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
         contextualOnboardingLogic: ContextualOnboardingLogic,
+        contextualOnboardingCustomSearchPixelReporting: OnboardingCustomSearchPixelReporting
         tutorialSettings: TutorialSettings = DefaultTutorialSettings()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -212,6 +214,7 @@ class MainViewController: UIViewController {
         self.variantManager = variantManager
         self.tutorialSettings = tutorialSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.contextualOnboardingPixelReporting = contextualOnboardingCustomSearchPixelReporting
 
         super.init(nibName: nil, bundle: nil)
         
@@ -1288,6 +1291,14 @@ class MainViewController: UIViewController {
         }
     }
 
+    func fireOnboardingCustomSearchPixelIfNeeded(query: String) {
+        if contextualOnboardingLogic.isShowingSearchSuggestions {
+            contextualOnboardingPixelReporting.trackCustomSearch()
+        } else if contextualOnboardingLogic.isShowingSitesSuggestions {
+            contextualOnboardingPixelReporting.trackCustomSite()
+        }
+    }
+
     func animateBackgroundTab() {
         showBars()
         tabSwitcherButton.incrementAnimated()
@@ -1709,6 +1720,7 @@ extension MainViewController: OmniBarDelegate {
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
+        fireOnboardingCustomSearchPixelIfNeeded(query: query)
     }
 
     func onPrivacyIconPressed() {

@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 // MARK: - Pixel Fire Interface
 
@@ -49,15 +50,45 @@ protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
     func trackChooseBrowserCTAAction()
 }
 
+protocol OnboardingSearchSuggestionsPixelReporting {
+    func trackSearchSuggestionSayDuck()
+    func trackSearchSuggestionMightyDuck()
+    func trackSearchSuggestionWeather()
+    func trackSearchSuggestionSurpriseMe()
+}
+
+protocol OnboardingSiteSuggestionsPixelReporting {
+    func trackSiteSuggestionESPN()
+    func trackSiteSuggestionYahoo()
+    func trackSiteSuggestionEbay()
+    func trackSiteSuggestionSurpriseMe()
+}
+
+protocol OnboardingCustomSearchPixelReporting {
+    func trackCustomSearch()
+    func trackCustomSite()
+    func trackSecondSiteVisit()
+}
+
+protocol OnboardingPrivacyDashboardPixelReporting {
+    func trackPrivacyDashboardOpen()
+}
+
 // MARK: - Implementation
 
 final class OnboardingPixelReporter {
     private let pixel: OnboardingPixelFiring.Type
     private let uniquePixel: OnboardingPixelFiring.Type
+    private let daysSinceInstallProvider: DaysSinceInstallProviding
 
-    init(pixel: OnboardingPixelFiring.Type = Pixel.self, uniquePixel: OnboardingPixelFiring.Type = UniquePixel.self) {
+    init(
+        pixel: OnboardingPixelFiring.Type = Pixel.self,
+        uniquePixel: OnboardingPixelFiring.Type = UniquePixel.self,
+        daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider()
+    ) {
         self.pixel = pixel
         self.uniquePixel = uniquePixel
+        self.daysSinceInstallProvider = daysSinceInstallProvider
     }
 
     private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
@@ -71,7 +102,7 @@ final class OnboardingPixelReporter {
 
 }
 
-// MARK: - OnboardingAnalytics + Intro
+// MARK: - OnboardingPixelReporter + Intro
 
 extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 
@@ -87,4 +118,94 @@ extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
         fire(event: .onboardingIntroChooseBrowserCTAPressed, unique: false)
     }
 
+}
+
+// MARK: - OnboardingPixelReporter + List
+
+extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
+   
+    func trackSearchSuggestionSayDuck() {
+        fire(event: .onboardingContextualSearchSayDuckUnique, unique: true)
+    }
+    
+    func trackSearchSuggestionMightyDuck() {
+        fire(event: .onboardingContextualSearchMightyDuckUnique, unique: true)
+    }
+    
+    func trackSearchSuggestionWeather() {
+        fire(event: .onboardingContextualSearchWeatherUnique, unique: true)
+    }
+    
+    func trackSearchSuggestionSurpriseMe() {
+        fire(event: .onboardingContextualSearchSurpriseMeUnique, unique: true)
+    }
+
+}
+
+extension OnboardingPixelReporter: OnboardingSiteSuggestionsPixelReporting {
+    
+    func trackSiteSuggestionESPN() {
+        fire(event: .onboardingContextualSiteESPNUnique, unique: true)
+    }
+    
+    func trackSiteSuggestionYahoo() {
+        fire(event: .onboardingContextualSiteYahooUnique, unique: true)
+    }
+    
+    func trackSiteSuggestionEbay() {
+        fire(event: .onboardingContextualSiteEbayUnique, unique: true)
+    }
+    
+    func trackSiteSuggestionSurpriseMe() {
+        fire(event: .onboardingContextualSiteSurpriseMeUnique, unique: true)
+    }
+
+}
+
+// MARK: - OnboardingPixelReporter + Custom Search
+
+extension OnboardingPixelReporter: OnboardingCustomSearchPixelReporting {
+    
+    func trackCustomSearch() {
+        fire(event: .onboardingContextualSearchCustomUnique, unique: true)
+    }
+    
+    func trackCustomSite() {
+        fire(event: .onboardingContextualSiteCustomUnique, unique: true)
+    }
+    
+    func trackSecondSiteVisit() {
+        fire(event: .onboardingContextualSecondSiteVisitUnique, unique: true)
+    }
+
+}
+
+// MARK: - OnboardingPixelReporter + Privacy Dashboard
+
+extension OnboardingPixelReporter: OnboardingPrivacyDashboardPixelReporting {
+
+    func trackPrivacyDashboardOpen() {
+        guard let daysSinceInstall = daysSinceInstallProvider.daysSinceInstall else { return }
+        fire(event: .privacyDashboardOpened, unique: true, additionalParameters: ["daysSinceInstall": String(daysSinceInstall)])
+    }
+
+}
+
+protocol DaysSinceInstallProviding {
+    var daysSinceInstall: Int? { get }
+}
+
+final class DaysSinceInstallProvider: DaysSinceInstallProviding {
+    private let store: StatisticsStore
+    private let dateProvider: () -> Date
+
+    init(store: StatisticsStore = StatisticsUserDefaults(), dateProvider: @escaping () -> Date = Date.init) {
+        self.store = store
+        self.dateProvider = dateProvider
+    }
+
+    var daysSinceInstall: Int? {
+        guard let installDate = store.installDate else { return nil }
+        return Calendar.current.numberOfDaysBetween(installDate, and: dateProvider())
+    }
 }

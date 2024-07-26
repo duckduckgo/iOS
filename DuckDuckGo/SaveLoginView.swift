@@ -166,7 +166,7 @@ struct SaveLoginView: View {
     @ViewBuilder private var featuresView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10) {
-                Text("Key Features")
+                Text(UserText.autofillOnboardingKeyFeaturesTitle)
                     .font(Font.custom("SF Pro Text", size: 12))
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -181,18 +181,18 @@ struct SaveLoginView: View {
             VStack(alignment: .leading, spacing: 12) {
                 featuresListItem(
                     imageTitle: "Autofill-Color-24",
-                    title: "Seamless sign-ins",
-                    subtitle: "No need to remember login info."
+                    title: UserText.autofillOnboardingKeyFeaturesSignInsTitle,
+                    subtitle: UserText.autofillOnboardingKeyFeaturesSignInsDescription
                 )
                 featuresListItem(
                     imageTitle: "Lock-Color-24",
-                    title: "Secure storage",
-                    subtitle: "Passwords are encrypted, stored on device, and locked with Face ID or passcode."
+                    title: UserText.autofillOnboardingKeyFeaturesSecureStorageTitle,
+                    subtitle: UserText.autofillOnboardingKeyFeaturesSecureStorageDescription
                 )
                 featuresListItem(
                     imageTitle: "Sync-Color-24",
-                    title: "Sync between devices",
-                    subtitle: "End-to-end encrypted and easy to set up when you’re ready."
+                    title: UserText.autofillOnboardingKeyFeaturesSyncTitle,
+                    subtitle: UserText.autofillOnboardingKeyFeaturesSyncDescription
                 )
             }
             .padding(.horizontal, 16)

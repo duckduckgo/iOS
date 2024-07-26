@@ -209,6 +209,7 @@ private enum Const {
         static let bottomSpacerLegacyHeight: CGFloat = 16.0
         static let bottomSpacerLegacyHeightIPad: CGFloat = 64.0
         static let bottomSpacerLegacyHeightLandscape: CGFloat = 44.0
+        static let featureListItemIconGap: CGFloat = 8.0
     }
 }
 

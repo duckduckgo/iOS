@@ -21,10 +21,7 @@ import UIKit
 
 import Subscription
 import Core
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 final class SubscriptionDebugViewController: UITableViewController {
 

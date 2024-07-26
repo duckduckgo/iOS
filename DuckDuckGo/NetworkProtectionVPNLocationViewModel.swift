@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import Combine
 import NetworkProtection
@@ -164,5 +162,3 @@ struct NetworkProtectionVPNCityItemModel: Identifiable {
         self.isSelected = isSelected
     }
 }
-
-#endif

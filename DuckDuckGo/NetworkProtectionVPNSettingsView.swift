@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 import DesignResourcesKit
 
@@ -176,5 +174,3 @@ private extension WidgetEducationView {
         )
     }
 }
-
-#endif

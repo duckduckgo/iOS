@@ -33,10 +33,7 @@ import Networking
 import Suggestions
 import Subscription
 import SwiftUI
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 class MainViewController: UIViewController {
     
@@ -114,11 +111,8 @@ class MainViewController: UIViewController {
     private var emailCancellables = Set<AnyCancellable>()
     private var urlInterceptorCancellables = Set<AnyCancellable>()
     private var settingsDeepLinkcancellables = Set<AnyCancellable>()
-    
-#if NETWORK_PROTECTION
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
-#endif
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -268,10 +262,7 @@ class MainViewController: UIViewController {
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
         subscribeToSettingsDeeplinkNotifications()
-        
-#if NETWORK_PROTECTION
         subscribeToNetworkProtectionEvents()
-#endif
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1376,7 +1367,6 @@ class MainViewController: UIViewController {
             .store(in: &settingsDeepLinkcancellables)
     }
 
-#if NETWORK_PROTECTION
     private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
@@ -1477,7 +1467,6 @@ class MainViewController: UIViewController {
             await networkProtectionTunnelController.removeVPN(reason: .signedOut)
         }
     }
-#endif
 
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {

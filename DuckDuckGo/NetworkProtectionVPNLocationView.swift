@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import SwiftUI
 
@@ -190,5 +188,3 @@ private struct MenuItem: View {
         .tint(Color(designSystemColor: .textPrimary))
     }
 }
-
-#endif

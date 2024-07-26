@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import NetworkProtection
 import UIKit
 import Common
@@ -103,5 +101,3 @@ extension NetworkProtectionVPNLocationViewModel {
         )
     }
 }
-
-#endif

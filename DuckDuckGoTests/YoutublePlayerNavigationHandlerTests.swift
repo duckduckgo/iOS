@@ -100,6 +100,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     
    // MARK: - Decide policyFor Tests
     
+    
     @MainActor
     func testDecidePolicyForVideoWasAlreadyHandled() {
         
@@ -108,7 +109,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let expectation = self.expectation(description: "Completion handler called")
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         let player = MockDuckPlayer(settings: playerSettings)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
         var navigationPolicy: WKNavigationActionPolicy?
         
         handler.lastHandledVideoID = "abc123"

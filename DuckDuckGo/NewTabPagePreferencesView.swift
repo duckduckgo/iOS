@@ -24,86 +24,86 @@ struct NewTabPagePreferencesView: View {
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject var model: NewTabPagePreferencesModel
+    @ObservedObject var shortcutsModel: ShortcutsModel
 
-    @State var listHeight: CGFloat?
+    // Arbitrary high value is required to acomodate for the content size
+    @State var listHeight: CGFloat = 5000
 
-    @State var lastListGlobalFrame: CGRect = .zero
-    @State var lastSectionGlobalFrame: CGRect = .zero
+    @State var firstSectionFrame: CGRect = .zero
+    @State var lastSectionFrame: CGRect = .zero
 
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Section {
-                        sectionsPreferenceSectionContentView
-                    } header: {
-                        Text(UserText.newTabPagePreferencesSectionsSettingsHeaderTitle)
-                    } footer: {
-                        Text(UserText.newTabPagePreferencesSectionsSettingsDescription)
-                    }
-
-                    if model.visibleSections.contains(.shortcuts) {
-                        Section {
-                        } header: {
-                            Text(UserText.newTabPagePreferencesShortcutsHeaderTitle)
-                        } footer: {
-                        }.overlay {
-                            GeometryReader(content: { geometry in
-                                Color.clear
-                                    .preference(key: FrameKey.self, value: geometry.frame(in: .global))
-                            })
-                        }
-                        .onPreferenceChange(FrameKey.self, perform: { value in
-                            self.lastSectionGlobalFrame = value
-                            updateListHeight()
-                        })
-                    }
+        mainView
+        .applyBackground()
+        .tintIfAvailable(Color(designSystemColor: .accent))
+        .navigationTitle(UserText.newTabPagePreferencesTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(UserText.navigationTitleDone) {
+                    dismiss()
                 }
-                .environment(\.editMode, .constant(.active))
-                .applyInsetGroupedListStyle()
-                .tintIfAvailable(Color(designSystemColor: .accent))
-                .navigationTitle(UserText.newTabPagePreferencesTitle)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") {
-                            dismiss()
-                        }
-                        .tint(Color(designSystemColor: .textPrimary))
-                    }
-                }
-                .overlay {
-                    GeometryReader(content: { geometry in
-                        Color.clear.preference(key: ListFrameKey.self, value: geometry.frame(in: .global))
-                    })
-                }
-                .onPreferenceChange(ListFrameKey.self, perform: { value in
-                    lastListGlobalFrame = value
-                    updateListHeight()
-                })
-                .frame(height: listHeight)
-
-                ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()),
-                              editingEnabled: true)
-                .padding(.horizontal, 16)
-
-                Spacer()
+                .tint(Color(designSystemColor: .textPrimary))
             }
-            .applyBackground()
         }
     }
 
-    private func updateListHeight() {
-        guard lastListGlobalFrame != .zero, lastSectionGlobalFrame != .zero else { return }
+    // MARK: Views
 
-        let newHeight = lastSectionGlobalFrame.maxY - lastListGlobalFrame.origin.y
-//        if let listHeight {
-//            self.listHeight = max(listHeight, newHeight)
-//        } else {
-            self.listHeight = max(0, newHeight)
-//        }
+    @ViewBuilder
+    private var mainView: some View {
+        if model.visibleSections.contains(.shortcuts) {
+            ScrollView {
+                VStack {
+                    sectionsList(withFrameUpdates: true)
+                        .withoutScroll()
+                        .frame(height: listHeight)
+                    
+                    ShortcutsView(model: shortcutsModel, editingEnabled: true)
+                        .padding(.horizontal, Metrics.horizontalPadding)
+                }
+            }
+            .coordinateSpace(name: Constant.scrollCoordinateSpace)
+        } else {
+            sectionsList(withFrameUpdates: false)
+        }
     }
 
+    @ViewBuilder
+    private func sectionsList(withFrameUpdates: Bool) -> some View {
+        List {
+            Section {
+                sectionsPreferenceSectionContentView
+            } header: {
+                Text(UserText.newTabPagePreferencesSectionsSettingsHeaderTitle)
+                    .if(withFrameUpdates) {
+                        $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: FirstSectionFrameKey.self) { frame in
+                            self.firstSectionFrame = frame
+                            updateListHeight()
+                        }
+                    }
+            } footer: {
+                Text(UserText.newTabPagePreferencesSectionsSettingsDescription)
+            }
+
+            if model.visibleSections.contains(.shortcuts) {
+                Section {
+                } header: {
+                    Text(UserText.newTabPagePreferencesShortcutsHeaderTitle)
+                        .if(withFrameUpdates) {
+                            $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: LastSectionFrameKey.self) { frame in
+                                self.lastSectionFrame = frame
+                                updateListHeight()
+                            }
+                        }
+                }
+            }
+        }
+        .applyInsetGroupedListStyle()
+        .environment(\.editMode, .constant(.active))
+    }
+
+    @ViewBuilder
     private var sectionsPreferenceSectionContentView: some View {
         ForEach(model.sectionsSettings, id: \.section) { item in
             switch item.section {
@@ -120,24 +120,59 @@ struct NewTabPagePreferencesView: View {
             model.moveSections(from: indices, to: newOffset)
         })
     }
+
+    // MARK: -
+
+    private func updateListHeight() {
+        guard firstSectionFrame != .zero, lastSectionFrame != .zero else { return }
+
+        let newHeight = lastSectionFrame.maxY - firstSectionFrame.minY + Metrics.defaultListTopPadding
+        self.listHeight = max(0, newHeight)
+    }
+
+    private struct Constant {
+        static let scrollCoordinateSpaceName = "Scroll"
+        static let scrollCoordinateSpace = CoordinateSpace.named(scrollCoordinateSpaceName)
+    }
+
+    private struct Metrics {
+        static let defaultListTopPadding = 24.0
+        static let horizontalPadding = 16.0
+    }
 }
 
 #Preview {
-    return NewTabPagePreferencesView(
-        model: NewTabPagePreferencesModel(
-            newTabPagePreferencesStorage: InMemoryNewTabPageSectionsPreferencesStorage()
+    NavigationView {
+        NewTabPagePreferencesView(
+            model: NewTabPagePreferencesModel(
+                newTabPagePreferencesStorage: InMemoryNewTabPageSectionsPreferencesStorage()
+            ),
+            shortcutsModel: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
         )
-    )
+    }
 }
 
-private struct FrameKey: PreferenceKey {
+private extension View {
+    func onFrameUpdate<K: PreferenceKey>(in space: CoordinateSpace, using key: K.Type, perform: @escaping (CGRect) -> Void) -> some View {
+
+        self.background {
+            GeometryReader(content: { geometry in
+                Color.clear
+                    .preference(key: LastSectionFrameKey.self, value: geometry.frame(in: .named("Scroll")))
+            })
+        }
+        .onPreferenceChange(LastSectionFrameKey.self, perform: perform)
+    }
+}
+
+private struct FirstSectionFrameKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
         value = nextValue()
     }
     static var defaultValue: CGRect = .zero
 }
 
-private struct ListFrameKey: PreferenceKey {
+private struct LastSectionFrameKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
         value = nextValue()
     }

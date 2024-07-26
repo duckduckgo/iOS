@@ -34,6 +34,17 @@ extension View {
     }
 }
 
+extension View {
+    @ViewBuilder
+    func withoutScroll() -> some View {
+        if #available(iOS 16, *) {
+            scrollDisabled(true)
+        } else {
+            gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local), including: .gesture)
+        }
+    }
+}
+
 /*
  These exensions are needed to provide the UI styling specs for Network Protection
  However, at time of writing, they are not supported in iOS <=14. As Network Protection

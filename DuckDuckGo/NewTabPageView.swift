@@ -124,7 +124,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         }
         .background(Color(designSystemColor: .background))
         .sheet(isPresented: $isShowingPreferences, content: {
-            NewTabPagePreferencesView(model: preferencesModel)
+            NavigationView {
+                NewTabPagePreferencesView(model: preferencesModel, shortcutsModel: shortcutsModel)
+            }
         })
     }
 }

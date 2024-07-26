@@ -406,8 +406,7 @@ import WebKit
             return NullHistoryManager()
 
         case .success(let historyManager):
-            self.presentPreemptiveCrashAlert()
-            return NullHistoryManager()
+            return historyManager
         }
     }
 

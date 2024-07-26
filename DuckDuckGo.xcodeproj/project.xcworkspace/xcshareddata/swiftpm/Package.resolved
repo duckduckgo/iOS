@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "fc03a7c3bf6cd25cf286f8f5a6cfe9ec3d35305a",
-        "version" : "176.0.0"
+        "branch" : "dominik/grdb-2.4.0",
+        "revision" : "286d9773edf6bdab244193ac3b0384b7a2e0a445"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/GRDB.swift.git",
       "state" : {
-        "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
-        "version" : "2.3.0"
+        "revision" : "4225b85c9a0c50544e413a1ea1e502c802b44b35",
+        "version" : "2.4.0"
       }
     },
     {

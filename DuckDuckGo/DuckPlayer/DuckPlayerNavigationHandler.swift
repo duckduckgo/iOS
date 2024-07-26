@@ -174,7 +174,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Pixel for Views From Youtube
         if referrer == .youtube,
             duckPlayer.settings.mode == .enabled {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic, debounce: 2)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
         
         // If DuckPlayer is Enabled or in ask mode, render the video

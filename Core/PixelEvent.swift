@@ -724,16 +724,10 @@ extension Pixel {
         case duckPlayerOverlayYoutubeImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
-        case duckPlayerSettingAlwaysOverlaySERP
-        case duckPlayerSettingAlwaysOverlayYoutube
         case duckPlayerSettingAlwaysSettings
-        case duckPlayerSettingNeverOverlaySERP
-        case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
-        case watchInDuckPlayerInitial
-        
     }
 
 }
@@ -1444,17 +1438,12 @@ extension Pixel.Event {
         case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
         case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
         case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
         case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
         case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
-        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
-        case .duckPlayerSettingAlwaysOverlaySERP: return "m_duck-player_setting_always_overlay_serp"
-        case .duckPlayerSettingAlwaysOverlayYoutube: return "m_duck-player_setting_always_overlay_youtube"
-        case .duckPlayerSettingNeverOverlaySERP: return "m_duck-player_setting_never_overlay_serp"
-        case .duckPlayerSettingNeverOverlayYoutube: return "m_duck-player_setting_never_overlay_youtube"
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
-        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }

@@ -28,6 +28,8 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var favoritesModel: FavoritesModelType
     @ObservedObject private var shortcutsModel: ShortcutsModel
 
+    @State var isShowingTooltip: Bool = false
+
     init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModelType, shortcutsModel: ShortcutsModel) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
@@ -49,7 +51,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
 
                     // MARK: Favorites
                     if favoritesModel.isEmpty {
-                        FavoritesEmptyStateView()
+                        FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
                             .padding(Constant.sectionPadding)
                     } else {
                         FavoritesView(model: favoritesModel)
@@ -81,6 +83,11 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                 .frame(minHeight: proxy.frame(in: .local).size.height)
             }
             .background(Color(designSystemColor: .background))
+            .if(isShowingTooltip, transform: {
+                $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
+                    isShowingTooltip = false
+                })
+            })
         }
     }
 }

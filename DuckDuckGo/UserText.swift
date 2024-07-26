@@ -1175,7 +1175,9 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let duckPlayerPresentationModalBody = NSLocalizedString("duckplayer.presentation.modal.body", value: "Duck Player lets you watch YouTube without targeted ads in a theater-like experience in DuckDuckGo and what you watch won’t influence your recommendations.", comment: "Body text for the modal feature explanation")
     public static let duckPlayerPresentationModalDismissButton = NSLocalizedString("duckplayer.presentation.modal.dismiss-button", value: "Got it!", comment: "Button that will dismiss the modal")
 
-    // Home Tab Shortcuts
+    // MARK: - New Tab Page
+
+    // MARK: Shortcuts
     public static let newTabPageShortcutBookmarks = NSLocalizedString("new.tab.page.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
     public static let newTabPageShortcutAIChat = NSLocalizedString("new.tab.page.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
     public static let newTabPageShortcutPasswords = NSLocalizedString("new.tab.page.shortcut.passwords", value: "Passwords", comment: "Shortcut title leading to Passwords")
@@ -1183,7 +1185,10 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let newTabPageShortcutDownloads = NSLocalizedString("new.tab.page.shortcut.downloads", value: "Downloads", comment: "Shortcut title leading to Downloads")
     public static let newTabPageShortcutSettings = NSLocalizedString("new.tab.page.shortcut.settings", value: "Settings", comment: "Shortcut title leading to app settings")
 
-    // MARK: -  Dax Onboarding Experiment
+    // MARK: Tooltip
+    public static let newTabPageTooltipBody = NSLocalizedString("new.tab.page.tooltip.body", value: "On any site, open the ••• menu and select **Add Favorite** to add it to your new tab page.", comment: "Text shown on the favorites info tooltip")
+
+    // MARK: - Dax Onboarding Experiment
     public enum DaxOnboardingExperiment {
         enum Intro {
             public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.\n\nReady for a better, more private internet?", comment: "The title of the onboarding dialog popup")

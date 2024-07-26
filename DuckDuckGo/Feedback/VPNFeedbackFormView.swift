@@ -20,7 +20,6 @@
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15.0, *)
 struct VPNFeedbackFormCategoryView: View {
     @Environment(\.dismiss) private var dismiss
     let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
@@ -76,7 +75,6 @@ struct VPNFeedbackFormCategoryView: View {
     }
 }
 
-@available(iOS 15.0, *)
 struct VPNFeedbackFormView: View {
     @StateObject var viewModel: VPNFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss

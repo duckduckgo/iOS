@@ -20,7 +20,6 @@
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 
@@ -252,7 +251,6 @@ private struct NetworkProtectionErrorView: View {
     }
 }
 
-@available(iOS 15.0, *)
 private struct NetworkProtectionLocationItemView: View {
     let title: AttributedString
     let imageName: String?

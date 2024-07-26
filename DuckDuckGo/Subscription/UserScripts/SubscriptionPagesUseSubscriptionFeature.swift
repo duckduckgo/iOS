@@ -30,7 +30,6 @@ enum SubscriptionTransactionStatus {
     case idle, purchasing, restoring, polling
 }
 
-@available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
     struct Constants {

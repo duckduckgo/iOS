@@ -83,10 +83,7 @@ final class DuckPlayerNavigationHandler {
     }
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
-        // iOS 14 will be soon dropped out (and it does not support simulatedRequests)
-        if #available(iOS 15.0, *) {
-            webView.loadSimulatedRequest(request, responseHTML: responseHTML)
-        }
+        webView.loadSimulatedRequest(request, responseHTML: responseHTML)
     }
     
     private func performRequest(request: URLRequest, webView: WKWebView) {
@@ -181,14 +178,13 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
             !url.hasWatchInYoutubeQueryParameter {
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-            if #available(iOS 15.0, *) {
-                os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
-                                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.performRequest(request: newRequest, webView: webView)
-                }
-                return
+
+            os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.performRequest(request: newRequest, webView: webView)
             }
+            return
         }
         
     }

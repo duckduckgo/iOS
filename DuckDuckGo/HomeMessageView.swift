@@ -49,8 +49,6 @@ struct HomeMessageView: View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 8) {
                 Group {
-                    topText
-
                     if case .promoSingleAction = viewModel.modelType {
                         title
                             .daxTitle3()
@@ -114,17 +112,6 @@ struct HomeMessageView: View {
         .contentShape(Rectangle())
     }
     
-    private var topText: some View {
-        Group {
-            if let topText = viewModel.topText {
-                Text(topText)
-                    .font(Font(uiFont: Const.Font.topText))
-            } else {
-                EmptyView()
-            }
-        }
-    }
-    
     private var image: some View {
         Group {
             if let image = viewModel.image {
@@ -144,7 +131,7 @@ struct HomeMessageView: View {
 
     @ViewBuilder
     private var subtitle: some View {
-        if #available(iOS 15, *), let attributed = try? AttributedString(markdown: viewModel.subtitle) {
+        if let attributed = try? AttributedString(markdown: viewModel.subtitle) {
             Text(attributed)
                 .daxBodyRegular()
         } else {

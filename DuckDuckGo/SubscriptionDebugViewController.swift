@@ -23,7 +23,7 @@ import Subscription
 import Core
 import NetworkProtection
 
-@available(iOS 15.0, *) final class SubscriptionDebugViewController: UITableViewController {
+final class SubscriptionDebugViewController: UITableViewController {
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     private var subscriptionManager: SubscriptionManager {

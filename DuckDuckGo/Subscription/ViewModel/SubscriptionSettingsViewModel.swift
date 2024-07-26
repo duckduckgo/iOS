@@ -23,7 +23,6 @@ import StoreKit
 import Subscription
 import Core
 
-@available(iOS 15.0, *)
 final class SubscriptionSettingsViewModel: ObservableObject {
     
     private let subscriptionManager: SubscriptionManager

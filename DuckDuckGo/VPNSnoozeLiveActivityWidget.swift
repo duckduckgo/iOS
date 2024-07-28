@@ -28,7 +28,15 @@ struct VPNSnoozeLiveActivity: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: VPNSnoozeActivityAttributes.self) { context in
-            Group {
+            let startDate = Date()
+            let endDate = context.state.endDate
+            var range: ClosedRange<Date>?
+
+            if startDate <= endDate {
+                range = startDate...endDate
+            }
+
+            return Group {
                 if context.isStale {
                     HStack {
                         Image("vpn-off")
@@ -61,7 +69,7 @@ struct VPNSnoozeLiveActivity: Widget {
                 }
             }
             .padding()
-            .activityBackgroundTint(Color.secondary)
+            .activityBackgroundTint(Color.black)
         } dynamicIsland: { context in
             let startDate = Date()
             let endDate = context.state.endDate
@@ -73,88 +81,16 @@ struct VPNSnoozeLiveActivity: Widget {
 
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    HStack {
-                        Image("vpn-off-live-activity")
-
-                        VStack(alignment: .leading) {
-                            Text("VPN Snoozed")
-
-                            if let range {
-                                Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                                    .foregroundStyle(Color(uiColor: UIColor.yellow60))
-                            } else {
-                                Text("")
-                            }
-                        }
-
-                        Spacer()
-                    }
-                    .dynamicIsland(verticalPlacement: .belowIfTooWide)
-                    .padding(.bottom, 15)
+                    VPNSnoozeLiveActivityPrimaryCountdownView(snoozeActive: !context.isStale, countdownRange: range, snoozeEndDate: endDate)
+                        .dynamicIsland(verticalPlacement: .belowIfTooWide)
+                        .padding(.bottom, 15)
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(alignment: .center) {
-                        Spacer()
-
-                        if context.isStale {
-                            Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                                Text("Dismiss")
-                                    .font(Font.system(size: 18, weight: .semibold))
-                                    .foregroundColor(Color.white)
-                            })
-                            .buttonStyle(.borderedProminent)
-                            .tint(Color("WidgetLiveActivityButtonColor"))
-                        } else {
-                            Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                                Text("Resume")
-                                    .font(Font.system(size: 18, weight: .semibold))
-                                    .foregroundColor(Color.white)
-                            })
-                            .buttonStyle(.borderedProminent)
-                            .tint(Color("WidgetLiveActivityButtonColor"))
-                        }
-
-                        Spacer()
-                    }
+                    VPNSnoozeLiveActivityActionView(snoozeActive: !context.isStale)
                 }
-
-//                DynamicIslandExpandedRegion(.center, priority: 0.0) {
-//                    if let range {
-//                        Group {
-//                            Text("Reconnecting in ") +
-//                            Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-//                                .foregroundStyle(Color(uiColor: UIColor.yellow60))
-//                        }
-//                            .multilineTextAlignment(.center)
-//                    } else {
-//                        Text("VPN snooze has ended")
-//                    }
-//                }
-
-//                DynamicIslandExpandedRegion(.bottom) {
-//                    if context.isStale {
-//                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-//                            Text("Dismiss")
-//                                .font(Font.system(size: 18, weight: .semibold))
-//                                .foregroundColor(Color.white)
-//                                .frame(maxWidth: .infinity)
-//                        })
-//                        .buttonStyle(.borderedProminent)
-//                        .tint(Color("WidgetLiveActivityButtonColor"))
-//                    } else {
-//                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-//                            Text("Resume VPN")
-//                                .font(Font.system(size: 18, weight: .semibold))
-//                                .foregroundColor(Color.white)
-//                                .frame(maxWidth: .infinity)
-//                        })
-//                        .buttonStyle(.borderedProminent)
-//                        .tint(Color("WidgetLiveActivityButtonColor"))
-//                    }
-//                }
             } compactLeading: {
-                Image("vpn-off-compact")
+                context.isStale ? Image("vpn-on-compact") : Image("vpn-off-compact")
             } compactTrailing: {
                 if let range {
                     Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
@@ -162,13 +98,13 @@ struct VPNSnoozeLiveActivity: Widget {
                         .frame(minWidth: 0, maxWidth: 55)
                         .multilineTextAlignment(.trailing)
                 } else {
-                    Text("0:00")
-                        .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                    Text(timerInterval: endDate...Date.distantFuture, countsDown: false)
+                        .foregroundStyle(Color(uiColor: UIColor.midGreen))
                         .frame(minWidth: 0, maxWidth: 55)
                         .multilineTextAlignment(.trailing)
                 }
             } minimal: {
-                Image("vpn-off-compact")
+                context.isStale ? Image("vpn-on-compact") : Image("vpn-off-compact")
             }
         }
     }
@@ -180,6 +116,66 @@ struct VPNSnoozeLiveActivity: Widget {
             return startDate...endDate
         } else {
             return nil
+        }
+    }
+
+}
+
+@available(iOS 17.0, *)
+private struct VPNSnoozeLiveActivityPrimaryCountdownView: View {
+
+    let snoozeActive: Bool
+    let countdownRange: ClosedRange<Date>?
+    let snoozeEndDate: Date
+
+    var body: some View {
+        HStack {
+            if snoozeActive {
+                Image("vpn-off-live-activity")
+            } else {
+                Image("vpn-on")
+            }
+
+            VStack(alignment: .leading) {
+                if snoozeActive {
+                    Text("VPN Snoozed")
+                } else {
+                    Text("VPN is On")
+                }
+
+                if let countdownRange {
+                    Text(timerInterval: countdownRange, pauseTime: countdownRange.lowerBound, countsDown: true)
+                        .foregroundStyle(Color(uiColor: UIColor.yellow60))
+                } else {
+                    Text(timerInterval: snoozeEndDate...Date.distantFuture, countsDown: false)
+                        .foregroundStyle(Color(uiColor: UIColor.midGreen))
+                }
+            }
+
+            Spacer()
+        }
+    }
+
+}
+
+@available(iOS 17.0, *)
+private struct VPNSnoozeLiveActivityActionView: View {
+
+    let snoozeActive: Bool
+
+    var body: some View {
+        VStack(alignment: .center) {
+            Spacer()
+
+            Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
+                Text(snoozeActive ? "Dismiss" : "Resume")
+                    .font(Font.system(size: 18, weight: .semibold))
+                    .foregroundColor(Color.white)
+            })
+            .buttonStyle(.borderedProminent)
+            .tint(Color("WidgetLiveActivityButtonColor"))
+
+            Spacer()
         }
     }
 

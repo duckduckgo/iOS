@@ -84,6 +84,11 @@ final class NewTabPageMessagesModel: ObservableObject {
                 params
             }
         case .remoteMessage(let remoteMessage):
+
+            // call didAppear here to support marking messages as shown when they appear on the new tab page
+            // as a result of refreshing a config while the user was on a new tab page already.
+            didAppear(message)
+
             return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
                 guard let action,
                       let self else { return }
@@ -126,7 +131,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
                 }
             } onDidAppear: { [weak self] in
-                self?.homePageMessagesConfiguration.didAppear(message)
+                self?.didAppear(message)
             }
         }
     }

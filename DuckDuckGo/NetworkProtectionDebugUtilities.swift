@@ -19,8 +19,6 @@
 
 import Common
 import Foundation
-
-#if NETWORK_PROTECTION
 import NetworkProtection
 import NetworkExtension
 
@@ -98,5 +96,3 @@ private extension NetworkProtectionSimulationOption {
         }
     }
 }
-
-#endif

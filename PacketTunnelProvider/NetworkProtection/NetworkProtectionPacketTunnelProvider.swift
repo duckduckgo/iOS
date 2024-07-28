@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import Common
 import Combine
@@ -443,4 +441,3 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 }
-#endif

@@ -51,7 +51,7 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
+            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.firstKeyWindow
             activityViewController.popoverPresentationController?.permittedArrowDirections = .right
             activityViewController.popoverPresentationController?.sourceRect = rect
         }

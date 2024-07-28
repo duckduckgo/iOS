@@ -29,16 +29,10 @@ public class RemoteMessagingStoreErrorHandling: EventMapping<RemoteMessagingStor
             switch event {
             case .saveConfigFailed:
                 Pixel.fire(pixel: .dbRemoteMessagingSaveConfigError, error: error)
-            case .invalidateConfigFailed:
-                Pixel.fire(pixel: .dbRemoteMessagingInvalidateConfigError, error: error)
             case .updateMessageShownFailed:
                 Pixel.fire(pixel: .dbRemoteMessagingUpdateMessageShownError, error: error)
-            case .saveMessageFailed:
-                Pixel.fire(pixel: .dbRemoteMessagingSaveMessageError, error: error)
             case .updateMessageStatusFailed:
                 Pixel.fire(pixel: .dbRemoteMessagingUpdateMessageStatusError, error: error)
-            case .deleteScheduledMessageFailed:
-                Pixel.fire(pixel: .dbRemoteMessagingDeleteScheduledMessageError, error: error)
             }
         }
     }

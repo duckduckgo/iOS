@@ -51,9 +51,7 @@ extension AppDelegate {
             mainViewController.newEmailAddress()
 
         case .openVPN:
-#if NETWORK_PROTECTION
             presentNetworkProtectionStatusSettingsModal()
-#endif
 
         case .openPasswords:
             var source: AutofillSettingsSource = .homeScreenWidget

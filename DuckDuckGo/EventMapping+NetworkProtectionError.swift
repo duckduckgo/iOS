@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import NetworkProtection
 import Common
@@ -102,5 +100,3 @@ extension EventMapping where Event == NetworkProtectionError {
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
     }
 }
-
-#endif

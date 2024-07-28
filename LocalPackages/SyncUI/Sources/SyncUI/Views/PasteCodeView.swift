@@ -77,20 +77,11 @@ public struct PasteCodeView: View {
                     .padding(.horizontal)
                 } else {
 
-                    if #available(iOS 15.0, *) {
-                        Text(instructionsString)
-                            .lineLimit(nil)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white.opacity(0.6))
-                            .padding()
-                    } else {
-                        Text(UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath,
-                                                                             menuItem: UserText.viewTextCodeMenuItem))
-                            .lineLimit(nil)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white.opacity(0.6))
-                            .padding()
-                    }
+                    Text(instructionsString)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white.opacity(0.6))
+                        .padding()
 
                     Spacer()
                 }
@@ -105,7 +96,6 @@ public struct PasteCodeView: View {
         .padding()
     }
 
-    @available(iOS 15, *)
     var instructionsString: AttributedString {
         let baseString = UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath, menuItem: UserText.viewTextCodeMenuItem)
         var instructions = AttributedString(baseString)

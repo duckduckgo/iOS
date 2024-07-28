@@ -22,12 +22,14 @@ import ContentScopeScripts
 import WebKit
 import Core
 import Common
+import BrowserServicesKit
 
 final class DuckPlayerNavigationHandler {
     
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
+    var featureFlagger: FeatureFlagger
     
     private struct Constants {
         static let SERPURL =  "https://duckduckgo.com/"
@@ -45,8 +47,10 @@ final class DuckPlayerNavigationHandler {
         static let urlInternalReferrer = "embeds_referring_euri"
     }
     
-    init(duckPlayer: DuckPlayerProtocol = DuckPlayer()) {
+    init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.duckPlayer = duckPlayer
+        self.featureFlagger = featureFlagger
     }
     
     static var htmlTemplatePath: String {
@@ -83,10 +87,7 @@ final class DuckPlayerNavigationHandler {
     }
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
-        // iOS 14 will be soon dropped out (and it does not support simulatedRequests)
-        if #available(iOS 15.0, *) {
-            webView.loadSimulatedRequest(request, responseHTML: responseHTML)
-        }
+        webView.loadSimulatedRequest(request, responseHTML: responseHTML)
     }
     
     private func performRequest(request: URLRequest, webView: WKWebView) {
@@ -101,6 +102,10 @@ final class DuckPlayerNavigationHandler {
     private func handleURLChange(url: URL?, webView: WKWebView) {
 
         guard let url else { return }
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
         
         if let (videoID, _) = url.youtubeVideoParams,
             videoID == lastHandledVideoID {
@@ -139,6 +144,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
        
         guard let url = navigationAction.request.url else { return }
         
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
+        
         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
         // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
@@ -157,6 +166,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
                    let id = videoParameterItem.value,
                     let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+                        Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
                         webView.load(URLRequest(url: newURL))
                         return
                 }
@@ -173,7 +183,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         // Pixel for Views From Youtube
         if referrer == .youtube,
             duckPlayer.settings.mode == .enabled {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic, debounce: 2)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
         
         // If DuckPlayer is Enabled or in ask mode, render the video
@@ -181,14 +191,13 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
             !url.hasWatchInYoutubeQueryParameter {
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-            if #available(iOS 15.0, *) {
-                os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
-                                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.performRequest(request: newRequest, webView: webView)
-                }
-                return
+
+            os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.performRequest(request: newRequest, webView: webView)
             }
+            return
         }
         
     }
@@ -202,6 +211,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         guard let url = navigationAction.request.url else {
             completion(.cancel)
+            return
+        }
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            completion(.allow)
             return
         }
         
@@ -243,6 +257,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     
     @MainActor
     func handleJSNavigation(url: URL?, webView: WKWebView) {
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
+        
         handleURLChange(url: url, webView: webView)
     }
     
@@ -250,6 +269,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     func handleGoBack(webView: WKWebView) {
         
         os_log("DP: Handling Back Navigation", log: .duckPlayerLog, type: .debug)
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            webView.goBack()
+            return
+        }
         
         lastHandledVideoID = nil
         webView.stopLoading()
@@ -283,6 +307,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleReload(webView: WKWebView) {
         
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            webView.reload()
+            return
+        }
+        
         lastHandledVideoID = nil
         webView.stopLoading()
         if let url = webView.url, url.isDuckPlayer,
@@ -298,6 +327,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     
     @MainActor
     func handleAttach(webView: WKWebView) {
+        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+            return
+        }
         
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,

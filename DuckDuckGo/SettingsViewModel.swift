@@ -26,10 +26,7 @@ import Combine
 import SyncUI
 
 import Subscription
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 final class SettingsViewModel: ObservableObject {
 
@@ -80,9 +77,7 @@ final class SettingsViewModel: ObservableObject {
         case voiceSearch
         case addressbarPosition
         case speechRecognition
-#if NETWORK_PROTECTION
         case networkProtection
-#endif
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
@@ -458,9 +453,7 @@ extension SettingsViewModel {
             completion(true)
         }
     }
-    
-    
-#if NETWORK_PROTECTION
+
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
         if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
@@ -475,7 +468,6 @@ extension SettingsViewModel {
             self.state.networkProtection.status = ""
         }
     }
-#endif
     
 }
 
@@ -484,14 +476,12 @@ extension SettingsViewModel {
     
     private func setupSubscribers() {
 
-    #if NETWORK_PROTECTION
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
-    #endif
 
     }
 }
@@ -599,14 +589,10 @@ extension SettingsViewModel {
         
         case .autoconsent:
             pushViewController(legacyViewProvider.autoConsent)
-     
-#if NETWORK_PROTECTION
+
         case .netP:
-            if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings)
-                pushViewController(legacyViewProvider.netP)
-            }
-#endif
+            firePixel(.privacyProVPNSettings)
+            pushViewController(legacyViewProvider.netP)
         }
     }
  
@@ -755,12 +741,10 @@ extension SettingsViewModel {
         subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
                                                                              object: nil,
                                                                              queue: .main) { [weak self] _ in
-            if #available(iOS 15.0, *) {
-                guard let strongSelf = self else { return }
-                Task {
-                    strongSelf.subscriptionStateCache.reset()
-                    await strongSelf.setupSubscriptionEnvironment()
-                }
+            guard let strongSelf = self else { return }
+            Task {
+                strongSelf.subscriptionStateCache.reset()
+                await strongSelf.setupSubscriptionEnvironment()
             }
         }
         
@@ -774,7 +758,6 @@ extension SettingsViewModel {
         
     }
     
-    @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,

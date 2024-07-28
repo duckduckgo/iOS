@@ -17,12 +17,9 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 import NetworkProtection
 
-@available(iOS 15.0, *)
 struct NetworkProtectionDNSSettingsView: View {
     @StateObject var viewModel = NetworkProtectionDNSSettingsViewModel(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
     @Environment(\.dismiss) private var dismiss
@@ -110,7 +107,6 @@ struct NetworkProtectionDNSSettingsView: View {
     }
 }
 
-@available(iOS 15, *)
 private struct ChecklistItem<Content>: View where Content: View {
     let isSelected: Bool
     let action: () -> Void
@@ -135,5 +131,3 @@ private struct ChecklistItem<Content>: View where Content: View {
         .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
     }
 }
-
-#endif

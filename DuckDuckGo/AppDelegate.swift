@@ -35,11 +35,8 @@ import DDGSync
 import RemoteMessaging
 import SyncDataProviders
 import Subscription
-
-#if NETWORK_PROTECTION
 import NetworkProtection
 import WebKit
-#endif
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -47,10 +44,7 @@ import WebKit
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
         static let passwords = "com.duckduckgo.mobile.ios.passwords"
-
-#if NETWORK_PROTECTION
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
-#endif
     }
 
     private var testing = false
@@ -61,7 +55,6 @@ import WebKit
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
 
-#if NETWORK_PROTECTION
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
@@ -71,7 +64,6 @@ import WebKit
             tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
         )
     }()
-#endif
 
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
@@ -358,9 +350,7 @@ import WebKit
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
 
-#if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
-#endif
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
@@ -429,7 +419,6 @@ import WebKit
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
-#if NETWORK_PROTECTION
     private func presentExpiredEntitlementAlert() {
         let alertController = CriticalAlerts.makeExpiredEntitlementAlert { [weak self] in
             self?.mainViewController?.segueToPrivacyPro()
@@ -447,7 +436,6 @@ import WebKit
         )
         presenter.showEntitlementNotification()
     }
-#endif
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
@@ -523,7 +511,6 @@ import WebKit
 
         fireFailedCompilationsPixelIfNeeded()
 
-#if NETWORK_PROTECTION
         widgetRefreshModel.refreshVPNWidget()
 
         if tunnelDefaults.showEntitlementAlert {
@@ -537,7 +524,6 @@ import WebKit
             await refreshShortcuts()
             await vpnWorkaround.installRedditSessionWorkaround()
         }
-#endif
 
         AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
             if isSubscriptionActive {
@@ -637,7 +623,8 @@ import WebKit
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
     }
 
-    private func refreshRemoteMessages() {
+    /// It's public in order to allow refreshing on demand via Debug menu. Otherwise it shouldn't be called from outside.
+    func refreshRemoteMessages() {
         Task {
             try? await remoteMessagingClient.fetchAndProcess(using: remoteMessagingClient.store)
         }
@@ -801,7 +788,7 @@ import WebKit
     }
     
     private func tryToObtainOverlayWindow() {
-        for window in UIApplication.shared.windows where window.rootViewController is BlankSnapshotViewController {
+        for window in UIApplication.shared.foregroundSceneWindows where window.rootViewController is BlankSnapshotViewController {
             overlayWindow = window
             return
         }
@@ -846,11 +833,9 @@ import WebKit
                 return
             }
 
-#if NETWORK_PROTECTION
             if shortcutItem.type == ShortcutKey.openVPNSettings {
                 presentNetworkProtectionStatusSettingsModal()
             }
-#endif
 
         }
     }
@@ -914,7 +899,6 @@ import WebKit
 
     @MainActor
     func refreshShortcuts() async {
-#if NETWORK_PROTECTION
         guard AppDependencyProvider.shared.vpnFeatureVisibility.shouldShowVPNShortcut() else {
             UIApplication.shared.shortcutItems = nil
             return
@@ -933,7 +917,6 @@ import WebKit
         } else {
             UIApplication.shared.shortcutItems = nil
         }
-#endif
     }
 
 }
@@ -991,31 +974,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
 
-#if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
             }
-#endif
         }
 
         completionHandler()
     }
 
-#if NETWORK_PROTECTION
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
                hasEntitlements {
-                if #available(iOS 15, *) {
-                    let networkProtectionRoot = NetworkProtectionRootViewController()
-                    presentSettings(with: networkProtectionRoot)
-                }
+                let networkProtectionRoot = NetworkProtectionRootViewController()
+                presentSettings(with: networkProtectionRoot)
             } else {
                 (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }
         }
     }
-#endif
 
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }

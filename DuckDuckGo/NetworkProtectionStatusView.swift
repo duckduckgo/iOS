@@ -136,6 +136,7 @@ struct NetworkProtectionStatusView: View {
                     await statusModel.cancelSnooze()
                 }
             }
+            .foregroundStyle(Color(designSystemColor: .accent))
             .disabled(statusModel.snoozeRequestPending)
         } else if statusModel.hasServerInfo {
             Button("Snooze for 2 minutes") {

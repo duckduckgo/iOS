@@ -791,6 +791,90 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result4?.type, .final)
     }
 
+    func testWhenExperimentGroup_AndBrowserWithTrackersShown_AndPrivacyAnimationNotShown_ThenShowPrivacyAnimationPulse() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.privacyButtonPulseShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.shouldShowPrivacyButtonPulse
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenExperimentGroup_AndBrowserWithTrackersShown_AndPrivacyAnimationShown_ThenDoNotShowPrivacyAnimationPulse() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.privacyButtonPulseShown = true
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.shouldShowPrivacyButtonPulse
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenExperimentGroup_AndCallSetPrivacyButtonPulseSeen_ThenSetPrivacyButtonPulseShownFlagToTrue() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertFalse(settings.privacyButtonPulseShown)
+
+        // WHEN
+        sut.setPrivacyButtonPulseSeen()
+
+        // THEN
+        XCTAssertTrue(settings.privacyButtonPulseShown)
+    }
+
+    func testWhenExperimentGroup_AndSetFireEducationMessageSeenIsCalled_ThenSetPrivacyButtonPulseShownToTrue() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertFalse(settings.privacyButtonPulseShown)
+
+        // WHEN
+        sut.setFireEducationMessageSeen()
+
+        // THEN
+        XCTAssertTrue(settings.privacyButtonPulseShown)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonAnimationPulseNotShown__AndShouldShowFireButtonPulseIsCalled_ThenReturnTrue() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.privacyButtonPulseShown = true
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonPulseDateShown = nil
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.shouldShowFireButtonPulse
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenExperimentGroup_AndFireButtonAnimationPulseShown_AndShouldShowFireButtonPulseIsCalled_ThenReturnFalse() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.privacyButtonPulseShown = true
+        settings.browsingWithTrackersShown = true
+        settings.fireButtonPulseDateShown = Date()
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.shouldShowFireButtonPulse
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,

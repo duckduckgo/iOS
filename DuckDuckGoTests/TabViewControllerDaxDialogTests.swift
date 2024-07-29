@@ -72,8 +72,9 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertEqual(delegateMock.capturedURL, .ddg)
     }
 
-    func testWhenDidShowTrackersDialogIsCalledThenTabDidRequestPrivacyDashboardButtonPulseIsCalledOnDelegate() {
+    func testWhenDidShowTrackersDialogIsCalled_AndShouldShowPrivacyAnimation_ThenTabDidRequestPrivacyDashboardButtonPulseIsCalledOnDelegate() {
         // GIVEN
+        onboardingLogicMock.shouldShowPrivacyButtonPulse = true
         XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
 
         // WHEN
@@ -81,6 +82,18 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
+    }
+
+    func testWhenDidShowTrackersDialogIsCalled_AndShouldNotShowPrivacyAnimation_ThenTabDidRequestPrivacyDashboardButtonPulseIsNotCalledOnDelegate() {
+        // GIVEN
+        onboardingLogicMock.shouldShowPrivacyButtonPulse = false
+        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
+
+        // WHEN
+        sut.didShowContextualOnboardingTrackersDialog()
+
+        // THEN
+        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
     }
 
     func testWhenDidAcknowledgeTrackersDialogIsCalledThenTabDidRequestFireButtonPulseIsCalledOnDelegate() {
@@ -127,30 +140,16 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertTrue(onboardingLogicMock.didCallsetsetSearchMessageSeen)
     }
 
-    func testWhenDidShowContextualOnboardingTrackersDialog_ShieldIconAnimationActivated() {
+    func testWhenDidShowContextualOnboardingTrackersDialog_AndShouldShowPrivacyAnimation_ShieldIconAnimationActivated() {
         // GIVEN
-        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
+        onboardingLogicMock.shouldShowPrivacyButtonPulse = true
         XCTAssertNil(delegateMock.privacyDashboardAnimated)
 
         // WHEN
         sut.didShowContextualOnboardingTrackersDialog()
 
         // THEN
-        XCTAssertTrue(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
         XCTAssertTrue(delegateMock.privacyDashboardAnimated ?? false)
-    }
-
-    func testOnPrivacyDashboardShown_ShieldIconAnimationRemoved() {
-        // GIVEN
-        XCTAssertFalse(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
-        XCTAssertNil(delegateMock.privacyDashboardAnimated)
-
-        // WHEN
-        sut.showPrivacyDashboard()
-
-        // THEN
-        XCTAssertTrue(delegateMock.tabDidRequestPrivacyDashboardButtonPulseCalled)
-        XCTAssertFalse(delegateMock.privacyDashboardAnimated ?? true)
     }
 
     func testWhenDismissContextualDaxFireDialog_andNewOnboarding_andFireDialogPresented_ThenAskPresenterToDismissDialog() {
@@ -187,6 +186,7 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     private(set) var didCallsetsetSearchMessageSeen = false
 
     var isShowingFireDialog: Bool = false
+    var shouldShowPrivacyButtonPulse: Bool = false
 
     func setFireEducationMessageSeen() {
         didCallSetFireEducationMessageSeen = true
@@ -199,6 +199,10 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
 
     func setSearchMessageSeen() {
         didCallsetsetSearchMessageSeen = true
+    }
+
+    func setPrivacyButtonPulseSeen() {
+
     }
 
 }

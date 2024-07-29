@@ -1704,6 +1704,9 @@ extension MainViewController: OmniBarDelegate {
     func onPrivacyIconPressed() {
         guard !isSERPPresented else { return }
 
+        // Dismiss privacy icon animation when showing privacy dashboard
+        dismissPrivacyDashboardButtonPulse()
+
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1713,6 +1716,12 @@ extension MainViewController: OmniBarDelegate {
 
     func onMenuPressed() {
         omniBar.cancel()
+
+        // Dismiss privacy icon animation when showing menu
+        if !DaxDialogs.shared.shouldShowPrivacyButtonPulse {
+            dismissPrivacyDashboardButtonPulse()
+        }
+
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -2579,6 +2588,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     private func dismissPrivacyDashboardButtonPulse() {
+        DaxDialogs.shared.setPrivacyButtonPulseSeen()
         viewCoordinator.omniBar.dismissOnboardingPrivacyIconAnimation()
     }
 

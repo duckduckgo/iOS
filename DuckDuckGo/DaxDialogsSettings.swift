@@ -37,6 +37,8 @@ protocol DaxDialogsSettings {
     
     var fireButtonPulseDateShown: Date? { get set }
 
+    var privacyButtonPulseShown: Bool { get set }
+
     var browsingFinalDialogShown: Bool { get set }
 
     var lastVisitedOnboardingWebsiteURLPath: String? { get set }
@@ -70,7 +72,10 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     
     @UserDefaultsWrapper(key: .fireButtonPulseDateShown, defaultValue: nil)
     var fireButtonPulseDateShown: Date?
-    
+
+    @UserDefaultsWrapper(key: .privacyButtonPulseShown, defaultValue: false)
+    var privacyButtonPulseShown: Bool
+
     @UserDefaultsWrapper(key: .daxBrowsingFinalDialogShown, defaultValue: false)
     var browsingFinalDialogShown: Bool
 
@@ -99,7 +104,9 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     var fireButtonEducationShownOrExpired: Bool = false
     
     var fireButtonPulseDateShown: Date?
-    
+
+    var privacyButtonPulseShown: Bool = false
+
     var browsingFinalDialogShown = false
 
     var lastVisitedOnboardingWebsiteURLPath: String?

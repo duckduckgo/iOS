@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Atšaukti";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Atrakinkite, kad galėtumėte naudoti išsaugotą slaptažodį";
+"autofill.logins.prompt.auth.reason" = "Atrakinkite įrenginį, kad galėtumėte naudoti išsaugotą slaptažodį";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Iš šios svetainės";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Išsaugoti slaptažodį";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Praneškite apie funkcijos „Automatinis užpildymas“ problemą";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Siųsti ataskaitą";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "„DuckDuckGo“ siunčiami pranešimai yra anoniminiai, juose nėra jūsų naudotojo vardo, slaptažodžio ar kitos jūsų tapatybę identifikuojančios informacijos.\n\nPranešime pateikiamas tik interneto svetainės URL adresas ir kai kurių automatinio užpildymo nustatymų būsena.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Pranešimas apie automatinį užpildymą neveikia svetainėje %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Dėkojame! Jūsų pranešimas padės mums tobulinti „DuckDuckGo“ visiems.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anonimiškai praneškite apie automatinį užpildymą, kuris neveikia šioje svetainėje. Slaptažodžiai niekada nėra bendrinami.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Automatinis užpildymas neveikia?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rodyti slaptažodį";

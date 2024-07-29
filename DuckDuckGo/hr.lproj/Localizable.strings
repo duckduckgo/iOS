@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Otkaži";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Otključaj za korištenje spremljene lozinke";
+"autofill.logins.prompt.auth.reason" = "Otključaj uređaj za korištenje spremljene lozinke";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "S ove web lokacije";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Spremi lozinku";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Prijavi problem s automatskim popunjavanjem";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Pošalji izvješće";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Izvješća poslana usluzi DuckDuckGo anonimna su i ne sadrže tvoje korisničko ime, lozinku ili bilo koje druge osobne identifikacijske podatke.\n\nIzvješće uključuje samo URL web-mjesta i status nekih postavki automatskog popunjavanja.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Izvještaj o automatskom popunjavanju ne radi na %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Hvala! Tvoj će izvještaj pomoći poboljšati DuckDuckGo za sve.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anonimno prijavi da automatsko popunjavanje ne radi na ovom web-mjestu. Lozinke se nikada ne dijele.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Automatsko popunjavanje ne radi?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaži lozinku";

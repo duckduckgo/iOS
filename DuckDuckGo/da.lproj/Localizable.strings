@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Annullér";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemt adgangskode";
+"autofill.logins.prompt.auth.reason" = "Lås enheden op for at bruge gemt adgangskode";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Fra dette websted";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Rapporter et problem med automatisk udfyldning";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Send rapport";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Rapporter, der sendes til DuckDuckGo, er anonyme og indeholder ikke dit brugernavn, din adgangskode eller andre personligt identificerbare oplysninger.\n\nRapporten indeholder kun webadressen og status for nogle indstillinger for automatisk udfyldning.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Virker rapportering af automatisk udfyldning ikke på %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Tak! Din rapport hjælper med at gøre DuckDuckGo bedre for alle.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Rapportér anonymt, at automatisk udfyldning ikke fungerer på dette websted. Adgangskoder deles aldrig.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Virker automatisk udfyldning ikke?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";

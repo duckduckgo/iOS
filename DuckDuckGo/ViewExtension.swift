@@ -34,13 +34,6 @@ extension View {
     }
 }
 
-/*
- These exensions are needed to provide the UI styling specs for Network Protection
- However, at time of writing, they are not supported in iOS <=14. As Network Protection
- is not supporting iOS <=14, these are being kept separate.
- */
-
-@available(iOS 15, *)
 extension View {
     @ViewBuilder
     func applyInsetGroupedListStyle() -> some View {

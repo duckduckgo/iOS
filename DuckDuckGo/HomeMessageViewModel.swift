@@ -49,11 +49,6 @@ struct HomeMessageViewModel {
         }
     }
     
-    var topText: String? {
-        // actually unused!
-        return nil
-    }
-    
     var title: String {
         switch modelType {
         case .small(let titleText, _):
@@ -125,6 +120,7 @@ struct HomeMessageViewModel {
     
     let onDidClose: (ButtonAction?) -> Void
     let onDidAppear: () -> Void
+    let onAttachAdditionalParameters: ((_ useCase: PrivacyProDataReportingUseCase, _ params: [String: String]) -> [String: String])?
 
     func mapActionToViewModel(remoteAction: RemoteAction,
                               buttonAction: HomeMessageViewModel.ButtonAction,

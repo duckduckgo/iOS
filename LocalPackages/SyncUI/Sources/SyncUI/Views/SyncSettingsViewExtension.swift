@@ -358,17 +358,13 @@ extension SyncSettingsView {
             Button(action: {
                 isEnvironmentSwitcherInstructionsVisible.toggle()
             }, label: {
-                if #available(iOS 15.0, *) {
-                    Text("Dev environment")
-                        .daxFootnoteRegular()
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 2)
-                        .foregroundColor(.white)
-                        .background(Color.red40)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                } else {
-                    Text("Dev environment")
-                }
+                Text("Dev environment")
+                    .daxFootnoteRegular()
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 2)
+                    .foregroundColor(.white)
+                    .background(Color.red40)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             })
             .alert(isPresented: $isEnvironmentSwitcherInstructionsVisible) {
                 Alert(

@@ -28,15 +28,13 @@ extension UIViewController {
         titleAttrs[NSAttributedString.Key.foregroundColor] = theme.navigationBarTitleColor
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
         
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
-            appearance.titleTextAttributes = titleAttrs
+        let appearance = UINavigationBarAppearance()
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = theme.backgroundColor
+        appearance.titleTextAttributes = titleAttrs
 
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     func decorateToolbar(with theme: Theme = ThemeManager.shared.currentTheme) {
@@ -44,9 +42,7 @@ extension UIViewController {
         navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
         navigationController?.toolbar.tintColor = theme.barTintColor
         
-        if #available(iOS 15.0, *) {
-            let appearance = navigationController?.toolbar.standardAppearance
-            navigationController?.toolbar.scrollEdgeAppearance = appearance
-        }
+        let appearance = navigationController?.toolbar.standardAppearance
+        navigationController?.toolbar.scrollEdgeAppearance = appearance
     }
 }

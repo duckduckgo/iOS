@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import Combine
 import Core
@@ -391,5 +389,3 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         try await tunnelManager.saveToPreferences()
     }
 }
-
-#endif

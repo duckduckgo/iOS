@@ -49,8 +49,6 @@ struct HomeMessageView: View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 8) {
                 Group {
-                    topText
-
                     if case .promoSingleAction = viewModel.modelType {
                         title
                             .daxTitle3()
@@ -114,17 +112,6 @@ struct HomeMessageView: View {
         .contentShape(Rectangle())
     }
     
-    private var topText: some View {
-        Group {
-            if let topText = viewModel.topText {
-                Text(topText)
-                    .font(Font(uiFont: Const.Font.topText))
-            } else {
-                EmptyView()
-            }
-        }
-    }
-    
     private var image: some View {
         Group {
             if let image = viewModel.image {
@@ -144,7 +131,7 @@ struct HomeMessageView: View {
 
     @ViewBuilder
     private var subtitle: some View {
-        if #available(iOS 15, *), let attributed = try? AttributedString(markdown: viewModel.subtitle) {
+        if let attributed = try? AttributedString(markdown: viewModel.subtitle) {
             Text(attributed)
                 .daxBodyRegular()
         } else {
@@ -175,12 +162,12 @@ struct HomeMessageView: View {
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
-
-                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: [
+                    var additionalParameters = [
                         PixelParameters.message: "\(viewModel.messageId)",
                         PixelParameters.sheetResult: "\(result)"
-                    ])
-
+                    ]
+                    additionalParameters = viewModel.onAttachAdditionalParameters?(.messageID(viewModel.messageId), additionalParameters) ?? additionalParameters
+                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: additionalParameters)
                 }
                 .modifier(ActivityViewPresentationModifier())
             }
@@ -329,27 +316,27 @@ struct HomeMessageView_Previews: PreviewProvider {
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Small",
                                                             sendPixels: false,
                                                             modelType: small,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onAttachAdditionalParameters: { _, params in params }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Critical",
                                                             sendPixels: false,
                                                             modelType: critical,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onAttachAdditionalParameters: { _, params in params }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Single",
                                                             sendPixels: false,
                                                             modelType: bigSingle,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onAttachAdditionalParameters: { _, params in params }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Two",
                                                             sendPixels: false,
                                                             modelType: bigTwo,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onAttachAdditionalParameters: { _, params in params }))
 
             HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Promo",
                                                             sendPixels: false,
                                                             modelType: promo,
-                                                            onDidClose: { _ in }, onDidAppear: {}))
+                                                            onDidClose: { _ in }, onDidAppear: {}, onAttachAdditionalParameters: { _, params in params }))
         }
         .frame(height: 200)
         .padding(.horizontal)

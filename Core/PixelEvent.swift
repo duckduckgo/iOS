@@ -201,8 +201,6 @@ extension Pixel {
         
         case downloadsSharingPredownloadedLocalFile
         
-        case downloadAttemptToOpenBLOBviaJS
-        
         case jsAlertShown
         
         case featureFlaggingInternalUserAuthenticated
@@ -454,11 +452,8 @@ extension Pixel {
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
         case dbRemoteMessagingSaveConfigError
-        case dbRemoteMessagingInvalidateConfigError
-        case dbRemoteMessagingSaveMessageError
         case dbRemoteMessagingUpdateMessageShownError
         case dbRemoteMessagingUpdateMessageStatusError
-        case dbRemoteMessagingDeleteScheduledMessageError
         case dbLocalAuthenticationError
         
         case configurationFetchInfo
@@ -692,12 +687,6 @@ extension Pixel {
         case settingsAccessibilityOpen
         case settingsAccessiblityTextSize
 
-        // Other settings
-        case settingsKeyboardOnNewTabOn
-        case settingsKeyboardOnNewTabOff
-        case settingsKeyboardOnAppLaunchOn
-        case settingsKeyboardOnAppLaunchOff
-
         // Web pixels
         case privacyProOfferMonthlyPriceClick
         case privacyProOfferYearlyPriceClick
@@ -740,16 +729,10 @@ extension Pixel {
         case duckPlayerOverlayYoutubeImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
-        case duckPlayerSettingAlwaysOverlaySERP
-        case duckPlayerSettingAlwaysOverlayYoutube
         case duckPlayerSettingAlwaysSettings
-        case duckPlayerSettingNeverOverlaySERP
-        case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
-        case watchInDuckPlayerInitial
-        
     }
 
 }
@@ -799,11 +782,6 @@ extension Pixel.Event {
         case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
         case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
-        case .settingsKeyboardOnNewTabOn: return "m_settings_keyboard_on-new-tab_on"
-        case .settingsKeyboardOnNewTabOff: return "m_settings_keyboard_on-new-tab_off"
-        case .settingsKeyboardOnAppLaunchOn: return "m_settings_keyboard_on-app-launch_on"
-        case .settingsKeyboardOnAppLaunchOff: return "m_settings_keyboard_on-app-launch_off"
-
         case .browsingMenuOpened: return "mb"
         case .browsingMenuNewTab: return "mb_tb"
         case .browsingMenuAddToBookmarks: return "mb_abk"
@@ -938,8 +916,6 @@ extension Pixel.Event {
         case .downloadsListSharePressed: return "m_downloads_list_share_pressed"
             
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
-            
-        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
             
         case .jsAlertShown: return "m_js_alert_shown"
             
@@ -1179,11 +1155,8 @@ extension Pixel.Event {
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"
         case .dbRemoteMessagingSaveConfigError: return "m_d_db_rm_save_config"
-        case .dbRemoteMessagingInvalidateConfigError: return "m_d_db_rm_invalidate_config"
-        case .dbRemoteMessagingSaveMessageError: return "m_d_db_rm_save_message"
         case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
-        case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
         case .dbLocalAuthenticationError: return "m_d_local_auth_error"
             
         case .debugBookmarksMigratedMoreThanOnce: return "m_debug_bookmarks_migrated-more-than-once"
@@ -1475,17 +1448,12 @@ extension Pixel.Event {
         case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
         case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
         case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
         case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
         case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
-        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
-        case .duckPlayerSettingAlwaysOverlaySERP: return "m_duck-player_setting_always_overlay_serp"
-        case .duckPlayerSettingAlwaysOverlayYoutube: return "m_duck-player_setting_always_overlay_youtube"
-        case .duckPlayerSettingNeverOverlaySERP: return "m_duck-player_setting_never_overlay_serp"
-        case .duckPlayerSettingNeverOverlayYoutube: return "m_duck-player_setting_never_overlay_youtube"
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
-        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }

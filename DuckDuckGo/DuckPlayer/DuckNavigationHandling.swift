@@ -23,23 +23,11 @@ protocol DuckNavigationHandling {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
-    func handleURLChange(url: URL?, webView: WKWebView)
-    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction, webView: WKWebView)
+    func handleJSNavigation(url: URL?, webView: WKWebView)
+    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
+                               completion: @escaping (WKNavigationActionPolicy) -> Void,
+                               webView: WKWebView)
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
-}
-
-extension WKWebView {
-   
-   func goBack(skippingHistoryItems: Int) {
-       
-       let backList = self.backForwardList.backList
-       guard skippingHistoryItems > 1,
-       let lastElement = backList[safe: backList.count - skippingHistoryItems] else {
-           self.goBack()
-           return
-       }
-       self.go(to: lastElement)
-   }
-   
+    func handleAttach(webView: WKWebView)
 }

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1720796469387,
+    "version": 1721406809556,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1524,6 +1524,10 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": "#leaderboard-container",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".leaderboard_wrapper",
                         "type": "hide-empty"
                     },
@@ -1549,6 +1553,10 @@
                     },
                     {
                         "selector": "#topAd",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "#topad",
                         "type": "hide-empty"
                     },
                     {
@@ -2847,6 +2855,27 @@
                             {
                                 "selector": "[id^='ghacks_ad_code']",
                                 "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "gizmodo.com",
+                        "rules": [
+                            {
+                                "selector": ".banner-top",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".od-wrapper",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".widget_keleops-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[id^='optidigital-adslot-Billboard']",
+                                "type": "closest-empty"
                             }
                         ]
                     },
@@ -4581,7 +4610,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "c69c499b65697c42f660e3c5588bebe4"
+            "hash": "507d3d1aba39974635faf482e944f310"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5226,6 +5255,21 @@
                 }
             ],
             "hash": "1a1a4652687f25da9f351df157c5e051"
+        },
+        "phishingDetection": {
+            "state": "disabled",
+            "exceptions": [
+                {
+                    "domain": "marvel.com"
+                },
+                {
+                    "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
+                }
+            ],
+            "hash": "7b395d1b9b54fd08f5a949b920d28552"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -8809,6 +8853,9 @@
         "webCompat": {
             "exceptions": [
                 {
+                    "domain": "crocs.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -8861,7 +8908,7 @@
                     }
                 ]
             },
-            "hash": "25d935f0276cd0d81fc6f25811f7cb36"
+            "hash": "895bea376ffb485029872b8279778ce6"
         },
         "webViewBlobDownload": {
             "exceptions": [],

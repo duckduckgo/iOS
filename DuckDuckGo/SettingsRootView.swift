@@ -34,21 +34,16 @@ struct SettingsRootView: View {
     var body: some View {
 
         // Hidden navigationLink for programatic navigation
-        if #available(iOS 15.0, *) {
-            
-            if let target = deepLinkTarget {
-                NavigationLink(destination: deepLinkDestinationView(for: target),
-                               isActive: $shouldDisplayDeepLinkPush) {
-                    EmptyView()
-                }
+        if let target = deepLinkTarget {
+            NavigationLink(destination: deepLinkDestinationView(for: target),
+                           isActive: $shouldDisplayDeepLinkPush) {
+                EmptyView()
             }
         }
 
         List {
             SettingsPrivacyProtectionsView()
-            if #available(iOS 15, *) {
-                SettingsSubscriptionView().environmentObject(subscriptionNavigationCoordinator)
-            }
+            SettingsSubscriptionView().environmentObject(subscriptionNavigationCoordinator)
             SettingsMainSettingsView()
             SettingsNextStepsView()
             SettingsOthersView()
@@ -67,18 +62,14 @@ struct SettingsRootView: View {
 
         // MARK: Deeplink Modifiers
 
-        .sheet(isPresented: $shouldDisplayDeepLinkSheet,
-               onDismiss: {
-                    viewModel.onAppear()
-                    shouldDisplayDeepLinkSheet = false
-                },
-               content: {
-                    if #available(iOS 15.0, *) {
-                        if let target = deepLinkTarget {
-                            deepLinkDestinationView(for: target)
-                        }
-                    }
-                })
+        .sheet(isPresented: $shouldDisplayDeepLinkSheet, onDismiss: {
+            viewModel.onAppear()
+            shouldDisplayDeepLinkSheet = false
+        }, content: {
+            if let target = deepLinkTarget {
+                deepLinkDestinationView(for: target)
+            }
+        })
 
         .onReceive(viewModel.$deepLinkTarget.removeDuplicates(), perform: { link in
             guard let link else {
@@ -102,10 +93,16 @@ struct SettingsRootView: View {
                 }
             }
         })
+
+        .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
+            if shouldDismiss {
+                shouldDisplayDeepLinkSheet = false
+                shouldDisplayDeepLinkPush = false
+            }
+        }
     }
 
     // MARK: DeepLink Views
-    @available(iOS 15.0, *)
     @ViewBuilder
      func deepLinkDestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
         switch target {
@@ -116,7 +113,12 @@ struct SettingsRootView: View {
         case let .subscriptionFlow(origin):
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
-                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+                                                               subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                               privacyProDataReporter: viewModel.privacyProDataReporter)
+        case .restoreFlow:
+            SubscriptionContainerViewFactory.makeEmailFlow(navigationCoordinator: subscriptionNavigationCoordinator,
+                                                           subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                           onDisappear: {})
         case .duckPlayer:
             SettingsDuckPlayerView().environmentObject(viewModel)
         default:
@@ -136,11 +138,7 @@ struct SettingsRootView: View {
 
 struct InsetGroupedListStyleModifier: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 15, *) {
-            return AnyView(content.applyInsetGroupedListStyle())
-        } else {
-            return AnyView(content)
-        }
+        return AnyView(content.applyInsetGroupedListStyle())
     }
 }
 

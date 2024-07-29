@@ -33,7 +33,7 @@ public enum ContextualOnboardingListItem: Equatable {
         case .site(let title):
             return title.replacingOccurrences(of: "https:", with: "")
         case .surprise:
-            return "Surprise me"
+            return UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle
         }
     }
 
@@ -81,7 +81,7 @@ struct ContextualOnboardingListView: View {
                         Spacer()
                     }
                 })
-                .buttonStyle(SecondaryButtonStyle(compact: true))
+                .buttonStyle(GhostButtonStyle(compact: true))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .inset(by: 0.5)

@@ -793,7 +793,8 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
 
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
-            // Dismiss pulsing fire button animation when the user taps on the Fire Button
+            // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
+            currentTab?.dismissContextualDaxFireDialog()
             ViewHighlighter.hideAll()
             showClearDataAlert()
         } else {

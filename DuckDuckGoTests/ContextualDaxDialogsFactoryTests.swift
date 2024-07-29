@@ -31,7 +31,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         try super.setUpWithError()
         delegate = ContextualOnboardingDelegateMock()
         settingsMock = ContextualOnboardingSettingsMock()
-        sut = ExperimentContextualDaxDialogsFactory(contextualOnboardingSettings: settingsMock)
+        sut = ExperimentContextualDaxDialogsFactory(contextualOnboardingSettings: settingsMock, contextualOnboardingLogic: ContextualOnboardingLogicMock())
     }
 
     override func tearDownWithError() throws {

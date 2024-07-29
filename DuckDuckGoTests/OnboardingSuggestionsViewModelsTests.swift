@@ -30,7 +30,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
         suggestionsProvider = MockOnboardingSuggestionsProvider()
         navigationDelegate = CapturingOnboardingNavigationDelegate()
         searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate)
-        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate)
+        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate)
     }
 
     override func tearDown() {

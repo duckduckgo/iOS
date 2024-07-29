@@ -752,7 +752,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result2, result3)
     }
 
-    func testWhenExperimentGroup_AndFireMessageSeen_OnLoadingAnotherSearch_ExpectedDialogIseturned() {
+    func testWhenExperimentGroup_AndSearchNotSeen_AndFireMessageSeen_OnLoadingAnotherSearch_ExpectedDialogIseturned() {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         let sut = makeExperimentSUT(settings: settings)
@@ -767,7 +767,28 @@ final class DaxDialog: XCTestCase {
         // THEN
         XCTAssertEqual(result1?.type, .siteIsMajorTracker)
         XCTAssertEqual(result2?.type, .fire)
-        XCTAssertEqual(result3?.type, .final)
+        XCTAssertEqual(result3?.type, .afterSearch)
+    }
+
+    func testWhenExperimentGroup_AndSearchSeen_AndFireMessageSeen_OnLoadingAnotherSearch_ExpectedDialogIseturned() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        let sut = makeExperimentSUT(settings: settings)
+        sut.setSearchMessageSeen()
+
+        // WHEN
+        let result1 = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook))
+        sut.setFireEducationMessageSeen()
+        let result2 = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook))
+        let result3 = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg))
+        settings.browsingAfterSearchShown = true
+        let result4 = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg2))
+
+        // THEN
+        XCTAssertEqual(result1?.type, .siteIsMajorTracker)
+        XCTAssertEqual(result2?.type, .fire)
+        XCTAssertEqual(result3?.type, .afterSearch)
+        XCTAssertEqual(result4?.type, .final)
     }
 
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {

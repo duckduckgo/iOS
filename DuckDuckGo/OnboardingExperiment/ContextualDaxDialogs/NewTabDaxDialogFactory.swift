@@ -55,44 +55,37 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         let viewModel = OnboardingSearchSuggestionsViewModel(delegate: delegate)
         return FadeInView {
             OnboardingTrySearchDialog(viewModel: viewModel)
-                .padding()
+                .onboardingDaxDialogStyle()
         }
-        .background(
-            OnboardingBackground()
-        )
+        .onboardingContextualBackgroundStyle()
     }
 
     private func createSubsequentDialog() -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
-        return ScrollView(.vertical) {
-            FadeInView {
-                OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
-                    .padding()
-            }
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, delegate: delegate)
+        return FadeInView {
+            OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
+                .onboardingDaxDialogStyle()
         }
-        .background(
-            OnboardingBackground()
-        )
+        .onboardingContextualBackgroundStyle()
     }
 
     private func createAddFavoriteDialog(message: String) -> some View {
-        return FadeInView {
+        FadeInView {
             DaxDialogView(logoPosition: .top) {
                 ContextualDaxDialogContent(message: NSAttributedString(string: message))
-
             }
             .padding()
         }
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        return ScrollView(.vertical) {
-            FadeInView {
-                OnboardingFinalDialog(highFiveAction: {
-                    onDismiss()
-                }).padding()
-            }
+        FadeInView {
+            OnboardingFinalDialog(highFiveAction: {
+                onDismiss()
+            })
+            .onboardingDaxDialogStyle()
         }
+        .onboardingContextualBackgroundStyle()
         .onAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
         }

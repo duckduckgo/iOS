@@ -153,26 +153,6 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNil(dialogFactory.onDismiss)
     }
 
-    func testWhenNewOnboarding_OnOpenedAsNewTab_CorrectTypePassedToDialogFactory() throws {
-        // GIVEN
-        variantManager.isSupported = true
-        let expectedSpec = randomDialogType()
-        specProvider.specToReturn = expectedSpec
-
-        // WHEN
-        hvc.openedAsNewTab(allowingKeyboard: true)
-
-        // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
-        XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
-        XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
-        XCTAssertNotNil(self.dialogFactory.onDismiss)
-        let onDismiss = try XCTUnwrap(dialogFactory.onDismiss)
-        onDismiss()
-        XCTAssertTrue(specProvider.dismissCalled)
-    }
-
     func testWhenOldOnboarding_OnOpenedAsNewTab_NothingPassedDialogFactory() throws {
         // GIVEN
         variantManager.isSupported = false

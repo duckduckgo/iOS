@@ -32,6 +32,19 @@ extension OnboardingStyles {
 
     }
 
+    struct BackgroundStyle: ViewModifier {
+
+        func body(content: Content) -> some View {
+            ZStack {
+                OnboardingBackground()
+                    .ignoresSafeArea(.keyboard)
+
+                content
+            }
+        }
+        
+    }
+
 }
 
 private enum Metrics {
@@ -42,5 +55,9 @@ extension View {
 
     func onboardingDaxDialogStyle() -> some View {
         modifier(OnboardingStyles.DaxDialogStyle())
+    }
+
+    func onboardingContextualBackgroundStyle() -> some View {
+        modifier(OnboardingStyles.BackgroundStyle())
     }
 }

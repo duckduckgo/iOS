@@ -50,7 +50,7 @@ final class MockTimerFactory: TimerCreating {
 
     private(set) var createdTimer: MockTimer?
 
-    func makeTimer(withTimeInterval interval: TimeInterval, repeats: Bool, block: @escaping @Sendable (TimerInterface) -> Void) -> TimerInterface {
+    func makeTimer(withTimeInterval interval: TimeInterval, repeats: Bool, on runLoop: RunLoop, block: @escaping @Sendable (TimerInterface) -> Void) -> TimerInterface {
         didCallMakeTimer = true
         capturedInterval = interval
         capturedRepeats = repeats

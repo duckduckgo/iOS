@@ -87,7 +87,7 @@ final class MockPrivacyProDataReporter: PrivacyProDataReporting {
         [:]
     }
 
-    func mergeRandomizedParameters(for useCase: DuckDuckGo.PrivacyProDataReportingUseCase, with parameters: [String: String]) -> [String : String] {
+    func mergeRandomizedParameters(for useCase: DuckDuckGo.PrivacyProDataReportingUseCase, with parameters: [String: String]) -> [String: String] {
         [:]
     }
 }

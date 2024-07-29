@@ -115,6 +115,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         parent.daxContextualOnboardingController = daxController
         parent.daxDialogsStackView.addArrangedSubview(daxController.view)
         XCTAssertFalse(daxController.didCallRemoveFromParent)
+        XCTAssertNotNil(parent.daxContextualOnboardingController)
         XCTAssertTrue(parent.daxDialogsStackView.arrangedSubviews.contains(daxController.view))
 
         // WHEN
@@ -123,6 +124,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         // THEN
         waitForExpectations(timeout: 1.0)
         XCTAssertTrue(daxController.didCallRemoveFromParent)
+        XCTAssertNil(parent.daxContextualOnboardingController)
         XCTAssertFalse(parent.daxDialogsStackView.arrangedSubviews.contains(daxController.view))
     }
 

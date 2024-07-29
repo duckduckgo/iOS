@@ -29,8 +29,11 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
+    private let messagesModel: NewTabPageMessagesModel
     private let favoritesModel: FavoritesDefaultModel
     private let shortcutsModel: ShortcutsModel
+    private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
+    private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
     init(interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
@@ -41,16 +44,16 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        let shortcutsPreferencesStorage = InMemoryShortcutsPreferencesStorage()
-        let newTabPagePreferencesStorage = InMemoryNewTabPageSectionsPreferencesStorage()
+        shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
+        sectionsSettingsModel = NewTabPageSectionsSettingsModel()
         favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
-        shortcutsModel = ShortcutsModel(shortcutsPreferencesStorage: shortcutsPreferencesStorage)
-        let messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
-        let preferencesModel = NewTabPagePreferencesModel(newTabPagePreferencesStorage: newTabPagePreferencesStorage)
+        shortcutsModel = ShortcutsModel()
+        messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
         let newTabPageView = NewTabPageView(messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
                                             shortcutsModel: shortcutsModel,
-                                            preferencesModel: preferencesModel)
+                                            shortcutsSettingsModel: shortcutsSettingsModel,
+                                            sectionsSettingsModel: sectionsSettingsModel)
 
         super.init(rootView: newTabPageView)
 

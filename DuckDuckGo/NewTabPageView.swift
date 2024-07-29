@@ -27,19 +27,22 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
     @ObservedObject private var favoritesModel: FavoritesModelType
     @ObservedObject private var shortcutsModel: ShortcutsModel
-    @ObservedObject private var preferencesModel: NewTabPagePreferencesModel
-
+    @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
+    @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    
     @State var isShowingTooltip: Bool = false
     @State private var isShowingPreferences: Bool = false
 
     init(messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
          shortcutsModel: ShortcutsModel,
-         preferencesModel: NewTabPagePreferencesModel) {
+         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
+         sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
         self.shortcutsModel = shortcutsModel
-        self.preferencesModel = preferencesModel
+        self.shortcutsSettingsModel = shortcutsSettingsModel
+        self.sectionsSettingsModel = sectionsSettingsModel
 
         self.messagesModel.load()
     }
@@ -66,7 +69,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ViewBuilder
     private var shortcutsSectionView: some View {
         if isShortcutsSectionVisible {
-            ShortcutsView(model: shortcutsModel, editingEnabled: false)
+            ShortcutsView(model: shortcutsModel, shortcuts: shortcutsSettingsModel.enabledItems)
                 .sectionPadding()
         }
     }
@@ -87,11 +90,11 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     }
 
     private var isAnySectionEnabled: Bool {
-        !preferencesModel.visibleSections.isEmpty
+        !sectionsSettingsModel.enabledItems.isEmpty
     }
 
     private var isShortcutsSectionVisible: Bool {
-        !shortcutsModel.enabledShortcuts.isEmpty
+        !shortcutsSettingsModel.enabledItems.isEmpty
     }
 
     var body: some View {
@@ -101,7 +104,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                     messagesSectionView
 
                     if isAnySectionEnabled {
-                        ForEach(preferencesModel.visibleSections, id: \.rawValue) { section in
+                        ForEach(sectionsSettingsModel.enabledItems, id: \.rawValue) { section in
                             switch section {
                             case .favorites:
                                 favoritesSectionView
@@ -124,14 +127,18 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             }
         }
         .background(Color(designSystemColor: .background))
-        .if(isShowingTooltip, transform: {
+        .if(isShowingTooltip) {
             $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
                 isShowingTooltip = false
             })
-        })
-        .sheet(isPresented: $isShowingPreferences, content: {
+        }
+        .sheet(isPresented: $isShowingPreferences, onDismiss: {
+            shortcutsSettingsModel.save()
+            sectionsSettingsModel.save()
+        }, content: {
             NavigationView {
-                NewTabPagePreferencesView(model: preferencesModel, shortcutsModel: shortcutsModel)
+                NewTabPagePreferencesView(shortcutsSettingsModel: shortcutsSettingsModel,
+                                          sectionsSettingsModel: sectionsSettingsModel)
             }
         })
     }
@@ -161,7 +168,8 @@ private struct Constant {
         ),
         favoritesModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
-        preferencesModel: NewTabPagePreferencesModel()
+        shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
     )
 }
 
@@ -184,7 +192,8 @@ private struct Constant {
         ),
         favoritesModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
-        preferencesModel: NewTabPagePreferencesModel()
+        shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
     )
 }
 
@@ -205,17 +214,5 @@ private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration 
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
         homeMessages = homeMessages.dropLast()
-    }
-}
-
-private extension ShortcutsModel {
-    convenience init() {
-        self.init(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
-    }
-}
-
-private extension NewTabPagePreferencesModel {
-    convenience init() {
-        self.init(newTabPagePreferencesStorage: InMemoryNewTabPageSectionsPreferencesStorage())
     }
 }

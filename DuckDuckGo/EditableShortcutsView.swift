@@ -22,7 +22,7 @@ import UniformTypeIdentifiers
 
 struct EditableShortcutsView: View {
 
-    @ObservedObject private(set) var model: ShortcutsPreferencesModel
+    @ObservedObject private(set) var model: NewTabPageShortcutsSettingsModel
 
     var body: some View {
         NewTabPageGridView { _ in
@@ -66,7 +66,7 @@ extension NewTabPagePreferencesModel.NTPSetting<NewTabPageShortcut>: Reorderable
 
 #Preview {
     ScrollView {
-        EditableShortcutsView(model: ShortcutsPreferencesModel(preferencesStorage: ShortcutsPreferencesStorage()))
+        EditableShortcutsView(model: NewTabPageShortcutsSettingsModel())
     }
     .background(Color(designSystemColor: .background))
 }

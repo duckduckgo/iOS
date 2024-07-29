@@ -23,8 +23,8 @@ import Common
 struct NewTabPagePreferencesView: View {
     @Environment(\.dismiss) var dismiss
 
-    @ObservedObject var model: NewTabPagePreferencesModel
-    @ObservedObject var shortcutsModel: ShortcutsModel
+    @ObservedObject var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
+    @ObservedObject var sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
     // Arbitrary high value is required to acomodate for the content size
     @State var listHeight: CGFloat = 5000
@@ -52,14 +52,14 @@ struct NewTabPagePreferencesView: View {
 
     @ViewBuilder
     private var mainView: some View {
-        if model.visibleSections.contains(.shortcuts) {
+        if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
             ScrollView {
                 VStack {
                     sectionsList(withFrameUpdates: true)
                         .withoutScroll()
                         .frame(height: listHeight)
                     
-                    ShortcutsView(model: shortcutsModel, editingEnabled: true)
+                    EditableShortcutsView(model: shortcutsSettingsModel)
                         .padding(.horizontal, Metrics.horizontalPadding)
                 }
             }
@@ -86,7 +86,7 @@ struct NewTabPagePreferencesView: View {
                 Text(UserText.newTabPagePreferencesSectionsSettingsDescription)
             }
 
-            if model.visibleSections.contains(.shortcuts) {
+            if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
                 Section {
                 } header: {
                     Text(UserText.newTabPagePreferencesShortcutsHeaderTitle)
@@ -105,19 +105,19 @@ struct NewTabPagePreferencesView: View {
 
     @ViewBuilder
     private var sectionsPreferenceSectionContentView: some View {
-        ForEach(model.sectionsSettings, id: \.section) { item in
-            switch item.section {
+        ForEach(sectionsSettingsModel.itemsSettings, id: \.item) { setting in
+            switch setting.item {
             case .favorites:
                 NTPPreferencesSectionItemView(title: "Favorites",
                                               iconResource: .favorite24,
-                                              isEnabled: item.isEnabled)
+                                              isEnabled: setting.isEnabled)
             case .shortcuts:
                 NTPPreferencesSectionItemView(title: "Shortcuts",
                                               iconResource: .shortcut24,
-                                              isEnabled: item.isEnabled)
+                                              isEnabled: setting.isEnabled)
             }
         }.onMove(perform: { indices, newOffset in
-            model.moveSections(from: indices, to: newOffset)
+            sectionsSettingsModel.moveItems(from: indices, to: newOffset)
         })
     }
 
@@ -129,25 +129,23 @@ struct NewTabPagePreferencesView: View {
         let newHeight = lastSectionFrame.maxY - firstSectionFrame.minY + Metrics.defaultListTopPadding
         self.listHeight = max(0, newHeight)
     }
+}
 
-    private struct Constant {
-        static let scrollCoordinateSpaceName = "Scroll"
-        static let scrollCoordinateSpace = CoordinateSpace.named(scrollCoordinateSpaceName)
-    }
+private struct Constant {
+    static let scrollCoordinateSpaceName = "Scroll"
+    static let scrollCoordinateSpace = CoordinateSpace.named(scrollCoordinateSpaceName)
+}
 
-    private struct Metrics {
-        static let defaultListTopPadding = 24.0
-        static let horizontalPadding = 16.0
-    }
+private struct Metrics {
+    static let defaultListTopPadding = 24.0
+    static let horizontalPadding = 16.0
 }
 
 #Preview {
     NavigationView {
         NewTabPagePreferencesView(
-            model: NewTabPagePreferencesModel(
-                newTabPagePreferencesStorage: InMemoryNewTabPageSectionsPreferencesStorage()
-            ),
-            shortcutsModel: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage())
+            shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+            sectionsSettingsModel: NewTabPageSectionsSettingsModel()
         )
     }
 }

@@ -53,7 +53,8 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             configurationStore: MockConfigurationStoring(),
             database: db,
             errorEvents: nil,
-            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
+            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding(),
+            duckPlayerStorage: MockDuckPlayerStorage())
         let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
         let dependencies = HomePageDependencies(
             homePageConfiguration: homePageConfiguration,

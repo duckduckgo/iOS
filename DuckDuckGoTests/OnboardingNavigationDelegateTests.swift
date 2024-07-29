@@ -52,7 +52,9 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             configurationStore: MockConfigurationStoring(),
             database: db,
             errorEvents: nil,
-            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding())
+            remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding(),
+            duckPlayerStorage: MockDuckPlayerStorage()
+        )
         let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
         let tabsModel = TabsModel(desktop: true)
         mainVC = MainViewController(

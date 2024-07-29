@@ -51,9 +51,7 @@ final class NewTabPagePreferencesModel<SettingItem: NewTabPageSettingsStorageIte
     }
 
     private func populateEnabledItems() {
-        enabledItems = preferencesStorage.itemsOrder.compactMap { item in
-            preferencesStorage.isEnabled(item) ? item : nil
-        }
+        enabledItems = preferencesStorage.enabledItems
     }
 
     private func populateSettings() {

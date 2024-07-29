@@ -34,3 +34,7 @@ protocol NewTabPageSettingsStorage {
 
     func save()
 }
+
+extension NewTabPageSettingsStorage {
+    var enabledItems: [SettingItem] { itemsOrder.filter(isEnabled) }
+}

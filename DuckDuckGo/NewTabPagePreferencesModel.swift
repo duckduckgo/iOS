@@ -20,44 +20,48 @@
 import Foundation
 import SwiftUI
 
-final class NewTabPagePreferencesModel: ObservableObject {
+final class NewTabPagePreferencesModel<SettingItem: NewTabPageSettingsStorageItem, Storage: NewTabPageSettingsStorage>: ObservableObject where Storage.SettingItem == SettingItem {
 
     /// Preferences page settings collection with bindings
-    @Published private(set) var sectionsSettings: [NTPSectionSetting] = []
+    @Published private(set) var itemsSettings: [NTPSetting<SettingItem>] = []
 
-    /// Sections set visible for New Tab Page, ordered.
-    @Published private(set) var visibleSections: [NewTabPageSection] = []
+    /// Enabled items, ordered.
+    @Published private(set) var enabledItems: [SettingItem] = []
 
-    private let newTabPagePreferencesStorage: NewTabPageSectionsPreferencesStorage
+    private let preferencesStorage: Storage
 
-    init(newTabPagePreferencesStorage: NewTabPageSectionsPreferencesStorage) {
-        self.newTabPagePreferencesStorage = newTabPagePreferencesStorage
+    init(preferencesStorage: Storage) {
+        self.preferencesStorage = preferencesStorage
 
         updatePublishedValues()
     }
 
-    func moveSections(from: IndexSet, to: Int) {
-        newTabPagePreferencesStorage.moveSections(from, toOffset: to)
+    func moveItems(from: IndexSet, to: Int) {
+        preferencesStorage.moveItems(from, toOffset: to)
         updatePublishedValues()
+    }
+
+    func save() {
+        preferencesStorage.save()
     }
 
     private func updatePublishedValues() {
-        populateSectionsSettings()
-        populateVisibleSections()
+        populateSettings()
+        populateEnabledItems()
     }
 
-    private func populateVisibleSections() {
-        visibleSections = newTabPagePreferencesStorage.sectionsOrder.compactMap { section in
-            newTabPagePreferencesStorage.isEnabled(section) ? section : nil
+    private func populateEnabledItems() {
+        enabledItems = preferencesStorage.itemsOrder.compactMap { item in
+            preferencesStorage.isEnabled(item) ? item : nil
         }
     }
 
-    private func populateSectionsSettings() {
-        sectionsSettings = newTabPagePreferencesStorage.sectionsOrder.map { section in
-            NTPSectionSetting(section: section, isEnabled: Binding(get: {
-                self.newTabPagePreferencesStorage.isEnabled(section)
+    private func populateSettings() {
+        itemsSettings = preferencesStorage.itemsOrder.map { item in
+            NTPSetting(item: item, isEnabled: Binding(get: {
+                self.preferencesStorage.isEnabled(item)
             }, set: { newValue in
-                self.newTabPagePreferencesStorage.setSection(section, enabled: newValue)
+                self.preferencesStorage.setItem(item, enabled: newValue)
                 self.updatePublishedValues()
             }))
         }
@@ -65,8 +69,8 @@ final class NewTabPagePreferencesModel: ObservableObject {
 }
 
 extension NewTabPagePreferencesModel {
-    struct NTPSectionSetting {
-        let section: NewTabPageSection
+    struct NTPSetting<Item> {
+        let item: Item
         let isEnabled: Binding<Bool>
     }
 }

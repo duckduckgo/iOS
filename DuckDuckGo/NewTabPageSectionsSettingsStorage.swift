@@ -1,5 +1,5 @@
 //
-//  ShortcutsPreferencesStorage.swift
+//  NewTabPageSectionsSettingsStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,12 +19,17 @@
 
 import Foundation
 
-typealias ShortcutsPreferencesAppSettingsStorage = NewTabPagePreferencesAppSettingsStorage<NewTabPageShortcut>
+enum NewTabPageSection: String, Codable, CaseIterable {
+    case favorites
+    case shortcuts
+}
 
-extension NewTabPagePreferencesAppSettingsStorage<NewTabPageShortcut> {
+typealias NewTabPageSectionsSettingsStorage = NewTabPageSettingsPersistentStorage<NewTabPageSection>
+
+extension NewTabPageSettingsPersistentStorage<NewTabPageSection> {
     convenience init() {
-        self.init(keyPath: \.newTabPageShortcutsSettings,
-                  defaultOrder: NewTabPageShortcut.allCases,
-                  defaultEnabledItems: NewTabPageShortcut.allCases)
+        self.init(keyPath: \.newTabPageSectionsSettings,
+                  defaultOrder: NewTabPageSection.allCases,
+                  defaultEnabledItems: NewTabPageSection.allCases)
     }
 }

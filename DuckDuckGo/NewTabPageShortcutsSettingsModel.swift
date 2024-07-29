@@ -1,5 +1,5 @@
 //
-//  NewTabPagePreferencesStorage.swift
+//  NewTabPageShortcutsSettingsModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,23 +19,10 @@
 
 import Foundation
 
-enum NewTabPageSection: String, Codable, CaseIterable {
-    case favorites
-    case shortcuts
-}
+typealias NewTabPageShortcutsSettingsModel = NewTabPagePreferencesModel<NewTabPageShortcut, NewTabPageShortcutsSettingsStorage>
 
-typealias NewTabPagePreferencesStorageItem = Codable & Hashable
-
-protocol NewTabPagePreferencesStorage {
-
-    associatedtype PreferenceItem: NewTabPagePreferencesStorageItem
-
-    var itemsOrder: [PreferenceItem] { get }
-
-    func isEnabled(_ item: PreferenceItem) -> Bool
-    func setItem(_ item: PreferenceItem, enabled: Bool)
-
-    func moveItems(_ fromOffsets: IndexSet, toOffset: Int)
-
-    func save()
+extension NewTabPageShortcutsSettingsModel {
+    convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage()) {
+        self.init(preferencesStorage: storage)
+    }
 }

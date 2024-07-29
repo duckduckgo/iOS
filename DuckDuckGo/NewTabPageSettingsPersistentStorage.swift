@@ -1,5 +1,5 @@
 //
-//  NewTabPagePreferencesAppSettingsStorage.swift
+//  NewTabPageSettingsPersistentStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,12 +19,12 @@
 
 import Foundation
 
-private struct NewTabPageItemSettings<Item: NewTabPagePreferencesStorageItem>: Codable {
+private struct NewTabPageItemSettings<Item: NewTabPageSettingsStorageItem>: Codable {
     let itemsOrder: [Item]
     let enabledItems: Set<Item>
 }
 
-final class NewTabPagePreferencesAppSettingsStorage<Item: NewTabPagePreferencesStorageItem>: NewTabPagePreferencesStorage {
+final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageItem>: NewTabPageSettingsStorage {
     private(set) var itemsOrder: [Item]
     private var enabledItems: Set<Item>
 

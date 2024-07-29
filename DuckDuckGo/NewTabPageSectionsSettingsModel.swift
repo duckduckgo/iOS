@@ -1,5 +1,5 @@
 //
-//  NewTabPageSectionsPreferencesStorage.swift
+//  NewTabPageSectionsSettingsModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,12 +19,10 @@
 
 import Foundation
 
-typealias NewTabPageSectionsPreferencesStorage = NewTabPagePreferencesAppSettingsStorage<NewTabPageSection>
+typealias NewTabPageSectionsSettingsModel = NewTabPagePreferencesModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
 
-extension NewTabPagePreferencesAppSettingsStorage<NewTabPageSection> {
-    convenience init() {
-        self.init(keyPath: \.newTabPageSectionsSettings,
-                  defaultOrder: NewTabPageSection.allCases,
-                  defaultEnabledItems: NewTabPageSection.allCases)
+extension NewTabPageSectionsSettingsModel {
+    convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage()) {
+        self.init(preferencesStorage: storage)
     }
 }

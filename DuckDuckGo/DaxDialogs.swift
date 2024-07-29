@@ -38,9 +38,11 @@ protocol NewTabDialogSpecProvider {
 
 protocol ContextualOnboardingLogic {
     var isShowingFireDialog: Bool { get }
+    var shouldShowPrivacyButtonPulse: Bool { get }
     func setSearchMessageSeen()
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
+    func setPrivacyButtonPulseSeen()
 }
 
 extension ContentBlockerRulesManager: EntityProviding {
@@ -270,10 +272,14 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     
     var shouldShowFireButtonPulse: Bool {
         if isNewOnboarding {
-            nonDDGBrowsingMessageSeen && fireButtonBrowsingMessageSeenOrExpired && isEnabled
+            settings.privacyButtonPulseShown && nonDDGBrowsingMessageSeen && settings.fireButtonPulseDateShown == nil && isEnabled
         } else {
             nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
         }
+    }
+
+    var shouldShowPrivacyButtonPulse: Bool {
+        isEnabled && settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown
     }
 
     func isStillOnboarding() -> Bool {
@@ -368,6 +374,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func fireButtonPulseStarted() {
+        ViewHighlighter.dismissPrivacyIconPulseAnimation()
         if settings.fireButtonPulseDateShown == nil {
             settings.fireButtonPulseDateShown = Date()
         }
@@ -400,8 +407,15 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     func setFireEducationMessageSeen() {
         guard isNewOnboarding else { return }
+        // Set also privacy button pulse seen as we don't have to show anymore if we saw the fire educational message.
+        settings.privacyButtonPulseShown = true
         settings.fireButtonEducationShownOrExpired = true
         saveLastShownDaxDialog(specType: .fire)
+    }
+
+    func setPrivacyButtonPulseSeen() {
+        guard isNewOnboarding else { return }
+        settings.privacyButtonPulseShown = true
     }
 
     func setFinalOnboardingDialogSeen() {
@@ -677,4 +691,13 @@ extension URL {
         
         return normalizedQuery1 == normalizedQuery2
     }
+}
+
+private extension ViewHighlighter {
+
+    static func dismissPrivacyIconPulseAnimation() {
+        guard ViewHighlighter.highlightedViews.contains(where: { $0.view is PrivacyIconView }) else { return }
+        ViewHighlighter.hideAll()
+    }
+
 }

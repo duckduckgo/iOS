@@ -26,8 +26,10 @@ final class PrivacyIconContextualOnboardingAnimator {
         ViewHighlighter.showIn(window, focussedOnView: omniBar.privacyInfoContainer.privacyIcon, scale: .custom(3))
     }
 
-    func dismissPrivacyIconAnimation() {
-        ViewHighlighter.hideAll()
+    func dismissPrivacyIconAnimation(_ view: PrivacyIconView) {
+        if ViewHighlighter.highlightedViews.contains(where: { $0.view == view}) {
+            ViewHighlighter.hideAll()
+        }
     }
 
 }

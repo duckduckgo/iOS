@@ -1,5 +1,5 @@
 //
-//  NTPPreferencesSectionItemView.swift
+//  NewTabPageSettingsSectionItemView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-struct NTPPreferencesSectionItemView: View {
+struct NewTabPageSettingsSectionItemView: View {
 
     let title: String
     let iconResource: ImageResource
@@ -43,5 +43,5 @@ struct NTPPreferencesSectionItemView: View {
 
 #Preview {
     @State var isEnabled: Bool = false
-    return NTPPreferencesSectionItemView(title: "Foo", iconResource: .favorite24, isEnabled: $isEnabled).fixedSize(horizontal: false, vertical: true)
+    return NewTabPageSettingsSectionItemView(title: "Foo", iconResource: .favorite24, isEnabled: $isEnabled).fixedSize(horizontal: false, vertical: true)
 }

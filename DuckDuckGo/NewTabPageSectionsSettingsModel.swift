@@ -19,10 +19,10 @@
 
 import Foundation
 
-typealias NewTabPageSectionsSettingsModel = NewTabPagePreferencesModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
+typealias NewTabPageSectionsSettingsModel = NewTabPageSettingsModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
 
 extension NewTabPageSectionsSettingsModel {
     convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage()) {
-        self.init(preferencesStorage: storage)
+        self.init(settingsStorage: storage)
     }
 }

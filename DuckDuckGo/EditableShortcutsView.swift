@@ -50,7 +50,7 @@ private extension View {
     }
 }
 
-extension NewTabPagePreferencesModel.NTPSetting<NewTabPageShortcut>: Reorderable, Hashable, Equatable {
+extension NewTabPageSettingsModel.NTPSetting<NewTabPageShortcut>: Reorderable, Hashable, Equatable {
 
     var dropItemProvider: NSItemProvider {
         NSItemProvider(object: item.id as NSString)
@@ -58,7 +58,7 @@ extension NewTabPagePreferencesModel.NTPSetting<NewTabPageShortcut>: Reorderable
 
     var dropType: UTType { .text }
 
-    static func == (lhs: NewTabPagePreferencesModel.NTPSetting<Item>, rhs: NewTabPagePreferencesModel.NTPSetting<Item>) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.item == rhs.item
     }
 

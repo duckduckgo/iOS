@@ -31,7 +31,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
     
     @State var isShowingTooltip: Bool = false
-    @State private var isShowingPreferences: Bool = false
+    @State private var isShowingSettings: Bool = false
 
     init(messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
@@ -79,7 +79,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             Spacer()
 
             Button(action: {
-                isShowingPreferences = true
+                isShowingSettings = true
             }, label: {
                 NewTabPageCustomizeButtonView()
                 // Needed to reduce default button margins
@@ -115,7 +115,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                     } else {
                         // MARK: Dax Logo
                         Spacer()
-                        NTPDaxLogoView()
+                        NewTabPageDaxLogoView()
                     }
 
                     Spacer()
@@ -132,12 +132,12 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                 isShowingTooltip = false
             })
         }
-        .sheet(isPresented: $isShowingPreferences, onDismiss: {
+        .sheet(isPresented: $isShowingSettings, onDismiss: {
             shortcutsSettingsModel.save()
             sectionsSettingsModel.save()
         }, content: {
             NavigationView {
-                NewTabPagePreferencesView(shortcutsSettingsModel: shortcutsSettingsModel,
+                NewTabPageSettingsView(shortcutsSettingsModel: shortcutsSettingsModel,
                                           sectionsSettingsModel: sectionsSettingsModel)
             }
         })

@@ -1,5 +1,5 @@
 //
-//  NewTabPagePreferencesModel.swift
+//  NewTabPageSettingsModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,29 +20,29 @@
 import Foundation
 import SwiftUI
 
-final class NewTabPagePreferencesModel<SettingItem: NewTabPageSettingsStorageItem, Storage: NewTabPageSettingsStorage>: ObservableObject where Storage.SettingItem == SettingItem {
+final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, Storage: NewTabPageSettingsStorage>: ObservableObject where Storage.SettingItem == SettingItem {
 
-    /// Preferences page settings collection with bindings
+    /// Settings page settings collection with bindings
     @Published private(set) var itemsSettings: [NTPSetting<SettingItem>] = []
 
     /// Enabled items, ordered.
     @Published private(set) var enabledItems: [SettingItem] = []
 
-    private let preferencesStorage: Storage
+    private let settingsStorage: Storage
 
-    init(preferencesStorage: Storage) {
-        self.preferencesStorage = preferencesStorage
+    init(settingsStorage: Storage) {
+        self.settingsStorage = settingsStorage
 
         updatePublishedValues()
     }
 
     func moveItems(from: IndexSet, to: Int) {
-        preferencesStorage.moveItems(from, toOffset: to)
+        settingsStorage.moveItems(from, toOffset: to)
         updatePublishedValues()
     }
 
     func save() {
-        preferencesStorage.save()
+        settingsStorage.save()
     }
 
     private func updatePublishedValues() {
@@ -51,22 +51,22 @@ final class NewTabPagePreferencesModel<SettingItem: NewTabPageSettingsStorageIte
     }
 
     private func populateEnabledItems() {
-        enabledItems = preferencesStorage.enabledItems
+        enabledItems = settingsStorage.enabledItems
     }
 
     private func populateSettings() {
-        itemsSettings = preferencesStorage.itemsOrder.map { item in
+        itemsSettings = settingsStorage.itemsOrder.map { item in
             NTPSetting(item: item, isEnabled: Binding(get: {
-                self.preferencesStorage.isEnabled(item)
+                self.settingsStorage.isEnabled(item)
             }, set: { newValue in
-                self.preferencesStorage.setItem(item, enabled: newValue)
+                self.settingsStorage.setItem(item, enabled: newValue)
                 self.updatePublishedValues()
             }))
         }
     }
 }
 
-extension NewTabPagePreferencesModel {
+extension NewTabPageSettingsModel {
     struct NTPSetting<Item> {
         let item: Item
         let isEnabled: Binding<Bool>

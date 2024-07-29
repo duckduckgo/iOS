@@ -1,5 +1,5 @@
 //
-//  NewTabPagePreferencesView.swift
+//  NewTabPageSettingsView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import SwiftUI
 import Common
 
-struct NewTabPagePreferencesView: View {
+struct NewTabPageSettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
@@ -36,7 +36,7 @@ struct NewTabPagePreferencesView: View {
         mainView
         .applyBackground()
         .tintIfAvailable(Color(designSystemColor: .accent))
-        .navigationTitle(UserText.newTabPagePreferencesTitle)
+        .navigationTitle(UserText.newTabPageSettingsTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -73,9 +73,9 @@ struct NewTabPagePreferencesView: View {
     private func sectionsList(withFrameUpdates: Bool) -> some View {
         List {
             Section {
-                sectionsPreferenceSectionContentView
+                sectionsSettingsContentView
             } header: {
-                Text(UserText.newTabPagePreferencesSectionsSettingsHeaderTitle)
+                Text(UserText.newTabPageSettingsSectionsHeaderTitle)
                     .if(withFrameUpdates) {
                         $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: FirstSectionFrameKey.self) { frame in
                             self.firstSectionFrame = frame
@@ -83,13 +83,13 @@ struct NewTabPagePreferencesView: View {
                         }
                     }
             } footer: {
-                Text(UserText.newTabPagePreferencesSectionsSettingsDescription)
+                Text(UserText.newTabPageSettingsSectionsDescription)
             }
 
             if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
                 Section {
                 } header: {
-                    Text(UserText.newTabPagePreferencesShortcutsHeaderTitle)
+                    Text(UserText.newTabPageSettingsShortcutsHeaderTitle)
                         .if(withFrameUpdates) {
                             $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: LastSectionFrameKey.self) { frame in
                                 self.lastSectionFrame = frame
@@ -104,15 +104,15 @@ struct NewTabPagePreferencesView: View {
     }
 
     @ViewBuilder
-    private var sectionsPreferenceSectionContentView: some View {
+    private var sectionsSettingsContentView: some View {
         ForEach(sectionsSettingsModel.itemsSettings, id: \.item) { setting in
             switch setting.item {
             case .favorites:
-                NTPPreferencesSectionItemView(title: "Favorites",
+                NewTabPageSettingsSectionItemView(title: "Favorites",
                                               iconResource: .favorite24,
                                               isEnabled: setting.isEnabled)
             case .shortcuts:
-                NTPPreferencesSectionItemView(title: "Shortcuts",
+                NewTabPageSettingsSectionItemView(title: "Shortcuts",
                                               iconResource: .shortcut24,
                                               isEnabled: setting.isEnabled)
             }
@@ -143,7 +143,7 @@ private struct Metrics {
 
 #Preview {
     NavigationView {
-        NewTabPagePreferencesView(
+        NewTabPageSettingsView(
             shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
             sectionsSettingsModel: NewTabPageSectionsSettingsModel()
         )

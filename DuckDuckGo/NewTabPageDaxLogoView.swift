@@ -1,5 +1,5 @@
 //
-//  NTPDaxLogoView.swift
+//  NewTabPageDaxLogoView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-struct NTPDaxLogoView: View {
+struct NewTabPageDaxLogoView: View {
     var body: some View {
         VStack {
             Image(.home)
@@ -29,5 +29,5 @@ struct NTPDaxLogoView: View {
 }
 
 #Preview {
-    NTPDaxLogoView()
+    NewTabPageDaxLogoView()
 }

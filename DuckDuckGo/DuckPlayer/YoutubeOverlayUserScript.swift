@@ -166,11 +166,6 @@ extension YoutubeOverlayUserScript {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
             duckPlayerStorage.userInteractedWithDuckPlayer = true
 
-            if let installDate = statisticsStore.installDate,
-                installDate > Date.yearAgo {
-                UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
-            }
-                
         case "play.do_not_use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
             duckPlayerStorage.userInteractedWithDuckPlayer = true

@@ -34,7 +34,9 @@ protocol DaxDialogsSettings {
     var browsingMajorTrackingSiteShown: Bool { get set }
     
     var fireButtonEducationShownOrExpired: Bool { get set }
-    
+
+    var fireMessageExperimentShown: Bool { get set }
+
     var fireButtonPulseDateShown: Date? { get set }
 
     var privacyButtonPulseShown: Bool { get set }
@@ -69,7 +71,10 @@ class DefaultDaxDialogsSettings: DaxDialogsSettings {
     
     @UserDefaultsWrapper(key: .daxFireButtonEducationShownOrExpired, defaultValue: false)
     var fireButtonEducationShownOrExpired: Bool
-    
+
+    @UserDefaultsWrapper(key: .daxFireMessageExperimentShown, defaultValue: false)
+    var fireMessageExperimentShown: Bool
+
     @UserDefaultsWrapper(key: .fireButtonPulseDateShown, defaultValue: nil)
     var fireButtonPulseDateShown: Date?
 
@@ -102,7 +107,9 @@ class InMemoryDaxDialogsSettings: DaxDialogsSettings {
     var browsingMajorTrackingSiteShown: Bool = false
     
     var fireButtonEducationShownOrExpired: Bool = false
-    
+
+    var fireMessageExperimentShown: Bool = false
+
     var fireButtonPulseDateShown: Date?
 
     var privacyButtonPulseShown: Bool = false

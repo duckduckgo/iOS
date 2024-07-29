@@ -2573,6 +2573,10 @@ extension MainViewController: AutoClearWorker {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
+
+            if self.variantManager.isSupported(feature: .newOnboardingIntro) {
+                DaxDialogs.shared.setFireEducationMessageSeen()
+            }
         }
     }
     

@@ -89,7 +89,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
         case .fire:
-            settings.fireButtonEducationShownOrExpired = flag
+            settings.fireMessageExperimentShown = flag
         case .final:
             settings.browsingFinalDialogShown = flag
         }
@@ -242,7 +242,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private var visitedSiteAndFireButtonSeen: Bool {
-        fireButtonBrowsingMessageSeenOrExpired &&
+        settings.fireMessageExperimentShown &&
         firstBrowsingMessageSeen
     }
 
@@ -251,19 +251,19 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         visitedSiteAndFireButtonSeen
     }
 
-    private var fireButtonBrowsingMessageSeenOrExpired: Bool {
-        return settings.fireButtonEducationShownOrExpired
+    private var isDaxDialogEnabled: Bool {
+        ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false"
+    }
+
+    private var isEnabled: Bool {
+        // skip dax dialogs in integration tests
+        guard isDaxDialogEnabled else { return false }
+        return !settings.isDismissed
     }
 
     var isShowingFireDialog: Bool {
         guard isNewOnboarding, let lastShownDaxDialogType else { return false }
         return BrowsingSpec.SpecType(rawValue: lastShownDaxDialogType) == .fire
-    }
-
-    var isEnabled: Bool {
-        // skip dax dialogs in integration tests
-        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
-        return !settings.isDismissed
     }
 
     var isAddFavoriteFlow: Bool {
@@ -272,9 +272,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     
     var shouldShowFireButtonPulse: Bool {
         if isNewOnboarding {
-            settings.privacyButtonPulseShown && nonDDGBrowsingMessageSeen && settings.fireButtonPulseDateShown == nil && isEnabled
+            settings.privacyButtonPulseShown && nonDDGBrowsingMessageSeen && (!settings.fireMessageExperimentShown && settings.fireButtonPulseDateShown == nil) && isEnabled
         } else {
-            nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+            nonDDGBrowsingMessageSeen && !settings.fireButtonEducationShownOrExpired && isEnabled
         }
     }
 
@@ -409,7 +409,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         guard isNewOnboarding else { return }
         // Set also privacy button pulse seen as we don't have to show anymore if we saw the fire educational message.
         settings.privacyButtonPulseShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         saveLastShownDaxDialog(specType: .fire)
     }
 
@@ -477,7 +477,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
 
-        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
+        guard isDaxDialogEnabled, nextHomeScreenMessageOverride == nil else { return nil }
 
         guard let host = privacyInfo.domain else { return nil }
 
@@ -553,7 +553,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         guard isEnabled else { return nil }
 
         // Check final first as if we skip anonymous searches we don't want to show this.
-        if settings.fireButtonEducationShownOrExpired && !finalDaxDialogSeen {
+        if settings.fireMessageExperimentShown && !finalDaxDialogSeen {
             return .final
         }
 

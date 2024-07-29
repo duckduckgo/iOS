@@ -155,7 +155,7 @@ extension DefaultDaxDialogsSettings: ContextualOnboardingSettings {
     }
     
     var userHasSeenFireDialog: Bool {
-        fireButtonEducationShownOrExpired
+        fireMessageExperimentShown
     }
 
 }

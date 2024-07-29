@@ -78,7 +78,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             rootView = AnyView(endOfJourneyDialog(delegate: delegate))
         }
 
-        let viewWithBackground = rootView.withOnboardingBackground()
+        let viewWithBackground = rootView
+            .onboardingDaxDialogStyle()
+            .onboardingContextualBackgroundStyle()
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
@@ -133,16 +135,6 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         .onAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
         }
-    }
-
-}
-
-// MARK: - View + Onboarding Bacgkround
-
-private extension View {
-
-    func withOnboardingBackground() -> some View {
-        self.background(OnboardingBackground())
     }
 
 }

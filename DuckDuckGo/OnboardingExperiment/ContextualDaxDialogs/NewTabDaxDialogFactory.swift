@@ -55,20 +55,18 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         let viewModel = OnboardingSearchSuggestionsViewModel(delegate: delegate)
         return FadeInView {
             OnboardingTrySearchDialog(viewModel: viewModel)
+                .onboardingDaxDialogStyle()
         }
-        .background(
-            OnboardingBackground()
-        )
+        .onboardingContextualBackgroundStyle()
     }
 
     private func createSubsequentDialog() -> some View {
         let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, delegate: delegate)
         return FadeInView {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
+                .onboardingDaxDialogStyle()
         }
-        .background(
-            OnboardingBackground()
-        )
+        .onboardingContextualBackgroundStyle()
     }
 
     private func createAddFavoriteDialog(message: String) -> some View {
@@ -85,7 +83,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             OnboardingFinalDialog(highFiveAction: {
                 onDismiss()
             })
+            .onboardingDaxDialogStyle()
         }
+        .onboardingContextualBackgroundStyle()
         .onAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
         }

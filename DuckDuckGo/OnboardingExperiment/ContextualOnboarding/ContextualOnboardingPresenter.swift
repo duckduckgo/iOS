@@ -38,7 +38,7 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
 
     init(
         variantManager: VariantManager,
-        daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(),
+        daxDialogsFactory: ContextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: DaxDialogs.shared),
         appSettings: AppSettings = AppUserDefaults()
     ) {
         self.variantManager = variantManager
@@ -103,6 +103,7 @@ private extension ContextualOnboardingPresenter {
         animate(daxController: daxController, visible: false) { _ in
             parent.daxDialogsStackView.removeArrangedSubview(daxController.view)
             parent.removeChild(daxController)
+            parent.daxContextualOnboardingController = nil
         }
     }
 

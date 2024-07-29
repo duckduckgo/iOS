@@ -728,7 +728,12 @@ class TabViewController: UIViewController {
     func disableFireproofingForDomain(_ domain: String) {
         preserveLoginsWorker?.handleUserDisablingFireproofing(forDomain: domain)
     }
-    
+
+    func dismissContextualDaxFireDialog() {
+        guard contextualOnboardingLogic.isShowingFireDialog else { return }
+        contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+    }
+
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
@@ -1406,7 +1411,7 @@ extension TabViewController: WKNavigationDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self else { return }
             // https://app.asana.com/0/414709148257752/1201620790053163/f
-            if self.url != daxDialogSourceURL {
+            if self.url != daxDialogSourceURL && self.url?.isSameDuckDuckGoSearchURL(other: daxDialogSourceURL) == false {
                 DaxDialogs.shared.overrideShownFlagFor(spec, flag: false)
                 self.isShowingFullScreenDaxDialog = false
                 return

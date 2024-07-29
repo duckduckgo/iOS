@@ -43,9 +43,11 @@ protocol ContextualDaxDialogsFactory {
 
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
 
-    init(contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings()) {
+    init(contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(), contextualOnboardingLogic: ContextualOnboardingLogic) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
+        self.contextualOnboardingLogic = contextualOnboardingLogic
     }
 
     func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView> {
@@ -76,7 +78,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             rootView = AnyView(endOfJourneyDialog(delegate: delegate))
         }
 
-        let viewWithBackground = rootView.withOnboardingBackground()
+        let viewWithBackground = rootView
+            .onboardingDaxDialogStyle()
+            .onboardingContextualBackgroundStyle()
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
@@ -86,7 +90,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func afterSearchDialog(shouldFollowUpToWebsiteSearch: Bool, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
 
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
@@ -104,7 +108,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
         return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
     }
 
@@ -128,18 +132,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         OnboardingFinalDialog(highFiveAction: { [weak delegate] in
             delegate?.didTapDismissContextualOnboardingAction()
         })
-    }
-
-}
-
-// MARK: - View + Onboarding Bacgkround
-
-private extension View {
-
-    func withOnboardingBackground() -> some View {
-        self
-            .padding()
-            .background(OnboardingBackground())
+        .onAppear { [weak self] in
+            self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
+        }
     }
 
 }

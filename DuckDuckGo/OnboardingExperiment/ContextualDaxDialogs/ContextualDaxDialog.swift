@@ -36,15 +36,20 @@ struct ContextualDaxDialogContent: View {
         didSet {
             if typeToDisplay == .message {
                 timerCancellable?.cancel()
-                startTyping = true
+                startTypingMessage = true
+            }
+            if typeToDisplay == .title {
+                timerCancellable?.cancel()
+                startTypingTitle = true
             }
         }
     }
-    @State private var startTyping: Bool = false
+    @State private var startTypingMessage: Bool = false
+    @State private var startTypingTitle: Bool = false
     @State private var timerCancellable: AnyCancellable?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 16) {
             titleView
                 .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
             messageView
@@ -66,14 +71,16 @@ struct ContextualDaxDialogContent: View {
     @ViewBuilder
     private var titleView: some View {
         if let title {
-            Text(title)
-                .daxTitle3()
+            AnimatableTypingText(title, startAnimating: $startTypingTitle, onTypingFinished: {
+                self.typeToDisplay = .message
+            })
+            .daxTitle3()
         }
     }
 
     @ViewBuilder
     private var messageView: some View {
-        AnimatableTypingText(message, startAnimating: $startTyping, onTypingFinished: {
+        AnimatableTypingText(message, startAnimating: $startTypingMessage, onTypingFinished: {
             startSequentialUpdate()
         })
     }

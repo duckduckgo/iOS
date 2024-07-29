@@ -875,6 +875,20 @@ final class DaxDialog: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    func testWhenExperimentGroup_AndFireEducationMessageSeen_AndFinalMessageNotSeen_ThenShowFinalMessage() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.fireButtonEducationShownOrExpired = true
+        settings.browsingFinalDialogShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertEqual(result, .final)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,

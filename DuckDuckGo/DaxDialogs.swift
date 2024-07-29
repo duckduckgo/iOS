@@ -552,16 +552,17 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         }
         guard isEnabled else { return nil }
 
+        // Check final first as if we skip anonymous searches we don't want to show this.
+        if settings.fireButtonEducationShownOrExpired && !finalDaxDialogSeen {
+            return .final
+        }
+
         if !settings.browsingAfterSearchShown {
             return .initial
         }
 
         if firstSearchSeenButNoSiteVisited {
             return .subsequent
-        }
-
-        if settings.fireButtonEducationShownOrExpired && !finalDaxDialogSeen {
-            return .final
         }
         
         return nil

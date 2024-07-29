@@ -30,14 +30,17 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
     var statisticsStore: StatisticsStore
-    
+    private var duckPlayerStorage: DuckPlayerStorage
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol, statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    init(duckPlayer: DuckPlayerProtocol,
+         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+         duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
         self.duckPlayer = duckPlayer
         self.statisticsStore = statisticsStore
+        self.duckPlayerStorage = duckPlayerStorage
         super.init()
         subscribeToDuckPlayerMode()
     }
@@ -161,10 +164,12 @@ extension YoutubeOverlayUserScript {
         switch pixelName {
         case "play.use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
-                
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+
         case "play.do_not_use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
-                    
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+
         case "overlay":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
             

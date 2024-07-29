@@ -55,12 +55,14 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
         database: CoreDataDatabase,
         notificationCenter: NotificationCenter = .default,
         errorEvents: EventMapping<RemoteMessagingStoreError>?,
-        remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding
+        remoteMessagingAvailabilityProvider: RemoteMessagingAvailabilityProviding,
+        duckPlayerStorage: DuckPlayerStorage
     ) {
         let provider = RemoteMessagingConfigMatcherProvider(
             bookmarksDatabase: bookmarksDatabase,
             appSettings: appSettings,
-            internalUserDecider: internalUserDecider
+            internalUserDecider: internalUserDecider,
+            duckPlayerStorage: duckPlayerStorage
         )
         let configFetcher = RemoteMessagingConfigFetcher(
             configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),

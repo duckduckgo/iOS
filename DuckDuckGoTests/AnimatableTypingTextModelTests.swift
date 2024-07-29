@@ -69,10 +69,6 @@ final class AnimatableTypingTextModelTests: XCTestCase {
     }
 
     func testWhenTimerFiresThenTypedTextIsPublished_iOS15() throws {
-        guard #available(iOS 15, *) else {
-            throw XCTSkip("Test available only on iOS 15*")
-        }
-
         // GIVEN
         let text = "Hello World!!!"
         var typedText: NSAttributedString = .init(string: "")
@@ -97,10 +93,6 @@ final class AnimatableTypingTextModelTests: XCTestCase {
     }
 
     func testWhenStopAnimatingIsCalledThenWholeTextIsPublished_iOS15() throws {
-        guard #available(iOS 15, *) else {
-            throw XCTSkip("Test available only on iOS 15*")
-        }
-
         // GIVEN
         let text = "Hello World!!!"
         var typedText: NSAttributedString = .init(string: "")

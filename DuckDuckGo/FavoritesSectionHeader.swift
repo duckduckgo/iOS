@@ -21,22 +21,29 @@ import SwiftUI
 import DesignResourcesKit
 
 struct FavoritesSectionHeader: View {
+
+    @Binding var isShowingTooltip: Bool
+
     var body: some View {
         HStack(spacing: 16, content: {
             Text("Favorites")
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(alignment: .leading)
-            
+
             Spacer()
 
-            Button(action: {}, label: {
+            Button(action: {
+                isShowingTooltip.toggle()
+            }, label: {
                 Image(.info12)
-            }).tintIfAvailable(Color(designSystemColor: .textPrimary))
+                    .foregroundStyle(Color(designSystemColor: .textPrimary))
+            })
         })
     }
 }
 
 #Preview {
-    FavoritesSectionHeader()
+    @State var isShowingTooltip = true
+    return FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
 }

@@ -17,11 +17,8 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 
-@available(iOS 15, *)
 final class NetworkProtectionRootViewController: UIHostingController<NetworkProtectionRootView> {
 
     init() {
@@ -40,7 +37,6 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
     }
 }
 
-@available(iOS 15, *)
 extension NetworkProtectionRootViewController {
 
     private func decorate() {
@@ -52,6 +48,3 @@ extension NetworkProtectionRootViewController {
     }
 
 }
-
-
-#endif

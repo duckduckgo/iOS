@@ -201,8 +201,6 @@ extension Pixel {
         
         case downloadsSharingPredownloadedLocalFile
         
-        case downloadAttemptToOpenBLOBviaJS
-        
         case jsAlertShown
         
         case featureFlaggingInternalUserAuthenticated
@@ -280,6 +278,11 @@ extension Pixel {
         case autofillManagementUpdateLogin
 
         case autofillMultipleAuthCallsTriggered
+        case autofillLoginsReportFailure
+        case autofillLoginsReportAvailable
+        case autofillLoginsReportConfirmationPromptDisplayed
+        case autofillLoginsReportConfirmationPromptConfirmed
+        case autofillLoginsReportConfirmationPromptDismissed
 
         case getDesktopCopy
         case getDesktopShare
@@ -726,16 +729,10 @@ extension Pixel {
         case duckPlayerOverlayYoutubeImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
-        case duckPlayerSettingAlwaysOverlaySERP
-        case duckPlayerSettingAlwaysOverlayYoutube
         case duckPlayerSettingAlwaysSettings
-        case duckPlayerSettingNeverOverlaySERP
-        case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
-        case watchInDuckPlayerInitial
-        
     }
 
 }
@@ -920,8 +917,6 @@ extension Pixel.Event {
             
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
             
-        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
-            
         case .jsAlertShown: return "m_js_alert_shown"
             
         case .featureFlaggingInternalUserAuthenticated: return "m_internal-user_authenticated"
@@ -1013,6 +1008,11 @@ extension Pixel.Event {
             return "m_autofill_management_update_login"
 
         case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
+        case .autofillLoginsReportFailure: return "autofill_logins_report_failure"
+        case .autofillLoginsReportAvailable: return "autofill_logins_report_available"
+        case .autofillLoginsReportConfirmationPromptDisplayed: return "autofill_logins_report_confirmation_prompt_displayed"
+        case .autofillLoginsReportConfirmationPromptConfirmed: return "autofill_logins_report_confirmation_prompt_confirmed"
+        case .autofillLoginsReportConfirmationPromptDismissed: return "autofill_logins_report_confirmation_prompt_dismissed"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
@@ -1448,17 +1448,12 @@ extension Pixel.Event {
         case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
         case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
         case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
         case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
         case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
-        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
-        case .duckPlayerSettingAlwaysOverlaySERP: return "m_duck-player_setting_always_overlay_serp"
-        case .duckPlayerSettingAlwaysOverlayYoutube: return "m_duck-player_setting_always_overlay_youtube"
-        case .duckPlayerSettingNeverOverlaySERP: return "m_duck-player_setting_never_overlay_serp"
-        case .duckPlayerSettingNeverOverlayYoutube: return "m_duck-player_setting_never_overlay_youtube"
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
-        case .watchInDuckPlayerInitial: return "m_watch-in-duckplayer_initial_u"
         }
     }
 }

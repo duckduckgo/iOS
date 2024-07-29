@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import Subscription
 
@@ -46,5 +44,3 @@ struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVis
         return accountManager.isUserAuthenticated
     }
 }
-
-#endif

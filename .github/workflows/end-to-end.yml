@@ -8,7 +8,7 @@ on:
 jobs:
   end-to-end-tests:
     name: End to end Tests
-    runs-on: macos-13-xlarge
+    runs-on: macos-14-xlarge
 
     steps:
     - name: Check out the code

@@ -21,6 +21,7 @@ import Common
 import UIKit
 import MobileCoreServices
 import Core
+import UniformTypeIdentifiers
 
 class ActionViewController: UIViewController {
 
@@ -30,8 +31,8 @@ class ActionViewController: UIViewController {
         for item in extensionContext?.inputItems as? [NSExtensionItem] ?? [] {
             for provider in item.attachments ?? [] {
 
-                if provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
-                    provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil) { text, _ in
+                if provider.hasItemConformingToTypeIdentifier(UTType.text.identifier) {
+                    provider.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { text, _ in
                         guard let text = text as? String else { return }
                         guard let url = URL.makeSearchURL(text: text) else {
                             os_log("Couldn‘t for URL for query “%s”", log: .lifecycleLog, type: .error, text)
@@ -42,8 +43,8 @@ class ActionViewController: UIViewController {
                     break
                 }
 
-                if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil) { url, _ in
+                if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+                    provider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil) { url, _ in
                         guard let url = url as? URL else { return }
                         self.launchBrowser(withUrl: url)
                     }

@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import UserNotifications
 import NetworkProtection
@@ -104,5 +102,3 @@ extension NetworkProtectionVPNSettingsViewModel: NotificationsPermissionsControl
         updateViewKind(for: status)
     }
 }
-
-#endif

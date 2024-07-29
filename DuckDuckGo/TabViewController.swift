@@ -2799,10 +2799,18 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         }
     }
     
-    func saveLoginViewController(_ viewController: SaveLoginViewController,
-                                 didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
+    func saveLoginViewControllerConfirmKeepUsing(_ viewController: SaveLoginViewController) {
         Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
-        present(alertController, animated: true)
+        DispatchQueue.main.async {
+            let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+            ActionMessageView.present(message: "You can disable password saving anytime.",
+                                      actionTitle: "Open Settings",
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
+                                      onAction: { [weak self] in
+                guard let mainVC = self?.view.window?.rootViewController as? MainViewController else { return }
+                mainVC.launchAutofillLogins(source: .saveLoginDisablePrompt)
+            })
+        }
     }
 }
 

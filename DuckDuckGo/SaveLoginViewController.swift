@@ -27,8 +27,7 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
     func saveLoginViewController(_ viewController: SaveLoginViewController, didRequestNeverPromptForWebsite domain: String)
-    func saveLoginViewController(_ viewController: SaveLoginViewController,
-                                 didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController)
+    func saveLoginViewControllerConfirmKeepUsing(_ viewController: SaveLoginViewController)
 }
 
 class SaveLoginViewController: UIViewController {
@@ -136,40 +135,8 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         delegate?.saveLoginViewController(self, didRequestNeverPromptForWebsite: viewModel.accountDomain)
     }
 
-    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool) {
-        
-        let isSelfPresentingAlert = !isAlreadyDismissed
-        
-        let alertController = UIAlertController(title: UserText.autofillKeepEnabledAlertTitle,
-                                                message: UserText.autofillKeepEnabledAlertMessage,
-                                                preferredStyle: .alert)
-
-        let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled)
-            if isSelfPresentingAlert {
-                self.delegate?.saveLoginViewControllerDidCancel(self)
-            }
-            AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled = false
-        }
-
-        let keepUsingAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertKeepUsingAction, style: .default) { _ in
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillKept)
-            if isSelfPresentingAlert {
-                self.delegate?.saveLoginViewControllerDidCancel(self)
-            }
-        }
-
-        alertController.addAction(disableAction)
-        alertController.addAction(keepUsingAction)
-
-        alertController.preferredAction = keepUsingAction
-
-        if isAlreadyDismissed {
-            delegate?.saveLoginViewController(self, didRequestPresentConfirmKeepUsingAlertController: alertController)
-        } else {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
-            present(alertController, animated: true)
-        }
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel) {
+        delegate?.saveLoginViewControllerConfirmKeepUsing(self)
     }
 
     func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat) {

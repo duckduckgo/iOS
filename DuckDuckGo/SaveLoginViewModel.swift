@@ -26,7 +26,7 @@ protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel)
-    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool)
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat)
 }
 
@@ -174,11 +174,10 @@ final class SaveLoginViewModel: ObservableObject {
     
     private func cancel() {
         updateRejectionCountIfNeeded()
+        delegate?.saveLoginViewModelDidCancel(self)
         if shouldShowAutofillKeepUsingConfirmation() {
-            delegate?.saveLoginViewModelConfirmKeepUsing(self, isAlreadyDismissed: !dismissButtonWasPressed)
+            delegate?.saveLoginViewModelConfirmKeepUsing(self)
             autofillSaveModalDisablePromptShown = true
-        } else {
-            delegate?.saveLoginViewModelDidCancel(self)
         }
     }
     

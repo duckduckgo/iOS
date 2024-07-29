@@ -48,7 +48,7 @@ struct DisableVPNIntent: AppIntent {
             manager.connection.stopVPNTunnel()
 
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
-            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
 
             var iterations = 0
 
@@ -94,8 +94,8 @@ struct EnableVPNIntent: AppIntent {
             try manager.connection.startVPNTunnel()
 
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
-            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
-            
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+
             var iterations = 0
 
             while iterations <= 10 {
@@ -137,7 +137,7 @@ struct CancelSnoozeVPNIntent: AppIntent {
 
             try? await session.sendProviderMessage(.cancelSnooze)
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
-            await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
 
             return .result()
         } catch {
@@ -161,7 +161,7 @@ struct CancelSnoozeLiveActivityAppIntent: LiveActivityIntent {
         }
 
         try? await session.sendProviderMessage(.cancelSnooze)
-        await VPNSnoozeLiveActivityManager().cancelAllRunningActivities()
+        await VPNSnoozeLiveActivityManager().endSnoozeActivity()
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
 
         return .result()

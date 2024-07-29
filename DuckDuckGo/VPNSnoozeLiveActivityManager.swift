@@ -19,18 +19,25 @@
 
 import Foundation
 import ActivityKit
+import NetworkProtection
 
 @available(iOS 17.0, *)
 final class VPNSnoozeLiveActivityManager: ObservableObject {
-    static let shared = VPNSnoozeLiveActivityManager()
+    static let shared = VPNSnoozeLiveActivityManager() // TODO: Remove singleton
+
+    private let snoozeTimingStore: NetworkProtectionSnoozeTimingStore
+
+    init(snoozeTimingStore: NetworkProtectionSnoozeTimingStore = .init(userDefaults: .networkProtectionGroupDefaults)) {
+        self.snoozeTimingStore = snoozeTimingStore
+    }
 
     func start(endDate: Date) async {
-        await cancelAllRunningActivities()
+        await endSnoozeActivity()
         await startNewLiveActivity(endDate: endDate)
     }
 
     private func startNewLiveActivity(endDate: Date) async {
-        guard Activity<VPNSnoozeActivityAttributes>.activities.isEmpty else {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled, Activity<VPNSnoozeActivityAttributes>.activities.isEmpty else {
             return
         }
 
@@ -46,18 +53,20 @@ final class VPNSnoozeLiveActivityManager: ObservableObject {
                 content: initialContentState
             )
         } catch {
-            print("DEBUG: Failed to start activity with error: \(error.localizedDescription)")
+            // The only possible error is when the user has disabled Live Activities for the app, which is not given any special handling
         }
     }
 
-    func cancelAllRunningActivities() async {
+    func endSnoozeActivityIfNecessary() async {
+        if !snoozeTimingStore.isSnoozing {
+            await endSnoozeActivity()
+        }
+    }
+
+    func endSnoozeActivity() async {
         for activity in Activity<VPNSnoozeActivityAttributes>.activities {
             let initialContentState = VPNSnoozeActivityAttributes.ContentState(endDate: Date())
-
-            await activity.end(
-                ActivityContent(state: initialContentState, staleDate: Date()),
-                dismissalPolicy: .immediate
-            )
+            await activity.end(ActivityContent(state: initialContentState, staleDate: Date()), dismissalPolicy: .immediate)
         }
     }
 

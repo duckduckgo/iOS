@@ -36,37 +36,10 @@ struct VPNSnoozeLiveActivity: Widget {
                 range = startDate...endDate
             }
 
-            return Group {
-                if context.isStale {
-                    HStack {
-                        Image("vpn-off")
-
-                        Text("VPN snooze has ended")
-                            .foregroundStyle(Color(designSystemColor: .textPrimary))
-
-                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                            Text("Dismiss")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color("WidgetLiveActivityButtonColor"))
-                    }
-                } else if let range = self.range(from: context.state.endDate) {
-                    HStack {
-                        Image("vpn-off")
-
-                        Text("Reconnecting in ")
-                            .foregroundStyle(Color(designSystemColor: .textPrimary))
-                        +
-                        Text(timerInterval: range, pauseTime: range.lowerBound, countsDown: true)
-                            .foregroundStyle(Color(uiColor: UIColor.yellow60))
-
-                        Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                            Text("Resume")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color("WidgetLiveActivityButtonColor"))
-                    }
-                }
+            return HStack {
+                VPNSnoozeLiveActivityPrimaryCountdownView(snoozeActive: !context.isStale, countdownRange: range, snoozeEndDate: endDate)
+                Spacer()
+                VPNSnoozeLiveActivityActionView(snoozeActive: !context.isStale)
             }
             .padding()
             .activityBackgroundTint(Color.black)
@@ -139,8 +112,10 @@ private struct VPNSnoozeLiveActivityPrimaryCountdownView: View {
             VStack(alignment: .leading) {
                 if snoozeActive {
                     Text("VPN Snoozed")
+                        .foregroundStyle(Color.white)
                 } else {
                     Text("VPN is On")
+                        .foregroundStyle(Color.white)
                 }
 
                 if let countdownRange {
@@ -168,7 +143,7 @@ private struct VPNSnoozeLiveActivityActionView: View {
             Spacer()
 
             Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                Text(snoozeActive ? "Dismiss" : "Resume")
+                Text(snoozeActive ? "Resume" : "Dismiss")
                     .font(Font.system(size: 18, weight: .semibold))
                     .foregroundColor(Color.white)
             })

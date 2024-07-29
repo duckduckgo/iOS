@@ -464,7 +464,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         try? await activeSession.sendProviderMessage(.cancelSnooze)
 
         if #available(iOS 17.0, *) {
-            await VPNSnoozeLiveActivityManager.shared.cancelAllRunningActivities()
+            await VPNSnoozeLiveActivityManager.shared.endSnoozeActivity()
         }
     }
 

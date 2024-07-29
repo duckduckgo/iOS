@@ -433,7 +433,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingAfterSearchShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings)
 
         // WHEN
@@ -447,7 +447,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings)
 
         // WHEN
@@ -461,7 +461,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.example)
         let detectedTracker = detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString)
@@ -478,7 +478,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
 
@@ -493,7 +493,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingAfterSearchShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
         let sut = makeExperimentSUT(settings: settings)
 
@@ -508,7 +508,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
         let sut = makeExperimentSUT(settings: settings)
 
@@ -523,7 +523,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingWithTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
         let sut = makeExperimentSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.example)
@@ -541,7 +541,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingMajorTrackingSiteShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
         let sut = makeExperimentSUT(settings: settings)
         let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
@@ -559,7 +559,7 @@ final class DaxDialog: XCTestCase {
         settings.browsingWithoutTrackersShown = true
         settings.browsingWithTrackersShown = true
         settings.browsingMajorTrackingSiteShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = true
         let sut = makeExperimentSUT(settings: settings)
 
@@ -686,7 +686,7 @@ final class DaxDialog: XCTestCase {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
         settings.browsingWithoutTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings)
 
         // WHEN
@@ -878,7 +878,7 @@ final class DaxDialog: XCTestCase {
     func testWhenExperimentGroup_AndFireEducationMessageSeen_AndFinalMessageNotSeen_ThenShowFinalMessage() {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
         settings.browsingFinalDialogShown = false
         let sut = makeExperimentSUT(settings: settings)
 

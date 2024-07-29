@@ -71,7 +71,7 @@ final class DaxDialogsNewTabTests: XCTestCase {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingMajorTrackingSiteShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
@@ -84,7 +84,7 @@ final class DaxDialogsNewTabTests: XCTestCase {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingWithTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
@@ -97,7 +97,7 @@ final class DaxDialogsNewTabTests: XCTestCase {
         // GIVEN
         settings.browsingAfterSearchShown = true
         settings.browsingWithoutTrackersShown = true
-        settings.fireButtonEducationShownOrExpired = true
+        settings.fireMessageExperimentShown = true
 
         // WHEN
         let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
@@ -164,6 +164,7 @@ final class DaxDialogsNewTabTests: XCTestCase {
 }
 
 class MockDaxDialogsSettings: DaxDialogsSettings {
+    
     var lastVisitedOnboardingWebsiteURLPath: String?
     
     var lastShownContextualOnboardingDialogType: String?
@@ -181,6 +182,8 @@ class MockDaxDialogsSettings: DaxDialogsSettings {
     var browsingMajorTrackingSiteShown: Bool = false
 
     var fireButtonEducationShownOrExpired: Bool = false
+
+    var fireMessageExperimentShown: Bool = false
 
     var privacyButtonPulseShown: Bool = false
 

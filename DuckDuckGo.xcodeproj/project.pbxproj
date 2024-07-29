@@ -282,6 +282,7 @@
 		6F9FFE282C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FFE272C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift */; };
 		6F9FFE2D2C57AE8F00A238BE /* NewTabPageShortcutsSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FFE2C2C57AE8F00A238BE /* NewTabPageShortcutsSettingsModel.swift */; };
 		6F9FFE302C57B34800A238BE /* NewTabPageSectionsSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FFE2F2C57B34800A238BE /* NewTabPageSectionsSettingsModel.swift */; };
+		6F9FFE2A2C57ADB100A238BE /* EditableShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9FFE292C57ADB100A238BE /* EditableShortcutsView.swift */; };
 		6FA3438F2C3D3BC300470677 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA3438E2C3D3BC300470677 /* Favorite.swift */; };
 		6FA343922C3D3C3B00470677 /* FavoriteIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA343912C3D3C3B00470677 /* FavoriteIconView.swift */; };
 		6FB1FE9E2C24D41D0075B68B /* NewTabPageSectionsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1FE9D2C24D41D0075B68B /* NewTabPageSectionsDebugView.swift */; };
@@ -1448,6 +1449,7 @@
 		6F9FFE272C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageSectionsSettingsStorage.swift; sourceTree = "<group>"; };
 		6F9FFE2C2C57AE8F00A238BE /* NewTabPageShortcutsSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageShortcutsSettingsModel.swift; sourceTree = "<group>"; };
 		6F9FFE2F2C57B34800A238BE /* NewTabPageSectionsSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageSectionsSettingsModel.swift; sourceTree = "<group>"; };
+		6F9FFE292C57ADB100A238BE /* EditableShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableShortcutsView.swift; sourceTree = "<group>"; };
 		6FA3438E2C3D3BC300470677 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		6FA343912C3D3C3B00470677 /* FavoriteIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteIconView.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
@@ -3657,6 +3659,7 @@
 			isa = PBXGroup;
 			children = (
 				6FE1273F2C204D9B00EB5724 /* ShortcutsView.swift */,
+				6F9FFE292C57ADB100A238BE /* EditableShortcutsView.swift */,
 				6FE1274A2C20943500EB5724 /* ShortcutItemView.swift */,
 				6F64AA5C2C4920D200CF4489 /* ShortcutAccessoryView.swift */,
 				6F64AA582C4818D700CF4489 /* NewTabPageShortcut.swift */,
@@ -6889,6 +6892,7 @@
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				EE276BEA2A77F823009167B6 /* NetworkProtectionRootViewController.swift in Sources */,
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
+				6F9FFE2A2C57ADB100A238BE /* EditableShortcutsView.swift in Sources */,
 				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				D6D95CE32B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift in Sources */,
 				C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */,

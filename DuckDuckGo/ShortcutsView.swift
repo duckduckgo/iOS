@@ -21,41 +21,25 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ShortcutsView: View {
-    @ObservedObject private(set) var model: ShortcutsModel
-
-    let editingEnabled: Bool
+    private(set) var model: ShortcutsModel
+    let shortcuts: [NewTabPageShortcut]
 
     var body: some View {
         NewTabPageGridView { _ in
-            ReorderableForEach(model.enabledShortcuts, isReorderingEnabled: editingEnabled) { shortcut in
+            ForEach(shortcuts) { shortcut in
                 Button {
                     model.openShortcut(shortcut)
                 } label: {
                     ShortcutItemView(shortcut: shortcut, accessoryType: nil)
-                }
-                .contentShape(.dragPreview, RoundedRectangle(cornerRadius: 8))
-            } preview: { shortcut in
-                ShortcutIconView(shortcut: shortcut).contentShape(.dragPreview, RoundedRectangle(cornerRadius: 8))
-            } onMove: { indices, newOffset in
-                withAnimation {
-                    model.moveShortcuts(from: indices, to: newOffset)
                 }
             }
         }
     }
 }
 
-extension NewTabPageShortcut: Reorderable {
-    var dropItemProvider: NSItemProvider {
-        NSItemProvider(object: id as NSString)
-    }
-
-    var dropType: UTType { .text }
-}
-
 #Preview {
     ScrollView {
-        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()), editingEnabled: false)
+        ShortcutsView(model: ShortcutsModel(), shortcuts: NewTabPageShortcut.allCases)
     }
     .background(Color(designSystemColor: .background))
 }

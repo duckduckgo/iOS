@@ -28,8 +28,11 @@ struct EditableShortcutsView: View {
         NewTabPageGridView { _ in
             ReorderableForEach(model.itemsSettings, id: \.item.id, isReorderingEnabled: true) { setting in
                 let isEnabled = model.enabledItems.contains(setting.item)
-                ShortcutItemView(shortcut: setting.item, accessoryType: isEnabled ? .selected : .add)
-                    .previewShape()
+                Button {
+                    setting.isEnabled.wrappedValue.toggle()
+                } label: {
+                    ShortcutItemView(shortcut: setting.item, accessoryType: isEnabled ? .selected : .add)
+                }
             } preview: { setting in
                 ShortcutIconView(shortcut: setting.item).previewShape()
             } onMove: { indices, newOffset in

@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Peruuta";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Avaa lukitus käyttääksesi tallennettua salasanaa";
+"autofill.logins.prompt.auth.reason" = "Avaa laitteen lukitus käyttääksesi tallennettua salasanaa";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Tältä sivustolta";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Tallenna salasana";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Ilmoita automaattisen täytön ongelmasta";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Lähetä raportti";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "DuckDuckGolle lähetetyt raportit ovat anonyymejä, eivätkä ne sisällä käyttäjätunnusta, salasanaa tai muita tietoja, joista henkilön voisi tunnistaa.\n\nRaportti sisältää vain verkkosivuston url-osoitteen ja joidenkin automaattisen täytön asetusten tilan.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Ilmoita, että automaattinen täyttö ei toimi sivustolla %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Kiitos! Ilmoituksesi auttaa meitä tekemään DuckDuckGosta paremman kaikille!";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Tee nimetön ilmoitus automaattisen täytön ongelmista tällä sivustolla. Salasanoja ei koskaan jaeta.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Eikö automaattinen täyttö toimi?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Näytä salasana";

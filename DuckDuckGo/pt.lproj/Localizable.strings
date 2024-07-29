@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Cancelar";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Desbloqueia para utilizares a palavra-passe guardada";
+"autofill.logins.prompt.auth.reason" = "Desbloqueia o dispositivo para utilizares a palavra-passe guardada";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Deste site";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Guardar palavra-passe";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Comunicar um problema com o preenchimento automático";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Enviar relatório";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Os relatórios enviados para o DuckDuckGo são anónimos e não incluem o teu nome de utilizador, palavra-passe ou qualquer outra informação pessoal identificável.\n\nO relatório inclui apenas o URL do site e o estado de algumas definições de preenchimento automático.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Comunicar que o preenchimento automático não funciona em %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Obrigado! O teu relatório ajuda-nos a melhorar o DuckDuckGo para todos.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Denuncia anonimamente que o preenchimento automático não está a funcionar neste site. As palavras-passe nunca são partilhadas.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "O preenchimento automático não está a funcionar?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar palavra-passe";

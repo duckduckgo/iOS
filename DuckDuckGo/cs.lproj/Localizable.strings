@@ -568,6 +568,27 @@
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Uložit heslo";
 
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Nahlásit problém s automatickým vyplňováním";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Poslat zprávu";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Zprávy odeslané službě DuckDuckGo jsou anonymní a neobsahují tvoje uživatelské jméno, heslo ani žádné jiné osobní údaje.\n\nZpráva obsahuje jenom URL webu a stav některých nastavení automatického vyplňování.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Nahlásit, že na webu %@ automatické vyplňování nefunguje?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Děkujeme! Podrobnosti od tebe nám pomůžou zlepšit DuckDuckGo pro všechny.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anonymně můžeš nahlásit, že automatické vyplňování na tomhle webu nefunguje. Hesla nikdy nesdílíme.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Automatické vyplňování nefunguje?";
+
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Zobrazit heslo";
 

@@ -1,1 +1,1 @@
-- Bug fixes and other improvements.
+- If you encounter issues autofilling passwords, you can now report them to us directly from the "Suggested" section of the passwords menu.

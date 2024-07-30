@@ -25,6 +25,7 @@ import Combine
 @testable import Core
 @testable import BrowserServicesKit
 @testable import Common
+@testable import TestUtils
 
 class AutofillLoginListViewModelTests: XCTestCase {
 
@@ -33,6 +34,40 @@ class AutofillLoginListViewModelTests: XCTestCase {
     private let vault = (try? MockSecureVaultFactory.makeVault(reporter: nil))!
     private var manager: AutofillNeverPromptWebsitesManager!
     private var cancellables: Set<AnyCancellable> = []
+
+    private let configEnabled = """
+    {
+        "features": {
+            "autofillBreakageReporter": {
+                "state": "enabled",
+                "settings": {
+                    "monitorIntervalDays": 42
+                },
+                "exceptions": [
+                    {
+                        "domain": "exception.com"
+                    }
+                ]
+            },
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+
+    private let configDisabled = """
+    {
+        "features": {
+            "autofillBreakageReporter": {
+                "state": "disabled",
+                "settings": {
+                    "monitorIntervalDays": 42
+                },
+                "exceptions": []
+            },
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -44,6 +79,18 @@ class AutofillLoginListViewModelTests: XCTestCase {
         cancellables.removeAll()
 
         try super.tearDownWithError()
+    }
+
+    func makePrivacyConfig(from rawConfig: Data) -> PrivacyConfiguration {
+        let mockEmbeddedData = MockEmbeddedDataProvider(data: rawConfig, etag: "test")
+        let mockProtectionStore = MockDomainsProtectionStore()
+
+        let manager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: mockEmbeddedData,
+                                                  localProtection: mockProtectionStore,
+                                                  internalUserDecider: DefaultInternalUserDecider())
+        return manager.privacyConfig
     }
 
     func testWhenOneLoginDeletedWithNoSuggestionsThenAlphabeticalSectionIsDeleted() {
@@ -179,7 +226,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
         ]
         let testDomain = "testsite.com"
         let model
-                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"), autofillNeverPromptWebsitesManager: manager)
+                = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"), autofillNeverPromptWebsitesManager: manager, privacyConfig: makePrivacyConfig(from: configDisabled))
         XCTAssertEqual(model.sections.count, 3)
         XCTAssertEqual(model.rowsInSection(1), 1)
         XCTAssertEqual(model.rowsInSection(2), 3)
@@ -323,6 +370,152 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
         let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
         XCTAssertEqual(model.rowsInSection(0), 2)
+    }
+
+    func testWhenBreakageReporterConfigDisabledThenShowBreakageReporterIsFalse() {
+        let testDomain = "testsite.com"
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configDisabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        XCTAssertFalse(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndCurrentTabUrlIsNilThenShowBreakageReporterIsFalse() {
+        let testDomain = "testsite.com"
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: nil,
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        XCTAssertFalse(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndNoSuggestionsThenShowBreakageReporterIsFalse() {
+        let testDomain = "testsite.com"
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "not-testsites.com", created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        XCTAssertFalse(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndCurrentTabUrlIsInExceptionListThenShowBreakageReporterIsFalse() {
+        let testDomain = "exception.com"
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        XCTAssertFalse(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndReportAlreadyRecentlySavedThenShowBreakageReporterIsFalse() {
+        let testDomain = "testDomain.com"
+        let currentTabUrl = URL(string: "https://\(testDomain)")
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        let identifier = currentTabUrl!.privacySafeDomainIdentifier
+        model.breakageReporter.persistencyManager.set(value: "2024-07-16", forKey: identifier!, expiryDate: Date())
+
+        XCTAssertFalse(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndNoReportsSavedThenShowBreakageReporterIsTrue() {
+        let testDomain = "testDomain.com"
+        let currentTabUrl = URL(string: "https://\(testDomain)")
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        XCTAssertTrue(model.shouldShowBreakageReporter())
+    }
+
+    func testWhenBreakageReporterConfigEnabledAndNoReportsRecentlySavedThenShowBreakageReporterIsTrue() {
+        let testDomain = "testDomain.com"
+        let currentTabUrl = URL(string: "https://\(testDomain)")
+
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUid: "1",
+                                               autofillNeverPromptWebsitesManager: manager,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+
+        let identifier = currentTabUrl!.privacySafeDomainIdentifier
+        model.breakageReporter.persistencyManager.set(value: "2024-01-01", forKey: identifier!, expiryDate: Date())
+
+        XCTAssertEqual(model.sections.count, 3)
+        XCTAssertEqual(model.rowsInSection(1), 2)
+        XCTAssertEqual(model.rowsInSection(2), 1)
+
+        XCTAssertTrue(model.shouldShowBreakageReporter())
     }
 }
 

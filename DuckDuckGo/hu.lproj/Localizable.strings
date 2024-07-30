@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Mégsem";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Zárolás feloldása a mentett jelszó használatához";
+"autofill.logins.prompt.auth.reason" = "Eszköz zárolásának feloldása a mentett jelszó használatához";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Erről a webhelyről";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Jelszó mentése";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Automatikus kitöltéssel kapcsolatos probléma jelentése";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Jelentés küldése";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "A DuckDuckGónak küldött jelentések névtelenek, és azokban nem szerepel a felhasználóneved, jelszavad vagy más, személyazonosításra alkalmas adatod.\n\nA jelentés csak a weboldal URL-jét és néhány automatikus kitöltési beállítás állapotát tartalmazza.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Jelented, hogy az automatikus kitöltés nem működik a megnyitni kívánt %@ webhelyen?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Köszönjük! A jelentésed segít nekünk abban, hogy a DuckDuckGo mindenki számára jobb élményt nyújthasson.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Jelentsd névtelenül, hogy az automatikus kitöltés nem működik ezen a webhelyen. Jelszavak megosztására soha nem kerül sor.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Nem működik az automatikus kitöltés?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Jelszó megjelenítése";

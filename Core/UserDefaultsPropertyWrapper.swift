@@ -150,10 +150,13 @@ public struct UserDefaultsWrapper<T> {
         
         case duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         case duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
-        
+        case userInteractedWithDuckPlayer = "com.duckduckgo.ios.userInteractedWithDuckPlayer"
+
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
 
-        
+        case newTabPageSectionsSettings = "com.duckduckgo.ios.newTabPage.sections.settings"
+        case newTabPageShortcutsSettings = "com.duckduckgo.ios.newTabPage.shortcuts.settings"
+
         // Debug keys
 
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"

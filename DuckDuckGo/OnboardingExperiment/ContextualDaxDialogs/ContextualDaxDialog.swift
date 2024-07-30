@@ -32,39 +32,61 @@ struct ContextualDaxDialogContent: View {
     var cta: String?
     var action: (() -> Void)?
 
-    @State private var typeToDisplay: DisplayableTypes = .none {
-        didSet {
-            if typeToDisplay == .message {
-                timerCancellable?.cancel()
-                startTypingMessage = true
-            }
-            if typeToDisplay == .title {
-                timerCancellable?.cancel()
-                startTypingTitle = true
-            }
+    private let itemsToAnimate: [DisplayableTypes]
+
+    init(
+        title: String? = nil,
+        message: NSAttributedString,
+        list: [ContextualOnboardingListItem] = [],
+        listAction: ((_: ContextualOnboardingListItem) -> Void)? = nil,
+        imageName: String? = nil, cta: String? = nil,
+        action: (() -> Void)? = nil
+    ) {
+        self.title = title
+        self.message = message
+        self.list = list
+        self.listAction = listAction
+        self.imageName = imageName
+        self.cta = cta
+        self.action = action
+
+        var itemsToAnimate: [DisplayableTypes] = []
+        if title != nil {
+            itemsToAnimate.append(.title)
         }
+        itemsToAnimate.append(.message)
+        if !list.isEmpty {
+            itemsToAnimate.append(.list)
+        }
+        if imageName != nil {
+            itemsToAnimate.append(.image)
+        }
+        if cta != nil {
+            itemsToAnimate.append(.button)
+        }
+
+        self.itemsToAnimate = itemsToAnimate
     }
-    @State private var startTypingMessage: Bool = false
+
     @State private var startTypingTitle: Bool = false
-    @State private var timerCancellable: AnyCancellable?
+    @State private var startTypingMessage: Bool = false
+    @State private var nonTypingAnimatableItems: NonTypingAnimatableItems = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            // Typing items
             titleView
-                .visibility((typeToDisplay.rawValue >= 1) ? .visible : .invisible)
             messageView
+            // Non Typing items
             listView
-                .visibility((typeToDisplay.rawValue >= 3) ? .visible : .invisible)
+                .visibility(nonTypingAnimatableItems.contains(.list) ? .visible : .invisible)
             imageView
-                .visibility((typeToDisplay.rawValue >= 4) ? .visible : .invisible)
+                .visibility(nonTypingAnimatableItems.contains(.image) ? .visible : .invisible)
             actionView
-                .visibility((typeToDisplay.rawValue >= 5) ? .visible : .invisible)
+                .visibility(nonTypingAnimatableItems.contains(.button) ? .visible : .invisible)
         }
         .onAppear {
-            startSequentialUpdate()
-        }
-        .onDisappear {
-            timerCancellable?.cancel()
+            startAnimating()
         }
     }
 
@@ -72,7 +94,7 @@ struct ContextualDaxDialogContent: View {
     private var titleView: some View {
         if let title {
             AnimatableTypingText(title, startAnimating: $startTypingTitle, onTypingFinished: {
-                self.typeToDisplay = .message
+                startTypingMessage = true
             })
             .daxTitle3()
         }
@@ -81,7 +103,7 @@ struct ContextualDaxDialogContent: View {
     @ViewBuilder
     private var messageView: some View {
         AnimatableTypingText(message, startAnimating: $startTypingMessage, onTypingFinished: {
-            startSequentialUpdate()
+            animateNonTypingItems()
         })
     }
 
@@ -113,64 +135,57 @@ struct ContextualDaxDialogContent: View {
         }
     }
 
-    enum DisplayableTypes: Int {
-        case none = 0
-        case title = 1
-        case message = 2
-        case list = 3
-        case image = 4
-        case button = 5
+    enum DisplayableTypes {
+        case title
+        case message
+        case list
+        case image
+        case button
+    }
+
+    struct NonTypingAnimatableItems: OptionSet {
+        let rawValue: Int
+
+        static let list = NonTypingAnimatableItems(rawValue: 1 << 0)
+        static let image = NonTypingAnimatableItems(rawValue: 1 << 1)
+        static let button = NonTypingAnimatableItems(rawValue: 1 << 2)
     }
 }
 
 // MARK: - Auxiliary Functions
 
 extension ContextualDaxDialogContent {
-    private func startSequentialUpdate() {
-        let updateInterval = 0.3
-        let timerPublisher = Timer.publish(every: updateInterval, on: .main, in: .common).autoconnect()
 
-        timerCancellable = timerPublisher.sink { _ in
-            if self.typeToDisplay.rawValue < DisplayableTypes.button.rawValue {
-                withAnimation(.easeIn(duration: 0.25)) {
-                    self.updateTypeToDisplay()
-                }
-            } else {
-                self.timerCancellable?.cancel()
-            }
+    private func startAnimating() {
+        if itemsToAnimate.contains(.title) {
+            startTypingTitle = true
+        } else if itemsToAnimate.contains(.message) {
+            startTypingMessage = true
         }
     }
 
-    private func updateTypeToDisplay() {
-        switch typeToDisplay {
-        case .none:
-            if title != nil {
-                typeToDisplay = .title
-            } else {
-                typeToDisplay = .message
+    private func animateNonTypingItems() {
+        let animationDuration: TimeInterval = 0.25
+        let animationDelay = animationDuration + 0.05
+
+        // Remove typing items and animate sequentially non typing items
+        let nonTypingItems = itemsToAnimate.filter { $0 != .title && $0 != .message }
+
+        nonTypingItems.enumerated().forEach { index, item in
+            let delayForItem = animationDelay * Double(index + 1)
+            withAnimation(.easeIn(duration: animationDuration).delay(delayForItem)) {
+                switch item {
+                case .title, .message:
+                    // Typing items. they don't need to animate sequentially.
+                    break
+                case .list:
+                    nonTypingAnimatableItems.insert(.list)
+                case .image:
+                    nonTypingAnimatableItems.insert(.image)
+                case .button:
+                    nonTypingAnimatableItems.insert(.button)
+                }
             }
-        case .title:
-            typeToDisplay = .message
-        case .message:
-            if !list.isEmpty {
-                typeToDisplay = .list
-            } else if imageName != nil {
-                typeToDisplay = .image
-            } else if cta != nil {
-                typeToDisplay = .button
-            }
-        case .list:
-            if imageName != nil {
-                typeToDisplay = .image
-            } else if cta != nil {
-                typeToDisplay = .button
-            }
-        case .image:
-            if cta != nil {
-                typeToDisplay = .button
-            }
-        case .button:
-            break
         }
     }
 }

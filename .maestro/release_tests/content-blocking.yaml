@@ -45,8 +45,13 @@ tags:
 - tapOn: "Don't Send"
 
 - tapOn: "Refresh Page"
+- extendedWaitUntil: 
+    notVisible: "Nonsense text that won't exist"
+    timeout: 2000
+
 - assertVisible: "1 major tracker loaded via script src"
 
 - tapOn: 
     id: PrivacyIcon
 - assertVisible: "Protections are OFF for this site"
+

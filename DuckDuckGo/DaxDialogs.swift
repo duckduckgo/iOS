@@ -142,8 +142,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
 
-        // TODO: Change pixel name
-        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsWithoutTrackersFollowUp, type: .final)
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShown, type: .final)
 
         let message: String
         let cta: String

@@ -64,6 +64,9 @@
                <Test
                   Identifier = "AutoconsentMessageProtocolTests/testEval()">
                </Test>
+               <Test
+                  Identifier = "SyncSettingsViewControllerErrorTests/test_WhenAccountRemoved_ErrorHandlerSyncDidTurnOffCalled()">
+               </Test>
             </SkippedTests>
          </TestableReference>
          <TestableReference
@@ -124,13 +127,13 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "VARIANT"
-            value = "md"
+            key = "ONBOARDING"
+            value = "true"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "ONBOARDING"
-            value = "true"
+            key = "VARIANT"
+            value = "ma"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

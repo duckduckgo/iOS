@@ -18,15 +18,6 @@
 //
 
 import UIKit
-
-#if !NETWORK_PROTECTION
-
-final class NetworkProtectionDebugViewController: UITableViewController {
-    // Just an empty VC
-}
-
-#else
-
 import Common
 import Network
 import NetworkExtension
@@ -425,7 +416,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             Supports IPv6: \(path.supportsIPv6)
             """
 
-            if #available(iOS 14.2, *), path.status == .unsatisfied {
+            if path.status == .unsatisfied {
                 pathDescription.append("\nUnsatisfied Reason: \(path.unsatisfiedReason)")
             }
 
@@ -731,5 +722,3 @@ extension NWConnection {
     }
 
 }
-
-#endif

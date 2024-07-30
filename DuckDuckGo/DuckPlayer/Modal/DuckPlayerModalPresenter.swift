@@ -42,16 +42,14 @@ struct DuckPlayerModalPresenter {
     }
 
     private func configurePresentationStyle(for hostingController: UIHostingController<DuckPlayerFeaturePresentationView>, on viewController: UIViewController) {
-        if #available(iOS 15.0, *) {
-            if let sheet = hostingController.presentationController as? UISheetPresentationController {
+        if let sheet = hostingController.presentationController as? UISheetPresentationController {
 
-                if #available(iOS 16.0, *) {
-                    let targetSize = getTargetSizeForPresentationView(on: viewController)
-                    sheet.detents = [.custom { _ in targetSize.height }]
-                } else {
-                    sheet.detents = [.large()]
+            if #available(iOS 16.0, *) {
+                let targetSize = getTargetSizeForPresentationView(on: viewController)
+                sheet.detents = [.custom { _ in targetSize.height }]
+            } else {
+                sheet.detents = [.large()]
 
-                }
             }
         }
     }

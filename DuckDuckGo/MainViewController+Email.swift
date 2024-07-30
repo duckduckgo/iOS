@@ -85,15 +85,13 @@ extension MainViewController: EmailManagerAliasPermissionDelegate {
                 didRequestPermissionToProvideAliasWithCompletion(addressType, autosave)
             }
 
-            if #available(iOS 15.0, *) {
-                if let presentationController = emailAddressPromptViewController.presentationController as? UISheetPresentationController {
-                    if #available(iOS 16.0, *) {
-                        presentationController.detents = [.custom(resolver: { _ in
-                            AutofillViews.emailSignupPromptMinHeight
-                        })]
-                    } else {
-                        presentationController.detents = [.medium()]
-                    }
+            if let presentationController = emailAddressPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.emailSignupPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
                 }
             }
             self.present(emailAddressPromptViewController, animated: true)
@@ -115,15 +113,13 @@ extension MainViewController: EmailManagerAliasPermissionDelegate {
             }
         }
 
-        if #available(iOS 15.0, *) {
-            if let presentationController = emailSignupPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.emailSignupPromptMinHeight
-                    })]
-                } else {
-                    presentationController.detents = [.medium()]
-                }
+        if let presentationController = emailSignupPromptViewController.presentationController as? UISheetPresentationController {
+            if #available(iOS 16.0, *) {
+                presentationController.detents = [.custom(resolver: { _ in
+                    AutofillViews.emailSignupPromptMinHeight
+                })]
+            } else {
+                presentationController.detents = [.medium()]
             }
         }
 

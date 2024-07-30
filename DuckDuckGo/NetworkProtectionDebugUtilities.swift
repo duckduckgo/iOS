@@ -19,8 +19,6 @@
 
 import Common
 import Foundation
-
-#if NETWORK_PROTECTION
 import NetworkProtection
 import NetworkExtension
 
@@ -31,7 +29,7 @@ final class NetworkProtectionDebugUtilities {
     // MARK: - Registation Key
 
     func expireRegistrationKeyNow() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession() else {
             return
         }
 
@@ -41,7 +39,7 @@ final class NetworkProtectionDebugUtilities {
     // MARK: - Notifications
 
     func sendTestNotificationRequest() async throws {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession() else {
             return
         }
 
@@ -51,7 +49,7 @@ final class NetworkProtectionDebugUtilities {
     // MARK: - Disable VPN
 
     func disableConnectOnDemandAndShutDown() async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession() else {
             return
         }
 
@@ -61,7 +59,7 @@ final class NetworkProtectionDebugUtilities {
     // MARK: - Failure Simulation
 
     func triggerSimulation(_ option: NetworkProtectionSimulationOption) async {
-        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession() else {
             return
         }
 
@@ -88,5 +86,3 @@ private extension NetworkProtectionSimulationOption {
         }
     }
 }
-
-#endif

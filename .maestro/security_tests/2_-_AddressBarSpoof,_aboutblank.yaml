@@ -2,15 +2,10 @@ appId: com.duckduckgo.mobile.ios
 tags:
     - securityTest
 ---
+
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:

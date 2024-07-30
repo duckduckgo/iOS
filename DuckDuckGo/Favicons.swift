@@ -395,12 +395,8 @@ public class Favicons {
             }
         }
 
-        if #available(iOS 15.0, *) {
-            let request = URLRequest.userInitiated(url)
-            metadataFetcher.startFetchingMetadata(for: request, completionHandler: completion)
-        } else {
-            metadataFetcher.startFetchingMetadata(for: url, completionHandler: completion)
-        }
+        let request = URLRequest.userInitiated(url)
+        metadataFetcher.startFetchingMetadata(for: request, completionHandler: completion)
     }
 
     private func retrieveBestImage(from urls: [URL], completion: @escaping (UIImage?) -> Void) {

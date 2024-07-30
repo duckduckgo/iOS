@@ -118,7 +118,7 @@ struct HeadlessWebView: UIViewRepresentable {
 }
 
 extension UIViewController {
-    static func getCurrentViewController(base: UIViewController? = UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController) -> UIViewController? {
+    static func getCurrentViewController(base: UIViewController? = UIApplication.shared.firstKeyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return getCurrentViewController(base: nav.visibleViewController)
         } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {

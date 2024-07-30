@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Ακύρωση";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Ξεκλειδώστε για να χρησιμοποιήσετε τον αποθηκευμένο κωδικό πρόσβασης";
+"autofill.logins.prompt.auth.reason" = "Ξεκλειδώστε τη συσκευή για να χρησιμοποιήσετε τον αποθηκευμένο κωδικό πρόσβασης";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Από αυτόν τον ιστότοπο";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Αναφέρετε ένα πρόβλημα με την Αυτόματη συμπλήρωση";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Αποστολή Αναφοράς";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Οι αναφορές που αποστέλλονται στο DuckDuckGo είναι ανώνυμες και δεν περιλαμβάνουν το όνομα χρήστη, τον κωδικό πρόσβασής σας ή οποιαδήποτε άλλη πληροφορία που μπορεί να σας ταυτοποιήσει.\n\nΗ αναφορά περιλαμβάνει μόνο τη διεύθυνση URL του ιστότοπου και την κατάσταση ορισμένων ρυθμίσεων αυτόματης συμπλήρωσης.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Θέλετε να αναφέρετε ότι η αυτόματη συμπλήρωση δεν λειτουργεί στο %@;";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Σε ευχαριστούμε! Η αναφορά σας θα μας βοηθήσει ώστε να γίνει το DuckDuckGo καλύτερο για όλους.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Αναφέρετε ανώνυμα ότι η αυτόματη συμπλήρωση δεν λειτουργεί σε αυτόν τον ιστότοπο. Οι κωδικοί πρόσβασης δεν κοινοποιούνται ποτέ.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Δεν λειτουργεί η αυτόματη συμπλήρωση;";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";

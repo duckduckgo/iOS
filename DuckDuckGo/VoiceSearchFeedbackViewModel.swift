@@ -57,7 +57,6 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
         self.speechRecognizer = speechRecognizer
     }
     
-    @available(iOS 15, *)
     func startSpeechRecognizer() {
         speechRecognizer.startRecording { [weak self] text, error, speechDidFinish in
             DispatchQueue.main.async {

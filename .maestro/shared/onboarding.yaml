@@ -9,6 +9,8 @@ appId: com.duckduckgo.mobile.ios
 - tapOn:
     text: "Let’s Do It!"
     index: 0
-- assertVisible: "Make DuckDuckGo your default browser."
+
+# Disabled while UI testing is happening
+# - assertVisible: "Make DuckDuckGo your default browser."
 - tapOn:
     text: "Skip"

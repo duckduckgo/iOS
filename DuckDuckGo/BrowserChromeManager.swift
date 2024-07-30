@@ -62,7 +62,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         
         scrollView.delegate = self
         
-        observation = scrollView.observe(\.contentSize, options: .new) { [weak self] scrollView, _ in
+        observation = scrollView.observe(\.contentSize, options: .new) { [weak self] scrollView, observation in
+            guard observation.newValue != observation.oldValue else { return }
             self?.scrollViewDidResizeContent(scrollView)
         }
     }

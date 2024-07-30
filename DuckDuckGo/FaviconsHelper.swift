@@ -91,7 +91,22 @@ struct FaviconsHelper {
         }
 
     }
-    
+
+    @MainActor
+    static func loadFaviconSync(forDomain domain: String?,
+                                usingCache cacheType: Favicons.CacheType,
+                                useFakeFavicon: Bool,
+                                preferredFakeFaviconLetters: String? = nil) async -> (image: UIImage?, isFake: Bool) {
+        await withCheckedContinuation { continuation in
+            loadFaviconSync(forDomain: domain,
+                            usingCache: cacheType,
+                            useFakeFavicon: useFakeFavicon,
+                            preferredFakeFaviconLetters: preferredFakeFaviconLetters) { image, isFake in
+                continuation.resume(returning: (image, isFake))
+            }
+        }
+    }
+
     static func createFakeFavicon(forDomain domain: String,
                                   size: CGFloat = 192,
                                   backgroundColor: UIColor = UIColor.greyishBrown2,

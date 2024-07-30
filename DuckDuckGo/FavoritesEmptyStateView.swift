@@ -21,12 +21,16 @@ import SwiftUI
 
 struct FavoritesEmptyStateView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
-    @State var headerPadding: CGFloat = 10
+    @Environment(\.isLandscapeOrientation) var isLandscape
+
+    @State private var headerPadding: CGFloat = 10
+
+    @Binding var isShowingTooltip: Bool
 
     var body: some View {
+        ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                FavoritesSectionHeader()
+                FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
                     .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
@@ -41,18 +45,26 @@ struct FavoritesEmptyStateView: View {
                     })
                 )
                 .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass))
+                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape))
                     let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
                     let leftoverWidth = fullWidth - allColumnsWidth
                     let spacingSize = leftoverWidth / (columnsCount)
                     self.headerPadding = spacingSize / 2
                 })
             }
+
+            if isShowingTooltip {
+                FavoritesTooltip()
+                    .offset(x: -headerPadding + 18, y: 24)
+                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+            }
+        }
     }
 }
 
 #Preview {
-    FavoritesEmptyStateView()
+    @State var isShowingTooltip = false
+    return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
 }
 
 private struct WidthKey: PreferenceKey {

@@ -33,10 +33,7 @@ import Networking
 import Suggestions
 import Subscription
 import SwiftUI
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 class MainViewController: UIViewController {
     
@@ -113,11 +110,11 @@ class MainViewController: UIViewController {
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
     private var urlInterceptorCancellables = Set<AnyCancellable>()
-    
-#if NETWORK_PROTECTION
+    private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
-#endif
+
+    let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     
@@ -148,7 +145,7 @@ class MainViewController: UIViewController {
     }
     
     var searchBarRect: CGRect {
-        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        let view = UIApplication.shared.firstKeyWindow?.rootViewController?.view
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
     
@@ -157,9 +154,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
-    private var keyboardHeight: CGFloat = 0.0
-    
+
     var postClear: (() -> Void)?
     var clearInProgress = false
     var dataStoreWarmup: DataStoreWarmup? = DataStoreWarmup()
@@ -181,7 +176,8 @@ class MainViewController: UIViewController {
         appSettings: AppSettings,
         previewsSource: TabPreviewsSource,
         tabsModel: TabsModel,
-        syncPausedStateManager: any SyncPausedStateManaging
+        syncPausedStateManager: any SyncPausedStateManaging,
+        privacyProDataReporter: PrivacyProDataReporting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -199,8 +195,10 @@ class MainViewController: UIViewController {
                                      previewsSource: previewsSource,
                                      bookmarksDatabase: bookmarksDatabase,
                                      historyManager: historyManager,
-                                     syncService: syncService)
+                                     syncService: syncService,
+                                     privacyProDataReporter: privacyProDataReporter)
         self.syncPausedStateManager = syncPausedStateManager
+        self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
 
         super.init(nibName: nil, bundle: nil)
@@ -263,10 +261,8 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
         subscribeToEmailProtectionStatusNotifications()
         subscribeToURLInterceptorNotifications()
-        
-#if NETWORK_PROTECTION
+        subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
-#endif
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -553,15 +549,14 @@ class MainViewController: UIViewController {
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
-        var height = keyboardFrame.size.height
+        var keyboardHeight = keyboardFrame.size.height
 
         let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
         let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-        height = intersection.height
+        keyboardHeight = intersection.height
 
-        findInPageBottomLayoutConstraint.constant = height
-        keyboardHeight = height
+        findInPageBottomLayoutConstraint.constant = keyboardHeight
 
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
@@ -574,15 +569,14 @@ class MainViewController: UIViewController {
             }
         }
 
-        let y = self.view.frame.height - height
+        let y = self.view.frame.height - keyboardHeight
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
 
         if self.appSettings.currentAddressBarPosition.isBottom {
-            let navBarOffset = min(0, self.toolbarHeight - intersection.height)
-            self.viewCoordinator.constraints.navigationBarCollectionViewBottom.constant = navBarOffset
+            self.viewCoordinator.constraints.navigationBarContainerHeight.constant = max(52, keyboardHeight)
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -736,7 +730,15 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(homePageMessagesConfiguration: homePageConfiguration)
+            let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
+                                                      syncService: syncService,
+                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                      homePageMessagesConfiguration: homePageConfiguration,
+                                                      privacyProDataReporting: privacyProDataReporter)
+
+            controller.delegate = self
+            controller.shortcutsDelegate = self
+
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
@@ -746,7 +748,8 @@ class MainViewController: UIViewController {
                                                                    favoritesViewModel: favoritesViewModel,
                                                                    appSettings: appSettings,
                                                                    syncService: syncService,
-                                                                   syncDataProviders: syncDataProviders)
+                                                                   syncDataProviders: syncDataProviders,
+                                                                   privacyProDataReporter: privacyProDataReporter)
 
             controller.delegate = self
             controller.chromeDelegate = self
@@ -1161,11 +1164,12 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchAutofillLogins(with currentTabUrl: URL? = nil, openSearch: Bool = false, source: AutofillSettingsSource) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil, currentTabUid: String? = nil, openSearch: Bool = false, source: AutofillSettingsSource) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
+            currentTabUid: currentTabUid,
             syncService: syncService,
             syncDataProviders: syncDataProviders,
             selectedAccount: nil,
@@ -1346,8 +1350,24 @@ class MainViewController: UIViewController {
             }
             .store(in: &urlInterceptorCancellables)
     }
+    
+    private func subscribeToSettingsDeeplinkNotifications() {
+        NotificationCenter.default.publisher(for: .settingsDeepLinkNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                switch notification.object as? SettingsViewModel.SettingsDeepLinkSection {
+                
+                case .duckPlayer:
+                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
+                        deepLinkTarget = .duckPlayer
+                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
+                default:
+                    return
+                }
+            }
+            .store(in: &settingsDeepLinkcancellables)
+    }
 
-#if NETWORK_PROTECTION
     private func subscribeToNetworkProtectionEvents() {
         NotificationCenter.default.publisher(for: .accountDidSignIn)
             .receive(on: DispatchQueue.main)
@@ -1448,7 +1468,6 @@ class MainViewController: UIViewController {
             await networkProtectionTunnelController.removeVPN(reason: .signedOut)
         }
     }
-#endif
 
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
@@ -1955,6 +1974,18 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
 }
 
+extension MainViewController {
+    private func handleRequestedURL(_ url: URL) {
+        showKeyboardAfterFireButton?.cancel()
+
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
+    }
+}
+
 extension MainViewController: HomeControllerDelegate {
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -1962,13 +1993,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        showKeyboardAfterFireButton?.cancel()
-        
-        if url.isBookmarklet() {
-            executeBookmarklet(url)
-        } else {
-            loadUrl(url)
-        }
+        handleRequestedURL(url)
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
@@ -2002,6 +2027,46 @@ extension MainViewController: HomeControllerDelegate {
         viewCoordinator.navigationBarContainer.alpha = percent
     }
     
+}
+
+extension MainViewController: NewTabPageControllerDelegate {
+    func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL) {
+        handleRequestedURL(url)
+    }
+
+    func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        segueToEditBookmark(favorite)
+    }
+
+    func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
+        // no-op for now
+    }
+}
+
+extension MainViewController: NewTabPageControllerShortcutsDelegate {
+    func newTabPageDidRequestDownloads(_ controller: NewTabPageViewController) {
+        segueToDownloads()
+    }
+    
+    func newTabPageDidRequestBookmarks(_ controller: NewTabPageViewController) {
+        segueToBookmarks()
+    }
+    
+    func newTabPageDidRequestPasswords(_ controller: NewTabPageViewController) {
+        launchAutofillLogins(source: .newTabPageShortcut)
+    }
+    
+    func newTabPageDidRequestAIChat(_ controller: NewTabPageViewController) {
+        loadUrl(Constant.duckAIURL)
+    }
+    
+    func newTabPageDidRequestSettings(_ controller: NewTabPageViewController) {
+        segueToSettings()
+    }
+
+    private enum Constant {
+        static let duckAIURL = URL(string: "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1")!
+    }
 }
 
 extension MainViewController: TabDelegate {
@@ -2114,7 +2179,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
-        launchAutofillLogins(with: currentTab?.url, source: .overflow)
+        launchAutofillLogins(with: currentTab?.url, currentTabUid: tab.tabModel.uid, source: .overflow)
     }
     
     func tabDidRequestSettings(tab: TabViewController) {
@@ -2436,6 +2501,8 @@ extension MainViewController: AutoClearWorker {
             transitionCompletion?()
             self.refreshUIAfterClear()
         } completion: {
+            self.privacyProDataReporter.saveFireCount()
+
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
@@ -2597,17 +2664,10 @@ extension MainViewController {
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             
-            if #available(iOS 15.0, *) {
-                return UIAction(title: historyItem.title,
-                                subtitle: historyItem.sanitizedURLForDisplay,
-                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
-            } else {
-                return  UIAction(title: historyItem.title,
-                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
-                    self?.loadBackForwardItem(historyItem.backForwardItem)
-                }
+            return UIAction(title: historyItem.title,
+                            subtitle: historyItem.sanitizedURLForDisplay,
+                            discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                self?.loadBackForwardItem(historyItem.backForwardItem)
             }
         }
         

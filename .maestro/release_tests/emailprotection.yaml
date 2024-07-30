@@ -4,15 +4,9 @@ tags:
 
 ---
 
-- clearState
-- launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
-
+    file: ../shared/setup.yaml
+    
 - tapOn: Settings
 # Handling two different flows because of the current experiment
 # TODO: Remove the unused flow when the experiment is completed.

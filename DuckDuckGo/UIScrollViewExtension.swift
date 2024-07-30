@@ -28,7 +28,7 @@ extension UIScrollView {
     /// Calculates rect to scroll to based on what is most useful area for a user and size/position of the keyboard.
     func desiredVisibleRect(forInteractionArea interactionArea: CGRect,
                             coveredBy keyboardRect: CGRect) -> CGRect? {
-        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return nil }
+        guard let window = UIApplication.shared.firstKeyWindow else { return nil }
         
         let viewInWindow = convert(bounds, to: window)
         let obscuredScrollViewArea = viewInWindow.intersection(keyboardRect)

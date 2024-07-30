@@ -67,7 +67,7 @@ final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageI
     }
 
     private func load() {
-        if let settingsData = appSettings.newTabPageShortcutsSettings,
+        if let settingsData = appSettings[keyPath: keyPath],
            let settings = try? JSONDecoder().decode(NewTabPageItemSettings<Item>.self, from: settingsData) {
             itemsOrder = settings.itemsOrder
             enabledItems = settings.enabledItems

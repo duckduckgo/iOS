@@ -86,7 +86,10 @@ struct ContextualDaxDialogContent: View {
                 .visibility(nonTypingAnimatableItems.contains(.button) ? .visible : .invisible)
         }
         .onAppear {
-            startAnimating()
+            Task { @MainActor in
+                try await Task.sleep(interval: 0.3)
+                startAnimating()
+            }
         }
     }
 
@@ -165,15 +168,12 @@ extension ContextualDaxDialogContent {
     }
 
     private func animateNonTypingItems() {
-        let animationDuration: TimeInterval = 0.25
-        let animationDelay = animationDuration + 0.05
-
         // Remove typing items and animate sequentially non typing items
         let nonTypingItems = itemsToAnimate.filter { $0 != .title && $0 != .message }
 
         nonTypingItems.enumerated().forEach { index, item in
-            let delayForItem = animationDelay * Double(index + 1)
-            withAnimation(.easeIn(duration: animationDuration).delay(delayForItem)) {
+            let delayForItem = Metrics.animationDelay * Double(index + 1)
+            withAnimation(.easeIn(duration: Metrics.animationDuration).delay(delayForItem)) {
                 switch item {
                 case .title, .message:
                     // Typing items. they don't need to animate sequentially.
@@ -187,6 +187,15 @@ extension ContextualDaxDialogContent {
                 }
             }
         }
+    }
+}
+
+// MARK: - Metrics
+
+extension ContextualDaxDialogContent {
+    enum Metrics {
+        static let animationDuration = 0.25
+        static let animationDelay = 0.3
     }
 }
 

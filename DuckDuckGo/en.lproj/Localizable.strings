@@ -582,16 +582,13 @@
 "autofill.save-login.never-prompt.CTA" = "Never for This Website";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Passwords are stored securely on your device.";
+"autofill.save-login.new-user.message" = "DuckDuckGo Passwords & Autofill stores passwords securely on your device.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your password?";
-
-/* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Don’t Save";
+"autofill.save-login.new-user.title" = "Save this password?";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Save Password?";
+"autofill.save-login.title" = "Save password?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Save Password";

@@ -530,6 +530,16 @@ class MainViewController: UIViewController {
             }
         }
 
+        adjustNewTabPageSafeAreaInsets(for: position)
+    }
+
+    private func adjustNewTabPageSafeAreaInsets(for addressBarPosition: AddressBarPosition) {
+        switch addressBarPosition {
+        case .top:
+            newTabPageViewController?.additionalSafeAreaInsets = .zero
+        case .bottom:
+            newTabPageViewController?.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 52, right: 0)
+        }
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -742,6 +752,7 @@ class MainViewController: UIViewController {
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
             viewCoordinator.logoContainer.isHidden = true
+            adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
         } else {
             let controller = HomeViewController.loadFromStoryboard(homePageConfiguration: homePageConfiguration,
                                                                    model: tabModel,

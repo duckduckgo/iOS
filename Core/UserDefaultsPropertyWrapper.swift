@@ -154,7 +154,9 @@ public struct UserDefaultsWrapper<T> {
 
         case vpnRedditWorkaroundInstalled = "com.duckduckgo.ios.vpn.workaroundInstalled"
 
-        
+        case newTabPageSectionsSettings = "com.duckduckgo.ios.newTabPage.sections.settings"
+        case newTabPageShortcutsSettings = "com.duckduckgo.ios.newTabPage.shortcuts.settings"
+
         // Debug keys
 
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"

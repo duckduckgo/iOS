@@ -18,8 +18,8 @@ check_maestro() {
     local known_version="1.36.0"
 
     if command -v $command_name > /dev/null 2>&1; then
-      local version_output=$($command_name -v 2>&1)
-      
+      local version_output=$($command_name -v 2>&1 | tail -n 1)
+
       local command_version=$(echo $version_output | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
 
       if [[ $command_version == $known_version ]]; then

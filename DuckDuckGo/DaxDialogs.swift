@@ -251,13 +251,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         visitedSiteAndFireButtonSeen
     }
 
-    private var isDaxDialogEnabled: Bool {
-        ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false"
-    }
-
-    private var isEnabled: Bool {
+    var isEnabled: Bool {
         // skip dax dialogs in integration tests
-        guard isDaxDialogEnabled else { return false }
+        guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
         return !settings.isDismissed
     }
 
@@ -280,7 +276,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     var shouldShowPrivacyButtonPulse: Bool {
-        isEnabled && settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown
+        settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && isEnabled
     }
 
     func isStillOnboarding() -> Bool {
@@ -478,7 +474,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
 
-        guard isDaxDialogEnabled, nextHomeScreenMessageOverride == nil else { return nil }
+        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
 
         guard let host = privacyInfo.domain else { return nil }
 

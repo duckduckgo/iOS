@@ -18,13 +18,15 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ShortcutsView: View {
-    @ObservedObject private(set) var model: ShortcutsModel
+    private(set) var model: ShortcutsModel
+    let shortcuts: [NewTabPageShortcut]
 
     var body: some View {
         NewTabPageGridView { _ in
-            ForEach(model.enabledShortcuts) { shortcut in
+            ForEach(shortcuts) { shortcut in
                 Button {
                     model.openShortcut(shortcut)
                 } label: {
@@ -37,7 +39,7 @@ struct ShortcutsView: View {
 
 #Preview {
     ScrollView {
-        ShortcutsView(model: ShortcutsModel(shortcutsPreferencesStorage: InMemoryShortcutsPreferencesStorage()))
+        ShortcutsView(model: ShortcutsModel(), shortcuts: NewTabPageShortcut.allCases)
     }
     .background(Color(designSystemColor: .background))
 }

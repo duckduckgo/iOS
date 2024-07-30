@@ -19,10 +19,10 @@
 
 import Foundation
 
-typealias NewTabPageShortcutsSettingsModel = NewTabPagePreferencesModel<NewTabPageShortcut, NewTabPageShortcutsSettingsStorage>
+typealias NewTabPageShortcutsSettingsModel = NewTabPageSettingsModel<NewTabPageShortcut, NewTabPageShortcutsSettingsStorage>
 
 extension NewTabPageShortcutsSettingsModel {
     convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage()) {
-        self.init(preferencesStorage: storage)
+        self.init(settingsStorage: storage)
     }
 }

@@ -1585,6 +1585,18 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Show, hide, and reorder sections on the new tab page";
+
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SECTIONS";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "SHORTCUTS";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Customize New Tab";
+
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI Chat";
 

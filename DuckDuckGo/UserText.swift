@@ -1200,6 +1200,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     // MARK: Tooltip
     public static let newTabPageTooltipBody = NSLocalizedString("new.tab.page.tooltip.body", value: "On any site, open the ••• menu and select **Add Favorite** to add it to your new tab page.", comment: "Text shown on the favorites info tooltip")
 
+    // MARK: Settings
+
+    public static let newTabPageSettingsTitle = NSLocalizedString("new.tab.page.settings.title", value: "Customize New Tab", comment: "Title of New Tab Page preferences page.")
+    public static let newTabPageSettingsSectionsHeaderTitle = NSLocalizedString("new.tab.page.settings.sections.header.title", value: "SECTIONS", comment: "Header title of the group allowing for setting up new tab page sections")
+    public static let newTabPageSettingsSectionsDescription = NSLocalizedString("new.tab.page.settings.sections.description", value: "Show, hide, and reorder sections on the new tab page", comment: "Footer of the group allowing for setting up new tab page sections")
+    public static let newTabPageSettingsShortcutsHeaderTitle = NSLocalizedString("new.tab.page.settings.shortcuts.header.title", value: "SHORTCUTS", comment: "Header title of the shortcuts in New Tab Page preferences.")
+
     // MARK: - Dax Onboarding Experiment
     public enum DaxOnboardingExperiment {
         enum Intro {

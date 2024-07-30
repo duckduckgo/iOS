@@ -1,5 +1,5 @@
 //
-//  NewTabPageSectionsSettingsModel.swift
+//  NewTabPageDaxLogoView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,12 +17,17 @@
 //  limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-typealias NewTabPageSectionsSettingsModel = NewTabPageSettingsModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
-
-extension NewTabPageSectionsSettingsModel {
-    convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage()) {
-        self.init(settingsStorage: storage)
+struct NewTabPageDaxLogoView: View {
+    var body: some View {
+        VStack {
+            Image(.home)
+            Image(.textDuckDuckGo)
+        }
     }
+}
+
+#Preview {
+    NewTabPageDaxLogoView()
 }

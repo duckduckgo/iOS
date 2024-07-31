@@ -84,6 +84,10 @@ class HomeViewController: UIViewController, NewTabPage {
 
     let privacyProDataReporter: PrivacyProDataReporting
 
+    var hasFavoritesToShow: Bool {
+        !favoritesViewModel.favorites.isEmpty
+    }
+
     static func loadFromStoryboard(
         homePageDependecies: HomePageDependencies
     ) -> HomeViewController {

@@ -51,17 +51,11 @@ protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
 }
 
 protocol OnboardingSearchSuggestionsPixelReporting {
-    func trackSearchSuggestionSayDuck()
-    func trackSearchSuggestionMightyDuck()
-    func trackSearchSuggestionWeather()
-    func trackSearchSuggestionSurpriseMe()
+    func trackSearchSuggetionOptionTapped()
 }
 
 protocol OnboardingSiteSuggestionsPixelReporting {
-    func trackSiteSuggestionESPN()
-    func trackSiteSuggestionYahoo()
-    func trackSiteSuggestionEbay()
-    func trackSiteSuggestionSurpriseMe()
+    func trackSiteSuggetionOptionTapped()
 }
 
 protocol OnboardingCustomSearchPixelReporting {
@@ -127,41 +121,17 @@ extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 // MARK: - OnboardingPixelReporter + List
 
 extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
-   
-    func trackSearchSuggestionSayDuck() {
-        fire(event: .onboardingContextualSearchSayDuckUnique, unique: true)
-    }
     
-    func trackSearchSuggestionMightyDuck() {
-        fire(event: .onboardingContextualSearchMightyDuckUnique, unique: true)
-    }
-    
-    func trackSearchSuggestionWeather() {
-        fire(event: .onboardingContextualSearchWeatherUnique, unique: true)
-    }
-    
-    func trackSearchSuggestionSurpriseMe() {
-        fire(event: .onboardingContextualSearchSurpriseMeUnique, unique: true)
+    func trackSearchSuggetionOptionTapped() {
+        fire(event: .onboardingContextualSearchOptionTappedUnique, unique: true)
     }
 
 }
 
 extension OnboardingPixelReporter: OnboardingSiteSuggestionsPixelReporting {
     
-    func trackSiteSuggestionESPN() {
-        fire(event: .onboardingContextualSiteESPNUnique, unique: true)
-    }
-    
-    func trackSiteSuggestionYahoo() {
-        fire(event: .onboardingContextualSiteYahooUnique, unique: true)
-    }
-    
-    func trackSiteSuggestionEbay() {
-        fire(event: .onboardingContextualSiteEbayUnique, unique: true)
-    }
-    
-    func trackSiteSuggestionSurpriseMe() {
-        fire(event: .onboardingContextualSiteSurpriseMeUnique, unique: true)
+    func trackSiteSuggetionOptionTapped() {
+        fire(event: .onboardingContextualSiteOptionTappedUnique, unique: true)
     }
 
 }

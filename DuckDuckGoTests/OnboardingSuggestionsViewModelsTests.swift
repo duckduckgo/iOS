@@ -26,12 +26,12 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
     var navigationDelegate: CapturingOnboardingNavigationDelegate!
     var searchSuggestionsVM: OnboardingSearchSuggestionsViewModel!
     var siteSuggestionsVM: OnboardingSiteSuggestionsViewModel!
-    var pixelReporterMock: OnboardingSuggestionsPixelReporterMock!
+    var pixelReporterMock: OnboardingPixelReporterMock!
 
     override func setUp() {
         suggestionsProvider = MockOnboardingSuggestionsProvider()
         navigationDelegate = CapturingOnboardingNavigationDelegate()
-        pixelReporterMock = OnboardingSuggestionsPixelReporterMock()
+        pixelReporterMock = OnboardingPixelReporterMock()
         searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
         siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
     }
@@ -108,10 +108,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
             ContextualOnboardingListItem.surprise(title: "Surprise"),
         ]
         suggestionsProvider.list = searches
-        XCTAssertFalse(pixelReporterMock.didCallTrackSearchSayDuck)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSearchMightyDuck)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSearchWeather)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSearchSurpriseMe)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSearchOptionTapped)
 
         // WHEN
         searches.forEach { searchItem in
@@ -119,10 +116,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
         }
 
         // THEN
-        XCTAssertTrue(pixelReporterMock.didCallTrackSearchSayDuck)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSearchMightyDuck)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSearchWeather)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSearchSurpriseMe)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSearchOptionTapped)
     }
 
     func testWhenSiteSuggestionsTapped_ThenPixelReporterIsCalled() {
@@ -134,10 +128,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
             ContextualOnboardingListItem.surprise(title: "Surprise"),
         ]
         suggestionsProvider.list = searches
-        XCTAssertFalse(pixelReporterMock.didCallTrackSiteESPN)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSiteYahoo)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSiteEbay)
-        XCTAssertFalse(pixelReporterMock.didCallTrackSiteSurpriseMe)
+        XCTAssertFalse(pixelReporterMock.didCallTrackSiteOptionTapped)
 
         // WHEN
         searches.forEach { searchItem in
@@ -145,10 +136,7 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
         }
 
         // THEN
-        XCTAssertTrue(pixelReporterMock.didCallTrackSiteESPN)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSiteYahoo)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSiteEbay)
-        XCTAssertTrue(pixelReporterMock.didCallTrackSiteSurpriseMe)
+        XCTAssertTrue(pixelReporterMock.didCallTrackSiteOptionTapped)
     }
 
 }
@@ -168,49 +156,4 @@ class CapturingOnboardingNavigationDelegate: OnboardingNavigationDelegate {
     func navigateTo(url: URL) {
         urlToNavigateTo = url
     }
-}
-
-final class OnboardingSuggestionsPixelReporterMock: OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting {
-    private(set) var didCallTrackSearchSayDuck = false
-    private(set) var didCallTrackSearchMightyDuck = false
-    private(set) var didCallTrackSearchWeather = false
-    private(set) var didCallTrackSearchSurpriseMe = false
-
-    private(set) var didCallTrackSiteESPN = false
-    private(set) var didCallTrackSiteYahoo = false
-    private(set) var didCallTrackSiteEbay = false
-    private(set) var didCallTrackSiteSurpriseMe = false
-
-    func trackSearchSuggestionSayDuck() {
-        didCallTrackSearchSayDuck = true
-    }
-
-    func trackSearchSuggestionMightyDuck() {
-        didCallTrackSearchMightyDuck = true
-    }
-
-    func trackSearchSuggestionWeather() {
-        didCallTrackSearchWeather = true
-    }
-
-    func trackSearchSuggestionSurpriseMe() {
-        didCallTrackSearchSurpriseMe = true
-    }
-
-    func trackSiteSuggestionESPN() {
-        didCallTrackSiteESPN = true
-    }
-    
-    func trackSiteSuggestionYahoo() {
-        didCallTrackSiteYahoo = true
-    }
-    
-    func trackSiteSuggestionEbay() {
-        didCallTrackSiteEbay = true
-    }
-    
-    func trackSiteSuggestionSurpriseMe() {
-        didCallTrackSiteSurpriseMe = true
-    }
-
 }

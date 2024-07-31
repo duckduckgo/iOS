@@ -179,7 +179,6 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
 }
 
 final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
-    
     var expectation: XCTestExpectation?
     private(set) var didCallSetFireEducationMessageSeen = false
     private(set) var didCallsetFinalOnboardingDialogSeen = false
@@ -191,6 +190,8 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
 
     var isShowingFireDialog: Bool = false
     var shouldShowPrivacyButtonPulse: Bool = false
+    var isShowingSearchSuggestions: Bool = false
+    var isShowingSitesSuggestions: Bool = false
 
     func setFireEducationMessageSeen() {
         didCallSetFireEducationMessageSeen = true

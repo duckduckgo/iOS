@@ -2,7 +2,7 @@ name: Asana PR Task URL
 
 on: 
   pull_request:
-    types: [opened, edited, closed, unlabeled, synchronize, review_requested]
+    types: [opened, edited, closed, synchronize, review_requested]
 
 jobs:
 

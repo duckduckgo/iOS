@@ -84,26 +84,20 @@ struct SaveLoginView: View {
                 .zIndex(1)
 
             VStack {
-                Spacer()
-                    .frame(height: Const.Size.topPadding)
+                Spacer(minLength: Const.Size.topPadding)
                 AutofillViews.AppIconHeader()
-                Spacer()
-                    .frame(height: Const.Size.headlineTopPadding)
+                Spacer(minLength: Const.Size.contentSpacing)
                 AutofillViews.Headline(title: title)
-                if #available(iOS 16.0, *) {
-                    contentView
-                        .padding([.top, .bottom], contentPadding)
-                } else {
-                    Spacer()
-                    contentView
-                    Spacer()
-                }
+                Spacer(minLength: Const.Size.contentSpacing)
+                contentView
+                Spacer(minLength: Const.Size.contentSpacing)
                 if case .newUser = layoutType {
                     featuresView.padding([.bottom], 16)
                 }
                 ctaView
-                bottomSpacer
             }
+            .padding([.bottom], 24.0)
+            .fixedSize(horizontal: false, vertical: shouldFixSize)
             .background(GeometryReader { proxy -> Color in
                 DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
                 return Color.clear
@@ -111,6 +105,10 @@ struct SaveLoginView: View {
             .useScrollView(shouldUseScrollView(), minHeight: frame.height)
         }
         .padding(.horizontal, horizontalPadding)
+    }
+
+    var shouldFixSize: Bool {
+        AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) || AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass)
     }
 
     private func shouldUseScrollView() -> Bool {
@@ -123,16 +121,6 @@ struct SaveLoginView: View {
         }
 
         return useScrollView
-    }
-
-    private var contentPadding: CGFloat {
-        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
-            return Const.Size.contentSpacerHeight
-        } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
-            return Const.Size.contentSpacerHeightIPad
-        } else {
-            return Const.Size.contentSpacerHeightLandscape
-        }
     }
 
     @ViewBuilder private func featuresListItem(imageTitle: String, title: String, subtitle: String) -> some View {
@@ -200,13 +188,14 @@ struct SaveLoginView: View {
             .padding(.bottom, 16)
         }
         .padding(0)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
         .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .inset(by: 0.5)
                 .stroke(Color(designSystemColor: .container), lineWidth: 1)
-            )
+        )
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder private var ctaView: some View {
@@ -228,21 +217,6 @@ struct SaveLoginView: View {
             }
         } else {
             return Const.Size.closeButtonOffset
-        }
-    }
-
-    private var bottomSpacer: some View {
-        VStack {
-            if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
-                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight, legacyHeight: Const.Size.bottomSpacerLegacyHeight)
-            } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
-                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad,
-                                               legacyHeight: orientation == .portrait ? Const.Size.bottomSpacerHeightIPad
-                                                                                      : Const.Size.bottomSpacerLegacyHeightIPad)
-            } else {
-                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight,
-                                               legacyHeight: Const.Size.bottomSpacerLegacyHeightLandscape)
-            }
         }
     }
 
@@ -275,17 +249,9 @@ private enum Const {
         static let closeButtonOffsetPortrait: CGFloat = 44.0
         static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
         static let topPadding: CGFloat = 56.0
-        static let headlineTopPadding: CGFloat = 24.0
+        static let contentSpacing: CGFloat = 24.0
         static let ios15scrollOffset: CGFloat = 80.0
-        static let contentSpacerHeight: CGFloat = 24.0
-        static let contentSpacerHeightIPad: CGFloat = 34.0
-        static let contentSpacerHeightLandscape: CGFloat = 44.0
         static let ctaVerticalSpacing: CGFloat = 8.0
-        static let bottomSpacerHeight: CGFloat = 12.0
-        static let bottomSpacerHeightIPad: CGFloat = 24.0
-        static let bottomSpacerLegacyHeight: CGFloat = 16.0
-        static let bottomSpacerLegacyHeightIPad: CGFloat = 64.0
-        static let bottomSpacerLegacyHeightLandscape: CGFloat = 44.0
         static let featureListItemIconGap: CGFloat = 8.0
     }
 }

@@ -26,17 +26,7 @@ struct ShortcutItemView: View {
 
     var body: some View {
         VStack(spacing: 6) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(designSystemColor: .surface))
-                    .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(width: NewTabPageGrid.Item.edgeSize)
-                Image(shortcut.imageResource)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
-            }
+            ShortcutIconView(shortcut: shortcut)
             .overlay(alignment: .topTrailing) {
                 if let accessoryType {
                     ShortcutAccessoryView(accessoryType: accessoryType)
@@ -56,6 +46,24 @@ struct ShortcutItemView: View {
     private enum Constant {
         static let accessorySize = 24.0
         static let accessoryOffset = CGSize(width: 6, height: -6)
+    }
+}
+
+struct ShortcutIconView: View {
+    let shortcut: NewTabPageShortcut
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(designSystemColor: .surface))
+                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+                .aspectRatio(1, contentMode: .fit)
+                .frame(width: NewTabPageGrid.Item.edgeSize)
+            Image(shortcut.imageResource)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
+        }
     }
 }
 
@@ -92,20 +100,24 @@ private extension NewTabPageShortcut {
 }
 
 #Preview {
-    LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
-        let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
-
-        ForEach(accessoryTypes, id: \.?.hashValue) { type in
-            Section {
-                ForEach(NewTabPageShortcut.allCases) { shortcut in
-                    ShortcutItemView(shortcut: shortcut, accessoryType: type)
+    ScrollView {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+            let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
+            
+            ForEach(accessoryTypes, id: \.?.hashValue) { type in
+                Section {
+                    ForEach(NewTabPageShortcut.allCases) { shortcut in
+                        ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                    }
+                    
+                } footer: {
+                    Spacer(minLength: 12)
+                    Divider()
+                    Spacer(minLength: 12)
                 }
-
-            } footer: {
-                Spacer(minLength: 12)
-                Divider()
-                Spacer(minLength: 12)
             }
-        }
-    }).padding(8)
+        })
+        .padding(8)
+    }
+    .background(Color(designSystemColor: .background))
 }

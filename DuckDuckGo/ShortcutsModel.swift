@@ -19,28 +19,11 @@
 
 import Foundation
 
-protocol ShortcutsPreferencesStorage {
-    var enabledShortcuts: [NewTabPageShortcut] { get }
-}
-
 final class ShortcutsModel: ObservableObject {
-    @Published private(set) var enabledShortcuts: [NewTabPageShortcut] = []
-
-    private let shortcutsPreferencesStorage: ShortcutsPreferencesStorage
 
     var onShortcutOpened: ((NewTabPageShortcut) -> Void)?
-
-    init(shortcutsPreferencesStorage: ShortcutsPreferencesStorage) {
-        self.shortcutsPreferencesStorage = shortcutsPreferencesStorage
-
-        enabledShortcuts = shortcutsPreferencesStorage.enabledShortcuts
-    }
 
     func openShortcut(_ shortcut: NewTabPageShortcut) {
         onShortcutOpened?(shortcut)
     }
-}
-
-final class InMemoryShortcutsPreferencesStorage: ShortcutsPreferencesStorage {
-    private(set) var enabledShortcuts: [NewTabPageShortcut] = NewTabPageShortcut.allCases
 }

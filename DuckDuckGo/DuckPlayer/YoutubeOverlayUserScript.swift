@@ -30,14 +30,17 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
     var statisticsStore: StatisticsStore
-    
+    private var duckPlayerStorage: DuckPlayerStorage
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol, statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    init(duckPlayer: DuckPlayerProtocol,
+         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+         duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
         self.duckPlayer = duckPlayer
         self.statisticsStore = statisticsStore
+        self.duckPlayerStorage = duckPlayerStorage
         super.init()
         subscribeToDuckPlayerMode()
     }
@@ -76,6 +79,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let openDuckPlayer = "openDuckPlayer"
         static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
         static let initialSetup = "initialSetup"
+        static let openInfo = "openInfo"
     }
 
     weak var broker: UserScriptMessageBroker?
@@ -108,6 +112,8 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             return handleSendJSPixel
         case Handlers.initialSetup:
             return duckPlayer.initialSetupOverlay
+        case Handlers.openInfo:
+            return duckPlayer.openDuckPlayerInfo
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
             // TODO: Send pixel here
@@ -158,15 +164,12 @@ extension YoutubeOverlayUserScript {
         switch pixelName {
         case "play.use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
-            
-            if let installDate = statisticsStore.installDate,
-                installDate > Date.yearAgo {
-                UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
-            }
-                
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+
         case "play.do_not_use":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
-                    
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+
         case "overlay":
             Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
             

@@ -21,7 +21,6 @@ import SwiftUI
 import Foundation
 import DesignResourcesKit
 
-@available(iOS 15.0, *)
 struct SubscriptionExternalLinkView: View {
         
     @Environment(\.dismiss) var dismiss

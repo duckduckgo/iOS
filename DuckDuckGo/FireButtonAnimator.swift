@@ -112,7 +112,7 @@ class FireButtonAnimator {
         
     func animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {
 
-        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
+        guard let window = UIApplication.shared.firstKeyWindow,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {
             Task { @MainActor in
                 await onAnimationStart()

@@ -23,11 +23,14 @@ struct FavoritesEmptyStateView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
-    @State var headerPadding: CGFloat = 10
+    @State private var headerPadding: CGFloat = 10
+
+    @Binding var isShowingTooltip: Bool
 
     var body: some View {
+        ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                FavoritesSectionHeader()
+                FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
                     .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
@@ -49,11 +52,19 @@ struct FavoritesEmptyStateView: View {
                     self.headerPadding = spacingSize / 2
                 })
             }
+
+            if isShowingTooltip {
+                FavoritesTooltip()
+                    .offset(x: -headerPadding + 18, y: 24)
+                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+            }
+        }
     }
 }
 
 #Preview {
-    FavoritesEmptyStateView()
+    @State var isShowingTooltip = false
+    return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
 }
 
 private struct WidthKey: PreferenceKey {

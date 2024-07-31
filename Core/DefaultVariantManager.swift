@@ -40,13 +40,6 @@ public struct VariantIOS: Variant {
                 .contains(where: { Locale.current.regionCode == $0 }) }
 
         static let inEnglish = { return Locale.current.languageCode == "en" }
-
-        static let iOS15 = { () -> Bool in
-            if #available(iOS 15, *) {
-                return true
-            }
-            return false
-        }
     }
 
     /// This variant is used for returning users to separate them from really new users.

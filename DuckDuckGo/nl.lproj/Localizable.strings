@@ -482,7 +482,7 @@
 "autofill.logins.prompt.auth.cancel" = "Annuleren";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Ontgrendel om opgeslagen wachtwoord te gebruiken";
+"autofill.logins.prompt.auth.reason" = "Ontgrendel het apparaat om het opgeslagen wachtwoord te gebruiken";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Van deze website";
@@ -567,6 +567,27 @@
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Wachtwoord opslaan";
+
+/* Title for the button to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.button.title" = "Meld een probleem met automatisch invullen";
+
+/* Button title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.button" = "Verzend Rapport";
+
+/* Message for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.message" = "Rapporten die worden verzonden naar DuckDuckGo zijn anoniem en bevatten geen gebruikersnaam, wachtwoord of andere persoonlijk identificeerbare informatie.\n\nHet rapport bevat alleen de URL van de website en de status van sommige instellingen voor automatisch invullen.";
+
+/* Title for the confirmation prompt when reporting autofill is not working for a website */
+"autofill.settings.report.not.working.confirmation.title" = "Rapporteren dat automatisch invullen niet werkt op %@?";
+
+/* Message shown to user when they submit a report that autofill is not working for a website */
+"autofill.settings.report.not.working.sent.confirmation" = "Bedankt! Jouw rapport helpt ons DuckDuckGo beter te maken voor iedereen.";
+
+/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.subtitle" = "Anoniem melden dat automatisch invullen niet werkt op deze site. Wachtwoorden worden nooit gedeeld.";
+
+/* Title for the row to report that autofill is not working on a site in autofill settings */
+"autofill.settings.report.not.working.title" = "Automatisch invullen werkt niet?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Wachtwoord weergeven";

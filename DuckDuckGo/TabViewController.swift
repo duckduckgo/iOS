@@ -36,10 +36,7 @@ import Networking
 import SecureStorage
 import History
 import ContentScopeScripts
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 class TabViewController: UIViewController {
 
@@ -126,8 +123,7 @@ class TabViewController: UIViewController {
         return AppDependencyProvider.shared.subscriptionManager.canPurchase
     }
     private var currentlyLoadedURL: URL?
-    
-#if NETWORK_PROTECTION
+
     private let netPConnectionObserver: ConnectionStatusObserver = AppDependencyProvider.shared.connectionObserver
     private var netPConnectionObserverCancellable: AnyCancellable?
     private var netPConnectionStatus: ConnectionStatus = .default
@@ -141,7 +137,6 @@ class TabViewController: UIViewController {
 
         return false
     }
-#endif
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -356,14 +351,13 @@ class TabViewController: UIViewController {
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
         registerForAddressBarLocationNotifications()
+        registerForAutofillNotifications()
         
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
 
-#if NETWORK_PROTECTION
         observeNetPConnectionStatusChanges()
-#endif
     }
     
     private func registerForAddressBarLocationNotifications() {
@@ -416,7 +410,7 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
-        
+
         // Link DuckPlayer to current Tab
         duckPlayerNavigationHandler?.duckPlayer.setHostViewController(self)
     }
@@ -479,7 +473,7 @@ class TabViewController: UIViewController {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        
+
         webViewContainer.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
@@ -648,9 +642,7 @@ class TabViewController: UIViewController {
             requeryLogic.onNewNavigation(url: url)
         }
 
-        if #available(iOS 15.0, *) {
-            assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
-        }
+        assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
 
         refreshCountSinceLoad = 0
 
@@ -1250,8 +1242,7 @@ extension TabViewController: WKNavigationDelegate {
                 mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-            } else if #available(iOS 14.5, *),
-                      let url = navigationResponse.response.url,
+            } else if let url = navigationResponse.response.url,
                       case .blob = SchemeHandler.schemeType(for: url) {
                 decisionHandler(.download)
 
@@ -1308,11 +1299,9 @@ extension TabViewController: WKNavigationDelegate {
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
 
-#if NETWORK_PROTECTION
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
-#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1509,9 +1498,7 @@ extension TabViewController: WKNavigationDelegate {
             return nil
         }
         
-        if #available(iOS 15.0, *) {
-            request.attribution = .user
-        }
+        request.attribution = .user
 
         return request
     }
@@ -1723,7 +1710,7 @@ extension TabViewController: WKNavigationDelegate {
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
-            
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1873,6 +1860,34 @@ extension TabViewController: WKNavigationDelegate {
     @objc private func dismissLoginDetails() {
         dismiss(animated: true)
     }
+
+    private func registerForAutofillNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(autofillBreakageReport),
+                                               name: .autofillFailureReport,
+                                               object: nil)
+    }
+
+    @objc private func autofillBreakageReport(_ notification: Notification) {
+        guard let tabUid = notification.userInfo?[AutofillLoginListViewModel.UserInfoKeys.tabUid] as? String,
+              tabUid == tabModel.uid,
+              let url = webView.url?.normalized() else {
+            return
+        }
+
+        let parameters: [String: String] = [
+            "website": url.absoluteString,
+            "language": Locale.current.languageCode ?? "en",
+            "autofill_enabled": appSettings.autofillCredentialsEnabled ? "true" : "false",
+            "privacy_protection": (privacyInfo?.isFor(self.url) ?? false) ? "true" : "false",
+            "email_protection": (emailManager?.isSignedIn ?? false) ? "true" : "false",
+            "never_prompt": autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: url.host ?? url.absoluteString) ? "true" : "false"
+        ]
+
+        Pixel.fire(pixel: .autofillLoginsReportFailure, withAdditionalParameters: parameters)
+
+        ActionMessageView.present(message: UserText.autofillSettingsReportNotWorkingSentConfirmation)
+    }
 }
 
 // MARK: - Downloads
@@ -1880,14 +1895,6 @@ extension TabViewController {
 
     private func performBlobNavigation(_ navigationAction: WKNavigationAction,
                                        completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard #available(iOS 14.5, *) else {
-            Pixel.fire(pixel: .downloadAttemptToOpenBLOBviaJS)
-            self.legacySetupBlobDownload(for: navigationAction) {
-                completion(.allow)
-            }
-            return
-        }
-
         self.blobDownloadTargetFrame = navigationAction.targetFrame
         completion(.allow)
     }
@@ -1900,23 +1907,9 @@ extension TabViewController {
         let url = navigationResponse.response.url!
 
         if case .blob = SchemeHandler.schemeType(for: url) {
-            if #available(iOS 14.5, *) {
-                decisionHandler(.download)
+            decisionHandler(.download)
 
-                return nil
-
-            // [iOS<14.5 legacy] reuse temporary download for blob: initiated by WKNavigationAction
-            } else if let download = self.temporaryDownloadForPreviewedFile,
-                      download.temporary,
-                      download.url == navigationResponse.response.url {
-                self.temporaryDownloadForPreviewedFile = nil
-                download.temporary = FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType)
-                downloadManager.startDownload(download)
-
-                decisionHandler(.cancel)
-
-                return download
-            }
+            return nil
         } else if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
             downloadManager.startDownload(download)
             decisionHandler(.cancel)
@@ -1948,9 +1941,7 @@ extension TabViewController {
         guard SchemeHandler.schemeType(for: url) != .blob else {
             // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
             // WKNavigationResponse._downloadAttribute private API could be used instead of it :(
-            if #available(iOS 14.5, *),
-               // if temporary download not setup yet, preview otherwise
-               self.temporaryDownloadForPreviewedFile?.url != url {
+            if self.temporaryDownloadForPreviewedFile?.url != url { // if temporary download not setup yet, preview otherwise
                 // calls webView:navigationAction:didBecomeDownload:
                 return .download
             } else {
@@ -1966,7 +1957,6 @@ extension TabViewController {
         return .allow
     }
 
-    @available(iOS 14.5, *)
     func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
         let delegate = InlineWKDownloadDelegate()
         // temporary delegate held strongly in callbacks
@@ -2024,7 +2014,6 @@ extension TabViewController {
         download.delegate = delegate
     }
 
-    @available(iOS 14.5, *)
     private func transfer(_ download: WKDownload,
                           to downloadManager: DownloadManager,
                           with response: URLResponse,
@@ -2065,49 +2054,6 @@ extension TabViewController {
         }
         DispatchQueue.main.async {
             self.present(alert, animated: true)
-        }
-    }
-
-    private func legacySetupBlobDownload(for navigationAction: WKNavigationAction, completion: @escaping () -> Void) {
-        let url = navigationAction.request.url!
-        let legacyBlobDownloadScript = """
-            let blob = await fetch(url).then(r => r.blob())
-            let data = await new Promise((resolve, reject) => {
-              const fileReader = new FileReader();
-              fileReader.onerror = (e) => reject(fileReader.error);
-              fileReader.onloadend = (e) => {
-                resolve(e.target.result.split(",")[1])
-              };
-              fileReader.readAsDataURL(blob);
-            })
-            return {
-                mimeType: blob.type,
-                size: blob.size,
-                data: data
-            }
-        """
-        webView.callAsyncJavaScript(legacyBlobDownloadScript,
-                                    arguments: ["url": url.absoluteString],
-                                    in: navigationAction.sourceFrame,
-                                    in: .page) { [weak self] result in
-            guard let self = self,
-                  let dict = try? result.get() as? [String: Any],
-                  let mimeType = dict["mimeType"] as? String,
-                  let size = dict["size"] as? Int,
-                  let data = dict["data"] as? String
-            else {
-                completion()
-                return
-            }
-
-            let downloadManager = AppDependencyProvider.shared.downloadManager
-            let downloadSession = Base64DownloadSession(base64: data)
-            let response = URLResponse(url: url, mimeType: mimeType, expectedContentLength: size, textEncodingName: nil)
-            self.temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
-                                                                                  downloadSession: downloadSession,
-                                                                                  cookieStore: nil,
-                                                                                  temporary: true)
-            completion()
         }
     }
 
@@ -2554,18 +2500,18 @@ extension TabViewController: SecureVaultManagerDelegate {
                                                               domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
             self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
-            if #available(iOS 15.0, *) {
-                if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-                    if #available(iOS 16.0, *) {
-                        presentationController.detents = [.custom(resolver: { _ in
-                            saveLoginController.viewModel?.minHeight
-                        })]
-                    } else {
-                        presentationController.detents = [.medium()]
-                    }
-                    presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
+
+            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        saveLoginController.viewModel?.minHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
                 }
+                presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
             }
+
             self.present(saveLoginController, animated: true, completion: nil)
         }
     }
@@ -2663,17 +2609,16 @@ extension TabViewController: SecureVaultManagerDelegate {
                 completionHandler(useGeneratedPassword)
         }
 
-        if #available(iOS 15.0, *) {
-            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.passwordGenerationMinHeight
-                    })]
-                } else {
-                    presentationController.detents = [.medium()]
-                }
+        if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
+            if #available(iOS 16.0, *) {
+                presentationController.detents = [.custom(resolver: { _ in
+                    AutofillViews.passwordGenerationMinHeight
+                })]
+            } else {
+                presentationController.detents = [.medium()]
             }
         }
+
         self.present(passwordGenerationPromptViewController, animated: true)
     }
 
@@ -2706,17 +2651,16 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
         })
 
-        if #available(iOS 15.0, *) {
-            if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.loginPromptMinHeight
-                    })]
-                } else {
-                    presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
-                }
+        if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+            if #available(iOS 16.0, *) {
+                presentationController.detents = [.custom(resolver: { _ in
+                    AutofillViews.loginPromptMinHeight
+                })]
+            } else {
+                presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
             }
         }
+
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
 

@@ -17,12 +17,9 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import SwiftUI
 
-@available(iOS 15, *)
 struct NetworkProtectionVPNLocationView: View {
     @StateObject var model = NetworkProtectionVPNLocationViewModel(accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
 
@@ -97,7 +94,6 @@ struct NetworkProtectionVPNLocationView: View {
     }
 }
 
-@available(iOS 15, *)
 private struct CountryItem: View {
     let itemModel: NetworkProtectionVPNCountryItemModel
     let action: () -> Void
@@ -145,7 +141,6 @@ private struct CountryItem: View {
     }
 }
 
-@available(iOS 15, *)
 private struct ChecklistItem<Content>: View where Content: View {
     let isSelected: Bool
     let action: () -> Void
@@ -170,7 +165,6 @@ private struct ChecklistItem<Content>: View where Content: View {
     }
 }
 
-@available(iOS 15, *)
 private struct MenuItem: View {
     let isSelected: Bool
     let title: String
@@ -194,5 +188,3 @@ private struct MenuItem: View {
         .tint(Color(designSystemColor: .textPrimary))
     }
 }
-
-#endif

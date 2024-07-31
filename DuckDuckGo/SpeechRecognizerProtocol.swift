@@ -25,7 +25,6 @@ protocol SpeechRecognizerProtocol {
     func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float
     func stopRecording()
 
-    @available(iOS 15, *)
     func startRecording(resultHandler: @escaping (_ text: String?,
                                                   _ error: Error?, _
                                                   speechDidFinish: Bool) -> Void,

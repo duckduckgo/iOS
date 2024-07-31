@@ -46,10 +46,6 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
     }
 
     func fetch() async -> AdServicesAttributionResponse? {
-        guard #available(iOS 14.3, *) else {
-            return nil
-        }
-
         var lastToken: String?
 
         for _ in 0..<Constant.maxRetries {
@@ -123,11 +119,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
 
 extension AdAttributionFetcher {
     static func fetchAttributionToken() throws -> String {
-        if #available(iOS 14.3, *) {
-            return try AAAttribution.attributionToken()
-        } else {
-            throw AdAttributionFetcherError.attributionUnsupported
-        }
+        return try AAAttribution.attributionToken()
     }
 }
 

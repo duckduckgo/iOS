@@ -47,13 +47,8 @@ struct AnimatableTypingText: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .visibility(.invisible)
 
-            if #available(iOS 15, *) {
-                Text(AttributedString(model.typedAttributedText))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                Text(model.typedAttributedText.string)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            Text(AttributedString(model.typedAttributedText))
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onChange(of: startAnimating.wrappedValue, perform: { shouldAnimate in
             if shouldAnimate {
@@ -128,10 +123,6 @@ final class AnimatableTypingTextModel: ObservableObject {
     private func showCharacter() {
 
         func attributedTypedString(forTypedChars typedChars: [String.Element]) -> NSAttributedString {
-            guard #available(iOS 15, *) else {
-                return NSAttributedString(string: String(typedChars))
-            }
-
             let chars = Array(text)
             let untypedChars = chars[typedChars.count ..< chars.count]
             let combined = NSMutableAttributedString(string: String(typedChars))

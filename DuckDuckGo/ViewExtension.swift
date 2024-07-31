@@ -34,13 +34,43 @@ extension View {
     }
 }
 
-/*
- These exensions are needed to provide the UI styling specs for Network Protection
- However, at time of writing, they are not supported in iOS <=14. As Network Protection
- is not supporting iOS <=14, these are being kept separate.
- */
+extension View {
+    /// Disables scroll in a backwards-compatible way. 
+    ///
+    /// Keep in mind fallback version may have unforeseen consequences.
+    /// Verify if it does not break anything else for you.
+    @ViewBuilder
+    func withoutScroll() -> some View {
+        if #available(iOS 16, *) {
+            scrollDisabled(true)
+        } else {
+            gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local), including: .gesture)
+        }
+    }
+}
 
-@available(iOS 15, *)
+extension View {
+    /// Adds a preference key observer for views' frame in a given coordinate space.
+    ///
+    /// - Parameters:
+    ///    - space: `CoordinateSpace` used to convert the frame to.
+    ///    - key: `PreferenceKey` used to observe the value.
+    ///    - perform: Closure to call on value change.
+    func onFrameUpdate<K: PreferenceKey>(
+        in space: CoordinateSpace,
+        using key: K.Type,
+        perform: @escaping (CGRect) -> Void) -> some View where K.Value == CGRect {
+
+        self.background {
+            GeometryReader(content: { geometry in
+                Color.clear
+                    .preference(key: key, value: geometry.frame(in: space))
+            })
+        }
+        .onPreferenceChange(key, perform: perform)
+    }
+}
+
 extension View {
     @ViewBuilder
     func applyInsetGroupedListStyle() -> some View {

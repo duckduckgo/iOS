@@ -101,6 +101,8 @@ class MainViewController: UIViewController {
     let syncDataProviders: SyncDataProviders
     let syncPausedStateManager: any SyncPausedStateManaging
     private let variantManager: VariantManager
+    private let tutorialSettings: TutorialSettings
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -181,7 +183,8 @@ class MainViewController: UIViewController {
         privacyProDataReporter: PrivacyProDataReporting,
         variantManager: VariantManager,
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
-        contextualOnboardingLogic: ContextualOnboardingLogic
+        contextualOnboardingLogic: ContextualOnboardingLogic,
+        tutorialSettings: TutorialSettings = DefaultTutorialSettings()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -207,6 +210,8 @@ class MainViewController: UIViewController {
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
         self.variantManager = variantManager
+        self.tutorialSettings = tutorialSettings
+        self.contextualOnboardingLogic = contextualOnboardingLogic
 
         super.init(nibName: nil, bundle: nil)
         
@@ -404,8 +409,14 @@ class MainViewController: UIViewController {
     }
 
     func startAddFavoriteFlow() {
-        DaxDialogs.shared.enableAddFavoriteFlow()
-        if DefaultTutorialSettings().hasSeenOnboarding {
+        // Disable add favourite flow when new onboarding experiment is running and open a new tab.
+        guard contextualOnboardingLogic.canEnableAddFavoriteFlow() else {
+            newTab()
+            return
+        }
+
+        contextualOnboardingLogic.enableAddFavoriteFlow()
+        if tutorialSettings.hasSeenOnboarding {
             newTab()
         }
     }
@@ -416,9 +427,8 @@ class MainViewController: UIViewController {
             // explicitly skip onboarding, e.g. for integration tests
             return
         }
-        
-        let settings = DefaultTutorialSettings()
-        let showOnboarding = !settings.hasSeenOnboarding ||
+
+        let showOnboarding = !tutorialSettings.hasSeenOnboarding ||
             // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
@@ -664,7 +674,7 @@ class MainViewController: UIViewController {
         if let presentedViewController {
             return presentedViewController.supportedInterfaceOrientations
         }
-        return DefaultTutorialSettings().hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
+        return tutorialSettings.hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
     }
 
     override var shouldAutorotate: Bool {
@@ -2652,10 +2662,13 @@ extension MainViewController: OnboardingDelegate {
     }
     
     func markOnboardingSeen() {
-        var settings = DefaultTutorialSettings()
-        settings.hasSeenOnboarding = true
+        tutorialSettings.hasSeenOnboarding = true
     }
-    
+
+    func needsToShowOnboardingIntro() -> Bool {
+        !tutorialSettings.hasSeenOnboarding
+    }
+
 }
 
 extension MainViewController: OnboardingNavigationDelegate {

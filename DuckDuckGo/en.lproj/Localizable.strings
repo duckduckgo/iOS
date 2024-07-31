@@ -1979,8 +1979,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections:";
+/* Privacy pro description subtitle */
+"settings.subscription.description" = "Includes our VPN, Personal Information Removal, and Identity Theft Restoration.";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -1990,11 +1990,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
-
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN
- • Personal Information Removal
- • Identity Theft Restoration";
 
 /* Identity theft restoration cell subtitle for privacy pro */
 "settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
@@ -2009,7 +2004,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.subscription.manage" = "Subscription Settings";
 
 /* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+"settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";

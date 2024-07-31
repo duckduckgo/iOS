@@ -22,6 +22,17 @@ import Subscription
 import SwiftUI
 import UIKit
 
+enum SettingsSubscriptionViewConstants {
+    static let purchaseDescriptionPadding = 5.0
+    static let topCellPadding = 3.0
+    static let noEntitlementsIconWidth = 20.0
+    static let navigationDelay = 0.3
+    static let infoIcon = "info-16"
+    static let alertIcon = "Exclamation-Color-16"
+
+    static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
+}
+
 struct SettingsSubscriptionView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
@@ -34,27 +45,6 @@ struct SettingsSubscriptionView: View {
     @State var isShowingStripeView = false
     @State var isShowingSubscriptionError = false
     @State var isShowingPrivacyPro = false
-
-    enum Constants {
-        static let purchaseDescriptionPadding = 5.0
-        static let topCellPadding = 3.0
-        static let noEntitlementsIconWidth = 20.0
-        static let navigationDelay = 0.3
-        static let infoIcon = "info-16"
-        static let alertIcon = "Exclamation-Color-16"
-
-        static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
-    }
-
-    private var subscriptionDescriptionView: some View {
-        VStack(alignment: .leading) {
-            Text(UserText.settingsPProSubscribe).daxBodyRegular()
-            Group {
-                Text(UserText.settingsPProDescription).daxFootnoteRegular().padding(.bottom, Constants.purchaseDescriptionPadding)
-                Text(UserText.settingsPProFeatures).daxFootnoteRegular()
-            }.foregroundColor(Color(designSystemColor: .textSecondary))
-        }
-    }
     
     @ViewBuilder
     private var restorePurchaseView: some View {
@@ -87,10 +77,11 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
-
         Group {
-            SettingsCustomCell(content: { subscriptionDescriptionView })
-            
+            SettingsCellView(label: UserText.settingsPProSubscribe,
+                             subtitle: UserText.settingsPProDescription,
+                             image: Image("SettingsPrivacyPro"))
+
             let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
                                                                                    navigationCoordinator: subscriptionNavigationCoordinator,
                                                                                    subscriptionManager: subscriptionManager,
@@ -104,12 +95,14 @@ struct SettingsSubscriptionView: View {
                 }
 
             NavigationLink(destination: subscribeView,
-                           isActive: $isShowingSubscribeFlow,
-                           label: { SettingsCellView(label: UserText.settingsPProLearnMore ) })
-            
+                           isActive: $isShowingSubscribeFlow) {
+                SettingsCellView(label: UserText.settingsPProLearnMore)
+            }
+
             NavigationLink(destination: restoreView,
-                           isActive: $isShowingRestoreFlow,
-                           label: { SettingsCellView(label: UserText.settingsPProIHaveASubscription ) })
+                           isActive: $isShowingRestoreFlow) {
+                SettingsCellView(label: UserText.settingsPProIHaveASubscription )
+            }
         }
     }
 
@@ -118,13 +111,13 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: {
                 HStack(alignment: .top) {
-                    Image(Constants.alertIcon)
-                        .frame(width: Constants.noEntitlementsIconWidth)
-                        .padding(.top, Constants.topCellPadding)
+                    Image(SettingsSubscriptionViewConstants.alertIcon)
+                        .frame(width: SettingsSubscriptionViewConstants.noEntitlementsIconWidth)
+                        .padding(.top, SettingsSubscriptionViewConstants.topCellPadding)
                     VStack(alignment: .leading) {
                         Text(UserText.settingsPProSubscriptionExpiredTitle).daxBodyRegular()
                         Text(UserText.settingsPProSubscribeAgain).daxFootnoteRegular()
-                            .padding(.bottom, Constants.purchaseDescriptionPadding)
+                            .padding(.bottom, SettingsSubscriptionViewConstants.purchaseDescriptionPadding)
                     }.foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             })
@@ -155,13 +148,13 @@ struct SettingsSubscriptionView: View {
         Group {
             SettingsCustomCell(content: {
                 HStack(alignment: .top) {
-                    Image(Constants.infoIcon)
-                        .frame(width: Constants.noEntitlementsIconWidth)
-                        .padding(.top, Constants.topCellPadding)
+                    Image(SettingsSubscriptionViewConstants.infoIcon)
+                        .frame(width: SettingsSubscriptionViewConstants.noEntitlementsIconWidth)
+                        .padding(.top, SettingsSubscriptionViewConstants.topCellPadding)
                     VStack(alignment: .leading) {
                         Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
                         Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular()
-                            .padding(.bottom, Constants.purchaseDescriptionPadding)
+                            .padding(.bottom, SettingsSubscriptionViewConstants.purchaseDescriptionPadding)
                     }.foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             })
@@ -218,7 +211,7 @@ struct SettingsSubscriptionView: View {
         Group {
             if isShowingPrivacyPro {
                 let footerLink = Link(UserText.settingsPProSectionFooter,
-                                      destination: Constants.privacyPolicyURL
+                                      destination: SettingsSubscriptionViewConstants.privacyPolicyURL
                 ).daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
 
                 Section(header: Text(UserText.settingsPProSection), footer: footerLink) {
@@ -266,3 +259,22 @@ struct SettingsSubscriptionView: View {
         }
     }
 }
+//
+// let settingsModel = SettingsViewModel(legacyViewProvider: <#T##SettingsLegacyViewProvider#>,
+//                                      subscriptionManager: <#T##any SubscriptionManager#>,
+//                                      historyManager: <#T##any HistoryManaging#>,
+//                                      syncPausedStateManager: <#T##any SyncPausedStateManaging#>,
+//                                      privacyProDataReporter: <#T##any PrivacyProDataReporting#>)
+//
+// #Preview {
+//    SettingsSubscriptionView(viewModel: settingsModel,
+//                             subscriptionNavigationCoordinator: <#T##SubscriptionNavigationCoordinator#>,
+//                             isShowingDBP: <#T##arg#>,
+//                             isShowingITP: <#T##arg#>,
+//                             isShowingRestoreFlow: <#T##arg#>,
+//                             isShowingSubscribeFlow: <#T##arg#>,
+//                             isShowingGoogleView: <#T##arg#>,
+//                             isShowingStripeView: <#T##arg#>,
+//                             isShowingSubscriptionError: <#T##arg#>,
+//                             isShowingPrivacyPro: <#T##arg#>)
+// }

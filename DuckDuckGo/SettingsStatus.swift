@@ -39,7 +39,7 @@ enum StatusIndicator: Equatable {
 
 struct StatusIndicatorView: View {
     var status: StatusIndicator
-    var isDotHidden = false
+    var isDotHidden: Bool = false
 
     var body: some View {
         HStack(spacing: 6) {
@@ -65,5 +65,16 @@ struct StatusIndicatorView: View {
         case .off:
             return Color(designSystemColor: .textSecondary).opacity(0.33)
         }
+    }
+}
+
+#Preview {
+    VStack {
+        StatusIndicatorView(status: .on, isDotHidden: false)
+        StatusIndicatorView(status: .off, isDotHidden: false)
+        StatusIndicatorView(status: .alwaysOn, isDotHidden: false)
+        StatusIndicatorView(status: .on, isDotHidden: true)
+        StatusIndicatorView(status: .off, isDotHidden: true)
+        StatusIndicatorView(status: .alwaysOn, isDotHidden: true)
     }
 }

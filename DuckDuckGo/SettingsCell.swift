@@ -35,7 +35,7 @@ struct SettingsCellComponents {
 
 /// Encapsulates a View representing a Cell with different configurations
 struct SettingsCellView: View, Identifiable {
-    
+
     enum Accessory {
         case none
         case rightDetail(String)
@@ -43,7 +43,7 @@ struct SettingsCellView: View, Identifiable {
         case image(Image)
         case custom(AnyView)
     }
-    
+
     var label: String
     var subtitle: String?
     var image: Image?
@@ -55,7 +55,7 @@ struct SettingsCellView: View, Identifiable {
     var webLinkIndicator: Bool
     var id: UUID = UUID()
     var isButton: Bool
-    
+
     /// Initializes a `SettingsCellView` with the specified label and accesory.
     ///
     /// Use this initializer for standard cell types that require a label.
@@ -87,7 +87,7 @@ struct SettingsCellView: View, Identifiable {
     /// Use this initializer for creating a cell that displays custom content.
     /// This initializer does not require a label, as the content is entirely custom.
     /// - Parameters:
-    ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)    
+    ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
     ///   - customView: A closure that returns the custom view (`AnyView`) to be displayed in the cell.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     init(action: @escaping () -> Void = {}, @ViewBuilder customView: () -> AnyView, enabled: Bool = true) {
@@ -99,7 +99,7 @@ struct SettingsCellView: View, Identifiable {
         self.webLinkIndicator = false
         self.isButton = false
     }
-    
+
     var body: some View {
         Group {
             if isButton {
@@ -117,9 +117,9 @@ struct SettingsCellView: View, Identifiable {
                 .contentShape(Rectangle())
             }
         }.frame(maxWidth: .infinity)
-        
+
     }
-    
+
     private var cellContent: some View {
         Group {
             switch accesory {
@@ -130,7 +130,7 @@ struct SettingsCellView: View, Identifiable {
             }
         }
     }
-    
+
     private var defaultView: some View {
         Group {
             HStack {
@@ -148,11 +148,11 @@ struct SettingsCellView: View, Identifiable {
                     }
                 }.fixedSize(horizontal: false, vertical: true)
                     .layoutPriority(0.7)
-                
+
                 Spacer()
-                
+
                 accesoryView()
-                
+
                 if let statusIndicator {
                     statusIndicator.fixedSize()
                 }
@@ -165,7 +165,7 @@ struct SettingsCellView: View, Identifiable {
             }.padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
         }.contentShape(Rectangle())
     }
-    
+
     @ViewBuilder
     private func accesoryView() -> some View {
         switch accesory {
@@ -196,7 +196,7 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     let label: String
     let options: [T]
     @Binding var selectedOption: T
-    
+
     /// Initializes a SettingsPickerCellView.
     /// Use a custom picker that mimics the MenuPickerStyle
     /// But with specific design
@@ -237,7 +237,7 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
             }
         }
     }
-    
+
     private func getButtonWithAction(action: @escaping () -> Void,
                                      option: String,
                                      selected: Bool) -> some View {
@@ -305,91 +305,87 @@ struct SettingsCustomCell<Content: View>: View {
     }
 }
 
-#if DEBUG
-struct SettingsCellView_Previews: PreviewProvider {
-    enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
-        case optionOne = "Lorem"
-        case optionTwo = "Ipsum"
-        case optionThree = "Dolor"
+private enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
+    case optionOne = "Lorem"
+    case optionTwo = "Ipsum"
+    case optionThree = "Dolor"
 
-        var description: String {
-            return self.rawValue
-        }
+    var description: String {
+        return self.rawValue
     }
-    
-    static var previews: some View {
-        Group {
-            List {
-                SettingsCellView(label: "Cell with disclosure",
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Multi-line Cell with disclosure \nLine 2\nLine 3",
-                                 subtitle: "Curabitur erat massa, cursus sed velit",
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Image cell with disclosure ",
-                                 accesory: .image(Image(systemName: "person.circle")),
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Subtitle image cell with disclosure",
-                                 subtitle: "This is the subtitle",
-                                 accesory: .image(Image(systemName: "person.circle")),
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Right Detail cell with disclosure",
-                                 accesory: .rightDetail("Detail"),
-                                 disclosureIndicator: true)
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Switch Cell",
-                                 accesory: .toggle(isOn: .constant(true)))
-                    .previewLayout(.sizeThatFits)
-                
-                SettingsCellView(label: "Switch Cell",
-                                 subtitle: "Subtitle goes here",
-                                 accesory: .toggle(isOn: .constant(true)))
-                    .previewLayout(.sizeThatFits)
+}
 
-                
-                @State var selectedOption: SampleOption = .optionOne
-                SettingsPickerCellView(label: "Proin tempor urna", options: SampleOption.allCases, selectedOption: $selectedOption)
-                    .previewLayout(.sizeThatFits)
-                
-                let cellContent: () -> some View = {
-                    HStack(spacing: 15) {
-                        Image(systemName: "bird.circle")
-                            .foregroundColor(.orange)
-                            .imageScale(.large)
-                        Image(systemName: "bird.circle")
-                            .foregroundColor(.orange)
-                            .imageScale(.medium)
-                      
-                        Spacer()
-                        VStack(alignment: .center) {
-                            Text("LOREM IPSUM")
-                                .font(.headline)
-                        }
-                        Spacer()
-                        Image(systemName: "bird.circle")
-                            .foregroundColor(.orange)
-                            .imageScale(.medium)
-                        Image(systemName: "bird.circle")
-                            .foregroundColor(.orange)
-                            .imageScale(.large)
+#Preview {
+    Group {
+        List {
+            SettingsCellView(label: "Cell with disclosure",
+                             disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Multi-line Cell with disclosure \nLine 2\nLine 3",
+                             subtitle: "Curabitur erat massa, cursus sed velit",
+                             disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Image cell with disclosure ",
+                             accesory: .image(Image(systemName: "person.circle")),
+                             disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Subtitle image cell with disclosure",
+                             subtitle: "This is the subtitle",
+                             accesory: .image(Image(systemName: "person.circle")),
+                             disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Right Detail cell with disclosure",
+                             accesory: .rightDetail("Detail"),
+                             disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Switch Cell",
+                             accesory: .toggle(isOn: .constant(true)))
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Switch Cell",
+                             subtitle: "Subtitle goes here",
+                             accesory: .toggle(isOn: .constant(true)))
+            .previewLayout(.sizeThatFits)
+
+
+            @State var selectedOption: SampleOption = .optionOne
+            SettingsPickerCellView(label: "Proin tempor urna", options: SampleOption.allCases, selectedOption: $selectedOption)
+                .previewLayout(.sizeThatFits)
+
+            let cellContent: () -> some View = {
+                HStack(spacing: 15) {
+                    Image(systemName: "bird.circle")
+                        .foregroundColor(.orange)
+                        .imageScale(.large)
+                    Image(systemName: "bird.circle")
+                        .foregroundColor(.orange)
+                        .imageScale(.medium)
+
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text("LOREM IPSUM")
+                            .font(.headline)
                     }
+                    Spacer()
+                    Image(systemName: "bird.circle")
+                        .foregroundColor(.orange)
+                        .imageScale(.medium)
+                    Image(systemName: "bird.circle")
+                        .foregroundColor(.orange)
+                        .imageScale(.large)
                 }
-                // For some unknown reason, this breaks on CI, but works normally
-                // Perhaps an XCODE version issue?
-                SettingsCustomCell(content: cellContent)
-                     .previewLayout(.sizeThatFits)
-
-                               
             }
+            // For some unknown reason, this breaks on CI, but works normally
+            // Perhaps an XCODE version issue?
+            SettingsCustomCell(content: cellContent)
+                .previewLayout(.sizeThatFits)
+
+
         }
     }
 }
-#endif

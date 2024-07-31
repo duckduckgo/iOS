@@ -687,6 +687,11 @@ import WebKit
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
 
+        // If showing the onboarding intro ignore deeplinks
+        guard mainViewController?.needsToShowOnboardingIntro() == false else {
+            return false
+        }
+
         if handleEmailSignUpDeepLink(url) {
             return true
         }

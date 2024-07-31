@@ -49,14 +49,14 @@ struct SettingsCellView: View, Identifiable {
     var image: Image?
     var action: () -> Void = {}
     var enabled: Bool = true
-    var accesory: Accessory
+    var accessory: Accessory
     var statusIndicator: StatusIndicatorView?
     var disclosureIndicator: Bool
     var webLinkIndicator: Bool
     var id: UUID = UUID()
     var isButton: Bool
 
-    /// Initializes a `SettingsCellView` with the specified label and accesory.
+    /// Initializes a `SettingsCellView` with the specified label and accessory.
     ///
     /// Use this initializer for standard cell types that require a label.
     /// - Parameters:
@@ -64,18 +64,18 @@ struct SettingsCellView: View, Identifiable {
     ///   - subtitle: Displayed below title (if present)
     ///   - image: Image displayed to the left of label
     ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
-    ///   - accesory: The type of cell to display. Excludes the custom cell type.
+    ///   - accessory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
     ///   - webLinkIndicator: Adds a link indicator on the right
     ///   - isButton: Disables the tap actions on the cell if true
-    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, statusIndicator: StatusIndicatorView? = nil, disclosureIndicator: Bool = false, webLinkIndicator: Bool = false, isButton: Bool = false) {
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accessory: Accessory = .none, enabled: Bool = true, statusIndicator: StatusIndicatorView? = nil, disclosureIndicator: Bool = false, webLinkIndicator: Bool = false, isButton: Bool = false) {
         self.label = label
         self.subtitle = subtitle
         self.image = image
         self.action = action
         self.enabled = enabled
-        self.accesory = accesory
+        self.accessory = accessory
         self.statusIndicator = statusIndicator
         self.disclosureIndicator = disclosureIndicator
         self.webLinkIndicator = webLinkIndicator
@@ -94,7 +94,7 @@ struct SettingsCellView: View, Identifiable {
         self.label = "" // Not used for custom cell
         self.action = action
         self.enabled = enabled
-        self.accesory = .custom(customView())
+        self.accessory = .custom(customView())
         self.disclosureIndicator = false
         self.webLinkIndicator = false
         self.isButton = false
@@ -122,7 +122,7 @@ struct SettingsCellView: View, Identifiable {
 
     private var cellContent: some View {
         Group {
-            switch accesory {
+            switch accessory {
             case .custom(let customView):
                 customView
             default:
@@ -151,7 +151,7 @@ struct SettingsCellView: View, Identifiable {
 
                 Spacer()
 
-                accesoryView()
+                accessoryView()
 
                 if let statusIndicator {
                     statusIndicator.fixedSize()
@@ -167,8 +167,8 @@ struct SettingsCellView: View, Identifiable {
     }
 
     @ViewBuilder
-    private func accesoryView() -> some View {
-        switch accesory {
+    private func accessoryView() -> some View {
+        switch accessory {
         case .none:
             EmptyView()
         case .rightDetail(let value):

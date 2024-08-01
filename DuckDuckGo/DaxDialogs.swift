@@ -123,6 +123,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                               pixelName: .daxDialogsSerpUnique,
                                               type: .afterSearch)
 
+        // Message and CTA empty on purpose as for this case we use only pixelName and type
+        static let visitWebsite = BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .onboardingContextualTryVisitSiteUnique, type: .visitWebsite)
+
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
@@ -148,7 +151,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                       highlightAddressBar: true,
                                                       pixelName: .daxDialogsWithTrackersUnique, type: .withMultipleTrackers)
 
-        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShownUnique, type: .final)
+        // Message and CTA empty on purpose as for this case we use only pixelName and type
+        static let fire = BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShownUnique, type: .fire)
+
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsEndOfJourneyUnique, type: .final)
 
         let message: String
         let cta: String
@@ -373,7 +379,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case BrowsingSpec.SpecType.afterSearch.rawValue:
             return BrowsingSpec.afterSearch
         case BrowsingSpec.SpecType.visitWebsite.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmedUnique, type: .visitWebsite)
+            return .visitWebsite
         case BrowsingSpec.SpecType.withoutTrackers.rawValue:
             return BrowsingSpec.withoutTrackers
         case BrowsingSpec.SpecType.siteIsMajorTracker.rawValue:
@@ -386,7 +392,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             guard let entityNames = blockedEntityNames(privacyInfo.trackerInfo) else { return nil }
             return trackersBlockedMessage(entityNames)
         case BrowsingSpec.SpecType.fire.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmedUnique, type: .fire)
+            return .fire
         case BrowsingSpec.SpecType.final.rawValue:
             return nil
         default: return nil

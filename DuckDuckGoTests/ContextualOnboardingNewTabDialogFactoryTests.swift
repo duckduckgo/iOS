@@ -49,6 +49,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         mockDelegate = nil
         onDismissCalled = nil
         contextualOnboardingLogicMock = nil
+        pixelReporterMock = nil
         super.tearDown()
     }
 
@@ -158,7 +159,7 @@ private extension ContextualOnboardingNewTabDialogFactoryTests {
 
         // WHEN
         let view = factory.createDaxDialog(for: spec, onDismiss: {})
-        let host = UIHostingControllerMock(rootView: AnyView(view))
+        let host = OnboardingHostingControllerMock(rootView: AnyView(view))
         host.onAppearExpectation = expectation
         window.rootViewController = host
         XCTAssertNotNil(host.view)
@@ -167,17 +168,6 @@ private extension ContextualOnboardingNewTabDialogFactoryTests {
         waitForExpectations(timeout: 2.0)
         XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
         XCTAssertEqual(pixelReporterMock.capturedScreenImpression, event)
-    }
-
-}
-
-private final class UIHostingControllerMock: UIHostingController<AnyView> {
-
-    var onAppearExpectation: XCTestExpectation?
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        onAppearExpectation?.fulfill()
     }
 
 }

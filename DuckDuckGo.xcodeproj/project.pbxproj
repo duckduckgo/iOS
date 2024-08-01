@@ -657,6 +657,7 @@
 		9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */; };
 		9F6933192C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */; };
 		9F69331F2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */; };
+		9F6933212C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */; };
 		9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
 		9F9EE4CE2C377D4900D4118E /* OnboardingFirePixelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */; };
@@ -2370,6 +2371,7 @@
 		9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTutorialSettings.swift; sourceTree = "<group>"; };
 		9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporterMock.swift; sourceTree = "<group>"; };
 		9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppearViewModifier.swift; sourceTree = "<group>"; };
+		9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHostingControllerMock.swift; sourceTree = "<group>"; };
 		9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyDataReporter.swift; sourceTree = "<group>"; };
 		9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFirePixelMock.swift; sourceTree = "<group>"; };
 		9F9EE4D32C37BB1300D4118E /* OnboardingView+Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+Landing.swift"; sourceTree = "<group>"; };
@@ -4470,6 +4472,7 @@
 				9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */,
 				9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */,
 				9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */,
+				9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -7489,6 +7492,7 @@
 				9F23B8062C2BE22700950875 /* OnboardingIntroViewModelTests.swift in Sources */,
 				9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,
+				9F6933212C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift in Sources */,
 				9F6933192C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift in Sources */,
 				56D0602D2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift in Sources */,
 				85AD49EE2B6149110085D2D1 /* CookieStorageTests.swift in Sources */,

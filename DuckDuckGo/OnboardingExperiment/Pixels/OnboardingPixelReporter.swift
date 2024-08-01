@@ -68,6 +68,10 @@ protocol OnboardingPrivacyDashboardPixelReporting {
     func trackPrivacyDashboardOpen()
 }
 
+protocol OnboardingScreenImpressionReporting {
+    func trackScreenImpression(event: Pixel.Event)
+}
+
 // MARK: - Implementation
 
 final class OnboardingPixelReporter {
@@ -165,6 +169,16 @@ extension OnboardingPixelReporter: OnboardingPrivacyDashboardPixelReporting {
     func trackPrivacyDashboardOpen() {
         guard let daysSinceInstall = daysSinceInstallProvider.daysSinceInstall else { return }
         fire(event: .privacyDashboardOpened, unique: true, additionalParameters: ["daysSinceInstall": String(daysSinceInstall)])
+    }
+
+}
+
+// MARK: - OnboardingPixelReporter + Screen Impression
+
+extension OnboardingPixelReporter: OnboardingScreenImpressionReporting {
+    
+    func trackScreenImpression(event: Pixel.Event) {
+        fire(event: event, unique: true)
     }
 
 }

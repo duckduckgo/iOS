@@ -25,13 +25,19 @@ protocol NewTabDaxDialogProvider {
     func createDaxDialog(for homeDialog: DaxDialogs.HomeScreenSpec, onDismiss: @escaping () -> Void) -> DaxDialog
 }
 
-class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
-    var delegate: OnboardingNavigationDelegate?
-    var contextualOnboardingLogic: ContextualOnboardingLogic
+final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
+    private var delegate: OnboardingNavigationDelegate?
+    private let contextualOnboardingLogic: ContextualOnboardingLogic
+    private let onboardingPixelReporter: OnboardingScreenImpressionReporting
 
-    init(delegate: OnboardingNavigationDelegate?, contextualOnboardingLogic: ContextualOnboardingLogic) {
+    init(
+        delegate: OnboardingNavigationDelegate?,
+        contextualOnboardingLogic: ContextualOnboardingLogic,
+        onboardingPixelReporter: OnboardingScreenImpressionReporting = OnboardingPixelReporter()
+    ) {
         self.delegate = delegate
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.onboardingPixelReporter = onboardingPixelReporter
     }
 
     @ViewBuilder
@@ -58,6 +64,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
                 .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle()
+        .onFirstAppear { [weak self] in
+            self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTrySearchUnique)
+        }
     }
 
     private func createSubsequentDialog() -> some View {
@@ -67,6 +76,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
                 .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle()
+        .onFirstAppear { [weak self] in
+            self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
+        }
     }
 
     private func createAddFavoriteDialog(message: String) -> some View {
@@ -86,8 +98,9 @@ class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle()
-        .onAppear { [weak self] in
+        .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
+            self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyUnique)
         }
     }
 }

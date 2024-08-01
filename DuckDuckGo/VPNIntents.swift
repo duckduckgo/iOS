@@ -116,40 +116,10 @@ struct EnableVPNIntent: AppIntent {
 // MARK: - Snooze
 
 @available(iOS 17.0, *)
-struct StartSnoozeVPNIntent: AppIntent {
-
-    static let title: LocalizedStringResource = "Snooze VPN"
-    static let description: LocalizedStringResource = "Snoozes the DuckDuckGo VPN"
-    static let openAppWhenRun: Bool = false
-    static let isDiscoverable: Bool = false
-
-    @MainActor
-    func perform() async throws -> some IntentResult {
-        do {
-            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-
-            guard let manager = managers.first, let session = manager.connection as? NETunnelProviderSession else {
-                return .result()
-            }
-
-            let defaultDuration: TimeInterval = .minutes(1) + .seconds(1) // TODO: Change to 20 mins, 1 min is only used for testing
-            try? await session.sendProviderMessage(.startSnooze(defaultDuration))
-
-            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
-
-            return .result()
-        } catch {
-            return .result()
-        }
-    }
-
-}
-
-@available(iOS 17.0, *)
 struct CancelSnoozeVPNIntent: AppIntent {
 
-    static let title: LocalizedStringResource = "Snooze VPN"
-    static let description: LocalizedStringResource = "Snoozes the DuckDuckGo VPN"
+    static let title: LocalizedStringResource = "Resume VPN"
+    static let description: LocalizedStringResource = "Resumes the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = false
 
@@ -163,7 +133,6 @@ struct CancelSnoozeVPNIntent: AppIntent {
             }
 
             try? await session.sendProviderMessage(.cancelSnooze)
-
             WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
 
             return .result()

@@ -156,6 +156,8 @@ public struct UserDefaultsWrapper<T> {
 
         case newTabPageSectionsSettings = "com.duckduckgo.ios.newTabPage.sections.settings"
         case newTabPageShortcutsSettings = "com.duckduckgo.ios.newTabPage.shortcuts.settings"
+        case newTabPageIntroMessageEnabled = "com.duckduckgo.ios.newTabPage.introMessageEnabled"
+        case newTabPageIntroMessageSeenCount = "com.duckduckgo.ios.newTabPage.introMessageSeenCount"
 
         // Debug keys
 

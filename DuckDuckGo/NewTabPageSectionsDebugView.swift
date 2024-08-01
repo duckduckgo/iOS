@@ -22,7 +22,11 @@ import SwiftUI
 struct NewTabPageSectionsDebugView: View {
     
     private var newTabPageDebugging: NewTabPageDebugging
+    private var appSettings: AppSettings
+    
     @State private var isFeatureEnabled: Bool
+    @State private var introMessageCount: Int
+    
     private var localFlagEnabled: Binding<Bool> {
         Binding {
             newTabPageDebugging.isLocalFlagEnabled
@@ -30,15 +34,34 @@ struct NewTabPageSectionsDebugView: View {
             newTabPageDebugging.isLocalFlagEnabled = $0
             isFeatureEnabled = newTabPageDebugging.isNewTabPageSectionsEnabled
         }
-
     }
-
+    
+    private var introMessageEnabled: Binding<Bool> {
+        Binding {
+            appSettings.newTabPageIntroMessageEnabled ?? false
+        } set: {
+            appSettings.newTabPageIntroMessageEnabled = $0
+        }
+    }
+    
+    private var introMessageCountBinding: Binding<Int> {
+        Binding {
+            appSettings.newTabPageIntroMessageSeenCount
+        } set: {
+            appSettings.newTabPageIntroMessageSeenCount = $0
+            introMessageCount = $0
+        }
+    }
+    
     init() {
         let manager = NewTabPageManager()
         newTabPageDebugging = manager
         isFeatureEnabled = manager.isNewTabPageSectionsEnabled
+        
+        appSettings = AppDependencyProvider.shared.appSettings
+        introMessageCount = appSettings.newTabPageIntroMessageSeenCount
     }
-
+    
     var body: some View {
         List {
             Section {
@@ -54,7 +77,7 @@ struct NewTabPageSectionsDebugView: View {
                     }
                 }
             }
-
+            
             Section {
                 HStack {
                     Text("Feature flag enabled")
@@ -72,14 +95,34 @@ struct NewTabPageSectionsDebugView: View {
             } footer: {
                 Text("Requires internal user")
             }
-
+            
             Section {
                 Toggle(isOn: localFlagEnabled,
                        label: {
                     Text("Local setting enabled")
                 })
             }
+            
+            Section {
+                Toggle(isOn: introMessageEnabled) {
+                    Text("Intro message")
+                }
+                HStack {
+                    Text("Message seen count")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("\(introMessageCount)")
+                        .frame(alignment: .trailing)
+                        .foregroundStyle(.secondary)
+                }
+                Button("Reset message seen count", action: {
+                    introMessageCountBinding.wrappedValue = 0
+                })
+            } header: {
+                Text("Other Settings")
+            }
         }
+        .applyInsetGroupedListStyle()
+        .navigationTitle("New Tab Page Improvements")
     }
 }
 

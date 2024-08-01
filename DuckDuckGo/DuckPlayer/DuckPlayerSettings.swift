@@ -177,6 +177,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        isFeatureEnabledCancellable?.cancel()
+        NotificationCenter.default.removeObserver(self, name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated, object: nil)
     }
 }

@@ -351,6 +351,7 @@ class TabViewController: UIViewController {
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
         registerForAddressBarLocationNotifications()
+        registerForAutofillNotifications()
         
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
@@ -409,7 +410,7 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
-        
+
         // Link DuckPlayer to current Tab
         duckPlayerNavigationHandler?.duckPlayer.setHostViewController(self)
     }
@@ -472,7 +473,7 @@ class TabViewController: UIViewController {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        
+
         webViewContainer.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
@@ -1709,7 +1710,7 @@ extension TabViewController: WKNavigationDelegate {
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
-            
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1858,6 +1859,34 @@ extension TabViewController: WKNavigationDelegate {
     
     @objc private func dismissLoginDetails() {
         dismiss(animated: true)
+    }
+
+    private func registerForAutofillNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(autofillBreakageReport),
+                                               name: .autofillFailureReport,
+                                               object: nil)
+    }
+
+    @objc private func autofillBreakageReport(_ notification: Notification) {
+        guard let tabUid = notification.userInfo?[AutofillLoginListViewModel.UserInfoKeys.tabUid] as? String,
+              tabUid == tabModel.uid,
+              let url = webView.url?.normalized() else {
+            return
+        }
+
+        let parameters: [String: String] = [
+            "website": url.absoluteString,
+            "language": Locale.current.languageCode ?? "en",
+            "autofill_enabled": appSettings.autofillCredentialsEnabled ? "true" : "false",
+            "privacy_protection": (privacyInfo?.isFor(self.url) ?? false) ? "true" : "false",
+            "email_protection": (emailManager?.isSignedIn ?? false) ? "true" : "false",
+            "never_prompt": autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: url.host ?? url.absoluteString) ? "true" : "false"
+        ]
+
+        Pixel.fire(pixel: .autofillLoginsReportFailure, withAdditionalParameters: parameters)
+
+        ActionMessageView.present(message: UserText.autofillSettingsReportNotWorkingSentConfirmation)
     }
 }
 

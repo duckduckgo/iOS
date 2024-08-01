@@ -488,6 +488,7 @@ public struct UserText {
     static let netPStatusViewTitle = NSLocalizedString("network.protection.status.view.title", value: "VPN", comment: "Title label text for the status view when netP is disconnected")
     static let netPStatusHeaderTitleOff = NSLocalizedString("network.protection.status.header.title.off", value: "DuckDuckGo VPN is Off", comment: "Header title label text for the status view when VPN is disconnected")
     static let netPStatusHeaderTitleOn = NSLocalizedString("network.protection.status.header.title.on", value: "DuckDuckGo VPN is On", comment: "Header title label text for the status view when VPN is connected")
+    static let netPStatusHeaderTitleSnoozed = NSLocalizedString("network.protection.status.header.title.snoozed", value: "DuckDuckGo VPN is Snoozed", comment: "Header title label text for the status view when VPN is snoozing")
     static let netPStatusHeaderMessageOff = NSLocalizedString("network.protection.status.header.message.off", value: "Connect to secure all of your device’s\nInternet traffic.", comment: "Message label text for the status view when VPN is disconnected")
     static let netPStatusHeaderMessageOn = NSLocalizedString("network.protection.status.header.message.on", value: "All device Internet traffic is being secured\nthrough the VPN.", comment: "Message label text for the status view when VPN is disconnected")
     static let netPStatusDisconnected = NSLocalizedString("network.protection.status.disconnected", value: "Not connected", comment: "The label for the NetP VPN when disconnected")

@@ -1480,6 +1480,9 @@ https://duckduckgo.com/mac";
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "DuckDuckGo VPN is On";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN is Snoozed";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 

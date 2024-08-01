@@ -160,7 +160,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
         statusMessage = Self.message(for: statusObserver.recentValue)
-        self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
+        self.headerTitle = Self.titleText(status: statusObserver.recentValue)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
         self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
@@ -306,7 +306,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func updateViewModel(withStatus connectionStatus: ConnectionStatus) {
-        self.headerTitle = Self.titleText(connected: connectionStatus.isConnected)
+        print("DEBUG: Updating view model with status \(connectionStatus)")
+        self.headerTitle = Self.titleText(status: connectionStatus)
         self.statusImageID = Self.statusImageID(connected: connectionStatus.isConnected)
 
         if !connectionStatus.isConnected {
@@ -468,8 +469,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
     }
 
-    private class func titleText(connected isConnected: Bool) -> String {
-        isConnected ? UserText.netPStatusHeaderTitleOn : UserText.netPStatusHeaderTitleOff
+    private class func titleText(status: ConnectionStatus) -> String {
+        switch status {
+        case .connected: return UserText.netPStatusHeaderTitleOn
+        case .snoozing: return UserText.netPStatusHeaderTitleSnoozed
+        case .notConfigured, .disconnected, .disconnecting, .connecting, .reasserting: return UserText.netPStatusHeaderTitleOff
+        }
     }
 
     private class func statusImageID(connected isConnected: Bool) -> String {

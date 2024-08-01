@@ -47,8 +47,8 @@ struct NetworkProtectionStatusView: View {
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
             $0
-                .animation(.default, value: statusModel.hasServerInfo)
-                .animation(.default, value: statusModel.shouldShowError)
+                .animation(.easeOut, value: statusModel.hasServerInfo)
+                .animation(.easeOut, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
     }
@@ -131,7 +131,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func snooze() -> some View {
         if statusModel.isSnoozing {
-            Button("Resume") {
+            Button("Wake Up") {
                 Task {
                     await statusModel.cancelSnooze()
                 }

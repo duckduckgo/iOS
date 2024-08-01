@@ -151,7 +151,7 @@ struct VPNStatusView: View {
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
 
                 if status == .connected {
-                    Text(snoozeTimingStore.isSnoozing ? "Resumes at \(snoozeEndDateString)" : entry.location)
+                    Text(snoozeTimingStore.isSnoozing ? "Until \(snoozeEndDateString)" : entry.location)
                         .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(Color(designSystemColor: .textSecondary))
                         .opacity(status.isConnected ? 0.8 : 0.6)
@@ -163,7 +163,26 @@ struct VPNStatusView: View {
                 }
 
                 switch status {
-                case .connected, .connecting, .reasserting:
+                case .connected:
+                    let buttonTitle = snoozeTimingStore.isSnoozing ? "Wake Up" : UserText.vpnWidgetDisconnectButton
+                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : DisableVPNIntent()
+
+                    Button(buttonTitle, intent: intent)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(snoozeTimingStore.isSnoozing ?
+                                         connectButtonForegroundColor(isDisabled: false) :
+                                         disconnectButtonForegroundColor(isDisabled: status != .connected))
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.roundedRectangle(radius: 8))
+                        .tint(snoozeTimingStore.isSnoozing ?
+                              Color(designSystemColor: .accent) :
+                                disconnectButtonBackgroundColor(isDisabled: status != .connected)
+                        )
+                        .disabled(status != .connected)
+                        .frame(height: 28)
+                        .padding(.top, 6)
+                        .padding(.bottom, 16)
+                case .connecting, .reasserting:
                     Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))

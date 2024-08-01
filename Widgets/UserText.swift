@@ -73,8 +73,8 @@ struct UserText {
                                                             value: "VPN is On",
                                                             comment: "Message describing VPN connected status")
 
-    static let vpnWidgetSnoozingStatus = NSLocalizedString("widget.vpn.status.snoozing",
-                                                            value: "VPN is Snoozing",
+    static let vpnWidgetSnoozingStatus = NSLocalizedString("widget.vpn.status.snoozed",
+                                                            value: "VPN is Snoozed",
                                                             comment: "Message describing VPN snoozing status")
 
     static let vpnWidgetDisconnectedStatus = NSLocalizedString("widget.vpn.status.disconnected",

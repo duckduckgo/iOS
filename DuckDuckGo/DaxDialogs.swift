@@ -120,35 +120,35 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
-                                              pixelName: .daxDialogsSerp,
+                                              pixelName: .daxDialogsSerpUnique,
                                               type: .afterSearch)
 
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
-                                                  pixelName: .daxDialogsWithoutTrackers, type: .withoutTrackers)
-        
+                                                  pixelName: .daxDialogsWithoutTrackersUnique, type: .withoutTrackers)
+
         static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
-                                                     pixelName: .daxDialogsSiteIsMajor, type: .siteIsMajorTracker)
-        
+                                                     pixelName: .daxDialogsSiteIsMajorUnique, type: .siteIsMajorTracker)
+
         static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
-                                                          pixelName: .daxDialogsSiteOwnedByMajor, type: .siteOwnedByMajorTracker)
-        
+                                                          pixelName: .daxDialogsSiteOwnedByMajorUnique, type: .siteOwnedByMajorTracker)
+
         static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: true,
-                                                 pixelName: .daxDialogsWithTrackers, type: .withOneTracker)
-        
+                                                 pixelName: .daxDialogsWithTrackersUnique, type: .withOneTracker)
+
         static let withMultipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
-                                                      pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
+                                                      pixelName: .daxDialogsWithTrackersUnique, type: .withMultipleTrackers)
 
-        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShown, type: .final)
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShownUnique, type: .final)
 
         let message: String
         let cta: String
@@ -180,10 +180,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                          confirmAction: UserText.daxDialogFireButtonEducationConfirmAction,
                                                          cancelAction: UserText.daxDialogFireButtonEducationCancelAction,
                                                          isConfirmActionDestructive: true,
-                                                         displayedPixelName: .daxDialogsFireEducationShown,
-                                                         confirmActionPixelName: .daxDialogsFireEducationConfirmed,
-                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled)
-        
+                                                         displayedPixelName: .daxDialogsFireEducationShownUnique,
+                                                         confirmActionPixelName: .daxDialogsFireEducationConfirmedUnique,
+                                                         cancelActionPixelName: .daxDialogsFireEducationCancelledUnique)
+
         let message: String
         let confirmAction: String
         let cancelAction: String
@@ -373,7 +373,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case BrowsingSpec.SpecType.afterSearch.rawValue:
             return BrowsingSpec.afterSearch
         case BrowsingSpec.SpecType.visitWebsite.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .visitWebsite)
+            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmedUnique, type: .visitWebsite)
         case BrowsingSpec.SpecType.withoutTrackers.rawValue:
             return BrowsingSpec.withoutTrackers
         case BrowsingSpec.SpecType.siteIsMajorTracker.rawValue:
@@ -386,7 +386,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             guard let entityNames = blockedEntityNames(privacyInfo.trackerInfo) else { return nil }
             return trackersBlockedMessage(entityNames)
         case BrowsingSpec.SpecType.fire.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .fire)
+            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmedUnique, type: .fire)
         case BrowsingSpec.SpecType.final.rawValue:
             return nil
         default: return nil

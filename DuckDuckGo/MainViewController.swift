@@ -166,6 +166,8 @@ class MainViewController: UIViewController {
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
+    private var whatsNewController: WhatsNewHostingController?
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -302,6 +304,10 @@ class MainViewController: UIViewController {
 
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
+        }
+
+        if DefaultWhatsNewExperiment().shouldDisplay {
+            showWhatsNew()
         }
     }
 
@@ -2679,5 +2685,24 @@ extension MainViewController {
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+extension MainViewController {
+    
+    func showWhatsNew() {
+
+        whatsNewController = WhatsNewHostingController { [weak self] featureSelected in
+            guard let self else { return }
+
+            self.presentedViewController?.dismiss(animated: true)
+
+            switch featureSelected {
+            case .privacyPro:
+                self.segueToPrivacyPro()
+            }
+
+        }
+        present(whatsNewController!, animated: true)
     }
 }

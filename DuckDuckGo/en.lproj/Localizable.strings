@@ -1585,6 +1585,12 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Your New Tab Page is... New!";
+
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Show, hide, and reorder sections on the new tab page";
 

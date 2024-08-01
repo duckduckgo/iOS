@@ -1207,6 +1207,12 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let newTabPageSettingsSectionsDescription = NSLocalizedString("new.tab.page.settings.sections.description", value: "Show, hide, and reorder sections on the new tab page", comment: "Footer of the group allowing for setting up new tab page sections")
     public static let newTabPageSettingsShortcutsHeaderTitle = NSLocalizedString("new.tab.page.settings.shortcuts.header.title", value: "SHORTCUTS", comment: "Header title of the shortcuts in New Tab Page preferences.")
 
+    // MARK: Intro message
+
+    public static let newTabPageIntroMessageTitle = NSLocalizedString("new.tab.page.intro.message.title", value: "Your New Tab Page is... New!", comment: "Title of information message about New Tab Page redesign")
+    public static let newTabPageIntroMessageBody = NSLocalizedString("new.tab.page.intro.message.body", value: "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.", comment: "Information message about New Tab Page redesign")
+
+
     // MARK: - Dax Onboarding Experiment
     public enum DaxOnboardingExperiment {
         enum Intro {

@@ -28,7 +28,7 @@ struct NewTabPageIntroMessageView: View {
         VStack {
             VStack(spacing: Metrics.itemSpacing) {
                 HStack {
-                    Text("Your New Tab Page is... New!")
+                    Text(UserText.newTabPageIntroMessageTitle)
                         .daxHeadline()
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color(designSystemColor: .textPrimary))
@@ -36,7 +36,7 @@ struct NewTabPageIntroMessageView: View {
                 }
                 .padding(.horizontal, 20) // Prevent showing header underneath close button
 
-                Text("Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.")
+                Text(UserText.newTabPageIntroMessageBody)
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)

@@ -23,7 +23,6 @@ import NetworkProtection
 
 @available(iOS 17.0, *)
 final class VPNSnoozeLiveActivityManager: ObservableObject {
-    static let shared = VPNSnoozeLiveActivityManager() // TODO: Remove singleton
 
     private let snoozeTimingStore: NetworkProtectionSnoozeTimingStore
 

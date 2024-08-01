@@ -450,7 +450,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
 
         if #available(iOS 17.0, *) {
-            await VPNSnoozeLiveActivityManager.shared.start(endDate: Date().addingTimeInterval(defaultDuration))
+            await VPNSnoozeLiveActivityManager().start(endDate: Date().addingTimeInterval(defaultDuration))
         }
     }
 
@@ -464,7 +464,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         try? await activeSession.sendProviderMessage(.cancelSnooze)
 
         if #available(iOS 17.0, *) {
-            await VPNSnoozeLiveActivityManager.shared.endSnoozeActivity()
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
         }
     }
 

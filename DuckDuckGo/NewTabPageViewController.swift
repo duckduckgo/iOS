@@ -29,6 +29,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
+    private let newTabPageModel: NewTabPageModel
     private let messagesModel: NewTabPageMessagesModel
     private let favoritesModel: FavoritesDefaultModel
     private let shortcutsModel: ShortcutsModel
@@ -44,12 +45,14 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
+        newTabPageModel = NewTabPageModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
         favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
-        let newTabPageView = NewTabPageView(messagesModel: messagesModel,
+        let newTabPageView = NewTabPageView(newTabPageModel: newTabPageModel,
+                                            messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,

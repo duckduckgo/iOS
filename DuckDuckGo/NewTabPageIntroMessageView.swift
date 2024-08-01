@@ -21,6 +21,9 @@ import SwiftUI
 import DesignResourcesKit
 
 struct NewTabPageIntroMessageView: View {
+
+    var onClose: (() -> Void)?
+
     var body: some View {
         VStack {
             VStack(spacing: Metrics.itemSpacing) {
@@ -41,7 +44,7 @@ struct NewTabPageIntroMessageView: View {
             .padding(Metrics.padding)
             .overlay(alignment: .topTrailing) {
                 Button {
-
+                    onClose?()
                 } label: {
                     Image(.close24)
                 }

@@ -165,7 +165,7 @@ final class SaveLoginViewModel: ObservableObject {
         autofillSaveModalRejectionCount += 1
     }
 
-    private func shouldShowAutofillKeepUsingConfirmation() -> Bool {
+    private func shouldShowDisableAutofillPrompt() -> Bool {
         if autofillSaveModalDisablePromptShown || !autofillFirstTimeUser {
             return false
         }
@@ -175,15 +175,11 @@ final class SaveLoginViewModel: ObservableObject {
     private func cancel() {
         updateRejectionCountIfNeeded()
         delegate?.saveLoginViewModelDidCancel(self)
-        if shouldShowAutofillKeepUsingConfirmation() {
-            delegate?.saveLoginViewModelConfirmKeepUsing(self)
-            autofillSaveModalDisablePromptShown = true
-        }
+        showDisableAutofillPromptIfNeeded()
     }
-    
+
     func cancelButtonPressed() {
         dismissButtonWasPressed = true
-        // autofillFirstTimeUser = false TODO: Determine whether this is right
         cancel()
     }
     
@@ -206,7 +202,15 @@ final class SaveLoginViewModel: ObservableObject {
 
     func neverPrompt() {
         didSave = true
-        autofillFirstTimeUser = false
+        updateRejectionCountIfNeeded()
         delegate?.saveLoginViewModelNeverPrompt(self)
+        showDisableAutofillPromptIfNeeded()
+    }
+
+    private func showDisableAutofillPromptIfNeeded() {
+        if shouldShowDisableAutofillPrompt() {
+            delegate?.saveLoginViewModelConfirmKeepUsing(self)
+            autofillSaveModalDisablePromptShown = true
+        }
     }
 }

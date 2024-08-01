@@ -34,7 +34,7 @@ struct NewTabPageIntroMessageView: View {
                         .foregroundStyle(Color(designSystemColor: .textPrimary))
                         .frame(maxWidth: .infinity, alignment: .top)
                 }
-                .padding(.horizontal, 20) // Prevent showing header underneath close button
+                .padding(.horizontal, Metrics.titlePadding) // Prevent showing header underneath close button
 
                 Text(UserText.newTabPageIntroMessageBody)
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
@@ -63,6 +63,7 @@ struct NewTabPageIntroMessageView: View {
         static let padding = 8.0
         static let itemSpacing = 6.0
         static let cornerRadius = 12.0
+        static let titlePadding = 20.0
     }
 }
 

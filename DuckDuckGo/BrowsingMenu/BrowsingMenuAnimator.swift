@@ -106,7 +106,7 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
         fromViewController.view.isHidden = true
 
-        if toViewController.homeController != nil {
+        if toViewController.homeViewController != nil {
             toViewController.presentedMenuButton.setState(.bookmarksImage, animated: true)
         } else {
             toViewController.presentedMenuButton.setState(.menuImage, animated: true)

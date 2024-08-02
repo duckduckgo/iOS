@@ -123,9 +123,9 @@ struct SaveLoginView: View {
         return useScrollView
     }
 
-    @ViewBuilder private func featuresListItem(imageTitle: String, title: String, subtitle: String) -> some View {
+    @ViewBuilder private func featuresListItem(imageResource: ImageResource, title: String, subtitle: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(imageTitle).frame(width: 24, height: 24)
+            Image(imageResource).frame(width: 24, height: 24)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .daxSubheadSemibold()
@@ -161,17 +161,17 @@ struct SaveLoginView: View {
                 .frame(height: 1)
             VStack(alignment: .leading, spacing: 12) {
                 featuresListItem(
-                    imageTitle: "Autofill-Color-24",
+                    imageResource: .autofillColor24,
                     title: UserText.autofillOnboardingKeyFeaturesSignInsTitle,
                     subtitle: UserText.autofillOnboardingKeyFeaturesSignInsDescription
                 )
                 featuresListItem(
-                    imageTitle: "Lock-Color-24",
+                    imageResource: .lockColor24,
                     title: UserText.autofillOnboardingKeyFeaturesSecureStorageTitle,
                     subtitle: viewModel.secureStorageDescription
                 )
                 featuresListItem(
-                    imageTitle: "Sync-Color-24",
+                    imageResource: .syncColor24,
                     title: UserText.autofillOnboardingKeyFeaturesSyncTitle,
                     subtitle: UserText.autofillOnboardingKeyFeaturesSyncDescription
                 )

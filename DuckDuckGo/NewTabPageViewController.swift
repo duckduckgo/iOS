@@ -34,13 +34,16 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let tab: Tab
 
-    init(interactionModel: FavoritesListInteracting,
+    init(tab: Tab,
+         interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil) {
 
+        self.tab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
@@ -59,6 +62,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tab.viewed = true
     }
 
     // MARK: - Private

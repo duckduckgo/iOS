@@ -90,6 +90,9 @@ class MainViewController: UIViewController {
     let previewsSource: TabPreviewsSource
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
+    var isNewTabPageVisible: Bool {
+        newTabPageViewController != nil
+    }
 
     var autoClearInProgress = false
     var autoClearShouldRefreshUIAfterClear = true
@@ -740,7 +743,8 @@ class MainViewController: UIViewController {
         }
 
         if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(interactionModel: favoritesViewModel,
+            let controller = NewTabPageViewController(tab: tabModel,
+                                                      interactionModel: favoritesViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                       homePageMessagesConfiguration: homePageConfiguration,
@@ -1102,7 +1106,7 @@ class MainViewController: UIViewController {
 
     func refreshMenuButtonState() {
         let expectedState: MenuButton.State
-        if homeController != nil {
+        if homeViewController != nil {
             expectedState = .bookmarksImage
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
@@ -1714,9 +1718,18 @@ extension MainViewController: OmniBarDelegate {
     private func launchBrowsingMenu() async {
         guard let tab = currentTab else { return }
 
-        let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
-        let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
-                                                                menuEntries: entries)
+        let menuEntries: [BrowsingMenuEntry]
+        let headerEntries: [BrowsingMenuEntry]
+        if isNewTabPageVisible {
+            menuEntries = tab.buildShortcutsMenu()
+            headerEntries = []
+        } else {
+            menuEntries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
+            headerEntries = tab.buildBrowsingMenuHeaderContent()
+        }
+
+        let controller = BrowsingMenuViewController.instantiate(headerEntries: headerEntries,
+                                                                menuEntries: menuEntries)
 
         controller.modalPresentationStyle = .custom
         self.present(controller, animated: true) {

@@ -144,7 +144,7 @@ class AppUserDefaultsTests: XCTestCase {
         appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
         appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
         appUserDefaults.autofillIsNewInstallForOnByDefault = true
-        let featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+        let featureFlagger = createFeatureFlagger(withFeatureFlagEnabled: .autofillOnByDefault)
         appUserDefaults.featureFlagger = featureFlagger
 
         XCTAssertTrue(appUserDefaults.autofillCredentialsEnabled)
@@ -174,7 +174,7 @@ class AppUserDefaultsTests: XCTestCase {
 
     func testDefaultAutoconsentStateIsTrue_WhenInRollout() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withFeatureFlagEnabled: .autoconsentOnByDefault)
         XCTAssertTrue(appUserDefaults.autoconsentEnabled)
     }
 
@@ -183,7 +183,7 @@ class AppUserDefaultsTests: XCTestCase {
      
         // When setting disabled by user and rollout enabled
         appUserDefaults.autoconsentEnabled = false
-        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withFeatureFlagEnabled: .autoconsentOnByDefault)
 
         XCTAssertFalse(appUserDefaults.autoconsentEnabled)
 
@@ -212,5 +212,10 @@ class AppUserDefaultsTests: XCTestCase {
 
         return mockPrivacyConfiguration
     }
-    
+
+    private func createFeatureFlagger(withFeatureFlagEnabled featureFlag: FeatureFlag) -> FeatureFlagger {
+        let mockFeatureFlagger = MockFeatureFlagger()
+        mockFeatureFlagger.enabledFeatureFlags.append(featureFlag)
+        return mockFeatureFlagger
+    }
 }

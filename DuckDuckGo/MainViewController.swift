@@ -1716,7 +1716,9 @@ extension MainViewController: OmniBarDelegate {
 
     @MainActor
     private func launchBrowsingMenu() async {
-        guard let tab = currentTab else { return }
+        guard let tab = currentTab ?? tabManager.current(createIfNeeded: true) else {
+            return
+        }
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]

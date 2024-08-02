@@ -1,5 +1,5 @@
 //
-//  SettingsStatus.swift
+//  StatusIndicatorView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,24 +18,6 @@
 //
 
 import SwiftUI
-import Combine
-
-enum StatusIndicator: Equatable {
-    case alwaysOn
-    case on
-    case off
-
-    var text: String {
-        switch self {
-        case .alwaysOn:
-            return UserText.settingsAlwaysOn
-        case .on:
-            return UserText.settingsOn
-        case .off:
-            return UserText.settingsOff
-        }
-    }
-}
 
 struct StatusIndicatorView: View {
     var status: StatusIndicator

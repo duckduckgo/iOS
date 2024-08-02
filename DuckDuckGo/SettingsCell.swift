@@ -133,23 +133,29 @@ struct SettingsCellView: View, Identifiable {
 
     private var defaultView: some View {
         Group {
-            HStack {
-                if let image {
-                    image
-                }
-                VStack(alignment: .leading) {
-                    Text(label)
-                        .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textPrimary))
-                    if let subtitleText = subtitle {
-                        Text(subtitleText)
-                            .daxFootnoteRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
+            HStack(alignment: .center) {
+                HStack(alignment: .top) {
+                    // Image
+                    if let image {
+                        image
+                            .padding(.top, -2)
                     }
-                }.fixedSize(horizontal: false, vertical: true)
-                    .layoutPriority(0.7)
+                    VStack(alignment: .leading) {
+                        // Title
+                        Text(label)
+                            .daxBodyRegular()
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
+                        // Subtitle
+                        if let subtitleText = subtitle {
+                            Text(subtitleText)
+                                .daxFootnoteRegular()
+                                .foregroundColor(Color(designSystemColor: .textSecondary))
+                        }
+                    }.fixedSize(horizontal: false, vertical: true)
+                        .layoutPriority(0.7)
+                }.scaledToFit()
 
-                Spacer()
+                Spacer(minLength: 8)
 
                 accessoryView()
 
@@ -179,6 +185,7 @@ struct SettingsCellView: View, Identifiable {
         case .toggle(let isOn):
             Toggle("", isOn: isOn)
                 .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+                .fixedSize()
         case .image(let image):
             image
                 .resizable()
@@ -305,7 +312,7 @@ struct SettingsCustomCell<Content: View>: View {
     }
 }
 
-private enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
+enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
     case optionOne = "Lorem"
     case optionTwo = "Ipsum"
     case optionThree = "Dolor"
@@ -324,32 +331,34 @@ private enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertib
 
             SettingsCellView(label: "Multi-line Cell with disclosure \nLine 2\nLine 3",
                              subtitle: "Curabitur erat massa, cursus sed velit",
+                             image: Image("SettingsAppearance"),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Image cell with disclosure ",
-                             accesory: .image(Image(systemName: "person.circle")),
+                             accessory: .image(Image(systemName: "person.circle")),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Subtitle image cell with disclosure",
                              subtitle: "This is the subtitle",
-                             accesory: .image(Image(systemName: "person.circle")),
+                             accessory: .image(Image("SettingsAppearance")),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Right Detail cell with disclosure",
-                             accesory: .rightDetail("Detail"),
+                             accessory: .rightDetail("Detail"),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Switch Cell",
-                             accesory: .toggle(isOn: .constant(true)))
+                             image: Image("SettingsAppearance"),
+                             accessory: .toggle(isOn: .constant(true)))
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Switch Cell",
                              subtitle: "Subtitle goes here",
-                             accesory: .toggle(isOn: .constant(true)))
+                             accessory: .toggle(isOn: .constant(true)))
             .previewLayout(.sizeThatFits)
 
 
@@ -385,7 +394,26 @@ private enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertib
             SettingsCustomCell(content: cellContent)
                 .previewLayout(.sizeThatFits)
 
+            SettingsCellView(label: "Cell with image",
+                             image: Image("SettingsAppearance"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             disclosureIndicator: true
+            )
 
+
+            SettingsCellView(label: "Cell a long long long long long long long title",
+                             image: Image("SettingsAppearance"),
+                             statusIndicator: StatusIndicatorView(status: .alwaysOn),
+                             disclosureIndicator: true
+            )
+
+            SettingsCellView(label: "Cell with everything Lorem ipsum dolor sit amet, consectetur",
+                             subtitle: "Long subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+                             image: Image("SettingsAppearance"),
+                             accessory: .toggle(isOn: .constant(true)),
+                             statusIndicator: StatusIndicatorView(status: .on),
+                             disclosureIndicator: true
+            )
         }
     }
 }

@@ -67,8 +67,10 @@ struct SettingsSubscriptionView: View {
     }
     
     private var manageSubscriptionView: some View {
-        Text(UserText.settingsPProManageSubscription)
-            .daxBodyRegular()
+        SettingsCellView(
+            label: UserText.settingsPProManageSubscription,
+            image: Image("SettingsPrivacyPro")
+        )
     }
 
     private var subscriptionManager: SubscriptionManager {
@@ -166,37 +168,34 @@ struct SettingsSubscriptionView: View {
     private var subscriptionDetailsView: some View {
         
         if viewModel.state.subscription.entitlements.contains(.networkProtection) {
-            SettingsCellView(
-                label: UserText.settingsPProVPNTitle,
-                subtitle: viewModel.state.networkProtection.status != ""
-                ? viewModel.state.networkProtection.status : nil,
-                action: { viewModel.presentLegacyView(.netP) },
-                disclosureIndicator: true,
-                isButton: true)
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             action: { viewModel.presentLegacyView(.netP) },
+                             statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtection.enabled ? .on : .off),
+                             disclosureIndicator: true,
+                             isButton: true)
         }
         
         if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
-            NavigationLink(
-                destination: SubscriptionPIRView(),
-                isActive: $isShowingDBP,
-                label: {
-                    SettingsCellView(
-                        label: UserText.settingsPProDBPTitle,
-                        subtitle: UserText.settingsPProDBPSubTitle)
-                })
-            
+            NavigationLink(destination: SubscriptionPIRView(), isActive: $isShowingDBP) {
+                SettingsCellView(
+                    label: UserText.settingsPProDBPTitle,
+                    image: Image("SettingsPrivacyProPIR"),
+                    statusIndicator: StatusIndicatorView(status: .on)
+                )
+            }
         }
         
         if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
             NavigationLink(
                 destination: SubscriptionITPView(),
-                isActive: $isShowingITP,
-                label: {
+                isActive: $isShowingITP) {
                     SettingsCellView(
                         label: UserText.settingsPProITRTitle,
-                        subtitle: UserText.settingsPProITRSubTitle)
-                })
-            
+                        image: Image("SettingsPrivacyProITP"),
+                        statusIndicator: StatusIndicatorView(status: .on)
+                    )
+            }
         }
         
         NavigationLink(

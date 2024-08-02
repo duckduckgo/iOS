@@ -1,5 +1,5 @@
 //
-//  OnFirstAppear.swift
+//  OnFirstAppearViewModifier.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -33,7 +33,7 @@ import SwiftUI
 /// ```
 ///
 /// - Parameter onFirstAppearAction: A closure to be executed the first time the view appears.
-public struct OnFirstAppearModifier: ViewModifier {
+public struct OnFirstAppearViewModifier: ViewModifier {
 
     private let onFirstAppearAction: () -> Void
     @State private var hasAppeared = false
@@ -59,7 +59,7 @@ extension View {
     /// - Parameter action: A closure to be executed the first time the view appears.
     /// - Returns: A view that will execute `action` only once when it appears.
     func onFirstAppear(_ onFirstAppearAction: @escaping () -> Void ) -> some View {
-        return modifier(OnFirstAppearModifier(onFirstAppearAction))
+        return modifier(OnFirstAppearViewModifier(onFirstAppearAction))
     }
 
 }

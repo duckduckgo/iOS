@@ -889,6 +889,48 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result, .final)
     }
 
+    func testWhenExperimentGroup_AndCanEnableAddFavoritesFlowIsCalled_ThenReturnFalse() {
+        // GIVEN
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+
+        // WHEN
+        let result = sut.canEnableAddFavoriteFlow()
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenControlGroup_AndCanEnableAddFavoritesFlowIsCalled_ThenReturnTrue() {
+        // WHEN
+        let result = onboarding.canEnableAddFavoriteFlow()
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenControlGroup_AndEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsTrue() {
+        // GIVEN
+        XCTAssertFalse(onboarding.isAddFavoriteFlow)
+
+        // WHEN
+        onboarding.enableAddFavoriteFlow()
+
+        // THEN
+        XCTAssertTrue(onboarding.isAddFavoriteFlow)
+    }
+
+    func testWhenExperimentGroup_AndEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsFalse() {
+        // GIVEN
+        let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
+        XCTAssertFalse(sut.isAddFavoriteFlow)
+
+        // WHEN
+        sut.enableAddFavoriteFlow()
+
+        // THEN
+        XCTAssertFalse(sut.isAddFavoriteFlow)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,

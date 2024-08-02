@@ -318,7 +318,7 @@ import WebKit
                                       variantManager: variantManager,
                                       contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
                                       contextualOnboardingLogic: daxDialogs,
-                                      contextualOnboardingCustomSearchPixelReporting: OnboardingPixelReporter())
+                                      contextualOnboardingPixelReporter: OnboardingPixelReporter())
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

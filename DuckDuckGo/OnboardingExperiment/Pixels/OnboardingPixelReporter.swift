@@ -58,14 +58,11 @@ protocol OnboardingSiteSuggestionsPixelReporting {
     func trackSiteSuggetionOptionTapped()
 }
 
-protocol OnboardingCustomSearchPixelReporting {
+protocol OnboardingCustomInteractionPixelReporting {
     func trackCustomSearch()
     func trackCustomSite()
     func trackSecondSiteVisit()
-}
-
-protocol OnboardingPrivacyDashboardPixelReporting {
-    func trackPrivacyDashboardOpen()
+    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool)
 }
 
 protocol OnboardingScreenImpressionReporting {
@@ -77,19 +74,25 @@ protocol OnboardingScreenImpressionReporting {
 final class OnboardingPixelReporter {
     private let pixel: OnboardingPixelFiring.Type
     private let uniquePixel: OnboardingPixelFiring.Type
-    private let daysSinceInstallProvider: DaysSinceInstallProviding
+    private let statisticsStore: StatisticsStore
+    private let calendar: Calendar
+    private let dateProvider: () -> Date
     private let userDefaults: UserDefaults
     private let siteVisitedUserDefaultsKey = "com.duckduckgo.ios.site-visited"
 
     init(
         pixel: OnboardingPixelFiring.Type = Pixel.self,
         uniquePixel: OnboardingPixelFiring.Type = UniquePixel.self,
-        daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider(),
-        userDefaults: UserDefaults = UserDefaults.standard
+        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+        calendar: Calendar = .current,
+        dateProvider: @escaping () -> Date = Date.init,
+        userDefaults: UserDefaults = UserDefaults.app
     ) {
         self.pixel = pixel
         self.uniquePixel = uniquePixel
-        self.daysSinceInstallProvider = daysSinceInstallProvider
+        self.statisticsStore = statisticsStore
+        self.calendar = calendar
+        self.dateProvider = dateProvider
         self.userDefaults = userDefaults
     }
 
@@ -140,10 +143,10 @@ extension OnboardingPixelReporter: OnboardingSiteSuggestionsPixelReporting {
 
 }
 
-// MARK: - OnboardingPixelReporter + Custom Search
+// MARK: - OnboardingPixelReporter + Custom Interaction
 
-extension OnboardingPixelReporter: OnboardingCustomSearchPixelReporting {
-    
+extension OnboardingPixelReporter: OnboardingCustomInteractionPixelReporting {
+
     func trackCustomSearch() {
         fire(event: .onboardingContextualSearchCustomUnique, unique: true)
     }
@@ -160,15 +163,13 @@ extension OnboardingPixelReporter: OnboardingCustomSearchPixelReporting {
         }
     }
 
-}
-
-// MARK: - OnboardingPixelReporter + Privacy Dashboard
-
-extension OnboardingPixelReporter: OnboardingPrivacyDashboardPixelReporting {
-
-    func trackPrivacyDashboardOpen() {
-        guard let daysSinceInstall = daysSinceInstallProvider.daysSinceInstall else { return }
-        fire(event: .privacyDashboardOpened, unique: true, additionalParameters: ["daysSinceInstall": String(daysSinceInstall)])
+    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool) {
+        let daysSinceInstall = statisticsStore.installDate.flatMap { calendar.numberOfDaysBetween($0, and: dateProvider()) }
+        let additionalParameters = [
+            PixelParameters.fromOnboarding: String(fromOnboarding),
+            PixelParameters.daysSinceInstall: String(daysSinceInstall ?? 0)
+        ]
+        fire(event: .privacyDashboardFirstTimeOpenedUnique, unique: true, additionalParameters: additionalParameters)
     }
 
 }
@@ -181,23 +182,4 @@ extension OnboardingPixelReporter: OnboardingScreenImpressionReporting {
         fire(event: event, unique: true)
     }
 
-}
-
-protocol DaysSinceInstallProviding {
-    var daysSinceInstall: Int? { get }
-}
-
-final class DaysSinceInstallProvider: DaysSinceInstallProviding {
-    private let store: StatisticsStore
-    private let dateProvider: () -> Date
-
-    init(store: StatisticsStore = StatisticsUserDefaults(), dateProvider: @escaping () -> Date = Date.init) {
-        self.store = store
-        self.dateProvider = dateProvider
-    }
-
-    var daysSinceInstall: Int? {
-        guard let installDate = store.installDate else { return nil }
-        return Calendar.current.numberOfDaysBetween(installDate, and: dateProvider())
-    }
 }

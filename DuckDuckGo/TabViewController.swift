@@ -298,8 +298,7 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                                   onboardingPixelReporter: OnboardingPixelReporter = OnboardingPixelReporter(),
-                                   daysSinceInstallProvider: DaysSinceInstallProviding = DaysSinceInstallProvider()) -> TabViewController {
+                                   onboardingPixelReporter: OnboardingPixelReporter = OnboardingPixelReporter()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -312,8 +311,7 @@ class TabViewController: UIViewController {
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                               contextualOnboardingLogic: contextualOnboardingLogic,
-                              onboardingPixelReporter: onboardingPixelReporter,
-                              daysSinceInstallProvider: daysSinceInstallProvider
+                              onboardingPixelReporter: onboardingPixelReporter
             )
         })
         return controller
@@ -330,7 +328,6 @@ class TabViewController: UIViewController {
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
-    let daysSinceInstallProvider: DaysSinceInstallProviding
     let onboardingPixelReporter: OnboardingPixelReporter
 
     required init?(coder aDecoder: NSCoder,
@@ -343,8 +340,7 @@ class TabViewController: UIViewController {
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                   onboardingPixelReporter: OnboardingPixelReporter,
-                   daysSinceInstallProvider: DaysSinceInstallProviding) {
+                   onboardingPixelReporter: OnboardingPixelReporter) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -357,7 +353,6 @@ class TabViewController: UIViewController {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
-        self.daysSinceInstallProvider = daysSinceInstallProvider
         super.init(coder: aDecoder)
     }
 

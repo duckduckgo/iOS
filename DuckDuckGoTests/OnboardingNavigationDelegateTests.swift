@@ -72,7 +72,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             variantManager: MockVariantManager(),
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: ContextualOnboardingLogicMock(),
-            contextualOnboardingCustomSearchPixelReporting: OnboardingPixelReporterMock())
+            contextualOnboardingPixelReporter: OnboardingPixelReporterMock())
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

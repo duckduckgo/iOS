@@ -21,7 +21,7 @@ import Foundation
 import Core
 @testable import DuckDuckGo
 
-final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomSearchPixelReporting, OnboardingScreenImpressionReporting {
+final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingScreenImpressionReporting {
     private(set) var didCallTrackSearchOptionTapped = false
     private(set) var didCallTrackSiteOptionTapped = false
     private(set) var didCallTrackCustomSearch = false
@@ -34,6 +34,8 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     private(set) var secondSiteVisitCounter = 0
     private(set) var didCallTrackScreenImpressionCalled = false
     private(set) var capturedScreenImpression: Pixel.Event?
+    private(set) var didCallPrivacyDashboardOpenedForFirstTime = false
+    private(set) var capturedFromOnboarding: Bool?
 
     func trackSiteSuggetionOptionTapped() {
         didCallTrackSiteOptionTapped = true
@@ -58,5 +60,10 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     func trackScreenImpression(event: Pixel.Event) {
         didCallTrackScreenImpressionCalled = true
         capturedScreenImpression = event
+    }
+
+    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool) {
+        didCallPrivacyDashboardOpenedForFirstTime = true
+        capturedFromOnboarding = fromOnboarding
     }
 }

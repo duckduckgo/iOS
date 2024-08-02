@@ -928,13 +928,7 @@ class TabViewController: UIViewController {
     }
 
     func showPrivacyDashboard() {
-        func firePrivacyDashboardOpenPixel() {
-            let additionalParameters = daysSinceInstallProvider.daysSinceInstall
-                .flatMap { [PixelParameters.daysSinceInstall: String($0)] } ?? [:]
-            UniquePixel.fire(pixel: .privacyDashboardOpened, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion, .atb])
-        }
-
-        firePrivacyDashboardOpenPixel()
+        Pixel.fire(pixel: .privacyDashboardOpened)
         performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
 

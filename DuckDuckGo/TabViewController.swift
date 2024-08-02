@@ -2800,13 +2800,14 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     }
     
     func saveLoginViewControllerConfirmKeepUsing(_ viewController: SaveLoginViewController) {
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisableSnackbarShown)
         DispatchQueue.main.async {
             let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
             ActionMessageView.present(message: UserText.autofillDisablePromptMessage,
                                       actionTitle: UserText.autofillDisablePromptAction,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
                                       onAction: { [weak self] in
+                Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisableSnackbarOpenSettings)
                 guard let mainVC = self?.view.window?.rootViewController as? MainViewController else { return }
                 mainVC.launchAutofillLogins(source: .saveLoginDisablePrompt)
             })

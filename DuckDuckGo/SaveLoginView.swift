@@ -128,11 +128,11 @@ struct SaveLoginView: View {
             Image(imageTitle).frame(width: 24, height: 24)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .daxFootnoteSemibold()
+                    .daxSubheadSemibold()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                 Text(subtitle)
-                    .daxFootnoteRegular()
+                    .daxSubheadRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)

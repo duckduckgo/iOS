@@ -43,6 +43,9 @@ protocol ContextualOnboardingLogic {
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
     func setPrivacyButtonPulseSeen()
+
+    func canEnableAddFavoriteFlow() -> Bool // Temporary during Contextual Onboarding Experiment
+    func enableAddFavoriteFlow()
 }
 
 extension ContentBlockerRulesManager: EntityProviding {
@@ -297,7 +300,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         settings.isDismissed = false
     }
 
+    func canEnableAddFavoriteFlow() -> Bool {
+        !isNewOnboarding
+    }
+
     func enableAddFavoriteFlow() {
+        guard canEnableAddFavoriteFlow() else { return }
+
         nextHomeScreenMessageOverride = .addFavorite
         // Progress to next home screen message, but don't re-show the second dax dialog if it's already been shown
         settings.homeScreenMessagesSeen = max(settings.homeScreenMessagesSeen, 1)

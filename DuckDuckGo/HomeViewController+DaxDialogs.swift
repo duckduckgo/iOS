@@ -80,7 +80,8 @@ extension HomeViewController {
         hostingController?.view.removeFromSuperview()
         hostingController?.removeFromParent()
         if didFinishNTPOnboarding {
-            delegate?.home(self, didRequestHideLogo: false)
+            // If there are favorites to show hide the Dax logo
+            delegate?.home(self, didRequestHideLogo: hasFavoritesToShow)
         }
     }
 }

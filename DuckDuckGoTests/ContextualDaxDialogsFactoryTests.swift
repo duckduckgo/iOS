@@ -276,7 +276,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
     func testWhenViewForFinalSpecAppearsThenExpectedPixelFires() {
         // GIVEN
         let spec = DaxDialogs.BrowsingSpec.final
-        let expectedPixel = Pixel.Event.daxDialogsEndOfJourneyUnique
+        let expectedPixel = Pixel.Event.daxDialogsEndOfJourneyTabUnique
         // TEST
         testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
     }

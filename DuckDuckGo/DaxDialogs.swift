@@ -154,7 +154,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         // Message and CTA empty on purpose as for this case we use only pixelName and type
         static let fire = BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShownUnique, type: .fire)
 
-        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsEndOfJourneyUnique, type: .final)
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsEndOfJourneyTabUnique, type: .final)
 
         let message: String
         let cta: String

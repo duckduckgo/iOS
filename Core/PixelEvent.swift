@@ -161,7 +161,8 @@ extension Pixel {
         case daxDialogsFireEducationShownUnique
         case daxDialogsFireEducationConfirmedUnique
         case daxDialogsFireEducationCancelledUnique
-        case daxDialogsEndOfJourneyUnique
+        case daxDialogsEndOfJourneyTabUnique
+        case daxDialogsEndOfJourneyNewTabUnique
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -893,7 +894,8 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShownUnique: return "m_dx_fe_s_unique"
         case .daxDialogsFireEducationConfirmedUnique: return "m_dx_fe_co_unique"
         case .daxDialogsFireEducationCancelledUnique: return "m_dx_fe_ca_unique"
-        case .daxDialogsEndOfJourneyUnique: return "m_dx_end_unique_unique"
+        case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
+        case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"

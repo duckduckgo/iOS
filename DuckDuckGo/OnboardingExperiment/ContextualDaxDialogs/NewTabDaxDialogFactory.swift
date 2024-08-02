@@ -100,7 +100,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         .onboardingContextualBackgroundStyle()
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
-            self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyUnique)
+            self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)
         }
     }
 }

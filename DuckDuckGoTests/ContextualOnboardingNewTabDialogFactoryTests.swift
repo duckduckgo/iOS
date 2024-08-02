@@ -142,7 +142,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
     func testWhenOnboardingFinalDialogAppearForTheFirstTime_ThenSendFireExpectedPixel() {
         // GIVEN
         let spec = DaxDialogs.HomeScreenSpec.final
-        let pixelEvent = Pixel.Event.daxDialogsEndOfJourneyUnique
+        let pixelEvent = Pixel.Event.daxDialogsEndOfJourneyNewTabUnique
         // TEST
         testDialogDefinedBy(spec: spec, firesEvent: pixelEvent)
     }

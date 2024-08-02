@@ -271,6 +271,12 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
+/* Open Settings action for disabling autofill in Settings */
+"autofill.disable.prompt.action.open-settings" = "Open Settings";
+
+/* Message for informing user that they can disable autofill in Settings */
+"autofill.disable.prompt.message" = "You can turn off password saving anytime.";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Enable Email Protection";
 
@@ -315,15 +321,6 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Disable";
-
-/* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Keep Saving";
-
-/* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "You can disable this at any time in Settings.";
-
-/* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Do you want to keep saving passwords?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";

@@ -2803,8 +2803,8 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
         DispatchQueue.main.async {
             let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
-            ActionMessageView.present(message: "You can disable password saving anytime.",
-                                      actionTitle: "Open Settings",
+            ActionMessageView.present(message: UserText.autofillDisablePromptMessage,
+                                      actionTitle: UserText.autofillDisablePromptAction,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
                                       onAction: { [weak self] in
                 guard let mainVC = self?.view.window?.rootViewController as? MainViewController else { return }

@@ -1726,9 +1726,11 @@ extension MainViewController: OmniBarDelegate {
         fireOnboardingCustomSearchPixelIfNeeded(query: query)
     }
 
-    func onPrivacyIconPressed() {
+    func onPrivacyIconPressed(isHighlighted: Bool) {
         guard !isSERPPresented else { return }
 
+        // Track first tap of privacy icon button
+        contextualOnboardingPixelReporter.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: isHighlighted)
         // Dismiss privacy icon animation when showing privacy dashboard
         dismissPrivacyDashboardButtonPulse()
 

@@ -466,7 +466,8 @@ class OmniBar: UIView {
     }
 
     @IBAction func onPrivacyIconPressed(_ sender: Any) {
-        omniDelegate?.onPrivacyIconPressed()
+        let isPrivacyIconHighlighted = privacyIconContextualOnboardingAnimator.isPrivacyIconHighlighted(privacyInfoContainer.privacyIcon)
+        omniDelegate?.onPrivacyIconPressed(isHighlighted: isPrivacyIconHighlighted)
     }
 
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {

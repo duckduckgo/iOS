@@ -34,7 +34,7 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     private(set) var secondSiteVisitCounter = 0
     private(set) var didCallTrackScreenImpressionCalled = false
     private(set) var capturedScreenImpression: Pixel.Event?
-    private(set) var didCallPrivacyDashboardOpenedForFirstTime = false
+    private(set) var didCallTrackPrivacyDashboardOpenedForFirstTime = false
     private(set) var capturedFromOnboarding: Bool?
 
     func trackSiteSuggetionOptionTapped() {
@@ -63,7 +63,7 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     }
 
     func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool) {
-        didCallPrivacyDashboardOpenedForFirstTime = true
+        didCallTrackPrivacyDashboardOpenedForFirstTime = true
         capturedFromOnboarding = fromOnboarding
     }
 }

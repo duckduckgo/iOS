@@ -33,11 +33,10 @@ struct NewTabPageIntroMessageSetup {
         self.newTabPageManager = newTabPageManager
     }
 
-    func perform(ignoringPublicAvailabilityCheck ignorePublicCheck: Bool = false) {
-        let isPublicOrBypassed = ignorePublicCheck || newTabPageManager.isAvailableInPublicRelease
+    func perform() {
+        
         let isNotSetUp = appSettings.newTabPageIntroMessageEnabled == nil
-
-        guard isPublicOrBypassed && isNotSetUp else { return }
+        guard newTabPageManager.isAvailableInPublicRelease && isNotSetUp else { return }
 
         // For new users we **don't** want intro message
         appSettings.newTabPageIntroMessageEnabled = statistics.installDate != nil

@@ -65,17 +65,6 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
         XCTAssertNil(appSettings.newTabPageIntroMessageEnabled)
     }
 
-    func testPerformsSetupWhenPublicReleaseBypassed() {
-        let sut = createSUT()
-        statistics.installDate = nil
-        ntpManagerMock.isAvailableInPublicRelease = false
-        appSettings.newTabPageIntroMessageEnabled = nil
-
-        sut.perform(ignoringPublicAvailabilityCheck: true)
-
-        XCTAssertNotNil(appSettings.newTabPageIntroMessageEnabled)
-    }
-
     private func createSUT() -> NewTabPageIntroMessageSetup {
         NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics, newTabPageManager: ntpManagerMock)
     }

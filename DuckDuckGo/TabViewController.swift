@@ -298,7 +298,7 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                                   onboardingPixelReporter: OnboardingPixelReporter = OnboardingPixelReporter()) -> TabViewController {
+                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporter()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -328,7 +328,7 @@ class TabViewController: UIViewController {
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
-    let onboardingPixelReporter: OnboardingPixelReporter
+    let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -340,7 +340,7 @@ class TabViewController: UIViewController {
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                   onboardingPixelReporter: OnboardingPixelReporter) {
+                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -1315,7 +1315,7 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
-        onboardingPixelReporter.trackSecondSiteVisit()
+        trackSecondSiteVisitIfNeeded(url: webView.url)
 
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
@@ -1371,6 +1371,12 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+    }
+
+    func trackSecondSiteVisitIfNeeded(url: URL?) {
+        // Track second non-SERP webpage visit
+        guard url?.isDuckDuckGoSearch == false else { return }
+        onboardingPixelReporter.trackSecondSiteVisit()
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {

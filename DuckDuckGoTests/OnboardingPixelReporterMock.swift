@@ -26,7 +26,7 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     private(set) var didCallTrackSiteOptionTapped = false
     private(set) var didCallTrackCustomSearch = false
     private(set) var didCallTrackCustomSite = false
-    private(set) var didCallSecondSiteVisit = false {
+    private(set) var didCallTrackSecondSiteVisit = false {
         didSet {
             secondSiteVisitCounter += 1
         }
@@ -54,7 +54,7 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     }
 
     func trackSecondSiteVisit() {
-        didCallSecondSiteVisit = true
+        didCallTrackSecondSiteVisit = true
     }
 
     func trackScreenImpression(event: Pixel.Event) {

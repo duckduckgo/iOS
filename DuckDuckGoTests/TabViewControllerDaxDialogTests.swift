@@ -20,6 +20,7 @@
 import XCTest
 import Persistence
 import Core
+import WebKit
 @testable import DuckDuckGo
 
 final class TabViewControllerDaxDialogTests: XCTestCase {
@@ -27,13 +28,15 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
     private var delegateMock: MockTabDelegate!
     private var onboardingPresenterMock: ContextualOnboardingPresenterMock!
     private var onboardingLogicMock: ContextualOnboardingLogicMock!
+    private var onboardingPixelReporterMock: OnboardingPixelReporterMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         delegateMock = MockTabDelegate()
         onboardingPresenterMock = ContextualOnboardingPresenterMock()
         onboardingLogicMock = ContextualOnboardingLogicMock()
-        sut = .fake(contextualOnboardingPresenter: onboardingPresenterMock, contextualOnboardingLogic: onboardingLogicMock)
+        onboardingPixelReporterMock = OnboardingPixelReporterMock()
+        sut = .fake(contextualOnboardingPresenter: onboardingPresenterMock, contextualOnboardingLogic: onboardingLogicMock, contextualOnboardingPixelReporter: onboardingPixelReporterMock)
         sut.delegate = delegateMock
     }
 
@@ -176,6 +179,40 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertFalse(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
     }
 
+    // MARK: - SecondSite Visit Pixel
+
+    func testWhenWebsiteFinishLoading_andIsNotSERP_ThenFireSecondSiteVisitPixel() {
+        // GIVEN
+        WKNavigation.swizzleDealloc()
+        let url = URL.ddg
+        let webView = MockWebView()
+        webView.setCurrentURL(url)
+        XCTAssertFalse(onboardingPixelReporterMock.didCallTrackSecondSiteVisit)
+
+        // WHEN
+        sut.webView(webView, didFinish: WKNavigation())
+
+        // THEN
+        XCTAssertTrue(onboardingPixelReporterMock.didCallTrackSecondSiteVisit)
+        WKNavigation.restoreDealloc()
+    }
+
+    func testWhenWebsiteFinishLoading_andIsSERP_ThenDoNotFireSecondSiteVisitPixel() throws {
+        // GIVEN
+        WKNavigation.swizzleDealloc()
+        let url = try XCTUnwrap(URL.makeSearchURL(text: "test"))
+        let webView = MockWebView()
+        webView.setCurrentURL(url)
+        XCTAssertFalse(onboardingPixelReporterMock.didCallTrackSecondSiteVisit)
+
+        // WHEN
+        sut.webView(webView, didFinish: WKNavigation())
+
+        // THEN
+        XCTAssertFalse(onboardingPixelReporterMock.didCallTrackSecondSiteVisit)
+        WKNavigation.restoreDealloc()
+    }
+
 }
 
 final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
@@ -219,4 +256,25 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
         didCallEnableAddFavoriteFlow = true
     }
     
+}
+
+private extension WKNavigation {
+    private static var isSwizzled = false
+    private static let originalDealloc = { class_getInstanceMethod(WKNavigation.self, NSSelectorFromString("dealloc"))! }()
+    private static let swizzledDealloc = { class_getInstanceMethod(WKNavigation.self, #selector(swizzled_dealloc))! }()
+
+    static func swizzleDealloc() {
+        guard !self.isSwizzled else { return }
+        self.isSwizzled = true
+        method_exchangeImplementations(originalDealloc, swizzledDealloc)
+    }
+
+    static func restoreDealloc() {
+        guard self.isSwizzled else { return }
+        self.isSwizzled = false
+        method_exchangeImplementations(originalDealloc, swizzledDealloc)
+    }
+
+    @objc
+    func swizzled_dealloc() { }
 }

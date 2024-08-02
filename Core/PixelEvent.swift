@@ -209,7 +209,12 @@ extension Pixel {
         case autofillLoginsSaveLoginModalConfirmed
         case autofillLoginsSaveLoginModalDismissed
         case autofillLoginsSaveLoginModalExcludeSiteConfirmed
-        
+
+        case autofillLoginsSaveLoginOnboardingModalDisplayed
+        case autofillLoginsSaveLoginOnboardingModalConfirmed
+        case autofillLoginsSaveLoginOnboardingModalDismissed
+        case autofillLoginsSaveLoginOnboardingModalExcludeSiteConfirmed
+
         case autofillLoginsSavePasswordModalDisplayed
         case autofillLoginsSavePasswordModalConfirmed
         case autofillLoginsSavePasswordModalDismissed
@@ -925,7 +930,12 @@ extension Pixel.Event {
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"
         case .autofillLoginsSaveLoginModalDismissed: return "m_autofill_logins_save_login_inline_dismissed"
         case .autofillLoginsSaveLoginModalExcludeSiteConfirmed: return "m_autofill_logins_save_login_exclude_site_confirmed"
-            
+
+        case .autofillLoginsSaveLoginOnboardingModalDisplayed: return "autofill_logins_save_login_inline_onboarding_displayed"
+        case .autofillLoginsSaveLoginOnboardingModalConfirmed: return "autofill_logins_save_login_inline_onboarding_confirmed"
+        case .autofillLoginsSaveLoginOnboardingModalDismissed: return "autofill_logins_save_login_inline_onboarding_dismissed"
+        case .autofillLoginsSaveLoginOnboardingModalExcludeSiteConfirmed: return "autofill_logins_save_login_onboarding_exclude_site_confirmed"
+
         case .autofillLoginsSavePasswordModalDisplayed: return "m_autofill_logins_save_password_inline_displayed"
         case .autofillLoginsSavePasswordModalConfirmed: return "m_autofill_logins_save_password_inline_confirmed"
         case .autofillLoginsSavePasswordModalDismissed: return "m_autofill_logins_save_password_inline_dismissed"

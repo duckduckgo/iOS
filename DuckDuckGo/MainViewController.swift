@@ -187,7 +187,7 @@ class MainViewController: UIViewController {
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
-        tutorialSettings: TutorialSettings = DefaultTutorialSettings()
+        tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults()
     ) {
         self.bookmarksDatabase = bookmarksDatabase

@@ -166,6 +166,28 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
     }
 
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasNotBeenSeenAndAllUsersFeatureFlagEnabledThenDefaultAutofillStateIsTrue() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillIsNewInstallForOnByDefault = false
+        let featureFlagger = createFeatureFlagger(withFeatureFlagEnabled: .autofillOnForExistingUsers)
+        appUserDefaults.featureFlagger = featureFlagger
+
+        XCTAssertTrue(appUserDefaults.autofillCredentialsEnabled)
+    }
+
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasBeenSeenAndAllUsersFeatureFlagEnabledThenDefaultAutofillStateIsFalse() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = true
+        appUserDefaults.autofillIsNewInstallForOnByDefault = false
+        let featureFlagger = createFeatureFlagger(withFeatureFlagEnabled: .autofillOnForExistingUsers)
+        appUserDefaults.featureFlagger = featureFlagger
+
+        XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
+    }
+
     func testDefaultAutoconsentStateIsFalse_WhenNotInRollout() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)

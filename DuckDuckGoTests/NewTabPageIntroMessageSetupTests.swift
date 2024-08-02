@@ -22,11 +22,12 @@ import XCTest
 
 final class NewTabPageIntroMessageSetupTests: XCTestCase {
 
-    let appSettings = AppSettingsMock()
-    let statistics = MockStatisticsStore()
+    private let appSettings = AppSettingsMock()
+    private let statistics = MockStatisticsStore()
+    private let ntpManagerMock = NewTabPageManagerMock()
 
     func testEnablesFeatureForExistingUser() {
-        let sut = NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics)
+        let sut = createSUT()
         statistics.installDate = Date()
 
         sut.perform()
@@ -35,7 +36,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
     }
 
     func testDisablesFeatureForNewUser() {
-        let sut = NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics)
+        let sut = createSUT()
         statistics.installDate = nil
 
         sut.perform()
@@ -44,7 +45,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
     }
 
     func testDoesNothingIfSetAlready() {
-        let sut = NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics)
+        let sut = createSUT()
         statistics.installDate = nil
         appSettings.newTabPageIntroMessageEnabled = true
 
@@ -52,4 +53,35 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
 
         XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, true)
     }
+
+    func testDoesNothingIfNotPubliclyReleased() {
+        let sut = createSUT()
+        statistics.installDate = nil
+        ntpManagerMock.isAvailableInPublicRelease = false
+        appSettings.newTabPageIntroMessageEnabled = nil
+
+        sut.perform()
+
+        XCTAssertNil(appSettings.newTabPageIntroMessageEnabled)
+    }
+
+    func testPerformsSetupWhenPublicReleaseBypassed() {
+        let sut = createSUT()
+        statistics.installDate = nil
+        ntpManagerMock.isAvailableInPublicRelease = false
+        appSettings.newTabPageIntroMessageEnabled = nil
+
+        sut.perform(ignoringPublicAvailabilityCheck: true)
+
+        XCTAssertNotNil(appSettings.newTabPageIntroMessageEnabled)
+    }
+
+    private func createSUT() -> NewTabPageIntroMessageSetup {
+        NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics, newTabPageManager: ntpManagerMock)
+    }
+}
+
+private final class NewTabPageManagerMock: NewTabPageManaging {
+    var isNewTabPageSectionsEnabled: Bool = true
+    var isAvailableInPublicRelease: Bool = true
 }

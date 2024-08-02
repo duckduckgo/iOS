@@ -106,18 +106,18 @@ class AutofillCredentialsDebugViewController: UITableViewController {
         <style>
             body { font-size: 15px; }
         </style>
-            <b>ID:</b> \(credential.credential.account.id ?? "")<br>
-            <b>Title:</b> \(credential.credential.account.title ?? "")<br>
-            <b>Display Title:</b> \(credential.displayTitle)<br>
-            <b>Website URL:</b> \(credential.credential.account.domain ?? "")<br>
-            <b>Domain:</b> \(credential.domain)<br>
-            <b>Username:</b> \(credential.credential.account.username ?? "")<br>
-            <b>Password:</b> \(credential.displayPassword)<br>
-            <b>Notes:</b> \(credential.credential.account.notes ?? "")<br>
-            <b>Created:</b> \(credential.credential.account.created)<br>
-            <b>LastUpdated:</b> \(credential.credential.account.lastUpdated)<br>
-            <b>LastUsed:</b> \(credential.lastUsed)<br>
-            <b>Signature:</b> \(credential.credential.account.signature ?? "")<br>
+            <b>ID:</b> \(credential.credential.account.id ?? ""),<br>
+            <b>Title:</b> \(credential.credential.account.title ?? ""),<br>
+            <b>Display Title:</b> \(credential.displayTitle),<br>
+            <b>Website URL:</b> \(credential.credential.account.domain ?? ""),<br>
+            <b>Domain:</b> \(credential.domain),<br>
+            <b>Username:</b> \(credential.credential.account.username ?? ""),<br>
+            <b>Password:</b> \(credential.displayPassword),<br>
+            <b>Notes:</b> \(credential.credential.account.notes ?? ""),<br>
+            <b>Created:</b> \(credential.credential.account.created),<br>
+            <b>LastUpdated:</b> \(credential.credential.account.lastUpdated),<br>
+            <b>LastUsed:</b> \(credential.lastUsed),<br>
+            <b>Signature:</b> \(credential.credential.account.signature ?? "").<br>
         """
 
         if let data = details.data(using: .utf8) {

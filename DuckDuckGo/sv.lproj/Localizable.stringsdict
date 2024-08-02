@@ -42,6 +42,26 @@ Jag blockerade dem!
 ☝️ Du kan kontrollera adressfältet för att se vem som försöker spåra dig när du besöker en ny sida.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* och *1 annan* försökte spåra dig här. Jag blockerade dem!
+
+☝️ Tryck på skölden för mer information.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* och *%1$d andra* försökte spåra dig här. Jag blockerade dem!
+
+☝️ Tryck på skölden för mer information.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

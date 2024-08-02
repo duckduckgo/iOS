@@ -62,7 +62,7 @@ protocol OnboardingCustomInteractionPixelReporting {
     func trackCustomSearch()
     func trackCustomSite()
     func trackSecondSiteVisit()
-    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool)
+    func trackPrivacyDashboardOpenedForFirstTime()
 }
 
 protocol OnboardingScreenImpressionReporting {
@@ -96,12 +96,11 @@ final class OnboardingPixelReporter {
         self.userDefaults = userDefaults
     }
 
-    private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:]) {
-        let parameters: [Pixel.QueryParameters] = [.appVersion, .atb]
+    private func fire(event: Pixel.Event, unique: Bool, additionalParameters: [String: String] = [:], includedParameters: [Pixel.QueryParameters] = [.appVersion, .atb]) {
         if unique {
-            uniquePixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: parameters)
+            uniquePixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: includedParameters)
         } else {
-            pixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: parameters)
+            pixel.fire(pixel: event, withAdditionalParameters: additionalParameters, includedParameters: includedParameters)
         }
     }
 
@@ -163,13 +162,13 @@ extension OnboardingPixelReporter: OnboardingCustomInteractionPixelReporting {
         }
     }
 
-    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool) {
+    func trackPrivacyDashboardOpenedForFirstTime() {
         let daysSinceInstall = statisticsStore.installDate.flatMap { calendar.numberOfDaysBetween($0, and: dateProvider()) }
         let additionalParameters = [
-            PixelParameters.fromOnboarding: String(fromOnboarding),
+            PixelParameters.fromOnboarding: "true",
             PixelParameters.daysSinceInstall: String(daysSinceInstall ?? 0)
         ]
-        fire(event: .privacyDashboardFirstTimeOpenedUnique, unique: true, additionalParameters: additionalParameters)
+        fire(event: .privacyDashboardFirstTimeOpenedUnique, unique: true, additionalParameters: additionalParameters, includedParameters: [.appVersion])
     }
 
 }

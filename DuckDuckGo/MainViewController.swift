@@ -1730,7 +1730,9 @@ extension MainViewController: OmniBarDelegate {
         guard !isSERPPresented else { return }
 
         // Track first tap of privacy icon button
-        contextualOnboardingPixelReporter.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: isHighlighted)
+        if isHighlighted {
+            contextualOnboardingPixelReporter.trackPrivacyDashboardOpenedForFirstTime()
+        }
         // Dismiss privacy icon animation when showing privacy dashboard
         dismissPrivacyDashboardButtonPulse()
 

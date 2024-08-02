@@ -35,7 +35,6 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
     private(set) var didCallTrackScreenImpressionCalled = false
     private(set) var capturedScreenImpression: Pixel.Event?
     private(set) var didCallTrackPrivacyDashboardOpenedForFirstTime = false
-    private(set) var capturedFromOnboarding: Bool?
 
     func trackSiteSuggetionOptionTapped() {
         didCallTrackSiteOptionTapped = true
@@ -62,8 +61,7 @@ final class OnboardingPixelReporterMock: OnboardingSiteSuggestionsPixelReporting
         capturedScreenImpression = event
     }
 
-    func trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: Bool) {
+    func trackPrivacyDashboardOpenedForFirstTime() {
         didCallTrackPrivacyDashboardOpenedForFirstTime = true
-        capturedFromOnboarding = fromOnboarding
     }
 }

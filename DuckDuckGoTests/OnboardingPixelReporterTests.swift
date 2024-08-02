@@ -234,35 +234,24 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
 
         // WHEN
-        sut.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: true)
+        sut.trackPrivacyDashboardOpenedForFirstTime()
 
         // THEN
         XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
         XCTAssertEqual(expectedPixel.name, "m_privacy_dashboard_first_time_used_unique")
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion])
     }
 
-    func testWhenTrackPrivacyDashboardOpenedForFirstTimeAndFromOnboardingFalseThenParameterIsSetToFalse() {
+    func testWhenTrackPrivacyDashboardOpenedForFirstTimeThenFromOnboardingParameterIsSetToTrue() {
         // GIVEN
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
 
         // WHEN
-        sut.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: true)
+        sut.trackPrivacyDashboardOpenedForFirstTime()
 
         // THEN
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["from_onboarding"], "true")
-    }
-
-    func testWhenTrackPrivacyDashboardOpenedForFirstTimeAndFromOnboardingTrueThenParameterIsSetToTrue() {
-        // GIVEN
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
-
-        // WHEN
-        sut.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: false)
-
-        // THEN
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["from_onboarding"], "false")
     }
 
     func testWhenTrackPrivacyDashboardOpenedForFirstTimeThenDaysSinceInstallParameterIsSet() {
@@ -273,7 +262,7 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
 
         // WHEN
-        sut.trackPrivacyDashboardOpenedForFirstTime(fromOnboarding: false)
+        sut.trackPrivacyDashboardOpenedForFirstTime()
 
         // THEN
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["daysSinceInstall"], "3")

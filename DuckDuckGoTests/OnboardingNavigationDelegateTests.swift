@@ -155,32 +155,28 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
 
     // MARK: Pixel
 
-    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsHighlighted_ThenFireFirstTimePrivacyDashboardUsedPixel_AndFromOnboardingIsTrue() {
+    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsHighlighted_ThenFireFirstTimePrivacyDashboardUsedPixel() {
         // GIVEN
         let isHighlighted = true
         XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
-        XCTAssertNil(onboardingPixelReporter.capturedFromOnboarding)
 
         // WHEN
         mainVC.onPrivacyIconPressed(isHighlighted: isHighlighted)
 
         // THEN
         XCTAssertTrue(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
-        XCTAssertEqual(onboardingPixelReporter.capturedFromOnboarding, true)
     }
 
-    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsNotHighlighted_ThenFireFirstTimePrivacyDashboardUsedPixel_AndFromOnboardingIsFalse() {
+    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsNotHighlighted_ThenDoNotFireFirstTimePrivacyDashboardUsedPixel() {
         // GIVEN
         let isHighlighted = false
         XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
-        XCTAssertNil(onboardingPixelReporter.capturedFromOnboarding)
 
         // WHEN
         mainVC.onPrivacyIconPressed(isHighlighted: isHighlighted)
 
         // THEN
-        XCTAssertTrue(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
-        XCTAssertEqual(onboardingPixelReporter.capturedFromOnboarding, false)
+        XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
     }
 
 }

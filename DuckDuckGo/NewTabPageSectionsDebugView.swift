@@ -76,7 +76,7 @@ struct NewTabPageSectionsDebugView: View {
             } header: {
                 Text(verbatim: "Feature settings")
             } footer: {
-                Text(verbatim: "Requires internal user flag set to have an effect.\n\nEnabling the local flag will cause existing-user behavior for feature Intro Message.")
+                Text(verbatim: "Requires internal user flag set to have an effect.")
             }
 
             Section {
@@ -133,8 +133,9 @@ struct NewTabPageSectionsDebugView: View {
                     introMessageCountBinding.wrappedValue = 0
                 })
 
-                Button("Reset intro message setting", action: {
+                Button("Reset intro message", action: {
                     appSettings.newTabPageIntroMessageEnabled = nil
+                    introMessageCountBinding.wrappedValue = 0
                     isIntroMessageInitialized = false
                 })
             } header: {

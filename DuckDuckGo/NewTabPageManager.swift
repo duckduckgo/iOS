@@ -66,9 +66,6 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
         }
         set {
             appDefaults.newTabPageSectionsEnabled = newValue
-            if newValue {
-                NewTabPageIntroMessageSetup().perform(ignoringPublicAvailabilityCheck: true)
-            }
         }
     }
 

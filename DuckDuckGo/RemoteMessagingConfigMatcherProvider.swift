@@ -123,6 +123,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         }
 
         let dismissedMessageIds = store.fetchDismissedRemoteMessageIDs()
+        let shownMessageIds = store.fetchShownRemoteMessageIDs()
 
         return RemoteMessagingConfigMatcher(
             appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
@@ -145,7 +146,8 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                                                        isPrivacyProSubscriptionExpired: isPrivacyProSubscriptionExpired,
                                                        isDuckPlayerOnboarded: isDuckPlayerOnboarded,
                                                        isDuckPlayerEnabled: isDuckPlayerEnabled,
-                                                       dismissedMessageIds: dismissedMessageIds),
+                                                       dismissedMessageIds: dismissedMessageIds,
+                                                       shownMessageIds: shownMessageIds),
             percentileStore: RemoteMessagingPercentileUserDefaultsStore(keyValueStore: UserDefaults.standard),
             surveyActionMapper: surveyActionMapper,
             dismissedMessageIds: dismissedMessageIds

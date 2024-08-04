@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/add-rmf-message-shown-attribute",
-        "revision" : "eed68fe76825b427a2fbc10435b4df1a9bf2737b"
+        "revision" : "ebad3db46e09913ac4c0e0c62085dcb40a6d6253",
+        "version" : "178.0.0"
       }
     },
     {

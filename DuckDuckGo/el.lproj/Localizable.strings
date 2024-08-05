@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ναί";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "Το *%1$@* προσπαθούσε να σας παρακολουθήσει εδώ. Τους εμπόδισα!\n\n☝️ Πατήστε την ασπίδα για περισσότερες πληροφορίες.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Κόλλα πέντε!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Να θυμάστε: κάθε φορά που περιηγείστε μαζί μου, μια ανατριχιαστική διαφήμιση χάνει τη δύναμή της! 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Το έχετε!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Αυτό είναι το DuckDuckGo Search. Ιδιωτικά. Γρήγορα. Λιγότερες διαφημίσεις.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Το κατάλαβα!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Δοκιμάστε να επισκεφτείτε έναν ιστότοπο!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "Οι αναζητήσεις σας στο DuckDuckGo είναι πάντα ανώνυμες.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Έτοιμοι να αρχίσετε;\nΔοκίμασε μια αναζήτηση!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Θα εμποδίσω τις εφαρμογές παρακολούθησης ώστε να μην μπορούν να σας κατασκοπεύουν.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Στη συνέχεια, δοκιμάστε να επισκεφτείτε έναν ιστότοπο!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Διαγράψτε άμεσα τη δραστηριότητα περιήγησής σας με το Fire Button.<br/><br/>Δοκιμάστε το! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "πώς μπορείτε να πείτε «duck» στα ισπανικά";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "πώς να πείτε «πάπια» στα αγγλικά";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "Mighty Ducks Cast";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "οι ηθοποιοί του avatar";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "τοπικός καιρός";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "συνταγές για μπισκότα με κομματάκια σοκολάτας";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "συνταγές για δείπνο";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Κάνε μου έκπληξη!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Να αποστέλλονται πάντα αναφορές σφαλμάτων";
 

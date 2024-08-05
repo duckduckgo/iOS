@@ -42,6 +42,26 @@ Li ho bloccati!
  ☝ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* e *1 altro* stavano cercando di tracciare la tua attività qui. Li ho bloccati!
+
+☝️ Tocca lo scudo per maggiori informazioni.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* e *altri %1$d* stavano cercando di tracciare la tua attività qui. Li ho bloccati!
+
+☝️ Tocca lo scudo per maggiori informazioni.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

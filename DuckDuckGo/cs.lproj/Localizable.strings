@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ano";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "Stránka *%1$@* se tě tady snaží sledovat. A tak jsem ji zablokoval!\n\n☝️ Klepnutím na štít si zobrazíš další informace.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Plácnutí!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Pamatuj: Když se mnou na webu surfuješ, příšerné reklamy zaženeš. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Máte to!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Tohle je vyhledávač DuckDuckGo Search. Soukromý. Rychlý. S méně reklamami.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Mám to!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Zkus přejít na nějaký web!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "Tvoje vyhledávání v DuckDuckGo je vždycky anonymní.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Tak co, jdeš na to?\nZkus něco vyhledat!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Zablokujeme trackery, aby vás nemohli špehovat.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "A teď zkus přejít na nějaký web!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Vcukuletu můžeš smazat svou aktivitu při prohlížení pomocí funkce Fire Button.\n\nZkus ji! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "jak se řekne „kachna“ španělsky";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "jak se řekne anglicky „kachna“";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "herci z filmu Šampióni";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "obsazení avatara";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "aktuální počasí";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "recepty na čokoládové sušenky";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "recepty na večeři";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Překvap mě!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vždycky odesílat hlášení o selhání";
 

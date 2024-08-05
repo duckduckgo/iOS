@@ -58,6 +58,34 @@ Boli zablokovaní!
  ☝️Môžete skontrolovať panel s adresou a zistiť, kto sa vás snaží sledovať, keď navštívite novú webovú lokalitu.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* a *%1$d ďalšia* sa vás tu pokúšala vystopovať. Zablokoval som ich!
+
+☝️ Klepnutím na štít zobrazíte ďalšie informácie.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* a *%1$d ďalšie* sa vás tu pokúšali vystopovať. Zablokoval som ich!
+
+☝️ Klepnutím na štít zobrazíte ďalšie informácie.</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúšalo vystopovať. Zablokoval som ich!
+
+☝️ Klepnutím na štít zobrazíte ďalšie informácie.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* a *%1$d ďalších* sa vás tu pokúšalo vystopovať. Zablokoval som ich!
+
+☝️ Klepnutím na štít zobrazíte ďalšie informácie.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

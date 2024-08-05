@@ -23,6 +23,7 @@ import WebKit
 import Core
 import Common
 import BrowserServicesKit
+import DuckPlayer
 
 final class DuckPlayerNavigationHandler {
     

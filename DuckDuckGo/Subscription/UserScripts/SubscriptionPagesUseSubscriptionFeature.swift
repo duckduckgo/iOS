@@ -205,7 +205,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         } else {
             os_log("Failed to obtain subscription options", log: .subscription, type: .error)
             setTransactionError(.failedToGetSubscriptionOptions)
-            return nil
+            return SubscriptionOptions.empty
         }
     }
     

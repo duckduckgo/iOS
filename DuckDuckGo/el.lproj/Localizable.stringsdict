@@ -42,6 +42,26 @@
  ☝️Μπορείτε να ελέγξετε τη γραμμή διευθύνσεων για να δείτε ποιος προσπαθεί να σας παρακολουθήσει όταν επισκέπτεστε έναν νέο ιστότοπο.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* και *1 ακόμα * προσπαθούσαν να σας εντοπίσουν εδώ. Τους μπλόκαρα!
+
+☝️ Πατήστε την ασπίδα για περισσότερες πληροφορίες.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* και *%1$d ακόμα* προσπαθούσαν να σας εντοπίσουν εδώ. Τους μπλόκαρα!
+
+☝️ Πατήστε την ασπίδα για περισσότερες πληροφορίες.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

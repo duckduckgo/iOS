@@ -24,6 +24,7 @@ enum OnboardingStyles {}
 extension OnboardingStyles {
 
     struct TitleStyle: ViewModifier {
+
         let fontSize: CGFloat
 
         func body(content: Content) -> some View {

@@ -22,16 +22,29 @@ import Core
 @testable import DuckDuckGo
 
 final class OnboardingPixelReporterTests: XCTestCase {
+    private static let suiteName = "testing_onboarding_pixel_store"
     private var sut: OnboardingPixelReporter!
+    private var statisticsStoreMock: MockStatisticsStore!
+    private var now: Date!
+    private var userDefaultsMock: UserDefaults!
 
     override func setUpWithError() throws {
-        sut = OnboardingPixelReporter(pixel: OnboardingPixelFireMock.self, uniquePixel: OnboardingUniquePixelFireMock.self)
+        statisticsStoreMock = MockStatisticsStore()
+        now = Date()
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 0))
+        userDefaultsMock = UserDefaults(suiteName: Self.suiteName)
+        sut = OnboardingPixelReporter(pixel: OnboardingPixelFireMock.self, uniquePixel: OnboardingUniquePixelFireMock.self, statisticsStore: statisticsStoreMock, calendar: calendar, dateProvider: { self.now }, userDefaults: userDefaultsMock)
         try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
         OnboardingPixelFireMock.tearDown()
         OnboardingUniquePixelFireMock.tearDown()
+        statisticsStoreMock = nil
+        now = nil
+        userDefaultsMock.removePersistentDomain(forName: Self.suiteName)
+        userDefaultsMock = nil
         sut = nil
         try super.tearDownWithError()
     }
@@ -93,4 +106,184 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
+    // MARK: - List
+
+    func testWhenTrackSearchSuggestionOptionTappedThenSearchOptionTappedFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingContextualSearchOptionTappedUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackSearchSuggetionOptionTapped()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_onboarding_search_option_tapped_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackSiteSuggestionThenSiteOptionsTappedFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingContextualSiteOptionTappedUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackSiteSuggetionOptionTapped()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_onboarding_visit_site_option_tapped_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    // MARK: - Custom Interactions
+
+    func testWhenTrackCustomSearchIsCalledThenSearchCustomFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingContextualSearchCustomUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackCustomSearch()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_onboarding_search_custom_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackCustomSiteIsCalledThenSiteCustomFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingContextualSiteCustomUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackCustomSite()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_onboarding_visit_site_custom_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackSecondVisitIsCalledAndStoreDoesNotContainPixelThenPixelIsNotFired() {
+        // GIVEN
+        XCTAssertNil(userDefaultsMock.value(forKey: "com.duckduckgo.ios.site-visited"))
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackSecondSiteVisit()
+
+        // THEN
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+    }
+
+    func testWhenTrackSecondVisitIsCalledThenFiresOnlyOnSecondTime() {
+        // GIVEN
+        let key = "com.duckduckgo.ios.site-visited"
+        userDefaultsMock.set(true, forKey: key)
+        XCTAssertTrue(userDefaultsMock.bool(forKey: key))
+        let expectedPixel = Pixel.Event.onboardingContextualSecondSiteVisitUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackSecondSiteVisit()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_second_sitevisit_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackPrivacyDashboardOpenedForFirstTimeThenPrivacyDashboardFirstTimeOpenedPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.privacyDashboardFirstTimeOpenedUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackPrivacyDashboardOpenedForFirstTime()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, "m_privacy_dashboard_first_time_used_unique")
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion])
+    }
+
+    func testWhenTrackPrivacyDashboardOpenedForFirstTimeThenFromOnboardingParameterIsSetToTrue() {
+        // GIVEN
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+
+        // WHEN
+        sut.trackPrivacyDashboardOpenedForFirstTime()
+
+        // THEN
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["from_onboarding"], "true")
+    }
+
+    func testWhenTrackPrivacyDashboardOpenedForFirstTimeThenDaysSinceInstallParameterIsSet() {
+        // GIVEN
+        let installDate = Date(timeIntervalSince1970: 1722348000) // 30th July 2024 GMT
+        now = Date(timeIntervalSince1970: 1722607200) // 1st August 2024 GMT
+        statisticsStoreMock.installDate = installDate
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+
+        // WHEN
+        sut.trackPrivacyDashboardOpenedForFirstTime()
+
+        // THEN
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["daysSinceInstall"], "3")
+    }
+
+    // MARK: - Screen Impressions
+
+    func testWhenTrackScreenImpressionIsCalledThenPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.daxDialogsSerpUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackScreenImpression(event: expectedPixel)
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
 }

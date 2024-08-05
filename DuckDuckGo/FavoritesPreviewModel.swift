@@ -71,6 +71,10 @@ final class FavoritesPreviewModel: FavoritesModel {
 
     }
 
+    func moveFavorites(from indexSet: IndexSet, to index: Int) {
+        allFavorites.move(fromOffsets: indexSet, toOffset: index)
+    }
+
     func loadFavicon(for favorite: Favorite, size: CGFloat) async {
         
     }

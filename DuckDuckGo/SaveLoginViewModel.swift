@@ -211,6 +211,7 @@ final class SaveLoginViewModel: ObservableObject {
         if shouldShowDisableAutofillPrompt() {
             delegate?.saveLoginViewModelConfirmKeepUsing(self)
             autofillSaveModalDisablePromptShown = true
+            autofillFirstTimeUser = false
         }
     }
 }

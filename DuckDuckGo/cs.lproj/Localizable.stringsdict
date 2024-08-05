@@ -58,6 +58,34 @@ Zablokovali jsme je.
 ☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* a *1 další stránka* se tě tady snaží sledovat. A tak jsem je všechny zablokoval!
+
+☝️ Klepnutím na štít si zobrazíš další informace.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* a *%1$d další stránky* se tě tady snaží sledovat. A tak jsem je všechny zablokoval!
+
+☝️ Klepnutím na štít si zobrazíš další informace.</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* a *%1$d další stránky* se tě tady snaží sledovat. A tak jsem je všechny zablokoval!
+
+☝️ Klepnutím na štít si zobrazíš další informace.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* a *%1$d dalších stránek* se tě tady snaží sledovat. A tak jsem je všechny zablokoval!
+
+☝️ Klepnutím na štít si zobrazíš další informace.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

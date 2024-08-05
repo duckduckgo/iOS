@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import DuckPlayer
 
 extension OmniBar {
 

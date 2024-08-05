@@ -24,6 +24,7 @@ import UserScript
 import Combine
 import Core
 import BrowserServicesKit
+import DuckPlayer
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         

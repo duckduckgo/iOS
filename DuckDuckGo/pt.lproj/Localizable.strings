@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Sim";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* tentou rastrear-te aqui.\n\n Bloqueei-os!\n\n☝️ Toca no escudo para obter mais informações.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Dá cá cinco!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Lembra-te: sempre que navegas comigo, um anúncio assustador perde as suas asas. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Você consegue!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "É a DuckDuckGo Search. Privado. Rápido. Menos anúncios.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Entendi!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Experimenta visitar um site!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "As tuas pesquisas no DuckDuckGo são sempre anónimas.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Estás pronto para começar?\nExperimenta fazer uma pesquisa!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Bloquearei rastreadores para que não possam espiá-lo.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Em seguida, experimenta visitar um site!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Limpa instantaneamente a tua atividade de navegação com o Fire Button.\n\nExperimenta! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "como dizer \"pato\" em espanhol";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "como dizer \"pato\" em inglês";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "elenco do filme A Hora dos Campeões";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "elenco de avatar";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "meteorologia local";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "receitas de biscoitos de chocolate";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "receitas de jantar";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Surpreende-me!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Enviar sempre relatórios de falhas";
 
@@ -1644,6 +1707,12 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Definições da VPN";
+
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Personaliza os teus Favoritos e as tuas funcionalidades de preferência. Reordena as coisas ou esconde-as para manter um aspeto limpo.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "A tua página Novo separador é... nova!";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

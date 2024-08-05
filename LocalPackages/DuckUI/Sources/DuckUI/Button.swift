@@ -132,9 +132,9 @@ public struct SecondaryFillButtonStyle: ButtonStyle {
 
 public struct GhostButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     public init() {}
-    
+
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))

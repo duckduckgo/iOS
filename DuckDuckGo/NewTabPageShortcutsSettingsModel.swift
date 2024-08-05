@@ -18,11 +18,20 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 typealias NewTabPageShortcutsSettingsModel = NewTabPageSettingsModel<NewTabPageShortcut, NewTabPageShortcutsSettingsStorage>
 
 extension NewTabPageShortcutsSettingsModel {
-    convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage()) {
-        self.init(settingsStorage: storage)
+    convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage(),
+                     featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+        self.init(settingsStorage: storage) { shortcut in
+            switch shortcut {
+            case .aiChat, .bookmarks, .downloads, .settings:
+                return true
+            case .passwords:
+                return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
+            }
+        }
     }
 }

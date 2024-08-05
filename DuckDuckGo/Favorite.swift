@@ -20,7 +20,7 @@
 import Bookmarks
 import SwiftUI
 
-struct Favorite: Identifiable, Equatable {
+struct Favorite: Identifiable, Equatable, Hashable {
     let id: String
     let title: String
     let domain: String

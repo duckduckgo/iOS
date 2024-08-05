@@ -19,6 +19,7 @@
 
 import Bookmarks
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -35,7 +36,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
             let result = model.prefixedFavorites(for: columns)
 
             NewTabPageGridView { _ in
-                ForEach(result.items) { item in
+                ReorderableForEach(result.items) { item in
                     Button(action: {
                         model.favoriteSelected(item)
                         selectionFeedback.selectionChanged()
@@ -52,6 +53,15 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .background(.clear)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                     })
+                    .previewShape()
+                } preview: { favorite in
+                    FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
+                        .frame(width: NewTabPageGrid.Item.edgeSize)
+                        .previewShape()
+                } onMove: { from, to in
+                    withAnimation {
+                        model.moveFavorites(from: from, to: to)
+                    }
                 }
             }
 
@@ -67,6 +77,22 @@ struct FavoritesView<Model: FavoritesModel>: View {
                 .buttonStyle(ToggleExpandButtonStyle())
             }
         }
+    }
+}
+
+private extension View {
+    func previewShape() -> some View {
+        contentShape(.dragPreview, RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+extension Favorite: Reorderable {
+    var dropItemProvider: NSItemProvider {
+        NSItemProvider(object: (urlObject?.absoluteString ?? "") as NSString)
+    }
+
+    var dropType: UTType {
+        .plainText
     }
 }
 

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "92ecebfb4172ab9561959a07d7ef7037aea8c6e1",
-        "version" : "180.0.0"
+        "branch" : "bunn/duckplayer/contingency-handler",
+        "revision" : "9dc529a22fda53cbaa8785be2b4f7642b35bdf21"
       }
     },
     {

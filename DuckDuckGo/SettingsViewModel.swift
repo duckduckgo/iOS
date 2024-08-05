@@ -24,6 +24,7 @@ import SwiftUI
 import Common
 import Combine
 import SyncUI
+import DuckPlayer
 
 import Subscription
 import NetworkProtection
@@ -45,7 +46,9 @@ final class SettingsViewModel: ObservableObject {
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
-    var duckPlayerContingencyHandler: DuckPlayerContingencyHandler { DefaultDuckPlayerContingencyHandler() }
+    var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+        DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+    }
 
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"

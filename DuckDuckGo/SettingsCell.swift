@@ -55,6 +55,7 @@ struct SettingsCellView: View, Identifiable {
     var webLinkIndicator: Bool
     var id: UUID = UUID()
     var isButton: Bool
+    var isGreyedOut: Bool
 
     /// Initializes a `SettingsCellView` with the specified label and accessory.
     ///
@@ -69,7 +70,7 @@ struct SettingsCellView: View, Identifiable {
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
     ///   - webLinkIndicator: Adds a link indicator on the right
     ///   - isButton: Disables the tap actions on the cell if true
-    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accessory: Accessory = .none, enabled: Bool = true, statusIndicator: StatusIndicatorView? = nil, disclosureIndicator: Bool = false, webLinkIndicator: Bool = false, isButton: Bool = false) {
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accessory: Accessory = .none, enabled: Bool = true, statusIndicator: StatusIndicatorView? = nil, disclosureIndicator: Bool = false, webLinkIndicator: Bool = false, isButton: Bool = false, isGreyedOut: Bool = false) {
         self.label = label
         self.subtitle = subtitle
         self.image = image
@@ -80,6 +81,7 @@ struct SettingsCellView: View, Identifiable {
         self.disclosureIndicator = disclosureIndicator
         self.webLinkIndicator = webLinkIndicator
         self.isButton = isButton
+        self.isGreyedOut = isGreyedOut
     }
 
     /// Initializes a `SettingsCellView` for custom content.
@@ -98,6 +100,7 @@ struct SettingsCellView: View, Identifiable {
         self.disclosureIndicator = false
         self.webLinkIndicator = false
         self.isButton = false
+        self.isGreyedOut = false
     }
 
     var body: some View {
@@ -137,14 +140,21 @@ struct SettingsCellView: View, Identifiable {
                 HStack(alignment: .top) {
                     // Image
                     if let image {
-                        image
-                            .padding(.top, -2)
+                        if isGreyedOut {
+                            image
+                                .padding(.top, -2)
+                                .saturation(0)
+                                .opacity(0.7)
+                        } else {
+                            image
+                                .padding(.top, -2)
+                        }
                     }
                     VStack(alignment: .leading) {
                         // Title
                         Text(label)
                             .daxBodyRegular()
-                            .foregroundColor(Color(designSystemColor: .textPrimary))
+                            .foregroundColor(Color(designSystemColor: isGreyedOut == true ? .textSecondary : .textPrimary))
                         // Subtitle
                         if let subtitleText = subtitle {
                             Text(subtitleText)
@@ -187,11 +197,13 @@ struct SettingsCellView: View, Identifiable {
                 .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
                 .fixedSize()
         case .image(let image):
-            image
-                .resizable()
-                .scaledToFit()
-                .frame(width: 25, height: 25)
-                .cornerRadius(4)
+            if isGreyedOut {
+                image
+                    .saturation(0)
+                    .opacity(0.7)
+            } else {
+                image
+            }
         case .custom(let customView):
             customView
         }
@@ -331,7 +343,7 @@ enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
 
             SettingsCellView(label: "Multi-line Cell with disclosure \nLine 2\nLine 3",
                              subtitle: "Curabitur erat massa, cursus sed velit",
-                             image: Image("SettingsAppearance"),
+                             image: Image("SettingsPrivacyProITP"),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
@@ -342,8 +354,16 @@ enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
 
             SettingsCellView(label: "Subtitle image cell with disclosure",
                              subtitle: "This is the subtitle",
-                             accessory: .image(Image("SettingsAppearance")),
+                             accessory: .image(Image("SettingsPrivacyProWarning")),
                              disclosureIndicator: true)
+            .previewLayout(.sizeThatFits)
+
+            SettingsCellView(label: "Greyed out cell",
+                             subtitle: "This is the subtitle",
+                             image: Image("SettingsPrivacyProITP"),
+                             accessory: .image(Image("SettingsPrivacyProWarning")),
+                             disclosureIndicator: true,
+                             isGreyedOut: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Right Detail cell with disclosure",

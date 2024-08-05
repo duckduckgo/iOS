@@ -95,75 +95,118 @@ struct SettingsSubscriptionView: View {
                 .onFirstAppear {
                     Pixel.fire(pixel: .privacyProRestorePurchaseClick)
                 }
-
             NavigationLink(destination: subscribeView,
                            isActive: $isShowingSubscribeFlow) {
-                SettingsCellView(label: UserText.settingsPProLearnMore)
+                SettingsCellView(label: UserText.settingsPProLearnMore).padding(.leading, 32.0)
             }
 
             NavigationLink(destination: restoreView,
                            isActive: $isShowingRestoreFlow) {
-                SettingsCellView(label: UserText.settingsPProIHaveASubscription )
+                SettingsCellView(label: UserText.settingsPProIHaveASubscription).padding(.leading, 32.0)
             }
         }
     }
 
     @ViewBuilder
     private var subscriptionExpiredView: some View {
-        Group {
-            SettingsCustomCell(content: {
-                HStack(alignment: .top) {
-                    Image(SettingsSubscriptionViewConstants.alertIcon)
-                        .frame(width: SettingsSubscriptionViewConstants.noEntitlementsIconWidth)
-                        .padding(.top, SettingsSubscriptionViewConstants.topCellPadding)
-                    VStack(alignment: .leading) {
-                        Text(UserText.settingsPProSubscriptionExpiredTitle).daxBodyRegular()
-                        Text(UserText.settingsPProSubscribeAgain).daxFootnoteRegular()
-                            .padding(.bottom, SettingsSubscriptionViewConstants.purchaseDescriptionPadding)
-                    }.foregroundColor(Color(designSystemColor: .textSecondary))
-                }
-            })
-                        
-            let subscribeView = SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
-                                                                                   navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                                   subscriptionManager: subscriptionManager,
-                                                                                   privacyProDataReporter: viewModel.privacyProDataReporter
-            ).navigationViewStyle(.stack)
-            NavigationLink(
-                destination: subscribeView,
-                isActive: $isShowingSubscribeFlow,
-                label: { SettingsCellView(label: UserText.subscriptionRestoreNotFoundPlans) })
-            
-            // Renew Subscription (Expired)
-            let settingsView = SubscriptionSettingsView(viewPlans: {
-                    isShowingSubscribeFlow = true
-            })
-                .environmentObject(subscriptionNavigationCoordinator)
-            NavigationLink(destination: settingsView) {
-                SettingsCustomCell(content: { manageSubscriptionView })
-            }
+        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             isGreyedOut: true
+            )
+        }
+
+        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProDBPTitle,
+                image: Image("SettingsPrivacyProPIR"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
+            SettingsCellView(
+                label: UserText.settingsPProITRTitle,
+                image: Image("SettingsPrivacyProITP"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        // Renew Subscription (Expired)
+        let settingsView = SubscriptionSettingsView(viewPlans: { isShowingSubscribeFlow = true })
+            .environmentObject(subscriptionNavigationCoordinator)
+        NavigationLink(destination: settingsView) {
+            SettingsCellView(
+                label: UserText.settingsPProManageSubscription,
+                subtitle: "Your Privacy Pro subscription expired",
+                image: Image("SettingsPrivacyPro"),
+                accessory: .image(Image("SettingsPrivacyProWarning"))
+            )
         }
     }
-    
+
+//    @ViewBuilder
+//    private var noEntitlementsAvailableView: some View {
+//        Group {
+//            SettingsCustomCell(content: {
+//                HStack(alignment: .top) {
+//                    Image(SettingsSubscriptionViewConstants.infoIcon)
+//                        .frame(width: SettingsSubscriptionViewConstants.noEntitlementsIconWidth)
+//                        .padding(.top, SettingsSubscriptionViewConstants.topCellPadding)
+//                    VStack(alignment: .leading) {
+//                        Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
+//                        Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular()
+//                            .padding(.bottom, SettingsSubscriptionViewConstants.purchaseDescriptionPadding)
+//                    }.foregroundColor(Color(designSystemColor: .textSecondary))
+//                }
+//            })
+//            restorePurchaseView
+//        }
+//    }
+
     @ViewBuilder
     private var noEntitlementsAvailableView: some View {
-        Group {
-            SettingsCustomCell(content: {
-                HStack(alignment: .top) {
-                    Image(SettingsSubscriptionViewConstants.infoIcon)
-                        .frame(width: SettingsSubscriptionViewConstants.noEntitlementsIconWidth)
-                        .padding(.top, SettingsSubscriptionViewConstants.topCellPadding)
-                    VStack(alignment: .leading) {
-                        Text(UserText.settingsPProActivationPendingTitle).daxBodyRegular()
-                        Text(UserText.settingsPProActivationPendingDescription).daxFootnoteRegular()
-                            .padding(.bottom, SettingsSubscriptionViewConstants.purchaseDescriptionPadding)
-                    }.foregroundColor(Color(designSystemColor: .textSecondary))
-                }
-            })
-            restorePurchaseView
+        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             isGreyedOut: true
+            )
+        }
+
+        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProDBPTitle,
+                image: Image("SettingsPrivacyProPIR"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
+            SettingsCellView(
+                label: UserText.settingsPProITRTitle,
+                image: Image("SettingsPrivacyProITP"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        // Renew Subscription (Expired)
+        let settingsView = SubscriptionSettingsView(viewPlans: { isShowingSubscribeFlow = true })
+            .environmentObject(subscriptionNavigationCoordinator)
+        NavigationLink(destination: settingsView) {
+            SettingsCellView(
+                label: UserText.settingsPProManageSubscription,
+                subtitle: "Activating",
+                image: Image("SettingsPrivacyPro")
+            )
         }
     }
-    
+
     @ViewBuilder
     private var subscriptionDetailsView: some View {
         
@@ -209,34 +252,38 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         Group {
             if isShowingPrivacyPro {
+
+                let isSignedIn = viewModel.state.subscription.isSignedIn
+                let hasActiveSubscription = viewModel.state.subscription.hasActiveSubscription
+                let hasNoEntitlements = viewModel.state.subscription.entitlements.isEmpty
+
                 let footerLink = Link(UserText.settingsPProSectionFooter,
-                                      destination: SettingsSubscriptionViewConstants.privacyPolicyURL
-                ).daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
+                                      destination: SettingsSubscriptionViewConstants.privacyPolicyURL)
+                    .daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
 
-                Section(header: Text(UserText.settingsPProSection), footer: footerLink) {
+                Section(header: Text(UserText.settingsPProSection),
+                        footer: !isSignedIn ? footerLink : nil
+                ) {
+                    purchaseSubscriptionView
 
-                    switch (
-                        viewModel.state.subscription.isSignedIn,
-                        viewModel.state.subscription.hasActiveSubscription,
-                        viewModel.state.subscription.entitlements.isEmpty
-                    ) {
-                        
-                        // Signed In, Subscription Expired
-                    case (true, false, _):
-                        subscriptionExpiredView
-                        
-                        // Signed in, Subscription Active, Valid entitlements
-                    case (true, true, false):
-                        subscriptionDetailsView  // View for valid subscription details
-                        
-                        // Signed in, Subscription Active, Empty Entitlements
-                    case (true, true, true):
-                        noEntitlementsAvailableView  // View for no entitlements
-                        
-                        // Signed out
-                    case (false, _, _):
-                        purchaseSubscriptionView  // View for signing up or purchasing a subscription
-                    }
+//                    switch (isSignedIn, hasActiveSubscription, hasNoEntitlements) {
+//                      
+//                        // Signed In, Subscription Expired
+//                    case (true, false, _):
+//                        subscriptionExpiredView
+//                        
+//                        // Signed in, Subscription Active, Valid entitlements
+//                    case (true, true, false):
+//                        subscriptionDetailsView  // View for valid subscription details
+//                        
+//                        // Signed in, Subscription Active, Empty Entitlements
+//                    case (true, true, true):
+//                        noEntitlementsAvailableView  // View for no entitlements
+//                        
+//                        // Signed out
+//                    case (false, _, _):
+//                        purchaseSubscriptionView  // View for signing up or purchasing a subscription
+//                    }
                 }
                 
                 .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
@@ -258,22 +305,3 @@ struct SettingsSubscriptionView: View {
         }
     }
 }
-//
-// let settingsModel = SettingsViewModel(legacyViewProvider: <#T##SettingsLegacyViewProvider#>,
-//                                      subscriptionManager: <#T##any SubscriptionManager#>,
-//                                      historyManager: <#T##any HistoryManaging#>,
-//                                      syncPausedStateManager: <#T##any SyncPausedStateManaging#>,
-//                                      privacyProDataReporter: <#T##any PrivacyProDataReporting#>)
-//
-// #Preview {
-//    SettingsSubscriptionView(viewModel: settingsModel,
-//                             subscriptionNavigationCoordinator: <#T##SubscriptionNavigationCoordinator#>,
-//                             isShowingDBP: <#T##arg#>,
-//                             isShowingITP: <#T##arg#>,
-//                             isShowingRestoreFlow: <#T##arg#>,
-//                             isShowingSubscribeFlow: <#T##arg#>,
-//                             isShowingGoogleView: <#T##arg#>,
-//                             isShowingStripeView: <#T##arg#>,
-//                             isShowingSubscriptionError: <#T##arg#>,
-//                             isShowingPrivacyPro: <#T##arg#>)
-// }

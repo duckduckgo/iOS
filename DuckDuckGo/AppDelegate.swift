@@ -170,7 +170,7 @@ import WebKit
             Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+            _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -209,9 +209,18 @@ import WebKit
             DatabaseMigration.migrate(to: context)
         }
 
-        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
-                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
-            // MARK: post-Bookmarks migration logic
+        switch BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+        case .success:
+            break
+        case .failure(let error):
+            Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                       error: error)
+            if error.isDiskFull {
+                shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+            } else {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create database stack: \(error.localizedDescription)")
+            }
         }
 
         WidgetCenter.shared.reloadAllTimelines()
@@ -308,35 +317,40 @@ import WebKit
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         privacyProDataReporter.injectTabsModel(tabsModel)
-
-        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                      historyManager: historyManager,
-                                      homePageConfiguration: homePageConfiguration,
-                                      syncService: syncService,
-                                      syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel,
-                                      syncPausedStateManager: syncErrorHandler,
-                                      privacyProDataReporter: privacyProDataReporter)
-
-        main.loadViewIfNeeded()
-        syncErrorHandler.alertPresenter = main
-
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = main
-        window?.makeKeyAndVisible()
-
+        
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-            presentInsufficientDiskSpaceAlert()
-        }
 
-        autoClear = AutoClear(worker: main)
-        let applicationState = application.applicationState
-        Task {
-            await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
-            await vpnWorkaround.installRedditSessionWorkaround()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+            window?.makeKeyAndVisible()
+
+            presentInsufficientDiskSpaceAlert()
+        } else {
+            let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                          bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                          historyManager: historyManager,
+                                          homePageConfiguration: homePageConfiguration,
+                                          syncService: syncService,
+                                          syncDataProviders: syncDataProviders,
+                                          appSettings: AppDependencyProvider.shared.appSettings,
+                                          previewsSource: previewsSource,
+                                          tabsModel: tabsModel,
+                                          syncPausedStateManager: syncErrorHandler,
+                                          privacyProDataReporter: privacyProDataReporter)
+
+            main.loadViewIfNeeded()
+            syncErrorHandler.alertPresenter = main
+
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = main
+            window?.makeKeyAndVisible()
+
+            autoClear = AutoClear(worker: main)
+            let applicationState = application.applicationState
+            Task {
+                await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+                await vpnWorkaround.installRedditSessionWorkaround()
+            }
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -473,10 +487,6 @@ import WebKit
         guard !testing else { return }
 
         syncService.initializeIfNeeded()
-        if syncService.authState == .active &&
-            (InternalUserStore().isInternalUser == false && syncService.serverEnvironment == .development) {
-            UniquePixel.fire(pixel: .syncWrongEnvironment)
-        }
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
@@ -1052,6 +1062,11 @@ private extension Error {
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
             return true
         }
+
+        if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
+            return true
+        }
+        
         return false
     }
 

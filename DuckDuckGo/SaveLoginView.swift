@@ -148,7 +148,7 @@ struct SaveLoginView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10) {
                 Text(UserText.autofillOnboardingKeyFeaturesTitle)
-                    .font(Font.custom("SF Pro Text", size: 12))
+                    .font(Font.system(size: 12, weight: .semibold))
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                     .frame(width: 255, alignment: .top)

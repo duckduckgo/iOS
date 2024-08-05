@@ -126,10 +126,6 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     }
 
-    func omniBarCancelPressed() {
-
-    }
-
     func dismiss() {
 
     }

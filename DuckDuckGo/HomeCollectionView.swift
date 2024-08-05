@@ -150,10 +150,6 @@ class HomeCollectionView: UICollectionView {
         menuController.showMenu(from: self, rect: menuView.frame)
     }
     
-    func omniBarCancelPressed() {
-        renderers.omniBarCancelPressed()
-    }
-    
     func openedAsNewTab(allowingKeyboard: Bool) {
         renderers.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }

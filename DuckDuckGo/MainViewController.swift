@@ -1851,7 +1851,6 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         omniBar.cancel()
         hideSuggestionTray()
-        homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
     }
 

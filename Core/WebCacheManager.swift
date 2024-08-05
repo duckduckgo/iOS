@@ -96,12 +96,18 @@ public class WebCacheManager {
 extension WebCacheManager {
 
     @available(iOS 17, *)
-    private func checkForLeftBehindDataStores() async {
+    private func checkForLeftBehindDataStores(leftOversCount: Int) async {
+        let params = [
+            "left_overs_count": "\(leftOversCount)"
+        ]
+
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
         if ids.count > 1 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple, withAdditionalParameters: params)
         } else if ids.count > 0 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne, withAdditionalParameters: params)
+        } else if leftOversCount > 0 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresCleared, withAdditionalParameters: params)
         }
     }
 
@@ -113,10 +119,11 @@ extension WebCacheManager {
         dataStore = nil
 
         let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        let count = max(0, uuids.count - 1) // -1 because there should be a current store
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
-        await checkForLeftBehindDataStores()
+        await checkForLeftBehindDataStores(leftOversCount: count)
 
         storeIdManager.allocateNewContainerId()
         return cookies

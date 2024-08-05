@@ -78,7 +78,7 @@ public class WebCacheManager {
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
-                      dataStoreIdManager: DataStoreIdManager = .shared) async {
+                      dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
         if #available(iOS 17, *), dataStoreIdManager.hasId {
@@ -87,6 +87,10 @@ public class WebCacheManager {
 
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
+
+        if #available(iOS 17, *) {
+            dataStoreIdManager.allocateNewContainerId()
+        }
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
@@ -106,7 +110,7 @@ extension WebCacheManager {
     }
 
     @available(iOS 17, *)
-    private func containerBasedClearing(storeIdManager: DataStoreIdManager) async -> [HTTPCookie]? {
+    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
         guard let containerId = storeIdManager.id else { return [] }
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
@@ -118,7 +122,6 @@ extension WebCacheManager {
         }
         await checkForLeftBehindDataStores()
 
-        storeIdManager.allocateNewContainerId()
         return cookies
     }
 

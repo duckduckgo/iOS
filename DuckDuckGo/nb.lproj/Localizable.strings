@@ -1645,6 +1645,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Tilpass favorittene dine og de funksjonene du bruker mest. Endre på rekkefølgen av ting eller skjul dem for å holde orden.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Den nye fanesiden din er … ny!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

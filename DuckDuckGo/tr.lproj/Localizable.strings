@@ -1645,6 +1645,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Ayarları";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Favorilerinizi ve düzenli olarak kullandığınız özellikleri kendinize göre ayarlayın. Temiz tutmak için öğeleri yeniden sıralayın veya gizleyin.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Yeni Sekme Sayfanız... Yeni!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

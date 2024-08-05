@@ -299,7 +299,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     var shouldShowPrivacyButtonPulse: Bool {
-        settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && isEnabled
+        guard isNewOnboarding else { return false }
+        return settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && isEnabled
     }
 
     func isStillOnboarding() -> Bool {

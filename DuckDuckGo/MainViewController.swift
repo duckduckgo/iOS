@@ -866,7 +866,9 @@ class MainViewController: UIViewController {
     
     func didReturnFromBackground() {
         skipSERPFlow = true
-        if DaxDialogs.shared.shouldShowFireButtonPulse {
+        
+        // Show Fire Pulse only if Privacy button pulse should not be shown. In control group onboarding `shouldShowPrivacyButtonPulse` is always false.
+        if DaxDialogs.shared.shouldShowFireButtonPulse && !DaxDialogs.shared.shouldShowPrivacyButtonPulse {
             showFireButtonPulse()
         }
     }

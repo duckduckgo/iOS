@@ -18,19 +18,45 @@
 //
 
 import Foundation
+import BrowserServicesKit
+import Core
 
 protocol DuckPlayerContingencyHandler {
     var shouldDisplayContingencyMessage: Bool { get }
-    var learnMoreURL: URL { get }
+    var learnMoreURL: URL? { get }
 }
 
 struct DefaultDuckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
+
     var shouldDisplayContingencyMessage: Bool {
-        false
+        learnMoreURL != nil && !isDuckPlayerFeatureEnabled
     }
 
-    var learnMoreURL: URL {
-#warning("DuckPlayer - Replace this with real URL")
-        return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
+    private var isDuckPlayerFeatureEnabled: Bool {
+        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .duckPlayer)
+    }
+
+    var learnMoreURL: URL? {
+        let settings = privacyConfigurationManager.privacyConfig.settings(for: .duckPlayer)
+        guard let link = settings[.duckPlayerDisabledHelpPageLink] as? String,
+        let pageLink = URL(string: link) else { return nil }
+        return pageLink
+    }
+
+    internal init(privacyConfigurationManager: any PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+        self.privacyConfigurationManager = privacyConfigurationManager
+    }
+}
+
+// MARK: - Settings key for Dictionary extension
+
+private enum SettingsKey: String {
+    case duckPlayerDisabledHelpPageLink
+}
+
+private extension Dictionary where Key == String {
+    subscript(key: SettingsKey) -> Value? {
+        return self[key.rawValue]
     }
 }

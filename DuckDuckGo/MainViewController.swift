@@ -771,6 +771,7 @@ class MainViewController: UIViewController {
 
             controller.delegate = self
             controller.shortcutsDelegate = self
+            controller.chromeDelegate = self
 
             newTabPageViewController = controller
             addToContentContainer(controller: controller)

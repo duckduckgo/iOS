@@ -119,11 +119,17 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     weak var shortcutsDelegate: NewTabPageControllerShortcutsDelegate?
 
     func launchNewSearch() {
-
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
+        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
 
+        // The omnibar is inside a collection view so this needs a chance to do its thing
+        // which might also be async. Not great.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.launchNewSearch()
+        }
     }
 
     func dismiss() {

@@ -32,6 +32,7 @@ import Combine
 final class OnboardingNavigationDelegateTests: XCTestCase {
 
     var mainVC: MainViewController!
+    var onboardingPixelReporter: OnboardingPixelReporterMock!
 
     override func setUp() {
         let db = CoreDataDatabase.bookmarksMock
@@ -57,6 +58,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         )
         let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
         let tabsModel = TabsModel(desktop: true)
+        onboardingPixelReporter = OnboardingPixelReporterMock()
         mainVC = MainViewController(
             bookmarksDatabase: db,
             bookmarksDatabaseCleaner: bookmarkDatabaseCleaner,
@@ -71,7 +73,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             privacyProDataReporter: MockPrivacyProDataReporter(),
             variantManager: MockVariantManager(),
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
-            contextualOnboardingLogic: ContextualOnboardingLogicMock())
+            contextualOnboardingLogic: ContextualOnboardingLogicMock(),
+            contextualOnboardingPixelReporter: onboardingPixelReporter)
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()
@@ -148,6 +151,32 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
     func assertExpected(url: URL) {
         XCTAssertNotNil(mainVC.currentTab?.url)
         XCTAssertEqual(mainVC.currentTab?.url, url)
+    }
+
+    // MARK: Pixel
+
+    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsHighlighted_ThenFireFirstTimePrivacyDashboardUsedPixel() {
+        // GIVEN
+        let isHighlighted = true
+        XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
+
+        // WHEN
+        mainVC.onPrivacyIconPressed(isHighlighted: isHighlighted)
+
+        // THEN
+        XCTAssertTrue(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
+    }
+
+    func testWhenPrivacyBarIconIsPressed_AndPrivacyIconIsNotHighlighted_ThenDoNotFireFirstTimePrivacyDashboardUsedPixel() {
+        // GIVEN
+        let isHighlighted = false
+        XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
+
+        // WHEN
+        mainVC.onPrivacyIconPressed(isHighlighted: isHighlighted)
+
+        // THEN
+        XCTAssertFalse(onboardingPixelReporter.didCallTrackPrivacyDashboardOpenedForFirstTime)
     }
 
 }

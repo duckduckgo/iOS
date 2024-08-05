@@ -27,9 +27,12 @@ final class PrivacyIconContextualOnboardingAnimator {
     }
 
     func dismissPrivacyIconAnimation(_ view: PrivacyIconView) {
-        if ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
+        if isPrivacyIconHighlighted(view) {
             ViewHighlighter.hideAll()
         }
     }
 
+    func isPrivacyIconHighlighted(_ view: PrivacyIconView) -> Bool {
+        ViewHighlighter.highlightedViews.contains(where: { $0.view == view })
+    }
 }

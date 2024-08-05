@@ -19,6 +19,7 @@
 
 import XCTest
 import SwiftUI
+import Core
 @testable import DuckDuckGo
 
 class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
@@ -26,6 +27,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
     var factory: NewTabDaxDialogFactory!
     var mockDelegate: CapturingOnboardingNavigationDelegate!
     var contextualOnboardingLogicMock: ContextualOnboardingLogicMock!
+    var pixelReporterMock: OnboardingPixelReporterMock!
     var onDismissCalled: Bool!
     var window: UIWindow!
 
@@ -34,7 +36,8 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         mockDelegate = CapturingOnboardingNavigationDelegate()
         contextualOnboardingLogicMock = ContextualOnboardingLogicMock()
         onDismissCalled = false
-        factory = NewTabDaxDialogFactory(delegate: mockDelegate, contextualOnboardingLogic: contextualOnboardingLogicMock)
+        pixelReporterMock = OnboardingPixelReporterMock()
+        factory = NewTabDaxDialogFactory(delegate: mockDelegate, contextualOnboardingLogic: contextualOnboardingLogicMock, onboardingPixelReporter: pixelReporterMock)
         window = UIWindow(frame: UIScreen.main.bounds)
         window.makeKeyAndVisible()
     }
@@ -46,6 +49,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         mockDelegate = nil
         onDismissCalled = nil
         contextualOnboardingLogicMock = nil
+        pixelReporterMock = nil
         super.tearDown()
     }
 
@@ -115,6 +119,55 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         let addFavoriteDialog = find(ContextualDaxDialogContent.self, in: host)
         XCTAssertNotNil(addFavoriteDialog)
         XCTAssertEqual(addFavoriteDialog?.message.string, homeDialog.message)
+    }
+
+    // MARK: - Pixels
+
+    func testWhenOnboardingTrySearchDialogAppearForTheFirstTime_ThenSendFireExpectedPixel() {
+        // GIVEN
+        let spec = DaxDialogs.HomeScreenSpec.initial
+        let pixelEvent = Pixel.Event.onboardingContextualTrySearchUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: pixelEvent)
+    }
+
+    func testWhenOnboardingTryVisitSiteDialogAppearForTheFirstTime_ThenSendFireExpectedPixel() {
+        // GIVEN
+        let spec = DaxDialogs.HomeScreenSpec.subsequent
+        let pixelEvent = Pixel.Event.onboardingContextualTryVisitSiteUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: pixelEvent)
+    }
+
+    func testWhenOnboardingFinalDialogAppearForTheFirstTime_ThenSendFireExpectedPixel() {
+        // GIVEN
+        let spec = DaxDialogs.HomeScreenSpec.final
+        let pixelEvent = Pixel.Event.daxDialogsEndOfJourneyNewTabUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: pixelEvent)
+    }
+
+}
+
+private extension ContextualOnboardingNewTabDialogFactoryTests {
+
+    func testDialogDefinedBy(spec: DaxDialogs.HomeScreenSpec, firesEvent event: Pixel.Event) {
+        // GIVEN
+        let expectation = self.expectation(description: #function)
+        XCTAssertFalse(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertNil(pixelReporterMock.capturedScreenImpression)
+
+        // WHEN
+        let view = factory.createDaxDialog(for: spec, onDismiss: {})
+        let host = OnboardingHostingControllerMock(rootView: AnyView(view))
+        host.onAppearExpectation = expectation
+        window.rootViewController = host
+        XCTAssertNotNil(host.view)
+
+        // THEN
+        waitForExpectations(timeout: 2.0)
+        XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertEqual(pixelReporterMock.capturedScreenImpression, event)
     }
 
 }

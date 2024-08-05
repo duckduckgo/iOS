@@ -297,7 +297,8 @@ class TabViewController: UIViewController {
                                    duckPlayer: DuckPlayerProtocol,
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
-                                   contextualOnboardingLogic: ContextualOnboardingLogic) -> TabViewController {
+                                   contextualOnboardingLogic: ContextualOnboardingLogic,
+                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporter()) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -309,7 +310,9 @@ class TabViewController: UIViewController {
                               duckPlayer: duckPlayer,
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                              contextualOnboardingLogic: contextualOnboardingLogic)
+                              contextualOnboardingLogic: contextualOnboardingLogic,
+                              onboardingPixelReporter: onboardingPixelReporter
+            )
         })
         return controller
     }
@@ -325,6 +328,7 @@ class TabViewController: UIViewController {
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
+    let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -335,7 +339,8 @@ class TabViewController: UIViewController {
                    duckPlayer: DuckPlayerProtocol,
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
-                   contextualOnboardingLogic: ContextualOnboardingLogic) {
+                   contextualOnboardingLogic: ContextualOnboardingLogic,
+                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -347,6 +352,7 @@ class TabViewController: UIViewController {
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.onboardingPixelReporter = onboardingPixelReporter
         super.init(coder: aDecoder)
     }
 
@@ -1309,7 +1315,8 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
-        
+        trackSecondSiteVisitIfNeeded(url: webView.url)
+
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()
@@ -1364,6 +1371,12 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+    }
+
+    func trackSecondSiteVisitIfNeeded(url: URL?) {
+        // Track second non-SERP webpage visit
+        guard url?.isDuckDuckGoSearch == false else { return }
+        onboardingPixelReporter.trackSecondSiteVisit()
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {

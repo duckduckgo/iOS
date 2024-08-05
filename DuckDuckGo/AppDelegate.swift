@@ -317,7 +317,8 @@ import WebKit
                                       privacyProDataReporter: privacyProDataReporter,
                                       variantManager: variantManager,
                                       contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
-                                      contextualOnboardingLogic: daxDialogs)
+                                      contextualOnboardingLogic: daxDialogs,
+                                      contextualOnboardingPixelReporter: OnboardingPixelReporter())
 
         main.loadViewIfNeeded()
         syncErrorHandler.alertPresenter = main

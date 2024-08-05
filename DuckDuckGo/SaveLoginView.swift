@@ -88,7 +88,7 @@ struct SaveLoginView: View {
                 AutofillViews.AppIconHeader()
                 Spacer(minLength: Const.Size.contentSpacing)
                 AutofillViews.Headline(title: title)
-                Spacer(minLength: Const.Size.contentSpacing)
+                Spacer(minLength: 8)
                 contentView
                 Spacer(minLength: Const.Size.contentSpacing)
                 if case .newUser = layoutType {

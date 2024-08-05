@@ -58,6 +58,34 @@ Užblokavau juos!
 ☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* ir *dar 1* bandė jus sekti čia. Aš juos užblokavau!
+
+☝️ Norėdami gauti daugiau informacijos, bakstelėkite skydą.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė jus sekti čia. Aš juos užblokavau!
+
+☝️ Norėdami gauti daugiau informacijos, bakstelėkite skydą.</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė jus sekti čia. Aš juos užblokavau!
+
+☝️ Norėdami gauti daugiau informacijos, bakstelėkite skydą.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė jus sekti čia. Aš juos užblokavau!
+
+☝️ Norėdami gauti daugiau informacijos, bakstelėkite skydą.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

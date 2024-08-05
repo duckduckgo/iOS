@@ -172,15 +172,6 @@ final class PrivacyProDataReporterTests: XCTestCase {
     }
 }
 
-struct MockTutorialSettings: TutorialSettings {
-    var lastVersionSeen: Int { 0 }
-    var hasSeenOnboarding: Bool
-
-    init(hasSeenOnboarding: Bool) {
-        self.hasSeenOnboarding = hasSeenOnboarding
-    }
-}
-
 class MockEmailStorage: EmailManagerStorage {
     private let username: String?
     private let token: String?

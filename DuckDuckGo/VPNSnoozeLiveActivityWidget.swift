@@ -111,10 +111,10 @@ private struct VPNSnoozeLiveActivityPrimaryCountdownView: View {
 
             VStack(alignment: .leading) {
                 if snoozeActive {
-                    Text("VPN Snoozing")
+                    Text(UserText.vpnWidgetLiveActivityVPNSnoozingStatusLabel)
                         .foregroundStyle(Color.white)
                 } else {
-                    Text("VPN is On")
+                    Text(UserText.vpnWidgetLiveActivityVPNSnoozingStatusLabel)
                         .foregroundStyle(Color.white)
                 }
 
@@ -143,7 +143,7 @@ private struct VPNSnoozeLiveActivityActionView: View {
             Spacer()
 
             Button(intent: CancelSnoozeLiveActivityAppIntent(), label: {
-                Text(snoozeActive ? "Wake Up" : "Dismiss")
+                Text(snoozeActive ? UserText.vpnWidgetLiveActivityWakeUpButton : UserText.vpnWidgetLiveActivityDismissButton)
                     .font(Font.system(size: 18, weight: .semibold))
                     .foregroundColor(Color.white)
             })

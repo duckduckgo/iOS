@@ -1492,6 +1492,12 @@ https://duckduckgo.com/mac";
 /* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
 "network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
 
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "Snooze For 2 Minutes";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Wake Up";
+
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
 

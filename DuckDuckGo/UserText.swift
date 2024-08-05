@@ -503,6 +503,8 @@ public struct UserText {
         let localized = NSLocalizedString("network.protection.status.snoozing.format", value: "Snoozing, %@ remaining", comment: "The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00'")
         return String(format: localized, timeLapsedString)
     }
+    static let netPStatusViewSnooze = NSLocalizedString("network.protection.status.view.action.snooze", value: "Snooze For 2 Minutes", comment: "Snooze button title shown in NetworkProtection's status view.")
+    static let netPStatusViewWakeUp = NSLocalizedString("network.protection.status.view.action.wake-up", value: "Wake Up", comment: "Wake Up button title shown in NetworkProtection's status view.")
     static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
     static let netPStatusViewIPAddress = NSLocalizedString("network.protection.status.view.ip.address", value: "IP Address", comment: "IP Address label shown in NetworkProtection's status view.")
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")

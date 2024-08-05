@@ -131,7 +131,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func snooze() -> some View {
         if statusModel.isSnoozing {
-            Button("Wake Up") {
+            Button(UserText.netPStatusViewWakeUp) {
                 Task {
                     await statusModel.cancelSnooze()
                 }
@@ -139,7 +139,7 @@ struct NetworkProtectionStatusView: View {
             .foregroundStyle(Color(designSystemColor: .accent))
             .disabled(statusModel.snoozeRequestPending)
         } else if statusModel.hasServerInfo {
-            Button("Snooze for 2 minutes") {
+            Button(UserText.netPStatusViewSnooze) {
                 Task {
                     await statusModel.startSnooze()
                 }

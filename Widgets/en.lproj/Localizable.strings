@@ -76,6 +76,18 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Disconnect";
 
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN is On";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN is On";
 

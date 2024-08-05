@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import Core
 import SwiftUI
 
 extension HomeViewController {
@@ -34,6 +35,10 @@ extension HomeViewController {
         daxDialogViewController.loadViewIfNeeded()
         daxDialogViewController.message = spec.message
         daxDialogViewController.accessibleMessage = spec.accessibilityLabel
+
+        if spec == .initial {
+            UniquePixel.fire(pixel: .onboardingContextualTryVisitSiteUnique, includedParameters: [.appVersion, .atb])
+        }
 
         view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
 

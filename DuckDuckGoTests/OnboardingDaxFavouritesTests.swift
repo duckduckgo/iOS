@@ -75,6 +75,7 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             variantManager: MockVariantManager(),
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: contextualOnboardingLogicMock,
+            contextualOnboardingPixelReporter: OnboardingPixelReporterMock(),
             tutorialSettings: tutorialSettingsMock
         )
         let window = UIWindow(frame: UIScreen.main.bounds)

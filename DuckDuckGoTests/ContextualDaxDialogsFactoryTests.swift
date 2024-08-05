@@ -19,24 +19,36 @@
 
 import XCTest
 import SwiftUI
+import Core
 @testable import DuckDuckGo
 
 final class ContextualDaxDialogsFactoryTests: XCTestCase {
     private var sut: ExperimentContextualDaxDialogsFactory!
     private var delegate: ContextualOnboardingDelegateMock!
     private var settingsMock: ContextualOnboardingSettingsMock!
-
+    private var pixelReporterMock: OnboardingPixelReporterMock!
+    private var window: UIWindow!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         delegate = ContextualOnboardingDelegateMock()
         settingsMock = ContextualOnboardingSettingsMock()
-        sut = ExperimentContextualDaxDialogsFactory(contextualOnboardingSettings: settingsMock, contextualOnboardingLogic: ContextualOnboardingLogicMock())
+        pixelReporterMock = OnboardingPixelReporterMock()
+        sut = ExperimentContextualDaxDialogsFactory(
+            contextualOnboardingLogic: ContextualOnboardingLogicMock(),
+            contextualOnboardingSettings: settingsMock,
+            contextualOnboardingPixelReporter: pixelReporterMock
+        )
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.makeKeyAndVisible()
     }
 
     override func tearDownWithError() throws {
+        window.isHidden = true
+        window = nil
         delegate = nil
         settingsMock = nil
+        pixelReporterMock = nil
         sut = nil
         try super.tearDownWithError()
     }
@@ -167,7 +179,6 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         XCTAssertNotNil(view)
     }
 
-
     // MARK: - Final
 
     func test_WhenMakeViewForFinalSpec_ThenReturnViewOnboardingFinalDialog() throws {
@@ -195,6 +206,143 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         // THEN
         XCTAssertTrue(delegate.didCallDidTapDismissContextualOnboardingAction)
     }
+
+    // MARK: - Pixels
+
+    func testWhenViewForAfterSearchSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.afterSearch
+        let expectedPixel = Pixel.Event.daxDialogsSerpUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForVisitSiteSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.visitWebsite
+        let expectedPixel = Pixel.Event.onboardingContextualTryVisitSiteUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForWithoutTrackersSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.withoutTrackers
+        let expectedPixel = Pixel.Event.daxDialogsWithoutTrackersUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForWithOneTrackerSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.withOneTracker
+        let expectedPixel = Pixel.Event.daxDialogsWithTrackersUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForWithTrackersSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.withMultipleTrackers
+        let expectedPixel = Pixel.Event.daxDialogsWithTrackersUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForSiteIsMajorTrackerSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.siteIsMajorTracker
+        let expectedPixel = Pixel.Event.daxDialogsSiteIsMajorUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForSiteIsOwnedByMajorTrackerSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.siteOwnedByMajorTracker
+        let expectedPixel = Pixel.Event.daxDialogsSiteOwnedByMajorUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForFireSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.fire
+        let expectedPixel = Pixel.Event.daxDialogsFireEducationShownUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenViewForFinalSpecAppearsThenExpectedPixelFires() {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.final
+        let expectedPixel = Pixel.Event.daxDialogsEndOfJourneyTabUnique
+        // TEST
+        testDialogDefinedBy(spec: spec, firesEvent: expectedPixel)
+    }
+
+    func testWhenAfterSearchCTAIsTappedAndTryVisitWebsiteDialogThenExpectedPixelFires() throws {
+        try [DaxDialogs.BrowsingSpec.siteIsMajorTracker, .siteOwnedByMajorTracker, .withMultipleTrackers, .withoutTrackers, .withoutTrackers].forEach { spec in
+            // GIVEN
+            settingsMock.userHasSeenFireDialog = false
+            pixelReporterMock = OnboardingPixelReporterMock()
+            sut = ExperimentContextualDaxDialogsFactory(
+                contextualOnboardingLogic: ContextualOnboardingLogicMock(),
+                contextualOnboardingSettings: settingsMock,
+                contextualOnboardingPixelReporter: pixelReporterMock
+            )
+            let result = sut.makeView(for: spec, delegate: delegate, onSizeUpdate: {})
+            let view = try XCTUnwrap(find(OnboardingTrackersDoneDialog.self, in: result))
+            XCTAssertFalse(pixelReporterMock.didCallTrackScreenImpressionCalled)
+            XCTAssertNil(pixelReporterMock.capturedScreenImpression)
+
+            // WHEN
+            view.blockedTrackersCTAAction()
+
+            // THEN
+            XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
+            XCTAssertEqual(pixelReporterMock.capturedScreenImpression, .daxDialogsFireEducationShownUnique)
+        }
+    }
+
+    func testWhenTrackersDialogCTAIsTappedAndFireDialogThenExpectedPixelFires() throws {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.afterSearch
+        let result = sut.makeView(for: spec, delegate: delegate, onSizeUpdate: {})
+        let view = try XCTUnwrap(find(OnboardingFirstSearchDoneDialog.self, in: result))
+        XCTAssertFalse(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertNil(pixelReporterMock.capturedScreenImpression)
+
+        // WHEN
+        view.gotItAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertEqual(pixelReporterMock.capturedScreenImpression, .onboardingContextualTryVisitSiteUnique)
+    }
+}
+
+extension ContextualDaxDialogsFactoryTests {
+
+    func testDialogDefinedBy(spec: DaxDialogs.BrowsingSpec, firesEvent event: Pixel.Event) {
+        // GIVEN
+        let expectation = self.expectation(description: #function)
+        XCTAssertFalse(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertNil(pixelReporterMock.capturedScreenImpression)
+
+        // WHEN
+        let view = sut.makeView(for: spec, delegate: ContextualOnboardingDelegateMock(), onSizeUpdate: {}).rootView
+        let host = OnboardingHostingControllerMock(rootView: AnyView(view))
+        host.onAppearExpectation = expectation
+        window.rootViewController = host
+        XCTAssertNotNil(host.view)
+
+        // THEN
+        waitForExpectations(timeout: 2.0)
+        XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
+        XCTAssertEqual(pixelReporterMock.capturedScreenImpression, event)
+    }
+
 }
 
 final class ContextualOnboardingSettingsMock: ContextualOnboardingSettings {

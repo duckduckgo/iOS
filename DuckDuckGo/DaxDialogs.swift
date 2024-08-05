@@ -39,6 +39,9 @@ protocol NewTabDialogSpecProvider {
 protocol ContextualOnboardingLogic {
     var isShowingFireDialog: Bool { get }
     var shouldShowPrivacyButtonPulse: Bool { get }
+    var isShowingSearchSuggestions: Bool { get }
+    var isShowingSitesSuggestions: Bool { get }
+
     func setSearchMessageSeen()
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
@@ -117,35 +120,41 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
-                                              pixelName: .daxDialogsSerp,
+                                              pixelName: .daxDialogsSerpUnique,
                                               type: .afterSearch)
+
+        // Message and CTA empty on purpose as for this case we use only pixelName and type
+        static let visitWebsite = BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .onboardingContextualTryVisitSiteUnique, type: .visitWebsite)
 
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
-                                                  pixelName: .daxDialogsWithoutTrackers, type: .withoutTrackers)
-        
+                                                  pixelName: .daxDialogsWithoutTrackersUnique, type: .withoutTrackers)
+
         static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
-                                                     pixelName: .daxDialogsSiteIsMajor, type: .siteIsMajorTracker)
-        
+                                                     pixelName: .daxDialogsSiteIsMajorUnique, type: .siteIsMajorTracker)
+
         static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
-                                                          pixelName: .daxDialogsSiteOwnedByMajor, type: .siteOwnedByMajorTracker)
-        
+                                                          pixelName: .daxDialogsSiteOwnedByMajorUnique, type: .siteOwnedByMajorTracker)
+
         static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: true,
-                                                 pixelName: .daxDialogsWithTrackers, type: .withOneTracker)
-        
+                                                 pixelName: .daxDialogsWithTrackersUnique, type: .withOneTracker)
+
         static let withMultipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
-                                                      pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
+                                                      pixelName: .daxDialogsWithTrackersUnique, type: .withMultipleTrackers)
 
-        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShown, type: .final)
+        // Message and CTA empty on purpose as for this case we use only pixelName and type
+        static let fire = BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationShownUnique, type: .fire)
+
+        static let final = BrowsingSpec(message: UserText.daxDialogHomeSubsequent, cta: "", highlightAddressBar: false, pixelName: .daxDialogsEndOfJourneyTabUnique, type: .final)
 
         let message: String
         let cta: String
@@ -177,10 +186,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                          confirmAction: UserText.daxDialogFireButtonEducationConfirmAction,
                                                          cancelAction: UserText.daxDialogFireButtonEducationCancelAction,
                                                          isConfirmActionDestructive: true,
-                                                         displayedPixelName: .daxDialogsFireEducationShown,
-                                                         confirmActionPixelName: .daxDialogsFireEducationConfirmed,
-                                                         cancelActionPixelName: .daxDialogsFireEducationCancelled)
-        
+                                                         displayedPixelName: .daxDialogsFireEducationShownUnique,
+                                                         confirmActionPixelName: .daxDialogsFireEducationConfirmedUnique,
+                                                         cancelActionPixelName: .daxDialogsFireEducationCancelledUnique)
+
         let message: String
         let confirmAction: String
         let cancelAction: String
@@ -205,6 +214,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     
     // So we can avoid showing two dialogs for the same page
     private var lastURLDaxDialogReturnedFor: URL?
+
+    private var currentHomeSpec: HomeScreenSpec?
 
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
@@ -251,6 +262,16 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private var shouldDisplayFinalContextualBrowsingDialog: Bool {
         !finalDaxDialogSeen &&
         visitedSiteAndFireButtonSeen
+    }
+
+    var isShowingSearchSuggestions: Bool {
+        guard isNewOnboarding else { return false }
+        return currentHomeSpec == .initial
+    }
+
+    var isShowingSitesSuggestions: Bool {
+        guard isNewOnboarding else { return false }
+        return lastShownDaxDialogType.flatMap(BrowsingSpec.SpecType.init(rawValue:)) == .visitWebsite || currentHomeSpec == .subsequent
     }
 
     var isEnabled: Bool {
@@ -358,7 +379,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case BrowsingSpec.SpecType.afterSearch.rawValue:
             return BrowsingSpec.afterSearch
         case BrowsingSpec.SpecType.visitWebsite.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .visitWebsite)
+            return .visitWebsite
         case BrowsingSpec.SpecType.withoutTrackers.rawValue:
             return BrowsingSpec.withoutTrackers
         case BrowsingSpec.SpecType.siteIsMajorTracker.rawValue:
@@ -371,7 +392,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             guard let entityNames = blockedEntityNames(privacyInfo.trackerInfo) else { return nil }
             return trackersBlockedMessage(entityNames)
         case BrowsingSpec.SpecType.fire.rawValue:
-            return BrowsingSpec(message: "", cta: "", highlightAddressBar: false, pixelName: .daxDialogsFireEducationConfirmed, type: .fire)
+            return .fire
         case BrowsingSpec.SpecType.final.rawValue:
             return nil
         default: return nil
@@ -482,6 +503,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
 
+        // Reset current home spec when navigating
+        currentHomeSpec = nil
+
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
 
         guard let host = privacyInfo.domain else { return nil }
@@ -528,7 +552,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func nextHomeScreenMessageNew() -> HomeScreenSpec? {
-        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else { return nil }
+        guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else {
+            currentHomeSpec = nil
+            return nil
+        }
+        currentHomeSpec = homeScreenSpec
         return homeScreenSpec
     }
 

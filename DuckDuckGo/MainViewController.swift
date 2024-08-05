@@ -103,6 +103,8 @@ class MainViewController: UIViewController {
     private let variantManager: VariantManager
     private let tutorialSettings: TutorialSettings
     private let contextualOnboardingLogic: ContextualOnboardingLogic
+    private let contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting
+    private let statisticsStore: StatisticsStore
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -184,7 +186,9 @@ class MainViewController: UIViewController {
         variantManager: VariantManager,
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        tutorialSettings: TutorialSettings = DefaultTutorialSettings()
+        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+        tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
+        statisticsStore: StatisticsStore = StatisticsUserDefaults()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -212,6 +216,8 @@ class MainViewController: UIViewController {
         self.variantManager = variantManager
         self.tutorialSettings = tutorialSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
+        self.statisticsStore = statisticsStore
 
         super.init(nibName: nil, bundle: nil)
         
@@ -1299,6 +1305,14 @@ class MainViewController: UIViewController {
         }
     }
 
+    func fireOnboardingCustomSearchPixelIfNeeded(query: String) {
+        if contextualOnboardingLogic.isShowingSearchSuggestions {
+            contextualOnboardingPixelReporter.trackCustomSearch()
+        } else if contextualOnboardingLogic.isShowingSitesSuggestions {
+            contextualOnboardingPixelReporter.trackCustomSite()
+        }
+    }
+
     func animateBackgroundTab() {
         showBars()
         tabSwitcherButton.incrementAnimated()
@@ -1720,11 +1734,16 @@ extension MainViewController: OmniBarDelegate {
         loadQuery(query)
         hideSuggestionTray()
         showHomeRowReminder()
+        fireOnboardingCustomSearchPixelIfNeeded(query: query)
     }
 
-    func onPrivacyIconPressed() {
+    func onPrivacyIconPressed(isHighlighted: Bool) {
         guard !isSERPPresented else { return }
 
+        // Track first tap of privacy icon button
+        if isHighlighted {
+            contextualOnboardingPixelReporter.trackPrivacyDashboardOpenedForFirstTime()
+        }
         // Dismiss privacy icon animation when showing privacy dashboard
         dismissPrivacyDashboardButtonPulse()
 

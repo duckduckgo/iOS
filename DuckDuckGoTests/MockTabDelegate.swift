@@ -115,7 +115,8 @@ extension TabViewController {
 
     static func fake(
         contextualOnboardingPresenter: ContextualOnboardingPresenting = ContextualOnboardingPresenterMock(),
-        contextualOnboardingLogic: ContextualOnboardingLogic = ContextualOnboardingLogicMock()
+        contextualOnboardingLogic: ContextualOnboardingLogic = ContextualOnboardingLogicMock(),
+        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporterMock()
     ) -> TabViewController {
         let tab = TabViewController.loadFromStoryboard(
             model: .init(link: Link(title: nil, url: .ddg)),
@@ -126,7 +127,8 @@ extension TabViewController {
             duckPlayer: MockDuckPlayer(settings: MockDuckPlayerSettings(privacyConfigManager: PrivacyConfigurationManagerMock())),
             privacyProDataReporter: MockPrivacyProDataReporter(),
             contextualOnboardingPresenter: contextualOnboardingPresenter,
-            contextualOnboardingLogic: contextualOnboardingLogic
+            contextualOnboardingLogic: contextualOnboardingLogic,
+            onboardingPixelReporter: contextualOnboardingPixelReporter
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false)
         return tab

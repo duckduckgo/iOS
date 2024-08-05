@@ -42,6 +42,26 @@ Blokkoltam őket!
  ☝️A címsorban láthatod, hogy ki próbál meg követni, amikor új webhelyre látogatsz.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>A(z) *%2$@, a(z) %3$@* és további 1 oldal követni próbált téged itt. Blokkoltam őket!
+
+☝️ További információkért koppints a pajzsra.</string>
+			<key>other</key>
+			<string>A(z) *%2$@, a(z) %3$@* és további %1$d oldal követni próbált téged itt. Blokkoltam őket!
+
+☝️ További információkért koppints a pajzsra.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

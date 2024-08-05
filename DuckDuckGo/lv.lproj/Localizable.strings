@@ -1708,6 +1708,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Tava jaunas cilnes lapa ir... atjaunota!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

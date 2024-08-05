@@ -1708,6 +1708,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Ρυθμίσεις VPN";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Προσαρμόστε τα Αγαπημένα και τις λειτουργίες μετάβασης. Αναδιατάξτε στοιχεία ή αποκρύψτε τα για να τη διατηρείτε καθαρή.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Η σελίδα σας για τη Νέα καρτέλα είναι... Νέα!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

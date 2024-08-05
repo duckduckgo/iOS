@@ -1708,6 +1708,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Kohanda oma lemmikuid ja enim kasutatavaid funktsioone. Järjesta valikud ümber või peida need, et kõik oleks lihtsasti leitav.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Sinu uue vahelehe leht on... Uus!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

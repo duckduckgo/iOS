@@ -376,6 +376,8 @@ import WebKit
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
 
+        NewTabPageIntroMessageSetup().perform()
+
         widgetRefreshModel.beginObservingVPNStatus()
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()

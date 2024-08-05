@@ -85,6 +85,8 @@ protocol AppSettings: AnyObject, AppDebugSettings {
 
     var newTabPageShortcutsSettings: Data? { get set }
     var newTabPageSectionsSettings: Data? { get set }
+    var newTabPageIntroMessageEnabled: Bool? { get set }
+    var newTabPageIntroMessageSeenCount: Int { get set }
 }
 
 protocol AppDebugSettings {

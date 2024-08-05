@@ -1708,6 +1708,12 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavitve VPN";
 
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Prilagodite zavihek Priljubljene in izbrane funkcije. Preuredite stvari ali jih skrijte, da boste imeli vse urejeno.";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Vaša stran za nov zavihek je ... nova!";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

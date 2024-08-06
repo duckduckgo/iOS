@@ -25,7 +25,7 @@ import Core
 struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
+//    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @StateObject var viewModel: SubscriptionFlowViewModel
     
     @State private var isPurchaseInProgress = false
@@ -180,9 +180,7 @@ struct SubscriptionFlowView: View {
                 
         .alert(isPresented: $isPresentingError) {
             getAlert(error: self.errorMessage)
-            
         }
-        
     }
         
     private func getAlert(error: SubscriptionErrorMessage) -> Alert {
@@ -223,9 +221,7 @@ struct SubscriptionFlowView: View {
 
     @ViewBuilder
     private var webView: some View {
-        
         ZStack(alignment: .top) {
-
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             

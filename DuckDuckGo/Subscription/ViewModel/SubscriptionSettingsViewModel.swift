@@ -256,7 +256,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             }
         }
     }
-    
+
+    @MainActor
+    func showTermsOfService() {
+        self.openURL(SettingsSubscriptionViewConstants.privacyPolicyURL)
+    }
+
     // MARK: -
     
     @MainActor private func manageAppleSubscription() async {

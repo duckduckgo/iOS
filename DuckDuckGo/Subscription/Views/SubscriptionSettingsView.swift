@@ -23,9 +23,16 @@ import DesignResourcesKit
 import Core
 
 struct SubscriptionSettingsView: View {
-        
+
+    enum Configuration {
+        case subscribed
+        case expired
+        case activating
+    }
+    @State var configuration: Configuration
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SubscriptionSettingsViewModel()
+    @StateObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     var viewPlans: (() -> Void)?
     
@@ -36,36 +43,34 @@ struct SubscriptionSettingsView: View {
     @State var isShowingLearnMoreView = false
     @State var isShowingEmailView = false
     @State var isShowingConnectionError = false
+    @State var isShowingSubscriptionError = false
 
-    enum Constants {
-        static let alertIcon = "Exclamation-Color-16"
-    }
-    
     var body: some View {
         optionsView
             .onFirstAppear {
                 Pixel.fire(pixel: .privacyProSubscriptionSettings, debounce: 1)
             }
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: settingsViewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
+            if value {
+                isShowingSubscriptionError = true
+            }
+        }
     }
     
     // MARK: -
-    
+    @ViewBuilder
     private var headerSection: some View {
+//        let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
+//        let isSubscribed = viewModel.state.subscriptionInfo?.isActive ?? false
         Section {
-            let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
-            VStack(alignment: .center, spacing: 7) {
-                Image("Privacy-Pro-96x96")
-                Text(UserText.subscriptionTitle).daxTitle2()
-
-                if isExpired {
-                    HStack {
-                        Image(Constants.alertIcon)
-                        Text(viewModel.state.subscriptionDetails)
-                            .daxSubheadRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                    }
-                }
+            switch configuration {
+            case .subscribed:
+                SubscriptionSettingsHeaderView(state: .subscribed)
+            case .expired:
+                SubscriptionSettingsHeaderView(state: .expired(viewModel.state.subscriptionDetails))
+            case .activating:
+                SubscriptionSettingsHeaderView(state: .activating)
             }
         }
         .listRowBackground(Color.clear)
@@ -110,50 +115,75 @@ struct SubscriptionSettingsView: View {
     private var manageSection: some View {
         Section(header: Text(UserText.subscriptionManageTitle),
                 footer: manageSectionFooter) {
-            let active = viewModel.state.subscriptionInfo?.isActive ?? false
-            SettingsCustomCell(content: {
 
-                if !viewModel.state.isLoadingSubscriptionInfo {
-                    if active {
-                        Text(UserText.subscriptionChangePlan)
-                            .daxBodyRegular()
-                            .foregroundColor(Color.init(designSystemColor: .accent))
-                    } else {
-                        Text(UserText.subscriptionRestoreNotFoundPlans)
-                            .daxBodyRegular()
-                            .foregroundColor(Color.init(designSystemColor: .accent))
-                    }
-                } else {
-                    SwiftUI.ProgressView()
-                }
-            },
-                               action: {
-                if !viewModel.state.isLoadingSubscriptionInfo {
-                    Task {
+            switch configuration {
+            case .subscribed, .expired:
+                let active = viewModel.state.subscriptionInfo?.isActive ?? false
+                SettingsCustomCell(content: {
+                    if !viewModel.state.isLoadingSubscriptionInfo {
                         if active {
-                            viewModel.manageSubscription()
-                            Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
+                            Text(UserText.subscriptionChangePlan)
+                                .daxBodyRegular()
+                                .foregroundColor(Color.init(designSystemColor: .accent))
                         } else {
-                            viewPlans?()
+                            Text(UserText.subscriptionRestoreNotFoundPlans)
+                                .daxBodyRegular()
+                                .foregroundColor(Color.init(designSystemColor: .accent))
+                        }
+                    } else {
+                        SwiftUI.ProgressView()
+                    }
+                },
+                                   action: {
+                    if !viewModel.state.isLoadingSubscriptionInfo {
+                        Task {
+                            if active {
+                                viewModel.manageSubscription()
+                                Pixel.fire(pixel: .privacyProSubscriptionManagementPlanBilling, debounce: 1)
+                            } else {
+                                viewPlans?()
+                            }
                         }
                     }
+                },
+                                   isButton: true)
+                .sheet(isPresented: $isShowingStripeView) {
+                    if let stripeViewModel = viewModel.state.stripeViewModel {
+                        SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
+                    }
                 }
-            },
-                               isButton: true)
-            .sheet(isPresented: $isShowingStripeView) {
-                if let stripeViewModel = viewModel.state.stripeViewModel {
-                    SubscriptionExternalLinkView(viewModel: stripeViewModel, title: UserText.subscriptionManagePlan)
-                }
-            }
 
-            SettingsCustomCell(content: {
-                Text(UserText.subscriptionRemoveFromDevice)
+                SettingsCustomCell(content: {
+                    Text(UserText.subscriptionRemoveFromDevice)
                         .daxBodyRegular()
-                        .foregroundColor(Color.init(designSystemColor: .accent))},
-                               action: { viewModel.displayRemovalNotice(true) },
-                               isButton: true)
+                    .foregroundColor(Color.init(designSystemColor: .accent))},
+                                   action: { viewModel.displayRemovalNotice(true) },
+                                   isButton: true)
+            case .activating:
+                restorePurchaseView
+            }
         }
     }
+
+     @ViewBuilder
+    var restorePurchaseView: some View {
+         let text = !settingsViewModel.state.subscription.isRestoring ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
+         SettingsCustomCell(content: {
+             Text(text)
+                 .daxBodyRegular()
+                 .foregroundColor(Color.init(designSystemColor: .accent)) },
+                            action: {
+                                 Task { await settingsViewModel.restoreAccountPurchase() }
+                             },
+                            isButton: !settingsViewModel.state.subscription.isRestoring )
+         .alert(isPresented: $isShowingSubscriptionError) {
+             Alert(
+                 title: Text(UserText.subscriptionAppStoreErrorTitle),
+                 message: Text(UserText.subscriptionAppStoreErrorMessage),
+                 dismissButton: .default(Text(UserText.actionOK)) {}
+             )
+         }
+     }
 
     private var manageSectionFooter: some View {
         let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
@@ -169,8 +199,7 @@ struct SubscriptionSettingsView: View {
     @ViewBuilder var helpSection: some View {
         Section(header: Text(UserText.subscriptionHelpAndSupport),
                 footer: Text(UserText.subscriptionFAQFooter)) {
-            
-            
+
             SettingsCustomCell(content: {
                 Text(UserText.subscriptionFAQ)
                     .daxBodyRegular()
@@ -182,7 +211,20 @@ struct SubscriptionSettingsView: View {
 
         }
     }
-    
+
+    @ViewBuilder var privacyPolicySection: some View {
+        Section {
+            SettingsCustomCell(content: {
+                Text(UserText.settingsPProSectionFooter)
+                    .daxBodyRegular()
+                    .foregroundColor(Color(designSystemColor: .accent))
+            },
+                               action: { viewModel.showTermsOfService() },
+                               disclosureIndicator: false,
+                               isButton: true)
+        }
+    }
+
     @ViewBuilder
     private var optionsView: some View {
         NavigationLink(destination: SubscriptionGoogleView(),
@@ -192,27 +234,28 @@ struct SubscriptionSettingsView: View {
         
         List {
             headerSection
-            devicesSection
-                .alert(isPresented: $isShowingRemovalNotice) {
-                    Alert(
-                        title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
-                        message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
-                        primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
-                        },
-                        secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
-                            Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
-                            viewModel.removeSubscription()
-                            dismiss()
-                        }
-                    )
-                }
+            if configuration == .subscribed || configuration == .expired {
+                devicesSection
+            }
             manageSection
             helpSection
-            
+            privacyPolicySection
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()
-        
+        .alert(isPresented: $isShowingRemovalNotice) {
+            Alert(
+                title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
+                },
+                secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
+                    viewModel.removeSubscription()
+                    dismiss()
+                }
+            )
+        }
         .onChange(of: viewModel.state.shouldDismissView) { value in
             if value {
                 dismiss()
@@ -306,20 +349,11 @@ struct SubscriptionSettingsView: View {
         }
             
     }
-    
+
     @ViewBuilder
     private var stripeView: some View {
         if let stripeViewModel = viewModel.state.stripeViewModel {
             SubscriptionExternalLinkView(viewModel: stripeViewModel)
         }
     }
-        
-        
 }
-
-// Commented out because CI fails if a SwiftUI preview is enabled https://app.asana.com/0/414709148257752/1206774081310425/f
-// struct SubscriptionSettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubscriptionSettingsView()
-//    }
-// }

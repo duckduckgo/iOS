@@ -144,7 +144,7 @@ struct SettingsCellView: View, Identifiable {
                             image
                                 .padding(.top, -2)
                                 .saturation(0)
-                                .opacity(0.7)
+                                .opacity(0.5)
                         } else {
                             image
                                 .padding(.top, -2)
@@ -200,7 +200,7 @@ struct SettingsCellView: View, Identifiable {
             if isGreyedOut {
                 image
                     .saturation(0)
-                    .opacity(0.7)
+                    .opacity(0.5)
             } else {
                 image
             }
@@ -354,14 +354,14 @@ enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
 
             SettingsCellView(label: "Subtitle image cell with disclosure",
                              subtitle: "This is the subtitle",
-                             accessory: .image(Image("SettingsPrivacyProWarning")),
+                             accessory: .image(Image("Exclamation-Color-16")),
                              disclosureIndicator: true)
             .previewLayout(.sizeThatFits)
 
             SettingsCellView(label: "Greyed out cell",
                              subtitle: "This is the subtitle",
                              image: Image("SettingsPrivacyProITP"),
-                             accessory: .image(Image("SettingsPrivacyProWarning")),
+                             accessory: .image(Image("Exclamation-Color-16")),
                              disclosureIndicator: true,
                              isGreyedOut: true)
             .previewLayout(.sizeThatFits)

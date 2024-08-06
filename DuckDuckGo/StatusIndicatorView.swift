@@ -21,7 +21,7 @@ import SwiftUI
 
 struct StatusIndicatorView: View {
     var status: StatusIndicator
-    var isDotHidden: Bool = false
+    var isDotHidden = false
 
     var body: some View {
         HStack(spacing: 6) {
@@ -43,7 +43,7 @@ struct StatusIndicatorView: View {
     private func colorForStatus(_ status: StatusIndicator) -> Color {
         switch status {
         case .on, .alwaysOn:
-            return Color("AlertGreen")
+            return Color(designSystemColor: .alertGreen)
         case .off:
             return Color(designSystemColor: .textSecondary).opacity(0.33)
         }

@@ -88,15 +88,15 @@ struct SaveLoginView: View {
                 AutofillViews.AppIconHeader()
                 Spacer(minLength: Const.Size.contentSpacing)
                 AutofillViews.Headline(title: title)
-                Spacer(minLength: 8)
+                Spacer(minLength: Const.Size.headlineToContentSpacing)
                 contentView
                 Spacer(minLength: Const.Size.contentSpacing)
                 if case .newUser = layoutType {
-                    featuresView.padding([.bottom], 16)
+                    featuresView.padding([.bottom], Const.Size.featuresListPadding)
                 }
                 ctaView
             }
-            .padding([.bottom], 24.0)
+            .padding([.bottom], Const.Size.bodyBottomPadding)
             .fixedSize(horizontal: false, vertical: shouldFixSize)
             .background(GeometryReader { proxy -> Color in
                 DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
@@ -124,9 +124,9 @@ struct SaveLoginView: View {
     }
 
     @ViewBuilder private func featuresListItem(imageResource: ImageResource, title: String, subtitle: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image(imageResource).frame(width: 24, height: 24)
-            VStack(alignment: .leading, spacing: 2) {
+        HStack(alignment: .top, spacing: Const.Size.featuresListItemHorizontalSpacing) {
+            Image(imageResource).frame(width: Const.Size.featuresListItemImageWidthHeight, height: Const.Size.featuresListItemImageWidthHeight)
+            VStack(alignment: .leading, spacing: Const.Size.featuresListItemVerticalSpacing) {
                 Text(title)
                     .daxSubheadSemibold()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
@@ -146,20 +146,19 @@ struct SaveLoginView: View {
 
     @ViewBuilder private var featuresView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center) {
                 Text(UserText.autofillOnboardingKeyFeaturesTitle)
                     .font(Font.system(size: 12, weight: .semibold))
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                     .frame(width: 255, alignment: .top)
             }
-            .padding(.horizontal, 0)
-            .padding(.vertical, 12)
+            .padding(.vertical, Const.Size.featuresListVerticalSpacing)
             .frame(maxWidth: .infinity, alignment: .center)
             Rectangle()
                 .fill(Color(designSystemColor: .container))
                 .frame(height: 1)
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: Const.Size.featuresListVerticalSpacing) {
                 featuresListItem(
                     imageResource: .autofillColor24,
                     title: UserText.autofillOnboardingKeyFeaturesSignInsTitle,
@@ -176,15 +175,15 @@ struct SaveLoginView: View {
                     subtitle: UserText.autofillOnboardingKeyFeaturesSyncDescription
                 )
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 12)
-            .padding(.bottom, 16)
+            .padding(.horizontal, Const.Size.featuresListPadding)
+            .padding(.top, Const.Size.featuresListTopPadding)
+            .padding(.bottom, Const.Size.featuresListPadding)
         }
         .padding(0)
         .frame(maxWidth: .infinity, alignment: .topLeading)
-        .cornerRadius(8)
+        .cornerRadius(Const.Size.featuresListBorderCornerRadius)
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: Const.Size.featuresListBorderCornerRadius)
                 .inset(by: 0.5)
                 .stroke(Color(designSystemColor: .container), lineWidth: 1)
         )
@@ -243,9 +242,17 @@ private enum Const {
         static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
         static let topPadding: CGFloat = 56.0
         static let contentSpacing: CGFloat = 24.0
-        static let ios15scrollOffset: CGFloat = 80.0
+        static let headlineToContentSpacing: CGFloat = 8.0
         static let ctaVerticalSpacing: CGFloat = 8.0
+        static let bodyBottomPadding: CGFloat = 24.0
         static let featureListItemIconGap: CGFloat = 8.0
+        static let featuresListItemImageWidthHeight: CGFloat = 24.0
+        static let featuresListItemHorizontalSpacing: CGFloat = 12.0
+        static let featuresListItemVerticalSpacing: CGFloat = 2.0
+        static let featuresListVerticalSpacing: CGFloat = 12.0
+        static let featuresListPadding: CGFloat = 16.0
+        static let featuresListTopPadding: CGFloat = 12.0
+        static let featuresListBorderCornerRadius: CGFloat = 8.0
     }
 }
 

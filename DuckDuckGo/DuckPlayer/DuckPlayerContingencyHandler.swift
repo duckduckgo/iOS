@@ -1,5 +1,5 @@
 //
-//  NewTabPage.swift
+//  DuckPlayerContingencyHandler.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,18 +17,20 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-protocol NewTabPage: UIViewController {
+protocol DuckPlayerContingencyHandler {
+    var shouldDisplayContingencyMessage: Bool { get }
+    var learnMoreURL: URL { get }
+}
 
-    var isDragging: Bool { get } // TODO: Mariusz, check if needed in both
-    func reloadFavorites() // TODO: Mariusz: check if needed with reactive approach
+struct DefaultDuckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+    var shouldDisplayContingencyMessage: Bool {
+        false
+    }
 
-    func launchNewSearch()
-    func openedAsNewTab(allowingKeyboard: Bool)
-
-    func dismiss()
-
-    func showNextDaxDialog()
-    func onboardingCompleted()
+    var learnMoreURL: URL {
+#warning("DuckPlayer - Replace this with real URL")
+        return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
+    }
 }

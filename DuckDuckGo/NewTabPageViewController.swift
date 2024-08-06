@@ -35,13 +35,16 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let tab: Tab
 
-    init(interactionModel: FavoritesListInteracting,
+    init(tab: Tab,
+         interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil) {
 
+        self.tab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
@@ -62,6 +65,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tab.viewed = true
     }
 
     // MARK: - Private
@@ -119,15 +128,17 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     weak var shortcutsDelegate: NewTabPageControllerShortcutsDelegate?
 
     func launchNewSearch() {
-
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
+        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
 
-    }
-
-    func omniBarCancelPressed() {
-
+        // The omnibar is inside a collection view so this needs a chance to do its thing
+        // which might also be async. Not great.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.launchNewSearch()
+        }
     }
 
     func dismiss() {

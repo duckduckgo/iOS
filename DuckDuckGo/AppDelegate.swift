@@ -394,11 +394,12 @@ import WebKit
 
     private func makeHistoryManager() -> HistoryManaging {
 
-        let settings = AppDependencyProvider.shared.appSettings
+        let provider = AppDependencyProvider.shared
 
-        switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
-                                   isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
-                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
+        switch HistoryManager.make(isAutocompleteEnabledByUser: provider.appSettings.autocomplete,
+                                   isRecentlyVisitedSitesEnabledByUser: provider.appSettings.recentlyVisitedSites,
+                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                   tld: provider.storageCache.tld) {
 
         case .failure(let error):
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)

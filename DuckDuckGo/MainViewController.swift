@@ -775,6 +775,7 @@ class MainViewController: UIViewController {
 
             controller.delegate = self
             controller.shortcutsDelegate = self
+            controller.chromeDelegate = self
 
             newTabPageViewController = controller
             addToContentContainer(controller: controller)
@@ -1866,7 +1867,6 @@ extension MainViewController: OmniBarDelegate {
         dismissOmniBar()
         omniBar.cancel()
         hideSuggestionTray()
-        homeController?.omniBarCancelPressed()
         self.showMenuHighlighterIfNeeded()
     }
 

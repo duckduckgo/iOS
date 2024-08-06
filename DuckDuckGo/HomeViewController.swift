@@ -216,10 +216,6 @@ class HomeViewController: UIViewController, NewTabPage {
         collectionView.reloadData()
     }
     
-    func omniBarCancelPressed() {
-        collectionView.omniBarCancelPressed()
-    }
-    
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         if !variantManager.isSupported(feature: .newOnboardingIntro) {

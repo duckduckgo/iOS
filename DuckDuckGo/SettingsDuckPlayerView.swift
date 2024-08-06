@@ -28,7 +28,7 @@ struct SettingsDuckPlayerView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     var body: some View {
         List {
-            if viewModel.shouldDisplayDuckPlayerContingencyMessage() {
+            if viewModel.shouldDisplayDuckPlayerContingencyMessage {
                 Section {
                     ContingencyMessageView {
                         viewModel.openDuckPlayerContingencyMessageSite()
@@ -60,6 +60,7 @@ struct SettingsDuckPlayerView: View {
                 SettingsPickerCellView(label: UserText.settingsOpenVideosInDuckPlayerLabel,
                                        options: DuckPlayerMode.allCases,
                                        selectedOption: viewModel.duckPlayerModeBinding)
+                .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
             } footer: {
                 Text(UserText.settingsDuckPlayerFooter)
                     .daxFootnoteRegular()

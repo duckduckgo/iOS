@@ -19,6 +19,11 @@
 
 import Core
 
+protocol HomeScreenTransitionSource: AnyObject {
+    var snapshotView: UIView { get }
+    var baseView: UIView { get }
+}
+
 class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate var homeScreenSnapshot: UIView?
@@ -26,19 +31,11 @@ class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
-    fileprivate func prepareSnapshots(with homeScreen: HomeViewController,
+    fileprivate func prepareSnapshots(with homeScreen: HomeScreenTransitionSource,
                                       transitionContext: UIViewControllerContextTransitioning) {
-        let viewToSnapshot: UIView
-        let frameToSnapshot: CGRect
-        if let logoContainer = homeScreen.logoContainer, !logoContainer.isHidden {
-            viewToSnapshot = logoContainer
-            frameToSnapshot = homeScreen.collectionView.convert(homeScreen.collectionView.bounds,
-                                                                to: nil)
-        } else {
-            viewToSnapshot = homeScreen.collectionView
-            frameToSnapshot = viewToSnapshot.bounds
-        }
-        
+        let viewToSnapshot = homeScreen.snapshotView
+        let frameToSnapshot = homeScreen.baseView.convert(homeScreen.baseView.bounds, to: viewToSnapshot)
+
         if let snapshot = viewToSnapshot.resizableSnapshotView(from: frameToSnapshot,
                                                                afterScreenUpdates: false,
                                                                withCapInsets: .zero) {
@@ -93,7 +90,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
-        guard let homeScreen = mainViewController.homeViewController,
+        guard let homeScreen = mainViewController.homeController,
               let tab = mainViewController.tabManager.model.currentTab,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
@@ -105,7 +102,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
 
         let theme = ThemeManager.shared.currentTheme
         
-        solidBackground.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
+        solidBackground.frame = homeScreen.view.convert(homeScreen.baseView.frame, to: nil)
         solidBackground.backgroundColor = theme.backgroundColor
         
         imageContainer.frame = solidBackground.frame
@@ -166,7 +163,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         prepareSubviews(using: transitionContext)
         
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-              let homeScreen = mainViewController.homeViewController,
+              let homeScreen = mainViewController.homeController,
               let tab = mainViewController.tabManager.model.currentTab,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
@@ -199,7 +196,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
-                self.imageContainer.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
+                self.imageContainer.frame = homeScreen.view.convert(homeScreen.baseView.frame, to: nil)
                 self.imageContainer.layer.cornerRadius = 0
                 self.imageContainer.backgroundColor = theme.backgroundColor
                 self.imageView.frame = CGRect(origin: .zero,

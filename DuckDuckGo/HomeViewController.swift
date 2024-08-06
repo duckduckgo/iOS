@@ -363,3 +363,17 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
         refresh()
     }
 }
+
+extension HomeViewController: HomeScreenTransitionSource {
+    var snapshotView: UIView {
+        if let logoContainer = logoContainer, !logoContainer.isHidden {
+            return logoContainer
+        } else {
+            return collectionView
+        }
+    }
+
+    var baseView: UIView {
+        collectionView
+    }
+}

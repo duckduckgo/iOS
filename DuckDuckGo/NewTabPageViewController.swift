@@ -164,3 +164,13 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension NewTabPageViewController: HomeScreenTransitionSource {
+    var snapshotView: UIView {
+        view
+    }
+
+    var baseView: UIView {
+        view
+    }
+}

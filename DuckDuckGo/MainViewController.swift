@@ -78,7 +78,7 @@ class MainViewController: UIViewController {
     
     var homeViewController: HomeViewController?
     var newTabPageViewController: NewTabPageViewController?
-    var homeController: NewTabPage? {
+    var homeController: (NewTabPage & HomeScreenTransitionSource)? {
         homeViewController ?? newTabPageViewController
     }
     var tabsBarController: TabsBarViewController?

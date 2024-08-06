@@ -117,7 +117,7 @@ struct SaveLoginView: View {
         if #available(iOS 16.0, *) {
             useScrollView = AutofillViews.contentHeightExceedsScreenHeight(viewModel.contentHeight)
         } else {
-            useScrollView = viewModel.contentHeight > frame.height + Const.Size.ios15scrollOffset
+            useScrollView = viewModel.contentHeight > frame.height
         }
 
         return useScrollView

@@ -20,6 +20,7 @@
 import Core
 import SwiftUI
 import DesignResourcesKit
+import DuckUI
 
 struct SettingsDuckPlayerView: View {
     private static let learnMoreURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
@@ -27,6 +28,14 @@ struct SettingsDuckPlayerView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     var body: some View {
         List {
+            if viewModel.shouldDisplayDuckPlayerContingencyMessage() {
+                Section {
+                    ContingencyMessageView {
+                        viewModel.openDuckPlayerContingencyMessageSite()
+                    }
+                }
+            }
+
             VStack(alignment: .center) {
                 Image("SettingsDuckPlayerHero")
                     .padding(.top, -20) // Adjust for the image padding
@@ -60,5 +69,50 @@ struct SettingsDuckPlayerView: View {
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+    }
+}
+
+private struct ContingencyMessageView: View {
+    let buttonCallback: () -> Void
+
+    private enum Copy {
+        static let title: String = UserText.duckPlayerContingencyMessageTitle
+        static let message: String = UserText.duckPlayerContingencyMessageBody
+        static let buttonTitle: String = UserText.duckPlayerContingencyMessageCTA
+    }
+    private enum Constants {
+        static let imageName: String = "WarningYoutube"
+        static let imageSize: CGSize = CGSize(width: 50, height: 50)
+        static let buttonCornerRadius: CGFloat = 8.0
+    }
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 8) {
+            Image(Constants.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)
+                .padding(.bottom, 8)
+
+            Text(Copy.title)
+                .daxHeadline()
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+
+            Text(Copy.message)
+                .daxBodyRegular()
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+
+            Button {
+                buttonCallback()
+            } label: {
+                Text(Copy.buttonTitle)
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                    .bold()
+            }
+            .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
+            .padding(10)
+        }
     }
 }

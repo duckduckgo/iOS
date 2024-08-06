@@ -46,13 +46,6 @@ class HomeScreenTransition: TabSwitcherTransition {
             snapshot.frame = imageContainer.bounds
             homeScreenSnapshot = snapshot
         }
-        
-        // This fixes animation glitch in centered search mode.
-        settingsButtonSnapshot = homeScreen.settingsButton.snapshotView(afterScreenUpdates: true)
-        if let settingsButton = settingsButtonSnapshot {
-            settingsButton.frame = homeScreen.view.convert(homeScreen.settingsButton.frame, to: nil)
-            transitionContext.containerView.addSubview(settingsButton)
-        }
     }
 
     fileprivate func tabSwitcherCellFrame(for attributes: UICollectionViewLayoutAttributes) -> CGRect {

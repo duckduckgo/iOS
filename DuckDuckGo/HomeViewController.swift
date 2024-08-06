@@ -34,7 +34,6 @@ class HomeViewController: UIViewController, NewTabPage {
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var collectionView: HomeCollectionView!
-    @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
@@ -149,7 +148,6 @@ class HomeViewController: UIViewController, NewTabPage {
 
         collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
-        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -363,13 +361,5 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     
     func homeMessageRenderer(_ renderer: HomeMessageViewSectionRenderer, didDismissHomeMessage homeMessage: HomeMessage) {
         refresh()
-    }
-}
-
-extension HomeViewController {
-
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        settingsButton.tintColor = theme.barTintColor
     }
 }

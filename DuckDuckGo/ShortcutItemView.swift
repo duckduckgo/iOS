@@ -27,13 +27,13 @@ struct ShortcutItemView: View {
     var body: some View {
         VStack(spacing: 6) {
             ShortcutIconView(shortcut: shortcut)
-            .overlay(alignment: .topTrailing) {
-                if let accessoryType {
-                    ShortcutAccessoryView(accessoryType: accessoryType)
-                        .frame(width: Constant.accessorySize)
-                        .offset(Constant.accessoryOffset)
+                .overlay(alignment: .topTrailing) {
+                    if let accessoryType {
+                        ShortcutAccessoryView(accessoryType: accessoryType)
+                            .alignedForOverlay(edgeSize: Constant.accessorySize)
+                    }
                 }
-            }
+
             Text(shortcut.name)
                 .font(Font.system(size: 12))
                 .lineLimit(2)
@@ -45,7 +45,6 @@ struct ShortcutItemView: View {
 
     private enum Constant {
         static let accessorySize = 24.0
-        static let accessoryOffset = CGSize(width: 6, height: -6)
     }
 }
 
@@ -95,6 +94,21 @@ private extension NewTabPageShortcut {
             return .downloadsColor32
         case .settings:
             return .settingsColor32
+        }
+    }
+}
+
+private extension ShortcutAccessoryView {
+    @ViewBuilder func alignedForOverlay(edgeSize: CGFloat) -> some View {
+        let offset = CGSize(width: edgeSize/4.0, height: -edgeSize/4.0)
+        let size = CGSize(width: edgeSize, height: edgeSize)
+        
+        if #available(iOS 16, *) {
+            frame(width: edgeSize)
+                .offset(offset)
+        } else {
+            frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .offset(offset)
         }
     }
 }

@@ -579,6 +579,32 @@ public struct UserText {
     static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
 
+    // MARK: Unified Feedback Form
+    static let browserFeedbackReportProblem = NSLocalizedString("send.browser.feedback.report-problem", value: "Report a problem", comment: "Name of the option the user can chose to give browser feedback about a problem they enountered")
+    static let browserFeedbackRequestFeature = NSLocalizedString("send.browser.feedback.request-feature", value: "Request a feature", comment: "Name of the option the user can chose to give browser feedback about a feature they would like")
+    static let browserFeedbackGeneralFeedback = NSLocalizedString("send.browser.feedback.general-feedback", value: "General feedback", comment: "Name of the option the user can chose to give general browser feedback")
+    static let browserFeedbackSelectCategory = NSLocalizedString("send.browser.feedback.select-category", value: "Select a category", comment: "Title of the picker where the user can chose the category of the feedback they want ot send.")
+    static let feedbackFormTitle = NSLocalizedString("feedback.form.title", value: "Help Improve Privacy Pro", comment: "Title of the feedback form")
+    static let generalFeedbackFormCategorySelect = NSLocalizedString("feedback.general.category.select", value: "Select a category", comment: "Prompt to select a category for general feedback")
+    static let generalFeedbackFormCategoryPPro = NSLocalizedString("feedback.general.category.ppro", value: "Subscription and Payments", comment: "Category for subscription and payments feedback")
+    static let generalFeedbackFormCategoryVPN = NSLocalizedString("feedback.general.category.vpn", value: "VPN", comment: "Category for VPN feedback")
+    static let generalFeedbackFormCategoryPIR = NSLocalizedString("feedback.general.category.pir", value: "Personal Info Removal", comment: "Category for Personal Info Removal feedback")
+    static let generalFeedbackFormCategoryITR = NSLocalizedString("feedback.general.category.itr", value: "Identity Theft Restoration", comment: "Category for Identity Theft Restoration feedback")
+    static let pproFeedbackFormCategorySelect = NSLocalizedString("feedback.ppro.category.select", value: "Select a category", comment: "Prompt to select a category for Privacy Pro feedback")
+    static let pproFeedbackFormCategoryOTP = NSLocalizedString("feedback.ppro.category.otp", value: "Issue with one-time password", comment: "Category for one-time password issues")
+    static let pproFeedbackFormCategoryOther = NSLocalizedString("feedback.ppro.category.other", value: "Something else", comment: "Category for other Privacy Pro issues")
+    static let pirFeedbackFormCategorySelect = NSLocalizedString("feedback.pir.category.select", value: "Select a category", comment: "Prompt to select a category for Personal Info Removal feedback")
+    static let pirFeedbackFormCategoryNothingOnSpecificSite = NSLocalizedString("feedback.pir.category.nothing-on-site", value: "The scan didn't find my info on a specific site", comment: "Category for when scan doesn't find info on a specific site")
+    static let pirFeedbackFormCategoryNotMe = NSLocalizedString("feedback.pir.category.not-me", value: "The scan found records which aren't me", comment: "Category for when scan finds incorrect records")
+    static let pirFeedbackFormCategoryScanStuck = NSLocalizedString("feedback.pir.category.scan-stuck", value: "The scan for records is stuck", comment: "Category for when the scan is stuck")
+    static let pirFeedbackFormCategoryRemovalStuck = NSLocalizedString("feedback.pir.category.removal-stuck", value: "The removal process is stuck", comment: "Category for when the removal process is stuck")
+    static let pirFeedbackFormCategoryOther = NSLocalizedString("feedback.pir.category.other", value: "Something else", comment: "Category for other Personal Info Removal issues")
+    static let itrFeedbackFormCategorySelect = NSLocalizedString("feedback.itr.category.select", value: "Select a category", comment: "Prompt to select a category for Identity Theft Restoration feedback")
+    static let itrFeedbackFormCategoryAccessCode = NSLocalizedString("feedback.itr.category.access-code", value: "Issue with access code", comment: "Category for access code issues")
+    static let itrFeedbackFormCategoryCantContactAdvisor = NSLocalizedString("feedback.itr.category.cant-contact-advisor", value: "Unable to contact advisor", comment: "Category for issues contacting an advisor")
+    static let itrFeedbackFormCategoryUnhelpful = NSLocalizedString("feedback.itr.category.unhelpful", value: "Call to Advisor was unhelpful", comment: "Category for unhelpful advisor calls")
+    static let itrFeedbackFormCategorySomethingElse = NSLocalizedString("feedback.itr.category.something-else", value: "Something else", comment: "Category for other Identity Theft Restoration issues")
+
     // MARK: VPN Widget
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")

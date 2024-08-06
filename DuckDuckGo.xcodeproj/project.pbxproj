@@ -778,6 +778,10 @@
 		BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */; };
 		BDE219EA2C457B46005D5884 /* PrivacyProDataReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE219E92C457B46005D5884 /* PrivacyProDataReporterTests.swift */; };
+		BDE91CD62C6294020005CB74 /* FeedbackCategoryProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CD52C6294020005CB74 /* FeedbackCategoryProviding.swift */; };
+		BDE91CD82C629A910005CB74 /* UnifiedFeedbackSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CD72C629A910005CB74 /* UnifiedFeedbackSender.swift */; };
+		BDE91CDA2C62A70B0005CB74 /* UnifiedMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */; };
+		BDE91CDC2C62AA3A0005CB74 /* DefaultMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */; };
 		BDF8D0022C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */; };
 		BDFF031D2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */; };
 		BDFF03212BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF03202BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift */; };
@@ -2508,6 +2512,10 @@
 		BDC234F62B27F51100D3C798 /* UniquePixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquePixel.swift; sourceTree = "<group>"; };
 		BDE219E52C406D19005D5884 /* PrivacyProDataReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporting.swift; sourceTree = "<group>"; };
 		BDE219E92C457B46005D5884 /* PrivacyProDataReporterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyProDataReporterTests.swift; sourceTree = "<group>"; };
+		BDE91CD52C6294020005CB74 /* FeedbackCategoryProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackCategoryProviding.swift; sourceTree = "<group>"; };
+		BDE91CD72C629A910005CB74 /* UnifiedFeedbackSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedFeedbackSender.swift; sourceTree = "<group>"; };
+		BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedMetadataCollector.swift; sourceTree = "<group>"; };
+		BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMetadataCollector.swift; sourceTree = "<group>"; };
 		BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDNSSettingsViewModel.swift; sourceTree = "<group>"; };
 		BDFF03192BA39C5A00F324C9 /* NetworkProtectionFeatureVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFeatureVisibility.swift; sourceTree = "<group>"; };
 		BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProtectionVisibility.swift; sourceTree = "<group>"; };
@@ -4743,6 +4751,17 @@
 			path = Feedback;
 			sourceTree = "<group>";
 		};
+		BDE91CD42C6292BF0005CB74 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				BDE91CD52C6294020005CB74 /* FeedbackCategoryProviding.swift */,
+				BDE91CD72C629A910005CB74 /* UnifiedFeedbackSender.swift */,
+				BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */,
+				BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */,
+			);
+			path = Feedback;
+			sourceTree = "<group>";
+		};
 		BDFF031F2BA3D3AD00F324C9 /* Feature Visibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -4964,6 +4983,7 @@
 		D664C7922B289AA000CBFA76 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
+				BDE91CD42C6292BF0005CB74 /* Feedback */,
 				F1FDC92F2BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift */,
 				D60170BB2BA32DD6001911B5 /* Subscription.swift */,
 				D6D95CE42B6DA3F200960317 /* AsyncHeadlessWebview */,
@@ -7044,6 +7064,7 @@
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				EE276BEA2A77F823009167B6 /* NetworkProtectionRootViewController.swift in Sources */,
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
+				BDE91CD62C6294020005CB74 /* FeedbackCategoryProviding.swift in Sources */,
 				6F9FFE2A2C57ADB100A238BE /* EditableShortcutsView.swift in Sources */,
 				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				D6D95CE32B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift in Sources */,
@@ -7132,6 +7153,7 @@
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
+				BDE91CDC2C62AA3A0005CB74 /* DefaultMetadataCollector.swift in Sources */,
 				D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */,
 				EE458D142ABB652900FC651A /* NetworkProtectionDebugUtilities.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
@@ -7263,6 +7285,7 @@
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				CB825C922C071B1400BCC586 /* AlertView.swift in Sources */,
 				1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */,
+				BDE91CD82C629A910005CB74 /* UnifiedFeedbackSender.swift in Sources */,
 				6F64AA5F2C49463C00CF4489 /* ShortcutsModel.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
@@ -7360,6 +7383,7 @@
 				85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
+				BDE91CDA2C62A70B0005CB74 /* UnifiedMetadataCollector.swift in Sources */,
 				C13F3F6C2B7F88470083BE40 /* AuthConfirmationPromptViewModel.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				9FB027122C2526DD009EA190 /* OnboardingView+IntroDialogContent.swift in Sources */,

@@ -1216,6 +1216,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Submit";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Help Improve Privacy Pro";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Personal Info Removal";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Subscription and Payments";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "Select a category";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Issue with access code";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Unable to contact advisor";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "Select a category";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Something else";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Call to Advisor was unhelpful";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
 
@@ -1255,6 +1288,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Web pages or search results load slowly";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "The scan found records which aren't me";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "The scan didn't find my info on a specific site";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Something else";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "The removal process is stuck";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "The scan for records is stuck";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "Select a category";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Share Details";
 
@@ -1272,6 +1323,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Share Details";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Something else";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Issue with one-time password";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "Select a category";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
@@ -1856,6 +1916,18 @@ https://duckduckgo.com/mac";
 
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorites";
+
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "General feedback";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Report a problem";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Request a feature";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "Select a category";
 
 /* Settings cell for About DDG */
 "settings.about.ddg" = "About DuckDuckGo";

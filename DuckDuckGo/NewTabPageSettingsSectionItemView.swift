@@ -35,6 +35,7 @@ struct NewTabPageSettingsSectionItemView: View {
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
                     .daxBodyRegular()
             })
+            .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
 
             Divider()
         }

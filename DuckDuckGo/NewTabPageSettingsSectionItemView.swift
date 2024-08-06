@@ -38,6 +38,18 @@ struct NewTabPageSettingsSectionItemView: View {
 
             Divider()
         }
+        .applyListRowInsets()
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func applyListRowInsets() -> some View {
+        if #available(iOS 16, *) {
+            self
+        } else {
+            listRowInsets(EdgeInsets(top: 0, leading: -24, bottom: 0, trailing: 8))
+        }
     }
 }
 

@@ -106,12 +106,12 @@ struct NewTabPageSettingsView: View {
             switch setting.item {
             case .favorites:
                 NewTabPageSettingsSectionItemView(title: "Favorites",
-                                              iconResource: .favorite24,
-                                              isEnabled: setting.isEnabled)
+                                                  iconResource: .favorite24,
+                                                  isEnabled: setting.isEnabled)
             case .shortcuts:
                 NewTabPageSettingsSectionItemView(title: "Shortcuts",
-                                              iconResource: .shortcut24,
-                                              isEnabled: setting.isEnabled)
+                                                  iconResource: .shortcut24,
+                                                  isEnabled: setting.isEnabled)
             }
         }.onMove(perform: { indices, newOffset in
             sectionsSettingsModel.moveItems(from: indices, to: newOffset)

@@ -21,7 +21,7 @@ import Core
 
 protocol HomeScreenTransitionSource: AnyObject {
     var snapshotView: UIView { get }
-    var baseView: UIView { get }
+    var rootContainerView: UIView { get }
 }
 
 class HomeScreenTransition: TabSwitcherTransition {
@@ -31,10 +31,10 @@ class HomeScreenTransition: TabSwitcherTransition {
     
     fileprivate let tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     
-    fileprivate func prepareSnapshots(with homeScreen: HomeScreenTransitionSource,
+    fileprivate func prepareSnapshots(with transitionSource: HomeScreenTransitionSource,
                                       transitionContext: UIViewControllerContextTransitioning) {
-        let viewToSnapshot = homeScreen.snapshotView
-        let frameToSnapshot = homeScreen.baseView.convert(homeScreen.baseView.bounds, to: viewToSnapshot)
+        let viewToSnapshot = transitionSource.snapshotView
+        let frameToSnapshot = transitionSource.rootContainerView.convert(transitionSource.rootContainerView.bounds, to: viewToSnapshot)
 
         if let snapshot = viewToSnapshot.resizableSnapshotView(from: frameToSnapshot,
                                                                afterScreenUpdates: false,
@@ -102,7 +102,7 @@ class FromHomeScreenTransition: HomeScreenTransition {
 
         let theme = ThemeManager.shared.currentTheme
         
-        solidBackground.frame = homeScreen.view.convert(homeScreen.baseView.frame, to: nil)
+        solidBackground.frame = homeScreen.view.convert(homeScreen.rootContainerView.frame, to: nil)
         solidBackground.backgroundColor = theme.backgroundColor
         
         imageContainer.frame = solidBackground.frame
@@ -196,7 +196,7 @@ class ToHomeScreenTransition: HomeScreenTransition {
         UIView.animateKeyframes(withDuration: TabSwitcherTransition.Constants.duration, delay: 0, options: .calculationModeLinear, animations: {
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0) {
-                self.imageContainer.frame = homeScreen.view.convert(homeScreen.baseView.frame, to: nil)
+                self.imageContainer.frame = homeScreen.view.convert(homeScreen.rootContainerView.frame, to: nil)
                 self.imageContainer.layer.cornerRadius = 0
                 self.imageContainer.backgroundColor = theme.backgroundColor
                 self.imageView.frame = CGRect(origin: .zero,

@@ -170,7 +170,7 @@ extension NewTabPageViewController: HomeScreenTransitionSource {
         view
     }
 
-    var baseView: UIView {
+    var rootContainerView: UIView {
         view
     }
 }

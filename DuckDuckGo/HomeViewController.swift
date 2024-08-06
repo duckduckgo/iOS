@@ -373,7 +373,7 @@ extension HomeViewController: HomeScreenTransitionSource {
         }
     }
 
-    var baseView: UIView {
+    var rootContainerView: UIView {
         collectionView
     }
 }

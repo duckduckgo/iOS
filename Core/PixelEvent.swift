@@ -44,7 +44,8 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        
+        case privacyDashboardFirstTimeOpenedUnique
+
         case dashboardProtectionAllowlistAdd
         case dashboardProtectionAllowlistRemove
         
@@ -142,18 +143,27 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingContextualSearchOptionTappedUnique
+        case onboardingContextualSearchCustomUnique
+        case onboardingContextualSiteOptionTappedUnique
+        case onboardingContextualSiteCustomUnique
+        case onboardingContextualSecondSiteVisitUnique
+        case onboardingContextualTrySearchUnique
+        case onboardingContextualTryVisitSiteUnique
 
-        case daxDialogsSerp
-        case daxDialogsWithoutTrackers
+        case daxDialogsSerpUnique
+        case daxDialogsWithoutTrackersUnique
         case daxDialogsWithoutTrackersFollowUp
-        case daxDialogsWithTrackers
-        case daxDialogsSiteIsMajor
-        case daxDialogsSiteOwnedByMajor
-        case daxDialogsHidden
-        case daxDialogsFireEducationShown
-        case daxDialogsFireEducationConfirmed
-        case daxDialogsFireEducationCancelled
-        
+        case daxDialogsWithTrackersUnique
+        case daxDialogsSiteIsMajorUnique
+        case daxDialogsSiteOwnedByMajorUnique
+        case daxDialogsHiddenUnique
+        case daxDialogsFireEducationShownUnique
+        case daxDialogsFireEducationConfirmedUnique
+        case daxDialogsFireEducationCancelledUnique
+        case daxDialogsEndOfJourneyTabUnique
+        case daxDialogsEndOfJourneyNewTabUnique
+
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
         case widgetsOnboardingMovedToBackground
@@ -525,7 +535,8 @@ extension Pixel {
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
-        
+        case debugWebsiteDataStoresCleared
+
         case debugBookmarksMigratedMoreThanOnce
         
         // Return user measurement
@@ -759,7 +770,8 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-            
+        case .privacyDashboardFirstTimeOpenedUnique: return "m_privacy_dashboard_first_time_used_unique"
+
         case .dashboardProtectionAllowlistAdd: return "mp_wla"
         case .dashboardProtectionAllowlistRemove: return "mp_wlr"
             
@@ -865,18 +877,27 @@ extension Pixel.Event {
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
-
-        case .daxDialogsSerp: return "m_dx_s"
-        case .daxDialogsWithoutTrackers: return "m_dx_wo"
+        case .onboardingContextualSearchOptionTappedUnique: return "m_onboarding_search_option_tapped_unique"
+        case .onboardingContextualSiteOptionTappedUnique: return "m_onboarding_visit_site_option_tapped_unique"
+        case .onboardingContextualSecondSiteVisitUnique: return "m_second_sitevisit_unique"
+        case .onboardingContextualSearchCustomUnique: return "m_onboarding_search_custom_unique"
+        case .onboardingContextualSiteCustomUnique: return "m_onboarding_visit_site_custom_unique"
+        case .onboardingContextualTrySearchUnique: return "m_dx_try_a_search_unique"
+        case .onboardingContextualTryVisitSiteUnique: return "m_dx_try_visit_site_unique"
+        
+        case .daxDialogsSerpUnique: return "m_dx_s_unique"
+        case .daxDialogsWithoutTrackersUnique: return "m_dx_wo_unique"
         case .daxDialogsWithoutTrackersFollowUp: return "m_dx_wof"
-        case .daxDialogsWithTrackers: return "m_dx_wt"
-        case .daxDialogsSiteIsMajor: return "m_dx_sm"
-        case .daxDialogsSiteOwnedByMajor: return "m_dx_so"
-        case .daxDialogsHidden: return "m_dx_h"
-        case .daxDialogsFireEducationShown: return "m_dx_fe_s"
-        case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
-        case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
-            
+        case .daxDialogsWithTrackersUnique: return "m_dx_wt_unique"
+        case .daxDialogsSiteIsMajorUnique: return "m_dx_sm_unique"
+        case .daxDialogsSiteOwnedByMajorUnique: return "m_dx_so_unique"
+        case .daxDialogsHiddenUnique: return "m_dx_h_unique"
+        case .daxDialogsFireEducationShownUnique: return "m_dx_fe_s_unique"
+        case .daxDialogsFireEducationConfirmedUnique: return "m_dx_fe_co_unique"
+        case .daxDialogsFireEducationCancelledUnique: return "m_dx_fe_ca_unique"
+        case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
+        case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
+
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"
         case .widgetsOnboardingMovedToBackground: return "m_o_w_b"
@@ -1223,7 +1244,8 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
-            
+        case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
+
             // MARK: Ad Attribution
             
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"

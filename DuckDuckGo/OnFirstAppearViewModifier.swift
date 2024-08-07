@@ -1,5 +1,5 @@
 //
-//  View+AppearModifiers.swift
+//  OnFirstAppearViewModifier.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,15 +19,29 @@
 
 import SwiftUI
 
-public struct OnFirstAppearModifier: ViewModifier {
+/// A view modifier that executes a specified action only once when the view first appears.
+///
+/// Use this modifier to perform an action the first time the view becomes visible on the screen.
+/// The action will not be executed again if the view reappears or is recreated.
+///
+/// Example:
+/// ```swift
+/// Text("Hello, World!")
+///     .modifier(OnFirstAppearModifier {
+///         print("The view has appeared for the first time.")
+///     })
+/// ```
+///
+/// - Parameter onFirstAppearAction: A closure to be executed the first time the view appears.
+public struct OnFirstAppearViewModifier: ViewModifier {
 
     private let onFirstAppearAction: () -> Void
     @State private var hasAppeared = false
-    
+
     public init(_ onFirstAppearAction: @escaping () -> Void) {
         self.onFirstAppearAction = onFirstAppearAction
     }
-    
+
     public func body(content: Content) -> some View {
         content
             .onAppear {
@@ -39,9 +53,13 @@ public struct OnFirstAppearModifier: ViewModifier {
 }
 
 extension View {
-        
+
+    /// Adds an action to perform that is executed only the first time before this view appears.
+    ///
+    /// - Parameter action: A closure to be executed the first time the view appears.
+    /// - Returns: A view that will execute `action` only once when it appears.
     func onFirstAppear(_ onFirstAppearAction: @escaping () -> Void ) -> some View {
-        return modifier(OnFirstAppearModifier(onFirstAppearAction))
+        return modifier(OnFirstAppearViewModifier(onFirstAppearAction))
     }
-    
+
 }

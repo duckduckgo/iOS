@@ -70,6 +70,10 @@ extension TabViewController {
 
     var favoriteEntryIndex: Int { 1 }
 
+    func buildShortcutsMenu() -> [BrowsingMenuEntry] {
+        buildShortcutsEntries(includeBookmarks: true)
+    }
+
     func buildBrowsingMenu(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
 
@@ -88,6 +92,21 @@ extension TabViewController {
         }))
 
         entries.append(.separator)
+
+        let shortcutsEntries = buildShortcutsEntries(includeBookmarks: false)
+        entries.append(contentsOf: shortcutsEntries)
+
+        return entries
+    }
+
+    private func buildShortcutsEntries(includeBookmarks: Bool) -> [BrowsingMenuEntry] {
+        var entries = [BrowsingMenuEntry]()
+
+        if includeBookmarks {
+            entries.append(buildOpenBookmarksEntry())
+
+            entries.append(.separator)
+        }
 
         if featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) {
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
@@ -123,12 +142,7 @@ extension TabViewController {
         assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
         entries.append(bookmarkEntries.favorite)
                 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                 image: UIImage(named: "Library-16")!,
-                                                 action: { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
-        }))
+        entries.append(buildOpenBookmarksEntry())
 
         entries.append(.separator)
 
@@ -214,6 +228,14 @@ extension TabViewController {
                                            self?.performSaveBookmarkAction(for: link,
                                                                            with: bookmarksInterface)
                                          })
+    }
+
+    private func buildOpenBookmarksEntry() -> BrowsingMenuEntry {
+        BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+                                                 image: UIImage(named: "Library-16")!,
+                                                 action: { [weak self] in
+            self?.onOpenBookmarksAction()
+        })
     }
 
     private func performSaveBookmarkAction(for link: Link,
@@ -406,6 +428,10 @@ extension TabViewController {
     
     private func onBrowsingSettingsAction() {
         delegate?.tabDidRequestSettings(tab: self)
+    }
+
+    private func onOpenBookmarksAction() {
+        delegate?.tabDidRequestBookmarks(tab: self)
     }
 
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {

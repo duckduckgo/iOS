@@ -24,6 +24,7 @@ import SwiftUI
 import Common
 import Combine
 import SyncUI
+import DuckPlayer
 
 import Subscription
 import NetworkProtection
@@ -42,11 +43,13 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
-
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
-    
+    var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+        DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+    }
+
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"
     }
@@ -396,7 +399,7 @@ extension SettingsViewModel {
             networkProtection: getNetworkProtectionState(),
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
-            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer),
+            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode
         )
         
@@ -537,6 +540,17 @@ extension SettingsViewModel {
 
     func openMoreSearchSettings() {
         UIApplication.shared.open(URL.searchSettings,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
+    var shouldDisplayDuckPlayerContingencyMessage: Bool {
+        duckPlayerContingencyHandler.shouldDisplayContingencyMessage
+    }
+
+    func openDuckPlayerContingencyMessageSite() {
+        guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        UIApplication.shared.open(url,
                                   options: [:],
                                   completionHandler: nil)
     }

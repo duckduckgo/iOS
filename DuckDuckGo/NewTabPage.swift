@@ -26,7 +26,6 @@ protocol NewTabPage: UIViewController {
 
     func launchNewSearch()
     func openedAsNewTab(allowingKeyboard: Bool)
-    func omniBarCancelPressed()
 
     func dismiss()
 

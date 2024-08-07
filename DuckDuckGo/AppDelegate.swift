@@ -233,13 +233,14 @@ import WebKit
         
         let variantManager = DefaultVariantManager()
         let historyMessageManager = HistoryMessageManager()
+        let daxDialogs = DaxDialogs.shared
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            DaxDialogs.shared.primeForUse()
+            daxDialogs.primeForUse()
 
             // New users don't see the message
             historyMessageManager.dismiss()
@@ -336,7 +337,11 @@ import WebKit
                                           previewsSource: previewsSource,
                                           tabsModel: tabsModel,
                                           syncPausedStateManager: syncErrorHandler,
-                                          privacyProDataReporter: privacyProDataReporter)
+                                          privacyProDataReporter: privacyProDataReporter,
+                                          variantManager: variantManager,
+                                          contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
+                                          contextualOnboardingLogic: daxDialogs,
+                                          contextualOnboardingPixelReporter: OnboardingPixelReporter())
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -370,6 +375,8 @@ import WebKit
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
+
+        NewTabPageIntroMessageSetup().perform()
 
         widgetRefreshModel.beginObservingVPNStatus()
 
@@ -702,6 +709,11 @@ import WebKit
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+
+        // If showing the onboarding intro ignore deeplinks
+        guard mainViewController?.needsToShowOnboardingIntro() == false else {
+            return false
+        }
 
         if handleEmailSignUpDeepLink(url) {
             return true

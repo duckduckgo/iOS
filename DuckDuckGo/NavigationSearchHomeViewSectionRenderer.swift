@@ -38,7 +38,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = !fixed
-        controller.settingsButton.isHidden = true
         
         if !fixed {
             controller.hideLogo()
@@ -48,7 +47,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func openedAsNewTab(allowingKeyboard: Bool) {
         guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
         // The omnibar is inside a collection view so this needs to chance to do its thing
-        //  which might also be async.  Not great.
+        //  which might also be async. Not great.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.launchNewSearch()
         }

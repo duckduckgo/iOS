@@ -18,10 +18,11 @@
 //
 
 import XCTest
+import PrivacyDashboard
 @testable import DuckDuckGo
 
 class DaxDialogsBrowsingSpecTests: XCTestCase {
-    
+
     func testWhenSiteIsOwnedByMajorTrackerIsFormattedThenContainsNamesDomainAndPercentage() {
         let majorTracker1 = "TestTracker1"
         let domain = "testtracker.com"
@@ -84,7 +85,7 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
         let message = DaxDialogs.BrowsingSpec.withOneTracker.format(args: majorTracker).message
         XCTAssertTrue(message.contains(majorTracker))
     }
-    
+
 }
 
 // From: https://stackoverflow.com/a/49547114/73479

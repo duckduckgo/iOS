@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Da";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* te je pokušao pratiti ovdje. Blokirani su!\n\n☝️ Dodirni štit za više informacija.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Daj pet!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Zapamti: svaki put kada me koristiš za pregledavanje, grozne reklame odlaze u zaborav. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Možeš ti to!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "To je DuckDuckGo Search. Privatno. Brzo. Manje oglasa.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Shvaćam!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Pokušaj posjetiti web-mjesto!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "Tvoja su DuckDuckGo pretraživanja uvijek anonimna.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Spreman za početak?\nIsprobaj pretraživanje!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Blokirat ću tragače kako te ne bi mogli špijunirati.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Nakon toga pokušaj posjetiti neko web-mjesto!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Odmah izbriši svoju aktivnost pregledavanja pomoću Fire Buttona.\n\nPokušaj! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "kako se kaže \"patka\" na španjolskom";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "kako se kaže \"patka\" na engleskom";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "moćne patke";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "uloge u filmu Avatar";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "lokalno vrijeme";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "recepti za kolačiće s komadićima čokolade";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "recepti za večeru";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Iznenadi me!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Uvijek šalji izvješća o padu programa";
 
@@ -1644,6 +1707,40 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN postavke";
+
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Prilagodi svoje favorite i najdraže značajke. Preuredi stvari ili ih sakrij kako bi sve bilo jasno.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Prikaži, sakrij i promijeni redoslijed odjeljaka na stranici nove kartice";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Tvoja stranica nove kartice je... nova!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SEKCIJE";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "PREČACI";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Prilagodi novu karticu";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "AI Chat";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Knjižne oznake";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Preuzimanja";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Lozinke";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Postavke";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Na bilo kojem web-mjestu otvori ••• izbornik i odaberi **Dodaj favorit** kako bi se on dodao na stranicu nove kartice.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

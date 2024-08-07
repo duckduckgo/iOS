@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Персонализирайте раздела Любими и функциите за достъп. Пренаредете елементите или скрийте някои от тях за по голяма яснота.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Страницата с нов раздел е... Нова!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "СЕКЦИИ";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "БЪРЗИ ВРЪЗКИ";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Персонализиране на страницата с нов раздел";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Чат с изкуствен интелект";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Отметки";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Изтеглени файлове";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Пароли";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Настройки";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "В който и да е сайт отворете менюто ••• и изберете **Добавяне към предпочитани**, за да го добавите към страницата с нов раздел.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

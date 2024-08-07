@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Rādīt, paslēpt un pārkārtot sadaļas jaunās cilnes lapā";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tava jaunas cilnes lapa ir... atjaunota!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SADAĻAS";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "SAĪSNES";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Jaunas cilnes pielāgošana";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "MI čats";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Grāmatzīmes";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Lejupielādes";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Paroles";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Iestatījumi";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Jebkurā vietnē atver izvēlni ••• un izvēlies **Pievienot izlasei**, lai to pievienotu savai jaunas cilnes lapai.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

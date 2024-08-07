@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizează-ți Favoritele și funcțiile predilecte. Reordonează lucrurile sau ascunde-le pentru a menține ordinea.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Afișează, ascunde și reordonează secțiunile din pagina noii file";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Pagina Filă nouă este... nouă!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SECȚIUNI";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "SCURTĂTURI";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Personalizează noua filă";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Chat IA";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Semne de carte";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Descărcări";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Parole";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Setări";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Pe orice site, deschide meniul ••• și selectează **Adaugă la favorite** pentru a adăuga la pagina Filă nouă.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodi svoje favorite i najdraže značajke. Preuredi stvari ili ih sakrij kako bi sve bilo jasno.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Prikaži, sakrij i promijeni redoslijed odjeljaka na stranici nove kartice";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tvoja stranica nove kartice je... nova!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SEKCIJE";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "PREČACI";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Prilagodi novu karticu";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "AI Chat";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Knjižne oznake";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Preuzimanja";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Lozinke";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Postavke";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Na bilo kojem web-mjestu otvori ••• izbornik i odaberi **Dodaj favorit** kako bi se on dodao na stranicu nove kartice.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

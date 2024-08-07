@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizza i tuoi Preferiti e le funzionalità principali. Riorganizza gli elementi o nascondili per mantenere tutto in ordine.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Mostra, nascondi e riordina le sezioni nella nuova scheda";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "La tua pagina Nuova scheda è... Nuova!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SEZIONI";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "Scorciatoie";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Personalizza la pagina Nuova scheda";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Chat IA";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Segnalibri";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Download";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Password";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Impostazioni";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Su qualsiasi sito, apri il menu ••• e seleziona **Aggiungi preferito** per aggiungerlo alla nuova scheda.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

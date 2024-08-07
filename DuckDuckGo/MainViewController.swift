@@ -78,7 +78,7 @@ class MainViewController: UIViewController {
     
     var homeViewController: HomeViewController?
     var newTabPageViewController: NewTabPageViewController?
-    var homeController: NewTabPage? {
+    var homeController: (NewTabPage & HomeScreenTransitionSource)? {
         homeViewController ?? newTabPageViewController
     }
     var tabsBarController: TabsBarViewController?
@@ -2390,7 +2390,16 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         newTab()
-        animateLogoAppearance()
+        if homeViewController != nil {
+            animateLogoAppearance()
+        } else if newTabPageViewController != nil {
+            newTabPageViewController?.view.transform = CGAffineTransform().scaledBy(x: 0.5, y: 0.5)
+            newTabPageViewController?.view.alpha = 0.0
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseInOut, .beginFromCurrentState]) {
+                self.newTabPageViewController?.view.transform = .identity
+                self.newTabPageViewController?.view.alpha = 1.0
+            }
+        }
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {

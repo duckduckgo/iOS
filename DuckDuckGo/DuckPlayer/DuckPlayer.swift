@@ -136,16 +136,21 @@ final class DuckPlayer: DuckPlayerProtocol {
             return nil
         }
         
-        // Fires pixels
-        Task { await firePixels(message: message, userValues: userValues) }
-        
-        // Update Settings
-        settings.setMode(userValues.duckPlayerMode)
-        settings.setOverlayHidden(userValues.askModeOverlayHidden)
-        
+        Task {
+            // Fires pixels
+            await firePixels(message: message, userValues: userValues)
+            
+            // Update Settings
+            await updateSettings(userValues: userValues)
+        }
         return userValues
     }
         
+    private func updateSettings(userValues: UserValues) async {
+        settings.setMode(userValues.duckPlayerMode)
+        settings.setOverlayHidden(userValues.askModeOverlayHidden)
+    }
+    
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
         encodeUserValues()
     }

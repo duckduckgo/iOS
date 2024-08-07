@@ -3,8 +3,11 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- assertVisible: "Got It"
-- assertVisible: "Hide"
-- tapOn: "Hide"
-- assertVisible: "Hide Tips Forever"
-- tapOn: "Hide Tips Forever"
+- runFlow:
+    when:
+      visible: "Got It"
+    commands:
+        - assertVisible: "Hide"
+        - tapOn: "Hide"
+        - assertVisible: "Hide Tips Forever"
+        - tapOn: "Hide Tips Forever"

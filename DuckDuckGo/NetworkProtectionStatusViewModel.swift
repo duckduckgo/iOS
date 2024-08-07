@@ -306,7 +306,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func updateViewModel(withStatus connectionStatus: ConnectionStatus) {
-        print("DEBUG: Updating view model with status \(connectionStatus)")
         self.headerTitle = Self.titleText(status: connectionStatus)
         self.statusImageID = Self.statusImageID(connected: connectionStatus.isConnected)
 

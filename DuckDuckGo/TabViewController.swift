@@ -2806,6 +2806,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
             ActionMessageView.present(message: UserText.autofillDisablePromptMessage,
                                       actionTitle: UserText.autofillDisablePromptAction,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
+                                      duration: 4.0,
                                       onAction: { [weak self] in
                 Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisableSnackbarOpenSettings)
                 guard let mainVC = self?.view.window?.rootViewController as? MainViewController else { return }

@@ -257,12 +257,18 @@ public class AppUserDefaults: AppSettings {
             if let isNewInstall = autofillIsNewInstallForOnByDefault,
                isNewInstall,
                featureFlagger.isFeatureOn(.autofillOnByDefault) {
-                autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
-                autofillCredentialsEnabled = true
+                enableAutofillCredentials()
+            } else if featureFlagger.isFeatureOn(.autofillOnForExistingUsers) {
+                enableAutofillCredentials()
             }
         }
     }
-    
+
+    private func enableAutofillCredentials() {
+        autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
+        autofillCredentialsEnabled = true
+    }
+
     var autofillCredentialsEnabled: Bool {
         get {
             // setAutofillCredentialsEnabledAutomaticallyIfNecessary() used here to automatically turn on autofill for people if:

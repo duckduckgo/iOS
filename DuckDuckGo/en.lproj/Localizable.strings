@@ -576,7 +576,7 @@
 "autofill.removed.duck.address.title" = "Private Duck Address username was removed";
 
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
-"autofill.save-login.never-prompt.CTA" = "Never for This Website";
+"autofill.save-login.never-prompt.CTA" = "Never for This Site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "DuckDuckGo Passwords & Autofill stores passwords securely on your device.";

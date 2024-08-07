@@ -70,7 +70,9 @@ class SaveLoginViewController: UIViewController {
             return
         }
         switch viewModel.layoutType {
-        case .newUser, .saveLogin:
+        case .newUser:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginOnboardingModalDismissed)
+        case .saveLogin:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed)
@@ -94,7 +96,9 @@ class SaveLoginViewController: UIViewController {
         installChildViewController(controller)
         
         switch saveViewModel.layoutType {
-        case .newUser, .saveLogin:
+        case .newUser:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginOnboardingModalDisplayed)
+        case .saveLogin:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed)
@@ -110,7 +114,9 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
         switch viewModel.layoutType {
         case .saveLogin, .savePassword, .newUser:
-            if viewModel.layoutType == .savePassword {
+            if case .newUser = viewModel.layoutType {
+                Pixel.fire(pixel: .autofillLoginsSaveLoginOnboardingModalConfirmed)
+            } else if case .savePassword = viewModel.layoutType {
                 Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed)
             } else {
                 Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed)
@@ -131,7 +137,11 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     }
 
     func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel) {
-        Pixel.fire(pixel: .autofillLoginsSaveLoginModalExcludeSiteConfirmed)
+        if case .newUser = viewModel.layoutType {
+            Pixel.fire(pixel: .autofillLoginsSaveLoginOnboardingModalExcludeSiteConfirmed)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalExcludeSiteConfirmed)
+        }
         delegate?.saveLoginViewController(self, didRequestNeverPromptForWebsite: viewModel.accountDomain)
     }
 

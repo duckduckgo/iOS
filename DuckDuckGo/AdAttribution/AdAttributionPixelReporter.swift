@@ -22,7 +22,7 @@ import Core
 
 final actor AdAttributionPixelReporter {
 
-    static let isAdAttributionReportingEnabled = false
+    static let isAdAttributionReportingEnabled = true
 
     static var shared = AdAttributionPixelReporter()
 

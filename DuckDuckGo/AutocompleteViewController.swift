@@ -245,9 +245,10 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
     func deleteSuggestion(_ suggestion: Suggestion) {
         switch suggestion {
-        case .historyEntry(let title, let url, let allowedInTopHits):
+        case .historyEntry(_, let url, _):
             Task {
                 await historyManager.deleteHistoryForURL(url)
+                Pixel.fire(pixel: .autocompleteSwipeToDelete)
             }
         default:
             assertionFailure("Only history items can be deleted")

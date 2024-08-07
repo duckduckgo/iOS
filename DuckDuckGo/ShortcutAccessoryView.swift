@@ -22,6 +22,7 @@ import SwiftUI
 struct ShortcutAccessoryView: View {
 
     let accessoryType: ShortcutAccessoryType
+    let expectedSize: CGSize
 
     var body: some View {
         Circle()
@@ -32,6 +33,13 @@ struct ShortcutAccessoryView: View {
                     .aspectRatio(contentMode: .fit)
             }
             .shadow(color: .shade(0.15), radius: 1, y: 1)
+            .frame(width: expectedSize.width, height: expectedSize.height)
+    }
+}
+
+extension ShortcutAccessoryView {
+    init(accessoryType: ShortcutAccessoryType) {
+        self.init(accessoryType: accessoryType, expectedSize: CGSize(width: 24, height: 24))
     }
 }
 

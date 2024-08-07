@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Anpassa dina favoriter och funktioner. Ordna om saker och ting eller göm dem för att hålla layouten minimalistisk.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Visa, dölja och ändra ordning på avsnitt på den nya fliksidan";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Din nya fliksida är... ny!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "AVSNITT";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "GENVÄGAR";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Anpassa ny flik";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "AI-chatt";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Bokmärken";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Nerladdningar";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Lösenord";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Inställningar";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Öppna menyn ••• på valfri webbplats och välj **Lägg till favorit** för att lägga till den på din nya fliksida.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

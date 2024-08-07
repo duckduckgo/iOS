@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Favorilerinizi ve düzenli olarak kullandığınız özellikleri kendinize göre ayarlayın. Temiz tutmak için öğeleri yeniden sıralayın veya gizleyin.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Yeni sekme sayfasında bölümleri göster, gizle ve yeniden sırala";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Yeni Sekme Sayfanız... Yeni!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "BÖLÜMLER";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "KISAYOLLAR";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Yeni Sekme Sayfasını Özelleştirin";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Yapay Zeka Sohbeti";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Yer İmleri";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "İndirilenler";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Şifreler";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Ayarlar";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Herhangi bir sitedeyken, ••• menüsünü açın ve siteyi yeni sekme sayfanıza eklemek için **Favori Ekle**'yi seçin.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

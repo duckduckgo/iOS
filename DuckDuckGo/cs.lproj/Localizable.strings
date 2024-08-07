@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Přizpůsob si oblíbené záložky a časté funkce. Přeskládej je nebo je skryj, ať je všechno přehledné.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Zobrazení, skrytí a změna pořadí oddílů na stránce nové karty";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Stránka nové karty je... úplně nová!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "ODDÍLY";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "ZKRATKY";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Přizpůsobení nové karty";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "AI chat";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Záložky";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Stahování";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Hesla";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Nastavení";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Na libovolném webu otevři nabídku ••• a vyber **Přidat do oblíbených**. Web se ti přidá na stránku nové karty.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

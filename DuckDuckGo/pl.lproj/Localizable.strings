@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Dostosuj ulubione elementy i podręczne funkcje. Zmień kolejność opcji lub ukryj je, aby zachować porządek.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Pokazuj, ukrywaj i zmieniaj kolejność sekcji na stronie nowej karty";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Strona nowej karty ma nowy wygląd!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SEKCJE";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "Skróty";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Dostosuj nową kartę";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Czat AI";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Zakładki";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Pobrane";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Hasła";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Ustawienia";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "W dowolnej witrynie otwórz menu ••• i wybierz **Dodaj ulubione**, aby dodać je do strony nowej karty.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

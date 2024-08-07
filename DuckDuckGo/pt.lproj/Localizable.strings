@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personaliza os teus Favoritos e as tuas funcionalidades de preferência. Reordena as coisas ou esconde-as para manter um aspeto limpo.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Mostrar, ocultar e reordenar secções na página do novo separador";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "A tua página Novo separador é... nova!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SECÇÕES";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "Atalhos";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Personalizar novo separador";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Chat com IA";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Marcadores";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Transferências";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Palavras-passe";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Definições";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Em qualquer site, abre o menu ••• e seleciona **Adicionar favorito** para o adicionar à tua página de novo separador.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

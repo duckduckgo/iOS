@@ -525,7 +525,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
 
         let timeRemainingInterval = snoozeEndDate.timeIntervalSince(currentDate)
-        let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "0:00"
+        let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "00:00"
 
         return UserText.netPStatusSnoozing(until: timeRemaining)
     }

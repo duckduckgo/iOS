@@ -22,6 +22,7 @@ import Foundation
 final class NewTabPageModel: ObservableObject {
 
     @Published private(set) var isIntroMessageVisible: Bool
+    @Published private(set) var isOnboarding: Bool
 
     private let appSettings: AppSettings
 
@@ -29,6 +30,7 @@ final class NewTabPageModel: ObservableObject {
         self.appSettings = appSettings
         
         isIntroMessageVisible = appSettings.newTabPageIntroMessageEnabled ?? false
+        isOnboarding = false
     }
 
     func increaseIntroMessageCounter() {
@@ -41,5 +43,13 @@ final class NewTabPageModel: ObservableObject {
     func dismissIntroMessage() {
         appSettings.newTabPageIntroMessageEnabled = false
         isIntroMessageVisible = false
+    }
+
+    func startOnboarding() {
+        isOnboarding = true
+    }
+
+    func finishOnboarding() {
+        isOnboarding = false
     }
 }

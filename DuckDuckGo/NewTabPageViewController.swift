@@ -20,12 +20,16 @@
 import SwiftUI
 import DDGSync
 import Bookmarks
+import BrowserServicesKit
 import Core
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
+    private let variantManager: VariantManager
+    private let newTabDialogFactory: any NewTabDaxDialogProvider
+    private let newTabDialogTypeProvider: NewTabDialogSpecProvider
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
@@ -37,16 +41,24 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
     private let tab: Tab
 
+    private var hostingController: UIHostingController<AnyView>?
+
     init(tab: Tab,
          interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
-         privacyProDataReporting: PrivacyProDataReporting? = nil) {
+         privacyProDataReporting: PrivacyProDataReporting? = nil,
+         variantManager: VariantManager,
+         newTabDialogFactory: any NewTabDaxDialogProvider,
+         newTabDialogTypeProvider: NewTabDialogSpecProvider) {
 
         self.tab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
+        self.variantManager = variantManager
+        self.newTabDialogFactory = newTabDialogFactory
+        self.newTabDialogTypeProvider = newTabDialogTypeProvider
 
         newTabPageModel = NewTabPageModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
@@ -71,6 +83,8 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         super.viewDidAppear(animated)
 
         tab.viewed = true
+
+        presentNextDaxDialog()
     }
 
     // MARK: - Private
@@ -146,15 +160,23 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     }
 
     func showNextDaxDialog() {
-
+        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
     }
 
     func onboardingCompleted() {
-
+        presentNextDaxDialog()
     }
 
     func reloadFavorites() {
 
+    }
+
+    // MARK: - Onboarding
+
+    private func presentNextDaxDialog() {
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        }
     }
 
     // MARK: -
@@ -172,5 +194,47 @@ extension NewTabPageViewController: HomeScreenTransitionSource {
 
     var rootContainerView: UIView {
         view
+    }
+}
+
+extension NewTabPageViewController {
+
+    func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
+        dismissHostingController(didFinishNTPOnboarding: false)
+
+        guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
+
+        let onDismiss = {
+            dialogProvider.dismiss()
+            self.dismissHostingController(didFinishNTPOnboarding: true)
+        }
+        let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
+        let hostingController = UIHostingController(rootView: daxDialogView)
+        self.hostingController = hostingController
+
+        hostingController.view.backgroundColor = .clear
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        hostingController.didMove(toParent: self)
+
+        newTabPageModel.startOnboarding()
+    }
+
+    private func dismissHostingController(didFinishNTPOnboarding: Bool) {
+        hostingController?.willMove(toParent: nil)
+        hostingController?.view.removeFromSuperview()
+        hostingController?.removeFromParent()
+        if didFinishNTPOnboarding {
+            self.newTabPageModel.finishOnboarding()
+        }
     }
 }

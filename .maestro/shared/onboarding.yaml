@@ -14,3 +14,25 @@ appId: com.duckduckgo.mobile.ios
 # - assertVisible: "Make DuckDuckGo your default browser."
 - tapOn:
     text: "Skip"
+
+- runFlow:
+    when:
+      visible: "Ready to get started?\nTry a search!"
+    commands:
+        - assertVisible:
+            id: "searchEntry"
+        - tapOn:
+            id: "searchEntry"
+        - inputText: "https://www.duckduckgo.com"
+        - pressKey: Enter
+        - assertVisible: "Got It!"
+        - tapOn: "Got It!"
+        - assertVisible: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥"
+        - assertVisible: "Close Tabs and Clear Data"
+        - tapOn: "Close Tabs and Clear Data"
+        - tapOn: "Close Tabs and Clear Data"
+        - assertVisible: "You’ve got this!"
+        - assertVisible: "High five!"
+        - tapOn: "High five!"
+        - assertVisible: "Cancel"
+        - tapOn: "Cancel"

@@ -19,7 +19,7 @@
 
 import WebKit
 
-protocol DuckNavigationHandling {
+protocol DuckNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)

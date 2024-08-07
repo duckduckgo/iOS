@@ -78,7 +78,7 @@ public enum DuckPlayerReferrer {
     case youtube, other
 }
 
-protocol DuckPlayerProtocol {
+protocol DuckPlayerProtocol: AnyObject {
     
     var settings: DuckPlayerSettingsProtocol { get }
     var hostView: UIViewController? { get }

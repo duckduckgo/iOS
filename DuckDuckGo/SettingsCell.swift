@@ -196,7 +196,8 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     let label: String
     let options: [T]
     @Binding var selectedOption: T
-    
+    @Environment(\.isEnabled) private var isEnabled: Bool
+
     /// Initializes a SettingsPickerCellView.
     /// Use a custom picker that mimics the MenuPickerStyle
     /// But with specific design
@@ -214,7 +215,7 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
         HStack {
             Text(label)
                 .daxBodyRegular()
-                .foregroundColor(Color(designSystemColor: .textPrimary))
+                .foregroundColor(isEnabled ? Color(designSystemColor: .textPrimary): Color(designSystemColor: .textSecondary))
             Spacer()
             Menu {
                 ForEach(options, id: \.self) { option in

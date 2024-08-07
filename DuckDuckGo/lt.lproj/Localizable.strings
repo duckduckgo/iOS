@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Rodyti, slėpti ir pertvarkyti skiltis naujame skirtuko puslapyje";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Jūsų naujo skirtuko puslapis yra... Atnaujintas!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "SKILTYS";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "ŠAUKINIAI";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Tinkinti naują skirtuką";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "DI pokalbis";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Žymės";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Atsisiuntimai";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Slaptažodžiai";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Nustatymai";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Bet kurioje interneto svetainėje atidarykite ••• meniu ir pasirinkite **Pridėti mėgstamą**, kad pridėtumėte naujame skirtuko puslapyje.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

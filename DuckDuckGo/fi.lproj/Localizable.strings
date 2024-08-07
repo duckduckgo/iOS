@@ -1710,9 +1710,37 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Mukauta suosikkejasi ja muita usein käyttämiäsi ominaisuuksia. Luo uusi järjestys tai piilota kohteita pitääksesi selkeän ilmeen.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Näytä, piilota ja järjestä uuden välilehden osiot uudelleen";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Uusi välilehti -sivusi on... uusi!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "OSIOT";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "PIKAVALINNAT";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Mukauta uusi välilehti";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Tekoäly-chat";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Kirjanmerkit";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Lataukset";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Salasanat";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Asetukset";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Avaa missä tahansa sivustossa •••-valikko ja lisää se uudelle välilehtisivulle valitsemalla **Lisää suosikki**.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

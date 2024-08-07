@@ -34,7 +34,6 @@ class HomeViewController: UIViewController, NewTabPage {
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var collectionView: HomeCollectionView!
-    @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
@@ -149,7 +148,6 @@ class HomeViewController: UIViewController, NewTabPage {
 
         collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
-        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -214,10 +212,6 @@ class HomeViewController: UIViewController, NewTabPage {
 
     func refresh() {
         collectionView.reloadData()
-    }
-    
-    func omniBarCancelPressed() {
-        collectionView.omniBarCancelPressed()
     }
     
     func openedAsNewTab(allowingKeyboard: Bool) {
@@ -370,10 +364,16 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: HomeScreenTransitionSource {
+    var snapshotView: UIView {
+        if let logoContainer = logoContainer, !logoContainer.isHidden {
+            return logoContainer
+        } else {
+            return collectionView
+        }
+    }
 
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        settingsButton.tintColor = theme.barTintColor
+    var rootContainerView: UIView {
+        collectionView
     }
 }

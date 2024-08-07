@@ -42,6 +42,26 @@ Ich habe sie blockiert!
  ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* und *1 weiteres* haben versucht, dich hier zu tracken. Ich hab sie blockiert!
+
+☝️ Tippe auf das Schild, um weitere Informationen zu erhalten.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* und *%1$d weitere* haben versucht, dich hier zu tracken. Ich hab sie blockiert!
+
+☝️ Tippe auf das Schild, um weitere Informationen zu erhalten.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

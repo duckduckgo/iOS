@@ -26,26 +26,22 @@ struct NewTabPageSettingsView: View {
     @ObservedObject var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject var sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
-    // Arbitrary high value is required to acomodate for the content size
-    @State var listHeight: CGFloat = 5000
-
-    @State var firstSectionFrame: CGRect = .zero
-    @State var lastSectionFrame: CGRect = .zero
+    @State var listHeight: CGFloat = Metrics.initialListHeight
 
     var body: some View {
         mainView
-        .applyBackground()
-        .tintIfAvailable(Color(designSystemColor: .accent))
-        .navigationTitle(UserText.newTabPageSettingsTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button(UserText.navigationTitleDone) {
-                    dismiss()
+            .applyBackground()
+            .tintIfAvailable(Color(designSystemColor: .accent))
+            .navigationTitle(UserText.newTabPageSettingsTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(UserText.navigationTitleDone) {
+                        dismiss()
+                    }
+                    .tint(Color(designSystemColor: .textPrimary))
                 }
-                .tint(Color(designSystemColor: .textPrimary))
             }
-        }
     }
 
     // MARK: Views
@@ -53,54 +49,55 @@ struct NewTabPageSettingsView: View {
     @ViewBuilder
     private var mainView: some View {
         if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
-            ScrollView {
-                VStack {
-                    sectionsList(withFrameUpdates: true)
-                        .withoutScroll()
-                        .frame(height: listHeight)
-                    
-                    EditableShortcutsView(model: shortcutsSettingsModel)
-                        .padding(.horizontal, Metrics.horizontalPadding)
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack {
+                        sectionsList(withFrameUpdates: true, geometry: geometry)
+                            .withoutScroll()
+                            .frame(height: listHeight)
+
+                        EditableShortcutsView(model: shortcutsSettingsModel)
+                            .padding(.horizontal, Metrics.horizontalPadding)
+                            .coordinateSpace(name: Constant.scrollCoordinateSpaceName)
+                    }
                 }
             }
-            .coordinateSpace(name: Constant.scrollCoordinateSpace)
         } else {
             sectionsList(withFrameUpdates: false)
         }
     }
 
     @ViewBuilder
-    private func sectionsList(withFrameUpdates: Bool) -> some View {
-        List {
-            Section {
-                sectionsSettingsContentView
-            } header: {
-                Text(UserText.newTabPageSettingsSectionsHeaderTitle)
-                    .if(withFrameUpdates) {
-                        $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: FirstSectionFrameKey.self) { frame in
-                            self.firstSectionFrame = frame
-                            updateListHeight()
-                        }
-                    }
-            } footer: {
-                Text(UserText.newTabPageSettingsSectionsDescription)
-            }
-
-            if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
+    private func sectionsList(withFrameUpdates: Bool, geometry: GeometryProxy? = nil) -> some View {
+            List {
                 Section {
+                    sectionsSettingsContentView
                 } header: {
-                    Text(UserText.newTabPageSettingsShortcutsHeaderTitle)
-                        .if(withFrameUpdates) {
-                            $0.onFrameUpdate(in: Constant.scrollCoordinateSpace, using: LastSectionFrameKey.self) { frame in
-                                self.lastSectionFrame = frame
-                                updateListHeight()
-                            }
-                        }
+                    Text(UserText.newTabPageSettingsSectionsHeaderTitle)
+                } footer: {
+                    Text(UserText.newTabPageSettingsSectionsDescription)
+                }
+
+                if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
+                    Section {
+                    } header: {
+                        Text(UserText.newTabPageSettingsShortcutsHeaderTitle)
+                    } footer: {
+                        Rectangle().fill(.clear).frame(minHeight: 0.1)
+                    }
+                    .anchorPreference(key: ListBottomKey.self, value: .bottom, transform: { anchor in
+                        let y = geometry?[anchor].y ?? 0
+                        return y
+                    })
                 }
             }
-        }
-        .applyInsetGroupedListStyle()
-        .environment(\.editMode, .constant(.active))
+            .onPreferenceChange(ListBottomKey.self, perform: { position in
+                guard self.listHeight == Metrics.initialListHeight else { return }
+
+                self.listHeight = max(0, position)
+            })
+            .applyInsetGroupedListStyle()
+            .environment(\.editMode, .constant(.active))
     }
 
     @ViewBuilder
@@ -109,36 +106,37 @@ struct NewTabPageSettingsView: View {
             switch setting.item {
             case .favorites:
                 NewTabPageSettingsSectionItemView(title: "Favorites",
-                                              iconResource: .favorite24,
-                                              isEnabled: setting.isEnabled)
+                                                  iconResource: .favorite24,
+                                                  isEnabled: setting.isEnabled)
             case .shortcuts:
                 NewTabPageSettingsSectionItemView(title: "Shortcuts",
-                                              iconResource: .shortcut24,
-                                              isEnabled: setting.isEnabled)
+                                                  iconResource: .shortcut24,
+                                                  isEnabled: setting.isEnabled)
             }
         }.onMove(perform: { indices, newOffset in
             sectionsSettingsModel.moveItems(from: indices, to: newOffset)
         })
     }
-
-    // MARK: -
-
-    private func updateListHeight() {
-        guard firstSectionFrame != .zero, lastSectionFrame != .zero else { return }
-
-        let newHeight = lastSectionFrame.maxY - firstSectionFrame.minY + Metrics.defaultListTopPadding
-        self.listHeight = max(0, newHeight)
-    }
 }
 
 private struct Constant {
     static let scrollCoordinateSpaceName = "Scroll"
-    static let scrollCoordinateSpace = CoordinateSpace.named(scrollCoordinateSpaceName)
+}
+
+private extension CoordinateSpace {
+    static let scroll = CoordinateSpace.named(Constant.scrollCoordinateSpaceName)
 }
 
 private struct Metrics {
-    static let defaultListTopPadding = 24.0
     static let horizontalPadding = 16.0
+    static let initialListHeight = 5000.0
+}
+
+private struct ListBottomKey: PreferenceKey {
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+    static var defaultValue: CGFloat = Metrics.initialListHeight
 }
 
 #Preview {
@@ -148,18 +146,4 @@ private struct Metrics {
             sectionsSettingsModel: NewTabPageSectionsSettingsModel()
         )
     }
-}
-
-private struct FirstSectionFrameKey: PreferenceKey {
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
-        value = nextValue()
-    }
-    static var defaultValue: CGRect = .zero
-}
-
-private struct LastSectionFrameKey: PreferenceKey {
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
-        value = nextValue()
-    }
-    static var defaultValue: CGRect = .zero
 }

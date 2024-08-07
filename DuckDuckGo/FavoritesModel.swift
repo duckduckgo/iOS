@@ -37,6 +37,7 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     func favoriteSelected(_ favorite: Favorite)
     func editFavorite(_ favorite: Favorite)
     func deleteFavorite(_ favorite: Favorite)
+    func moveFavorites(from indexSet: IndexSet, to index: Int)
 }
 
 struct FavoritesSlice {

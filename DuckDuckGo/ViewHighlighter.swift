@@ -29,9 +29,9 @@ class ViewHighlighter {
     static var addedViews = [WeaklyHeldView]()
     static var highlightedViews = [WeaklyHeldView]()
 
-    static func showIn(_ window: UIWindow, focussedOnView view: UIView) {
+    static func showIn(_ window: UIWindow, focussedOnView view: UIView, scale: HighlightScale = .default) {
         guard let center = view.superview?.convert(view.center, to: nil) else { return }
-        let size = max(view.frame.width, view.frame.height) * 5.5
+        let size = max(view.frame.width, view.frame.height) * scale.value
 
         let highlightView = LottieAnimationView(name: "view_highlight")
         highlightView.frame = CGRect(x: 0, y: 0, width: size, height: size)
@@ -65,4 +65,18 @@ class ViewHighlighter {
         }
     }
 
+}
+
+extension ViewHighlighter {
+    enum HighlightScale {
+        case `default`
+        case custom(CGFloat)
+
+        fileprivate var value: CGFloat {
+            switch self {
+            case .default: 5.5
+            case let .custom(value): value
+            }
+        }
+    }
 }

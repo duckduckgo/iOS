@@ -50,6 +50,30 @@ Es tos nobloķēju!
 ☝️ Vari ieskatīties adreses joslā, lai redzētu, kas mēģina tevi izsekot, apmeklējot jaunas vietnes.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>*%2$@, %3$@* un *%1$d citi izsekošanas tīkli* mēģināja tevi šeit izsekot. Es tos nobloķēju!
+
+☝️ Pieskaries vairogam, lai uzzinātu vairāk.</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* un *1 cits izsekošanas tīkls* mēģināja tevi šeit izsekot. Es to nobloķēju!
+
+☝️ Pieskaries vairogam, lai uzzinātu vairāk.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* and *%1$d citi izsekošanas tīkli* mēģināja tevi šeit izsekot. Es tos nobloķēju!
+
+☝️ Pieskaries vairogam, lai uzzinātu vairāk.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

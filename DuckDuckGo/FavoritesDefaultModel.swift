@@ -114,6 +114,19 @@ final class FavoritesDefaultModel: FavoritesModel {
         onFavoriteEdit?(entity)
     }
 
+    func moveFavorites(from indexSet: IndexSet, to index: Int) {
+        guard indexSet.count == 1,
+              let fromIndex = indexSet.first else { return }
+
+        let favorite = allFavorites[fromIndex]
+        guard let entity = lookupEntity(for: favorite) else { return }
+
+        // adjust for different target index handling
+        let toIndex = index > fromIndex ? index - 1 : index
+        interactionModel.moveFavorite(entity, fromIndex: fromIndex, toIndex: toIndex)
+        allFavorites.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: index)
+    }
+
     private func lookupEntity(for favorite: Favorite) -> BookmarkEntity? {
         interactionModel.favorites.first {
             $0.uuid == favorite.id

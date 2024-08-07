@@ -74,7 +74,9 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestForgetAll(tab: TabViewController)
     
     func tabDidRequestFireButtonPulse(tab: TabViewController)
-        
+
+    func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController, animated: Bool)
+
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
 
     func tab(_ tab: TabViewController,
@@ -89,4 +91,6 @@ protocol TabDelegate: AnyObject {
     
     func showBars()
 
+    func tab(_ tab: TabViewController, didRequestLoadURL url: URL)
+    func tab(_ tab: TabViewController, didRequestLoadQuery query: String)
 }

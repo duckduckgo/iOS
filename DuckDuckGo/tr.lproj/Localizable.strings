@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Evet";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* sizi burada izlemeye çalışıyordu. Onları engelledik!\n\n☝️ Daha fazla bilgi için kalkana dokunun.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Çak Bir Beşlik!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Unutmayın: İnterneti benimle ne kadar çok gezerseniz rahatsız edici reklamları da o kadar az görürsünüz. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "İşte bu kadar!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "DuckDuckGo Search bu işte. Özel. Hızlı. Daha az reklam.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Anladım!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Bir siteyi ziyaret etmeyi deneyin!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "DuckDuckGo aramalarınız her zaman anonimdir.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Başlamaya hazır mısınız?\nBir şeyler arayın!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Sizi gözetlemelerini önlemek için izleyicileri engelleyeceğim.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Sonra, bir siteyi ziyaret etmeyi deneyin!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Fire Button ile göz atma etkinliğinizi anında temizleyin.\n\nDeneyin! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "ispanyolca \"ördek\" nasıl denir";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "ingilizcede \"ördek\" nasıl denir";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "mighty ducks oyuncu kadrosu";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "avatar oyuncu kadrosu";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "yerel hava durumu";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "çikolata parçacıklı kurabiye tarifleri";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "akşam yemeği tarifleri";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Şaşırt beni!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Kilitlenme Raporlarını Her Zaman Gönder";
 
@@ -1644,6 +1707,40 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Ayarları";
+
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Favorilerinizi ve düzenli olarak kullandığınız özellikleri kendinize göre ayarlayın. Temiz tutmak için öğeleri yeniden sıralayın veya gizleyin.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Yeni sekme sayfasında bölümleri göster, gizle ve yeniden sırala";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Yeni Sekme Sayfanız... Yeni!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "BÖLÜMLER";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "KISAYOLLAR";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Yeni Sekme Sayfasını Özelleştirin";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "Yapay Zeka Sohbeti";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Yer İmleri";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "İndirilenler";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Şifreler";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Ayarlar";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Herhangi bir sitedeyken, ••• menüsünü açın ve siteyi yeni sekme sayfanıza eklemek için **Favori Ekle**'yi seçin.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

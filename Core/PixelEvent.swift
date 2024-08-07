@@ -535,7 +535,8 @@ extension Pixel {
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
-        
+        case debugWebsiteDataStoresCleared
+
         case debugBookmarksMigratedMoreThanOnce
         
         // Return user measurement
@@ -1246,7 +1247,8 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
-            
+        case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
+
             // MARK: Ad Attribution
             
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"

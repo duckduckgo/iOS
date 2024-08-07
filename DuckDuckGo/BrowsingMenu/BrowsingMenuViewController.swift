@@ -87,6 +87,9 @@ final class BrowsingMenuViewController: UIViewController {
     }
 
     private func configureHeader() {
+        horizontalContainer.isHidden = headerEntries.isEmpty
+        separator.isHidden = headerEntries.isEmpty
+
         for entry in headerEntries {
             let button = BrowsingMenuButton.loadFromXib()
             button.configure(with: entry) { [weak self] completion in

@@ -103,7 +103,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     static let commonName = "Duck Player"
         
     private(set) var settings: DuckPlayerSettingsProtocol
-    private(set) var hostView: UIViewController?
+    private(set) weak var hostView: UIViewController?
     
     init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings

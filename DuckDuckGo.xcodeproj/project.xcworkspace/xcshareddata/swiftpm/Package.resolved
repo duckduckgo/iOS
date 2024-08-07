@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "mgurgel/bump-privacy-dashboard-5_0_0",
-        "revision" : "81610ce02c2e1048d2c165875c3d295f19b59c49"
+        "revision" : "ff87c19636bce8baa34b7984defa779c083f9ce9",
+        "version" : "181.1.0"
       }
     },
     {

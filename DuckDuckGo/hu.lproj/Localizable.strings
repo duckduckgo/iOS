@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Igen";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "A(z) *%1$@* követni próbált téged itt. Blokkoltam őket!\n\n☝️ További információkért koppints a pajzsra.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Pacsi!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Ne feledd: minden alkalommal, amikor velem böngészel, egy undok hirdetés elveszíti az erejét. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Megvan, ez az!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Ez a DuckDuckGo Search. Privát. Gyors. Kevesebb hirdetés.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Megvan!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Próbálj meg ellátogatni egy webhelyre!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "A DuckDuckGo-kereséseid mindig névtelenek.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Készen állsz a kezdésre?\nKeress rá!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Én blokkolom a nyomkövetőket, hogy ne tudjanak kémkedni utánad.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "A következő lépésben próbálj meg ellátogatni egy webhelyre!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Töröld azonnal a böngészési tevékenységedet a Fire Button használatával.\n\nPróbáld ki! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "hogyan mondják spanyolul, hogy „kacsa”";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "hogyan mondják angolul, hogy „kacsa”";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "kerge kacsák szereposztása";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "avatar szereposztása";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "helyi időjárás";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "csokisütireceptek";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "vacsorareceptek";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Lepj meg!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Mindig küldjön hibajelentést";
 
@@ -1612,12 +1675,13 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-beállítások";
 
-/* No comment provided by engineer. */
-"New tab page sections enabled" = "New tab page sections enabled";
-
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Testre szabhatja a kedvenceket és a leggyakrabban használt funkciókat. Az áttekinthetőség érdekében átrendezheti az elemeket, vagy elrejtheti őket.";
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Részek megjelenítése, elrejtése és átrendezése az új lap oldalon";
 
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Az új lap oldal… Új!";
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "RÉSZEK";
 

@@ -170,7 +170,7 @@ import WebKit
             Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+            _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -209,9 +209,18 @@ import WebKit
             DatabaseMigration.migrate(to: context)
         }
 
-        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
-                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
-            // MARK: post-Bookmarks migration logic
+        switch BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+        case .success:
+            break
+        case .failure(let error):
+            Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                       error: error)
+            if error.isDiskFull {
+                shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+            } else {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create database stack: \(error.localizedDescription)")
+            }
         }
 
         WidgetCenter.shared.reloadAllTimelines()
@@ -224,13 +233,14 @@ import WebKit
         
         let variantManager = DefaultVariantManager()
         let historyMessageManager = HistoryMessageManager()
+        let daxDialogs = DaxDialogs.shared
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            DaxDialogs.shared.primeForUse()
+            daxDialogs.primeForUse()
 
             // New users don't see the message
             historyMessageManager.dismiss()
@@ -308,35 +318,44 @@ import WebKit
         let tabsModel = prepareTabsModel(previewsSource: previewsSource)
 
         privacyProDataReporter.injectTabsModel(tabsModel)
-
-        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                      historyManager: historyManager,
-                                      homePageConfiguration: homePageConfiguration,
-                                      syncService: syncService,
-                                      syncDataProviders: syncDataProviders,
-                                      appSettings: AppDependencyProvider.shared.appSettings,
-                                      previewsSource: previewsSource,
-                                      tabsModel: tabsModel,
-                                      syncPausedStateManager: syncErrorHandler,
-                                      privacyProDataReporter: privacyProDataReporter)
-
-        main.loadViewIfNeeded()
-        syncErrorHandler.alertPresenter = main
-
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = main
-        window?.makeKeyAndVisible()
-
+        
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-            presentInsufficientDiskSpaceAlert()
-        }
 
-        autoClear = AutoClear(worker: main)
-        let applicationState = application.applicationState
-        Task {
-            await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
-            await vpnWorkaround.installRedditSessionWorkaround()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+            window?.makeKeyAndVisible()
+
+            presentInsufficientDiskSpaceAlert()
+        } else {
+            let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                          bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                          historyManager: historyManager,
+                                          homePageConfiguration: homePageConfiguration,
+                                          syncService: syncService,
+                                          syncDataProviders: syncDataProviders,
+                                          appSettings: AppDependencyProvider.shared.appSettings,
+                                          previewsSource: previewsSource,
+                                          tabsModel: tabsModel,
+                                          syncPausedStateManager: syncErrorHandler,
+                                          privacyProDataReporter: privacyProDataReporter,
+                                          variantManager: variantManager,
+                                          contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
+                                          contextualOnboardingLogic: daxDialogs,
+                                          contextualOnboardingPixelReporter: OnboardingPixelReporter())
+
+            main.loadViewIfNeeded()
+            syncErrorHandler.alertPresenter = main
+
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = main
+            window?.makeKeyAndVisible()
+
+            autoClear = AutoClear(worker: main)
+            let applicationState = application.applicationState
+            Task {
+                await autoClear?.clearDataIfEnabled(applicationState: .init(with: applicationState))
+                await vpnWorkaround.installRedditSessionWorkaround()
+            }
         }
 
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
@@ -356,6 +375,8 @@ import WebKit
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
+
+        NewTabPageIntroMessageSetup().perform()
 
         widgetRefreshModel.beginObservingVPNStatus()
 
@@ -473,10 +494,6 @@ import WebKit
         guard !testing else { return }
 
         syncService.initializeIfNeeded()
-        if syncService.authState == .active &&
-            (InternalUserStore().isInternalUser == false && syncService.serverEnvironment == .development) {
-            UniquePixel.fire(pixel: .syncWrongEnvironment)
-        }
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
@@ -688,6 +705,11 @@ import WebKit
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+
+        // If showing the onboarding intro ignore deeplinks
+        guard mainViewController?.needsToShowOnboardingIntro() == false else {
+            return false
+        }
 
         if handleEmailSignUpDeepLink(url) {
             return true
@@ -1052,6 +1074,11 @@ private extension Error {
         if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
             return true
         }
+
+        if nsError.userInfo["NSSQLiteErrorDomain"] as? Int == 13 {
+            return true
+        }
+        
         return false
     }
 

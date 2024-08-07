@@ -56,21 +56,29 @@ extension WKWebViewConfiguration {
 
 }
 
-public class DataStoreIdManager {
+public protocol DataStoreIdManaging {
+
+    var id: UUID? { get }
+    var hasId: Bool { get }
+    func allocateNewContainerId()
+
+}
+
+public class DataStoreIdManager: DataStoreIdManaging {
 
     public static let shared = DataStoreIdManager()
 
     @UserDefaultsWrapper(key: .webContainerId, defaultValue: nil)
     private var containerId: String?
 
-    var id: UUID? {
+    public var id: UUID? {
         if let containerId {
             return UUID(uuidString: containerId)
         }
         return nil
     }
 
-    var hasId: Bool {
+    public var hasId: Bool {
         return containerId != nil
     }
 

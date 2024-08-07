@@ -29,27 +29,33 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
+    private let newTabPageModel: NewTabPageModel
     private let messagesModel: NewTabPageMessagesModel
     private let favoritesModel: FavoritesDefaultModel
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let tab: Tab
 
-    init(interactionModel: FavoritesListInteracting,
+    init(tab: Tab,
+         interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil) {
 
+        self.tab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
+        newTabPageModel = NewTabPageModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
         favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
-        let newTabPageView = NewTabPageView(messagesModel: messagesModel,
+        let newTabPageView = NewTabPageView(newTabPageModel: newTabPageModel,
+                                            messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,
@@ -59,6 +65,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tab.viewed = true
     }
 
     // MARK: - Private
@@ -116,15 +128,17 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     weak var shortcutsDelegate: NewTabPageControllerShortcutsDelegate?
 
     func launchNewSearch() {
-
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
+        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
 
-    }
-
-    func omniBarCancelPressed() {
-
+        // The omnibar is inside a collection view so this needs a chance to do its thing
+        // which might also be async. Not great.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.launchNewSearch()
+        }
     }
 
     func dismiss() {

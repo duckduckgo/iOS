@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her. Jeg blokkerte dem!\n\n☝️ Trykk på skjoldet for å få mer informasjon.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "High five!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Husk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Dette går bra!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Det er DuckDuckGo Search. Privat. Raskt. Færre annonser.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Skjønner!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Prøv å besøke et nettsted!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "DuckDuckGo-søkene dine er alltid anonyme.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Er du klar til å komme i gang?\nPrøv et søk!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Jeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Nå kan du prøve å besøke et nettsted!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Fjern nettleseraktiviteten din på et blunk med Fire Button.\n\nPrøv den! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "hvordan si «duck» på spansk";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "hva heter «and» på engelsk";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "mighty ducks rolleinnehavere";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "rollebesetningen i avatar";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "lokalt vær";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "oppskrifter på sjokoladekjeks";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "middagsoppskrifter";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Overrask meg!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Send alltid krasjrapporter";
 
@@ -1612,12 +1675,13 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
 
-/* No comment provided by engineer. */
-"New tab page sections enabled" = "New tab page sections enabled";
-
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Tilpass favorittene dine og de funksjonene du bruker mest. Endre på rekkefølgen av ting eller skjul dem for å holde orden.";
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Vis, skjul og endre rekkefølgen av delene på den nye fanesiden";
 
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Den nye fanesiden din er … ny!";
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "DELER";
 

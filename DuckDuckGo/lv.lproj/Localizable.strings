@@ -724,6 +724,69 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Jā";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* mēģināja tevi šeit izsekot. Es to nobloķēju!\n\n☝️ Pieskaries vairogam, lai uzzinātu vairāk.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "Dod pieci!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Atceries: katru reizi, kad pārlūkosi kopā ar mani, uzmācīgās reklāmas zaudēs savu spēku! 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Izdevās!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Tas ir DuckDuckGo Search. Privāti. Ātri. Mazāk reklāmu.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Sapratu!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Pamēģini apmeklēt kādu vietni!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "Tavi DuckDuckGo meklējumi vienmēr ir anonīmi.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Vai esat gatavs sākt?\nIzmēģini meklēšanu!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Es nobloķēšu izsekotājus, lai tie nevarētu tevi izspiegot.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Tagad pamēģini atvērt kādu vietni!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Acumirklī notīri savu pārlūkošanas vēsturi, izmantojot Fire Button.\n\nIzmēģini! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "kā spāniski pateikt “pīle”";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "kā angliski pateikt “pīle”";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "mighty ducks aktieri";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "avatara aktieru sastāvs";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "vietējie laikapstākļi";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "cepumu ar šokolādes gabaliņiem receptes";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "vakariņu receptes";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Pārsteidz mani!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vienmēr sūtīt avārijas ziņojumus";
 
@@ -1612,12 +1675,13 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
 
-/* No comment provided by engineer. */
-"New tab page sections enabled" = "New tab page sections enabled";
-
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Rādīt, paslēpt un pārkārtot sadaļas jaunās cilnes lapā";
 
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Tava jaunas cilnes lapa ir... atjaunota!";
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SADAĻAS";
 

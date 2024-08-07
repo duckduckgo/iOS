@@ -672,9 +672,9 @@
 		9F5E5AAC2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */; };
 		9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */; };
 		9F5E5AB22C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */; };
+		9F6933192C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */; };
 		9F69331B2C5A16E200CD6A5D /* OnboardingDaxFavouritesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331A2C5A16E200CD6A5D /* OnboardingDaxFavouritesTests.swift */; };
 		9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */; };
-		9F6933192C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */; };
 		9F69331F2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */; };
 		9F6933212C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */; };
 		9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */; };
@@ -2404,9 +2404,9 @@
 		9F5E5AAB2C3D0FCD00165F54 /* ContextualDaxDialogsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialogsFactory.swift; sourceTree = "<group>"; };
 		9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenter.swift; sourceTree = "<group>"; };
 		9F5E5AB12C3E606D00165F54 /* ContextualOnboardingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterTests.swift; sourceTree = "<group>"; };
+		9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporterMock.swift; sourceTree = "<group>"; };
 		9F69331A2C5A16E200CD6A5D /* OnboardingDaxFavouritesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDaxFavouritesTests.swift; sourceTree = "<group>"; };
 		9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTutorialSettings.swift; sourceTree = "<group>"; };
-		9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporterMock.swift; sourceTree = "<group>"; };
 		9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppearViewModifier.swift; sourceTree = "<group>"; };
 		9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHostingControllerMock.swift; sourceTree = "<group>"; };
 		9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyDataReporter.swift; sourceTree = "<group>"; };
@@ -10468,8 +10468,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 180.0.0;
+				branch = "sabrina/onboarding-fix";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

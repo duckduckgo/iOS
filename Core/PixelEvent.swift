@@ -734,6 +734,9 @@ extension Pixel {
         case newTabPageMessageDisplayed
         case newTabPageMessageDismissed
 
+        case newTabPageFavoritesSeeMore
+        case newTabPageFavoritesSeeLess
+
         // MARK: DuckPlayer        
         case duckPlayerDailyUniqueView
         case duckPlayerViewFromYoutubeViaMainOverlay
@@ -1469,6 +1472,9 @@ extension Pixel.Event {
         // MARK: New Tab Page
         case .newTabPageMessageDisplayed: return "m_new_tab_page_message_displayed"
         case .newTabPageMessageDismissed: return "m_new_tab_page_message_dismissed"
+
+        case .newTabPageFavoritesSeeMore: return "m_new_tab_page_favorites_see_more"
+        case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"
 
         // MARK: DuckPlayer
         case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"

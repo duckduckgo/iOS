@@ -42,13 +42,16 @@ final class FavoritesDefaultModel: FavoritesModel {
     private var cancellables = Set<AnyCancellable>()
 
     private let interactionModel: FavoritesListInteracting
+    private let pixelFiring: PixelFiring.Type
 
     var isEmpty: Bool {
         allFavorites.isEmpty
     }
 
-    init(interactionModel: FavoritesListInteracting) {
+    init(interactionModel: FavoritesListInteracting,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
         self.interactionModel = interactionModel
+        self.pixelFiring = pixelFiring
 
         interactionModel.externalUpdates.sink { [weak self] _ in
             try? self?.updateData()
@@ -63,6 +66,12 @@ final class FavoritesDefaultModel: FavoritesModel {
 
     func toggleCollapse() {
         isCollapsed.toggle()
+        
+        if isCollapsed {
+            pixelFiring.fire(.newTabPageFavoritesSeeLess, withAdditionalParameters: [:])
+        } else {
+            pixelFiring.fire(.newTabPageFavoritesSeeMore, withAdditionalParameters: [:])
+        }
     }
 
     func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {

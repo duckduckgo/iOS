@@ -744,6 +744,13 @@ extension Pixel {
 
         case newTabPageShortcutClicked(_ shortcutName: String)
 
+        case newTabPageSectionOff(_ sectionName: String)
+        case newTabPageSectionOn(_ sectionName: String)
+        case newTabPageSectionReordered
+
+        case newTabPageCustomizeShortcutRemoved(_ shortcutName: String)
+        case newTabPageCustomizeShortcutAdded(_ shortcutName: String)
+
         // MARK: DuckPlayer        
         case duckPlayerDailyUniqueView
         case duckPlayerViewFromYoutubeViaMainOverlay
@@ -1490,6 +1497,17 @@ extension Pixel.Event {
 
         case .newTabPageShortcutClicked(let name):
             return "m_new_tab_page_shortcut_clicked_\(name)"
+
+        case .newTabPageSectionOff(let sectionName):
+            return "m_new_tab_page_customize_section_off_\(sectionName)"
+        case .newTabPageSectionOn(let sectionName):
+            return "m_new_tab_page_customize_section_on_\(sectionName)"
+        case .newTabPageSectionReordered: return "m_new_tab_page_customize_section_reordered"
+
+        case .newTabPageCustomizeShortcutRemoved(let shortcutName):
+            return "m_new_tab_page_customize_shortcut_removed_\(shortcutName)"
+        case .newTabPageCustomizeShortcutAdded(let shortcutName):
+            return "m_new_tab_page_customize_shortcut_added_\(shortcutName)"
 
         // MARK: DuckPlayer
         case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"

@@ -18,11 +18,35 @@
 //
 
 import Foundation
+import Core
 
 typealias NewTabPageSectionsSettingsModel = NewTabPageSettingsModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
 
 extension NewTabPageSectionsSettingsModel {
     convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage()) {
-        self.init(settingsStorage: storage)
+        self.init(settingsStorage: storage,
+                  onItemEnabled: Self.onEnabled(_:isEnabled:),
+                  onItemReordered: Self.onReordered)
+    }
+
+    private static func onEnabled(_ section: SettingItem, isEnabled: Bool) {
+        if isEnabled {
+            Pixel.fire(.newTabPageSectionOn(section.nameForPixel), withAdditionalParameters: [:])
+        } else {
+            Pixel.fire(.newTabPageSectionOff(section.nameForPixel), withAdditionalParameters: [:])
+        }
+    }
+
+    private static func onReordered() {
+        Pixel.fire(.newTabPageSectionReordered, withAdditionalParameters: [:])
+    }
+}
+
+private extension NewTabPageSection {
+    var nameForPixel: String {
+        switch self {
+        case .favorites: return "favorites"
+        case .shortcuts: return "shortcuts"
+        }
     }
 }

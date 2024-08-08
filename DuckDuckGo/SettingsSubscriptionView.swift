@@ -39,7 +39,7 @@ struct SettingsSubscriptionView: View {
     @State var isShowingDBP = false
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
-    @State var isShowingSubscribeFlow = false
+//    @State var isShowingSubscribeFlow = false
     @State var isShowingGoogleView = false
     @State var isShowingStripeView = false
     @State var isShowingPrivacyPro = false
@@ -74,7 +74,8 @@ struct SettingsSubscriptionView: View {
                     .foregroundColor(Color.init(designSystemColor: .accent))
                     .padding(.leading, 32.0)
             }, action: {
-                isShowingSubscribeFlow = true
+//                isShowingSubscribeFlow = true
+                subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
             }, isButton: true)
 
             // Restore subscription
@@ -126,7 +127,10 @@ struct SettingsSubscriptionView: View {
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .expired,
                                                     settingsViewModel: viewModel,
-                                                    viewPlans: { isShowingSubscribeFlow = true })
+                                                    viewPlans: {
+//            isShowingSubscribeFlow = true
+            subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
+        })
             .environmentObject(subscriptionNavigationCoordinator)
         NavigationLink(destination: settingsView) {
             SettingsCellView(
@@ -145,7 +149,10 @@ struct SettingsSubscriptionView: View {
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .activating,
                                                     settingsViewModel: viewModel,
-                                                    viewPlans: { isShowingSubscribeFlow = true })
+                                                    viewPlans: {
+//            isShowingSubscribeFlow = true
+            subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
+        })
             .environmentObject(subscriptionNavigationCoordinator)
         NavigationLink(destination: settingsView) {
             SettingsCellView(
@@ -235,19 +242,20 @@ struct SettingsSubscriptionView: View {
                 .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                     if shouldDismiss {
                         isShowingRestoreFlow = false
-                        isShowingSubscribeFlow = false
+//                        isShowingSubscribeFlow = false
+                        subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = false
                     }
                 }
-                .sheet(isPresented: $isShowingSubscribeFlow,
-                       onDismiss: {
-print("")
-                },
-                       content: {
-                    SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
-                                                                       navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                       subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                                       privacyProDataReporter: viewModel.privacyProDataReporter)
-                })
+//                .sheet(isPresented: $isShowingSubscribeFlow,
+//                       onDismiss: {
+// print("dismiss")
+//                },
+//                       content: {
+//                    SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
+//                                                                       navigationCoordinator: subscriptionNavigationCoordinator,
+//                                                                       subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+//                                                                       privacyProDataReporter: viewModel.privacyProDataReporter)
+//                })
             }
         }
         .onReceive(viewModel.$state) { state in

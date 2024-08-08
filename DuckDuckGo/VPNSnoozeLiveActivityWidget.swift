@@ -114,7 +114,7 @@ private struct VPNSnoozeLiveActivityPrimaryCountdownView: View {
                     Text(UserText.vpnWidgetLiveActivityVPNSnoozingStatusLabel)
                         .foregroundStyle(Color.white)
                 } else {
-                    Text(UserText.vpnWidgetLiveActivityVPNSnoozingStatusLabel)
+                    Text(UserText.vpnWidgetLiveActivityVPNActiveStatusLabel)
                         .foregroundStyle(Color.white)
                 }
 

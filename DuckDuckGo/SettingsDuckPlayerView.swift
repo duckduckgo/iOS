@@ -111,10 +111,9 @@ private struct ContingencyMessageView: View {
                 buttonCallback()
             } label: {
                 Text(Copy.buttonTitle)
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
                     .bold()
             }
-            .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
+            .buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
             .padding(10)
         }
     }

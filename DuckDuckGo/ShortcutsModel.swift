@@ -18,12 +18,31 @@
 //
 
 import Foundation
+import Core
 
 final class ShortcutsModel: ObservableObject {
 
     var onShortcutOpened: ((NewTabPageShortcut) -> Void)?
+    let pixelFiring: PixelFiring.Type
+
+    init(pixelFiring: PixelFiring.Type = Pixel.self) {
+        self.pixelFiring = pixelFiring
+    }
 
     func openShortcut(_ shortcut: NewTabPageShortcut) {
+        pixelFiring.fire(.newTabPageShortcutClicked(shortcut.nameForPixel), withAdditionalParameters: [:])
         onShortcutOpened?(shortcut)
+    }
+}
+
+private extension NewTabPageShortcut {
+    var nameForPixel: String {
+        switch self {
+        case .bookmarks: return "bookmarks"
+        case .aiChat: return "chat"
+        case .passwords: return "passwords"
+        case .downloads: return "downloads"
+        case .settings: return "settings"
+        }
     }
 }

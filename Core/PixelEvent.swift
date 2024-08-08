@@ -742,6 +742,8 @@ extension Pixel {
 
         case newTabPageCustomize
 
+        case newTabPageShortcutClicked(_ shortcutName: String)
+
         // MARK: DuckPlayer        
         case duckPlayerDailyUniqueView
         case duckPlayerViewFromYoutubeViaMainOverlay
@@ -1485,6 +1487,9 @@ extension Pixel.Event {
         case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"
 
         case .newTabPageCustomize: return "m_new_tab_page_customize"
+
+        case .newTabPageShortcutClicked(let name):
+            return "m_new_tab_page_shortcut_clicked_\(name)"
 
         // MARK: DuckPlayer
         case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"

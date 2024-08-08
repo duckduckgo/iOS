@@ -734,6 +734,8 @@ extension Pixel {
         case newTabPageMessageDisplayed
         case newTabPageMessageDismissed
 
+        case newTabPageFavoritesPlaceholderTapped
+
         case newTabPageFavoritesSeeMore
         case newTabPageFavoritesSeeLess
 
@@ -1475,6 +1477,7 @@ extension Pixel.Event {
         case .newTabPageMessageDisplayed: return "m_new_tab_page_message_displayed"
         case .newTabPageMessageDismissed: return "m_new_tab_page_message_dismissed"
 
+        case .newTabPageFavoritesPlaceholderTapped: return "m_new_tab_page_favorites_placeholder_click"
         case .newTabPageFavoritesSeeMore: return "m_new_tab_page_favorites_see_more"
         case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"
 

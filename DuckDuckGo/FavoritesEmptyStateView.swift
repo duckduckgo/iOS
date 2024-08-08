@@ -23,6 +23,8 @@ struct FavoritesEmptyStateView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
+    private let model = FavoritesEmptyStateModel()
+
     @State private var headerPadding: CGFloat = 10
 
     @Binding var isShowingTooltip: Bool
@@ -38,6 +40,10 @@ struct FavoritesEmptyStateView: View {
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                            .contentShape(.capsule)
+                            .onTapGesture {
+                                model.placeholderTapped()
+                            }
                     }
                 }.overlay(
                     GeometryReader(content: { geometry in

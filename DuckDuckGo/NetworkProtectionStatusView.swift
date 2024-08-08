@@ -151,8 +151,8 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func locationDetails() -> some View {
-        Section {
-            if !statusModel.isSnoozing, let location = statusModel.location {
+        if !statusModel.isSnoozing, let location = statusModel.location {
+            Section {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(
                         statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location
@@ -167,7 +167,13 @@ struct NetworkProtectionStatusView: View {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(title: locationAttributedString, imageName: nil)
                 }
-            } else {
+            } header: {
+                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
+            }
+            .listRowBackground(Color(designSystemColor: .surface))
+        } else {
+            Section {
                 let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
                 var nearestLocationAttributedString: AttributedString {
                     var attributedString = AttributedString(statusModel.preferredLocation.title)
@@ -178,12 +184,12 @@ struct NetworkProtectionStatusView: View {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
+            } header: {
+                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
             }
-        } header: {
-            Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
-                .foregroundColor(.init(designSystemColor: .textSecondary))
+            .listRowBackground(Color(designSystemColor: .surface))
         }
-        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder

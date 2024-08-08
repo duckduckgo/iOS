@@ -48,11 +48,13 @@ struct SubscriptionContainerView: View {
             switch currentViewState {
             case .subscribe:
                 SubscriptionFlowView(viewModel: flowViewModel,
-                                     currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
+                                     currentView: $currentViewState)
+                .environmentObject(subscriptionNavigationCoordinator)
             case .restore:
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
-                                        currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
+                                        currentView: $currentViewState)
+                .environmentObject(subscriptionNavigationCoordinator)
             case .email:
                 SubscriptionEmailView(viewModel: emailViewModel)
             }

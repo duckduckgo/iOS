@@ -165,7 +165,7 @@ struct SubscriptionSettingsView: View {
         }
     }
 
-     @ViewBuilder
+    @ViewBuilder
     var restorePurchaseView: some View {
          let text = !settingsViewModel.state.subscription.isRestoring ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
          SettingsCustomCell(content: {

@@ -112,7 +112,7 @@ struct SettingsRootView: View {
             SubscriptionITPView()
         case let .subscriptionFlow(origin):
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
-//                                                               navigationCoordinator: subscriptionNavigationCoordinator,
+                                                               navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                                privacyProDataReporter: viewModel.privacyProDataReporter)
             .environmentObject(subscriptionNavigationCoordinator)

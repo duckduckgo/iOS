@@ -24,11 +24,12 @@ import SwiftUI
 import Core
 import WidgetKit
 
-final class FavoritesDefaultModel: FavoritesModel {
+final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
 
     @Published private(set) var allFavorites: [Favorite] = []
     @Published private(set) var isCollapsed: Bool = true
-    
+    @Published private(set) var isShowingTooltip: Bool = false
+
     private(set) lazy var faviconLoader: FavoritesFaviconLoading? = {
         FavoritesFaviconLoader(onFaviconMissing: { [weak self] in
             guard let self else { return }
@@ -135,6 +136,21 @@ final class FavoritesDefaultModel: FavoritesModel {
         interactionModel.moveFavorite(entity, fromIndex: fromIndex, toIndex: toIndex)
         allFavorites.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: index)
     }
+
+    // MARK: - Empty state model
+
+    func placeholderTapped() {
+        pixelFiring.fire(.newTabPageFavoritesPlaceholderTapped, withAdditionalParameters: [:])
+    }
+
+    func toggleTooltip() {
+        isShowingTooltip.toggle()
+        if isShowingTooltip {
+            pixelFiring.fire(.newTabPageFavoritesInfoTooltip, withAdditionalParameters: [:])
+        }
+    }
+
+    // MARK: -
 
     private func lookupEntity(for favorite: Favorite) -> BookmarkEntity? {
         interactionModel.favorites.first {

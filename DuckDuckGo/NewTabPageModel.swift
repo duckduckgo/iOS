@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 final class NewTabPageModel: ObservableObject {
 
@@ -25,15 +26,20 @@ final class NewTabPageModel: ObservableObject {
     @Published private(set) var isOnboarding: Bool
 
     private let appSettings: AppSettings
+    private let pixelFiring: PixelFiring.Type
 
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
         self.appSettings = appSettings
-        
+        self.pixelFiring = pixelFiring
+
         isIntroMessageVisible = appSettings.newTabPageIntroMessageEnabled ?? false
         isOnboarding = false
     }
 
     func increaseIntroMessageCounter() {
+        pixelFiring.fire(.newTabPageMessageDisplayed, withAdditionalParameters: [:])
+
         appSettings.newTabPageIntroMessageSeenCount += 1
         if appSettings.newTabPageIntroMessageSeenCount >= 3 {
             appSettings.newTabPageIntroMessageEnabled = false
@@ -41,6 +47,8 @@ final class NewTabPageModel: ObservableObject {
     }
 
     func dismissIntroMessage() {
+        pixelFiring.fire(.newTabPageMessageDismissed, withAdditionalParameters: [:])
+
         appSettings.newTabPageIntroMessageEnabled = false
         isIntroMessageVisible = false
     }

@@ -85,7 +85,7 @@ private struct ContingencyMessageView: View {
     }
     private enum Constants {
         static let imageName: String = "WarningYoutube"
-        static let imageSize: CGSize = CGSize(width: 50, height: 50)
+        static let imageSize: CGSize = CGSize(width: 48, height: 48)
         static let buttonCornerRadius: CGFloat = 8.0
     }
 

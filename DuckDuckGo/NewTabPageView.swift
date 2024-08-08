@@ -24,6 +24,7 @@ import RemoteMessaging
 struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
+    @ObservedObject private var newTabPageModel: NewTabPageModel
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
     @ObservedObject private var favoritesModel: FavoritesModelType
     @ObservedObject private var shortcutsModel: ShortcutsModel
@@ -33,11 +34,13 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @State var isShowingTooltip: Bool = false
     @State private var isShowingSettings: Bool = false
 
-    init(messagesModel: NewTabPageMessagesModel,
+    init(newTabPageModel: NewTabPageModel,
+         messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
+        self.newTabPageModel = newTabPageModel
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
         self.shortcutsModel = shortcutsModel
@@ -89,6 +92,21 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         }.sectionPadding()
     }
 
+    @ViewBuilder
+    private var introMessageView: some View {
+        if newTabPageModel.isIntroMessageVisible {
+            NewTabPageIntroMessageView(onClose: {
+                withAnimation {
+                    newTabPageModel.dismissIntroMessage()
+                }
+            })
+            .sectionPadding()
+            .onFirstAppear {
+                newTabPageModel.increaseIntroMessageCounter()
+            }
+        }
+    }
+
     private var isAnySectionEnabled: Bool {
         !sectionsSettingsModel.enabledItems.isEmpty
     }
@@ -97,10 +115,12 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         !shortcutsSettingsModel.enabledItems.isEmpty
     }
 
-    var body: some View {
+    private var mainView: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack {
+                    introMessageView
+
                     messagesSectionView
 
                     if isAnySectionEnabled {
@@ -138,9 +158,15 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         }, content: {
             NavigationView {
                 NewTabPageSettingsView(shortcutsSettingsModel: shortcutsSettingsModel,
-                                          sectionsSettingsModel: sectionsSettingsModel)
+                                       sectionsSettingsModel: sectionsSettingsModel)
             }
         })
+    }
+
+    var body: some View {
+        if !newTabPageModel.isOnboarding {
+            mainView
+        }
     }
 }
 
@@ -161,6 +187,7 @@ private struct Constant {
 
 #Preview("Regular") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: []
@@ -175,6 +202,7 @@ private struct Constant {
 
 #Preview("With message") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: [

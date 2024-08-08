@@ -25,7 +25,8 @@ import Common
 import DDGSync
 import Persistence
 import RemoteMessaging
-
+import SwiftUI
+import BrowserServicesKit
 
 class HomeViewController: UIViewController, NewTabPage {
 
@@ -33,12 +34,12 @@ class HomeViewController: UIViewController, NewTabPage {
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var collectionView: HomeCollectionView!
-    @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var daxDialogContainer: UIView!
     @IBOutlet weak var daxDialogContainerHeight: NSLayoutConstraint!
     weak var daxDialogViewController: DaxDialogViewController?
-    
+    var hostingController: UIHostingController<AnyView>?
+
     var logoContainer: UIView! {
         return delegate?.homeDidRequestLogoContainer(self)
     }
@@ -64,7 +65,7 @@ class HomeViewController: UIViewController, NewTabPage {
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    
+
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
@@ -74,31 +75,35 @@ class HomeViewController: UIViewController, NewTabPage {
     private let appSettings: AppSettings
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private let variantManager: VariantManager
+    private let newTabDialogFactory: any NewTabDaxDialogProvider
+    private let newTabDialogTypeProvider: NewTabDialogSpecProvider
     private var viewModelCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
 
     let privacyProDataReporter: PrivacyProDataReporting
 
+    var hasFavoritesToShow: Bool {
+        !favoritesViewModel.favorites.isEmpty
+    }
+
     static func loadFromStoryboard(
-        homePageConfiguration: HomePageConfiguration,
-        model: Tab,
-        favoritesViewModel: FavoritesListInteracting,
-        appSettings: AppSettings,
-        syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders,
-        privacyProDataReporter: PrivacyProDataReporting
+        homePageDependecies: HomePageDependencies
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
                 coder: coder,
-                homePageConfiguration: homePageConfiguration,
-                tabModel: model,
-                favoritesViewModel: favoritesViewModel,
-                appSettings: appSettings,
-                syncService: syncService,
-                syncDataProviders: syncDataProviders,
-                privacyProDataReporter: privacyProDataReporter
+                homePageConfiguration: homePageDependecies.homePageConfiguration,
+                tabModel: homePageDependecies.model,
+                favoritesViewModel: homePageDependecies.favoritesViewModel,
+                appSettings: homePageDependecies.appSettings,
+                syncService: homePageDependecies.syncService,
+                syncDataProviders: homePageDependecies.syncDataProviders,
+                privacyProDataReporter: homePageDependecies.privacyProDataReporter,
+                variantManager: homePageDependecies.variantManager,
+                newTabDialogFactory: homePageDependecies.newTabDialogFactory,
+                newTabDialogTypeProvider: homePageDependecies.newTabDialogTypeProvider
             )
         })
         return controller
@@ -112,7 +117,10 @@ class HomeViewController: UIViewController, NewTabPage {
         appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        privacyProDataReporter: PrivacyProDataReporting
+        privacyProDataReporter: PrivacyProDataReporting,
+        variantManager: VariantManager,
+        newTabDialogFactory: any NewTabDaxDialogProvider,
+        newTabDialogTypeProvider: NewTabDialogSpecProvider
     ) {
         self.homePageConfiguration = homePageConfiguration
         self.tabModel = tabModel
@@ -121,6 +129,9 @@ class HomeViewController: UIViewController, NewTabPage {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.privacyProDataReporter = privacyProDataReporter
+        self.variantManager = variantManager
+        self.newTabDialogFactory = newTabDialogFactory
+        self.newTabDialogTypeProvider = newTabDialogTypeProvider
 
         super.init(coder: coder)
     }
@@ -137,7 +148,6 @@ class HomeViewController: UIViewController, NewTabPage {
 
         collectionView.homePageConfiguration = homePageConfiguration
         configureCollectionView()
-        decorate()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -204,13 +214,12 @@ class HomeViewController: UIViewController, NewTabPage {
         collectionView.reloadData()
     }
     
-    func omniBarCancelPressed() {
-        collectionView.omniBarCancelPressed()
-    }
-    
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        showNextDaxDialog()
+        if !variantManager.isSupported(feature: .newOnboardingIntro) {
+            // In the new onboarding this gets called twice (viewDidAppear in Tab) which then reset the spec to nil.
+            presentNextDaxDialog()
+        }
     }
     
     @IBAction func launchSettings() {
@@ -226,9 +235,9 @@ class HomeViewController: UIViewController, NewTabPage {
 
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
-        
-        showNextDaxDialog()
-        
+
+        presentNextDaxDialog()
+
         collectionView.didAppear()
 
         viewHasAppeared = true
@@ -238,42 +247,25 @@ class HomeViewController: UIViewController, NewTabPage {
     var isShowingDax: Bool {
         return !daxDialogContainer.isHidden
     }
-        
-    func showNextDaxDialog() {
-
-        guard !isShowingDax else { return }
-        guard let spec = DaxDialogs.shared.nextHomeScreenMessage(),
-              let daxDialogViewController = daxDialogViewController else { return }
-        collectionView.isHidden = true
-        daxDialogContainer.isHidden = false
-        daxDialogContainer.alpha = 0.0
-        
-        daxDialogViewController.loadViewIfNeeded()
-        daxDialogViewController.message = spec.message
-        daxDialogViewController.accessibleMessage = spec.accessibilityLabel
-        
-        view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
-        
-        daxDialogContainerHeight.constant = daxDialogViewController.calculateHeight()
-        hideLogo()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.daxDialogContainer.alpha = 1.0
-            }, completion: { _ in
-                self.daxDialogViewController?.start()
-            })
-        }
-
-        configureCollectionView()
-    }
 
     func hideLogo() {
         delegate?.home(self, didRequestHideLogo: true)
     }
     
     func onboardingCompleted() {
-        showNextDaxDialog()
+        presentNextDaxDialog()
+    }
+
+    func presentNextDaxDialog() {
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        } else {
+            showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
+        }
+    }
+
+    func showNextDaxDialog() {
+        showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
     }
 
     func reloadFavorites() {
@@ -372,10 +364,16 @@ extension HomeViewController: HomeMessageViewSectionRendererDelegate {
     }
 }
 
-extension HomeViewController {
+extension HomeViewController: HomeScreenTransitionSource {
+    var snapshotView: UIView {
+        if let logoContainer = logoContainer, !logoContainer.isHidden {
+            return logoContainer
+        } else {
+            return collectionView
+        }
+    }
 
-    private func decorate() {
-        let theme = ThemeManager.shared.currentTheme
-        settingsButton.tintColor = theme.barTintColor
+    var rootContainerView: UIView {
+        collectionView
     }
 }

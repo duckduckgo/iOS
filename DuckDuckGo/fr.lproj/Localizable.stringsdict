@@ -42,6 +42,26 @@ Je les ai bloqués !
 ☝️ Vous pouvez voir dans la barre d&apos;adresse qui essaie de vous suivre lorsque vous visitez un nouveau site.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* et *1 autre* essayaient de vous suivre ici. Je les ai bloqués !
+
+☝️ Appuyez sur le bouclier pour en savoir plus.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* et *%1$d autres* essayaient de vous suivre ici. Je les ai bloqués !
+
+☝️ Appuyez sur le bouclier pour en savoir plus.️</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

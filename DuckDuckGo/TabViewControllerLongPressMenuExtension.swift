@@ -107,7 +107,9 @@ extension TabViewController {
                                                                  historyManager: historyManager,
                                                                  syncService: syncService,
                                                                  duckPlayer: duckPlayer,
-                                                                 privacyProDataReporter: privacyProDataReporter)
+                                                                 privacyProDataReporter: privacyProDataReporter,
+                                                                 contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                                 contextualOnboardingLogic: contextualOnboardingLogic)
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)

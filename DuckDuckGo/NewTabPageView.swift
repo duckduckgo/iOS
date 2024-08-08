@@ -115,7 +115,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         !shortcutsSettingsModel.enabledItems.isEmpty
     }
 
-    var body: some View {
+    private var mainView: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack {
@@ -158,9 +158,15 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         }, content: {
             NavigationView {
                 NewTabPageSettingsView(shortcutsSettingsModel: shortcutsSettingsModel,
-                                          sectionsSettingsModel: sectionsSettingsModel)
+                                       sectionsSettingsModel: sectionsSettingsModel)
             }
         })
+    }
+
+    var body: some View {
+        if !newTabPageModel.isOnboarding {
+            mainView
+        }
     }
 }
 

@@ -36,25 +36,27 @@ struct SettingsDuckPlayerView: View {
                 }
             }
 
-            VStack(alignment: .center) {
-                Image("SettingsDuckPlayerHero")
-                    .padding(.top, -20) // Adjust for the image padding
+            if !viewModel.shouldDisplayDuckPlayerContingencyMessage {
+                VStack(alignment: .center) {
+                    Image("SettingsDuckPlayerHero")
+                        .padding(.top, -20) // Adjust for the image padding
 
-                Text(UserText.duckPlayerFeatureName)
-                    .daxTitle3()
+                    Text(UserText.duckPlayerFeatureName)
+                        .daxTitle3()
 
-                Text(UserText.settingsDuckPlayerInfoText)
+                    Text(UserText.settingsDuckPlayerInfoText)
+                        .daxBodyRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .padding(.top, 12)
+
+                    Link(UserText.settingsDuckPlayerLearnMore,
+                         destination: SettingsDuckPlayerView.learnMoreURL)
                     .daxBodyRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .padding(.top, 12)
-
-                Link(UserText.settingsDuckPlayerLearnMore,
-                     destination: SettingsDuckPlayerView.learnMoreURL)
-                .daxBodyRegular()
-                .accentColor(Color.init(designSystemColor: .accent))
+                    .accentColor(Color.init(designSystemColor: .accent))
+                }
+                .listRowBackground(Color.clear)
             }
-            .listRowBackground(Color.clear)
 
             Section {
                 SettingsPickerCellView(label: UserText.settingsOpenVideosInDuckPlayerLabel,

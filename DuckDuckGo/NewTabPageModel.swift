@@ -24,6 +24,7 @@ final class NewTabPageModel: ObservableObject {
 
     @Published private(set) var isIntroMessageVisible: Bool
     @Published private(set) var isOnboarding: Bool
+    @Published var isShowingSettings: Bool
 
     private let appSettings: AppSettings
     private let pixelFiring: PixelFiring.Type
@@ -35,6 +36,7 @@ final class NewTabPageModel: ObservableObject {
 
         isIntroMessageVisible = appSettings.newTabPageIntroMessageEnabled ?? false
         isOnboarding = false
+        isShowingSettings = false
     }
 
     func increaseIntroMessageCounter() {
@@ -51,6 +53,11 @@ final class NewTabPageModel: ObservableObject {
 
         appSettings.newTabPageIntroMessageEnabled = false
         isIntroMessageVisible = false
+    }
+
+    func customizeNewTabPage() {
+        pixelFiring.fire(.newTabPageCustomize, withAdditionalParameters: [:])
+        isShowingSettings = true
     }
 
     func startOnboarding() {

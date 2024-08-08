@@ -32,7 +32,6 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
     
     @State var isShowingTooltip: Bool = false
-    @State private var isShowingSettings: Bool = false
 
     init(newTabPageModel: NewTabPageModel,
          messagesModel: NewTabPageMessagesModel,
@@ -82,7 +81,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             Spacer()
 
             Button(action: {
-                isShowingSettings = true
+                newTabPageModel.customizeNewTabPage()
             }, label: {
                 NewTabPageCustomizeButtonView()
                 // Needed to reduce default button margins
@@ -152,7 +151,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                 isShowingTooltip = false
             })
         }
-        .sheet(isPresented: $isShowingSettings, onDismiss: {
+        .sheet(isPresented: $newTabPageModel.isShowingSettings, onDismiss: {
             shortcutsSettingsModel.save()
             sectionsSettingsModel.save()
         }, content: {

@@ -259,7 +259,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     @MainActor
     func showTermsOfService() {
-        self.openURL(SettingsSubscriptionViewConstants.privacyPolicyURL)
+        self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
     }
 
     // MARK: -

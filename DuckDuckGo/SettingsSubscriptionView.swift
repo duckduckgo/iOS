@@ -22,18 +22,18 @@ import Subscription
 import SwiftUI
 import UIKit
 
-enum SettingsSubscriptionViewConstants {
-    static let purchaseDescriptionPadding = 5.0
-    static let topCellPadding = 3.0
-    static let noEntitlementsIconWidth = 20.0
-    static let navigationDelay = 0.3
-    static let infoIcon = "info-16"
-    static let alertIcon = "Exclamation-Color-16"
-    static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
-}
-
 struct SettingsSubscriptionView: View {
-    
+
+    enum ViewConstants {
+        static let purchaseDescriptionPadding = 5.0
+        static let topCellPadding = 3.0
+        static let noEntitlementsIconWidth = 20.0
+        static let navigationDelay = 0.3
+        static let infoIcon = "info-16"
+        static let alertIcon = "Exclamation-Color-16"
+        static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
+    }
+
     @EnvironmentObject var viewModel: SettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
@@ -42,33 +42,12 @@ struct SettingsSubscriptionView: View {
     @State var isShowingSubscribeFlow = false
     @State var isShowingGoogleView = false
     @State var isShowingStripeView = false
-//    @State var isShowingSubscriptionError = false
     @State var isShowingPrivacyPro = false
 
     var subscriptionRestoreView: some View {
         SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
                                                                            subscriptionManager: subscriptionManager)
     }
-
-//    @ViewBuilder
-//    private var restorePurchaseView: some View {
-//        let text = !viewModel.state.subscription.isRestoring ? UserText.subscriptionActivateAppleIDButton : UserText.subscriptionRestoringTitle
-//        SettingsCustomCell(content: {
-//            Text(text)
-//                .daxBodyRegular()
-//                .foregroundColor(Color.init(designSystemColor: .accent)) },
-//                           action: {
-//                                Task { await viewModel.restoreAccountPurchase() }
-//                            },
-//                           isButton: !viewModel.state.subscription.isRestoring )
-//        .alert(isPresented: $isShowingSubscriptionError) {
-//            Alert(
-//                title: Text(UserText.subscriptionAppStoreErrorTitle),
-//                message: Text(UserText.subscriptionAppStoreErrorMessage),
-//                dismissButton: .default(Text(UserText.actionOK)) {}
-//            )
-//        }
-//    }
     
     private var manageSubscriptionView: some View {
         SettingsCellView(
@@ -228,7 +207,7 @@ struct SettingsSubscriptionView: View {
                 let hasNoEntitlements = viewModel.state.subscription.entitlements.isEmpty
 
                 let footerLink = Link(UserText.settingsPProSectionFooter,
-                                      destination: SettingsSubscriptionViewConstants.privacyPolicyURL)
+                                      destination: ViewConstants.privacyPolicyURL)
                     .daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
 
                 Section(header: Text(UserText.settingsPProSection),
@@ -253,18 +232,17 @@ struct SettingsSubscriptionView: View {
                         purchaseSubscriptionView  // View for signing up or purchasing a subscription
                     }
                 }
-//                .onChange(of: viewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
-//                    if value {
-//                        isShowingSubscriptionError = true
-//                    }
-//                }
                 .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                     if shouldDismiss {
                         isShowingRestoreFlow = false
                         isShowingSubscribeFlow = false
                     }
                 }
-                .sheet(isPresented: $isShowingSubscribeFlow, content: {
+                .sheet(isPresented: $isShowingSubscribeFlow,
+                       onDismiss: {
+print("")
+                },
+                       content: {
                     SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
                                                                        navigationCoordinator: subscriptionNavigationCoordinator,
                                                                        subscriptionManager: AppDependencyProvider.shared.subscriptionManager,

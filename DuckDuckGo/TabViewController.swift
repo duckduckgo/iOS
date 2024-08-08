@@ -53,7 +53,6 @@ class TabViewController: UIViewController {
     @IBOutlet private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var webViewContainer: UIView!
-    var webViewBottomAnchorConstraint: NSLayoutConstraint?
     var daxContextualOnboardingController: UIViewController?
 
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
@@ -369,7 +368,6 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
-        registerForAddressBarLocationNotifications()
         registerForAutofillNotifications()
         
         if #available(iOS 16.4, *) {
@@ -377,13 +375,6 @@ class TabViewController: UIViewController {
         }
 
         observeNetPConnectionStatusChanges()
-    }
-    
-    private func registerForAddressBarLocationNotifications() {
-        NotificationCenter.default.addObserver(self, selector:
-                                                #selector(onAddressBarPositionChanged),
-                                               name: AppUserDefaults.Notifications.addressBarPositionChanged,
-                                               object: nil)
     }
 
     @available(iOS 16.4, *)
@@ -403,16 +394,6 @@ class TabViewController: UIViewController {
 #endif
     }
 
-    @objc
-    private func onAddressBarPositionChanged() {
-        updateWebViewBottomAnchor()
-    }
-
-    private func updateWebViewBottomAnchor() {
-        let targetHeight = chromeDelegate?.barsMaxHeight ?? 0.0
-        webViewBottomAnchorConstraint?.constant = appSettings.currentAddressBarPosition == .bottom ? -targetHeight : 0
-    }
-
     private func observeNetPConnectionStatusChanges() {
         netPConnectionObserverCancellable = netPConnectionObserver.publisher
             .receive(on: DispatchQueue.main)
@@ -425,7 +406,6 @@ class TabViewController: UIViewController {
         userScripts?.autofillUserScript.emailDelegate = emailManager
 
         woShownRecently = false // don't fire if the user goes somewhere else first
-        updateWebViewBottomAnchor()
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
@@ -495,11 +475,11 @@ class TabViewController: UIViewController {
 
         webViewContainer.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webViewBottomAnchorConstraint = webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
             webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
-            webViewBottomAnchorConstraint!,
+            webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor),
             webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor)
         ])
 

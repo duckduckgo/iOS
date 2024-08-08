@@ -136,7 +136,7 @@ struct NetworkProtectionStatusView: View {
                     await statusModel.cancelSnooze()
                 }
             }
-            .foregroundStyle(Color(designSystemColor: .accent))
+            .tint(Color(designSystemColor: .accent))
             .disabled(statusModel.snoozeRequestPending)
         } else if statusModel.hasServerInfo {
             Button(UserText.netPStatusViewSnooze) {
@@ -144,7 +144,7 @@ struct NetworkProtectionStatusView: View {
                     await statusModel.startSnooze()
                 }
             }
-            .foregroundStyle(Color(designSystemColor: .accent))
+            .tint(Color(designSystemColor: .accent))
             .disabled(statusModel.snoozeRequestPending)
         }
     }

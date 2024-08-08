@@ -141,6 +141,7 @@ class MainViewCoordinator {
     }
 
     func setAddressBarTopActive(_ active: Bool) {
+        constraints.contentContainerBottomToToolbarTop.isActive = active
         constraints.navigationBarContainerTop.isActive = active
         constraints.progressBarTop.isActive = active
         constraints.topSlideContainerBottomToNavigationBarBottom.isActive = active
@@ -148,6 +149,7 @@ class MainViewCoordinator {
     }
 
     func setAddressBarBottomActive(_ active: Bool) {
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = active
         constraints.progressBarBottom.isActive = active
         constraints.navigationBarContainerBottom.isActive = active
         constraints.topSlideContainerBottomToStatusBackgroundBottom.isActive = active

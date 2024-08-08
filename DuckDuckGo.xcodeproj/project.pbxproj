@@ -783,6 +783,7 @@
 		BDE91CDA2C62A70B0005CB74 /* UnifiedMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */; };
 		BDE91CDC2C62AA3A0005CB74 /* DefaultMetadataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */; };
 		BDE91CDE2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CDD2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift */; };
+		BDE91CE02C6515420005CB74 /* UnifiedFeedbackFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE91CDF2C6515410005CB74 /* UnifiedFeedbackFormViewModel.swift */; };
 		BDF8D0022C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */; };
 		BDFF031D2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */; };
 		BDFF03212BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFF03202BA3D3CF00F324C9 /* NetworkProtectionVisibilityForTunnelProvider.swift */; };
@@ -2518,6 +2519,7 @@
 		BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedMetadataCollector.swift; sourceTree = "<group>"; };
 		BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMetadataCollector.swift; sourceTree = "<group>"; };
 		BDE91CDD2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedFeedbackRootView.swift; sourceTree = "<group>"; };
+		BDE91CDF2C6515410005CB74 /* UnifiedFeedbackFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedFeedbackFormViewModel.swift; sourceTree = "<group>"; };
 		BDF8D0012C1B87F4003E3B27 /* NetworkProtectionDNSSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDNSSettingsViewModel.swift; sourceTree = "<group>"; };
 		BDFF03192BA39C5A00F324C9 /* NetworkProtectionFeatureVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionFeatureVisibility.swift; sourceTree = "<group>"; };
 		BDFF031C2BA3D2BD00F324C9 /* DefaultNetworkProtectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkProtectionVisibility.swift; sourceTree = "<group>"; };
@@ -4761,6 +4763,7 @@
 				BDE91CD92C62A70B0005CB74 /* UnifiedMetadataCollector.swift */,
 				BDE91CDB2C62AA3A0005CB74 /* DefaultMetadataCollector.swift */,
 				BDE91CDD2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift */,
+				BDE91CDF2C6515410005CB74 /* UnifiedFeedbackFormViewModel.swift */,
 			);
 			path = Feedback;
 			sourceTree = "<group>";
@@ -7251,6 +7254,7 @@
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
+				BDE91CE02C6515420005CB74 /* UnifiedFeedbackFormViewModel.swift in Sources */,
 				1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				6FD8E51E2C5B84DE00345670 /* NewTabPageIntroMessageView.swift in Sources */,

@@ -21,9 +21,54 @@ import SwiftUI
 import NetworkProtection
 
 struct UnifiedFeedbackRootView: View {
+    @StateObject var viewModel: UnifiedFeedbackFormViewModel
+
     var body: some View {
-        CategoryView("Send Feedback", sources: UnifiedFeedbackReportType.self, selection: .constant("")) {
-            
+        CategoryView("Send Feedback", sources: UnifiedFeedbackReportType.self, selection: $viewModel.selectedReportType) {
+            if let selectedReportType = viewModel.selectedReportType {
+                switch UnifiedFeedbackReportType(rawValue: selectedReportType) {
+                case nil:
+                    EmptyView()
+                case .general:
+                    UnifiedFeedbackFormView(viewModel: viewModel) {}
+                case .requestFeature:
+                    UnifiedFeedbackFormView(viewModel: viewModel) {}
+                case .reportIssue:
+                    reportProblemView()
+                }
+            } else {
+                EmptyView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    func reportProblemView() -> some View {
+        CategoryView("Select Category", sources: UnifiedFeedbackCategory.self, selection: $viewModel.selectedCategory) {
+            if let selectedCategory = viewModel.selectedCategory {
+                switch UnifiedFeedbackCategory(rawValue: selectedCategory) {
+                case nil:
+                    EmptyView()
+                case .subscription:
+                    CategoryView("Subscription", sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackFormView(viewModel: viewModel) {}
+                    }
+                case .vpn:
+                    CategoryView("VPN", sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackFormView(viewModel: viewModel) {}
+                    }
+                case .pir:
+                    CategoryView("PIR", sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackFormView(viewModel: viewModel) {}
+                    }
+                case .itr:
+                    CategoryView("ITR", sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackFormView(viewModel: viewModel) {}
+                    }
+                }
+            } else {
+                EmptyView()
+            }
         }
     }
 }
@@ -31,12 +76,12 @@ struct UnifiedFeedbackRootView: View {
 private struct CategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.AllCases == [Category], Category.RawValue == String {
     let title: String
     let sources: Category.Type
-    let selection: Binding<String>
+    let selection: Binding<String?>
     let destination: () -> Destination
 
     init(_ title: String,
          sources: Category.Type,
-         selection: Binding<String>,
+         selection: Binding<String?>,
          @ViewBuilder destination: @escaping () -> Destination) {
         self.title = title
         self.sources = sources
@@ -46,17 +91,17 @@ private struct CategoryView<Category: FeedbackCategoryProviding, Destination: Vi
 
     var body: some View {
         VStack {
-            List {
+            List(selection: selection) {
                 Section {
                     ForEach(sources.allCases) { option in
                         NavigationLink {
                             destination()
                         } label: {
                             Text(option.displayName)
-                                .tag(option.rawValue)
                                 .daxBodyRegular()
                                 .foregroundColor(.init(designSystemColor: .textPrimary))
                         }
+                        .tag(option.rawValue)
                     }
                 } header: {
                     header()
@@ -90,63 +135,63 @@ private struct CategoryView<Category: FeedbackCategoryProviding, Destination: Vi
     }
 }
 
-struct UnifiedFeedbackFormCategoryViewLegacy: View {
-    @Environment(\.dismiss) private var dismiss
-    let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
-
-    var body: some View {
-        VStack {
-            List {
-                Section {
-                    ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
-                        NavigationLink {
-                            UnifiedFeedbackFormView(viewModel: VPNFeedbackFormViewModel(metadataCollector: collector, category: category)) {
-                                dismiss()
-                                DispatchQueue.main.async {
-                                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
-                                                              presentationLocation: .withoutBottomBar)
-                                }
-                            }
-                        } label: {
-                            Text(category.displayName)
-                                .daxBodyRegular()
-                                .foregroundColor(.init(designSystemColor: .textPrimary))
-                        }
-                    }
-                } header: {
-                    header()
-                }
-                .increaseHeaderProminence()
-            }
-            .listRowBackground(Color(designSystemColor: .surface))
-        }
-        .applyInsetGroupedListStyle()
-        .navigationTitle(UserText.netPStatusViewShareFeedback)
-    }
-
-    @ViewBuilder
-    private func header() -> some View {
-        HStack {
-            Spacer(minLength: 0)
-            VStack(alignment: .center, spacing: 8) {
-                Text(UserText.vpnFeedbackFormTitle)
-                    .daxHeadline()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.init(designSystemColor: .textPrimary))
-                Text(UserText.vpnFeedbackFormCategorySelect)
-                    .daxFootnoteRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.init(designSystemColor: .textSecondary))
-            }
-            .padding(.vertical, 16)
-            .background(Color(designSystemColor: .background))
-            Spacer(minLength: 0)
-        }
-    }
-}
-
+//struct UnifiedFeedbackFormCategoryViewLegacy: View {
+//    @Environment(\.dismiss) private var dismiss
+//    let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
+//
+//    var body: some View {
+//        VStack {
+//            List {
+//                Section {
+//                    ForEach(VPNFeedbackCategory.allCases, id: \.self) { category in
+//                        NavigationLink {
+//                            UnifiedFeedbackFormView(viewModel: FeedbackFormViewModel(metadataCollector: collector, category: category)) {
+//                                dismiss()
+//                                DispatchQueue.main.async {
+//                                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
+//                                                              presentationLocation: .withoutBottomBar)
+//                                }
+//                            }
+//                        } label: {
+//                            Text(category.displayName)
+//                                .daxBodyRegular()
+//                                .foregroundColor(.init(designSystemColor: .textPrimary))
+//                        }
+//                    }
+//                } header: {
+//                    header()
+//                }
+//                .increaseHeaderProminence()
+//            }
+//            .listRowBackground(Color(designSystemColor: .surface))
+//        }
+//        .applyInsetGroupedListStyle()
+//        .navigationTitle(UserText.netPStatusViewShareFeedback)
+//    }
+//
+//    @ViewBuilder
+//    private func header() -> some View {
+//        HStack {
+//            Spacer(minLength: 0)
+//            VStack(alignment: .center, spacing: 8) {
+//                Text(UserText.vpnFeedbackFormTitle)
+//                    .daxHeadline()
+//                    .multilineTextAlignment(.center)
+//                    .foregroundColor(.init(designSystemColor: .textPrimary))
+//                Text(UserText.vpnFeedbackFormCategorySelect)
+//                    .daxFootnoteRegular()
+//                    .multilineTextAlignment(.center)
+//                    .foregroundColor(.init(designSystemColor: .textSecondary))
+//            }
+//            .padding(.vertical, 16)
+//            .background(Color(designSystemColor: .background))
+//            Spacer(minLength: 0)
+//        }
+//    }
+//}
+//
 struct UnifiedFeedbackFormView: View {
-    @StateObject var viewModel: VPNFeedbackFormViewModel
+    @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
     @Environment(\.dismiss) private var dismiss
     @FocusState private var isTextEditorFocused: Bool
 
@@ -199,10 +244,10 @@ struct UnifiedFeedbackFormView: View {
                     .daxHeadline()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.init(designSystemColor: .textPrimary))
-                Text(viewModel.categoryName)
-                    .daxFootnoteRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.init(designSystemColor: .textSecondary))
+//                Text(viewModel.categoryName)
+//                    .daxFootnoteRegular()
+//                    .multilineTextAlignment(.center)
+//                    .foregroundColor(.init(designSystemColor: .textSecondary))
             }
             .padding(.vertical, 16)
             .background(Color(designSystemColor: .background))
@@ -266,7 +311,7 @@ struct UnifiedFeedbackFormView: View {
     private func submitButton() -> some View {
         Button {
             Task {
-                _ = await viewModel.sendFeedback()
+                _ = await viewModel.process(action: .submit)
             }
             dismiss()
             onDismiss()

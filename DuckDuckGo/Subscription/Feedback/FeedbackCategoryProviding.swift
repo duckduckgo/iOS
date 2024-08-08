@@ -20,7 +20,6 @@
 import Foundation
 
 protocol FeedbackCategoryProviding: Hashable, CaseIterable, Identifiable, RawRepresentable {
-    static var prompt: Self { get }
     var displayName: String { get }
 }
 
@@ -31,16 +30,12 @@ extension FeedbackCategoryProviding where RawValue == String {
 }
 
 enum UnifiedFeedbackReportType: String, FeedbackCategoryProviding {
-    case selectReportType
     case reportIssue
     case requestFeature
     case general
 
-    static var prompt = UnifiedFeedbackReportType.selectReportType
-
     var displayName: String {
         switch self {
-        case .selectReportType: return UserText.browserFeedbackSelectCategory
         case .reportIssue: return UserText.browserFeedbackReportProblem
         case .requestFeature: return UserText.browserFeedbackRequestFeature
         case .general: return UserText.browserFeedbackGeneralFeedback
@@ -49,17 +44,13 @@ enum UnifiedFeedbackReportType: String, FeedbackCategoryProviding {
 }
 
 enum UnifiedFeedbackCategory: String, FeedbackCategoryProviding {
-    case selectFeature
     case subscription
     case vpn
     case pir
     case itr
 
-    static var prompt = UnifiedFeedbackCategory.selectFeature
-
     var displayName: String {
         switch self {
-        case .selectFeature: return UserText.generalFeedbackFormCategorySelect
         case .subscription: return UserText.generalFeedbackFormCategoryPPro
         case .vpn: return UserText.generalFeedbackFormCategoryVPN
         case .pir: return UserText.generalFeedbackFormCategoryPIR
@@ -69,15 +60,11 @@ enum UnifiedFeedbackCategory: String, FeedbackCategoryProviding {
 }
 
 enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding {
-    case selectSubcategory
     case otp
     case somethingElse
 
-    static var prompt = PrivacyProFeedbackSubcategory.selectSubcategory
-
     var displayName: String {
         switch self {
-        case .selectSubcategory: return UserText.pproFeedbackFormCategorySelect
         case .otp: return UserText.pproFeedbackFormCategoryOTP
         case .somethingElse: return UserText.pproFeedbackFormCategoryOther
         }
@@ -85,7 +72,6 @@ enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding {
 }
 
 enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding {
-    case selectSubcategory
     case unableToInstall
     case failsToConnect
     case tooSlow
@@ -94,11 +80,8 @@ enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding {
     case cantConnectToLocalDevice
     case somethingElse
 
-    static var prompt = VPNFeedbackSubcategory.selectSubcategory
-
     var displayName: String {
         switch self {
-        case .selectSubcategory: return UserText.vpnFeedbackFormCategorySelect
         case .unableToInstall: return UserText.vpnFeedbackFormCategoryUnableToInstall
         case .failsToConnect: return UserText.vpnFeedbackFormCategoryFailsToConnect
         case .tooSlow: return UserText.vpnFeedbackFormCategoryTooSlow
@@ -111,18 +94,14 @@ enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding {
 }
 
 enum PIRFeedbackSubcategory: String, FeedbackCategoryProviding {
-    case selectSubcategory
     case nothingOnSpecificSite
     case notMe
     case scanStuck
     case removalStuck
     case somethingElse
 
-    static var prompt = PIRFeedbackSubcategory.selectSubcategory
-
     var displayName: String {
         switch self {
-        case .selectSubcategory: return UserText.pirFeedbackFormCategorySelect
         case .nothingOnSpecificSite: return UserText.pirFeedbackFormCategoryNothingOnSpecificSite
         case .notMe: return UserText.pirFeedbackFormCategoryNotMe
         case .scanStuck: return UserText.pirFeedbackFormCategoryScanStuck
@@ -133,17 +112,13 @@ enum PIRFeedbackSubcategory: String, FeedbackCategoryProviding {
 }
 
 enum ITRFeedbackSubcategory: String, FeedbackCategoryProviding {
-    case selectSubcategory
     case accessCode
     case cantContactAdvisor
     case advisorUnhelpful
     case somethingElse
 
-    static var prompt = ITRFeedbackSubcategory.selectSubcategory
-
     var displayName: String {
         switch self {
-        case .selectSubcategory: return UserText.itrFeedbackFormCategorySelect
         case .accessCode: return UserText.itrFeedbackFormCategoryAccessCode
         case .cantContactAdvisor: return UserText.itrFeedbackFormCategoryCantContactAdvisor
         case .advisorUnhelpful: return UserText.itrFeedbackFormCategoryUnhelpful

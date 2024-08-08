@@ -198,13 +198,15 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
+        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector())
+
         Section {
             NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
 
-            if statusModel.usesUnifiedFeedbackForm {
-                NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: UnifiedFeedbackRootView())
+            if statusModel.usesUnifiedFeedbackForm || true {
+                NavigationLink(UserText.netPVPNSettingsShareFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))
             } else {

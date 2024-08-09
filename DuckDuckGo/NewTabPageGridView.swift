@@ -39,6 +39,8 @@ struct NewTabPageGridView<Content: View>: View {
                 .onFrameUpdate(in: .local, using: FramePreferenceKey.self) { rect in
                     // Width needs to be reset, otherwise grid will grow forever with each size change (like rotation)
                     let newGridWidth = rect.width
+                    guard newGridWidth != gridWidth else { return }
+
                     if newGridWidth > gridWidth {
                         gridWidth = 0
                         Task { @MainActor in

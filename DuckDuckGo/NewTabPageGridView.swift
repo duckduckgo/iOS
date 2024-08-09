@@ -22,21 +22,56 @@ import SwiftUI
 struct NewTabPageGridView<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
-    
+
+    @State private var gridWidth: CGFloat = .zero
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
 
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
 
-        LazyVGrid(columns: flexibleColumns(columnsCount), spacing: 24, content: {
+        LazyVGrid(columns: flexibleColumns(columnsCount, width: gridWidth), spacing: 24, content: {
             content(columnsCount)
         })
-        .padding(0)
-        .offset(.zero)
+        .frame(maxWidth: .infinity)
+        .background {
+            // Observing frame directly on grid didn't work for some reason, resulting in `.zero` frame.
+            Color.clear
+                .onFrameUpdate(in: .local, using: FramePreferenceKey.self) { rect in
+                    // Width needs to be reset, otherwise grid will grow forever with each size change (like rotation)
+                    let newGridWidth = rect.width
+                    if newGridWidth > gridWidth {
+                        gridWidth = 0
+                        Task { @MainActor in
+                            gridWidth = rect.width
+                            print("grid width: \(rect.width)")
+                        }
+                    }
+                }
+        }
     }
 
-    private func flexibleColumns(_ count: Int) -> [GridItem] {
-        Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize), alignment: .top), count: count)
+    private func flexibleColumns(_ count: Int, width: CGFloat) -> [GridItem] {
+        let spacing: CGFloat?
+        if width != .zero {
+            let columnsWidth = NewTabPageGrid.Item.edgeSize * Double(count)
+            let spacingsCount = count - 1
+            // Calculate exact spacing so that there's no leading and trailing padding.
+            spacing = max((width - columnsWidth) / Double(spacingsCount), 0)
+        } else {
+            spacing = nil
+        }
+
+        return Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize),
+                                         spacing: spacing,
+                                         alignment: .top),
+                     count: count)
+    }
+}
+
+private struct FramePreferenceKey: PreferenceKey {
+    static var defaultValue: CGRect = .zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value = nextValue()
     }
 }
 

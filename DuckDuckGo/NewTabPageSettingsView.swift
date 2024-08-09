@@ -58,7 +58,6 @@ struct NewTabPageSettingsView: View {
 
                         EditableShortcutsView(model: shortcutsSettingsModel)
                             .padding(.horizontal, Metrics.horizontalPadding)
-                            .coordinateSpace(name: Constant.scrollCoordinateSpaceName)
                     }
                 }
             }
@@ -119,16 +118,8 @@ struct NewTabPageSettingsView: View {
     }
 }
 
-private struct Constant {
-    static let scrollCoordinateSpaceName = "Scroll"
-}
-
-private extension CoordinateSpace {
-    static let scroll = CoordinateSpace.named(Constant.scrollCoordinateSpaceName)
-}
-
 private struct Metrics {
-    static let horizontalPadding = 16.0
+    static let horizontalPadding = 24.0
     static let initialListHeight = 5000.0
 }
 

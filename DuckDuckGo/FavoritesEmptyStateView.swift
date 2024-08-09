@@ -23,15 +23,12 @@ struct FavoritesEmptyStateView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
-    @State private var headerPadding: CGFloat = 10
-
     @Binding var isShowingTooltip: Bool
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
                 FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
-                    .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
                     let placeholders = Array(0..<placeholdersCount)
@@ -39,23 +36,12 @@ struct FavoritesEmptyStateView: View {
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
                     }
-                }.overlay(
-                    GeometryReader(content: { geometry in
-                        Color.clear.preference(key: WidthKey.self, value: geometry.frame(in: .local).width)
-                    })
-                )
-                .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape))
-                    let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
-                    let leftoverWidth = fullWidth - allColumnsWidth
-                    let spacingSize = leftoverWidth / (columnsCount)
-                    self.headerPadding = spacingSize / 2
-                })
+                }
             }
 
             if isShowingTooltip {
                 FavoritesTooltip()
-                    .offset(x: -headerPadding + 18, y: 24)
+                    .offset(x: 18, y: 24)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }
         }
@@ -65,11 +51,4 @@ struct FavoritesEmptyStateView: View {
 #Preview {
     @State var isShowingTooltip = false
     return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
-}
-
-private struct WidthKey: PreferenceKey {
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-    static var defaultValue: CGFloat = .zero
 }

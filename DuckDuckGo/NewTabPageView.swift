@@ -55,7 +55,8 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
             HomeMessageView(viewModel: messageModel)
                 .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                .padding(16)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
         }
     }
 
@@ -146,8 +147,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                             .animation(.easeInOut, value: customizeButtonShowedInline)
                     }
                 }
+                .padding(.vertical, 16)
                 .anchorPreference(key: CustomizeButtonPrefKey.self, value: .bounds, transform: { vStackBoundsAnchor in
-                    let verticalRoomForButton = 40 + Constant.sectionPadding
+                    let verticalRoomForButton = 40 + Constant.sectionPadding.top + Constant.sectionPadding.bottom
                     let contentSizeAdjustmentValue = customizeButtonShowedInline ? -verticalRoomForButton : 0
                     let adjustedContentSize = proxy[vStackBoundsAnchor].height + contentSizeAdjustmentValue
 
@@ -195,7 +197,7 @@ private extension View {
     }
 
 private struct Constant {
-    static let sectionPadding = 24.0
+    static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
 
     static let messageMaximumWidth: CGFloat = 380
     static let messageMaximumWidthPad: CGFloat = 455

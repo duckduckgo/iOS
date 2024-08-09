@@ -25,6 +25,10 @@ import DuckUI
 struct SettingsDuckPlayerView: View {
     private static let learnMoreURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
 
+    /// The ContingencyMessageView may be redrawn multiple times in the onAppear method if the user scrolls it outside the list bounds.
+    /// This property ensures that the associated action is only triggered once per viewing session, preventing redundant executions.
+    @State private var hasFiredSettingsDisplayedPixel = false
+
     @EnvironmentObject var viewModel: SettingsViewModel
     var body: some View {
         List {
@@ -32,6 +36,11 @@ struct SettingsDuckPlayerView: View {
                 Section {
                     ContingencyMessageView {
                         viewModel.openDuckPlayerContingencyMessageSite()
+                    }.onAppear {
+                        if !hasFiredSettingsDisplayedPixel {
+                            Pixel.fire(pixel: .duckPlayerContingencySettingsDisplayed)
+                            hasFiredSettingsDisplayedPixel = true
+                        }
                     }
                 }
             }

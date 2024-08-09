@@ -744,6 +744,8 @@ extension Pixel {
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
+        case duckPlayerContingencySettingsDisplayed
+        case duckPlayerContingencyLearnMoreClicked
     }
 
 }
@@ -1476,6 +1478,8 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
+        case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
+        case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
         }
     }
 }

@@ -177,7 +177,7 @@ private extension View {
     }
 
 private struct Constant {
-    static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+    static let sectionPadding = 24.0
 
     static let messageMaximumWidth: CGFloat = 380
     static let messageMaximumWidthPad: CGFloat = 455

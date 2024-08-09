@@ -164,15 +164,18 @@ extension YoutubeOverlayUserScript {
         
         switch pixelName {
         case "play.use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay, debounce: 2)
             duckPlayerStorage.userInteractedWithDuckPlayer = true
-
+            
+        case "play.use.thumbnail":
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaHoverButton, debounce: 2)
+            
         case "play.do_not_use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere, debounce: 2)
             duckPlayerStorage.userInteractedWithDuckPlayer = true
 
         case "overlay":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions, debounce: 2)
             
         default:
             break

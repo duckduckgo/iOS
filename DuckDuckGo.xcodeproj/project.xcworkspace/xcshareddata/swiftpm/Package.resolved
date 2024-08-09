@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/turn-autofill-on-with-new-onboarding",
-        "revision" : "025845bcaec0076e98d17316a355ea60f6bf351c"
+        "revision" : "d67979814bdd3c4c43a38e6694c56f1fdb5969ac",
+        "version" : "182.0.0"
       }
     },
     {

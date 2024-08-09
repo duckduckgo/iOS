@@ -64,6 +64,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                     }
                 }
             }
+            .clipped(antialiased: true)
 
             if result.isCollapsible {
                 Button(action: {

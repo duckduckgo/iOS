@@ -21,11 +21,11 @@ import Foundation
 import BrowserServicesKit
 import Common
 
+
 public extension OSLog {
 
     enum AppCategories: String, CaseIterable {
         case generalLog = "DDG General"
-        case contentBlockingLog = "DDG Content Blocking"
         case adAttributionLog = "DDG AdAttribution"
         case lifecycleLog = "DDG Lifecycle"
         case autoconsentLog = "DDG Autoconsent"
@@ -35,7 +35,6 @@ public extension OSLog {
     }
 
     @OSLogWrapper(.generalLog) static var generalLog
-    @OSLogWrapper(.contentBlockingLog) static var contentBlockingLog
     @OSLogWrapper(.adAttributionLog) static var adAttributionLog
     @OSLogWrapper(.lifecycleLog) static var lifecycleLog
     @OSLogWrapper(.autoconsentLog) static var autoconsentLog
@@ -48,7 +47,6 @@ public extension OSLog {
 #if DEBUG
     static var enabledCategories: Set<AppCategories> = [
         .generalLog,
-        .contentBlockingLog,
         .adAttributionLog,
         .lifecycleLog,
         .configurationLog,

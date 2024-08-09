@@ -54,7 +54,7 @@ struct CookiePopUpProtectionViewSettings: View {
         Section {
             // Let DuckDuckGo manage cookie consent pop-ups
             SettingsCellView(label: UserText.letDuckDuckGoManageCookieConsentPopups,
-                             accesory: .toggle(isOn: viewModel.autoconsentBinding))
+                             accessory: .toggle(isOn: viewModel.autoconsentBinding))
         }
     }
 }

@@ -22,6 +22,7 @@ import SwiftUI
 import StoreKit
 import Subscription
 import Core
+import os.log
 
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -105,6 +106,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: APICachePolicy, loadingIndicator: Bool) async -> Bool {
+        Logger.subscription.debug("\(#function)")
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
         if loadingIndicator { displaySubscriptionLoader(true) }
@@ -121,7 +123,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                    product: subscription.productId,
                                                    billingPeriod: subscription.billingPeriod)
             return true
-        default:
+        case .failure(let error):
+            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
             DispatchQueue.main.async {
                 if loadingIndicator { self.displaySubscriptionLoader(true) }
             }
@@ -130,11 +133,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     func fetchAndUpdateAccountEmail(cachePolicy: APICachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
+        Logger.subscription.debug("\(#function)")
         guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
 
         switch cachePolicy {
         case .returnCacheDataDontLoad, .returnCacheDataElseLoad:
-            self.state.subscriptionEmail = self.subscriptionManager.accountManager.email
+            DispatchQueue.main.async {
+                self.state.subscriptionEmail = self.subscriptionManager.accountManager.email
+            }
             return true
         case .reloadIgnoringLocalCacheData:
             break
@@ -143,6 +149,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         if loadingIndicator { displayEmailLoader(true) }
         switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
         case .success(let details):
+            Logger.subscription.debug("Account details fetched successfully")
             DispatchQueue.main.async {
                 self.state.subscriptionEmail = details.email
                 if loadingIndicator { self.displayEmailLoader(false) }
@@ -154,7 +161,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                 subscriptionManager.accountManager.storeAccount(token: token, email: details.email, externalID: externalID)
             }
             return true
-        default:
+        case .failure(let error):
+            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
             DispatchQueue.main.async {
                 if loadingIndicator { self.displayEmailLoader(true) }
             }
@@ -175,6 +183,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     func manageSubscription() {
+        Logger.subscription.debug("User action: \(#function)")
         switch state.subscriptionInfo?.platform {
         case .apple:
             Task { await manageAppleSubscription() }
@@ -256,7 +265,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
             }
         }
     }
-    
+
+    @MainActor
+    func showTermsOfService() {
+        self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
+    }
+
     // MARK: -
     
     @MainActor private func manageAppleSubscription() async {

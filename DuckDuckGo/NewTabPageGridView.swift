@@ -43,7 +43,6 @@ struct NewTabPageGridView<Content: View>: View {
                         gridWidth = 0
                         Task { @MainActor in
                             gridWidth = rect.width
-                            print("grid width: \(rect.width)")
                         }
                     }
                 }

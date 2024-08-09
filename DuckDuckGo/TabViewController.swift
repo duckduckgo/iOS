@@ -294,7 +294,7 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayer: DuckPlayerProtocol,
+                                   duckPlayer: DuckPlayerProtocol?,
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
@@ -323,7 +323,7 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-    var duckPlayer: DuckPlayerProtocol
+    weak var duckPlayer: DuckPlayerProtocol?
     var duckPlayerNavigationHandler: DuckNavigationHandling?
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
@@ -336,7 +336,7 @@ class TabViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
-                   duckPlayer: DuckPlayerProtocol,
+                   duckPlayer: DuckPlayerProtocol?,
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
@@ -348,7 +348,9 @@ class TabViewController: UIViewController {
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
         self.duckPlayer = duckPlayer
-        self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
+        if let duckPlayer {
+            self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
+        }
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic

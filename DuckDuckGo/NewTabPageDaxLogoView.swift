@@ -21,8 +21,11 @@ import SwiftUI
 
 struct NewTabPageDaxLogoView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             Image(.home)
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .frame(width: 96)
             Image(.textDuckDuckGo)
         }
     }

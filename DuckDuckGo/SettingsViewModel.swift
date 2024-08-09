@@ -548,6 +548,7 @@ extension SettingsViewModel {
 
     func openDuckPlayerContingencyMessageSite() {
         guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
         UIApplication.shared.open(url,
                                   options: [:],
                                   completionHandler: nil)

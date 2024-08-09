@@ -46,16 +46,18 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
     // MARK: - HomeTabManaging
 
     var isNewTabPageSectionsEnabled: Bool {
-        isLocalFlagEnabled && isFeatureFlagEnabled
+        true
+//        isLocalFlagEnabled && isFeatureFlagEnabled
     }
 
     var isAvailableInPublicRelease: Bool {
-        switch FeatureFlag.newTabPageSections.source {
-        case .disabled, .internalOnly, .remoteDevelopment:
-            return false
-        case .remoteReleasable:
-            return true
-        }
+        true
+//        switch FeatureFlag.newTabPageSections.source {
+//        case .disabled, .internalOnly, .remoteDevelopment:
+//            return false
+//        case .remoteReleasable:
+//            return true
+//        }
     }
 
     // MARK: - NewTabPageDebugging

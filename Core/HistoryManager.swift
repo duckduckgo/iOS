@@ -30,6 +30,7 @@ public protocol HistoryManaging {
     func isHistoryFeatureEnabled() -> Bool
     var isEnabledByUser: Bool { get }
     func removeAllHistory() async
+    func deleteHistoryForURL(_ url: URL) async
 
 }
 
@@ -37,6 +38,7 @@ public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging
     let dbCoordinator: HistoryCoordinator
+    let tld: TLD
 
     public var historyCoordinator: HistoryCoordinating {
         guard isHistoryFeatureEnabled(),
@@ -56,11 +58,13 @@ public class HistoryManager: HistoryManaging {
     /// Use `make()`
     init(privacyConfigManager: PrivacyConfigurationManaging,
          dbCoordinator: HistoryCoordinator,
+         tld: TLD,
          isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
          isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool) {
 
         self.privacyConfigManager = privacyConfigManager
         self.dbCoordinator = dbCoordinator
+        self.tld = tld
         self.isAutocompleteEnabledByUser = isAutocompleteEnabledByUser
         self.isRecentlyVisitedSitesEnabledByUser = isRecentlyVisitedSitesEnabledByUser
     }
@@ -73,6 +77,17 @@ public class HistoryManager: HistoryManaging {
     public func removeAllHistory() async {
         await withCheckedContinuation { continuation in
             dbCoordinator.burnAll {
+                continuation.resume()
+            }
+        }
+    }
+
+    public func deleteHistoryForURL(_ url: URL) async {
+        guard let domain = url.host,
+            let baseDomain = tld.eTLDplus1(domain) else { return }
+
+        await withCheckedContinuation { continuation in
+            historyCoordinator.burnDomains([baseDomain], tld: tld) {
                 continuation.resume()
             }
         }
@@ -203,7 +218,8 @@ extension HistoryManager {
     /// Should only be called once in the app
     public static func make(isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
                             isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool,
-                            privacyConfigManager: PrivacyConfigurationManaging) -> Result<HistoryManager, Error> {
+                            privacyConfigManager: PrivacyConfigurationManaging,
+                            tld: TLD) -> Result<HistoryManager, Error> {
 
         let database = HistoryDatabase.make()
         var loadError: Error?
@@ -220,6 +236,7 @@ extension HistoryManager {
 
         let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
                                             dbCoordinator: dbCoordinator,
+                                            tld: tld,
                                             isAutocompleteEnabledByUser: isAutocompleteEnabledByUser(),
                                             isRecentlyVisitedSitesEnabledByUser: isRecentlyVisitedSitesEnabledByUser())
 
@@ -249,4 +266,5 @@ public struct NullHistoryManager: HistoryManaging {
 
     public init() { }
     
+    public func deleteHistoryForURL(_ url: URL) async { }
 }

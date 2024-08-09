@@ -242,6 +242,19 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
     func onSuggestionHighlighted(_ suggestion: Suggestion, forQuery query: String) {
         self.delegate?.autocomplete(highlighted: suggestion, for: query)
     }
+
+    func deleteSuggestion(_ suggestion: Suggestion) {
+        switch suggestion {
+        case .historyEntry(_, let url, _):
+            Task {
+                await historyManager.deleteHistoryForURL(url)
+                Pixel.fire(pixel: .autocompleteSwipeToDelete)
+                requestSuggestions(query: self.query)
+            }
+        default:
+            assertionFailure("Only history items can be deleted")
+        }
+    }
 }
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {

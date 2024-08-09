@@ -28,6 +28,7 @@ protocol AutocompleteViewModelDelegate: NSObjectProtocol {
     func onTapAhead(_ suggestion: Suggestion)
     func onMessageDismissed()
     func onMessageShown()
+    func deleteSuggestion(_ suggestion: Suggestion)
 
 }
 
@@ -114,6 +115,10 @@ class AutocompleteViewModel: ObservableObject {
         if all.indices.contains(nextIndex) {
             self.selection = all[nextIndex]
         }
+    }
+
+    func deleteSuggestion(_ suggestion: SuggestionModel) {
+        delegate?.deleteSuggestion(suggestion.suggestion)
     }
 
     struct SuggestionModel: Identifiable, Equatable {

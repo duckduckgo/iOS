@@ -126,4 +126,7 @@ class MockHistoryManager: HistoryManaging {
     func removeAllHistory() async {
     }
 
+    func deleteHistoryForURL(_ url: URL) async {
+    }
+
  }

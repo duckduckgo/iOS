@@ -33,6 +33,7 @@ private class DefaultTunnelSessionProvider: TunnelSessionProvider {
 extension ConnectionStatusObserverThroughSession {
     convenience init() {
         self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+                  platformSnoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                   platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }

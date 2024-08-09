@@ -222,13 +222,13 @@ struct Widgets: WidgetBundle {
             return WidgetBundleBuilder.buildBlock(SearchWidget(),
                                                   PasswordsWidget(),
                                                   FavoritesWidget(),
-                                                  VPNStatusWidget(),
                                                   SearchLockScreenWidget(),
                                                   VoiceSearchLockScreenWidget(),
                                                   EmailProtectionLockScreenWidget(),
                                                   FireButtonLockScreenWidget(),
                                                   FavoritesLockScreenWidget(),
-                                                  PasswordsLockScreenWidget())
+                                                  PasswordsLockScreenWidget(),
+                                                  VPNBundle().body)
         }
 
         if #available(iOS 16.0, *) {
@@ -248,6 +248,17 @@ struct Widgets: WidgetBundle {
         }
     }
 }
+
+struct VPNBundle: WidgetBundle {
+    @WidgetBundleBuilder
+    var body: some Widget {
+        if #available(iOS 17, *) {
+            VPNStatusWidget()
+            VPNSnoozeLiveActivity()
+        }
+    }
+}
+
 
 extension UIImage {
 

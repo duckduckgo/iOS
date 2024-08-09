@@ -73,10 +73,14 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         showNotification(.test, content)
     }
 
-    func showConnectedNotification(serverLocation: String?) {
+    func showConnectedNotification(serverLocation: String?, snoozeEnded: Bool) {
         let body: String
         if let serverLocation {
-            body = UserText.networkProtectionConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            if snoozeEnded {
+                body = UserText.networkProtectionSnoozeEndedConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            } else {
+                body = UserText.networkProtectionConnectionSuccessNotificationBody(serverLocation: serverLocation)
+            }
         } else {
             body = UserText.networkProtectionConnectionSuccessNotificationBody
         }
@@ -96,6 +100,14 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
 
     func showConnectionFailureNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationBody)
+        showNotification(.connection, content)
+    }
+
+    func showSnoozingNotification(duration: TimeInterval) {
+        let interval = Int(duration)
+        let minutes = (interval / 60) % 60
+        let durationSuffix = (minutes == 1) ? "minute" : "minutes"
+        let content = notificationContent(body: UserText.networkProtectionSnoozedNotificationBody(duration: "\(minutes) \(durationSuffix)"))
         showNotification(.connection, content)
     }
 

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "vpn-on-compact.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

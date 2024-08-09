@@ -73,6 +73,10 @@ struct UserText {
                                                             value: "VPN is On",
                                                             comment: "Message describing VPN connected status")
 
+    static let vpnWidgetSnoozingStatus = NSLocalizedString("widget.vpn.status.snoozed",
+                                                            value: "VPN is Snoozed",
+                                                            comment: "Message describing VPN snoozing status")
+
     static let vpnWidgetDisconnectedStatus = NSLocalizedString("widget.vpn.status.disconnected",
                                                                value: "VPN is Off",
                                                                comment: "Message describing VPN disconnected status")
@@ -88,6 +92,22 @@ struct UserText {
     static let vpnWidgetDisconnectButton = NSLocalizedString("widget.vpn.button.disconnect",
                                                              value: "Disconnect",
                                                              comment: "VPN disconnect button text")
+
+    static let vpnWidgetLiveActivityVPNSnoozingStatusLabel = NSLocalizedString("widget.vpn.live-activity.label.snoozing",
+                                                                     value: "VPN Snoozing",
+                                                                     comment: "VPN Live Activity snoozing label text")
+
+    static let vpnWidgetLiveActivityVPNActiveStatusLabel = NSLocalizedString("widget.vpn.live-activity.label.active",
+                                                                     value: "VPN is On",
+                                                                     comment: "VPN Live Activity active label text")
+
+    static let vpnWidgetLiveActivityWakeUpButton = NSLocalizedString("widget.vpn.live-activity.button.wake-up",
+                                                                     value: "Wake Up",
+                                                                     comment: "VPN Live Activity wake up button text")
+
+    static let vpnWidgetLiveActivityDismissButton = NSLocalizedString("widget.vpn.live-activity.button.dismiss",
+                                                                      value: "Dismiss",
+                                                                      comment: "VPN Live Activity dismiss button text")
 
 
     static let lockScreenSearchTitle = NSLocalizedString(

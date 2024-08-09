@@ -18,6 +18,8 @@
 //
 
 import XCTest
+import BrowserServicesKit
+
 @testable import DuckDuckGo
 
 final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
@@ -26,26 +28,26 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
         PixelFiringMock.tearDown()
     }
 
-    func testFiresPixelWhenItemEnabled() {
+    func testFiresPixelWhenItemEnabled() throws {
         let sut = createSUT()
 
-        let passwordsSettings = sut.itemsSettings.first { setting in
+        let passwordsSettings = try XCTUnwrap(sut.itemsSettings.first { setting in
             setting.item == .passwords
-        }
+        })
 
-        passwordsSettings?.isEnabled.wrappedValue = true
+        passwordsSettings.isEnabled.wrappedValue = true
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutAdded("passwords"))
     }
 
-    func testFiresPixelWhenItemDisabled() {
+    func testFiresPixelWhenItemDisabled() throws {
         let sut = createSUT()
 
-        let passwordsSettings = sut.itemsSettings.first { setting in
+        let passwordsSettings = try XCTUnwrap(sut.itemsSettings.first { setting in
             setting.item == .passwords
-        }
+        })
 
-        passwordsSettings?.isEnabled.wrappedValue = false
+        passwordsSettings.isEnabled.wrappedValue = false
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutRemoved("passwords"))
     }
@@ -58,6 +60,14 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
             defaultEnabledItems: NewTabPageShortcut.allCases
         )
         
-        return NewTabPageShortcutsSettingsModel(storage: storage, pixelFiring: PixelFiringMock.self)
+        return NewTabPageShortcutsSettingsModel(storage: storage,
+                                                featureFlagger: AlwaysTrueFeatureFlagger(),
+                                                pixelFiring: PixelFiringMock.self)
+    }
+}
+
+private final class AlwaysTrueFeatureFlagger: FeatureFlagger {
+    func isFeatureOn<F>(forProvider: F) -> Bool where F: FeatureFlagSourceProviding {
+        true
     }
 }

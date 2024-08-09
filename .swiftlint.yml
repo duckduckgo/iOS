@@ -12,6 +12,8 @@ disabled_rules:
   - function_body_length
   - file_length
   - type_body_length
+  - non_optional_string_data_conversion
+  - static_over_final_class
 
 opt_in_rules:
   - closure_end_indentation

@@ -88,7 +88,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let secureVault: (any AutofillSecureVault)?
     private let autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     private let privacyConfig: PrivacyConfiguration
-    private let breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable
+    private let keyValueStore: KeyValueStoringDictionaryRepresentable
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
@@ -111,7 +111,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
         self?.updateData()
         self?.showBreakageReporter = false
-    }, keyValueStoring: breakageReporterKeyValueStoring, storageConfiguration: .autofillConfig)
+    }, keyValueStoring: keyValueStore, storageConfiguration: .autofillConfig)
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -138,6 +138,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         get { appSettings.autofillCredentialsEnabled }
         set {
             appSettings.autofillCredentialsEnabled = newValue
+            keyValueStore.set(false, forKey: UserDefaultsWrapper<Bool>.Key.autofillFirstTimeUser.rawValue)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: self)
         }
     }
@@ -149,7 +150,7 @@ final class AutofillLoginListViewModel: ObservableObject {
          currentTabUid: String? = nil,
          autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager,
          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
-         breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable = UserDefaults.standard) {
+         keyValueStore: KeyValueStoringDictionaryRepresentable = UserDefaults.standard) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
@@ -157,7 +158,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.currentTabUid = currentTabUid
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
         self.privacyConfig = privacyConfig
-        self.breakageReporterKeyValueStoring = breakageReporterKeyValueStoring
+        self.keyValueStore = keyValueStore
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid

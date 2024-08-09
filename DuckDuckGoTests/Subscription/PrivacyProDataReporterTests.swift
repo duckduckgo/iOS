@@ -225,9 +225,3 @@ class MockCalendar {
         date
     }
 }
-
-struct MockFeatureFlagger: FeatureFlagger {
-    func isFeatureOn<F>(forProvider: F) -> Bool where F: FeatureFlagSourceProviding {
-        false
-    }
-}

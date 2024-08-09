@@ -20,12 +20,13 @@
 import UIKit
 import BrowserServicesKit
 import Core
+import LocalAuthentication
 
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel)
-    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool)
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat)
 }
 
@@ -54,7 +55,8 @@ final class SaveLoginViewModel: ObservableObject {
     private let maximumPasswordDisplayCount = 40
     private let credentialManager: SaveAutofillLoginManagerProtocol
     private let appSettings: AppSettings
-    
+    private let biometryType: LABiometryType
+
     private var dismissButtonWasPressed = false
     var didSave = false
     
@@ -98,6 +100,21 @@ final class SaveLoginViewModel: ObservableObject {
         credentialManager.username
     }
 
+    var secureStorageDescription: String {
+        let biometryString: String
+
+        switch biometryType {
+        case .touchID:
+            biometryString = UserText.autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterTouchID
+        case .faceID:
+            biometryString = UserText.autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterFaceID
+        default:
+            biometryString = UserText.autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterPasscode
+        }
+
+        return UserText.autofillOnboardingKeyFeaturesSecureStorageDescription(biometryString: biometryString)
+    }
+
     var usernameTruncated: String {
         AutofillInterfaceEmailTruncator.truncateEmail(credentialManager.username, maxLength: 36)
     }
@@ -128,11 +145,16 @@ final class SaveLoginViewModel: ObservableObject {
     
     private var attributedLayoutType: SaveLoginView.LayoutType?
     
-    internal init(credentialManager: SaveAutofillLoginManagerProtocol, appSettings: AppSettings, layoutType: SaveLoginView.LayoutType? = nil, domainLastShownOn: String? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManagerProtocol,
+                  appSettings: AppSettings,
+                  layoutType: SaveLoginView.LayoutType? = nil,
+                  domainLastShownOn: String? = nil,
+                  biometryType: LABiometryType = LAContext().biometryType) {
         self.credentialManager = credentialManager
         self.appSettings = appSettings
         self.attributedLayoutType = layoutType
         self.domainLastShownOn = domainLastShownOn
+        self.biometryType = biometryType
     }
     
     private func updateRejectionCountIfNeeded() {
@@ -143,7 +165,7 @@ final class SaveLoginViewModel: ObservableObject {
         autofillSaveModalRejectionCount += 1
     }
 
-    private func shouldShowAutofillKeepUsingConfirmation() -> Bool {
+    private func shouldShowDisableAutofillPrompt() -> Bool {
         if autofillSaveModalDisablePromptShown || !autofillFirstTimeUser {
             return false
         }
@@ -152,14 +174,10 @@ final class SaveLoginViewModel: ObservableObject {
     
     private func cancel() {
         updateRejectionCountIfNeeded()
-        if shouldShowAutofillKeepUsingConfirmation() {
-            delegate?.saveLoginViewModelConfirmKeepUsing(self, isAlreadyDismissed: !dismissButtonWasPressed)
-            autofillSaveModalDisablePromptShown = true
-        } else {
-            delegate?.saveLoginViewModelDidCancel(self)
-        }
+        delegate?.saveLoginViewModelDidCancel(self)
+        showDisableAutofillPromptIfNeeded()
     }
-    
+
     func cancelButtonPressed() {
         dismissButtonWasPressed = true
         cancel()
@@ -184,7 +202,16 @@ final class SaveLoginViewModel: ObservableObject {
 
     func neverPrompt() {
         didSave = true
-        autofillFirstTimeUser = false
+        updateRejectionCountIfNeeded()
         delegate?.saveLoginViewModelNeverPrompt(self)
+        showDisableAutofillPromptIfNeeded()
+    }
+
+    private func showDisableAutofillPromptIfNeeded() {
+        if shouldShowDisableAutofillPrompt() {
+            delegate?.saveLoginViewModelConfirmKeepUsing(self)
+            autofillSaveModalDisablePromptShown = true
+            autofillFirstTimeUser = false
+        }
     }
 }

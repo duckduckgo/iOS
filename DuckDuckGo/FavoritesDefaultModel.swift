@@ -44,15 +44,18 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
 
     private let interactionModel: FavoritesListInteracting
     private let pixelFiring: PixelFiring.Type
+    private let dailyPixelFiring: DailyPixelFiring.Type
 
     var isEmpty: Bool {
         allFavorites.isEmpty
     }
 
     init(interactionModel: FavoritesListInteracting,
-         pixelFiring: PixelFiring.Type = Pixel.self) {
+         pixelFiring: PixelFiring.Type = Pixel.self,
+         dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
         self.interactionModel = interactionModel
         self.pixelFiring = pixelFiring
+        self.dailyPixelFiring = dailyPixelFiring
 
         interactionModel.externalUpdates.sink { [weak self] _ in
             try? self?.updateData()
@@ -94,8 +97,8 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     func favoriteSelected(_ favorite: Favorite) {
         guard let url = favorite.urlObject else { return }
 
-        Pixel.fire(pixel: .favoriteLaunchedNTP)
-        DailyPixel.fire(pixel: .favoriteLaunchedNTPDaily)
+        pixelFiring.fire(.favoriteLaunchedNTP, withAdditionalParameters: [:])
+        dailyPixelFiring.fireDaily(.favoriteLaunchedNTPDaily)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
 
         onFavoriteURLSelected?(url)
@@ -105,8 +108,8 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     func deleteFavorite(_ favorite: Favorite) {
         guard let entity = lookupEntity(for: favorite) else { return }
 
-        Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        
+        pixelFiring.fire(.homeScreenDeleteFavorite, withAdditionalParameters: [:])
+
         interactionModel.removeFavorite(entity)
 
         WidgetCenter.shared.reloadAllTimelines()
@@ -119,7 +122,7 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     func editFavorite(_ favorite: Favorite) {
         guard let entity = lookupEntity(for: favorite) else { return }
 
-        Pixel.fire(pixel: .homeScreenEditFavorite)
+        pixelFiring.fire(.homeScreenEditFavorite, withAdditionalParameters: [:])
 
         onFavoriteEdit?(entity)
     }

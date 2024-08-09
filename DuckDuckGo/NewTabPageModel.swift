@@ -39,7 +39,7 @@ final class NewTabPageModel: ObservableObject {
         isShowingSettings = false
     }
 
-    func increaseIntroMessageCounter() {
+    func introMessageDisplayed() {
         pixelFiring.fire(.newTabPageMessageDisplayed, withAdditionalParameters: [:])
 
         appSettings.newTabPageIntroMessageSeenCount += 1

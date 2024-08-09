@@ -42,7 +42,7 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
 
     init(settingsStorage: Storage,
          onItemEnabled: SettingItemEnabledFunction<SettingItem>? = nil,
-         onItemReordered: (() -> Void)?,
+         onItemReordered: (() -> Void)? = nil,
          visibilityFilter: @escaping ((SettingItem) -> Bool) = { _ in true }) {
         self.settingsStorage = settingsStorage
         self.visibilityFilter = visibilityFilter

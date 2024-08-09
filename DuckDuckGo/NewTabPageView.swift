@@ -99,7 +99,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
             })
             .sectionPadding()
             .onFirstAppear {
-                newTabPageModel.increaseIntroMessageCounter()
+                newTabPageModel.introMessageDisplayed()
             }
         }
     }

@@ -23,22 +23,23 @@ import Core
 typealias NewTabPageSectionsSettingsModel = NewTabPageSettingsModel<NewTabPageSection, NewTabPageSectionsSettingsStorage>
 
 extension NewTabPageSectionsSettingsModel {
-    convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage()) {
+    convenience init(storage: NewTabPageSectionsSettingsStorage = NewTabPageSectionsSettingsStorage(),
+                     pixelFiring: PixelFiring.Type = Pixel.self) {
         self.init(settingsStorage: storage,
-                  onItemEnabled: Self.onEnabled(_:isEnabled:),
-                  onItemReordered: Self.onReordered)
+                  onItemEnabled: { Self.onEnabled($0, isEnabled: $1, pixelFiring: pixelFiring) },
+                  onItemReordered: { Self.onReordered(pixelFiring: pixelFiring) })
     }
 
-    private static func onEnabled(_ section: SettingItem, isEnabled: Bool) {
+    private static func onEnabled(_ section: SettingItem, isEnabled: Bool, pixelFiring: PixelFiring.Type) {
         if isEnabled {
-            Pixel.fire(.newTabPageSectionOn(section.nameForPixel), withAdditionalParameters: [:])
+            pixelFiring.fire(.newTabPageSectionOn(section.nameForPixel), withAdditionalParameters: [:])
         } else {
-            Pixel.fire(.newTabPageSectionOff(section.nameForPixel), withAdditionalParameters: [:])
+            pixelFiring.fire(.newTabPageSectionOff(section.nameForPixel), withAdditionalParameters: [:])
         }
     }
 
-    private static func onReordered() {
-        Pixel.fire(.newTabPageSectionReordered, withAdditionalParameters: [:])
+    private static func onReordered(pixelFiring: PixelFiring.Type) {
+        pixelFiring.fire(.newTabPageSectionReordered, withAdditionalParameters: [:])
     }
 }
 

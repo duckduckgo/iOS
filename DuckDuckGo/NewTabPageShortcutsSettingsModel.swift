@@ -25,9 +25,10 @@ typealias NewTabPageShortcutsSettingsModel = NewTabPageSettingsModel<NewTabPageS
 
 extension NewTabPageShortcutsSettingsModel {
     convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage(),
-                     featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+                     featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+                     pixelFiring: PixelFiring.Type = Pixel.self) {
         self.init(settingsStorage: storage,
-                  onItemEnabled: Self.onEnabled(_:isEnabled:),
+                  onItemEnabled: { Self.onEnabled($0, isEnabled: $1, pixelFiring: pixelFiring) },
                   onItemReordered: nil,
                   visibilityFilter: { shortcut in
             switch shortcut {
@@ -39,11 +40,11 @@ extension NewTabPageShortcutsSettingsModel {
         })
     }
     
-    private static func onEnabled(_ shortcut: SettingItem, isEnabled: Bool) {
+    private static func onEnabled(_ shortcut: SettingItem, isEnabled: Bool, pixelFiring: PixelFiring.Type) {
         if isEnabled {
-            Pixel.fire(pixel: .newTabPageCustomizeShortcutAdded(shortcut.nameForPixel))
+            pixelFiring.fire(.newTabPageCustomizeShortcutAdded(shortcut.nameForPixel), withAdditionalParameters: [:])
         } else {
-            Pixel.fire(pixel: .newTabPageCustomizeShortcutRemoved(shortcut.nameForPixel))
+            pixelFiring.fire( .newTabPageCustomizeShortcutRemoved(shortcut.nameForPixel), withAdditionalParameters: [:])
         }
     }
 }

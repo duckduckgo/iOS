@@ -64,7 +64,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-protocol DuckPlayerSettingsProtocol {
+protocol DuckPlayerSettingsProtocol: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }

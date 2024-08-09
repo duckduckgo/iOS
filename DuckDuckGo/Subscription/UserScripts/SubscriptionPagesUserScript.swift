@@ -24,13 +24,11 @@ import Foundation
 import WebKit
 import UserScript
 import Core
+import os.log
 
-///
 /// The user script that will be the broker for all subscription features
-///
 public final class SubscriptionPagesUserScript: NSObject, UserScript, UserScriptMessaging {
     public var source: String = ""
-
     public static let context = "subscriptionPages"
 
     // special pages messaging cannot be isolated as we'll want regular page-scripts to be able to communicate
@@ -63,7 +61,6 @@ extension SubscriptionPagesUserScript: WKScriptMessageHandlerWithReply {
 extension SubscriptionPagesUserScript: WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        // unsupported
-        os_log("SubscriptionPagesUserScript sent an unsupported message: %s", log: .generalLog, type: .fault, message.messageName)
+        Logger.subscription.fault("SubscriptionPagesUserScript sent an unsupported message: \(message.messageName)")
     }
 }

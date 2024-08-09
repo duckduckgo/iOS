@@ -44,7 +44,7 @@ struct SettingsDataClearingView: View {
                 // Automatically Clear Data
                 SettingsCellView(label: UserText.settingsClearData,
                                   action: { viewModel.presentLegacyView(.autoclearData) },
-                                  accesory: .rightDetail(viewModel.state.autoclearDataEnabled
+                                  accessory: .rightDetail(viewModel.state.autoclearDataEnabled
                                                          ? UserText.autoClearAccessoryOn
                                                          : UserText.autoClearAccessoryOff),
                                   disclosureIndicator: true,

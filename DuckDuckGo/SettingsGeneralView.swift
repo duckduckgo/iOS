@@ -31,7 +31,7 @@ struct SettingsGeneralView: View {
             // Application Lock
             Section(footer: Text(UserText.settingsAutoLockDescription)) {
                 SettingsCellView(label: UserText.settingsAutolock,
-                                 accesory: .toggle(isOn: viewModel.applicationLockBinding))
+                                 accessory: .toggle(isOn: viewModel.applicationLockBinding))
 
             }
 
@@ -39,13 +39,13 @@ struct SettingsGeneralView: View {
                     footer: Text(UserText.settingsAutocompleteSubtitle)) {
                 // Autocomplete Suggestions
                 SettingsCellView(label: UserText.settingsAutocompleteLabel,
-                                 accesory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
+                                 accessory: .toggle(isOn: viewModel.autocompleteGeneralBinding))
             }
 
             if viewModel.shouldShowRecentlyVisitedSites {
                 Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
                     SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
-                                     accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+                                     accessory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
                 }
             }
 
@@ -53,7 +53,7 @@ struct SettingsGeneralView: View {
                 // Private Voice Search
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
-                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+                                     accessory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
                 }
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
@@ -79,11 +79,11 @@ struct SettingsGeneralView: View {
 
                 // Long-Press Previews
                 SettingsCellView(label: UserText.settingsPreviews,
-                                 accesory: .toggle(isOn: viewModel.longPressBinding))
+                                 accessory: .toggle(isOn: viewModel.longPressBinding))
 
                 // Open Links in Associated Apps
                 SettingsCellView(label: UserText.settingsAssociatedApps,
-                                 accesory: .toggle(isOn: viewModel.universalLinksBinding))
+                                 accessory: .toggle(isOn: viewModel.universalLinksBinding))
             }
         }
         .applySettingsListModifiers(title: UserText.general,

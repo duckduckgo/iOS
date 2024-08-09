@@ -51,13 +51,13 @@ struct PrivateSearchViewSettings: View {
         Section(footer: Text(UserText.settingsAutocompleteSubtitle)) {
             // Autocomplete Suggestions
             SettingsCellView(label: UserText.settingsAutocompleteLabel,
-                             accesory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
+                             accessory: .toggle(isOn: viewModel.autocompletePrivateSearchBinding))
         }
 
         if viewModel.shouldShowRecentlyVisitedSites {
             Section(footer: Text(UserText.settingsAutocompleteRecentlyVisitedSubtitle)) {
                 SettingsCellView(label: UserText.settingsAutocompleteRecentlyVisitedLabel,
-                                 accesory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
+                                 accessory: .toggle(isOn: viewModel.autocompleteRecentlyVisitedSitesBinding))
             }
         }
 

@@ -22,7 +22,10 @@ import Subscription
 
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager, privacyProDataReporter: PrivacyProDataReporting?) -> some View {
+    static func makeSubscribeFlow(origin: String?,
+                                  navigationCoordinator: SubscriptionNavigationCoordinator,
+                                  subscriptionManager: SubscriptionManager,
+                                  privacyProDataReporter: PrivacyProDataReporting?) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
@@ -51,7 +54,8 @@ enum SubscriptionContainerViewFactory {
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
+                                subscriptionManager: SubscriptionManager) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,

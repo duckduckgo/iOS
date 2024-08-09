@@ -12,6 +12,8 @@ disabled_rules:
   - function_body_length
   - file_length
   - type_body_length
+  - non_optional_string_data_conversion
+  - static_over_final_class
 
 opt_in_rules:
   - closure_end_indentation
@@ -20,16 +22,6 @@ opt_in_rules:
   - overridden_super_call
   - fatal_error_message
   - file_header
-
-custom_rules:
-  enforce_os_log_wrapper:
-    included: ".*\\.swift"
-    excluded: ".*Tests.*"
-    name: "Use `import Common` for os_log instead of `import os.log`"
-    regex: "^(import (?:os\\.log|os|OSLog))$"
-    capture_group: 0
-    message: "os_log wrapper ensures log args are @autoclosures (computed when needed) and to be able to use String Interpolation."
-    severity: error
 
 analyzer_rules:
   - unused_import

@@ -54,7 +54,7 @@ struct WebTrackingProtectionViewSettings: View {
         Section {
             // Global Privacy Control
             SettingsCellView(label: UserText.settingsGPC,
-                             accesory: .toggle(isOn: viewModel.gpcBinding))
+                             accessory: .toggle(isOn: viewModel.gpcBinding))
 
             // Unprotected Sites
             SettingsCellView(label: UserText.settingsUnprotectedSites,

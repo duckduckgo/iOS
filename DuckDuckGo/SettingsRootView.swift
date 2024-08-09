@@ -30,16 +30,20 @@ struct SettingsRootView: View {
     @State private var shouldDisplayDeepLinkSheet: Bool = false
     @State private var shouldDisplayDeepLinkPush: Bool = false
     @State var deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection?
+    @State var isShowingSubscribeFlow = false
 
     var body: some View {
 
-        // Hidden navigationLink for programatic navigation
+        // Hidden navigationLinks for programatic navigation
         if let target = deepLinkTarget {
-            NavigationLink(destination: deepLinkDestinationView(for: target),
+            NavigationLink(destination: navigationDestinationView(for: target),
                            isActive: $shouldDisplayDeepLinkPush) {
                 EmptyView()
             }
         }
+
+        NavigationLink(destination: navigationDestinationView(for: .subscriptionFlow(origin: nil)),
+                       isActive: $isShowingSubscribeFlow) { EmptyView() }
 
         List {
             SettingsPrivacyProtectionsView()
@@ -67,7 +71,7 @@ struct SettingsRootView: View {
             shouldDisplayDeepLinkSheet = false
         }, content: {
             if let target = deepLinkTarget {
-                deepLinkDestinationView(for: target)
+                navigationDestinationView(for: target)
             }
         })
 
@@ -100,11 +104,13 @@ struct SettingsRootView: View {
                 shouldDisplayDeepLinkPush = false
             }
         }
+        .onReceive(subscriptionNavigationCoordinator.$shouldPushSubscriptionWebView) { shouldPush in
+            isShowingSubscribeFlow = shouldPush
+        }
     }
 
-    // MARK: DeepLink Views
-    @ViewBuilder
-     func deepLinkDestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
+    /// Navigation Views for DeepLink and programmatic navigation
+    @ViewBuilder func navigationDestinationView(for target: SettingsViewModel.SettingsDeepLinkSection) -> some View {
         switch target {
         case .dbp:
             SubscriptionPIRView()
@@ -115,6 +121,8 @@ struct SettingsRootView: View {
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                                privacyProDataReporter: viewModel.privacyProDataReporter)
+            .environmentObject(subscriptionNavigationCoordinator)
+
         case .restoreFlow:
             SubscriptionContainerViewFactory.makeEmailFlow(navigationCoordinator: subscriptionNavigationCoordinator,
                                                            subscriptionManager: AppDependencyProvider.shared.subscriptionManager,

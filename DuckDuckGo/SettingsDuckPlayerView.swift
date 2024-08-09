@@ -36,25 +36,27 @@ struct SettingsDuckPlayerView: View {
                 }
             }
 
-            VStack(alignment: .center) {
-                Image("SettingsDuckPlayerHero")
-                    .padding(.top, -20) // Adjust for the image padding
+            if !viewModel.shouldDisplayDuckPlayerContingencyMessage {
+                VStack(alignment: .center) {
+                    Image("SettingsDuckPlayerHero")
+                        .padding(.top, -20) // Adjust for the image padding
 
-                Text(UserText.duckPlayerFeatureName)
-                    .daxTitle3()
+                    Text(UserText.duckPlayerFeatureName)
+                        .daxTitle3()
 
-                Text(UserText.settingsDuckPlayerInfoText)
+                    Text(UserText.settingsDuckPlayerInfoText)
+                        .daxBodyRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .padding(.top, 12)
+
+                    Link(UserText.settingsDuckPlayerLearnMore,
+                         destination: SettingsDuckPlayerView.learnMoreURL)
                     .daxBodyRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .padding(.top, 12)
-
-                Link(UserText.settingsDuckPlayerLearnMore,
-                     destination: SettingsDuckPlayerView.learnMoreURL)
-                .daxBodyRegular()
-                .accentColor(Color.init(designSystemColor: .accent))
+                    .accentColor(Color.init(designSystemColor: .accent))
+                }
+                .listRowBackground(Color.clear)
             }
-            .listRowBackground(Color.clear)
 
             Section {
                 SettingsPickerCellView(label: UserText.settingsOpenVideosInDuckPlayerLabel,
@@ -83,7 +85,7 @@ private struct ContingencyMessageView: View {
     }
     private enum Constants {
         static let imageName: String = "WarningYoutube"
-        static let imageSize: CGSize = CGSize(width: 50, height: 50)
+        static let imageSize: CGSize = CGSize(width: 48, height: 48)
         static let buttonCornerRadius: CGFloat = 8.0
     }
 
@@ -109,10 +111,9 @@ private struct ContingencyMessageView: View {
                 buttonCallback()
             } label: {
                 Text(Copy.buttonTitle)
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
                     .bold()
             }
-            .buttonStyle(SecondaryFillButtonStyle(fullWidth: false))
+            .buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
             .padding(10)
         }
     }

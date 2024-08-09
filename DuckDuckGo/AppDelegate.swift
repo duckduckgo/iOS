@@ -83,6 +83,7 @@ import WebKit
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?
+    private var autofillUsageMonitor = AutofillUsageMonitor()
 
     var privacyProDataReporter: PrivacyProDataReporting!
 

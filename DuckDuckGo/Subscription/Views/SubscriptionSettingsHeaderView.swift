@@ -31,7 +31,12 @@ struct SubscriptionSettingsHeaderView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
-            Image("PrivacyProHeader")
+            switch state {
+            case .expired:
+                Image("PrivacyProHeaderAlert")
+            default:
+                Image("PrivacyProHeader")
+            }
             Text(UserText.subscriptionTitle)
                 .daxTitle2()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
@@ -47,13 +52,9 @@ struct SubscriptionSettingsHeaderView: View {
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                 }
             case .expired(let details):
-                HStack(spacing: 4) {
-                    Image("Exclamation-Color-16")
-                        .frame(width: 16, height: 16)
-                    Text(details)
-                        .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                }
+                Text(details)
+                    .daxBodyRegular()
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
             case .activating:
                 HStack(spacing: 4) {
                     Circle()
@@ -74,7 +75,7 @@ struct SubscriptionSettingsHeaderView: View {
 }
 
 #Preview {
-    VStack {
+    VStack(spacing: 8) {
         SubscriptionSettingsHeaderView(state: .subscribed)
         SubscriptionSettingsHeaderView(state: .expired("Your subscription expired on April 20, 2027"))
         SubscriptionSettingsHeaderView(state: .activating)

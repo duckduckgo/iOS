@@ -91,31 +91,23 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var disabledFeaturesView: some View {
-        //        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
         SettingsCellView(label: UserText.settingsPProVPNTitle,
                          image: Image("SettingsPrivacyProVPN"),
                          statusIndicator: StatusIndicatorView(status: .off),
                          isGreyedOut: true
         )
-        //        }
-
-        //        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
         SettingsCellView(
             label: UserText.settingsPProDBPTitle,
             image: Image("SettingsPrivacyProPIR"),
             statusIndicator: StatusIndicatorView(status: .off),
             isGreyedOut: true
         )
-        //        }
-
-        //        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
         SettingsCellView(
             label: UserText.settingsPProITRTitle,
             image: Image("SettingsPrivacyProITP"),
             statusIndicator: StatusIndicatorView(status: .off),
             isGreyedOut: true
         )
-        //        }
     }
 
     @ViewBuilder
@@ -217,6 +209,7 @@ struct SettingsSubscriptionView: View {
                 Section(header: Text(UserText.settingsPProSection),
                         footer: !isSignedIn ? footerLink : nil
                 ) {
+
                     switch (isSignedIn, hasActiveSubscription, hasNoEntitlements) {
 
                         // Signed In, Subscription Expired
@@ -242,13 +235,6 @@ struct SettingsSubscriptionView: View {
                         subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = false
                     }
                 }
-//                .sheet(isPresented: $isShowingSubscribeFlow,
-//                       content: {
-//                    SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
-//                                                                       navigationCoordinator: subscriptionNavigationCoordinator,
-//                                                                       subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-//                                                                       privacyProDataReporter: viewModel.privacyProDataReporter)
-//                })
             }
         }
         .onReceive(viewModel.$state) { state in

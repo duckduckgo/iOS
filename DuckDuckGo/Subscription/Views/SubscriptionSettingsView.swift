@@ -61,8 +61,6 @@ struct SubscriptionSettingsView: View {
     // MARK: -
     @ViewBuilder
     private var headerSection: some View {
-//        let isExpired = !(viewModel.state.subscriptionInfo?.isActive ?? false)
-//        let isSubscribed = viewModel.state.subscriptionInfo?.isActive ?? false
         Section {
             switch configuration {
             case .subscribed:
@@ -230,10 +228,12 @@ struct SubscriptionSettingsView: View {
         NavigationLink(destination: SubscriptionGoogleView(),
                        isActive: $isShowingGoogleView) {
             EmptyView()
-        }
-        
+        }.hidden()
+
         List {
             headerSection
+                .padding(.horizontal, -20)
+                .padding(.vertical, -10)
             if configuration == .subscribed || configuration == .expired {
                 devicesSection
                     .alert(isPresented: $isShowingRemovalNotice) {
@@ -253,6 +253,7 @@ struct SubscriptionSettingsView: View {
             helpSection
             privacyPolicySection
         }
+        .padding(.top, -20)
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()
         .onChange(of: viewModel.state.shouldDismissView) { value in

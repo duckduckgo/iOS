@@ -421,6 +421,12 @@ public class AppUserDefaults: AppSettings {
 
     @UserDefaultsWrapper(key: .newTabPageSectionsSettings, defaultValue: nil)
     var newTabPageSectionsSettings: Data?
+
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageEnabled, defaultValue: nil)
+    var newTabPageIntroMessageEnabled: Bool?
+
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
+    var newTabPageIntroMessageSeenCount: Int
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

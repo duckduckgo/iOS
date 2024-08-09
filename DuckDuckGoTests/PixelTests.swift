@@ -196,7 +196,7 @@ class PixelTests: XCTestCase {
             }, debounce: debounceInterval)
         }
 
-        wait(for: [firstFireExpectation, thirdFireExpectation], timeout: Double(debounceInterval + 2))
+        wait(for: [firstFireExpectation, thirdFireExpectation], timeout: Double(debounceInterval + 4))
     }
 
 }

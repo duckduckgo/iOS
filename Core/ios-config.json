@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1721993813540,
+    "version": 1722878378366,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -327,6 +327,12 @@
                     "domain": "harley-davidson.com"
                 },
                 {
+                    "domain": "dailymail.co.uk"
+                },
+                {
+                    "domain": "newsforkids.net"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -370,7 +376,7 @@
                     }
                 }
             },
-            "hash": "ed7034e7eae6ab8575375dd938a5e954"
+            "hash": "08df6c3e54da19c0005e0a281e6b9aa5"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -424,9 +430,19 @@
                             }
                         ]
                     }
+                },
+                "onForExistingUsers": {
+                    "state": "enabled",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 10
+                            }
+                        ]
+                    }
                 }
             },
-            "hash": "bd604dcd1f7bb584185f0c1cb94a5771"
+            "hash": "2408c5de35db50491d915a9c8f3c8388"
         },
         "brokenSiteReportExperiment": {
             "exceptions": [],
@@ -1327,7 +1343,7 @@
             "exceptions": [],
             "features": {
                 "pip": {
-                    "state": "disabled"
+                    "state": "enabled"
                 },
                 "autoplay": {
                     "state": "disabled"
@@ -1400,7 +1416,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "17689d71b3f20a31d01c050bd5cba1ee"
+            "hash": "454c014ddd259aaae2b8c30e51ddfbbc"
         },
         "elementHiding": {
             "exceptions": [
@@ -1932,6 +1948,7 @@
                     "ad feedback",
                     "annonse",
                     "anzeige",
+                    "close",
                     "close ad",
                     "close this ad",
                     "content continues below",
@@ -2097,6 +2114,15 @@
                             {
                                 "selector": ".SovrnAd",
                                 "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "asuracomic.net",
+                        "rules": [
+                            {
+                                "selector": ".h12container",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -2510,7 +2536,15 @@
                                 "type": "hide"
                             },
                             {
+                                "selector": ".display-ad-leaderboard",
+                                "type": "hide-empty"
+                            },
+                            {
                                 "selector": ".display-ad-wrapper",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".display-ad-wrap",
                                 "type": "hide-empty"
                             },
                             {
@@ -4642,7 +4676,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "d2c2fb2d96cd435c4baaee4c45d11801"
+            "hash": "0f1079be6e20f32fa57b93891a52e6c8"
         },
         "exceptionHandler": {
             "exceptions": [

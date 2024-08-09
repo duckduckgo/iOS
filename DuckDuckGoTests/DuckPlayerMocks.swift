@@ -159,3 +159,7 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
     }
     
 }
+
+final class MockDuckPlayerStorage: DuckPlayerStorage {
+    var userInteractedWithDuckPlayer: Bool = false
+}

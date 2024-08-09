@@ -59,7 +59,7 @@
 "widget.gallery.search.display.name" = "Otsi";
 
 /* Description of VPN widget in widget gallery */
-"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+"widget.gallery.vpn.description" = "Vaata ja halda oma VPN-ühendust. Nõuab Privacy Pro tellimust.";
 
 /* Display name for VPN widget in widget gallery */
 "widget.gallery.vpn.display.name" = "VPN";
@@ -77,17 +77,17 @@
 "widget.search.duckduckgo" = "Otsi DuckDuckGo'st";
 
 /* VPN connect button text */
-"widget.vpn.button.connect" = "Connect";
+"widget.vpn.button.connect" = "Ühenda";
 
 /* VPN disconnect button text */
-"widget.vpn.button.disconnect" = "Disconnect";
+"widget.vpn.button.disconnect" = "Katkesta ühendus";
 
 /* Message describing VPN connected status */
-"widget.vpn.status.connected" = "VPN is On";
+"widget.vpn.status.connected" = "VPN on Sees";
 
 /* Message describing VPN disconnected status */
-"widget.vpn.status.disconnected" = "VPN is Off";
+"widget.vpn.status.disconnected" = "VPN on Väljas";
 
 /* Subtitle describing VPN disconnected status */
-"widget.vpn.subtitle.disconnected" = "Not connected";
+"widget.vpn.subtitle.disconnected" = "Ei ole ühendatud";
 

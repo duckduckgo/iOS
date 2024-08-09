@@ -19,9 +19,11 @@
 
 import Foundation
 import BrowserServicesKit
+import Core
 
 protocol NewTabPageManaging: AnyObject {
     var isNewTabPageSectionsEnabled: Bool { get }
+    var isAvailableInPublicRelease: Bool { get }
 }
 
 protocol NewTabPageDebugging: NewTabPageManaging {
@@ -45,6 +47,15 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
 
     var isNewTabPageSectionsEnabled: Bool {
         isLocalFlagEnabled && isFeatureFlagEnabled
+    }
+
+    var isAvailableInPublicRelease: Bool {
+        switch FeatureFlag.newTabPageSections.source {
+        case .disabled, .internalOnly, .remoteDevelopment:
+            return false
+        case .remoteReleasable:
+            return true
+        }
     }
 
     // MARK: - NewTabPageDebugging

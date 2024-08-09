@@ -159,6 +159,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                     customizeButtonShowedInline = value
                 })
             }
+            .withScrollKeyboardDismiss()
             .safeAreaInset(edge: .bottom, alignment: .trailing) {
                 if !customizeButtonShowedInline {
                     customizeButtonView
@@ -191,10 +192,19 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
 }
 
 private extension View {
-        func sectionPadding() -> some View {
-            self.padding(Constant.sectionPadding)
+    func sectionPadding() -> some View {
+        self.padding(Constant.sectionPadding)
+    }
+
+    @ViewBuilder
+    func withScrollKeyboardDismiss() -> some View {
+        if #available(iOS 16, *) {
+            scrollDismissesKeyboard(.immediately)
+        } else {
+            self
         }
     }
+}
 
 private struct Constant {
     static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)

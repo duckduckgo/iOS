@@ -33,6 +33,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     
     @State var isShowingTooltip: Bool = false
     @State private var isShowingSettings: Bool = false
+    @State private var customizeButtonShowedInline = false
 
     init(newTabPageModel: NewTabPageModel,
          messagesModel: NewTabPageMessagesModel,
@@ -88,7 +89,6 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                 // Needed to reduce default button margins
                     .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
             }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                .padding(.top, 40)
         }.sectionPadding()
     }
 
@@ -138,12 +138,30 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
                         NewTabPageDaxLogoView()
                     }
 
+                    // MARK: Customize button
                     Spacer()
 
-                    // MARK: Customize button
-                    customizeButtonView
+                    if customizeButtonShowedInline {
+                        customizeButtonView
+                            .animation(.easeInOut, value: customizeButtonShowedInline)
+                    }
                 }
-                .frame(minHeight: proxy.frame(in: .local).size.height)
+                .anchorPreference(key: CustomizeButtonPrefKey.self, value: .bounds, transform: { vStackBoundsAnchor in
+                    let verticalRoomForButton = 40 + Constant.sectionPadding
+                    let contentSizeAdjustmentValue = customizeButtonShowedInline ? -verticalRoomForButton : 0
+                    let adjustedContentSize = proxy[vStackBoundsAnchor].height + contentSizeAdjustmentValue
+
+                    return proxy.size.height < adjustedContentSize
+                })
+                .onPreferenceChange(CustomizeButtonPrefKey.self, perform: { value in
+                    customizeButtonShowedInline = value
+                })
+            }
+            .safeAreaInset(edge: .bottom, alignment: .trailing) {
+                if !customizeButtonShowedInline {
+                    customizeButtonView
+                        .animation(.easeInOut, value: customizeButtonShowedInline)
+                }
             }
         }
         .background(Color(designSystemColor: .background))
@@ -181,6 +199,14 @@ private struct Constant {
 
     static let messageMaximumWidth: CGFloat = 380
     static let messageMaximumWidthPad: CGFloat = 455
+}
+
+private struct CustomizeButtonPrefKey: PreferenceKey {
+    static var defaultValue: Bool = true
+
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value = nextValue()
+    }
 }
 
 // MARK: - Preview

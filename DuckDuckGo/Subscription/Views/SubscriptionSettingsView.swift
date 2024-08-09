@@ -50,12 +50,12 @@ struct SubscriptionSettingsView: View {
             .onFirstAppear {
                 Pixel.fire(pixel: .privacyProSubscriptionSettings, debounce: 1)
             }
-        .navigationBarTitleDisplayMode(.inline)
-        .onChange(of: settingsViewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
-            if value {
-                isShowingSubscriptionError = true
+            .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: settingsViewModel.state.subscription.shouldDisplayRestoreSubscriptionError) { value in
+                if value {
+                    isShowingSubscriptionError = true
+                }
             }
-        }
     }
     
     // MARK: -
@@ -236,6 +236,18 @@ struct SubscriptionSettingsView: View {
             headerSection
             if configuration == .subscribed || configuration == .expired {
                 devicesSection
+                    .alert(isPresented: $isShowingRemovalNotice) {
+                        Alert(
+                            title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
+                            message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
+                            primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {},
+                            secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
+                                Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
+                                viewModel.removeSubscription()
+                                dismiss()
+                            }
+                        )
+                    }
             }
             manageSection
             helpSection
@@ -243,19 +255,6 @@ struct SubscriptionSettingsView: View {
         }
         .navigationTitle(UserText.settingsPProManageSubscription)
         .applyInsetGroupedListStyle()
-        .alert(isPresented: $isShowingRemovalNotice) {
-            Alert(
-                title: Text(UserText.subscriptionRemoveFromDeviceConfirmTitle),
-                message: Text(UserText.subscriptionRemoveFromDeviceConfirmText),
-                primaryButton: .cancel(Text(UserText.subscriptionRemoveCancel)) {
-                },
-                secondaryButton: .destructive(Text(UserText.subscriptionRemove)) {
-                    Pixel.fire(pixel: .privacyProSubscriptionManagementRemoval)
-                    viewModel.removeSubscription()
-                    dismiss()
-                }
-            )
-        }
         .onChange(of: viewModel.state.shouldDismissView) { value in
             if value {
                 dismiss()

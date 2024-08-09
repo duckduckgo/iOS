@@ -39,7 +39,6 @@ struct SettingsSubscriptionView: View {
     @State var isShowingDBP = false
     @State var isShowingITP = false
     @State var isShowingRestoreFlow = false
-//    @State var isShowingSubscribeFlow = false
     @State var isShowingGoogleView = false
     @State var isShowingStripeView = false
     @State var isShowingPrivacyPro = false
@@ -74,7 +73,6 @@ struct SettingsSubscriptionView: View {
                     .foregroundColor(Color.init(designSystemColor: .accent))
                     .padding(.leading, 32.0)
             }, action: {
-//                isShowingSubscribeFlow = true
                 subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
             }, isButton: true)
 
@@ -128,7 +126,6 @@ struct SettingsSubscriptionView: View {
         let settingsView = SubscriptionSettingsView(configuration: .expired,
                                                     settingsViewModel: viewModel,
                                                     viewPlans: {
-//            isShowingSubscribeFlow = true
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
             .environmentObject(subscriptionNavigationCoordinator)
@@ -150,7 +147,6 @@ struct SettingsSubscriptionView: View {
         let settingsView = SubscriptionSettingsView(configuration: .activating,
                                                     settingsViewModel: viewModel,
                                                     viewPlans: {
-//            isShowingSubscribeFlow = true
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
             .environmentObject(subscriptionNavigationCoordinator)
@@ -209,6 +205,7 @@ struct SettingsSubscriptionView: View {
     var body: some View {
         Group {
             if isShowingPrivacyPro {
+
                 let isSignedIn = viewModel.state.subscription.isSignedIn
                 let hasActiveSubscription = viewModel.state.subscription.hasActiveSubscription
                 let hasNoEntitlements = viewModel.state.subscription.entitlements.isEmpty
@@ -242,14 +239,10 @@ struct SettingsSubscriptionView: View {
                 .onReceive(subscriptionNavigationCoordinator.$shouldPopToAppSettings) { shouldDismiss in
                     if shouldDismiss {
                         isShowingRestoreFlow = false
-//                        isShowingSubscribeFlow = false
                         subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = false
                     }
                 }
 //                .sheet(isPresented: $isShowingSubscribeFlow,
-//                       onDismiss: {
-// print("dismiss")
-//                },
 //                       content: {
 //                    SubscriptionContainerViewFactory.makeSubscribeFlow(origin: nil,
 //                                                                       navigationCoordinator: subscriptionNavigationCoordinator,

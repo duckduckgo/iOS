@@ -983,6 +983,7 @@
 		F115ED9C2B4EFC8E001A0453 /* TestUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F115ED9B2B4EFC8E001A0453 /* TestUtils */; };
 		F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D7391E5776C500C45811 /* OmniBarDelegate.swift */; };
 		F132D6A52C62239B00D85426 /* SubscriptionSettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F132D6A42C62239B00D85426 /* SubscriptionSettingsHeaderView.swift */; };
+		F132D6A82C6524B600D85426 /* Logger+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F132D6A72C6524B600D85426 /* Logger+Subscription.swift */; };
 		F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BA31E6846C40062FC3C /* TabDelegate.swift */; };
 		F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BBF1F180D8A00814661 /* TabsModel.swift */; };
 		F13B4BD31F1822C700814661 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BD21F1822C700814661 /* Tab.swift */; };
@@ -2752,6 +2753,7 @@
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F132D6A42C62239B00D85426 /* SubscriptionSettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsHeaderView.swift; sourceTree = "<group>"; };
 		F132D6A62C62294000D85426 /* DesignResourcesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DesignResourcesKit; path = ../DesignResourcesKit; sourceTree = "<group>"; };
+		F132D6A72C6524B600D85426 /* Logger+Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Subscription.swift"; sourceTree = "<group>"; };
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
 		F13B4BBF1F180D8A00814661 /* TabsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModel.swift; sourceTree = "<group>"; };
 		F13B4BD21F1822C700814661 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -5006,6 +5008,7 @@
 			isa = PBXGroup;
 			children = (
 				F1FDC9342BF51E41006B1435 /* VPNSettings+Environment.swift */,
+				F132D6A72C6524B600D85426 /* Logger+Subscription.swift */,
 				D664C7982B289AA000CBFA76 /* WKUserContentController+Handler.swift */,
 			);
 			path = Extensions;
@@ -7276,6 +7279,7 @@
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				CB825C922C071B1400BCC586 /* AlertView.swift in Sources */,
 				1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */,
+				F132D6A82C6524B600D85426 /* Logger+Subscription.swift in Sources */,
 				6F64AA5F2C49463C00CF4489 /* ShortcutsModel.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,

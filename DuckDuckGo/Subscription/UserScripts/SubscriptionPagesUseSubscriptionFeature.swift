@@ -25,8 +25,9 @@ import UserScript
 import Combine
 import Subscription
 import Core
+import os.log
 
-enum SubscriptionTransactionStatus {
+enum SubscriptionTransactionStatus: String {
     case idle, purchasing, restoring, polling
 }
 
@@ -140,7 +141,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
-        os_log("WebView handler: %s", log: .subscription, type: .debug, methodName)
+        Logger.subscription.debug("WebView handler: \(methodName)")
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
@@ -157,7 +158,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         case Handlers.subscriptionsWelcomeFaqClicked: return subscriptionsWelcomeFaqClicked
         case Handlers.getAccessToken: return getAccessToken
         default:
-            os_log("Unhandled web message: %s", log: .subscription, type: .error, methodName)
+            Logger.subscription.error("Unhandled web message: \(methodName)")
             return nil
         }
     }
@@ -171,8 +172,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let token: String
     }
     // swiftlint:enable nesting
-    
-    
+
     private func resetSubscriptionFlow() {
         setTransactionError(nil)
     }
@@ -182,11 +182,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
-        transactionStatus = status
+        if status != transactionStatus {
+            Logger.subscription.debug("Transaction state updated: \(status.rawValue)")
+            transactionStatus = status
+        }
     }
 
-    
     // MARK: Broker Methods (Called from WebView via UserScripts)
+    
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
         let authToken = accountManager.authToken ?? Constants.empty
@@ -203,7 +206,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 return SubscriptionOptions.empty
             }
         } else {
-            os_log("Failed to obtain subscription options", log: .subscription, type: .error)
+            Logger.subscription.error("Failed to obtain subscription options")
             setTransactionError(.failedToGetSubscriptionOptions)
             return SubscriptionOptions.empty
         }
@@ -223,12 +226,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let message = original
         guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
+            Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
             setTransactionStatus(.idle)
             return nil
         }
         
         // Check for active subscriptions
         if await subscriptionManager.storePurchaseManager().hasActiveSubscription() {
+            Logger.subscription.debug("Subscription already active")
             setTransactionError(.hasActiveSubscription)
             Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
             setTransactionStatus(.idle)
@@ -241,9 +246,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
                                                                emailAccessToken: emailAccessToken) {
         case .success(let transactionJWS):
+            Logger.subscription.debug("Subscription purchased successfully")
             purchaseTransactionJWS = transactionJWS
 
         case .failure(let error):
+            Logger.subscription.error("App store purchase error: \(error.localizedDescription)")
             setTransactionStatus(.idle)
             switch error {
             case .cancelledByUser:
@@ -264,23 +271,25 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         setTransactionStatus(.polling)
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success(let purchaseUpdate):
+            Logger.subscription.debug("Subscription purchase completed successfully")
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
             setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
-        case .failure:
+        case .failure(let error):
+            Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription)")
             setTransactionStatus(.idle)
             setTransactionError(.missingEntitlements)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
         }
         return nil
-        
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         guard let subscriptionValues: SubscriptionValues = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
+            Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             setTransactionError(.generalError)
             return nil
         }
@@ -296,7 +305,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             onSetSubscription?()
             
         } else {
-            os_log("Failed to obtain subscription options", log: .subscription, type: .error)
+            Logger.subscription.error("Failed to obtain subscription options")
             setTransactionError(.failedToSetSubscription)
         }
 
@@ -312,11 +321,13 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func featureSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
         guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
+            Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
         }
 
         guard let featureSelection = SubscriptionFeatureSelection(featureName: featureSelection.feature) else {
             assertionFailure("SubscriptionPagesUserScript: unexpected feature name value")
+            Logger.subscription.error("SubscriptionPagesUserScript: unexpected feature name value")
             setTransactionError(.generalError)
             return nil
         }
@@ -327,26 +338,29 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        if let accessToken = accountManager.accessToken,
-           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken) {
+        guard let accessToken = accountManager.accessToken else {
+            Logger.subscription.error("Missing access token")
+            return nil
+        }
 
+        switch await accountManager.fetchAccountDetails(with: accessToken) {
+        case .success(let accountDetails):
+            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken) {
             case .success:
                 accountManager.storeAccount(token: accessToken,
                                             email: accountDetails.email,
                                             externalID: accountDetails.externalID)
                 onBackToSettings?()
-            default:
-                break
+            case .failure(let error):
+                Logger.subscription.error("Error retrieving subscription details: \(error.localizedDescription)")
             }
-
-        } else {
-            os_log("General error. Could not get account Details", log: .subscription, type: .error)
+        case .failure(let error):
+            Logger.subscription.error("Could not get account Details: \(error.localizedDescription)")
             setTransactionError(.generalError)
         }
         return nil
     }
-    
+
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         if let accessToken = subscriptionManager.accountManager.accessToken {
             return [Constants.token: accessToken]
@@ -358,31 +372,37 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Pixel related actions
 
     func subscriptionsMonthlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferMonthlyPriceClick)
         return nil
     }
 
     func subscriptionsYearlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.debug("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferYearlyPriceClick)
         return nil
     }
 
     func subscriptionsUnknownPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
         // Not used
+        Logger.subscription.debug("Web function called: \(#function)")
         return nil
     }
 
     func subscriptionsAddEmailSuccess(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.debug("Web function called: \(#function)")
         UniquePixel.fire(pixel: .privacyProAddEmailSuccess)
         return nil
     }
 
     func subscriptionsWelcomeFaqClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.debug("Web function called: \(#function)")
         UniquePixel.fire(pixel: .privacyProWelcomeFAQClick)
         return nil
     }
 
     // MARK: Push actions (Push Data back to WebViews)
+    
     enum SubscribeActionName: String {
         case onPurchaseUpdate
     }
@@ -396,9 +416,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: true )
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
-    
-    
+
     // MARK: Native methods - Called from ViewModels
+    
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
@@ -413,7 +433,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     // MARK: Utility Methods
+    
     func mapAppStoreRestoreErrorToTransactionError(_ error: AppStoreRestoreFlowError) -> UseSubscriptionError {
+        Logger.subscription.error("\(#function): \(error.localizedDescription)")
         switch error {
         case .subscriptionExpired:
             return .subscriptionExpired
@@ -433,7 +455,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         onActivateSubscription = nil
         onBackToSettings = nil
     }
-
 }
 
 private extension Pixel {

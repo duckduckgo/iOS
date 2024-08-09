@@ -249,6 +249,7 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
             Task {
                 await historyManager.deleteHistoryForURL(url)
                 Pixel.fire(pixel: .autocompleteSwipeToDelete)
+                requestSuggestions(query: self.query)
             }
         default:
             assertionFailure("Only history items can be deleted")

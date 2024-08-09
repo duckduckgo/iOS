@@ -66,7 +66,7 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         lastDailyPixelInfo = PixelInfo(pixel: pixel, params: nil, includedParams: nil)
     }
 
-    static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String : String]) {
+    static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
         lastDailyPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
     }
 

@@ -744,8 +744,8 @@ extension Pixel {
 
         case newTabPageShortcutClicked(_ shortcutName: String)
 
-        case newTabPageSectionOff(_ sectionName: String)
-        case newTabPageSectionOn(_ sectionName: String)
+        case newTabPageCustomizeSectionOff(_ sectionName: String)
+        case newTabPageCustomizeSectionOn(_ sectionName: String)
         case newTabPageSectionReordered
 
         case newTabPageCustomizeShortcutRemoved(_ shortcutName: String)
@@ -1493,14 +1493,14 @@ extension Pixel.Event {
         case .newTabPageFavoritesSeeMore: return "m_new_tab_page_favorites_see_more"
         case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"
 
-        case .newTabPageCustomize: return "m_new_tab_page_customize"
-
         case .newTabPageShortcutClicked(let name):
             return "m_new_tab_page_shortcut_clicked_\(name)"
 
-        case .newTabPageSectionOff(let sectionName):
+        case .newTabPageCustomize: return "m_new_tab_page_customize"
+
+        case .newTabPageCustomizeSectionOff(let sectionName):
             return "m_new_tab_page_customize_section_off_\(sectionName)"
-        case .newTabPageSectionOn(let sectionName):
+        case .newTabPageCustomizeSectionOn(let sectionName):
             return "m_new_tab_page_customize_section_on_\(sectionName)"
         case .newTabPageSectionReordered: return "m_new_tab_page_customize_section_reordered"
 

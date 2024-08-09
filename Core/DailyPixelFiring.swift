@@ -30,7 +30,7 @@ extension DailyPixel: DailyPixelFiring {
         fire(pixel: pixel)
     }
 
-    public static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String : String]) {
+    public static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
         fire(pixel: pixel, withAdditionalParameters: params)
     }
 }

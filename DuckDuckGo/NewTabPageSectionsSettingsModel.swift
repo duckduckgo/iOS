@@ -32,9 +32,9 @@ extension NewTabPageSectionsSettingsModel {
 
     private static func onEnabled(_ section: SettingItem, isEnabled: Bool, pixelFiring: PixelFiring.Type) {
         if isEnabled {
-            pixelFiring.fire(.newTabPageSectionOn(section.nameForPixel), withAdditionalParameters: [:])
+            pixelFiring.fire(.newTabPageCustomizeSectionOn(section.nameForPixel), withAdditionalParameters: [:])
         } else {
-            pixelFiring.fire(.newTabPageSectionOff(section.nameForPixel), withAdditionalParameters: [:])
+            pixelFiring.fire(.newTabPageCustomizeSectionOff(section.nameForPixel), withAdditionalParameters: [:])
         }
     }
 

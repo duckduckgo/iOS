@@ -35,7 +35,7 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
         setting?.isEnabled.wrappedValue = true
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageSectionOn("favorites"))
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeSectionOn("favorites"))
     }
 
     func testFiresPixelWhenItemDisabled() {
@@ -47,7 +47,7 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
         setting?.isEnabled.wrappedValue = false
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageSectionOff("favorites"))
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeSectionOff("favorites"))
     }
 
     func testFiresPixelWhenItemReordered() {

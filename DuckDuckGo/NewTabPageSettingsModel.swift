@@ -18,7 +18,10 @@
 //
 
 import Foundation
+import Core
 import SwiftUI
+
+typealias SettingItemEnabledFunction<I> = (_ item: I, _ isEnabled: Bool) -> Void
 
 final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, Storage: NewTabPageSettingsStorage>: ObservableObject where Storage.SettingItem == SettingItem {
 
@@ -34,10 +37,17 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
 
     private let settingsStorage: Storage
     private let visibilityFilter: ((SettingItem) -> Bool)
+    private let onItemEnabled: SettingItemEnabledFunction<SettingItem>?
+    private let onItemReordered: (() -> Void)?
 
-    init(settingsStorage: Storage, visibilityFilter: @escaping ((SettingItem) -> Bool) = { _ in true }) {
+    init(settingsStorage: Storage,
+         onItemEnabled: SettingItemEnabledFunction<SettingItem>? = nil,
+         onItemReordered: (() -> Void)? = nil,
+         visibilityFilter: @escaping ((SettingItem) -> Bool) = { _ in true }) {
         self.settingsStorage = settingsStorage
         self.visibilityFilter = visibilityFilter
+        self.onItemEnabled = onItemEnabled
+        self.onItemReordered = onItemReordered
 
         updatePublishedValues()
     }
@@ -51,6 +61,8 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
 
         settingsStorage.moveItems(from, toOffset: to)
         updatePublishedValues()
+
+        onItemReordered?()
     }
 
     func save() {
@@ -75,6 +87,7 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
                        isEnabled: Binding(get: {
                 self.settingsStorage.isEnabled(item)
             }, set: { newValue in
+                self.onItemEnabled?(item, newValue)
                 self.settingsStorage.setItem(item, enabled: newValue)
                 self.updatePublishedValues()
             }))

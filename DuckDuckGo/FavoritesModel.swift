@@ -40,6 +40,14 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     func moveFavorites(from indexSet: IndexSet, to index: Int)
 }
 
+protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
+
+    var isShowingTooltip: Bool { get }
+
+    func placeholderTapped()
+    func toggleTooltip()
+}
+
 struct FavoritesSlice {
     let items: [Favorite]
     let isCollapsible: Bool

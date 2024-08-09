@@ -19,10 +19,11 @@
 
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 struct FavoritesSectionHeader: View {
 
-    @Binding var isShowingTooltip: Bool
+    let model: any FavoritesEmptyStateModel
 
     var body: some View {
         HStack(spacing: 16, content: {
@@ -34,7 +35,7 @@ struct FavoritesSectionHeader: View {
             Spacer()
 
             Button(action: {
-                isShowingTooltip.toggle()
+                model.toggleTooltip()
             }, label: {
                 Image(.info12)
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
@@ -44,6 +45,5 @@ struct FavoritesSectionHeader: View {
 }
 
 #Preview {
-    @State var isShowingTooltip = true
-    return FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
+    return FavoritesSectionHeader(model: FavoritesPreviewModel())
 }

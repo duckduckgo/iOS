@@ -24,6 +24,10 @@ final class NewTabPageModelTests: XCTestCase {
 
     let appSettings = AppSettingsMock()
 
+    override func tearDown() {
+        PixelFiringMock.tearDown()
+    }
+
     func testDoesNotShowIntroIfSettingUndefined() {
         let sut = NewTabPageModel(appSettings: appSettings)
 
@@ -51,11 +55,35 @@ final class NewTabPageModelTests: XCTestCase {
         appSettings.newTabPageIntroMessageEnabled = true
         let sut = NewTabPageModel(appSettings: appSettings)
 
-        for i in 1...3 {
-            sut.increaseIntroMessageCounter()
+        for _ in 1...3 {
+            sut.introMessageDisplayed()
         }
 
         XCTAssertTrue(sut.isIntroMessageVisible) // We want to keep the message visible on last occurence
         XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+    }
+
+    func testFiresPixelWhenIntroMessageDismissed() {
+        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+
+        sut.dismissIntroMessage()
+
+        XCTAssertEqual(.newTabPageMessageDismissed, PixelFiringMock.lastPixel)
+    }
+
+    func testFiresPixelWhenIntroMessageDisplayed() {
+        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+
+        sut.introMessageDisplayed()
+
+        XCTAssertEqual(.newTabPageMessageDisplayed, PixelFiringMock.lastPixel)
+    }
+
+    func testFiresPixelOnNewTabPageCustomize() {
+        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+
+        sut.customizeNewTabPage()
+
+        XCTAssertEqual(.newTabPageCustomize, PixelFiringMock.lastPixel)
     }
 }

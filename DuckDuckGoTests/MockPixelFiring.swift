@@ -20,19 +20,26 @@
 import Foundation
 import Core
 
-final actor PixelFiringMock: PixelFiring, PixelFiringAsync {
+struct PixelInfo {
+    let pixel: Pixel.Event?
+    let params: [String: String]?
+    let includedParams: [Pixel.QueryParameters]?
+}
+
+final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
     static var expectedFireError: Error?
 
-    static var lastParams: [String: String]?
-    static var lastPixel: Pixel.Event?
-    static var lastIncludedParams: [Pixel.QueryParameters]?
-    
+    static var lastPixelInfo: PixelInfo?
+    static var lastDailyPixelInfo: PixelInfo?
+
+    static var lastParams: [String: String]? { lastPixelInfo?.params }
+    static var lastPixel: Pixel.Event? { lastPixelInfo?.pixel }
+    static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
+
     static func fire(pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String],
                      includedParameters: [Pixel.QueryParameters]) async throws {
-        lastParams = params
-        lastPixel = pixel
-        lastIncludedParams = includedParameters
+        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
 
         if let expectedFireError {
             throw expectedFireError
@@ -43,9 +50,7 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync {
                      withAdditionalParameters params: [String: String],
                      includedParameters: [Pixel.QueryParameters],
                      onComplete: @escaping (Error?) -> Void) {
-        lastParams = params
-        lastPixel = pixel
-        lastIncludedParams = includedParameters
+        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
 
         if let expectedFireError {
             onComplete(expectedFireError)
@@ -54,14 +59,20 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync {
 
     static func fire(_ pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String]) {
-        lastParams = params
-        lastPixel = pixel
+        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
+    }
+
+    static func fireDaily(_ pixel: Pixel.Event) {
+        lastDailyPixelInfo = PixelInfo(pixel: pixel, params: nil, includedParams: nil)
+    }
+
+    static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
+        lastDailyPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
     }
 
     static func tearDown() {
-        lastParams = nil
-        lastPixel = nil
-        lastIncludedParams = nil
+        lastPixelInfo = nil
+        lastDailyPixelInfo = nil
         expectedFireError = nil
     }
 

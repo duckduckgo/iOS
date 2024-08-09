@@ -194,10 +194,10 @@
 "scan.or.see.code.footer" = "Kan du ikke skanne?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Gå til Innstillinger › Synkroniser og sikkerhetskopier i DuckDuckGo-nettleseren på en annen enhet og velg «Synkroniser med en annen enhet».";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Gå til %@ i DuckDuckGo-nettleseren på en annen enhet og velg «Synkroniser med en annen enhet.»";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Skriv inn koden manuelt";
@@ -209,7 +209,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobil til mobil?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Del tekstkode";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skann QR-kode";
@@ -254,7 +254,7 @@
 "synced.devices.section.header" = "Synkroniserte enheter";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Synkroniser med en annen enhet";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Denne enheten";

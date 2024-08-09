@@ -59,7 +59,7 @@
 "widget.gallery.search.display.name" = "Suche";
 
 /* Description of VPN widget in widget gallery */
-"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+"widget.gallery.vpn.description" = "Betrachte und verwalte deine VPN-Verbindung. Erfordert ein Privacy Pro Abonnement.";
 
 /* Display name for VPN widget in widget gallery */
 "widget.gallery.vpn.display.name" = "VPN";
@@ -77,17 +77,17 @@
 "widget.search.duckduckgo" = "Mit DuckDuckGo suchen";
 
 /* VPN connect button text */
-"widget.vpn.button.connect" = "Connect";
+"widget.vpn.button.connect" = "Verbinden";
 
 /* VPN disconnect button text */
-"widget.vpn.button.disconnect" = "Disconnect";
+"widget.vpn.button.disconnect" = "Trennen";
 
 /* Message describing VPN connected status */
-"widget.vpn.status.connected" = "VPN is On";
+"widget.vpn.status.connected" = "VPN ist An";
 
 /* Message describing VPN disconnected status */
-"widget.vpn.status.disconnected" = "VPN is Off";
+"widget.vpn.status.disconnected" = "VPN ist Aus";
 
 /* Subtitle describing VPN disconnected status */
-"widget.vpn.subtitle.disconnected" = "Not connected";
+"widget.vpn.subtitle.disconnected" = "Nicht verbunden";
 

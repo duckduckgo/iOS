@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pas je favorieten en go-to-functies aan. Herschik dingen of verberg ze om de tabbladpagina overzichtelijk te maken.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Secties op het nieuwe tabblad weergeven, verbergen en opnieuw ordenen";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Je nieuwe tabbladpagina is... Nieuw!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Secties op het nieuwe tabblad weergeven, verbergen en opnieuw ordenen";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SECTIES";
 

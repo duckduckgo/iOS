@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodite zavihek Priljubljene in izbrane funkcije. Preuredite stvari ali jih skrijte, da boste imeli vse urejeno.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Prikaz, skrivanje in razvrščanje razdelkov na strani novega zavihka";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Vaša stran za nov zavihek je ... nova!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Prikaz, skrivanje in razvrščanje razdelkov na strani novega zavihka";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "RAZDELKI";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "BLIŽNJICE";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Prilagoditev strani novega zavihka";
+"new.tab.page.settings.title" = "Prilagoditev strani z novim zavihkom";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Klepet z umetno inteligenco";

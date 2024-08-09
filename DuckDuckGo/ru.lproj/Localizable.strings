@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "К вашим услугам настройки «Избранного» и важнейших функций. Для поддержания порядка отдельные элементы можно переупорядочить или скрыть.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Показать, скрыть или изменить порядок разделов на странице новой вкладки";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Ваша страница новой вкладки... В новом виде!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Показать, скрыть или изменить порядок разделов на странице новой вкладки";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "РАЗДЕЛЫ";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "Ярлыки";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Настройки страницы новой вкладки";
+"new.tab.page.settings.title" = "Страница новой вкладки";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Чат с ИИ";

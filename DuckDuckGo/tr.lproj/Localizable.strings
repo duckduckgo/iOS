@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Favorilerinizi ve düzenli olarak kullandığınız özellikleri kendinize göre ayarlayın. Temiz tutmak için öğeleri yeniden sıralayın veya gizleyin.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Yeni sekme sayfasında bölümleri göster, gizle ve yeniden sırala";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Yeni Sekme Sayfanız... Yeni!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Yeni sekme sayfasında bölümleri göster, gizle ve yeniden sırala";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "BÖLÜMLER";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "KISAYOLLAR";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Yeni Sekme Sayfasını Özelleştirin";
+"new.tab.page.settings.title" = "Yeni Sekme Sayfasını Özelleştir";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Yapay Zeka Sohbeti";

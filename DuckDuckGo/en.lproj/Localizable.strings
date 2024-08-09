@@ -1673,7 +1673,7 @@ https://duckduckgo.com/mac";
 "new.tab.page.settings.shortcuts.header.title" = "SHORTCUTS";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Customize New Tab";
+"new.tab.page.settings.title" = "Customize New Tab Page";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI Chat";

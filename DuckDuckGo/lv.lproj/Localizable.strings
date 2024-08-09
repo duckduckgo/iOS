@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Rādīt, paslēpt un pārkārtot sadaļas jaunās cilnes lapā";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tava jaunas cilnes lapa ir... atjaunota!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Rādīt, paslēpt un pārkārtot sadaļas jaunās cilnes lapā";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SADAĻAS";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "SAĪSNES";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Jaunas cilnes pielāgošana";
+"new.tab.page.settings.title" = "Jaunas cilnes lapas pielāgošana";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "MI čats";

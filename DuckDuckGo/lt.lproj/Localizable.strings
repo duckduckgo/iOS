@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Rodyti, slėpti ir pertvarkyti skiltis naujame skirtuko puslapyje";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Jūsų naujo skirtuko puslapis yra... Atnaujintas!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Rodyti, slėpti ir pertvarkyti skiltis naujame skirtuko puslapyje";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SKILTYS";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "ŠAUKINIAI";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Tinkinti naują skirtuką";
+"new.tab.page.settings.title" = "Tinkinti naujo skirtuko puslapį";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "DI pokalbis";

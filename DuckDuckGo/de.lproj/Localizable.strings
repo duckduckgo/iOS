@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Passe deine Favoriten und häufig genutzten Funktionen an. Ordne die Dinge neu an oder blende sie aus, um die Übersichtlichkeit zu wahren.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Deine „Neuer Tab“-Seite ist ... neu!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "ABSCHNITTE";
 

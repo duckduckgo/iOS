@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Персонализирайте раздела Любими и функциите за достъп. Пренаредете елементите или скрийте някои от тях за по голяма яснота.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Страницата с нов раздел е... Нова!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "СЕКЦИИ";
 

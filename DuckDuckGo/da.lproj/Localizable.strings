@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tilpas dine favoritter og go-to-funktioner. Flyt rundt på ting, eller skjul dem for at holde det enkelt.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Vis, skjul og omarranger sektioner på den nye faneside";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Din nye faneside er... Ny!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Vis, skjul og omarranger sektioner på den nye faneside";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SEKTIONER";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "GENVEJE";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Tilpas ny fane";
+"new.tab.page.settings.title" = "Tilpas siden Ny fane";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI-chat";

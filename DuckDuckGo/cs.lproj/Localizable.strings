@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Přizpůsob si oblíbené záložky a časté funkce. Přeskládej je nebo je skryj, ať je všechno přehledné.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Zobrazení, skrytí a změna pořadí oddílů na stránce nové karty";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Stránka nové karty je... úplně nová!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Zobrazení, skrytí a změna pořadí oddílů na stránce nové karty";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "ODDÍLY";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "ZKRATKY";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Přizpůsobení nové karty";
+"new.tab.page.settings.title" = "Přizpůsobení karty s novou stránkou";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI chat";

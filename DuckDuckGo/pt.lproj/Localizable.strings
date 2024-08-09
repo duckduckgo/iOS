@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personaliza os teus Favoritos e as tuas funcionalidades de preferência. Reordena as coisas ou esconde-as para manter um aspeto limpo.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Mostrar, ocultar e reordenar secções na página do novo separador";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "A tua página Novo separador é... nova!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Mostrar, ocultar e reordenar secções na página do novo separador";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SECÇÕES";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "Atalhos";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Personalizar novo separador";
+"new.tab.page.settings.title" = "Personalizar página Novo separador";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Chat com IA";

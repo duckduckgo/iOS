@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Anpassa dina favoriter och funktioner. Ordna om saker och ting eller göm dem för att hålla layouten minimalistisk.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Visa, dölja och ändra ordning på avsnitt på den nya fliksidan";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Din nya fliksida är... ny!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Visa, dölja och ändra ordning på avsnitt på den nya fliksidan";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "AVSNITT";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "GENVÄGAR";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Anpassa ny flik";
+"new.tab.page.settings.title" = "Anpassa sidan Ny flik";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI-chatt";

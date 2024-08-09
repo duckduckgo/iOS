@@ -1710,11 +1710,13 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizează-ți Favoritele și funcțiile predilecte. Reordonează lucrurile sau ascunde-le pentru a menține ordinea.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Afișează, ascunde și reordonează secțiunile din pagina noii file";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Pagina Filă nouă este... nouă!";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Afișează, ascunde și reordonează secțiunile din pagina noii file";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SECȚIUNI";
 
@@ -1722,7 +1724,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "SCURTĂTURI";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Personalizează noua filă";
+"new.tab.page.settings.title" = "Personalizează pagina Filă nouă";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Chat IA";

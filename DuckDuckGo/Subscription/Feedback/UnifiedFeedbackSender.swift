@@ -175,6 +175,7 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
         case .pproFeedbackSubmitScreenShow(let source, let reportType, let category, let subcategory):
             return [
                 "source": source,
+                "reportType": reportType,
                 "category": category,
                 "subcategory": subcategory,
             ]

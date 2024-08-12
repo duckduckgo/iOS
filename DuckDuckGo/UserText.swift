@@ -546,6 +546,15 @@ public struct UserText {
     static let inviteDialogErrorAlertOKButton = NSLocalizedString("invite.alert.ok.button", value: "OK", comment: "OK title for invite screen alert dismissal button")
 
     // MARK: - Feedback Form
+    static let pproFeedbackFormTitle = NSLocalizedString("ppro.feedback-form.title", value: "Send Feedback", comment: "Title for the Privacy Pro feedback form")
+    static let pproFeedbackFormReportProblemTitle = NSLocalizedString("ppro.feedback-form.report-problem.title", value: "Report a Problem", comment: "Title for the Report a Problem step in the Privacy Pro feedback form")
+    static let pproFeedbackFormSelectCategoryTitle = NSLocalizedString("ppro.feedback-form.select-category.title", value: "Select a category", comment: "Title for the category selection section in the Privacy Pro feedback form")
+    static let pproFeedbackFormTextBoxTitle = NSLocalizedString("ppro.feedback-form.text-box.title", value: "Feedback", comment: "Title for the text box in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportPProProblemTitle = NSLocalizedString("ppro.feedback-form.report-ppro-problem.title", value: "Subscriptions and Payments", comment: "Title for the Subscriptions and Payments category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportVPNProblemTitle = NSLocalizedString("ppro.feedback-form.report-vpn-problem.title", value: "VPN", comment: "Title for the VPN category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportPIRProblemTitle = NSLocalizedString("ppro.feedback-form.report-pir-problem.title", value: "Personal Information Removal", comment: "Title for the PIR category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportITRProblemTitle = NSLocalizedString("ppro.feedback-form.report-itr-problem.title", value: "Identity Theft Restoration", comment: "Title for the ITR category in the Privacy Pro feedback form")
+
     static let vpnFeedbackFormTitle = NSLocalizedString("vpn.feedback-form.title", value: "Help Improve the DuckDuckGo VPN", comment: "Title for each screen of the VPN feedback form")
     static let vpnFeedbackFormCategorySelect = NSLocalizedString("vpn.feedback-form.category.select-category", value: "Select a category", comment: "Title for the category selection state of the VPN feedback form")
     static let vpnFeedbackFormCategoryUnableToInstall = NSLocalizedString("vpn.feedback-form.category.unable-to-install", value: "Unable to install VPN", comment: "Title for the 'unable to install' category of the VPN feedback form")
@@ -1106,6 +1115,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Update Plan or Cancel", comment: "Change plan or cancel title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
     public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "FAQs and Support", comment: "FAQ Button")
+    public static let subscriptionFeedback = NSLocalizedString("subscription.feedback", value: "Send Feedback", comment: "Send Feedback Button")
     public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.", comment: "FAQ Description")
     
     // Remove subscription confirmation

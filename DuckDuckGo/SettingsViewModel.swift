@@ -458,8 +458,6 @@ extension SettingsViewModel {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtectionConnected = true
-            case .snoozing:
-                self.state.networkProtectionConnected = true // TODO: change with @sam
             default:
                 self.state.networkProtectionConnected = false
             }

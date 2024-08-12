@@ -1508,6 +1508,9 @@ https://duckduckgo.com/mac";
 /* String indicating NetP is disconnected when viewed from the settings screen */
 "netP.cell.disconnected" = "Not connected";
 
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "Snoozing";
+
 /* Title for the DuckDuckGo VPN feature in settings */
 "netP.settings.title" = "VPN";
 
@@ -1547,6 +1550,9 @@ https://duckduckgo.com/mac";
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Open VPN";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected · %@";
 
@@ -1571,8 +1577,23 @@ https://duckduckgo.com/mac";
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "DuckDuckGo VPN is On";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN is Snoozed";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* The label for the NetP VPN when paused */
+"network.protection.status.paused" = "Paused";
+
+/* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
+"network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
+
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "Snooze For 20 Minutes";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Wake Up";
 
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
@@ -1603,6 +1624,9 @@ https://duckduckgo.com/mac";
 
 /* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Routing device traffic through %@.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Turn On Notifications";

@@ -1590,7 +1590,7 @@ https://duckduckgo.com/mac";
 "network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
 
 /* Snooze button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.snooze" = "Snooze For 2 Minutes";
+"network.protection.status.view.action.snooze" = "Snooze For 20 Minutes";
 
 /* Wake Up button title shown in NetworkProtection's status view. */
 "network.protection.status.view.action.wake-up" = "Wake Up";

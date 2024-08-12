@@ -445,7 +445,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        let defaultDuration: TimeInterval = .minutes(2) + .seconds(1) // TODO: Change to 20 mins, 2 min is only used for testing
+        let defaultDuration: TimeInterval = .minutes(20)
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
 

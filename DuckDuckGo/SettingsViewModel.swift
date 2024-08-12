@@ -422,10 +422,6 @@ extension SettingsViewModel {
         }
     }
 
-//    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-//        return SettingsState.NetworkProtection(enabled: false, status: "")
-//    }
-
     private func getSyncState() -> SettingsState.SyncSettings {
         SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
                                    title: {

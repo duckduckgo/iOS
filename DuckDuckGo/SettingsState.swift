@@ -36,11 +36,6 @@ struct SettingsState {
         var size: Int
     }
     
-//    struct NetworkProtection {
-//        var enabled: Bool
-////        var status: String
-//    }
-            
     struct Subscription: Codable {
         var enabled: Bool
         var canPurchase: Bool

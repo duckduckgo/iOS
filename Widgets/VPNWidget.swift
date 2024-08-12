@@ -151,7 +151,7 @@ struct VPNStatusView: View {
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
 
                 if status == .connected {
-                    Text(snoozeTimingStore.isSnoozing ? "Until \(snoozeEndDateString)" : entry.location)
+                    Text(snoozeTimingStore.isSnoozing ? UserText.vpnWidgetSnoozingUntil(endDate: snoozeEndDateString) : entry.location)
                         .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(Color(designSystemColor: .textSecondary))
                         .opacity(status.isConnected ? 0.8 : 0.6)
@@ -164,7 +164,7 @@ struct VPNStatusView: View {
 
                 switch status {
                 case .connected:
-                    let buttonTitle = snoozeTimingStore.isSnoozing ? "Wake Up" : UserText.vpnWidgetDisconnectButton
+                    let buttonTitle = snoozeTimingStore.isSnoozing ? UserText.vpnWidgetLiveActivityWakeUpButton : UserText.vpnWidgetDisconnectButton
                     let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : DisableVPNIntent()
 
                     Button(buttonTitle, intent: intent)

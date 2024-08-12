@@ -427,6 +427,10 @@ extension Pixel {
         case networkProtectionGeoswitchingSetCustom
         case networkProtectionGeoswitchingNoLocations
 
+        case networkProtectionSnoozeEnabledFromStatusMenu
+        case networkProtectionSnoozeDisabledFromStatusMenu
+        case networkProtectionSnoozeDisabledFromLiveActivity
+
         case networkProtectionFailureRecoveryStarted
         case networkProtectionFailureRecoveryFailed
         case networkProtectionFailureRecoveryCompletedHealthy
@@ -1149,6 +1153,10 @@ extension Pixel.Event {
         case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
         case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
         case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
+
+        case .networkProtectionSnoozeEnabledFromStatusMenu: return "m_netp_snooze_enabled_status_menu"
+        case .networkProtectionSnoozeDisabledFromStatusMenu: return "m_netp_snooze_disabled_status_menu"
+        case .networkProtectionSnoozeDisabledFromLiveActivity: return "m_netp_snooze_disabled_live_activity"
 
         case .networkProtectionClientFailedToFetchServerStatus: return "m_netp_server_migration_failed_to_fetch_status"
         case .networkProtectionClientFailedToParseServerStatusResponse: return "m_netp_server_migration_failed_to_parse_response"

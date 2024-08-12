@@ -22,6 +22,7 @@ import Combine
 import NetworkProtection
 import WidgetKit
 import BrowserServicesKit
+import Core
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -448,6 +449,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         let defaultDuration: TimeInterval = .minutes(20)
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
+        DailyPixel.fire(pixel: .networkProtectionSnoozeEnabledFromStatusMenu)
 
         if #available(iOS 17.0, *) {
             await VPNSnoozeLiveActivityManager().start(endDate: Date().addingTimeInterval(defaultDuration))
@@ -462,6 +464,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.cancelSnooze)
+        DailyPixel.fire(pixel: .networkProtectionSnoozeDisabledFromStatusMenu)
 
         if #available(iOS 17.0, *) {
             await VPNSnoozeLiveActivityManager().endSnoozeActivity()

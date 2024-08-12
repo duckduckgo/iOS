@@ -76,6 +76,9 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Disconnect";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Until %@";
+
 /* VPN Live Activity dismiss button text */
 "widget.vpn.live-activity.button.dismiss" = "Dismiss";
 

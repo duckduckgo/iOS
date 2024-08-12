@@ -109,6 +109,10 @@ struct UserText {
                                                                       value: "Dismiss",
                                                                       comment: "VPN Live Activity dismiss button text")
 
+    static func vpnWidgetSnoozingUntil(endDate: String) -> String {
+        let localized = NSLocalizedString("widget.vpn.label.snoozing-until", value: "Until %@", comment: "Label for the snooze end date, e.g. 'Until 9:51 AM'")
+        return localized.format(arguments: endDate)
+    }
 
     static let lockScreenSearchTitle = NSLocalizedString(
         "lock.screen.widget.search.title",

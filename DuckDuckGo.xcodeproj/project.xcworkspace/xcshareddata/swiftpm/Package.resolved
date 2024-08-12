@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/vpn-snooze-initial-support",
-        "revision" : "0ec4fc8b554e818244f83d0196eca06b214ce556"
+        "revision" : "1047d34c691ac9cbd58b89bd1f8e367b47179b15"
       }
     },
     {

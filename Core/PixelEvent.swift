@@ -219,7 +219,12 @@ extension Pixel {
         case autofillLoginsSaveLoginModalConfirmed
         case autofillLoginsSaveLoginModalDismissed
         case autofillLoginsSaveLoginModalExcludeSiteConfirmed
-        
+
+        case autofillLoginsSaveLoginOnboardingModalDisplayed
+        case autofillLoginsSaveLoginOnboardingModalConfirmed
+        case autofillLoginsSaveLoginOnboardingModalDismissed
+        case autofillLoginsSaveLoginOnboardingModalExcludeSiteConfirmed
+
         case autofillLoginsSavePasswordModalDisplayed
         case autofillLoginsSavePasswordModalConfirmed
         case autofillLoginsSavePasswordModalDismissed
@@ -246,10 +251,9 @@ extension Pixel {
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthCancelled
         case autofillLoginsAutopromptDismissed
         
-        case autofillLoginsFillLoginInlineDisablePromptShown
-        case autofillLoginsFillLoginInlineDisablePromptAutofillKept
-        case autofillLoginsFillLoginInlineDisablePromptAutofillDisabled
-        
+        case autofillLoginsFillLoginInlineDisableSnackbarShown
+        case autofillLoginsFillLoginInlineDisableSnackbarOpenSettings
+
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsResetExcludedDisplayed
@@ -744,6 +748,8 @@ extension Pixel {
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
+        case duckPlayerContingencySettingsDisplayed
+        case duckPlayerContingencyLearnMoreClicked
     }
 
 }
@@ -946,7 +952,12 @@ extension Pixel.Event {
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"
         case .autofillLoginsSaveLoginModalDismissed: return "m_autofill_logins_save_login_inline_dismissed"
         case .autofillLoginsSaveLoginModalExcludeSiteConfirmed: return "m_autofill_logins_save_login_exclude_site_confirmed"
-            
+
+        case .autofillLoginsSaveLoginOnboardingModalDisplayed: return "autofill_logins_save_login_inline_onboarding_displayed"
+        case .autofillLoginsSaveLoginOnboardingModalConfirmed: return "autofill_logins_save_login_inline_onboarding_confirmed"
+        case .autofillLoginsSaveLoginOnboardingModalDismissed: return "autofill_logins_save_login_inline_onboarding_dismissed"
+        case .autofillLoginsSaveLoginOnboardingModalExcludeSiteConfirmed: return "autofill_logins_save_login_onboarding_exclude_site_confirmed"
+
         case .autofillLoginsSavePasswordModalDisplayed: return "m_autofill_logins_save_password_inline_displayed"
         case .autofillLoginsSavePasswordModalConfirmed: return "m_autofill_logins_save_password_inline_confirmed"
         case .autofillLoginsSavePasswordModalDismissed: return "m_autofill_logins_save_password_inline_dismissed"
@@ -979,9 +990,8 @@ extension Pixel.Event {
         case .autofillLoginsAutopromptDismissed:
             return "m_autofill_logins_autoprompt_dismissed"
             
-        case .autofillLoginsFillLoginInlineDisablePromptShown: return "m_autofill_logins_save_disable-prompt_shown"
-        case .autofillLoginsFillLoginInlineDisablePromptAutofillKept: return "m_autofill_logins_save_disable-prompt_autofill-kept"
-        case .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled: return "m_autofill_logins_save_disable-prompt_autofill-disabled"
+        case .autofillLoginsFillLoginInlineDisableSnackbarShown: return "autofill_logins_save_disable_snackbar_shown"
+        case .autofillLoginsFillLoginInlineDisableSnackbarOpenSettings: return "autofill_logins_save_disable_snackbar_open_settings"
             
         case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
@@ -1476,6 +1486,8 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
         case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
         case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
+        case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
+        case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
         }
     }
 }

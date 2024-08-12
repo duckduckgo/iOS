@@ -613,6 +613,10 @@ class MainViewController: UIViewController {
 
         if self.appSettings.currentAddressBarPosition.isBottom {
             self.viewCoordinator.constraints.navigationBarContainerHeight.constant = max(52, keyboardHeight)
+
+            // Temporary fix, see https://app.asana.com/0/392891325557410/1207990702991361/f
+            self.currentTab?.webView.scrollView.contentInset = .init(top: 0, left: 0, bottom: keyboardHeight > 0 ? 52 : 0, right: 0)
+
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
             }
@@ -765,13 +769,17 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
+        let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared)
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(tab: tabModel,
                                                       interactionModel: favoritesViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                       homePageMessagesConfiguration: homePageConfiguration,
-                                                      privacyProDataReporting: privacyProDataReporter)
+                                                      privacyProDataReporting: privacyProDataReporter,
+                                                      variantManager: variantManager,
+                                                      newTabDialogFactory: newTabDaxDialogFactory,
+                                                      newTabDialogTypeProvider: DaxDialogs.shared)
 
             controller.delegate = self
             controller.shortcutsDelegate = self
@@ -782,7 +790,6 @@ class MainViewController: UIViewController {
             viewCoordinator.logoContainer.isHidden = true
             adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
         } else {
-            let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared)
             let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
                                                             model: tabModel,
                                                             favoritesViewModel: favoritesViewModel,

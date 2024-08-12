@@ -391,20 +391,34 @@ public struct UserText {
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
     
-    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your password?", comment: "Title displayed on modal asking for the user to save the login for the first time")
-    public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the login")
+    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Save this password?", comment: "Title displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save password?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Passwords are stored securely on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
-    public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Don’t Save", comment: "Cancel CTA displayed on modal asking for the user to save the login")
-    public static let autofillSaveLoginNeverPromptCTA = NSLocalizedString("autofill.save-login.never-prompt.CTA", value:"Never Ask for This Site", comment: "CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin")
-    
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo Passwords & Autofill stores passwords securely on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginNeverPromptCTA = NSLocalizedString("autofill.save-login.never-prompt.CTA", value: "Never Ask for This Site", comment: "CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin")
+
     public static func autofillUpdatePassword(for title: String) -> String {
         let message = NSLocalizedString("autofill.update-password.title", value: "Update password for\n%@?", comment: "Title displayed on modal asking for the user to update the password")
         return message.format(arguments: title)
     }
     public static let autoUpdatePasswordMessage = NSLocalizedString("autofill.update-password.message", value: "DuckDuckGo will update this stored password on your device.", comment: "Message displayed on modal asking for the user to update the password")
-    
+
+    public static let autofillOnboardingKeyFeaturesTitle = NSLocalizedString("autofill.onboarding.key-features.title", value: "Key Features", comment: "Title of autofill onboarding prompt's features list")
+    public static let autofillOnboardingKeyFeaturesSignInsTitle = NSLocalizedString("autofill.onboarding.key-features.sign-ins.title", value: "Seamless sign-ins", comment: "Title of autofill onboarding prompt's sign-in feature")
+    public static let autofillOnboardingKeyFeaturesSignInsDescription = NSLocalizedString("autofill.onboarding.key-features.sign-ins.description", value: "No need to remember login info.", comment: "Description of autofill onboarding prompt's sign-in feature")
+    public static let autofillOnboardingKeyFeaturesSecureStorageTitle = NSLocalizedString("autofill.onboarding.key-features.secure-storage.title", value: "Secure storage", comment: "Title of autofill onboarding prompt's secure storage feature")
+    static func autofillOnboardingKeyFeaturesSecureStorageDescription(biometryString: String) -> String {
+        let localized = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description", value: "Passwords are encrypted, stored on device, and locked with %@.", comment: "Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter")
+        return String(format: localized, biometryString)
+    }
+    public static let autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterFaceID = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description.parameter.face-id", value: "Face ID or passcode", comment: "Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode")
+    public static let autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterTouchID = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description.parameter.touch-id", value: "Touch ID or passcode", comment: "Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode")
+    public static let autofillOnboardingKeyFeaturesSecureStorageDescriptionParameterPasscode = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description.parameter.passcode", value: "passcode", comment: "Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available")
+    public static let autofillOnboardingKeyFeaturesSecureStorageDescription = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description", value: "Passwords are encrypted, stored on device, and locked with Face ID or passcode.", comment: "Description of autofill onboarding prompt's secure storage feature")
+    public static let autofillOnboardingKeyFeaturesSyncTitle = NSLocalizedString("autofill.onboarding.key-features.sync.title", value: "Sync between devices", comment: "Title of autofill onboarding prompt's sync feature")
+    public static let autofillOnboardingKeyFeaturesSyncDescription = NSLocalizedString("autofill.onboarding.key-features.sync.description", value: "End-to-end encrypted and easy to set up when you’re ready.", comment: "Description of autofill onboarding prompt's sync feature")
+
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
     public static let autofillShowPassword = NSLocalizedString("autofill.show-password", value: "Show Password", comment: "Accessibility title for a Show Password button displaying actial password instead of *****")
@@ -414,10 +428,10 @@ public struct UserText {
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Password updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
-    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep saving passwords?", comment: "Title for alert when asking the user if they want to keep using autofill")
-    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable this at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
-    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Saving", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
     public static let autofillKeepEnabledAlertDisableAction = NSLocalizedString("autofill.keep-enabled.alert.disable", value: "Disable", comment: "Disable action for alert when asking the user if they want to keep using autofill")
+
+    public static let autofillDisablePromptMessage = NSLocalizedString("autofill.disable.prompt.message", value: "You can turn off password saving anytime.", comment: "Message for informing user that they can disable autofill in Settings")
+    public static let autofillDisablePromptAction = NSLocalizedString("autofill.disable.prompt.action.open-settings", value: "Open Settings", comment: "Open Settings action for disabling autofill in Settings")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
 

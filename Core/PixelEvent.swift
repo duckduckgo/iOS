@@ -753,6 +753,8 @@ extension Pixel {
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
         case duckPlayerWatchOnYoutube
+        case duckPlayerSettingAlwaysOverlayYoutube
+        case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
     }
@@ -1483,19 +1485,21 @@ extension Pixel.Event {
         case .newTabPageDisplayedDaily: return "m_new_tab_page_displayed_daily"
             
         // MARK: DuckPlayer
-        case .duckPlayerDailyUniqueView: return "m_duck-player_daily-unique-view"
-        case .duckPlayerViewFromYoutubeViaMainOverlay: return "m_duck-player_view-from_youtube_main-overlay"
-        case .duckPlayerViewFromYoutubeViaHoverButton: return "m_duck-player_view-from_youtube_hover-button"
-        case .duckPlayerViewFromYoutubeAutomatic: return "m_duck-player_view-from_youtube_automatic"
-        case .duckPlayerViewFromSERP: return "m_duck-player_view-from_serp"
-        case .duckPlayerViewFromOther: return "m_duck-player_view-from_other"
-        case .duckPlayerSettingAlwaysSettings: return "m_duck-player_setting_always_settings"
-        case .duckPlayerSettingAlwaysDuckPlayer: return "m_duck-player_setting_always_duck-player"
-        case .duckPlayerOverlayYoutubeImpressions: return "m_duck-player_overlay_youtube_impressions"
-        case .duckPlayerOverlayYoutubeWatchHere: return "m_duck-player_overlay_youtube_watch_here"
-        case .duckPlayerSettingNeverSettings: return "m_duck-player_setting_never_settings"
-        case .duckPlayerSettingBackToDefault: return "m_duck-player_setting_back-to-default"
-        case .duckPlayerWatchOnYoutube: return "m_duck-player_watch_on_youtube"
+        case .duckPlayerDailyUniqueView: return "duckplayer_daily-unique-view"
+        case .duckPlayerViewFromYoutubeViaMainOverlay: return "duckplayer_view-from_youtube_main-overlay"
+        case .duckPlayerViewFromYoutubeViaHoverButton: return "duckplayer_view-from_youtube_hover-button"
+        case .duckPlayerViewFromYoutubeAutomatic: return "duckplayer_view-from_youtube_automatic"
+        case .duckPlayerViewFromSERP: return "duckplayer_view-from_serp"
+        case .duckPlayerViewFromOther: return "duckplayer_view-from_other"
+        case .duckPlayerSettingAlwaysSettings: return "duckplayer_setting_always_settings"
+        case .duckPlayerSettingAlwaysDuckPlayer: return "duckplayer_setting_always_duck-player"
+        case .duckPlayerOverlayYoutubeImpressions: return "duckplayer_overlay_youtube_impressions"
+        case .duckPlayerOverlayYoutubeWatchHere: return "duckplayer_overlay_youtube_watch_here"
+        case .duckPlayerSettingNeverSettings: return "duckplayer_setting_never_settings"
+        case .duckPlayerSettingBackToDefault: return "duckplayer_setting_back-to-default"
+        case .duckPlayerWatchOnYoutube: return "duckplayer_watch_on_youtube"
+        case .duckPlayerSettingAlwaysOverlayYoutube: return "duckplayer_setting_always_overlay_youtube"
+        case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
         }

@@ -16,13 +16,6 @@ tags:
 - inputText: "privacy blogs"
 - pressKey: Enter
 
-# Dismiss Dax Dialogs if visible
-- runFlow:
-    when:
-        visible: "Phew!"
-    commands:
-        - tapOn: "Phew!"
-
 # Change settings
 - tapOn: "Safe search: moderate"
 - tapOn: "Off"

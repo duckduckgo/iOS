@@ -967,6 +967,15 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Το Duck Player δεν είναι διαθέσιμο";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Μάθετε περισσότερα";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "Η λειτουργία του Duck Player έχει επηρεαστεί από τις πρόσφατες αλλαγές στο YouTube. Προσπαθούμε να διορθώσουμε αυτά τα προβλήματα και εκτιμούμε την κατανόησή σας.";
+
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo για iOS";
 

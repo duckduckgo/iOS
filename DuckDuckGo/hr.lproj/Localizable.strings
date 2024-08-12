@@ -967,6 +967,15 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Duck Player je nedostupan";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Saznajte više";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "Na funkcionalnost Duck Playera utjecale su nedavne promjene na YouTubeu. Radimo na rješavanju ovih problema i cijenimo tvoje razumijevanje.";
+
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo za iOS";
 

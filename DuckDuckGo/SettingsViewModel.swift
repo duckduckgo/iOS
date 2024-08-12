@@ -458,6 +458,8 @@ extension SettingsViewModel {
             switch connectionStatus {
             case .connected:
                 self.state.networkProtectionConnected = true
+            case .snoozing:
+                self.state.networkProtectionConnected = true // TODO: change with @sam
             default:
                 self.state.networkProtectionConnected = false
             }
@@ -475,8 +477,8 @@ extension SettingsViewModel {
 
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasActiveSubscription in
-                self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
+            .sink { [weak self] status in
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
 
@@ -544,6 +546,7 @@ extension SettingsViewModel {
 
     func openDuckPlayerContingencyMessageSite() {
         guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
         UIApplication.shared.open(url,
                                   options: [:],
                                   completionHandler: nil)

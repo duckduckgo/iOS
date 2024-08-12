@@ -35,7 +35,7 @@ struct SettingsState {
         var enabled: Bool
         var size: Int
     }
-    
+
     struct Subscription: Codable {
         var enabled: Bool
         var canPurchase: Bool
@@ -58,7 +58,7 @@ struct SettingsState {
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: TextSize
-    var addressbar: AddressBar
+    var addressBar: AddressBar
     var showsFullURL: Bool
 
     // Privacy properties
@@ -105,7 +105,7 @@ struct SettingsState {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
             textSize: TextSize(enabled: false, size: 100),
-            addressbar: AddressBar(enabled: false, position: .top),
+            addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,
             autoconsentEnabled: false,

@@ -127,11 +127,11 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.addressbar.position
+                self.state.addressBar.position
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.addressbar.position = $0
+                self.state.addressBar.position = $0
             }
         )
     }
@@ -379,7 +379,7 @@ extension SettingsViewModel {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
-            addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,

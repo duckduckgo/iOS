@@ -10,6 +10,9 @@ appId: com.duckduckgo.mobile.ios
     appId: "com.duckduckgo.mobile.ios"
     clearState: true
     clearKeychain: true
+    arguments:
+        isUITesting: true
+        isOnboardingCompleted: ${ONBOARDING_COMPLETED}
 
 # Get past onboarding screens
 - runFlow:

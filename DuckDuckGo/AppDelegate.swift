@@ -99,6 +99,8 @@ import WebKit
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
+    private let launchOptionsHandler = LaunchOptionsHandler()
+
     override init() {
         super.init()
 
@@ -241,7 +243,12 @@ import WebKit
         AtbAndVariantCleanup.cleanup()
         variantManager.assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
-            daxDialogs.primeForUse()
+            // If it's running UI Tests check if the onboarding should be in a completed state.
+            if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
+                daxDialogs.dismiss()
+            } else {
+                daxDialogs.primeForUse()
+            }
 
             // New users don't see the message
             historyMessageManager.dismiss()
@@ -1088,4 +1095,25 @@ private extension Error {
         return false
     }
 
+}
+
+final class LaunchOptionsHandler {
+    private static let isUITesting = "isUITesting"
+    private static let isOnboardingcompleted = "isOnboardingCompleted"
+
+    private let launchArguments: [String]
+    private let userDefaults: UserDefaults
+
+    init(launchArguments: [String] = ProcessInfo.processInfo.arguments, userDefaults: UserDefaults = .app) {
+        self.launchArguments = launchArguments
+        self.userDefaults = userDefaults
+    }
+
+    var isUITesting: Bool {
+        launchArguments.contains(Self.isUITesting)
+    }
+
+    var isOnboardingCompleted: Bool {
+        userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
+    }
 }

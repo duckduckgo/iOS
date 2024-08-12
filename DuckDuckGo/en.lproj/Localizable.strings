@@ -1477,12 +1477,6 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
 /* Title for the DuckDuckGo VPN feature in settings */
 "netP.settings.title" = "VPN";
 

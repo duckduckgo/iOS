@@ -72,7 +72,8 @@ struct LottieView: UIViewRepresentable {
 
         // If the view is not animating and the progress is 0, apply an animation-specific hack.
         // The VPN startup animations have an issue with the initial frame that is introduced when backgrounding and foregrounding the app.
-        // The issue can be reproduced using the official Lottie SwiftUI wrapped, so
+        // The issue can be reproduced using the official Lottie SwiftUI wrapped, so instead it is being worked around by resetting the animation
+        // when appropriate.
         if !isAnimating.wrappedValue, uiView.currentProgress == 0 {
             if uiView.currentFrame == 0, self.animationName.hasPrefix("vpn-") {
                 uiView.animation = nil

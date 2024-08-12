@@ -36,10 +36,10 @@ struct SettingsState {
         var size: Int
     }
     
-    struct NetworkProtection {
-        var enabled: Bool
-        var status: String
-    }
+//    struct NetworkProtection {
+//        var enabled: Bool
+////        var status: String
+//    }
             
     struct Subscription: Codable {
         var enabled: Bool
@@ -92,8 +92,8 @@ struct SettingsState {
     var loginsEnabled: Bool
     
     // Network Protection properties
-    var networkProtection: NetworkProtection
-    
+    var networkProtectionConnected: Bool
+
     // Subscriptions Properties
     var subscription: Subscription
     
@@ -127,7 +127,7 @@ struct SettingsState {
             voiceSearchEnabled: false,
             speechRecognitionAvailable: false,
             loginsEnabled: false,
-            networkProtection: NetworkProtection(enabled: false, status: ""),
+            networkProtectionConnected: false,
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
                                        isSignedIn: false,

@@ -63,7 +63,7 @@ struct SettingsPrivacyProtectionsView: View {
             }
 
             // Network Protection
-            if viewModel.state.networkProtection.enabled {
+            if viewModel.state.networkProtectionConnected {
                 SettingsCellView(label: UserText.netPSettingsTitle,
                                  image: Image("SettingsNetworkProtection"),
                                  action: { viewModel.presentLegacyView(.netP) },

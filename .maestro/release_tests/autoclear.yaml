@@ -15,6 +15,10 @@ tags:
         isOnboardingCompleted: ${ONBOARDING_COMPLETED}
         "autoclear-ui-test": true
 
+# Get past onboarding screens
+- runFlow:
+    file: ../shared/onboarding.yaml
+
 # Enable autoclear
 
 - tapOn: "Settings"

@@ -54,6 +54,7 @@ struct InitialPlayerSettings: Codable {
     }
 
     let userValues: UserValues
+    let ui: UIValues
     let settings: PlayerSettings
     let platform: Platform
     let locale: Locale
@@ -68,14 +69,21 @@ struct InitialOverlaySettings: Codable {
 public struct UserValues: Codable {
     enum CodingKeys: String, CodingKey {
         case duckPlayerMode = "privatePlayerMode"
-        case askModeOverlayHidden = "overlayInteracted"
+        case overlayInteracted = "overlayInteracted"
     }
     let duckPlayerMode: DuckPlayerMode
-    let askModeOverlayHidden: Bool
+    let overlayInteracted: Bool
+}
+
+public struct UIValues: Codable {
+    enum CodingKeys: String, CodingKey {
+        case allowFirstVideo = "allowFirstVideo"
+    }
+    let allowFirstVideo: Bool
 }
 
 public enum DuckPlayerReferrer {
-    case youtube, other
+    case serp, youtube, other
 }
 
 protocol DuckPlayerProtocol: AnyObject {
@@ -148,7 +156,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         
     private func updateSettings(userValues: UserValues) async {
         settings.setMode(userValues.duckPlayerMode)
-        settings.setOverlayHidden(userValues.askModeOverlayHidden)
+        settings.setOverlayInteracted(userValues.overlayInteracted)
     }
     
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
@@ -195,7 +203,13 @@ final class DuckPlayer: DuckPlayerProtocol {
     private func encodeUserValues() -> UserValues {
         UserValues(
             duckPlayerMode: settings.mode,
-            askModeOverlayHidden: settings.askModeOverlayHidden
+            overlayInteracted: settings.overlayInteracted
+        )
+    }
+    
+    private func encodeUIValues() -> UIValues {
+        UIValues(
+            allowFirstVideo: settings.allowFirstVideo
         )
     }
 
@@ -208,7 +222,13 @@ final class DuckPlayer: DuckPlayerProtocol {
         let locale = InitialPlayerSettings.Locale.en
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-        return InitialPlayerSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+        let uiValues = encodeUIValues()
+        let values = InitialPlayerSettings(userValues: userValues,
+                                           ui: uiValues,
+                                           settings: playerSettings,
+                                           platform: platform,
+                                           locale: locale)
+        return values
     }
     
     @MainActor

@@ -92,7 +92,7 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
     }
     
     private func handleSettingsChange() {
-        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, askModeOverlayHidden: duckPlayer.settings.askModeOverlayHidden)
+        let values = UserValues(duckPlayerMode: duckPlayer.settings.mode, overlayInteracted: duckPlayer.settings.overlayInteracted)
         userValuesUpdated(userValues: values)
     }
     

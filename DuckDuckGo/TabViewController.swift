@@ -722,7 +722,7 @@ class TabViewController: UIViewController {
              
         }
         if let url {
-            duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
+            duckPlayerNavigationHandler?.setRefererFrom(url: url)
         }
     }
     

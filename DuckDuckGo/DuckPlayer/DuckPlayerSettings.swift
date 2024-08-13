@@ -68,12 +68,14 @@ protocol DuckPlayerSettingsProtocol: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
-    var askModeOverlayHidden: Bool { get }
+    var allowFirstVideo: Bool { get }
+    var overlayInteracted: Bool { get }
     
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
     func setMode(_ mode: DuckPlayerMode)
-    func setOverlayHidden(_ overlayHidden: Bool)
+    func setAllowFirstVideo(_ allowFirstVideo: Bool)
+    func setOverlayInteracted(_ overlayInteracted: Bool)
     func triggerNotification()
 }
 
@@ -125,16 +127,21 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    var overlayHidden: Bool {
+    var allowFirstVideo: Bool {
         if isFeatureEnabled {
-            return appSettings.duckPlayerAskModeOverlayHidden
+            return appSettings.duckPlayerAllowFirstVideo
         } else {
             return false
         }
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
-    var askModeOverlayHidden: Bool
+    var overlayInteracted: Bool {
+        if isFeatureEnabled {
+            return appSettings.duckPlayerOverlayInteracted
+        } else {
+            return false
+        }
+    }
     
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher
@@ -161,9 +168,16 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
-        if overlayHidden != appSettings.duckPlayerAskModeOverlayHidden {
-            appSettings.duckPlayerAskModeOverlayHidden = overlayHidden
+    func setAllowFirstVideo(_ allowFirstVideo: Bool) {
+        if allowFirstVideo != appSettings.duckPlayerAllowFirstVideo {
+            appSettings.duckPlayerAllowFirstVideo = allowFirstVideo
+            triggerNotification()
+        }
+    }
+
+    func setOverlayInteracted(_ overlayInteracted: Bool) {
+        if allowFirstVideo != appSettings.duckPlayerOverlayInteracted {
+            appSettings.duckPlayerOverlayInteracted = overlayInteracted
             triggerNotification()
         }
     }

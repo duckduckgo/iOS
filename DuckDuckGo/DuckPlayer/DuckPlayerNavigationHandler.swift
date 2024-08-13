@@ -244,6 +244,13 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
         }
         
+        // If view comes from SERP we want to disable the overlay
+        duckPlayer.settings.setAllowFirstVideo(false)
+        if navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,
+           duckPlayer.settings.mode == .alwaysAsk {
+            duckPlayer.settings.setAllowFirstVideo(true)
+        }
+        
         if url.isYoutubeVideo,
            !url.isDuckPlayer,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
@@ -254,6 +261,16 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
         completion(.allow)
+    }
+    
+    func setRefererFrom(url: URL) {
+        if url.isDuckDuckGoSearch {
+            referrer = .serp
+            duckPlayer.settings.setAllowFirstVideo(true)
+        } else {
+            referrer = url.isYoutube ? .youtube : .other
+            duckPlayer.settings.setAllowFirstVideo(false)
+        }
     }
     
     @MainActor

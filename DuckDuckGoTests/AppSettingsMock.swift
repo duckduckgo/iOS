@@ -85,7 +85,8 @@ class AppSettingsMock: AppSettings {
     var newTabPageSectionsEnabled: Bool = false
 
     var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
-    var duckPlayerAskModeOverlayHidden: Bool = false
+    var duckPlayerAllowFirstVideo: Bool = false
+    var duckPlayerOverlayInteracted: Bool = false
 
     var newTabPageShortcutsSettings: Data?
     var newTabPageSectionsSettings: Data?

@@ -81,7 +81,8 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
     
     var duckPlayerMode: DuckPlayerMode { get set }
-    var duckPlayerAskModeOverlayHidden: Bool { get set }
+    var duckPlayerAllowFirstVideo: Bool { get set }
+    var duckPlayerOverlayInteracted: Bool { get set }
 
     var newTabPageShortcutsSettings: Data? { get set }
     var newTabPageSectionsSettings: Data? { get set }

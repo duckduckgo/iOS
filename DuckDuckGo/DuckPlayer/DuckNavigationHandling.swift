@@ -30,4 +30,5 @@ protocol DuckNavigationHandling: AnyObject {
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
+    func setRefererFrom(url: URL)
 }

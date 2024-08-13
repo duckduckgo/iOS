@@ -77,7 +77,8 @@ public class AppUserDefaults: AppSettings {
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
-        static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
+        static let duckPlayerAllowFirstVideo = "com.duckduckgo.ios.duckPlayerAllowFirstVideo"
+        static let duckPlayerOverlayInteracted = "com.duckduckgo.ios.overlayInteracted"
     }
 
     private struct DebugKeys {
@@ -402,15 +403,29 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
-    var duckPlayerAskModeOverlayHidden: Bool {
+    var duckPlayerAllowFirstVideo: Bool {
         get {
-            if let value = userDefaults?.bool(forKey: Keys.duckPlayerAskModeOverlayHidden) {
+            if let value = userDefaults?.bool(forKey: Keys.duckPlayerAllowFirstVideo) {
                 return value
             }
             return false
         }
         set {
-            userDefaults?.set(newValue, forKey: Keys.duckPlayerAskModeOverlayHidden)
+            userDefaults?.set(newValue, forKey: Keys.duckPlayerAllowFirstVideo)
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
+                                            object: duckPlayerMode)
+        }
+    }
+    
+    var duckPlayerOverlayInteracted: Bool {
+        get {
+            if let value = userDefaults?.bool(forKey: Keys.duckPlayerOverlayInteracted) {
+                return value
+            }
+            return false
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.duckPlayerOverlayInteracted)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
                                             object: duckPlayerMode)
         }

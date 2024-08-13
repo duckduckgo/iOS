@@ -2344,6 +2344,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* FAQ Description */
 "subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
 
+/* Send Feedback Button */
+"subscription.feedback" = "Send Feedback";
+
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
 

@@ -39,6 +39,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
         var isShowingLearnMoreView: Bool = false
+        var isShowingUnifiedFeedbackForm: Bool = false
         var subscriptionInfo: Subscription?
         var isLoadingSubscriptionInfo: Bool = false
         var isLoadingEmailInfo: Bool = false
@@ -250,6 +251,12 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     func displayLearnMoreView(_ value: Bool) {
         if value != state.isShowingLearnMoreView {
             state.isShowingLearnMoreView = value
+        }
+    }
+
+    func displayUnifiedFeedbackForm(_ value: Bool) {
+        if value != state.isShowingUnifiedFeedbackForm {
+            state.isShowingUnifiedFeedbackForm = value
         }
     }
 

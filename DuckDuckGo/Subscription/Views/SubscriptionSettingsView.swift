@@ -35,6 +35,7 @@ struct SubscriptionSettingsView: View {
     @State var isShowingFAQView = false
     @State var isShowingLearnMoreView = false
     @State var isShowingEmailView = false
+    @State var isShowingUnifiedFeedbackForm = false
     @State var isShowingConnectionError = false
 
     enum Constants {
@@ -167,22 +168,41 @@ struct SubscriptionSettingsView: View {
     }
 
     @ViewBuilder var helpSection: some View {
-        Section(header: Text(UserText.subscriptionHelpAndSupport),
-                footer: Text(UserText.subscriptionFAQFooter)) {
-            
-            
-            SettingsCustomCell(content: {
-                Text(UserText.subscriptionFAQ)
-                    .daxBodyRegular()
-                    .foregroundColor(Color(designSystemColor: .accent))
-            },
-                               action: { viewModel.displayFAQView(true) },
-                               disclosureIndicator: false,
-                               isButton: true)
-
+        if viewModel.usesUnifiedFeedbackForm || true {
+            Section {
+                faqButton
+                supportButton
+            } header: {
+                Text(UserText.subscriptionHelpAndSupport)
+            }
+        } else {
+            Section(header: Text(UserText.subscriptionHelpAndSupport),
+                    footer: Text(UserText.subscriptionFAQFooter)) {
+                faqButton
+            }
         }
     }
-    
+
+    @ViewBuilder
+    private var faqButton: some View {
+        SettingsCustomCell(content: {
+            Text(UserText.subscriptionFAQ)
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .accent))
+        },
+                           action: { viewModel.displayFAQView(true) },
+                           disclosureIndicator: false,
+                           isButton: true)
+    }
+
+    @ViewBuilder
+    private var supportButton: some View {
+        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector())
+        NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
+            .daxBodyRegular()
+            .foregroundColor(.init(designSystemColor: .textPrimary))
+    }
+
     @ViewBuilder
     private var optionsView: some View {
         NavigationLink(destination: SubscriptionGoogleView(),
@@ -265,6 +285,14 @@ struct SubscriptionSettingsView: View {
         }
         .onChange(of: isShowingConnectionError) { value in
             viewModel.showConnectionError(value)
+        }
+
+        // Feedback Form
+        .onChange(of: viewModel.state.isShowingUnifiedFeedbackForm) { value in
+            isShowingUnifiedFeedbackForm = value
+        }
+        .onChange(of: isShowingUnifiedFeedbackForm) { value in
+            viewModel.displayUnifiedFeedbackForm(value)
         }
 
         .onChange(of: isShowingEmailView) { value in

@@ -108,11 +108,13 @@ class AppUserDefaultsTests: XCTestCase {
 
     func testDefaultAutofillStateIsFalse() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
         XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
     }
 
     func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeWhenSavePromptShownThenDefaultAutofillStateIsFalse() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
         appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
         appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = true
 
@@ -121,6 +123,7 @@ class AppUserDefaultsTests: XCTestCase {
 
     func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasNotBeenSeenAndIsNotNewInstallThenDefaultAutofillStateIsFalse() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
         appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
         appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
         appUserDefaults.autofillIsNewInstallForOnByDefault = false

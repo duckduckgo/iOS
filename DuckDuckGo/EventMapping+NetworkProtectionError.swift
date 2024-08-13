@@ -94,12 +94,12 @@ extension EventMapping where Event == NetworkProtectionError {
             // Should never be sent from from the app
         case .unhandledError(function: let function, line: let line, error: let error):
             pixelEvent = .networkProtectionUnhandledError
-        case .startWireGuardBackend(let errorCode):
+        case .startWireGuardBackend(let error):
             pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
-            params[PixelParameters.keychainErrorCode] = String(errorCode)
-        case .setWireguardConfig(let errorCode):
+            pixelError = error
+        case .setWireguardConfig(let error):
             pixelEvent = .networkProtectionWireguardErrorCannotSetWireguardConfig
-            params[PixelParameters.keychainErrorCode] = String(errorCode)
+            pixelError = error
         }
 
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)

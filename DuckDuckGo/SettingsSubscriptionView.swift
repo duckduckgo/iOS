@@ -158,7 +158,7 @@ struct SettingsSubscriptionView: View {
             SettingsCellView(label: UserText.settingsPProVPNTitle,
                              image: Image("SettingsPrivacyProVPN"),
                              action: { viewModel.presentLegacyView(.netP) },
-                             statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtection.enabled ? .on : .off),
+                             statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtectionConnected ? .on : .off),
                              disclosureIndicator: true,
                              isButton: true)
         }

@@ -274,6 +274,12 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
+/* Open Settings action for disabling autofill in Settings */
+"autofill.disable.prompt.action.open-settings" = "Άνοιγμα ρυθμίσεων";
+
+/* Message for informing user that they can disable autofill in Settings */
+"autofill.disable.prompt.message" = "Μπορείτε να απενεργοποιήσετε την αποθήκευση κωδικού πρόσβασης οποιαδήποτε στιγμή.";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Ενεργοποίηση Email Protection";
 
@@ -318,15 +324,6 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Απενεργοποίηση";
-
-/* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Συνεχίστε την αποθήκευση";
-
-/* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Μπορείτε να απενεργοποιήσετε τη λειτουργία αυτή οποιαδήποτε στιγμή από τις Ρυθμίσεις.";
-
-/* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Θέλετε να συνεχίσετε να αποθηκεύετε κωδικούς πρόσβασης;";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Προβολή";
@@ -508,6 +505,37 @@
 /* Do not translate - stringsdict entry */
 "autofill.number.of.passwords" = "autofill.number.of.passwords";
 
+/* Description of autofill onboarding prompt's secure storage feature
+   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+"autofill.onboarding.key-features.secure-storage.description" = "Οι κωδικοί πρόσβασης κρυπτογραφούνται, αποθηκεύονται στη συσκευή και κλειδώνονται με %@.";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.face-id" = "Face ID ή κωδικός πρόσβασης";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available */
+"autofill.onboarding.key-features.secure-storage.description.parameter.passcode" = "κωδικός πρόσβασης";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.touch-id" = "Touch ID ή κωδικός πρόσβασης";
+
+/* Title of autofill onboarding prompt's secure storage feature */
+"autofill.onboarding.key-features.secure-storage.title" = "Ασφαλής αποθήκευση";
+
+/* Description of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.description" = "Δεν χρειάζεται να θυμάστε τα στοιχεία σύνδεσης.";
+
+/* Title of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.title" = "Απρόσκοπτες συνδέσεις";
+
+/* Description of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.description" = "Κρυπτογραφημένο από άκρο σε άκρο και εύκολο στη ρύθμιση, όταν είστε έτοιμοι.";
+
+/* Title of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.title" = "Συγχρονισμός μεταξύ συσκευών";
+
+/* Title of autofill onboarding prompt's features list */
+"autofill.onboarding.key-features.title" = "Βασικά χαρακτηριστικά";
+
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
 
@@ -554,13 +582,10 @@
 "autofill.save-login.never-prompt.CTA" = "Μην ζητάτε ποτέ αυτόν τον ιστότοπο";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
+"autofill.save-login.new-user.message" = "Η λειτουργία DuckDuckGo κωδικοί πρόσβασης και αυτόματη συμπλήρωση αποθηκεύει τους κωδικούς πρόσβασης με ασφάλεια στη συσκευή σας.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Θέλετε το DuckDuckGo να αποθηκεύσει τον κωδικό πρόσβασής σας;";
-
-/* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Να μην αποθηκευτεί";
+"autofill.save-login.new-user.title" = "Αποθήκευση αυτού του κωδικού πρόσβασης;";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Αποθήκευση κωδικού πρόσβασης;";
@@ -966,6 +991,15 @@
 
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
+
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Το Duck Player δεν είναι διαθέσιμο";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Μάθετε περισσότερα";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "Η λειτουργία του Duck Player έχει επηρεαστεί από τις πρόσφατες αλλαγές στο YouTube. Προσπαθούμε να διορθώσουμε αυτά τα προβλήματα και εκτιμούμε την κατανόησή σας.";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo για iOS";

@@ -274,6 +274,12 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
+/* Open Settings action for disabling autofill in Settings */
+"autofill.disable.prompt.action.open-settings" = "Avaa asetukset";
+
+/* Message for informing user that they can disable autofill in Settings */
+"autofill.disable.prompt.message" = "Voit poistaa salasanojen tallennuksen käytöstä milloin tahansa.";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Ota Email Protection käyttöön";
 
@@ -318,15 +324,6 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Poista Käytöstä";
-
-/* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Jatka tallentamista";
-
-/* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Voit poistaa sen käytöstä milloin vain asetuksissa.";
-
-/* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Haluatko jatkaa salasanojen tallentamista?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Näytä";
@@ -508,6 +505,37 @@
 /* Do not translate - stringsdict entry */
 "autofill.number.of.passwords" = "autofill.number.of.passwords";
 
+/* Description of autofill onboarding prompt's secure storage feature
+   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+"autofill.onboarding.key-features.secure-storage.description" = "Salasanat salataan, tallennetaan laitteeseen ja lukitaan %@.";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.face-id" = "Face ID:lla tai salakoodilla";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available */
+"autofill.onboarding.key-features.secure-storage.description.parameter.passcode" = "salakoodilla";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.touch-id" = "Touch ID:lla tai salakoodilla";
+
+/* Title of autofill onboarding prompt's secure storage feature */
+"autofill.onboarding.key-features.secure-storage.title" = "Turvallinen tallennus";
+
+/* Description of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.description" = "Kirjautumistietoja ei tarvitse muistaa.";
+
+/* Title of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.title" = "Saumattomat kirjautumiset";
+
+/* Description of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.description" = "Päästä päähän salattu ja helppo ottaa käyttöön, kun olet valmis.";
+
+/* Title of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.title" = "Laitteiden välinen synkronointi";
+
+/* Title of autofill onboarding prompt's features list */
+"autofill.onboarding.key-features.title" = "Tärkeimmät ominaisuudet";
+
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Salasanat tallennetaan laitteellesi turvallisesti.";
 
@@ -554,13 +582,10 @@
 "autofill.save-login.never-prompt.CTA" = "Älä kysy enää tällä sivustolla";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Salasanat tallennetaan laitteellesi turvallisesti.";
+"autofill.save-login.new-user.message" = "DuckDuckGon salasanat ja automaattinen täyttö tallentaa salasanat turvallisesti laitteellesi.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa salasanasi?";
-
-/* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Älä tallenna";
+"autofill.save-login.new-user.title" = "Tallennetaanko tämä salasana?";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Tallennetaanko salasana?";
@@ -966,6 +991,15 @@
 
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
+
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Duck Player ei ole käytettävissä";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Lue lisää";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "YouTuben viimeaikaiset muutokset ovat vaikuttaneet Duck Playerin toimintaan. Pyrimme korjaamaan nämä ongelmat. Kiitos ymmärryksestä.";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo iOS:lle";

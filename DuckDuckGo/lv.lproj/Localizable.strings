@@ -274,6 +274,12 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
+/* Open Settings action for disabling autofill in Settings */
+"autofill.disable.prompt.action.open-settings" = "Atvērt iestatījumus";
+
+/* Message for informing user that they can disable autofill in Settings */
+"autofill.disable.prompt.message" = "Jebkurā brīdī varat izslēgt paroļu saglabāšanu.";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Iespējo e-pasta aizsardzību";
 
@@ -318,15 +324,6 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Atslēgt";
-
-/* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Turpināt saglabāt";
-
-/* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Vari to jebkurā laikā atspējot iestatījumos.";
-
-/* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vai vēlaties turpināt saglabāt paroles?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
@@ -508,6 +505,37 @@
 /* Do not translate - stringsdict entry */
 "autofill.number.of.passwords" = "autofill.number.of.passwords";
 
+/* Description of autofill onboarding prompt's secure storage feature
+   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+"autofill.onboarding.key-features.secure-storage.description" = "Paroles tiek šifrētas, saglabātas ierīcē un bloķētas ar %@.";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.face-id" = "Face ID vai piekļuves kods";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available */
+"autofill.onboarding.key-features.secure-storage.description.parameter.passcode" = "piekļuves kods";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.touch-id" = "Touch ID vai piekļuves kods";
+
+/* Title of autofill onboarding prompt's secure storage feature */
+"autofill.onboarding.key-features.secure-storage.title" = "Droša glabāšana";
+
+/* Description of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.description" = "Nav jāatceras pieteikšanās informācija.";
+
+/* Title of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.title" = "Ērta pierakstīšanās";
+
+/* Description of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.description" = "Pilnīga šifrēšana un viegla iestatīšana, kad esat gatavs.";
+
+/* Title of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.title" = "Sinhronizēšana starp ierīcēm";
+
+/* Title of autofill onboarding prompt's features list */
+"autofill.onboarding.key-features.title" = "Galvenās funkcijas";
+
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Paroles tiek droši glabātas tavā ierīcē.";
 
@@ -554,13 +582,10 @@
 "autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Paroles tiek droši glabātas tavā ierīcē.";
+"autofill.save-login.new-user.message" = "DuckDuckGo funkcija Paroles un automātiskā aizpildīšana droši glabā paroles tavā ierīcē.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavu paroli?";
-
-/* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Nesaglabāt";
+"autofill.save-login.new-user.title" = "Vai saglabāt šo paroli?";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Saglabāt paroli?";
@@ -966,6 +991,15 @@
 
 /* No comment provided by engineer. */
 "Duck Address" = "Duck adrese";
+
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Duck Player nav pieejams";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Uzzināt vairāk";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "Nesen ieviestās YouTube izmaiņas ir ietekmējušas Duck Player funkcionalitāti. Mēs strādājam, lai novērstu šīs problēmas, un novērtējam tavu sapratni.";
 
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo operētājsistēmai iOS";

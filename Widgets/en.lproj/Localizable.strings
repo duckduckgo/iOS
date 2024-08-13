@@ -76,11 +76,29 @@
 /* VPN disconnect button text */
 "widget.vpn.button.disconnect" = "Disconnect";
 
+/* Label for the snooze end date, e.g. 'Until 9:51 AM' */
+"widget.vpn.label.snoozing-until" = "Until %@";
+
+/* VPN Live Activity dismiss button text */
+"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+
+/* VPN Live Activity wake up button text */
+"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+
+/* VPN Live Activity active label text */
+"widget.vpn.live-activity.label.active" = "VPN is On";
+
+/* VPN Live Activity snoozing label text */
+"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN is On";
 
 /* Message describing VPN disconnected status */
 "widget.vpn.status.disconnected" = "VPN is Off";
+
+/* Message describing VPN snoozing status */
+"widget.vpn.status.snoozed" = "VPN is Snoozed";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Not connected";

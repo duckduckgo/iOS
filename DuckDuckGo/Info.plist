@@ -225,6 +225,8 @@
 	<true/>
 	<key>SUBSCRIPTION_APP_GROUP</key>
 	<string>$(AppIdentifierPrefix)$(SUBSCRIPTION_APP_GROUP)</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>

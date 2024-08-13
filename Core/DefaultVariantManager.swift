@@ -81,10 +81,19 @@ public protocol VariantRNG {
 
 }
 
+public protocol VariantNameOverriding {
+    var overriddenAppVariantName: String? { get }
+    var overriddenOnboardingVariantName: String? { get }
+}
+
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
+        let variantName = variantNameOverride.overriddenAppVariantName
+        ?? ProcessInfo.processInfo.environment["VARIANT"]
+        ?? storage.variant
+        ?? ""
+
         return variants.first(where: { $0.name == variantName })
     }
 
@@ -92,16 +101,19 @@ public class DefaultVariantManager: VariantManager {
     private let storage: StatisticsStore
     private let rng: VariantRNG
     private let returningUserMeasurement: ReturnUserMeasurement
+    private let variantNameOverride: VariantNameOverriding
 
     init(variants: [Variant],
          storage: StatisticsStore,
          rng: VariantRNG,
-         returningUserMeasurement: ReturnUserMeasurement) {
-
+         returningUserMeasurement: ReturnUserMeasurement,
+         variantNameOverride: VariantNameOverriding
+    ) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
         self.returningUserMeasurement = returningUserMeasurement
+        self.variantNameOverride = variantNameOverride
     }
 
     public convenience init() {
@@ -109,7 +121,8 @@ public class DefaultVariantManager: VariantManager {
             variants: VariantIOS.defaultVariants,
             storage: StatisticsUserDefaults(),
             rng: Arc4RandomUniformVariantRNG(),
-            returningUserMeasurement: KeychainReturnUserMeasurement()
+            returningUserMeasurement: KeychainReturnUserMeasurement(),
+            variantNameOverride: LaunchOptionsHandler()
         )
     }
 
@@ -141,6 +154,10 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
+        if let overriddenOnboardingVariant = variantNameOverride.overriddenOnboardingVariantName {
+            return variants.first(where: { $0.name == overriddenOnboardingVariant })
+        }
+
         if returningUserMeasurement.isReturningUser {
             return VariantIOS.returningUser
         }

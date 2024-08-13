@@ -18,7 +18,7 @@
 //
 
 import XCTest
-@testable import DuckDuckGo
+@testable import Core
 
 final class LaunchOptionsHandlerTests: XCTestCase {
     private static let suiteName = "testing_launchOptionsHandler"
@@ -34,6 +34,8 @@ final class LaunchOptionsHandlerTests: XCTestCase {
         userDefaults = nil
         try super.tearDownWithError()
     }
+
+    // MARK: - isUITesting
 
     func testShouldReturnTrueWhenIsUITestingIsCalledAndLaunchArgumentContainsIsUITesting() {
         // GIVEN
@@ -58,6 +60,8 @@ final class LaunchOptionsHandlerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    // MARK: - isOnboardingCompleted
+
     func testShouldReturnTrueWhenIsOnboardingCompletedAndDefaultsIsOnboardingCompletedIsTrue() {
         // GIVEN
         userDefaults.set("true", forKey: "isOnboardingCompleted")
@@ -80,5 +84,105 @@ final class LaunchOptionsHandlerTests: XCTestCase {
 
         // THEN
         XCTAssertFalse(result)
+    }
+
+    // MARK: - Onboarding Variant
+
+    func testShouldReturnOnboardingVariantWhenOnboardingVariantIsCalledAndDefaultsContainsOnboardingVariant() {
+        // GIVEN
+        userDefaults.set("mb", forKey: "onboardingVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.onboardingVariantName
+
+        // THEN
+        XCTAssertEqual(result, "mb")
+    }
+
+    func testShouldReturnNilWhenOnboardingVariantIsCalledAndDefaultsDoesNotContainsOnboardingVariant() {
+        // GIVEN
+        userDefaults.removeObject(forKey: "onboardingVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.onboardingVariantName
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testShouldReturnNilWhenOnboardingVariantIsCalledAndDefaultsContainsNullStringOnboardingVariant() {
+        // GIVEN
+        userDefaults.set("null", forKey: "onboardingVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.onboardingVariantName
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testShouldReturnNilWhenOnboardingVariantIsCalledAndisUITestingIsFalse() {
+        // GIVEN
+        userDefaults.removeObject(forKey: "isOnboardingCompleted")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.onboardingVariantName
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    // MARK: - App Variant
+
+    func testShouldReturnAppVariantWhenAppVariantIsCalledAndDefaultsContainsAppVariant() {
+        // GIVEN
+        userDefaults.set("mb", forKey: "currentAppVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.appVariantName
+
+        // THEN
+        XCTAssertEqual(result, "mb")
+    }
+
+    func testShouldReturnNilWhenAppVariantIsCalledAndDefaultsDoesNotContainsAppVariant() {
+        // GIVEN
+        userDefaults.removeObject(forKey: "currentAppVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.appVariantName
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testShouldReturnNilWhenAppVariantIsCalledAndDefaultsContainsNullStringAppVariant() {
+        // GIVEN
+        userDefaults.set("null", forKey: "currentAppVariant")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.appVariantName
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testShouldReturnNilWhenAppVariantIsCalledAndisUITestingIsFalse() {
+        // GIVEN
+        userDefaults.removeObject(forKey: "isOnboardingCompleted")
+        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
+
+        // WHEN
+        let result = sut.appVariantName
+
+        // THEN
+        XCTAssertNil(result)
     }
 }

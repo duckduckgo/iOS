@@ -271,9 +271,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .wireGuardSetNetworkSettings(let error):
                 pixelEvent = .networkProtectionWireguardErrorCannotSetNetworkSettings
                 pixelError = error
-            case .startWireGuardBackend(let code):
+            case .startWireGuardBackend(let error):
                 pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
-                params[PixelParameters.wireguardErrorCode] = String(code)
+                pixelError = error
+            case .setWireguardConfig(let error):
+                pixelEvent = .networkProtectionWireguardErrorCannotSetWireguardConfig
+                pixelError = error
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .vpnAccessRevoked:

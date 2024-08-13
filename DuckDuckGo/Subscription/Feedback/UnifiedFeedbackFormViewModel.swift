@@ -53,6 +53,12 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     enum ViewAction {
         case cancel
         case submit
+        case reportShow
+        case reportActions
+        case reportCategory
+        case reportSubcategory
+        case reportFAQClick
+        case reportSubmitShow
     }
 
     @Published var viewState: ViewState {
@@ -70,15 +76,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     @Published private(set) var submitButtonEnabled: Bool = false
     @Published var selectedReportType: String? {
         didSet {
-            let defaultCategory: UnifiedFeedbackCategory?
-            switch Source(rawValue: source) {
-            case .ppro: defaultCategory = .subscription
-            case .vpn: defaultCategory = .vpn
-            case .pir: defaultCategory = .pir
-            case .itr: defaultCategory = .itr
-            default: defaultCategory = nil
-            }
-            selectedCategory = defaultCategory?.rawValue ?? ""
+            selectedCategory = ""
         }
     }
     @Published var selectedCategory: String? {
@@ -86,7 +84,11 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
             selectedSubcategory = ""
         }
     }
-    @Published var selectedSubcategory: String?
+    @Published var selectedSubcategory: String? {
+        didSet {
+            feedbackFormText = ""
+        }
+    }
 
     var usesCompactForm: Bool {
         guard let selectedReportType else { return false }
@@ -132,11 +134,40 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
             } catch {
                 self.viewState = .feedbackSendingFailed
             }
+        case .reportShow:
+            await feedbackSender.sendFormShowPixel()
+        case .reportActions:
+            await feedbackSender.sendActionsScreenShowPixel(source: source)
+        case .reportCategory:
+            if let selectedReportType {
+                await feedbackSender.sendCategoryScreenShow(source: source,
+                                                            reportType: selectedReportType)
+            }
+        case .reportSubcategory:
+            if let selectedReportType, let selectedCategory {
+                await feedbackSender.sendSubcategoryScreenShow(source: source,
+                                                               reportType: selectedReportType,
+                                                               category: selectedCategory)
+            }
+        case .reportFAQClick:
+            if let selectedReportType, let selectedCategory, let selectedSubcategory {
+                await feedbackSender.sendSubmitScreenFAQClickPixel(source: source,
+                                                                   reportType: selectedReportType,
+                                                                   category: selectedCategory,
+                                                                   subcategory: selectedSubcategory)
+            }
+        case .reportSubmitShow:
+            if let selectedReportType, let selectedCategory, let selectedSubcategory {
+                await feedbackSender.sendSubmitScreenShowPixel(source: source,
+                                                               reportType: selectedReportType,
+                                                               category: selectedCategory,
+                                                               subcategory: selectedSubcategory)
+            }
         }
     }
 
     private func sendFeedback() async throws {
-        guard let selectedReportType, let selectedCategory, let selectedSubcategory else { return }
+        guard let selectedReportType else { return }
         switch UnifiedFeedbackReportType(rawValue: selectedReportType) {
         case nil:
             return
@@ -149,11 +180,6 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         case .reportIssue:
             try await reportProblem()
         }
-
-        await feedbackSender.sendSubmitScreenShowPixel(source: source,
-                                                       reportType: selectedReportType,
-                                                       category: selectedCategory,
-                                                       subcategory: selectedSubcategory)
     }
 
     private func reportProblem() async throws {

@@ -27,6 +27,10 @@ protocol UnifiedFeedbackSender {
 
     func sendFormShowPixel() async
     func sendSubmitScreenShowPixel(source: String, reportType: String, category: String, subcategory: String) async
+    func sendActionsScreenShowPixel(source: String) async
+    func sendCategoryScreenShow(source: String, reportType: String) async
+    func sendSubcategoryScreenShow(source: String, reportType: String, category: String) async
+    func sendSubmitScreenFAQClickPixel(source: String, reportType: String, category: String, subcategory: String) async
 
     static func additionalParameters(for pixel: Pixel.Event) -> [String: String]
 }
@@ -58,13 +62,13 @@ extension UnifiedFeedbackSender {
 
             switch frequency {
             case .regular:
-                Pixel.fire(pixel: pixel, 
+                Pixel.fire(pixel: pixel,
                            withAdditionalParameters: Self.additionalParameters(for: pixel),
                            onComplete: completionHandler)
             case .dailyAndCount:
-                DailyPixel.fireDailyAndCount(pixel: pixel, 
+                DailyPixel.fireDailyAndCount(pixel: pixel,
                                              withAdditionalParameters: Self.additionalParameters(for: pixel),
-                                             onDailyComplete: completionHandler,
+                                             onDailyComplete: { _ in },
                                              onCountComplete: completionHandler)
             }
         }
@@ -137,6 +141,32 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
                              frequency: .dailyAndCount)
     }
 
+    func sendActionsScreenShowPixel(source: String) async {
+        try? await sendPixel(.pproFeedbackActionsScreenShow(source: source),
+                             frequency: .dailyAndCount)
+    }
+
+    func sendCategoryScreenShow(source: String, reportType: String) async {
+        try? await sendPixel(.pproFeedbackCategoryScreenShow(source: source,
+                                                             reportType: ReportType.from(reportType)),
+                             frequency: .dailyAndCount)
+    }
+
+    func sendSubcategoryScreenShow(source: String, reportType: String, category: String) async {
+        try? await sendPixel(.pproFeedbackSubcategoryScreenShow(source: source,
+                                                                reportType: ReportType.from(reportType),
+                                                                category: Category.from(category)),
+                             frequency: .dailyAndCount)
+    }
+
+    func sendSubmitScreenFAQClickPixel(source: String, reportType: String, category: String, subcategory: String) async {
+        try? await sendPixel(.pproFeedbackSubmitScreenShow(source: source,
+                                                           reportType: ReportType.from(reportType),
+                                                           category: Category.from(category),
+                                                           subcategory: Subcategory.from(subcategory)),
+                             frequency: .dailyAndCount)
+    }
+
     static func additionalParameters(for pixel: Pixel.Event) -> [String: String] {
         switch pixel {
         case .pproFeedbackFeatureRequest(let description, let source):
@@ -173,6 +203,13 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
                 "category": category,
             ]
         case .pproFeedbackSubmitScreenShow(let source, let reportType, let category, let subcategory):
+            return [
+                "source": source,
+                "reportType": reportType,
+                "category": category,
+                "subcategory": subcategory,
+            ]
+        case .pproFeedbackSubmitScreenFAQClick(let source, let reportType, let category, let subcategory):
             return [
                 "source": source,
                 "reportType": reportType,

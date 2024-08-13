@@ -198,7 +198,7 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
-        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector())
+        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .vpn)
 
         Section {
             NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))

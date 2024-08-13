@@ -34,6 +34,7 @@ struct SettingsOthersView: View {
 
             // Share Feedback
             if viewModel.usesUnifiedFeedbackForm || true {
+                let formViewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .settings)
                 NavigationLink {
                     UnifiedFeedbackCategoryView(UserText.subscriptionFeedback, sources: UnifiedFeedbackFlowCategory.self, selection: $viewModel.selectedFeedbackFlow) {
                         if let selectedFeedbackFlow = viewModel.selectedFeedbackFlow {
@@ -43,9 +44,13 @@ struct SettingsOthersView: View {
                             case .browserFeedback:
                                 LegacyFeedbackView()
                             case .ppro:
-                                let formViewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector())
                                 UnifiedFeedbackRootView(viewModel: formViewModel)
                             }
+                        }
+                    }
+                    .onFirstAppear {
+                        Task {
+                            await formViewModel.process(action: .reportShow)
                         }
                     }
                 } label: {
@@ -66,7 +71,6 @@ struct SettingsOthersView: View {
                              webLinkIndicator: true,
                              isButton: true)
         }
-
     }
 
 }

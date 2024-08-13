@@ -30,11 +30,11 @@ struct UnifiedFeedbackRootView: View {
                 case nil:
                     EmptyView()
                 case .general:
-                    DefaultIssueDescriptionFormView(viewModel: viewModel, 
+                    DefaultIssueDescriptionFormView(viewModel: viewModel,
                                                     navigationTitle: UserText.browserFeedbackReportProblem,
                                                     label: UserText.browserFeedbackGeneralFeedback) {}
                 case .requestFeature:
-                    DefaultIssueDescriptionFormView(viewModel: viewModel, 
+                    DefaultIssueDescriptionFormView(viewModel: viewModel,
                                                     navigationTitle: UserText.browserFeedbackRequestFeature,
                                                     label: UserText.browserFeedbackRequestFeature) {}
                 case .reportIssue:
@@ -42,32 +42,49 @@ struct UnifiedFeedbackRootView: View {
                 }
             }
         }
+        .onFirstAppear {
+            Task {
+                await viewModel.process(action: .reportActions)
+            }
+        }
     }
 
     @ViewBuilder
     func reportProblemView() -> some View {
         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle, sources: UnifiedFeedbackCategory.self, selection: $viewModel.selectedCategory) {
-            if let selectedCategory = viewModel.selectedCategory {
-                switch UnifiedFeedbackCategory(rawValue: selectedCategory) {
-                case nil:
-                    EmptyView()
-                case .subscription:
-                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                        VPNIssueDescriptionFormView(viewModel: viewModel) {}
-                    }
-                case .vpn:
-                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                        VPNIssueDescriptionFormView(viewModel: viewModel) {}
-                    }
-                case .pir:
-                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                        VPNIssueDescriptionFormView(viewModel: viewModel) {}
-                    }
-                case .itr:
-                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                        VPNIssueDescriptionFormView(viewModel: viewModel) {}
+            Group {
+                if let selectedCategory = viewModel.selectedCategory {
+                    switch UnifiedFeedbackCategory(rawValue: selectedCategory) {
+                    case nil:
+                        EmptyView()
+                    case .subscription:
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                        }
+                    case .vpn:
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                        }
+                    case .pir:
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                        }
+                    case .itr:
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                        }
                     }
                 }
+            }
+            .onFirstAppear {
+                Task {
+                    await viewModel.process(action: .reportSubcategory)
+                }
+            }
+        }
+        .onFirstAppear {
+            Task {
+                await viewModel.process(action: .reportCategory)
             }
         }
     }
@@ -131,6 +148,11 @@ private struct DefaultIssueDescriptionFormView: View {
         configuredForm()
             .applyBackground()
             .navigationTitle(navigationTitle)
+            .onFirstAppear {
+                Task {
+                    await viewModel.process(action: .reportSubmitShow)
+                }
+            }
     }
 
     @ViewBuilder
@@ -217,6 +239,11 @@ private struct VPNIssueDescriptionFormView: View {
         configuredForm()
             .applyBackground()
             .navigationTitle(UserText.browserFeedbackReportProblem)
+            .onFirstAppear {
+                Task {
+                    await viewModel.process(action: .reportSubmitShow)
+                }
+            }
     }
 
     @ViewBuilder
@@ -266,6 +293,12 @@ private struct VPNIssueDescriptionFormView: View {
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
+            .onOpenURL { url in
+                Task {
+                    await viewModel.process(action: .reportFAQClick)
+                    await UIApplication.shared.open(url)
+                }
+            }
 
         Spacer()
             .frame(height: 1)

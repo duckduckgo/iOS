@@ -1096,24 +1096,3 @@ private extension Error {
     }
 
 }
-
-final class LaunchOptionsHandler {
-    private static let isUITesting = "isUITesting"
-    private static let isOnboardingcompleted = "isOnboardingCompleted"
-
-    private let launchArguments: [String]
-    private let userDefaults: UserDefaults
-
-    init(launchArguments: [String] = ProcessInfo.processInfo.arguments, userDefaults: UserDefaults = .app) {
-        self.launchArguments = launchArguments
-        self.userDefaults = userDefaults
-    }
-
-    var isUITesting: Bool {
-        launchArguments.contains(Self.isUITesting)
-    }
-
-    var isOnboardingCompleted: Bool {
-        userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
-    }
-}

@@ -14,7 +14,6 @@ appId: com.duckduckgo.mobile.ios
     arguments:
         isUITesting: true # Renaming `isUITesting` requires to update LaunchOptionsHandler `isUITesting` key
         isOnboardingCompleted: ${ONBOARDING_COMPLETED} # Renaming `isOnboardingCompleted` requires to update LaunchOptionsHandler `isOnboardingCompleted` key
-        onboardingVariant: ${ONBOARDING_VARIANT} # Renaming `onboardingVariant` requires to update LaunchOptionsHandler `onboardingVariant` key
         currentAppVariant: ${APP_VARIANT} # Renaming `currentAppVariant` requires to update LaunchOptionsHandler `currentAppVariant` key
 
 # Get past onboarding screens

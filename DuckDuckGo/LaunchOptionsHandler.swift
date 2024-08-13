@@ -22,7 +22,6 @@ import Foundation
 public final class LaunchOptionsHandler {
     private static let isUITesting = "isUITesting"
     private static let isOnboardingcompleted = "isOnboardingCompleted"
-    private static let onboardingVariantName = "onboardingVariant"
     private static let appVariantName = "currentAppVariant"
 
     private let launchArguments: [String]
@@ -39,10 +38,6 @@ public final class LaunchOptionsHandler {
 
     public var isOnboardingCompleted: Bool {
         userDefaults.string(forKey: Self.isOnboardingcompleted) == "true"
-    }
-
-    public var onboardingVariantName: String? {
-        sanitisedEnvParameter(string: userDefaults.string(forKey: Self.onboardingVariantName))
     }
 
     public var appVariantName: String? {
@@ -62,11 +57,6 @@ extension LaunchOptionsHandler: VariantNameOverriding {
     public var overriddenAppVariantName: String? {
         guard isUITesting else { return nil }
         return appVariantName
-    }
-
-    public var overriddenOnboardingVariantName: String? {
-        guard isUITesting else { return nil }
-        return onboardingVariantName
     }
 
 }

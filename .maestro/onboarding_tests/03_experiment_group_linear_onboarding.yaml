@@ -9,7 +9,7 @@ tags:
     file: ../shared/setup.yaml
     env:
         ONBOARDING_COMPLETED: "false"
-        ONBOARDING_VARIANT: "mb"
+        APP_VARIANT: "mb"
 
 # Handle Search Suggestions
 - assertVisible: "Ready to get started?\nTry a search!"

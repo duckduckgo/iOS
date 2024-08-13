@@ -143,33 +143,12 @@ class VariantManagerTests: XCTestCase {
 
     // MARK: - Variant Override
 
-    func testWhenVariantOverrideHasAppVariantThenCurrentVariantIsAppVariant() {
+    func testWhenVariantOverrideIsNotNilThenVariantIsReturned() {
         // GIVEN
         let expectedVariantName = "experiment-test"
         let variants = testVariants + [VariantIOS(name: expectedVariantName, weight: 50, isIncluded: VariantIOS.When.always, features: [])]
         let mockVariantOverride = MockVariantNameOverride()
         mockVariantOverride.overriddenAppVariantName = expectedVariantName
-        let sut = DefaultVariantManager(
-            variants: variants,
-            storage: MockStatisticsStore(),
-            rng: MockVariantRNG(returnValue: 0),
-            returningUserMeasurement: MockReturningUserMeasurement(),
-            variantNameOverride: mockVariantOverride
-        )
-
-        // WHEN
-        let result = sut.currentVariant
-
-        // THEN
-        XCTAssertEqual(result?.name, expectedVariantName)
-    }
-
-    func testWhenVariantOverrideHasOnboardingVariantThenVariantIsReturnedWhenSelectingVariant() {
-        // GIVEN
-        let expectedVariantName = "experiment-test"
-        let variants = testVariants + [VariantIOS(name: expectedVariantName, weight: 50, isIncluded: VariantIOS.When.always, features: [])]
-        let mockVariantOverride = MockVariantNameOverride()
-        mockVariantOverride.overriddenOnboardingVariantName = expectedVariantName
         let sut = DefaultVariantManager(
             variants: variants,
             storage: MockStatisticsStore(),
@@ -217,5 +196,4 @@ class MockReturningUserMeasurement: ReturnUserMeasurement {
 
 final class MockVariantNameOverride: VariantNameOverriding {
     var overriddenAppVariantName: String?
-    var overriddenOnboardingVariantName: String?
 }

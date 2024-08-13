@@ -83,17 +83,12 @@ public protocol VariantRNG {
 
 public protocol VariantNameOverriding {
     var overriddenAppVariantName: String? { get }
-    var overriddenOnboardingVariantName: String? { get }
 }
 
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        let variantName = variantNameOverride.overriddenAppVariantName
-        ?? ProcessInfo.processInfo.environment["VARIANT"]
-        ?? storage.variant
-        ?? ""
-
+        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
         return variants.first(where: { $0.name == variantName })
     }
 
@@ -154,8 +149,8 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
-        if let overriddenOnboardingVariant = variantNameOverride.overriddenOnboardingVariantName {
-            return variants.first(where: { $0.name == overriddenOnboardingVariant })
+        if let overriddenAppVariantName = variantNameOverride.overriddenAppVariantName {
+            return variants.first(where: { $0.name == overriddenAppVariantName })
         }
 
         if returningUserMeasurement.isReturningUser {

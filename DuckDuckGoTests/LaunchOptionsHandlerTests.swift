@@ -86,56 +86,6 @@ final class LaunchOptionsHandlerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
-    // MARK: - Onboarding Variant
-
-    func testShouldReturnOnboardingVariantWhenOnboardingVariantIsCalledAndDefaultsContainsOnboardingVariant() {
-        // GIVEN
-        userDefaults.set("mb", forKey: "onboardingVariant")
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.onboardingVariantName
-
-        // THEN
-        XCTAssertEqual(result, "mb")
-    }
-
-    func testShouldReturnNilWhenOnboardingVariantIsCalledAndDefaultsDoesNotContainsOnboardingVariant() {
-        // GIVEN
-        userDefaults.removeObject(forKey: "onboardingVariant")
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.onboardingVariantName
-
-        // THEN
-        XCTAssertNil(result)
-    }
-
-    func testShouldReturnNilWhenOnboardingVariantIsCalledAndDefaultsContainsNullStringOnboardingVariant() {
-        // GIVEN
-        userDefaults.set("null", forKey: "onboardingVariant")
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.onboardingVariantName
-
-        // THEN
-        XCTAssertNil(result)
-    }
-
-    func testShouldReturnNilWhenOnboardingVariantIsCalledAndisUITestingIsFalse() {
-        // GIVEN
-        userDefaults.removeObject(forKey: "isOnboardingCompleted")
-        let sut = LaunchOptionsHandler(launchArguments: [], userDefaults: userDefaults)
-
-        // WHEN
-        let result = sut.onboardingVariantName
-
-        // THEN
-        XCTAssertNil(result)
-    }
-
     // MARK: - App Variant
 
     func testShouldReturnAppVariantWhenAppVariantIsCalledAndDefaultsContainsAppVariant() {

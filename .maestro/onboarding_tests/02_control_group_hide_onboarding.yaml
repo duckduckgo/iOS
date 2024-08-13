@@ -9,7 +9,7 @@ tags:
     file: ../shared/setup.yaml
     env:
         ONBOARDING_COMPLETED: "false"
-        ONBOARDING_VARIANT: "ma"
+        APP_VARIANT: "ma"
 
 # Load Site
 - assertVisible:

@@ -35,7 +35,6 @@ struct SubscriptionSettingsView: View {
     @State var isShowingFAQView = false
     @State var isShowingLearnMoreView = false
     @State var isShowingEmailView = false
-    @State var isShowingUnifiedFeedbackForm = false
     @State var isShowingConnectionError = false
 
     enum Constants {
@@ -285,14 +284,6 @@ struct SubscriptionSettingsView: View {
         }
         .onChange(of: isShowingConnectionError) { value in
             viewModel.showConnectionError(value)
-        }
-
-        // Feedback Form
-        .onChange(of: viewModel.state.isShowingUnifiedFeedbackForm) { value in
-            isShowingUnifiedFeedbackForm = value
-        }
-        .onChange(of: isShowingUnifiedFeedbackForm) { value in
-            viewModel.displayUnifiedFeedbackForm(value)
         }
 
         .onChange(of: isShowingEmailView) { value in

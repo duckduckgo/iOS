@@ -90,6 +90,8 @@ final class SettingsViewModel: ObservableObject {
     
     @Published var isInternalUser: Bool = AppDependencyProvider.shared.internalUserDecider.isInternalUser
 
+    @Published var selectedFeedbackFlow: String?
+
     // MARK: - Deep linking
     // Used to automatically navigate to a specific section
     // immediately after loading the Settings View
@@ -335,11 +337,14 @@ final class SettingsViewModel: ObservableObject {
     var syncStatus: StatusIndicator {
         legacyViewProvider.syncService.authState != .inactive ? .on : .off
     }
-    
+
+    let usesUnifiedFeedbackForm: Bool
+
     // MARK: Default Init
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          subscriptionManager: SubscriptionManager,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability,
          voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
@@ -355,6 +360,7 @@ final class SettingsViewModel: ObservableObject {
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
+        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()

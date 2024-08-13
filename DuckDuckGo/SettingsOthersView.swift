@@ -33,10 +33,31 @@ struct SettingsOthersView: View {
             }
 
             // Share Feedback
-            SettingsCellView(label: UserText.settingsFeedback,
-                             image: Image("SettingsFeedback"),
-                             action: { viewModel.presentLegacyView(.feedback) },
-                             isButton: true)
+            if viewModel.usesUnifiedFeedbackForm || true {
+                NavigationLink {
+                    UnifiedFeedbackCategoryView(UserText.subscriptionFeedback, sources: UnifiedFeedbackFlowCategory.self, selection: $viewModel.selectedFeedbackFlow) {
+                        if let selectedFeedbackFlow = viewModel.selectedFeedbackFlow {
+                            switch UnifiedFeedbackFlowCategory(rawValue: selectedFeedbackFlow) {
+                            case nil:
+                                EmptyView()
+                            case .browserFeedback:
+                                LegacyFeedbackView()
+                            case .ppro:
+                                let formViewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector())
+                                UnifiedFeedbackRootView(viewModel: formViewModel)
+                            }
+                        }
+                    }
+                } label: {
+                    SettingsCellView(label: UserText.subscriptionFeedback,
+                                     image: Image("SettingsFeedback"))
+                }
+            } else {
+                SettingsCellView(label: UserText.settingsFeedback,
+                                 image: Image("SettingsFeedback"),
+                                 action: { viewModel.presentLegacyView(.feedback) },
+                                 isButton: true)
+            }
 
             // DuckDuckGo on Other Platforms
             SettingsCellView(label: UserText.duckduckgoOnOtherPlatforms,
@@ -48,4 +69,21 @@ struct SettingsOthersView: View {
 
     }
 
+}
+
+private struct LegacyFeedbackView: View {
+    var body: some View {
+        LegacyFeedbackViewRepresentable()
+    }
+}
+
+private struct LegacyFeedbackViewRepresentable: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
+        let navigationController = storyboard.instantiateViewController(withIdentifier: "Feedback") as! UINavigationController
+        return navigationController.viewControllers.first!
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    }
 }

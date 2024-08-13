@@ -29,6 +29,18 @@ extension FeedbackCategoryProviding where RawValue == String {
     }
 }
 
+enum UnifiedFeedbackFlowCategory: String, FeedbackCategoryProviding {
+    case browserFeedback
+    case ppro
+
+    var displayName: String {
+        switch self {
+        case .browserFeedback: return UserText.settingsFeedback
+        case .ppro: return UserText.subscriptionTitle
+        }
+    }
+}
+
 enum UnifiedFeedbackReportType: String, FeedbackCategoryProviding {
     case reportIssue
     case requestFeature

@@ -24,7 +24,7 @@ struct UnifiedFeedbackRootView: View {
     @StateObject var viewModel: UnifiedFeedbackFormViewModel
 
     var body: some View {
-        CategoryView(UserText.pproFeedbackFormTitle, sources: UnifiedFeedbackReportType.self, selection: $viewModel.selectedReportType) {
+        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormTitle, sources: UnifiedFeedbackReportType.self, selection: $viewModel.selectedReportType) {
             if let selectedReportType = viewModel.selectedReportType {
                 switch UnifiedFeedbackReportType(rawValue: selectedReportType) {
                 case nil:
@@ -40,44 +40,40 @@ struct UnifiedFeedbackRootView: View {
                 case .reportIssue:
                     reportProblemView()
                 }
-            } else {
-                EmptyView()
             }
         }
     }
 
     @ViewBuilder
     func reportProblemView() -> some View {
-        CategoryView(UserText.pproFeedbackFormReportProblemTitle, sources: UnifiedFeedbackCategory.self, selection: $viewModel.selectedCategory) {
+        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle, sources: UnifiedFeedbackCategory.self, selection: $viewModel.selectedCategory) {
             if let selectedCategory = viewModel.selectedCategory {
                 switch UnifiedFeedbackCategory(rawValue: selectedCategory) {
                 case nil:
                     EmptyView()
                 case .subscription:
-                    CategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
                         VPNIssueDescriptionFormView(viewModel: viewModel) {}
                     }
                 case .vpn:
-                    CategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
                         VPNIssueDescriptionFormView(viewModel: viewModel) {}
                     }
                 case .pir:
-                    CategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
                         VPNIssueDescriptionFormView(viewModel: viewModel) {}
                     }
                 case .itr:
-                    CategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                    UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
                         VPNIssueDescriptionFormView(viewModel: viewModel) {}
                     }
                 }
-            } else {
-                EmptyView()
             }
         }
     }
 }
 
-private struct CategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.AllCases == [Category], Category.RawValue == String {
+struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.AllCases == [Category], Category.RawValue == String {
     let title: String
     let prompt: String
     let sources: Category.Type

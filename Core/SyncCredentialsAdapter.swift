@@ -43,8 +43,7 @@ public final class SyncCredentialsAdapter {
         databaseCleaner = CredentialsDatabaseCleaner(
             secureVaultFactory: secureVaultFactory,
             secureVaultErrorReporter: secureVaultErrorReporter,
-            errorEvents: CredentialsCleanupErrorHandling(),
-            log: .generalLog
+            errorEvents: CredentialsCleanupErrorHandling()
         )
     }
 

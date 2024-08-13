@@ -105,10 +105,14 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
     private let tutorialSettings: TutorialSettings
     private let appSettings: AppSettings
     private let statisticsStore: StatisticsStore
-    private let secureVault: (any AutofillSecureVault)?
+    private let featureFlagger: FeatureFlagger
+    private let autofillCheck: () -> Bool
+    private let secureVaultMaker: () -> (any AutofillSecureVault)?
     private var syncService: DDGSyncing?
     private var tabsModel: TabsModel?
     private let dateGenerator: () -> Date
+
+    private var secureVault: (any AutofillSecureVault)?
 
     init(configurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          variantManager: VariantManager = DefaultVariantManager(),
@@ -117,7 +121,9 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
          tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
          appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         autofillCheck: @escaping () -> Bool = { AutofillSettingStatus.isAutofillEnabledInSettings },
+         secureVaultMaker: @escaping () -> (any AutofillSecureVault)? = { try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) },
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,
          dateGenerator: @escaping () -> Date = Date.init) {
@@ -128,7 +134,9 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
         self.tutorialSettings = tutorialSettings
         self.appSettings = appSettings
         self.statisticsStore = statisticsStore
-        self.secureVault = secureVault
+        self.featureFlagger = featureFlagger
+        self.autofillCheck = autofillCheck
+        self.secureVaultMaker = secureVaultMaker
         self.syncService = syncService
         self.tabsModel = tabsModel
         self.dateGenerator = dateGenerator
@@ -297,7 +305,13 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     var _accountsCount: Int {
-        (try? secureVault?.accountsCount()) ?? 0
+        if featureFlagger.isFeatureOn(.autofillCredentialInjecting) && autofillCheck() {
+            if secureVault == nil {
+                secureVault = secureVaultMaker()
+            }
+            return (try? secureVault?.accountsCount()) ?? 0
+        }
+        return 0
     }
 
     var _tabsCount: Int {

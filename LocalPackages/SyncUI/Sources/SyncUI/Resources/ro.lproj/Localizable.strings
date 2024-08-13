@@ -194,10 +194,10 @@
 "scan.or.see.code.footer" = "Nu poți scana?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Accesează Setări > Sincronizare și backup din browserul DuckDuckGo de pe un alt dispozitiv și selectează „Sincronizează cu un alt dispozitiv”.";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Accesează %@ în browserul DuckDuckGo pe un alt dispozitiv și selectează „Sincronizează cu un alt dispozitiv”.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Introdu manual codul";
@@ -209,7 +209,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "De la mobil la mobil?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Distribuie codul textului";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Scanează codul QR";
@@ -254,7 +254,7 @@
 "synced.devices.section.header" = "Dispozitive sincronizate";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Sincronizează cu un alt dispozitiv";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Acest dispozitiv";

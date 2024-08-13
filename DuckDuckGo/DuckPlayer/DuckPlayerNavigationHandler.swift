@@ -264,13 +264,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     }
     
     func setRefererFrom(url: URL) {
-        if url.isDuckDuckGoSearch {
-            referrer = .serp
-            duckPlayer.settings.setAllowFirstVideo(true)
-        } else {
-            referrer = url.isYoutube ? .youtube : .other
-            duckPlayer.settings.setAllowFirstVideo(false)
-        }
+        referrer = url.isDuckDuckGoSearch ? .serp : (url.isYoutube ? .youtube : .other)
+        
+        // If DP is in ask Mode and user comes from SERP, we need to disable the overlay
+        let allowFirstVideo = url.isDuckDuckGoSearch && duckPlayer.settings.mode == .alwaysAsk
+        duckPlayer.settings.setAllowFirstVideo(allowFirstVideo)
     }
     
     @MainActor

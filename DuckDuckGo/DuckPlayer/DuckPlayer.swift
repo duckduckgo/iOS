@@ -223,12 +223,11 @@ final class DuckPlayer: DuckPlayerProtocol {
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
         let uiValues = encodeUIValues()
-        let values = InitialPlayerSettings(userValues: userValues,
+        return InitialPlayerSettings(userValues: userValues,
                                            ui: uiValues,
                                            settings: playerSettings,
                                            platform: platform,
                                            locale: locale)
-        return values
     }
     
     @MainActor

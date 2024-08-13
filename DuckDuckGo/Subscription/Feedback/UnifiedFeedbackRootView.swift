@@ -181,21 +181,12 @@ private struct DefaultIssueDescriptionFormView: View {
             TextEditor(text: $viewModel.feedbackFormText)
                 .font(.body)
                 .foregroundColor(.primary)
+                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
                 .frame(height: 100)
                 .fixedSize(horizontal: false, vertical: true)
                 .onChange(of: viewModel.feedbackFormText) {
                     viewModel.feedbackFormText = String($0.prefix(1000))
                 }
-                .padding(EdgeInsets(top: 3.0, leading: 6.0, bottom: 5.0, trailing: 0.0))
-                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .stroke(Color(designSystemColor: .textPrimary), lineWidth: 0.4)
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .fill(Color(designSystemColor: .panel))
-                    }
-                )
         }
     }
 
@@ -310,21 +301,12 @@ private struct VPNIssueDescriptionFormView: View {
             TextEditor(text: $viewModel.feedbackFormText)
                 .font(.body)
                 .foregroundColor(.primary)
+                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
                 .frame(height: 100)
                 .fixedSize(horizontal: false, vertical: true)
                 .onChange(of: viewModel.feedbackFormText) {
                     viewModel.feedbackFormText = String($0.prefix(1000))
                 }
-                .padding(EdgeInsets(top: 3.0, leading: 6.0, bottom: 5.0, trailing: 0.0))
-                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .stroke(Color(designSystemColor: .textPrimary), lineWidth: 0.4)
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .fill(Color(designSystemColor: .panel))
-                    }
-                )
         }
     }
 

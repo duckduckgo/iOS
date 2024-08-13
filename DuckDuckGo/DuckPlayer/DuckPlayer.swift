@@ -78,7 +78,7 @@ public enum DuckPlayerReferrer {
     case youtube, other
 }
 
-protocol DuckPlayerProtocol {
+protocol DuckPlayerProtocol: AnyObject {
     
     var settings: DuckPlayerSettingsProtocol { get }
     var hostView: UIViewController? { get }
@@ -99,11 +99,24 @@ protocol DuckPlayerProtocol {
 
 final class DuckPlayer: DuckPlayerProtocol {
     
-    static let duckPlayerHost: String = "player"
-    static let commonName = "Duck Player"
-        
+    struct Constants {
+        static let duckPlayerHost: String = "player"
+        static let commonName = "Duck Player"
+    }
+    
     private(set) var settings: DuckPlayerSettingsProtocol
-    private(set) var hostView: UIViewController?
+    private(set) weak var hostView: UIViewController?
+    
+    private struct WKMessageData: Codable {
+        var context: String?
+        var featureName: String?
+        var method: String?
+    }
+    
+    private enum FeatureName: String {
+        case page = "duckPlayerPage"
+        case overlay = "duckPlayer"
+    }
     
     init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
         self.settings = settings
@@ -122,20 +135,22 @@ final class DuckPlayer: DuckPlayerProtocol {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
-        settings.setMode(userValues.duckPlayerMode)
-        settings.setOverlayHidden(userValues.askModeOverlayHidden)
         
-        // Fire Pixels
-        switch userValues.duckPlayerMode {
-        case .enabled:
-            Pixel.fire(pixel: Pixel.Event.duckPlayerSettingAlwaysDuckPlayer, debounce: 2)
-        default:
-            break
+        Task {
+            // Fires pixels
+            await firePixels(message: message, userValues: userValues)
+            
+            // Update Settings
+            await updateSettings(userValues: userValues)
         }
-        
         return userValues
     }
         
+    private func updateSettings(userValues: UserValues) async {
+        settings.setMode(userValues.duckPlayerMode)
+        settings.setOverlayHidden(userValues.askModeOverlayHidden)
+    }
+    
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
         encodeUserValues()
     }
@@ -200,6 +215,22 @@ final class DuckPlayer: DuckPlayerProtocol {
     private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
         let userValues = encodeUserValues()
         return InitialOverlaySettings(userValues: userValues)
+    }
+    
+    // Accessing WKMessage needs main thread
+    @MainActor
+    private func firePixels(message: WKScriptMessage, userValues: UserValues) {
+        
+        guard let messageData: WKMessageData = DecodableHelper.decode(from: message.body) else {
+            assertionFailure("DuckPlayer: expected JSON representation of Message")
+            return
+        }
+        guard let feature = messageData.featureName else { return }
+        let event: Pixel.Event = feature == FeatureName.page.rawValue ? .duckPlayerSettingAlwaysDuckPlayer : .duckPlayerSettingAlwaysDuckPlayer
+        if userValues.duckPlayerMode == .enabled {
+            Pixel.fire(pixel: event)
+        }
+       
     }
     
 }

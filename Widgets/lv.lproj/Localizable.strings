@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
+"iOS 17 required" = "Nepieciešams iOS 17";
 
 /* No comment provided by engineer. */
 "Label" = "Etiķete";
@@ -59,7 +59,7 @@
 "widget.gallery.search.display.name" = "Meklēt";
 
 /* Description of VPN widget in widget gallery */
-"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+"widget.gallery.vpn.description" = "Skati un pārvaldi savu VPN savienojumu. Nepieciešams Privacy Pro abonements.";
 
 /* Display name for VPN widget in widget gallery */
 "widget.gallery.vpn.display.name" = "VPN";
@@ -77,17 +77,17 @@
 "widget.search.duckduckgo" = "Meklēt DuckDuckGo";
 
 /* VPN connect button text */
-"widget.vpn.button.connect" = "Connect";
+"widget.vpn.button.connect" = "Savienot";
 
 /* VPN disconnect button text */
-"widget.vpn.button.disconnect" = "Disconnect";
+"widget.vpn.button.disconnect" = "Atvienot";
 
 /* Message describing VPN connected status */
-"widget.vpn.status.connected" = "VPN is On";
+"widget.vpn.status.connected" = "VPN ir ieslēgts";
 
 /* Message describing VPN disconnected status */
-"widget.vpn.status.disconnected" = "VPN is Off";
+"widget.vpn.status.disconnected" = "VPN ir izslēgts";
 
 /* Subtitle describing VPN disconnected status */
-"widget.vpn.subtitle.disconnected" = "Not connected";
+"widget.vpn.subtitle.disconnected" = "Nav savienots";
 

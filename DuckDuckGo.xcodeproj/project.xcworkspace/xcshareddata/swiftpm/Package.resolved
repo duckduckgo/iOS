@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/ppro/fix-shutdown",
-        "revision" : "e16471a3471a55766db61eceea2e7cd1134e9d67"
+        "revision" : "98bc647c19aaf7f7315eb269975c63b482bfd814",
+        "version" : "183.0.0-1"
       }
     },
     {

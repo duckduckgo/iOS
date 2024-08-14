@@ -32,11 +32,11 @@ struct UnifiedFeedbackRootView: View {
                 case .general:
                     DefaultIssueDescriptionFormView(viewModel: viewModel,
                                                     navigationTitle: UserText.browserFeedbackReportProblem,
-                                                    label: UserText.browserFeedbackGeneralFeedback) {}
+                                                    label: UserText.browserFeedbackGeneralFeedback)
                 case .requestFeature:
                     DefaultIssueDescriptionFormView(viewModel: viewModel,
                                                     navigationTitle: UserText.browserFeedbackRequestFeature,
-                                                    label: UserText.browserFeedbackRequestFeature) {}
+                                                    label: UserText.browserFeedbackRequestFeature)
                 case .reportIssue:
                     reportProblemView()
                 }
@@ -59,19 +59,19 @@ struct UnifiedFeedbackRootView: View {
                         EmptyView()
                     case .subscription:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                            VPNIssueDescriptionFormView(viewModel: viewModel)
                         }
                     case .vpn:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                            VPNIssueDescriptionFormView(viewModel: viewModel)
                         }
                     case .pir:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                            VPNIssueDescriptionFormView(viewModel: viewModel)
                         }
                     case .itr:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel) {}
+                            VPNIssueDescriptionFormView(viewModel: viewModel)
                         }
                     }
                 }
@@ -136,13 +136,10 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
 
 private struct DefaultIssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
-    @Environment(\.dismiss) private var dismiss
     @FocusState private var isTextEditorFocused: Bool
 
     let navigationTitle: String
     let label: String
-
-    var onDismiss: () -> Void
 
     var body: some View {
         configuredForm()
@@ -218,8 +215,6 @@ private struct DefaultIssueDescriptionFormView: View {
             Task {
                 _ = await viewModel.process(action: .submit)
             }
-            dismiss()
-            onDismiss()
         } label: {
             Text(UserText.vpnFeedbackFormButtonSubmit)
         }
@@ -230,10 +225,7 @@ private struct DefaultIssueDescriptionFormView: View {
 
 private struct VPNIssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
-    @Environment(\.dismiss) private var dismiss
     @FocusState private var isTextEditorFocused: Bool
-
-    var onDismiss: () -> Void
 
     var body: some View {
         configuredForm()
@@ -349,8 +341,6 @@ private struct VPNIssueDescriptionFormView: View {
             Task {
                 _ = await viewModel.process(action: .submit)
             }
-            dismiss()
-            onDismiss()
         } label: {
             Text(UserText.vpnFeedbackFormButtonSubmit)
         }
@@ -376,4 +366,8 @@ private struct UnifiedFeedbackFormButtonStyle: ButtonStyle {
 
     }
 
+}
+
+extension NSNotification.Name {
+    static let unifiedFeedbackNotification: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.unifiedFeedback")
 }

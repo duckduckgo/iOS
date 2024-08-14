@@ -20,10 +20,6 @@
 import Combine
 import SwiftUI
 
-protocol UnifiedFeedbackFormViewModelDelegate: AnyObject {
-    func feedbackViewModelDismissedView(_ viewModel: UnifiedFeedbackFormViewModel)
-}
-
 final class UnifiedFeedbackFormViewModel: ObservableObject {
     enum Source: String {
         case settings
@@ -39,6 +35,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         case feedbackSending
         case feedbackSendingFailed
         case feedbackSent
+        case feedbackCanceled
 
         var canSubmit: Bool {
             switch self {
@@ -46,6 +43,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
             case .feedbackSending: return false
             case .feedbackSendingFailed: return true
             case .feedbackSent: return false
+            case .feedbackCanceled: return false
             }
         }
     }
@@ -100,8 +98,6 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         }
     }
 
-    weak var delegate: UnifiedFeedbackFormViewModelDelegate?
-
     private let vpnMetadataCollector: any UnifiedMetadataCollector
     private let defaultMetadataCollector: any UnifiedMetadataCollector
     private let feedbackSender: any UnifiedFeedbackSender
@@ -124,7 +120,8 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     func process(action: ViewAction) async {
         switch action {
         case .cancel:
-            delegate?.feedbackViewModelDismissedView(self)
+            self.viewState = .feedbackCanceled
+            NotificationCenter.default.post(name: .unifiedFeedbackNotification, object: nil)
         case .submit:
             self.viewState = .feedbackSending
 
@@ -134,6 +131,8 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
             } catch {
                 self.viewState = .feedbackSendingFailed
             }
+
+            NotificationCenter.default.post(name: .unifiedFeedbackNotification, object: nil)
         case .reportShow:
             await feedbackSender.sendFormShowPixel()
         case .reportActions:

@@ -37,6 +37,8 @@ public extension URL {
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
     static let apps = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/apps"))!
     static let searchSettings = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/settings"))!
+    // TODO: Replace this with the actual URL
+    static let autofillHelpPageLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/duckduckgo-help-pages/"))!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
 

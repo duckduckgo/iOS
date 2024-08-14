@@ -45,6 +45,10 @@ struct AutofillItemsEmptyView: View {
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)
                 .lineLimit(nil)
+            Link(destination: .autofillHelpPageLink) {
+                Text(UserText.autofillLearnMoreLinkTitle)
+                    .daxBodyRegular()
+            }.tint(Color.init(designSystemColor: .accent))
 
             Button {
                 importButtonAction?()

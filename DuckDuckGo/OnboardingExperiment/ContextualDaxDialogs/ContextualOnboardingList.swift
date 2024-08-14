@@ -31,7 +31,7 @@ public enum ContextualOnboardingListItem: Equatable {
         case .search(let title):
             return title
         case .site(let title):
-            return title.replacingOccurrences(of: "https:", with: "")
+            return title.replacingOccurrences(of: "https://", with: "")
         case .surprise:
             return UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle
         }

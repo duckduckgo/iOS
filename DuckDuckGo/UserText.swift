@@ -657,8 +657,10 @@ public struct UserText {
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"You can import saved passwords from another browser into DuckDuckGo. Passwords are encrypted and nobody but you can see them, not even us.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
     public static let autofillEmptyViewButtonTitle = NSLocalizedString("autofill.logins.empty-view.button.title", value:"Import Passwords", comment: "Title for button to Import Passwords when autofill has no items")
+
+    public static let autofillLearnMoreLinkTitle = NSLocalizedString("autofill.learn.more.link.title", value: "Learn More", comment: "A link that takes the user to the DuckDuckGo help pages explaining password managers")
 
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
@@ -682,6 +684,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Passwords", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search passwords", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
+    public static let autofillLoginListSettingsFooterMarkdown = NSLocalizedString("autofill.logins.list.settings.footer.markdown", value: "Passwords are encrypted and nobody but you can see them, not even us. [Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/)", comment: "Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More.")
 
     public static let autofillResetNeverSavedActionTitle = NSLocalizedString("autofill.logins.list.never.saved.reset.action.title", value:"If you reset excluded sites, you will be prompted to save your password next time you sign in to any of these sites.", comment: "Alert title")
     public static let autofillResetNeverSavedActionConfirmButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.confirm", value: "Reset Excluded Sites", comment: "Confirm button to reset list of never saved sites")

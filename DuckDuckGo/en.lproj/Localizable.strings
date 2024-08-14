@@ -322,6 +322,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Disable";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
 
@@ -416,7 +419,7 @@
 "autofill.logins.empty-view.button.title" = "Import Passwords";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.";
+"autofill.logins.empty-view.subtitle" = "You can import saved passwords from another browser into DuckDuckGo. Passwords are encrypted and nobody but you can see them, not even us.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "No passwords saved yet";
@@ -459,6 +462,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Search passwords";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Passwords are encrypted and nobody but you can see them, not even us. [Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";

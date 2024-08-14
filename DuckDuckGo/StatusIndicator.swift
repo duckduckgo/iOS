@@ -1,5 +1,5 @@
 //
-//  SubscriptionNavigationCoordinator.swift
+//  StatusIndicator.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,10 +17,22 @@
 //  limitations under the License.
 //
 
-import Foundation
+import SwiftUI
+import Combine
 
-final class SubscriptionNavigationCoordinator: ObservableObject {
-    @Published var shouldPopToSubscriptionSettings: Bool = false
-    @Published var shouldPopToAppSettings: Bool = false
-    @Published var shouldPushSubscriptionWebView: Bool = false
+enum StatusIndicator: Equatable {
+    case alwaysOn
+    case on
+    case off
+
+    var text: String {
+        switch self {
+        case .alwaysOn:
+            return UserText.settingsAlwaysOn
+        case .on:
+            return UserText.settingsOn
+        case .off:
+            return UserText.settingsOff
+        }
+    }
 }

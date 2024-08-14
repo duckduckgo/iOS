@@ -1,5 +1,5 @@
 //
-//  SubscriptionNavigationCoordinator.swift
+//  Logger+Subscription.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,9 +18,11 @@
 //
 
 import Foundation
+import os.log
 
-final class SubscriptionNavigationCoordinator: ObservableObject {
-    @Published var shouldPopToSubscriptionSettings: Bool = false
-    @Published var shouldPopToAppSettings: Bool = false
-    @Published var shouldPushSubscriptionWebView: Bool = false
+extension Logger {
+
+    static var subscription: Logger = {
+        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "SubscriptionPro")
+    }()
 }

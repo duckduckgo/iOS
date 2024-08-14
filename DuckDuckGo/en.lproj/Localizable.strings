@@ -1502,17 +1502,8 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
 /* String indicating NetP is snoozing when viewed from the settings screen */
 "netP.cell.snoozing" = "Snoozing";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
@@ -2091,11 +2082,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Set Your Address Bar Position";
 
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Activating";
+
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
-
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Your Subscription is being activated";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
@@ -2103,8 +2094,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections:";
+/* Privacy pro description subtitle in settings */
+"settings.subscription.description" = "Includes our VPN, Personal Information Removal, and Identity Theft Restoration.";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -2114,11 +2105,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
-
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN
- • Personal Information Removal
- • Identity Theft Restoration";
 
 /* Identity theft restoration cell subtitle for privacy pro */
 "settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
@@ -2132,8 +2118,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2277,7 +2263,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.devices.header" = "Activate on Other Devices";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Add an optional email to your subscription to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
 "subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
@@ -2392,6 +2378,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
+
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Subscribed";
 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Your subscription expired on %@";

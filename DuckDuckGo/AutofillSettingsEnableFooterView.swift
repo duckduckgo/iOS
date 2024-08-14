@@ -55,6 +55,7 @@ class AutofillSettingsEnableFooterView: UIView {
         attributedText.addAttribute(.font, value: UIFont.daxFootnoteRegular(), range: wholeRange)
 
         textView.attributedText = attributedText
+        textView.linkTextAttributes = [.foregroundColor: UIColor(designSystemColor: .accent)]
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.backgroundColor = .clear

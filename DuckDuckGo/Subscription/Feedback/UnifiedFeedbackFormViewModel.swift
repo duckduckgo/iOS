@@ -49,8 +49,8 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     }
 
     enum ViewAction {
-        case cancel
         case submit
+        case faqClick
         case reportShow
         case reportActions
         case reportCategory
@@ -119,9 +119,6 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     @MainActor
     func process(action: ViewAction) async {
         switch action {
-        case .cancel:
-            self.viewState = .feedbackCanceled
-            NotificationCenter.default.post(name: .unifiedFeedbackNotification, object: nil)
         case .submit:
             self.viewState = .feedbackSending
 
@@ -133,6 +130,8 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
             }
 
             NotificationCenter.default.post(name: .unifiedFeedbackNotification, object: nil)
+        case .faqClick:
+            await openFAQ()
         case .reportShow:
             await feedbackSender.sendFormShowPixel()
         case .reportActions:
@@ -162,6 +161,27 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
                                                                category: selectedCategory,
                                                                subcategory: selectedSubcategory)
             }
+        }
+    }
+
+    private func openFAQ() async {
+        guard let selectedReportType, UnifiedFeedbackReportType(rawValue: selectedReportType) == .reportIssue,
+              let selectedCategory, let category = UnifiedFeedbackCategory(rawValue: selectedCategory),
+              let selectedSubcategory else {
+            return
+        }
+
+        let url: URL? = {
+        switch category {
+            case .subscription: return PrivacyProFeedbackSubcategory(rawValue: selectedSubcategory)?.url
+            case .vpn: return VPNFeedbackSubcategory(rawValue: selectedSubcategory)?.url
+            case .pir: return PIRFeedbackSubcategory(rawValue: selectedSubcategory)?.url
+            case .itr: return ITRFeedbackSubcategory(rawValue: selectedSubcategory)?.url
+            }
+        }()
+
+        if let url {
+            await UIApplication.shared.open(url)
         }
     }
 

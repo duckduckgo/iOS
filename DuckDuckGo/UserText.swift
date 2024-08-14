@@ -548,12 +548,24 @@ public struct UserText {
     // MARK: - Feedback Form
     static let pproFeedbackFormTitle = NSLocalizedString("ppro.feedback-form.title", value: "Send Feedback", comment: "Title for the Privacy Pro feedback form")
     static let pproFeedbackFormReportProblemTitle = NSLocalizedString("ppro.feedback-form.report-problem.title", value: "Report a Problem", comment: "Title for the Report a Problem step in the Privacy Pro feedback form")
+    static let pproFeedbackFormGeneralFeedbackTitle = NSLocalizedString("ppro.feedback-form.general-feedback.title", value: "General Feedback", comment: "Title for the General Feedback step in the Privacy Pro feedback form")
+    static let pproFeedbackFormRequestFeatureTitle = NSLocalizedString("ppro.feedback-form.request-feature.title", value: "Feature Request", comment: "Title for the Feature Request step in the Privacy Pro feedback form")
     static let pproFeedbackFormSelectCategoryTitle = NSLocalizedString("ppro.feedback-form.select-category.title", value: "Select a category", comment: "Title for the category selection section in the Privacy Pro feedback form")
     static let pproFeedbackFormTextBoxTitle = NSLocalizedString("ppro.feedback-form.text-box.title", value: "Feedback", comment: "Title for the text box in the Privacy Pro feedback form")
     static let pproFeedbackFormReportPProProblemTitle = NSLocalizedString("ppro.feedback-form.report-ppro-problem.title", value: "Subscriptions and Payments", comment: "Title for the Subscriptions and Payments category in the Privacy Pro feedback form")
     static let pproFeedbackFormReportVPNProblemTitle = NSLocalizedString("ppro.feedback-form.report-vpn-problem.title", value: "VPN", comment: "Title for the VPN category in the Privacy Pro feedback form")
     static let pproFeedbackFormReportPIRProblemTitle = NSLocalizedString("ppro.feedback-form.report-pir-problem.title", value: "Personal Information Removal", comment: "Title for the PIR category in the Privacy Pro feedback form")
     static let pproFeedbackFormReportITRProblemTitle = NSLocalizedString("ppro.feedback-form.report-itr-problem.title", value: "Identity Theft Restoration", comment: "Title for the ITR category in the Privacy Pro feedback form")
+
+    static let pproFeedbackFormReportProblemPlaceholder = NSLocalizedString("ppro.feedback-form.report-problem.placeholder", value: "Tell us what's going on…", comment: "Placeholder for the Report a Problem step in the Privacy Pro feedback form")
+    static let pproFeedbackFormGeneralFeedbackPlaceholder = NSLocalizedString("ppro.feedback-form.general-feedback.placeholder", value: "Please give us your feedback…", comment: "Placeholder for the General Feedback step in the Privacy Pro feedback form")
+    static let pproFeedbackFormRequestFeaturePlaceholder = NSLocalizedString("ppro.feedback-form.request-feature.placeholder", value: "What feature would you like to see?", comment: "Placeholder for the Feature Request step in the Privacy Pro feedback form")
+
+    static let pproFeedbackFormText1 = NSLocalizedString("ppro.feedback-form.text-1", value: "Found an issue not cover in our [help center](duck://)? We definitely want to know about it.", comment: "Text for the body of the PPro feedback form")
+    static let pproFeedbackFormText2 = NSLocalizedString("ppro.feedback-form.text-2", value: "In addition to the details entered above, we send some anonymized info with your feedback:", comment: "Text for the body of the PPro feedback form")
+    static let pproFeedbackFormText3 = NSLocalizedString("ppro.feedback-form.text-3", value: "• Whether some browser features are active", comment: "Bullet text for the body of the PPro feedback form")
+    static let pproFeedbackFormText4 = NSLocalizedString("ppro.feedback-form.text-4", value: "• Aggregate app diagnostics (e.g., error codes)", comment: "Bullet text for the body of the PPro feedback form")
+    static let pproFeedbackFormText5 = NSLocalizedString("ppro.feedback-form.text-5", value: "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.", comment: "Text for the body of the PPro feedback form")
 
     static let vpnFeedbackFormTitle = NSLocalizedString("vpn.feedback-form.title", value: "Help Improve the DuckDuckGo VPN", comment: "Title for each screen of the VPN feedback form")
     static let vpnFeedbackFormCategorySelect = NSLocalizedString("vpn.feedback-form.category.select-category", value: "Select a category", comment: "Title for the category selection state of the VPN feedback form")

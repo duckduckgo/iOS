@@ -30,13 +30,15 @@ struct UnifiedFeedbackRootView: View {
                 case nil:
                     EmptyView()
                 case .general:
-                    DefaultIssueDescriptionFormView(viewModel: viewModel,
-                                                    navigationTitle: UserText.browserFeedbackReportProblem,
-                                                    label: UserText.browserFeedbackGeneralFeedback)
+                    CompactIssueDescriptionFormView(viewModel: viewModel,
+                                                    navigationTitle: UserText.pproFeedbackFormGeneralFeedbackTitle,
+                                                    label: UserText.pproFeedbackFormGeneralFeedbackTitle,
+                                                    placeholder: UserText.pproFeedbackFormGeneralFeedbackPlaceholder)
                 case .requestFeature:
-                    DefaultIssueDescriptionFormView(viewModel: viewModel,
-                                                    navigationTitle: UserText.browserFeedbackRequestFeature,
-                                                    label: UserText.browserFeedbackRequestFeature)
+                    CompactIssueDescriptionFormView(viewModel: viewModel,
+                                                    navigationTitle: UserText.pproFeedbackFormRequestFeatureTitle,
+                                                    label: UserText.pproFeedbackFormRequestFeatureTitle,
+                                                    placeholder: UserText.pproFeedbackFormRequestFeaturePlaceholder)
                 case .reportIssue:
                     reportProblemView()
                 }
@@ -59,19 +61,23 @@ struct UnifiedFeedbackRootView: View {
                         EmptyView()
                     case .subscription:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel)
+                            IssueDescriptionFormView(viewModel: viewModel, 
+                                                     placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .vpn:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel)
+                            IssueDescriptionFormView(viewModel: viewModel, 
+                                                     placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .pir:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel)
+                            IssueDescriptionFormView(viewModel: viewModel, 
+                                                     placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .itr:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
-                            VPNIssueDescriptionFormView(viewModel: viewModel)
+                            IssueDescriptionFormView(viewModel: viewModel, 
+                                                     placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     }
                 }
@@ -134,12 +140,13 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
     }
 }
 
-private struct DefaultIssueDescriptionFormView: View {
+private struct CompactIssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
     @FocusState private var isTextEditorFocused: Bool
 
     let navigationTitle: String
     let label: String
+    let placeholder: String
 
     var body: some View {
         configuredForm()
@@ -197,7 +204,7 @@ private struct DefaultIssueDescriptionFormView: View {
                 .textCase(.uppercase)
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 4)
-            TextEditor(text: $viewModel.feedbackFormText)
+            TextEditorWithPlaceholder(text: $viewModel.feedbackFormText, placeholder: placeholder)
                 .font(.body)
                 .foregroundColor(.primary)
                 .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
@@ -223,14 +230,16 @@ private struct DefaultIssueDescriptionFormView: View {
     }
 }
 
-private struct VPNIssueDescriptionFormView: View {
+private struct IssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
     @FocusState private var isTextEditorFocused: Bool
+
+    let placeholder: String
 
     var body: some View {
         configuredForm()
             .applyBackground()
-            .navigationTitle(UserText.browserFeedbackReportProblem)
+            .navigationTitle(UserText.pproFeedbackFormReportProblemTitle)
             .onFirstAppear {
                 Task {
                     await viewModel.process(action: .reportSubmitShow)
@@ -281,16 +290,17 @@ private struct VPNIssueDescriptionFormView: View {
 
     @ViewBuilder
     private func header() -> some View {
-        Text(UserText.vpnFeedbackFormText1)
+        Text(LocalizedStringKey(UserText.pproFeedbackFormText1))
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
-            .onOpenURL { url in
+            .environment(\.openURL, OpenURLAction { _ in
                 Task {
                     await viewModel.process(action: .reportFAQClick)
-                    await UIApplication.shared.open(url)
+                    await viewModel.process(action: .faqClick)
                 }
-            }
+                return .handled
+            })
 
         Spacer()
             .frame(height: 1)
@@ -299,17 +309,17 @@ private struct VPNIssueDescriptionFormView: View {
 
     @ViewBuilder
     private func footer() -> some View {
-        Text(UserText.vpnFeedbackFormText2)
+        Text(UserText.pproFeedbackFormText2)
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
 
         VStack(alignment: .leading) {
-            Text(UserText.vpnFeedbackFormText3)
-            Text(UserText.vpnFeedbackFormText4)
+            Text(UserText.pproFeedbackFormText3)
+            Text(UserText.pproFeedbackFormText4)
         }
 
-        Text(UserText.vpnFeedbackFormText5)
+        Text(UserText.pproFeedbackFormText5)
             .multilineTextAlignment(.leading)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
@@ -323,7 +333,7 @@ private struct VPNIssueDescriptionFormView: View {
                 .textCase(.uppercase)
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 4)
-            TextEditor(text: $viewModel.feedbackFormText)
+            TextEditorWithPlaceholder(text: $viewModel.feedbackFormText, placeholder: placeholder)
                 .font(.body)
                 .foregroundColor(.primary)
                 .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
@@ -366,6 +376,24 @@ private struct UnifiedFeedbackFormButtonStyle: ButtonStyle {
 
     }
 
+}
+
+private struct TextEditorWithPlaceholder: View {
+    let text: Binding<String>
+    let placeholder: String
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            TextEditor(text: text)
+            if text.wrappedValue.isEmpty {
+                Text(placeholder)
+                    .foregroundColor(.secondary)
+                    .opacity(0.5)
+                    .padding(.top, 8)
+                    .padding(.leading, 5)
+            }
+        }
+    }
 }
 
 extension NSNotification.Name {

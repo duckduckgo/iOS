@@ -23,6 +23,10 @@ protocol FeedbackCategoryProviding: Hashable, CaseIterable, Identifiable, RawRep
     var displayName: String { get }
 }
 
+protocol FeedbackFAQProviding {
+    var url: URL { get }
+}
+
 extension FeedbackCategoryProviding where RawValue == String {
     var id: String {
         rawValue
@@ -48,9 +52,9 @@ enum UnifiedFeedbackReportType: String, FeedbackCategoryProviding {
 
     var displayName: String {
         switch self {
-        case .reportIssue: return UserText.browserFeedbackReportProblem
-        case .requestFeature: return UserText.browserFeedbackRequestFeature
-        case .general: return UserText.browserFeedbackGeneralFeedback
+        case .reportIssue: return UserText.pproFeedbackFormReportProblemTitle
+        case .requestFeature: return UserText.pproFeedbackFormRequestFeatureTitle
+        case .general: return UserText.pproFeedbackFormGeneralFeedbackTitle
         }
     }
 }
@@ -71,7 +75,7 @@ enum UnifiedFeedbackCategory: String, FeedbackCategoryProviding {
     }
 }
 
-enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding {
+enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding, FeedbackFAQProviding {
     case otp
     case somethingElse
 
@@ -79,6 +83,13 @@ enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding {
         switch self {
         case .otp: return UserText.pproFeedbackFormCategoryOTP
         case .somethingElse: return UserText.pproFeedbackFormCategoryOther
+        }
+    }
+
+    var url: URL {
+        switch self {
+        case .otp: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/payments/")!
+        case .somethingElse: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/payments/")!
         }
     }
 }
@@ -103,9 +114,21 @@ enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding {
         case .somethingElse: return UserText.vpnFeedbackFormCategoryOther
         }
     }
+
+    var url: URL {
+        switch self {
+        case .unableToInstall: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .failsToConnect: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .tooSlow: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .issueWithAppOrWebsite: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .appCrashesOrFreezes: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .cantConnectToLocalDevice: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+        case .somethingElse: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/")!
+        }
+    }
 }
 
-enum PIRFeedbackSubcategory: String, FeedbackCategoryProviding {
+enum PIRFeedbackSubcategory: String, FeedbackCategoryProviding, FeedbackFAQProviding {
     case nothingOnSpecificSite
     case notMe
     case scanStuck
@@ -121,9 +144,19 @@ enum PIRFeedbackSubcategory: String, FeedbackCategoryProviding {
         case .somethingElse: return UserText.pirFeedbackFormCategoryOther
         }
     }
+
+    var url: URL {
+        switch self {
+        case .nothingOnSpecificSite: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/personal-information-removal/removal-process/")!
+        case .notMe: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/personal-information-removal/removal-process/")!
+        case .scanStuck: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/personal-information-removal/removal-process/")!
+        case .removalStuck: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/personal-information-removal/removal-process/")!
+        case .somethingElse: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/personal-information-removal/")!
+        }
+    }
 }
 
-enum ITRFeedbackSubcategory: String, FeedbackCategoryProviding {
+enum ITRFeedbackSubcategory: String, FeedbackCategoryProviding, FeedbackFAQProviding {
     case accessCode
     case cantContactAdvisor
     case advisorUnhelpful
@@ -135,6 +168,15 @@ enum ITRFeedbackSubcategory: String, FeedbackCategoryProviding {
         case .cantContactAdvisor: return UserText.itrFeedbackFormCategoryCantContactAdvisor
         case .advisorUnhelpful: return UserText.itrFeedbackFormCategoryUnhelpful
         case .somethingElse: return UserText.itrFeedbackFormCategorySomethingElse
+        }
+    }
+
+    var url: URL {
+        switch self {
+        case .accessCode: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/identity-theft-restoration/")!
+        case .cantContactAdvisor: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/identity-theft-restoration/iris/")!
+        case .advisorUnhelpful: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/identity-theft-restoration/")!
+        case .somethingElse: return URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/identity-theft-restoration/")!
         }
     }
 }

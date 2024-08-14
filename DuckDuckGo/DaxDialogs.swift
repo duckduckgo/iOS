@@ -365,6 +365,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         return settings.lastShownContextualOnboardingDialogType
     }
 
+    private var shouldShowNetworkTrackerDialog: Bool {
+        !settings.browsingMajorTrackingSiteShown && !settings.browsingWithTrackersShown
+    }
+
     private func saveLastShownDaxDialog(specType: BrowsingSpec.SpecType) {
         guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = specType.rawValue
@@ -515,10 +519,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         if privacyInfo.url.isDuckDuckGoSearch && !settings.browsingAfterSearchShown {
             spec = searchMessage()
-        } else if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
+        } else if isFacebookOrGoogle(privacyInfo.url) && shouldShowNetworkTrackerDialog {
             // won't be shown if owned by major tracker message has already been shown
             spec = majorTrackerMessage(host)
-        } else if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
+        } else if let owner = isOwnedByFacebookOrGoogle(host), shouldShowNetworkTrackerDialog {
             // won't be shown if major tracker message has already been shown
             spec = majorTrackerOwnerMessage(host, owner)
         } else if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {

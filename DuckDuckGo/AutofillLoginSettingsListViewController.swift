@@ -761,8 +761,6 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch viewModel.viewState {
-        case .empty:
-            return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
         case .showItems:
             return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
         default:

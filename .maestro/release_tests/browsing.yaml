@@ -16,7 +16,4 @@ tags:
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.site"
 - pressKey: Enter
-- tapOn: 
-    optional: true 
-    text: "Got it"
 - assertVisible: ".*Privacy Test Pages.*"

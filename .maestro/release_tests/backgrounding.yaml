@@ -17,10 +17,6 @@ tags:
 - inputText: "https://privacy-test-pages.site"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
-
 # Go home and hover there a bit
 - pressKey: Home
 - swipe:  

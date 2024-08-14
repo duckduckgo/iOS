@@ -1010,7 +1010,7 @@
 		F15531922BF215ED0029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */; };
 		F15531942BF215F60029ED04 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = F15531932BF215F60029ED04 /* Subscription */; };
 		F15531962BF215F60029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531952BF215F60029ED04 /* SubscriptionTestingUtilities */; };
-		F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */; };
+		F1564F032B7B915F00D454A6 /* AppDelegate+Attribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
@@ -2781,7 +2781,7 @@
 		F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewControllerExtension.swift; path = ../Core/UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchBarExtension.swift; path = ../Core/SearchBarExtension.swift; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
-		F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SKAD4.swift"; sourceTree = "<group>"; };
+		F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Attribution.swift"; sourceTree = "<group>"; };
 		F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewController.swift; sourceTree = "<group>"; };
 		F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherViewController.swift; sourceTree = "<group>"; };
@@ -5818,7 +5818,7 @@
 				CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */,
-				F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */,
+				F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
@@ -7041,7 +7041,7 @@
 				9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */,
 				310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
-				F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */,
+				F1564F032B7B915F00D454A6 /* AppDelegate+Attribution.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				4B2C79612C5B27AC00A240CC /* VPNSnoozeActivityAttributes.swift in Sources */,
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,

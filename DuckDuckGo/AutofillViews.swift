@@ -81,7 +81,7 @@ struct AutofillViews {
         let text: String
 
         var body: some View {
-            Text(text)
+            Text("\(Image(.lockSolid16)) \(text)")
                 .daxFootnoteRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

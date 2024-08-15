@@ -46,6 +46,7 @@ class AutofillSettingsEnableFooterView: UIView {
         let attributedTextDescription = try! NSMutableAttributedString(markdown: UserText.autofillLoginListSettingsFooterMarkdown)
         let attachment = NSTextAttachment()
         attachment.image = UIImage(resource: .lockSolid16).withTintColor(UIColor(designSystemColor: .textSecondary))
+        attachment.bounds = CGRect(x: 0, y: -1, width: 12, height: 12)
         let attributedTextImage = NSMutableAttributedString(attachment: attachment)
         attributedText.append(attributedTextImage)
         attributedText.append(.init(string: " "))

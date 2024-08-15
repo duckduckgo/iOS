@@ -30,6 +30,7 @@ import Bookmarks
 import Persistence
 import Crashes
 import Configuration
+import Network      // Added later
 import Networking
 import DDGSync
 import RemoteMessaging
@@ -51,6 +52,7 @@ import WebKit
     var appIsLaunching = false
     var overlayWindow: UIWindow?
     var window: UIWindow?
+    var session: URLSession!        // Declaring the session here
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
@@ -88,6 +90,13 @@ import WebKit
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle
+    
+    // Adding the MPTCP here
+    private func configureNetwork() {
+        var conf = URLSessionConfiguration.default
+        conf.multipathServiceType = .handover
+        session = URLSession(configuration: conf)
+    }
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
@@ -113,6 +122,7 @@ import WebKit
 
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        configureNetwork()      // Calling the conifigureNetwork() before any networking tasks or services
 
         // SKAD4 support
         updateSKAd(conversionValue: 1)

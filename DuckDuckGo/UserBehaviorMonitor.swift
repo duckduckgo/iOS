@@ -23,7 +23,7 @@ import Core
 
 public extension Notification.Name {
 
-    static let userBehaviorDidMatchExperimentVariant = Notification.Name("com.duckduckgo.app.userBehaviorDidMatchExperimentVariant")
+    static let userBehaviorDidMatchBrokenSiteCriteria = Notification.Name("com.duckduckgo.app.userBehaviorDidMatchBrokenSiteCriteria")
 
 }
 
@@ -105,7 +105,7 @@ final class UserBehaviorMonitor {
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
-                NotificationCenter.default.post(name: .userBehaviorDidMatchExperimentVariant,
+                NotificationCenter.default.post(name: .userBehaviorDidMatchBrokenSiteCriteria,
                                                 object: self,
                                                 userInfo: [UserBehaviorEvent.Key.event: eventToFire])
             }

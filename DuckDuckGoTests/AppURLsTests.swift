@@ -47,8 +47,7 @@ final class AppURLsTests: XCTestCase {
         appConfig = AppPrivacyConfiguration(data: privacyData,
                                             identifier: "",
                                             localProtection: localProtection,
-                                            internalUserDecider: DefaultInternalUserDecider(),
-                                            toggleProtectionsCounter: ToggleProtectionsCounter(eventReporting: nil))
+                                            internalUserDecider: DefaultInternalUserDecider())
     }
 
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {

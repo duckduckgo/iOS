@@ -485,7 +485,7 @@ class MainViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(attemptToShowBrokenSitePrompt(_:)),
-            name: .userBehaviorDidMatchExperimentVariant,
+            name: .userBehaviorDidMatchBrokenSiteCriteria,
             object: nil)
     }
 

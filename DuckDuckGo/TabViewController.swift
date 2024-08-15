@@ -571,8 +571,9 @@ class TabViewController: UIViewController {
         refreshControl.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             reload()
+            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
+            AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
         }, for: .valueChanged)
 
         refreshControl.backgroundColor = .systemBackground
@@ -1600,6 +1601,10 @@ extension TabViewController: WKNavigationDelegate {
             refreshCountSinceLoad = 0
         }
 
+        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
+            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
+        }
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType != .backForward,
@@ -2320,7 +2325,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
         }
 
         refreshCountSinceLoad += 1
-        AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
+        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.refresh)
     }
 
 }

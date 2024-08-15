@@ -51,7 +51,8 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
             let config = AppPrivacyConfiguration(data: newConfig.data,
                                                  identifier: "",
                                                  localProtection: DomainsProtectionUserDefaultsStore(),
-                                                 internalUserDecider: DefaultInternalUserDecider())
+                                                 internalUserDecider: DefaultInternalUserDecider(),
+                                                 toggleProtectionsCounter: ToggleProtectionsCounter(eventReporting: nil))
 
             XCTAssertFalse(config.isTempUnprotected(domain: "main1.com"))
             XCTAssertFalse(config.isTempUnprotected(domain: "notdomain1.com"))

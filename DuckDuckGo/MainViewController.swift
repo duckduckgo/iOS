@@ -47,7 +47,6 @@ class MainViewController: UIViewController {
         return isIPad ? [.left, .right] : []
     }
     
-    
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
     weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!

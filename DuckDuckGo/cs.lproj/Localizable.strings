@@ -133,17 +133,11 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
 
-/* Description for alert shown when sync error occurs because of bad bookmarks data */
-"alert.sync-bookmarks-bad-data-error-description" = "Některé záložky jsou nesprávně naformátované nebo příliš dlouhé, takže jsme je nemohli synchronizovat.";
-
 /* Description for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-description" = "Už máš maximální počet záložek. Jestli chceš synchronizaci obnovit, některé záložky smaž.";
 
 /* Title for alert shown when sync bookmarks paused for too many items */
 "alert.sync-bookmarks-paused-title" = "Synchronizace záložek je pozastavená";
-
-/* Description for alert shown when sync error occurs because of bad credentials data */
-"alert.sync-credentials-bad-data-error-description" = "Některá hesla jsou nesprávně naformátovaná nebo příliš dlouhá, takže jsme je nemohli synchronizovat.";
 
 /* Description for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-description" = "Už máš maximální počet hesel. Jestli chceš synchronizaci obnovit, některá hesla smaž.";
@@ -247,9 +241,6 @@
 /* Subtitle for search history items */
 "autocomplete.history.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";
 
-/* The message text shown in suggestions */
-"autocomplete.history.warning.message" = "Návrhy vyhledávání teď zahrnují tvoje nedávno navštívené stránky. Vypnout se dají v nastavení nebo je můžeš kdykoli vymazat tlačítkem 🔥 Fire Button.";
-
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Stejné soukromí.\nLepší návrhy pro vyhledávání!";
 
@@ -273,12 +264,6 @@
 
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
-
-/* Open Settings action for disabling autofill in Settings */
-"autofill.disable.prompt.action.open-settings" = "Otevřené nastavení";
-
-/* Message for informing user that they can disable autofill in Settings */
-"autofill.disable.prompt.message" = "Ukládání hesel můžeš kdykoli vypnout.";
 
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Povol funkci Email Protection";
@@ -478,9 +463,6 @@
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Zrušit";
 
-/* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Jestli chceš použít uložené heslo, odemkni zařízení";
-
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Z tohoto webu";
 
@@ -504,37 +486,6 @@
 
 /* Do not translate - stringsdict entry */
 "autofill.number.of.passwords" = "autofill.number.of.passwords";
-
-/* Description of autofill onboarding prompt's secure storage feature
-   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
-"autofill.onboarding.key-features.secure-storage.description" = "Hesla jsou šifrována, uložena na zařízení a uzamčena pomocí funkce %@.";
-
-/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
-"autofill.onboarding.key-features.secure-storage.description.parameter.face-id" = "Face ID nebo přístupový kód";
-
-/* Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available */
-"autofill.onboarding.key-features.secure-storage.description.parameter.passcode" = "přístupový kód";
-
-/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode */
-"autofill.onboarding.key-features.secure-storage.description.parameter.touch-id" = "Touch ID nebo přístupový kód";
-
-/* Title of autofill onboarding prompt's secure storage feature */
-"autofill.onboarding.key-features.secure-storage.title" = "Zabezpečené úložiště";
-
-/* Description of autofill onboarding prompt's sign-in feature */
-"autofill.onboarding.key-features.sign-ins.description" = "Nemusíš si pamatovat přihlašovací údaje.";
-
-/* Title of autofill onboarding prompt's sign-in feature */
-"autofill.onboarding.key-features.sign-ins.title" = "Bezproblémové přihlašování";
-
-/* Description of autofill onboarding prompt's sync feature */
-"autofill.onboarding.key-features.sync.description" = "End-to-end šifrování a jednoduchá aktivace.";
-
-/* Title of autofill onboarding prompt's sync feature */
-"autofill.onboarding.key-features.sync.title" = "Synchronizace mezi zařízeními";
-
-/* Title of autofill onboarding prompt's features list */
-"autofill.onboarding.key-features.title" = "Klíčové vlastnosti";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Hesla se bezpečně ukládají do tvého zařízení.";
@@ -581,38 +532,8 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Na téhle stránce už se neptat";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Funkce ukládání a automatického vyplňování hesel DuckDuckGo bezpečně ukládá hesla ve tvém zařízení.";
-
-/* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Uložit tohle heslo?";
-
-/* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Uložit heslo?";
-
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Uložit heslo";
-
-/* Title for the button to report that autofill is not working on a site in autofill settings */
-"autofill.settings.report.not.working.button.title" = "Nahlásit problém s automatickým vyplňováním";
-
-/* Button title for the confirmation prompt when reporting autofill is not working for a website */
-"autofill.settings.report.not.working.confirmation.button" = "Poslat zprávu";
-
-/* Message for the confirmation prompt when reporting autofill is not working for a website */
-"autofill.settings.report.not.working.confirmation.message" = "Zprávy odeslané službě DuckDuckGo jsou anonymní a neobsahují tvoje uživatelské jméno, heslo ani žádné jiné osobní údaje.\n\nZpráva obsahuje jenom URL webu a stav některých nastavení automatického vyplňování.";
-
-/* Title for the confirmation prompt when reporting autofill is not working for a website */
-"autofill.settings.report.not.working.confirmation.title" = "Nahlásit, že na webu %@ automatické vyplňování nefunguje?";
-
-/* Message shown to user when they submit a report that autofill is not working for a website */
-"autofill.settings.report.not.working.sent.confirmation" = "Děkujeme! Podrobnosti od tebe nám pomůžou zlepšit DuckDuckGo pro všechny.";
-
-/* Subtitle for the row to report that autofill is not working on a site in autofill settings */
-"autofill.settings.report.not.working.subtitle" = "Anonymně můžeš nahlásit, že automatické vyplňování na tomhle webu nefunguje. Hesla nikdy nesdílíme.";
-
-/* Title for the row to report that autofill is not working on a site in autofill settings */
-"autofill.settings.report.not.working.title" = "Automatické vyplňování nefunguje?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Zobrazit heslo";
@@ -749,69 +670,6 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ano";
 
-/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
-"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
-
-/* Parameter is domain name (string) */
-"contextual.onboarding.browsing.one.tracker" = "Stránka *%1$@* se tě tady snaží sledovat. A tak jsem ji zablokoval!\n\n☝️ Klepnutím na štít si zobrazíš další informace.";
-
-/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
-"contextual.onboarding.final-screen.button" = "Plácnutí!";
-
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Pamatuj: Když se mnou na webu surfuješ, příšerné reklamy zaženeš. 👌";
-
-/* Title of the last screen of the onboarding to the browser app */
-"contextual.onboarding.final-screen.title" = "Máte to!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "Tohle je vyhledávač DuckDuckGo Search. Soukromý. Rychlý. S méně reklamami.";
-
-/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
-"contextual.onboarding.got-it.button" = "Mám to!";
-
-/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
-"contextual.onboarding.ntp.try-a-site.title" = "Zkus přejít na nějaký web!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Tvoje vyhledávání v DuckDuckGo je vždycky anonymní.";
-
-/* Title of a popover on the browser that invites the user to try a search */
-"contextual.onboarding.try-a-search.title" = "Tak co, jdeš na to?\nZkus něco vyhledat!";
-
-/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
-"contextual.onboarding.try-a-site.message" = "Zablokujeme trackery, aby vás nemohli špehovat.";
-
-/* Title of a popover on the browser that invites the user to try a visiting a website */
-"contextual.onboarding.try-a-site.title" = "A teď zkus přejít na nějaký web!";
-
-/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
-"contextual.onboarding.try-fire-button.message" = "Vcukuletu můžeš smazat svou aktivitu při prohlížení pomocí funkce Fire Button.\n\nZkus ji! 🔥";
-
-/* Browser Search query for how to say duck in english */
-"contextual.onboarding.try-search.option1-English" = "jak se řekne „kachna“ španělsky";
-
-/* Browser Search query for how to say duck in english */
-"contextual.onboarding.try-search.option1international" = "jak se řekne anglicky „kachna“";
-
-/* Search query for the cast of Mighty Ducks */
-"contextual.onboarding.try-search.option2-english" = "herci z filmu Šampióni";
-
-/* Search query for the cast of Avatar */
-"contextual.onboarding.try-search.option2-international" = "obsazení avatara";
-
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "aktuální počasí";
-
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "recepty na čokoládové sušenky";
-
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "recepty na večeři";
-
-/* Title for a button that triggers an unknown search query for the user. */
-"contextual.onboarding.try-search.surprise-me-title" = "Překvap mě!";
-
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Vždycky odesílat hlášení o selhání";
 
@@ -947,14 +805,8 @@
 /* Message for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.message" = "Opravdu chcete stahování zrušit?";
 
-/* Confirm action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.no" = "Ne";
-
 /* Title for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.title" = "Zrušit stahování?";
-
-/* Confirm action for for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.yes" = "Ano";
 
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Smazat vše";
@@ -992,50 +844,8 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck Address";
 
-/* Title for message explaining to the user that Duck Player is not available */
-"duck-player.contingency-title" = "Duck Player není dostupný";
-
-/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
-"duck-player.video-contingency-cta" = "Více informací";
-
-/* Message explaining to the user that Duck Player is not available */
-"duck-player.video-contingency-message" = "Funkčnost přehrávače Duck Player ovlivnily nedávné změny na YouTube. Problémy se snažíme opravit. Děkujeme za pochopení.";
-
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo pro iOS";
-
-/* Text displayed when DuckPlayer is always enabled */
-"duckPlayer.alwaysEnabled.label" = "Vždy";
-
-/* Text displayed when DuckPlayer is in 'Ask' mode. */
-"duckPlayer.ask.label" = "Vždycky se ptát";
-
-/* Text displayed when DuckPlayer is in off. */
-"duckPlayer.never.label" = "Nikdy";
-
-/* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player umožňuje dívat se na YouTube v prohlížeči DuckDuckGo v režimu kina a bez cílených reklam. To, co sleduješ, nebude ovlivňovat tvoje doporučení.";
-
-/* Button that will dismiss the modal */
-"duckplayer.presentation.modal.dismiss-button" = "Mám to!";
-
-/* Two line title (separated by \n) for the feature explanation */
-"duckplayer.presentation.modal.title" = "Topíš se v reklamách na YouTube? Vyzkoušej přehrávač Duck Player!";
-
-/* Footer label in the settings screen for Duck Player */
-"duckplayer.settings.footer" = "DuckDuckGo má všechno, co ti zaručí ochranu soukromí při procházení webu.";
-
-/* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Přehrávač Duck Player nabízí sledování v minimalistickém prostředí bez personalizovaných reklam a brání tomu, aby sledovaná videa ovlivňovala tvoje doporučení na YouTube.";
-
-/* Button that takes the user to learn more about Duck Player. */
-"duckplayer.settings.learn-more" = "Více informací";
-
-/* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Otevírat videa v přehrávači Duck Player";
-
-/* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.title" = "Duck Player";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Ochrana e-mailu";
@@ -1103,9 +913,6 @@
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Skryj svůj e-mail\na blokuj trackery";
 
-/* No comment provided by engineer. */
-"empty!" = "empty!";
-
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
 
@@ -1151,9 +958,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Odstranit";
 
-/* No comment provided by engineer. */
-"Favorites" = "Oblíbené";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Všechny oblíbené položky na zařízení";
 
@@ -1165,9 +969,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Jenom oblíbené mobilní položky";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokování reklam a vyskakovacích oken";
@@ -1394,9 +1195,6 @@
 /* Home tab title */
 "homeTab.title" = "Domů";
 
-/* No comment provided by engineer. */
-"ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
-
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
@@ -1473,9 +1271,6 @@
 "launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1528,15 +1323,6 @@
 
 /* Edit button */
 "navigation.title.edit" = "Upravit";
-
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "VPN DuckDuckGo";
@@ -1604,9 +1390,6 @@
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
 
-/* Custom DNS label shown in NetworkProtection's status view. */
-"network.protection.status.view.custom.dns" = "DNS Server";
-
 /* Generic connection failed error message shown in NetworkProtection's status view. */
 "network.protection.status.view.error.connection.failed.message" = "Please try again later.";
 
@@ -1640,23 +1423,14 @@
 /* Title of the About section in the VPN status screen */
 "network.protection.vpn.about" = "O společnosti";
 
-/* Section header for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.section.header" = "Notifications";
-
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Nech si poslat upozornění, když se přeruší připojení nebo se změní stav VPN.";
-
-/* Title for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Objem dat";
 
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Místní provoz může obejít síť VPN a připojit se k zařízením v místní síti, třeba k tiskárně.";
-
-/* Header text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.header" = "General";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Vyloučení místních sítí";
@@ -1697,51 +1471,11 @@
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
-/* Footer text for the DNS server setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
-
-/* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "FAQs and Support";
-
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Podělte se o zpětnou vazbu k VPN";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavení sítě VPN";
-
-/* Information message about New Tab Page redesign */
-"new.tab.page.intro.message.body" = "Přizpůsob si oblíbené záložky a časté funkce. Přeskládej je nebo je skryj, ať je všechno přehledné.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Zobrazení, skrytí a změna pořadí oddílů na stránce nové karty";
-
-/* Title of information message about New Tab Page redesign */
-"new.tab.page.intro.message.title" = "Stránka nové karty je... úplně nová!";
-/* Header title of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.header.title" = "ODDÍLY";
-
-/* Header title of the shortcuts in New Tab Page preferences. */
-"new.tab.page.settings.shortcuts.header.title" = "ZKRATKY";
-
-/* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Přizpůsobení nové karty";
-
-/* Shortcut title leading to AI Chat */
-"new.tab.page.shortcut.ai.chat" = "AI chat";
-
-/* Shortcut title leading to Bookmarks */
-"new.tab.page.shortcut.bookmarks" = "Záložky";
-
-/* Shortcut title leading to Downloads */
-"new.tab.page.shortcut.downloads" = "Stahování";
-
-/* Shortcut title leading to Passwords */
-"new.tab.page.shortcut.passwords" = "Hesla";
-
-/* Shortcut title leading to app settings */
-"new.tab.page.shortcut.settings" = "Nastavení";
-
-/* Text shown on the favorites info tooltip */
-"new.tab.page.tooltip.body" = "Na libovolném webu otevři nabídku ••• a vyber **Přidat do oblíbených**. Web se ti přidá na stránku nové karty.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1751,36 +1485,6 @@
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skryté vyskakovací okno";
-
-/* Button to change the default browser */
-"onboarding.browsers.cta" = "Vyber si prohlížeč";
-
-/* Message to highlight browser capability of blocking cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Blokování vyskakovacích oken ohledně cookies";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Blokování reklam, které tě všude pronásledují";
-
-/* Message to highlight browser capability ofswiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Rychle vymaž údaje o procházení";
-
-/* Message to highlight browser capability of private searches */
-"onboarding.browsers.features.privateSearch.title" = "Soukromé vyhledávání ve výchozím nastavení";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Blokuj trackery třetích stran";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Ochrana osobních údajů je aktivní!";
-
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Otevírejte odkazy s klidem mysli, pokaždé.";
-
-/* Button to continue the onboarding process */
-"onboarding.intro.cta" = "Pojďme na to!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Zdravíme tě.\n\nTěšíš se na lepší internet s větší ochranou soukromí?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Přidat widget";
@@ -1905,9 +1609,6 @@
 "prompt.custom.url.scheme.title" = "Otevřít v jiné aplikaci?";
 
 /* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhledejte nebo zadejte adresu";
 
 /* No comment provided by engineer. */
@@ -1953,17 +1654,8 @@
 /* Description for associated apps description */
 "settings.associated.apps.description" = "Zakažte, chcete-li zabránit automatickému otevírání odkazů v jiných nainstalovaných aplikacích.";
 
-/* Settings screen cell for autocomplete */
-"settings.autocomplete" = "Návrhy vyhledávání";
-
 /* Settings label for enabling or disabling recently visited sites */
 "settings.autocomplete.recentlyvisited" = "Nedávno navštívené stránky";
-
-/* Settings label for enabling or disabling recently visited sites */
-"settings.autocomplete.recentlyvisited.subtitle" = "Zobrazovat poslední navštívené weby v návrzích vyhledávání. Poslední navštívené weby jsou soukromé, ukládají se jen do tvého zařízení a dají se vymazat tlačítkem Fire Button.";
-
-/* Subtitle for Search Suggestions setting */
-"settings.autocomplete.subtitle" = "Nech si při psaní zobrazovat návrhy vyhledávání včetně záložek. Všechna vyhledávání jsou soukromá.";
 
 /* Settings screen cell text for Application Lock */
 "settings.autolock" = "Zámek aplikace";
@@ -2068,9 +1760,6 @@
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
-/* Title for Link in the Footer of Privacy Pro section */
-"settings.ppro.footer" = "Privacy Policy and Terms of Service";
-
 /* Settings screen cell for long press previews */
 "settings.previews" = "Náhledy dlouhého stisknutí";
 
@@ -2098,17 +1787,11 @@
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
 
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Tvoje předplatné se aktivuje";
-
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
-
-/* Privacy pro description subtext */
-"settings.subscription.description" = "Tři nové ochranné funkce pro ještě větší soukromí:";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -2118,9 +1801,6 @@
 
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Tvoje předplatné Privacy Pro vypršelo";
-
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
 
 /* Identity theft restoration cell subtitle for privacy pro */
 "settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
@@ -2133,9 +1813,6 @@
 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
-
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2169,6 +1846,21 @@
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automaticky blokuje skryté trackery při procházení webu.\n[Více informací](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Vyber možnost, která nejlíp popisuje tvůj problém.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Odmítnout";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Pomáhá nám to vylepšovat prohlížeč.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Stránka nefunguje? Dej DuckDuckGo vědět.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Web nefunguje";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odešlete zprávu";
@@ -2205,12 +1897,6 @@
 
 /* Subscription Activation Info */
 "subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
-
-/* Button for editing email address added to subscription */
-"subscription.activate.edit.email.button" = "Edit Email";
-
-/* View Title for editing your email account */
-"subscription.activate.edit.email.title" = "Edit Email";
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
@@ -2257,32 +1943,14 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Plány předplatného";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
-
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
-
-/* Change plan or cancel title */
-"subscription.change.plan" = "Update Plan or Cancel";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
 
 /* Title for Confirm messages */
 "subscription.confirm.title" = "Are you sure?";
-
-/* Header for section for activating subscription on other devices */
-"subscription.devices.header" = "Activate on Other Devices";
-
-/* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
-
-/* Footer for section for activating subscription on other devices when email is added */
-"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
 "subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
@@ -2292,12 +1960,6 @@
 
 /* Alert content for not found subscription */
 "subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
-
-/* FAQ Button */
-"subscription.faq" = "FAQs and Support";
-
-/* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2398,12 +2060,6 @@
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Tvoje předplatné vypršelo %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
-
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
-
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
 
@@ -2484,9 +2140,6 @@
 
 /* Light Theme entry */
 "theme.name.light" = "Světlo";
-
-/* No comment provided by engineer. */
-"This list contains messages that have been shown plus at most 1 message that is scheduled for showing. There may be more messages in the config that will be presented, but they haven't been processed yet." = "Tenhle seznam obsahuje zprávy, které se zobrazily, plus maximálně 1 zprávu, která má zobrazení naplánované. V konfiguraci můžou být další zprávy, které se zobrazí, ale ještě nebyly zpracované.";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "Ochrana deaktivována u domény %@";
@@ -2616,33 +2269,6 @@
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Přidat widget VPN na domovskou obrazovku";
-
-/* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
-
-/* Header text for the DNS section on the VPN Settings screen */
-"vpn.settings.dns.section-header" = "DNS";
-
-/* Title for the Apply button on the DNS Server setting screen */
-"vpn.settings.dns.server.apply.button.title" = "Apply";
-
-/* Default value for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.default.value" = "DuckDuckGo";
-
-/* Title for the IPv4 Address setting */
-"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
-
-/* Custom option for the DNS Server setting */
-"vpn.settings.dns.server.option.custom" = "Custom";
-
-/* Recommended option for the DNS Server setting */
-"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
-
-/* Title for the DNS Server setting screen */
-"vpn.settings.dns.server.screen.title" = "DNS Server";
-
-/* Title for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.title" = "DNS Server";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Povolit oznámení";

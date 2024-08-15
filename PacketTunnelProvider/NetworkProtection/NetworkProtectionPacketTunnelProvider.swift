@@ -303,15 +303,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 
-    public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        super.startTunnel(options: options) { error in
-            if error != nil {
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
-            }
-            completionHandler(error)
-        }
-    }
-
     public override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         switch reason {
         case .appUpdate, .userInitiated:

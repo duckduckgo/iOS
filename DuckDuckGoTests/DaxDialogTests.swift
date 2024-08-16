@@ -819,6 +819,21 @@ final class DaxDialog: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    func testWhenExperimentGroup_AndBrowserWithTrackersShown_AndFireButtonPulseActive_ThenDoNotShowPrivacyAnimationPulse() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.privacyButtonPulseShown = false
+        let sut = makeExperimentSUT(settings: settings)
+        sut.fireButtonPulseStarted()
+
+        // WHEN
+        let result = sut.shouldShowPrivacyButtonPulse
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
     func testWhenExperimentGroup_AndCallSetPrivacyButtonPulseSeen_ThenSetPrivacyButtonPulseShownFlagToTrue() {
         // GIVEN
         let settings = InMemoryDaxDialogsSettings()
@@ -929,6 +944,62 @@ final class DaxDialog: XCTestCase {
 
         // THEN
         XCTAssertFalse(sut.isAddFavoriteFlow)
+    }
+
+    func testWhenExperimentGroup_AndBlockedTrackersDialogSeen_AndMajorTrackerNotSeen_ThenReturnNilSpec() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndBlockedTrackersDialogNotSeen_AndMajorTrackerNotSeen_ThenReturnMajorNetworkSpec() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = false
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook))
+
+        // THEN
+        XCTAssertEqual(result?.type, .siteIsMajorTracker)
+    }
+
+    func testWhenExperimentGroup_AndBlockedTrackersDialogSeen_AndOwnedByMajorTrackerNotSeen_ThenReturnNilSpec() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = true
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ownedByFacebook))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
+    func testWhenExperimentGroup_AndBlockedTrackersDialogNotSeen_AndOwnedByMajorTrackerNotSeen_ThenReturnOwnedByMajorNetworkSpec() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.browsingWithTrackersShown = false
+        settings.browsingMajorTrackingSiteShown = false
+        let sut = makeExperimentSUT(settings: settings)
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ownedByFacebook))
+
+        // THEN
+        XCTAssertEqual(result?.type, .siteOwnedByMajorTracker)
     }
 
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {

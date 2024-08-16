@@ -166,7 +166,7 @@ private struct CompactIssueDescriptionFormView: View {
             ScrollViewReader { scrollView in
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        IssueDescriptionTextEditor(label: UserText.pproFeedbackFormTextBoxTitle,
+                        IssueDescriptionTextEditor(label: label,
                                                    placeholder: placeholder,
                                                    text: $viewModel.feedbackFormText,
                                                    focusState: $isTextEditorFocused,

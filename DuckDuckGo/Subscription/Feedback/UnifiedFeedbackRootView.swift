@@ -165,16 +165,11 @@ private struct CompactIssueDescriptionFormView: View {
             ScrollViewReader { scrollView in
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        textEditor()
-                            .focused($isTextEditorFocused)
-                            .onChange(of: isTextEditorFocused) { isFocused in
-                                guard isFocused else { return }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    withAnimation {
-                                        scrollView.scrollTo(1, anchor: .top)
-                                    }
-                                }
-                            }
+                        IssueDescriptionTextEditor(label: UserText.pproFeedbackFormTextBoxTitle,
+                                                   placeholder: placeholder,
+                                                   text: $viewModel.feedbackFormText,
+                                                   focusState: $isTextEditorFocused,
+                                                   scrollViewProxy: scrollView)
                     }
                     .foregroundColor(.secondary)
                     .background(Color(designSystemColor: .background))
@@ -193,26 +188,6 @@ private struct CompactIssueDescriptionFormView: View {
             form().scrollDismissesKeyboard(.interactively)
         } else {
             form()
-        }
-    }
-
-    @ViewBuilder
-    private func textEditor() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .font(.caption)
-                .textCase(.uppercase)
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
-            TextEditorWithPlaceholder(text: $viewModel.feedbackFormText, placeholder: placeholder)
-                .font(.body)
-                .foregroundColor(.primary)
-                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
-                .frame(height: 100)
-                .fixedSize(horizontal: false, vertical: true)
-                .onChange(of: viewModel.feedbackFormText) {
-                    viewModel.feedbackFormText = String($0.prefix(1000))
-                }
         }
     }
 
@@ -255,16 +230,11 @@ private struct IssueDescriptionFormView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         header()
                             .padding(.horizontal, 4)
-                        textEditor()
-                            .focused($isTextEditorFocused)
-                            .onChange(of: isTextEditorFocused) { isFocused in
-                                guard isFocused else { return }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    withAnimation {
-                                        scrollView.scrollTo(1, anchor: .top)
-                                    }
-                                }
-                            }
+                        IssueDescriptionTextEditor(label: UserText.pproFeedbackFormTextBoxTitle,
+                                                   placeholder: placeholder,
+                                                   text: $viewModel.feedbackFormText,
+                                                   focusState: $isTextEditorFocused,
+                                                   scrollViewProxy: scrollView)
                         footer()
                             .padding(.horizontal, 4)
                     }
@@ -326,26 +296,6 @@ private struct IssueDescriptionFormView: View {
     }
 
     @ViewBuilder
-    private func textEditor() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(UserText.pproFeedbackFormTextBoxTitle)
-                .font(.caption)
-                .textCase(.uppercase)
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
-            TextEditorWithPlaceholder(text: $viewModel.feedbackFormText, placeholder: placeholder)
-                .font(.body)
-                .foregroundColor(.primary)
-                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
-                .frame(height: 100)
-                .fixedSize(horizontal: false, vertical: true)
-                .onChange(of: viewModel.feedbackFormText) {
-                    viewModel.feedbackFormText = String($0.prefix(1000))
-                }
-        }
-    }
-
-    @ViewBuilder
     private func submitButton() -> some View {
         Button {
             Task {
@@ -356,6 +306,43 @@ private struct IssueDescriptionFormView: View {
         }
         .buttonStyle(UnifiedFeedbackFormButtonStyle())
         .padding(16)
+    }
+}
+
+private struct IssueDescriptionTextEditor: View {
+    let label: String
+    let placeholder: String
+    let text: Binding<String>
+    let focusState: FocusState<Bool>.Binding
+    let scrollViewProxy: ScrollViewProxy
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(.caption)
+                .textCase(.uppercase)
+                .foregroundColor(.secondary)
+                .padding(.horizontal, 4)
+            TextEditorWithPlaceholder(text: text, placeholder: placeholder)
+                .font(.body)
+                .foregroundColor(.primary)
+                .background(Color(designSystemColor: .panel))
+                .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                .frame(height: 100)
+                .fixedSize(horizontal: false, vertical: true)
+                .onChange(of: text.wrappedValue) { value in
+                    text.wrappedValue = String(value.prefix(1000))
+                }
+        }
+        .focused(focusState)
+        .onChange(of: focusState.wrappedValue) { isFocused in
+            guard isFocused else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                withAnimation {
+                    scrollViewProxy.scrollTo(1, anchor: .top)
+                }
+            }
+        }
     }
 }
 

@@ -107,13 +107,13 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
 
     func sendFeatureRequestPixel(description: String, source: String) async throws {
         try await sendPixel(.pproFeedbackFeatureRequest(description: description,
-                                                        source: Source.from(source)), 
+                                                        source: Source.from(source)),
                             frequency: .regular)
     }
 
     func sendGeneralFeedbackPixel(description: String, source: String) async throws {
         try await sendPixel(.pproFeedbackGeneralFeedback(description: description,
-                                                         source: Source.from(source)), 
+                                                         source: Source.from(source)),
                             frequency: .regular)
     }
 

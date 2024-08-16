@@ -256,7 +256,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, 
+            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug,
                    pixelName.replacingOccurrences(of: "_", with: "."), "\(params)")
             onComplete(error)
         }

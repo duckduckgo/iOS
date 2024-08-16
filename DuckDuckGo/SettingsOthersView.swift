@@ -81,6 +81,7 @@ private struct LegacyFeedbackView: View {
     }
 }
 
+// swiftlint:disable force_cast
 private struct LegacyFeedbackViewRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
         let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
@@ -91,3 +92,4 @@ private struct LegacyFeedbackViewRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
+// swiftlint:enable force_cast

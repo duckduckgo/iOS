@@ -28,4 +28,3 @@ final class DefaultMetadataCollector: UnifiedMetadataCollector {
         nil
     }
 }
-

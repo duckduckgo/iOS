@@ -128,6 +128,7 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
                                 .foregroundColor(.init(designSystemColor: .textPrimary))
                         }
                         .tag(option.rawValue)
+                        .listRowBackground(Color(designSystemColor: .surface))
                     }
                 } header: {
                     Text(prompt)

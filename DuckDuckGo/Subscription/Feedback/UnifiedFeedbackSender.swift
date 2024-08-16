@@ -107,12 +107,14 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
 
     func sendFeatureRequestPixel(description: String, source: String) async throws {
         try await sendPixel(.pproFeedbackFeatureRequest(description: description,
-                                                        source: Source.from(source)), frequency: .regular)
+                                                        source: Source.from(source)), 
+                            frequency: .regular)
     }
 
     func sendGeneralFeedbackPixel(description: String, source: String) async throws {
         try await sendPixel(.pproFeedbackGeneralFeedback(description: description,
-                                                         source: Source.from(source)), frequency: .regular)
+                                                         source: Source.from(source)), 
+                            frequency: .regular)
     }
 
     func sendReportIssuePixel<T: UnifiedFeedbackMetadata>(source: String, category: String, subcategory: String, description: String, metadata: T?) async throws {
@@ -121,7 +123,7 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
                                                      subcategory: Subcategory.from(subcategory),
                                                      description: description,
                                                      metadata: metadata?.toBase64() ?? ""),
-                            frequency: .dailyAndCount)
+                            frequency: .regular)
     }
 
     func sendFormShowPixel() async {

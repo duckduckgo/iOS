@@ -386,7 +386,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configDisabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         XCTAssertFalse(model.shouldShowBreakageReporter())
     }
@@ -405,7 +405,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         XCTAssertFalse(model.shouldShowBreakageReporter())
     }
@@ -424,7 +424,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         XCTAssertFalse(model.shouldShowBreakageReporter())
     }
@@ -443,7 +443,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         XCTAssertFalse(model.shouldShowBreakageReporter())
     }
@@ -463,7 +463,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         let identifier = currentTabUrl!.privacySafeDomainIdentifier
         model.breakageReporter.persistencyManager.set(value: "2024-07-16", forKey: identifier!, expiryDate: Date())
@@ -486,7 +486,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         XCTAssertTrue(model.shouldShowBreakageReporter())
     }
@@ -506,7 +506,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
-                                               breakageReporterKeyValueStoring: MockKeyValueStore())
+                                               keyValueStore: MockKeyValueStore())
 
         let identifier = currentTabUrl!.privacySafeDomainIdentifier
         model.breakageReporter.persistencyManager.set(value: "2024-01-01", forKey: identifier!, expiryDate: Date())

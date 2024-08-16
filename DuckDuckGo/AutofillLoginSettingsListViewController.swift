@@ -34,6 +34,7 @@ enum AutofillSettingsSource: String {
     case homeScreenWidget = "home_screen_widget"
     case lockScreenWidget = "lock_screen_widget"
     case newTabPageShortcut = "new_tab_page_shortcut"
+    case saveLoginDisablePrompt = "save_login_disable_prompt"
 }
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
@@ -169,6 +170,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     var selectedAccount: SecureVaultModels.WebsiteAccount?
     var openSearch: Bool
+    let source: AutofillSettingsSource
 
     init(appSettings: AppSettings,
          currentTabUrl: URL? = nil,
@@ -186,6 +188,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.syncService = syncService
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
+        self.source = source
         super.init(nibName: nil, bundle: nil)
 
         authenticate()
@@ -967,7 +970,7 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
         if value {
             Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled, withAdditionalParameters: ["source": source.rawValue])
         }
         
         viewModel.isAutofillEnabledInSettings = value

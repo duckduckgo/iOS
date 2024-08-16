@@ -129,11 +129,11 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.addressbar.position
+                self.state.addressBar.position
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.addressbar.position = $0
+                self.state.addressBar.position = $0
             }
         )
     }
@@ -385,7 +385,7 @@ extension SettingsViewModel {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
-            addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
@@ -402,7 +402,7 @@ extension SettingsViewModel {
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
-            networkProtection: getNetworkProtectionState(),
+            networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
@@ -426,10 +426,6 @@ extension SettingsViewModel {
                 await self.historyManager.removeAllHistory()
             }
         }
-    }
-
-    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -467,12 +463,12 @@ extension SettingsViewModel {
         if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
-                self.state.networkProtection.status = UserText.netPCellConnected
+                self.state.networkProtectionConnected = true
             default:
-                self.state.networkProtection.status = UserText.netPCellDisconnected
+                self.state.networkProtectionConnected = false
             }
         } else {
-            self.state.networkProtection.status = ""
+            self.state.networkProtectionConnected = false
         }
     }
     
@@ -485,8 +481,8 @@ extension SettingsViewModel {
 
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasActiveSubscription in
-                self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
+            .sink { [weak self] status in
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
 
@@ -554,6 +550,7 @@ extension SettingsViewModel {
 
     func openDuckPlayerContingencyMessageSite() {
         guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
         UIApplication.shared.open(url,
                                   options: [:],
                                   completionHandler: nil)

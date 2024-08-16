@@ -38,7 +38,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = !fixed
-        controller.settingsButton.isHidden = true
         
         if !fixed {
             controller.hideLogo()

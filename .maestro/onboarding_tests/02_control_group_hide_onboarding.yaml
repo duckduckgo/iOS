@@ -1,0 +1,33 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - onboarding
+
+---
+
+# Set up
+- runFlow:
+    file: ../shared/setup.yaml
+    env:
+        ONBOARDING_COMPLETED: "false"
+        APP_VARIANT: "ma"
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn:
+    id: "searchEntry"
+- inputText: "https://www.duckduckgo.com"
+- pressKey: Enter
+
+# Handle Onboarding
+- assertVisible: "Got It"
+- assertVisible: "Hide"
+- tapOn: "Hide"
+- assertVisible: "Hide Tips Forever"
+- tapOn: "Hide Tips Forever"
+
+# Handle Fire Button
+- assertVisible: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+- tapOn: "Close Tabs and Clear Data"
+- assertNotVisible: "You’ve got this!\n\nRemember: Every time you browse with me, a creepy ad loses its wings. 👍"

@@ -83,6 +83,7 @@ import WebKit
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?
+    private var autofillUsageMonitor = AutofillUsageMonitor()
 
     var privacyProDataReporter: PrivacyProDataReporting!
 
@@ -98,6 +99,8 @@ import WebKit
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
+    private let launchOptionsHandler = LaunchOptionsHandler()
+
     override init() {
         super.init()
 
@@ -111,8 +114,8 @@ import WebKit
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // SKAD4 support
-        updateSKAd(conversionValue: 1)
+        // Attribution support
+        updateAttribution(conversionValue: 1)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -232,19 +235,11 @@ import WebKit
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         let variantManager = DefaultVariantManager()
-        let historyMessageManager = HistoryMessageManager()
         let daxDialogs = DaxDialogs.shared
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
-        AtbAndVariantCleanup.cleanup()
-        variantManager.assignVariantIfNeeded { _ in
-            // MARK: perform first time launch logic here
-            daxDialogs.primeForUse()
-
-            // New users don't see the message
-            historyMessageManager.dismiss()
-        }
+        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
 
         PixelExperiment.install()
 
@@ -394,11 +389,12 @@ import WebKit
 
     private func makeHistoryManager() -> HistoryManaging {
 
-        let settings = AppDependencyProvider.shared.appSettings
+        let provider = AppDependencyProvider.shared
 
-        switch HistoryManager.make(isAutocompleteEnabledByUser: settings.autocomplete,
-                                   isRecentlyVisitedSitesEnabledByUser: settings.recentlyVisitedSites,
-                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager) {
+        switch HistoryManager.make(isAutocompleteEnabledByUser: provider.appSettings.autocomplete,
+                                   isRecentlyVisitedSitesEnabledByUser: provider.appSettings.recentlyVisitedSites,
+                                   privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                   tld: provider.storageCache.tld) {
 
         case .failure(let error):
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
@@ -547,6 +543,10 @@ import WebKit
             await stopAndRemoveVPNIfNotAuthenticated()
             await refreshShortcuts()
             await vpnWorkaround.installRedditSessionWorkaround()
+
+            if #available(iOS 17.0, *) {
+                await VPNSnoozeLiveActivityManager().endSnoozeActivityIfNecessary()
+            }
         }
 
         AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
@@ -753,6 +753,24 @@ import WebKit
     }
 
     // MARK: private
+
+    private func cleanUpATBAndAssignVariant(variantManager: VariantManager, daxDialogs: DaxDialogs) {
+        let historyMessageManager = HistoryMessageManager()
+
+        AtbAndVariantCleanup.cleanup()
+        variantManager.assignVariantIfNeeded { _ in
+            // MARK: perform first time launch logic here
+            // If it's running UI Tests check if the onboarding should be in a completed state.
+            if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
+                daxDialogs.dismiss()
+            } else {
+                daxDialogs.primeForUse()
+            }
+
+            // New users don't see the message
+            historyMessageManager.dismiss()
+        }
+    }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         guard UIApplication.shared.backgroundRefreshStatus == .available else {

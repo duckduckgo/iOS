@@ -16,14 +16,6 @@ tags:
 - inputText: "https://www.search-company.site/#ad-id-3"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
-    file: ../shared/onboarding_browsing.yaml
-
 # Test Ad3
 - assertVisible:
     text: "[Ad 3] SERP Ad (heuristic)"

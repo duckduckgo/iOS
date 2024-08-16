@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Wand-16.svg",
+      "filename" : "App-DuckDuckGo-32.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

@@ -39,7 +39,7 @@ enum UnifiedFeedbackFlowCategory: String, FeedbackCategoryProviding {
 
     var displayName: String {
         switch self {
-        case .browserFeedback: return UserText.settingsFeedback
+        case .browserFeedback: return UserText.settingsBrowserFeedback
         case .ppro: return UserText.subscriptionTitle
         }
     }

@@ -59,11 +59,6 @@ struct InitialPlayerSettings: Codable {
     let locale: Locale
 }
 
-struct InitialOverlaySettings: Codable {
-    let userValues: UserValues
-}
-
-
 /// Values that the Frontend can use to determine user settings
 public struct UserValues: Codable {
     enum CodingKeys: String, CodingKey {
@@ -148,7 +143,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         
     private func updateSettings(userValues: UserValues) async {
         settings.setMode(userValues.duckPlayerMode)
-        settings.setOverlayHidden(userValues.askModeOverlayHidden)
+        settings.setAskModeOverlayHidden(userValues.askModeOverlayHidden)
     }
     
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
@@ -210,13 +205,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         let userValues = encodeUserValues()
         return InitialPlayerSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
     }
-    
-    @MainActor
-    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
-        let userValues = encodeUserValues()
-        return InitialOverlaySettings(userValues: userValues)
-    }
-    
+        
     // Accessing WKMessage needs main thread
     @MainActor
     private func firePixels(message: WKScriptMessage, userValues: UserValues) {

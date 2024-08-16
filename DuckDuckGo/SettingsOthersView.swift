@@ -33,7 +33,7 @@ struct SettingsOthersView: View {
             }
 
             // Share Feedback
-            if viewModel.usesUnifiedFeedbackForm || true {
+            if viewModel.usesUnifiedFeedbackForm {
                 let formViewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .settings)
                 NavigationLink {
                     UnifiedFeedbackCategoryView(UserText.subscriptionFeedback, sources: UnifiedFeedbackFlowCategory.self, selection: $viewModel.selectedFeedbackFlow) {

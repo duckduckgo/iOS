@@ -205,7 +205,7 @@ struct NetworkProtectionStatusView: View {
                 .daxBodyRegular()
                 .foregroundColor(.init(designSystemColor: .textPrimary))
 
-            if statusModel.usesUnifiedFeedbackForm || true {
+            if statusModel.usesUnifiedFeedbackForm {
                 NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
                     .daxBodyRegular()
                     .foregroundColor(.init(designSystemColor: .textPrimary))

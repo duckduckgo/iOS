@@ -72,7 +72,7 @@ public struct UserValues: Codable {
 
 public struct UIValues: Codable {
     enum CodingKeys: String, CodingKey {
-        case allowFirstVideo = "allowFirstVideo"
+        case allowFirstVideo
     }
     let allowFirstVideo: Bool
 }

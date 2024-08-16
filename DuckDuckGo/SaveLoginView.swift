@@ -217,7 +217,7 @@ struct SaveLoginView: View {
         switch layoutType {
         case .newUser, .saveLogin, .savePassword, .updatePassword:
             let text = layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser
-            AutofillViews.Description(text: text)
+            AutofillViews.SecureDescription(text: text)
         case .updateUsername:
             updateUsernameContentView
         }

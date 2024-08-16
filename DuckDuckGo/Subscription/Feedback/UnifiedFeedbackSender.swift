@@ -41,11 +41,6 @@ enum UnifiedFeedbackSenderFrequency {
 }
 
 extension UnifiedFeedbackSender {
-    static func encode(_ text: String) -> String {
-        let urlAllowed: CharacterSet = .alphanumerics.union(.init(charactersIn: "-._~"))
-        return text.addingPercentEncoding(withAllowedCharacters: urlAllowed) ?? text
-    }
-
     static func additionalParameters(for pixel: Pixel.Event) -> [String: String] {
         [:]
     }
@@ -111,12 +106,12 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
     }
 
     func sendFeatureRequestPixel(description: String, source: String) async throws {
-        try await sendPixel(.pproFeedbackFeatureRequest(description: Self.encode(description),
+        try await sendPixel(.pproFeedbackFeatureRequest(description: description,
                                                         source: Source.from(source)), frequency: .regular)
     }
 
     func sendGeneralFeedbackPixel(description: String, source: String) async throws {
-        try await sendPixel(.pproFeedbackGeneralFeedback(description: Self.encode(description),
+        try await sendPixel(.pproFeedbackGeneralFeedback(description: description,
                                                          source: Source.from(source)), frequency: .regular)
     }
 
@@ -124,7 +119,7 @@ struct DefaultFeedbackSender: UnifiedFeedbackSender {
         try await sendPixel(.pproFeedbackReportIssue(source: Source.from(source),
                                                      category: Category.from(category),
                                                      subcategory: Subcategory.from(subcategory),
-                                                     description: Self.encode(description),
+                                                     description: description,
                                                      metadata: metadata?.toBase64() ?? ""),
                             frequency: .dailyAndCount)
     }

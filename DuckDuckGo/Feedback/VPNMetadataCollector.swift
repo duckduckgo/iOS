@@ -93,18 +93,6 @@ struct VPNMetadata: Encodable {
 
         return String(data: encodedMetadata, encoding: .utf8)
     }
-
-    func toBase64() -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys]
-
-        do {
-            let encodedMetadata = try encoder.encode(self)
-            return encodedMetadata.base64EncodedString()
-        } catch {
-            return "Failed to encode metadata to JSON, error message: \(error.localizedDescription)"
-        }
-    }
 }
 
 protocol VPNMetadataCollector {

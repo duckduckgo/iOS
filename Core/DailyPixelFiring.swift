@@ -27,11 +27,11 @@ public protocol DailyPixelFiring {
 }
 
 extension DailyPixel: DailyPixelFiring {
-    static public func fireDaily(_ pixel: Pixel.Event) {
-        fire(pixel: pixel)
-    }
-
     public static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
         fire(pixel: pixel, withAdditionalParameters: params)
+    }
+
+    public static func fireDaily(_ pixel: Pixel.Event) {
+        fire(pixel: pixel)
     }
 }

@@ -1161,7 +1161,8 @@ extension TabViewController: WKNavigationDelegate {
     @MainActor
     private func loadSSLErrorHTML(url: URL) {
         let html = ErrorPageHTMLTemplate.htmlFromTemplate
-        webView?.loadHTMLString(html, baseURL: url) // todo scheme
+//        webView?.loadHTMLString(html, baseURL: .specialError) // why don't we just webView?.load(url: .specialError)? if we load html in the scheme handler?
+        webView?.load(URLRequest(url: .specialError))
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1750,13 +1751,11 @@ extension TabViewController: WKNavigationDelegate {
                 return
             }
 
-            let response = URLResponse(url: url, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil)
+//            let response = URLResponse(url: url, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil)
 
 
             if #available(iOS 15.0, *) {
-                webView.loadFileURL(URL(fileURLWithPath: file), allowingReadAccessTo: URL(fileURLWithPath: file))
-//                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), responseHTML: String(data: data, encoding: .utf8)!)
-//                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), response: response, responseData: data)
+                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), responseHTML: String(data: data, encoding: .utf8)!) // todo: google url is just for test, however, if we want to have duck://special-error displayed in the navigation bar (do we???) and so we if pass same url, we will end up in a infinite loop.
             }
             completion(.allow)
 

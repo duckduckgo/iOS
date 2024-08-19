@@ -23,11 +23,57 @@ import BrowserServicesKit
 import Persistence
 import History
 @testable import Core
+import Common
 
 final class HistoryManagerTests: XCTestCase {
 
     let privacyConfig = MockPrivacyConfiguration()
     let privacyConfigManager = MockPrivacyConfigurationManager()
+
+    @MainActor
+    func testWhenURLIsDeletedThenSiteIsRemovedFromHistory() async {
+        privacyConfig.isFeatureKeyEnabled = { feature, _ in
+            XCTAssertEqual(feature, .history)
+            return true
+        }
+
+        let model = CoreDataDatabase.loadModel(from: History.bundle, named: "BrowsingHistory")!
+        let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
+        let loadStoreExpectation = expectation(description: "loadStore")
+        db.loadStore { _, _ in
+            loadStoreExpectation.fulfill()
+        }
+        await fulfillment(of: [loadStoreExpectation], timeout: 5.0)
+
+        let historyManager = makeHistoryManager(db)
+        let loadHistoryExpectation = expectation(description: "loadHistory")
+        historyManager.dbCoordinator.loadHistory {
+            loadHistoryExpectation.fulfill()
+        }
+
+        await fulfillment(of: [loadHistoryExpectation], timeout: 5.0)
+
+        let ddgURL = URL(string: "https://duckduckgo.com/")!
+        let netflixURL = URL(string: "https://netflix.com/")!
+        let exampleURL = URL(string: "https://example.com/")!
+
+        [ exampleURL.appending("/1"),
+          exampleURL.appending("/1"),
+          exampleURL.appending("/1"),
+          netflixURL,
+          ddgURL,
+        ].forEach {
+            historyManager.historyCoordinator.addVisit(of: $0)
+            historyManager.historyCoordinator.updateTitleIfNeeded(title: $0.absoluteString, url: $0)
+            historyManager.historyCoordinator.commitChanges(url: $0)
+        }
+
+        await historyManager.deleteHistoryForURL(exampleURL.appending("/1"))
+
+        XCTAssertEqual(2, historyManager.historyCoordinator.history?.count)
+        XCTAssertTrue(historyManager.historyCoordinator.history?.contains(where: { $0.url == ddgURL }) ?? false)
+        XCTAssertTrue(historyManager.historyCoordinator.history?.contains(where: { $0.url == netflixURL }) ?? false)
+    }
 
     func testWhenEnabledInPrivacyConfig_ThenFeatureIsEnabled() {
         privacyConfig.isFeatureKeyEnabled = { feature, _ in
@@ -39,9 +85,7 @@ final class HistoryManagerTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
         db.loadStore()
 
-        let historyManager = makeHistoryManager(db) {
-            XCTFail("DB Error \($0)")
-        }
+        let historyManager = makeHistoryManager(db)
 
         XCTAssertTrue(historyManager.isHistoryFeatureEnabled())
         XCTAssertTrue(historyManager.historyCoordinator is HistoryCoordinator)
@@ -59,9 +103,7 @@ final class HistoryManagerTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
         db.loadStore()
 
-        let historyManager = makeHistoryManager(db) {
-            XCTFail("DB Error \($0)")
-        }
+        let historyManager = makeHistoryManager(db)
 
         XCTAssertFalse(historyManager.isHistoryFeatureEnabled())
         XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
@@ -81,9 +123,7 @@ final class HistoryManagerTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
         db.loadStore()
 
-        let historyManager = makeHistoryManager(db) {
-            XCTFail("DB Error \($0)")
-        }
+        let historyManager = makeHistoryManager(db)
 
         XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
     }
@@ -102,23 +142,21 @@ final class HistoryManagerTests: XCTestCase {
         let db = CoreDataDatabase(name: "Test", containerLocation: tempDBDir(), model: model)
         db.loadStore()
 
-        let historyManager = makeHistoryManager(db) {
-            XCTFail("DB Error \($0)")
-        }
+        let historyManager = makeHistoryManager(db)
 
         XCTAssertTrue(historyManager.historyCoordinator is NullHistoryCoordinator)
     }
 
-    private func makeHistoryManager(_ db: CoreDataDatabase, onStoreLoadFailed: @escaping (Error) -> Void) -> HistoryManager {
+    private func makeHistoryManager(_ db: CoreDataDatabase) -> HistoryManager {
         let eventMapper = HistoryStoreEventMapper()
         let store = HistoryStore(context: db.makeContext(concurrencyType: .privateQueueConcurrencyType), eventMapper: eventMapper)
         let dbCoordinator = HistoryCoordinator(historyStoring: store)
 
         return HistoryManager(privacyConfigManager: privacyConfigManager,
                               dbCoordinator: dbCoordinator,
+                              tld: TLD(),
                               isAutocompleteEnabledByUser: self.autocompleteEnabledByUser,
                               isRecentlyVisitedSitesEnabledByUser: self.recentlyVisitedSitesEnabledByUser)
-
     }
 
     var autocompleteEnabledByUser = true

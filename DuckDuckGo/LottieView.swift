@@ -35,22 +35,24 @@ struct LottieView: UIViewRepresentable {
         case withIntro(LoopWithIntroTiming)
     }
 
-    let lottieFile: String
     let delay: TimeInterval
     var isAnimating: Binding<Bool>
     private let loopMode: LoopMode
 
+    let animationName: String
+    let animation: LottieAnimation?
     let animationView = LottieAnimationView()
 
     init(lottieFile: String, delay: TimeInterval = 0, loopMode: LoopMode = .mode(.playOnce), isAnimating: Binding<Bool> = .constant(true)) {
-        self.lottieFile = lottieFile
+        self.animationName = lottieFile
+        self.animation = LottieAnimation.named(lottieFile)
         self.delay = delay
         self.isAnimating = isAnimating
         self.loopMode = loopMode
     }
 
     func makeUIView(context: Context) -> some LottieAnimationView {
-        animationView.animation = LottieAnimation.named(lottieFile)
+        animationView.animation = animation
         animationView.contentMode = .scaleAspectFit
         animationView.clipsToBounds = false
 
@@ -68,10 +70,25 @@ struct LottieView: UIViewRepresentable {
             return
         }
 
-        guard isAnimating.wrappedValue, !uiView.isAnimationPlaying else { return }
-        
-        if uiView.loopMode == .playOnce && uiView.currentProgress == 1 { return }
-                
+        // If the view is not animating and the progress is 0, apply an animation-specific hack.
+        // The VPN startup animations have an issue with the initial frame that is introduced when backgrounding and foregrounding the app.
+        // The issue can be reproduced using the official Lottie SwiftUI wrapped, so instead it is being worked around by resetting the animation
+        // when appropriate.
+        if !isAnimating.wrappedValue, uiView.currentProgress == 0 {
+            if uiView.currentFrame == 0, self.animationName.hasPrefix("vpn-") {
+                uiView.animation = nil
+                uiView.animation = self.animation
+            }
+        }
+
+        guard isAnimating.wrappedValue, !uiView.isAnimationPlaying else {
+            return
+        }
+
+        if uiView.loopMode == .playOnce && uiView.currentProgress == 1 {
+            return
+        }
+
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             switch loopMode {
             case .mode:

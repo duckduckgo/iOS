@@ -1,5 +1,5 @@
 //
-//  SettingsStatus.swift
+//  StatusIndicatorView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,24 +18,6 @@
 //
 
 import SwiftUI
-import Combine
-
-enum StatusIndicator: Equatable {
-    case alwaysOn
-    case on
-    case off
-
-    var text: String {
-        switch self {
-        case .alwaysOn:
-            return UserText.settingsAlwaysOn
-        case .on:
-            return UserText.settingsOn
-        case .off:
-            return UserText.settingsOff
-        }
-    }
-}
 
 struct StatusIndicatorView: View {
     var status: StatusIndicator
@@ -61,9 +43,20 @@ struct StatusIndicatorView: View {
     private func colorForStatus(_ status: StatusIndicator) -> Color {
         switch status {
         case .on, .alwaysOn:
-            return Color("AlertGreen")
+            return Color(designSystemColor: .alertGreen)
         case .off:
             return Color(designSystemColor: .textSecondary).opacity(0.33)
         }
+    }
+}
+
+#Preview {
+    VStack {
+        StatusIndicatorView(status: .on, isDotHidden: false)
+        StatusIndicatorView(status: .off, isDotHidden: false)
+        StatusIndicatorView(status: .alwaysOn, isDotHidden: false)
+        StatusIndicatorView(status: .on, isDotHidden: true)
+        StatusIndicatorView(status: .off, isDotHidden: true)
+        StatusIndicatorView(status: .alwaysOn, isDotHidden: true)
     }
 }

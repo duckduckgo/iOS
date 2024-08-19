@@ -16,14 +16,6 @@ tags:
 - inputText: "https://www.search-company.site/#ad-id-7"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
-    file: ../shared/onboarding_browsing.yaml
-
 - assertVisible:
     text: "[Ad 7] SERP Ad (SERP-provided)"
 - tapOn:

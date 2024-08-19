@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"iOS 17 required" = "iOS 17 required";
+"iOS 17 required" = "iOS 17 krävs";
 
 /* No comment provided by engineer. */
 "Label" = "Etikett";
@@ -59,7 +59,7 @@
 "widget.gallery.search.display.name" = "Sök";
 
 /* Description of VPN widget in widget gallery */
-"widget.gallery.vpn.description" = "View and manage your VPN connection. Requires a Privacy Pro subscription.";
+"widget.gallery.vpn.description" = "Visa och hantera din VPN-anslutning. Kräver en prenumeration på Privacy Pro.";
 
 /* Display name for VPN widget in widget gallery */
 "widget.gallery.vpn.display.name" = "VPN";
@@ -77,17 +77,17 @@
 "widget.search.duckduckgo" = "Sök med DuckDuckGo";
 
 /* VPN connect button text */
-"widget.vpn.button.connect" = "Connect";
+"widget.vpn.button.connect" = "Anslut";
 
 /* VPN disconnect button text */
-"widget.vpn.button.disconnect" = "Disconnect";
+"widget.vpn.button.disconnect" = "Koppla från";
 
 /* Message describing VPN connected status */
-"widget.vpn.status.connected" = "VPN is On";
+"widget.vpn.status.connected" = "VPN är på";
 
 /* Message describing VPN disconnected status */
-"widget.vpn.status.disconnected" = "VPN is Off";
+"widget.vpn.status.disconnected" = "VPN är av";
 
 /* Subtitle describing VPN disconnected status */
-"widget.vpn.subtitle.disconnected" = "Not connected";
+"widget.vpn.subtitle.disconnected" = "Ej ansluten";
 

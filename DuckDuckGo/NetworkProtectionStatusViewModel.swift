@@ -22,6 +22,7 @@ import Combine
 import NetworkProtection
 import WidgetKit
 import BrowserServicesKit
+import Core
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -78,6 +79,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
+    private static var snoozeRemainingDateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
+
     private let byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
@@ -113,6 +121,13 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: Toggle Item
 
     @Published public var isNetPEnabled = false
+    @Published public var isSnoozing = false {
+        didSet {
+            snoozeRequestPending = false
+        }
+    }
+
+    @Published public var snoozeRequestPending = false
     @Published public var statusMessage: String
     @Published public var shouldDisableToggle: Bool = false
 
@@ -123,7 +138,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Connection Details
 
-    @Published public var shouldShowConnectionDetails: Bool = false
+    @Published public var hasServerInfo: Bool = false
     @Published public var location: String?
     @Published public var ipAddress: String?
     @Published public var dnsSettings: NetworkProtectionDNSSettings
@@ -146,7 +161,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
         statusMessage = Self.message(for: statusObserver.recentValue)
-        self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
+        self.headerTitle = Self.titleText(status: statusObserver.recentValue)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
         self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
@@ -172,7 +187,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private func setUpIsConnectedStatePublishers() {
-        statusObserver.publisher.sink { [weak self] status in
+        statusObserver.publisher.receive(on: DispatchQueue.main).sink { [weak self] status in
             self?.updateViewModel(withStatus: status)
         }
         .store(in: &cancellables)
@@ -194,10 +209,25 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+
+        statusObserver.publisher
+            .map {
+                switch $0 {
+                case .snoozing:
+                    return true
+                default:
+                    return false
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+            .assign(to: \.isSnoozing, onWeaklyHeld: self)
+            .store(in: &cancellables)
     }
 
     private func setUpStatusMessagePublishers() {
         statusObserver.publisher
+            .removeDuplicates()
             .flatMap(maxPublishers: .max(1)) { status in
                 // As soon as the connection status changes, we should update the status message
                 var statusUpdatePublishers = [Just(Self.message(for: status)).eraseToAnyPublisher()]
@@ -206,6 +236,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                     // In the case that the status is connected, we should then provide timed updates
                     // If we rely on the timed updates alone, there will be a delay to the initial update
                     statusUpdatePublishers.append(Self.timedConnectedStatusMessagePublisher(forConnectedDate: connectedDate))
+                case .snoozing:
+                    let timingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
+                    guard let endDate = timingStore.activeTiming?.endDate else {
+                        break
+                    }
+
+                    statusUpdatePublishers = [Just(Self.snoozeDurationRemainingMessage(for: endDate, currentDate: Date())).eraseToAnyPublisher()]
+                    statusUpdatePublishers.append(Self.timedSnoozeDurationRemainingMessagePublisher(forSnoozeEndDate: endDate))
                 default:
                     break
                 }
@@ -264,12 +302,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 $0.serverAddress != nil || $0.serverLocation != nil
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .assign(to: \.hasServerInfo, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
     private func updateViewModel(withStatus connectionStatus: ConnectionStatus) {
-        self.headerTitle = Self.titleText(connected: connectionStatus.isConnected)
+        self.headerTitle = Self.titleText(status: connectionStatus)
         self.statusImageID = Self.statusImageID(connected: connectionStatus.isConnected)
 
         if !connectionStatus.isConnected {
@@ -380,7 +418,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // It makes sense as animations should mostly only happen when a user has interacted.
         animationsOn = true
         if enabled {
-            await enableNetP()
+            if isSnoozing {
+                await cancelSnooze()
+            } else {
+                await enableNetP()
+            }
         } else {
             await disableNetP()
         }
@@ -398,8 +440,43 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         await tunnelController.stop()
     }
 
-    private class func titleText(connected isConnected: Bool) -> String {
-        isConnected ? UserText.netPStatusHeaderTitleOn : UserText.netPStatusHeaderTitleOff
+    @MainActor
+    func startSnooze() async {
+        guard !snoozeRequestPending, let activeSession = await tunnelController.activeSession() else {
+            return
+        }
+
+        let defaultDuration: TimeInterval = .minutes(20)
+        snoozeRequestPending = true
+        try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
+        DailyPixel.fire(pixel: .networkProtectionSnoozeEnabledFromStatusMenu)
+
+        if #available(iOS 17.0, *) {
+            await VPNSnoozeLiveActivityManager().start(endDate: Date().addingTimeInterval(defaultDuration))
+        }
+    }
+
+    @MainActor
+    func cancelSnooze() async {
+        guard !snoozeRequestPending, let activeSession = await tunnelController.activeSession() else {
+            return
+        }
+
+        snoozeRequestPending = true
+        try? await activeSession.sendProviderMessage(.cancelSnooze)
+        DailyPixel.fire(pixel: .networkProtectionSnoozeDisabledFromStatusMenu)
+
+        if #available(iOS 17.0, *) {
+            await VPNSnoozeLiveActivityManager().endSnoozeActivity()
+        }
+    }
+
+    private class func titleText(status: ConnectionStatus) -> String {
+        switch status {
+        case .connected: return UserText.netPStatusHeaderTitleOn
+        case .snoozing: return UserText.netPStatusHeaderTitleSnoozed
+        case .notConfigured, .disconnected, .disconnecting, .connecting, .reasserting: return UserText.netPStatusHeaderTitleOff
+        }
     }
 
     private class func statusImageID(connected isConnected: Bool) -> String {
@@ -407,10 +484,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     }
 
     private static func timedConnectedStatusMessagePublisher(forConnectedDate connectedDate: Date) -> AnyPublisher<String, Never> {
-        Timer.publish(every: 1, on: .main, in: .default)
+        Timer.publish(every: .seconds(1), on: .main, in: .default)
             .autoconnect()
             .map {
                 Self.connectedMessage(for: connectedDate, currentDate: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private static func timedSnoozeDurationRemainingMessagePublisher(forSnoozeEndDate snoozeEndDate: Date) -> AnyPublisher<String, Never> {
+        Timer.publish(every: .seconds(1), on: .main, in: .default)
+            .autoconnect()
+            .map {
+                Self.snoozeDurationRemainingMessage(for: snoozeEndDate, currentDate: $0)
             }
             .eraseToAnyPublisher()
     }
@@ -425,6 +511,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return connectedMessage(for: connectedDate)
         case .connecting, .reasserting:
             return UserText.netPStatusConnecting
+        case .snoozing:
+            return UserText.netPStatusPaused
         }
     }
 
@@ -432,6 +520,17 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         let timeLapsedInterval = currentDate.timeIntervalSince(connectedDate)
         let timeLapsed = Self.dateFormatter.string(from: timeLapsedInterval) ?? "00:00:00"
         return UserText.netPStatusConnected(since: timeLapsed)
+    }
+
+    private static func snoozeDurationRemainingMessage(for snoozeEndDate: Date, currentDate: Date = Date()) -> String {
+        if snoozeEndDate <= currentDate {
+            return UserText.netPCellSnoozing
+        }
+
+        let timeRemainingInterval = snoozeEndDate.timeIntervalSince(currentDate)
+        let timeRemaining = Self.snoozeRemainingDateFormatter.string(from: timeRemainingInterval) ?? "00:00"
+
+        return UserText.netPStatusSnoozing(until: timeRemaining)
     }
 
     private func resetConnectionInformation() {
@@ -447,6 +546,15 @@ private extension ConnectionStatus {
     var isConnected: Bool {
         switch self {
         case .connected:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isSnoozing: Bool {
+        switch self {
+        case .snoozing:
             return true
         default:
             return false

@@ -35,12 +35,7 @@ struct SettingsState {
         var enabled: Bool
         var size: Int
     }
-    
-    struct NetworkProtection {
-        var enabled: Bool
-        var status: String
-    }
-            
+
     struct Subscription: Codable {
         var enabled: Bool
         var canPurchase: Bool
@@ -63,7 +58,7 @@ struct SettingsState {
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: TextSize
-    var addressbar: AddressBar
+    var addressBar: AddressBar
     var showsFullURL: Bool
 
     // Privacy properties
@@ -92,8 +87,8 @@ struct SettingsState {
     var loginsEnabled: Bool
     
     // Network Protection properties
-    var networkProtection: NetworkProtection
-    
+    var networkProtectionConnected: Bool
+
     // Subscriptions Properties
     var subscription: Subscription
     
@@ -110,7 +105,7 @@ struct SettingsState {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
             textSize: TextSize(enabled: false, size: 100),
-            addressbar: AddressBar(enabled: false, position: .top),
+            addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,
             autoconsentEnabled: false,
@@ -127,7 +122,7 @@ struct SettingsState {
             voiceSearchEnabled: false,
             speechRecognitionAvailable: false,
             loginsEnabled: false,
-            networkProtection: NetworkProtection(enabled: false, status: ""),
+            networkProtectionConnected: false,
             subscription: Subscription(enabled: false,
                                        canPurchase: false,
                                        isSignedIn: false,

@@ -19,27 +19,34 @@
 
 import SwiftUI
 
-struct FavoritesEmptyStateView: View {
+struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
-    @Binding var isShowingTooltip: Bool
+    @ObservedObject var model: Model
+
+    @State private var headerPadding: CGFloat = 10
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
+                FavoritesSectionHeader(model: model)
+                    .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
                     let placeholders = Array(0..<placeholdersCount)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                            .contentShape(.capsule)
+                            .onTapGesture {
+                                model.placeholderTapped()
+                            }
                     }
                 }
             }
 
-            if isShowingTooltip {
+            if model.isShowingTooltip {
                 FavoritesTooltip()
                     .offset(x: 18, y: 24)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
@@ -49,6 +56,5 @@ struct FavoritesEmptyStateView: View {
 }
 
 #Preview {
-    @State var isShowingTooltip = false
-    return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
+    return FavoritesEmptyStateView(model: FavoritesPreviewModel())
 }

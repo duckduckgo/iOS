@@ -21,7 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 
 class OnboardingSuggestedSitesProviderTests: XCTestCase {
-    let scheme = "https:"
+    let scheme = "https://"
 
     func testSuggestedSitesForIndonesia() {
         // GIVEN
@@ -65,7 +65,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "bundesliga.de"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "tagesschau.de"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "galeria.de"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://duden.de"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "duden.de"))
     }
 
     func testSuggestedSitesForCanada() {
@@ -95,7 +95,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "voetbalprimeur.nl"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "nu.nl"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "bol.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://www.woorden.org/woord/eend"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "www.woorden.org/woord/eend"))
     }
 
     func testSuggestedSitesForAustralia() {
@@ -125,7 +125,7 @@ class OnboardingSuggestedSitesProviderTests: XCTestCase {
         XCTAssertEqual(sitesList[0], ContextualOnboardingListItem.site(title: scheme + "svenskafans.com"))
         XCTAssertEqual(sitesList[1], ContextualOnboardingListItem.site(title: scheme + "dn.se"))
         XCTAssertEqual(sitesList[2], ContextualOnboardingListItem.site(title: scheme + "tradera.com"))
-        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: "https://www.synonymer.se/sv-syn/anka"))
+        XCTAssertEqual(sitesList[3], ContextualOnboardingListItem.surprise(title: scheme + "www.synonymer.se/sv-syn/anka"))
     }
 
     func testSuggestedSitesForIreland() {

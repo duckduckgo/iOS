@@ -21,7 +21,7 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
+struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @ObservedObject private var newTabPageModel: NewTabPageModel
@@ -30,9 +30,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
-    
-    @State var isShowingTooltip: Bool = false
-    @State private var isShowingSettings: Bool = false
+
     @State private var customizeButtonShowedInline = false
 
     init(newTabPageModel: NewTabPageModel,
@@ -63,7 +61,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     private var favoritesSectionView: some View {
         Group {
             if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
+                FavoritesEmptyStateView(model: favoritesModel)
             } else {
                 FavoritesView(model: favoritesModel)
             }
@@ -84,7 +82,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             Spacer()
 
             Button(action: {
-                isShowingSettings = true
+                newTabPageModel.customizeNewTabPage()
             }, label: {
                 NewTabPageCustomizeButtonView()
                 // Needed to reduce default button margins
@@ -103,7 +101,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             })
             .sectionPadding()
             .onFirstAppear {
-                newTabPageModel.increaseIntroMessageCounter()
+                newTabPageModel.introMessageDisplayed()
             }
         }
     }
@@ -168,12 +166,12 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             }
         }
         .background(Color(designSystemColor: .background))
-        .if(isShowingTooltip) {
+        .if(favoritesModel.isShowingTooltip) {
             $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
-                isShowingTooltip = false
+                favoritesModel.toggleTooltip()
             })
         }
-        .sheet(isPresented: $isShowingSettings, onDismiss: {
+        .sheet(isPresented: $newTabPageModel.isShowingSettings, onDismiss: {
             shortcutsSettingsModel.save()
             sectionsSettingsModel.save()
         }, content: {

@@ -179,6 +179,7 @@ class TabViewController: UIViewController {
     private let certificateTrustEvaluator: CertificateTrustEvaluating
     var isCertificateValid: Bool?
     private var shouldBypassSSLError = false
+    var errorData: SpecialErrorData?
 
     let syncService: DDGSyncing
 
@@ -1158,25 +1159,9 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     @MainActor
-    private func loadSSLErrorHTML(url: URL, alternate: Bool, errorCode: Int) {
-        let html = SSLErrorPageHTMLTemplate(domain: url.host ?? url.absoluteString, errorCode: errorCode).makeHTMLFromTemplate()
-        loadHTML(html: html, url: url, alternate: alternate)
-    }
-
-    @MainActor
-    private func loadErrorHTML(_ error: WKError, header: String, forUnreachableURL url: URL, alternate: Bool) {
-        let html = ErrorPageHTMLTemplate(error: error, header: header).makeHTMLFromTemplate()
-        loadHTML(html: html, url: url, alternate: alternate)
-    }
-
-    @MainActor
-    private func loadHTML(html: String, url: URL, alternate: Bool) {
-        if alternate {
-            webView?.loadHTMLString(html, baseURL: url)
-//            webView?.loadAlternateHTML(html, baseURL: .error, forUnreachableURL: url) // error on macos side (two times called)
-        } else {
-            webView?.setDocumentHtml(html)
-        }
+    private func loadSSLErrorHTML(url: URL) {
+        let html = ErrorPageHTMLTemplate.htmlFromTemplate
+        webView?.loadHTMLString(html, baseURL: .specialError)
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1491,9 +1476,13 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if error.code == NSURLErrorServerCertificateUntrusted {
-            userScripts?.sslErrorPageUserScript?.delegate = self
-            userScripts?.sslErrorPageUserScript?.failingURL = error.failedUrl
-            loadSSLErrorHTML(url: error.failedUrl!, alternate: true, errorCode: error.code) //todo force opt
+//            userScripts?.specialErrorPageUserScript?.delegate = self // TODO? czy TOREMOVE?
+            userScripts?.specialErrorPageUserScript?.failingURL = error.failedUrl
+
+            let domain = url?.host ?? url?.absoluteString ?? ""
+
+            errorData = SpecialErrorData(kind: "ssl", errorType: SSLErrorType.forErrorCode(error.code).rawValue, domain: domain)
+            loadSSLErrorHTML(url: error.failedUrl!) //todo force opt
         }
     }
 
@@ -1724,17 +1713,55 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            if let handler = youtubeNavigationHandler {
-                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
-                return
-            }
-            completion(.cancel)
-            
+            handleDuckNavigation(navigationAction: navigationAction, to: url, completion: completion)
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
             } else {
                 presentOpenInExternalAppAlert(url: url)
+            }
+            completion(.cancel)
+        }
+    }
+
+    private func handleDuckNavigation(navigationAction: WKNavigationAction,
+                                      to url: URL,
+                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if url.host == "special-error" {
+            var fileName = "index"
+            var fileExtension = "html"
+            var directoryURL = URL(fileURLWithPath: "/pages/special-error")
+            directoryURL.appendPathComponent(url.path)
+            if !directoryURL.pathExtension.isEmpty {
+                fileExtension = directoryURL.pathExtension
+                directoryURL.deletePathExtension()
+                fileName = directoryURL.lastPathComponent
+                directoryURL.deleteLastPathComponent()
+            }
+            guard let file = ContentScopeScripts.Bundle.path(forResource: fileName, ofType: fileExtension, inDirectory: directoryURL.path) else {
+                assertionFailure("\(fileExtension) template not found")
+                completion(.cancel)
+                return
+            }
+
+            guard let data = try? Data(contentsOf: URL(fileURLWithPath: file)) else {
+                completion(.cancel)
+                return
+            }
+
+            let response = URLResponse(url: url, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil)
+
+
+            if #available(iOS 15.0, *) {
+                webView.loadSimulatedRequest(URLRequest(url: directoryURL), response: response, responseData: data)
+            }
+            completion(.allow)
+
+        } else {
+            if let handler = youtubeNavigationHandler {
+                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
+                return
             }
             completion(.cancel)
         }
@@ -2890,7 +2917,7 @@ extension UserContentController {
 
 }
 
-extension TabViewController: SSLErrorPageUserScriptDelegate {
+extension TabViewController: SpecialErrorPageUserScriptDelegate {
 
     func leaveSite() {
         guard webView?.canGoBack == true else {

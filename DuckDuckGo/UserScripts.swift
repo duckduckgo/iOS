@@ -43,7 +43,7 @@ final class UserScripts: UserScriptsProvider {
     }
     var youtubeOverlayScript: YoutubeOverlayUserScript?
     var youtubePlayerUserScript: YoutubePlayerUserScript?
-    var sslErrorPageUserScript: SSLErrorPageUserScript?
+    var specialErrorPageUserScript: SpecialErrorPageUserScript?
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -72,8 +72,8 @@ final class UserScripts: UserScriptsProvider {
         if let specialPages {
             userScripts.append(specialPages)
         }
-        sslErrorPageUserScript = SSLErrorPageUserScript()
-        sslErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
+        specialErrorPageUserScript = SpecialErrorPageUserScript()
+        specialErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
 
     }
     

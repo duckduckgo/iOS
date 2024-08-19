@@ -17,7 +17,7 @@ tags:
 - pressKey: Enter
 
 # Change settings
-- tapOn: "Safe search: moderate"
+- tapOn: "Safe search"
 - tapOn: "Off"
 
 # Fire Button - twice, just to be sure

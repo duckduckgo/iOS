@@ -1161,7 +1161,7 @@ extension TabViewController: WKNavigationDelegate {
     @MainActor
     private func loadSSLErrorHTML(url: URL) {
         let html = ErrorPageHTMLTemplate.htmlFromTemplate
-        webView?.loadHTMLString(html, baseURL: .specialError)
+        webView?.loadHTMLString(html, baseURL: url) // todo scheme
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1476,7 +1476,7 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if error.code == NSURLErrorServerCertificateUntrusted {
-//            userScripts?.specialErrorPageUserScript?.delegate = self // TODO? czy TOREMOVE?
+            userScripts?.specialErrorPageUserScript?.delegate = self
             userScripts?.specialErrorPageUserScript?.failingURL = error.failedUrl
 
             let domain = url?.host ?? url?.absoluteString ?? ""
@@ -1754,7 +1754,9 @@ extension TabViewController: WKNavigationDelegate {
 
 
             if #available(iOS 15.0, *) {
-                webView.loadSimulatedRequest(URLRequest(url: directoryURL), response: response, responseData: data)
+                webView.loadFileURL(URL(fileURLWithPath: file), allowingReadAccessTo: URL(fileURLWithPath: file))
+//                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), responseHTML: String(data: data, encoding: .utf8)!)
+//                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), response: response, responseData: data)
             }
             completion(.allow)
 

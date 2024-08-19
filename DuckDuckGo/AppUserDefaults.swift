@@ -397,6 +397,8 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
+            // Reset Hidden overlay setting when changing Mode
+            userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
                                             object: duckPlayerMode)
         }

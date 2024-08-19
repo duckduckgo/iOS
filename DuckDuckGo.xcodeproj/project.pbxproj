@@ -694,6 +694,8 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
+		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
+		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FE05CEE2C36424E00D9046B /* OnboardingPixelReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE05CED2C36424E00D9046B /* OnboardingPixelReporter.swift */; };
 		9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE05CEF2C3642F900D9046B /* OnboardingPixelReporterTests.swift */; };
 		9FE08BD32C2A5B88001D5EBC /* OnboardingTextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD22C2A5B88001D5EBC /* OnboardingTextStyles.swift */; };
@@ -1011,7 +1013,7 @@
 		F15531922BF215ED0029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531912BF215ED0029ED04 /* SubscriptionTestingUtilities */; };
 		F15531942BF215F60029ED04 /* Subscription in Frameworks */ = {isa = PBXBuildFile; productRef = F15531932BF215F60029ED04 /* Subscription */; };
 		F15531962BF215F60029ED04 /* SubscriptionTestingUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = F15531952BF215F60029ED04 /* SubscriptionTestingUtilities */; };
-		F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */; };
+		F1564F032B7B915F00D454A6 /* AppDelegate+Attribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
 		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
@@ -2433,6 +2435,8 @@
 		9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonModel.swift; sourceTree = "<group>"; };
 		9FB0271A2C2927D0009EA190 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewModel.swift; sourceTree = "<group>"; };
+		9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchOptionsHandler.swift; path = ../DuckDuckGo/LaunchOptionsHandler.swift; sourceTree = "<group>"; };
+		9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOptionsHandlerTests.swift; sourceTree = "<group>"; };
 		9FE05CED2C36424E00D9046B /* OnboardingPixelReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporter.swift; sourceTree = "<group>"; };
 		9FE05CEF2C3642F900D9046B /* OnboardingPixelReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporterTests.swift; sourceTree = "<group>"; };
 		9FE08BD22C2A5B88001D5EBC /* OnboardingTextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextStyles.swift; sourceTree = "<group>"; };
@@ -2764,7 +2768,6 @@
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F132D6A42C62239B00D85426 /* SubscriptionSettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsHeaderView.swift; sourceTree = "<group>"; };
-		F132D6AA2C66688E00D85426 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
 		F13B4BBF1F180D8A00814661 /* TabsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModel.swift; sourceTree = "<group>"; };
 		F13B4BD21F1822C700814661 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -2785,7 +2788,7 @@
 		F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewControllerExtension.swift; path = ../Core/UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchBarExtension.swift; path = ../Core/SearchBarExtension.swift; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
-		F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SKAD4.swift"; sourceTree = "<group>"; };
+		F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Attribution.swift"; sourceTree = "<group>"; };
 		F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewController.swift; sourceTree = "<group>"; };
 		F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherViewController.swift; sourceTree = "<group>"; };
@@ -3956,7 +3959,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				F132D6AA2C66688E00D85426 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -5541,6 +5543,7 @@
 		F143C3191E4A99DD00CFDE3A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */,
 				B603974829C19F6F00902A34 /* Assertions.swift */,
 				CBAA195927BFE15600A4BD49 /* NSManagedObjectContextExtension.swift */,
 				4BE27566272F878F006B20B0 /* URLRequestExtension.swift */,
@@ -5704,6 +5707,7 @@
 		F198D78F1E3976300088DA8A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */,
 				F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */,
 				F14E491E1E391CE900DC037C /* URLExtensionTests.swift */,
 				F1DA2F7C1EBCF23700313F51 /* ExternalUrlSchemeTests.swift */,
@@ -5826,7 +5830,7 @@
 				CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */,
-				F1564F022B7B915F00D454A6 /* AppDelegate+SKAD4.swift */,
+				F1564F022B7B915F00D454A6 /* AppDelegate+Attribution.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
@@ -7050,7 +7054,7 @@
 				9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */,
 				310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
-				F1564F032B7B915F00D454A6 /* AppDelegate+SKAD4.swift in Sources */,
+				F1564F032B7B915F00D454A6 /* AppDelegate+Attribution.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				4B2C79612C5B27AC00A240CC /* VPNSnoozeActivityAttributes.swift in Sources */,
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,
@@ -7526,6 +7530,7 @@
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
+				9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */,
 				983C52E72C2C0ACB007B5747 /* BookmarkStateRepairTests.swift in Sources */,
 				31C138AC27A403CB00FFD4B2 /* DownloadManagerTests.swift in Sources */,
 				BDE219EA2C457B46005D5884 /* PrivacyProDataReporterTests.swift in Sources */,
@@ -7869,6 +7874,7 @@
 				F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */,
 				F17D723C1E8BB374003E8B0E /* AppDeepLinkSchemes.swift in Sources */,
 				1E8AD1DB27C51AE000ABA377 /* TimeIntervalExtension.swift in Sources */,
+				9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */,
 				B652DF0D287C2A6300C12A9C /* PrivacyFeatures.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
@@ -8740,7 +8746,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -8777,7 +8783,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8867,7 +8873,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -8894,7 +8900,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9043,7 +9049,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9068,7 +9074,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9137,7 +9143,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -9171,7 +9177,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9204,7 +9210,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9234,7 +9240,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9544,7 +9550,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9575,7 +9581,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9603,7 +9609,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9636,7 +9642,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -9666,7 +9672,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProviderAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -9699,11 +9705,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9936,7 +9942,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9963,7 +9969,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9995,7 +10001,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -10032,7 +10038,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -10067,7 +10073,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -10102,11 +10108,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10279,11 +10285,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10312,10 +10318,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0;
+				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10516,8 +10522,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 183.0.0;
+				branch = fcappelli/oslog_to_logger;
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

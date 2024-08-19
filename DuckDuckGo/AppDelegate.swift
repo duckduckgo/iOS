@@ -99,6 +99,8 @@ import WebKit
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
 
+    private let launchOptionsHandler = LaunchOptionsHandler()
+
     override init() {
         super.init()
 
@@ -112,8 +114,8 @@ import WebKit
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // SKAD4 support
-        updateSKAd(conversionValue: 1)
+        // Attribution support
+        updateAttribution(conversionValue: 1)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -233,19 +235,11 @@ import WebKit
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         let variantManager = DefaultVariantManager()
-        let historyMessageManager = HistoryMessageManager()
         let daxDialogs = DaxDialogs.shared
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
-        AtbAndVariantCleanup.cleanup()
-        variantManager.assignVariantIfNeeded { _ in
-            // MARK: perform first time launch logic here
-            daxDialogs.primeForUse()
-
-            // New users don't see the message
-            historyMessageManager.dismiss()
-        }
+        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
 
         PixelExperiment.install()
 
@@ -759,6 +753,24 @@ import WebKit
     }
 
     // MARK: private
+
+    private func cleanUpATBAndAssignVariant(variantManager: VariantManager, daxDialogs: DaxDialogs) {
+        let historyMessageManager = HistoryMessageManager()
+
+        AtbAndVariantCleanup.cleanup()
+        variantManager.assignVariantIfNeeded { _ in
+            // MARK: perform first time launch logic here
+            // If it's running UI Tests check if the onboarding should be in a completed state.
+            if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
+                daxDialogs.dismiss()
+            } else {
+                daxDialogs.primeForUse()
+            }
+
+            // New users don't see the message
+            historyMessageManager.dismiss()
+        }
+    }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         guard UIApplication.shared.backgroundRefreshStatus == .available else {

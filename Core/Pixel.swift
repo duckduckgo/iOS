@@ -115,7 +115,6 @@ public struct PixelParameters {
     // Network Protection
     public static let keychainFieldName = "fieldName"
     public static let keychainErrorCode = errorCode
-    public static let wireguardErrorCode = errorCode
     public static let latency = "latency"
     public static let server = "server"
     public static let networkType = "network_type"

@@ -1016,6 +1016,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown()
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -1032,6 +1033,7 @@ class MainViewController: UIViewController {
     private func attachTab(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
             
@@ -1407,6 +1409,7 @@ class MainViewController: UIViewController {
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {

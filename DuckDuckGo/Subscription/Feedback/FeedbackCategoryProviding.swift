@@ -94,7 +94,7 @@ enum PrivacyProFeedbackSubcategory: String, FeedbackCategoryProviding, FeedbackF
     }
 }
 
-enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding {
+enum VPNFeedbackSubcategory: String, FeedbackCategoryProviding, FeedbackFAQProviding {
     case unableToInstall
     case failsToConnect
     case tooSlow

@@ -18,20 +18,33 @@
 //
 
 import Foundation
+import Core
 import BrowserServicesKit
 
 typealias NewTabPageShortcutsSettingsModel = NewTabPageSettingsModel<NewTabPageShortcut, NewTabPageShortcutsSettingsStorage>
 
 extension NewTabPageShortcutsSettingsModel {
     convenience init(storage: NewTabPageShortcutsSettingsStorage = NewTabPageShortcutsSettingsStorage(),
-                     featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
-        self.init(settingsStorage: storage) { shortcut in
+                     featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+                     pixelFiring: PixelFiring.Type = Pixel.self) {
+        self.init(settingsStorage: storage,
+                  onItemEnabled: { Self.onEnabled($0, isEnabled: $1, pixelFiring: pixelFiring) },
+                  onItemReordered: nil,
+                  visibilityFilter: { shortcut in
             switch shortcut {
             case .aiChat, .bookmarks, .downloads, .settings:
                 return true
             case .passwords:
                 return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
             }
+        })
+    }
+    
+    private static func onEnabled(_ shortcut: SettingItem, isEnabled: Bool, pixelFiring: PixelFiring.Type) {
+        if isEnabled {
+            pixelFiring.fire(.newTabPageCustomizeShortcutAdded(shortcut.nameForPixel), withAdditionalParameters: [:])
+        } else {
+            pixelFiring.fire( .newTabPageCustomizeShortcutRemoved(shortcut.nameForPixel), withAdditionalParameters: [:])
         }
     }
 }

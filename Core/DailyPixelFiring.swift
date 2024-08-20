@@ -1,5 +1,5 @@
 //
-//  ShortcutsModel.swift
+//  DailyPixelFiring.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,19 +18,20 @@
 //
 
 import Foundation
-import Core
 
-final class ShortcutsModel: ObservableObject {
+public protocol DailyPixelFiring {
+    static func fireDaily(_ pixel: Pixel.Event,
+                          withAdditionalParameters params: [String: String])
+    
+    static func fireDaily(_ pixel: Pixel.Event)
+}
 
-    var onShortcutOpened: ((NewTabPageShortcut) -> Void)?
-    let pixelFiring: PixelFiring.Type
-
-    init(pixelFiring: PixelFiring.Type = Pixel.self) {
-        self.pixelFiring = pixelFiring
+extension DailyPixel: DailyPixelFiring {
+    public static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
+        fire(pixel: pixel, withAdditionalParameters: params)
     }
 
-    func openShortcut(_ shortcut: NewTabPageShortcut) {
-        pixelFiring.fire(.newTabPageShortcutClicked(shortcut.nameForPixel), withAdditionalParameters: [:])
-        onShortcutOpened?(shortcut)
+    public static func fireDaily(_ pixel: Pixel.Event) {
+        fire(pixel: pixel)
     }
 }

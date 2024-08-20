@@ -34,6 +34,8 @@ public struct UserText {
     static let syncAndBackUpThisDeviceLink = NSLocalizedString("sync.and.backup.this.device.link", bundle: Bundle.module, value: "Sync and Back Up This Device", comment: "Link label for syncing and backing up the device")
     static let recoverSyncedDataLink = NSLocalizedString("recover.synced.data.link", bundle: Bundle.module, value: "Recover Synced Data", comment: "Link label for recovering synced data")
     static let otherOptionsSectionHeader = NSLocalizedString("other.options.section.header", bundle: Bundle.module, value: "Other Options", comment: "Section header for other syncing options")
+    // Other Platforms
+    static let syncGetOnOtherDevices = NSLocalizedString("sync.get.other.devices", value:"Get DuckDuckGo on Other Devices", comment: "Button to get DuckDuckGo on other devices")
 
     // Sync Enabled View
     // Turn Sync Off

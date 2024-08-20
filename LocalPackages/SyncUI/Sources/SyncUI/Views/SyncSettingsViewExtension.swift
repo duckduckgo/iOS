@@ -105,6 +105,21 @@ extension SyncSettingsView {
             Text(UserText.otherOptionsSectionHeader)
         }
     }
+
+    @ViewBuilder
+    func otherPlatformsLinks() -> some View {
+        Section {
+            NavigationLink(destination: PlatformLinksView(model: model)) {
+                HStack(spacing: 6) {
+                    Image("Downloads-24")
+                    Text(UserText.syncGetOnOtherDevices)
+                        .daxBodyRegular()
+                }
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+            }
+            .buttonStyle(.plain)
+        }
+    }
 }
 
 // MARK: - Sync Enabled Views

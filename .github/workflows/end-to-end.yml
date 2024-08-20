@@ -8,9 +8,9 @@ on:
 jobs:
   build-end-to-end-tests:
     name: Build End to End Tests
-    runs-on: macos-14-xlarge
+    runs-on: macos-14
     timeout-minutes: 30
-    
+
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -68,7 +68,7 @@ jobs:
   end-to-end-tests:
     name: End to end Tests
     needs: build-end-to-end-tests
-    runs-on: macos-14-xlarge
+    runs-on: macos-14
     timeout-minutes: 90
     strategy:
       matrix:

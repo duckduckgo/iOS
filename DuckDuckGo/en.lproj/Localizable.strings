@@ -680,6 +680,9 @@
 /* More options button text */
 "bookmark.moreButton" = "More";
 
+/* Placeholder in the bookmarks search bar */
+"bookmark.searchbar.placeholder" = "Search";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Website title";
 

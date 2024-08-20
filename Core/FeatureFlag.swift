@@ -36,6 +36,8 @@ public enum FeatureFlag: String {
     case history
     case newTabPageSections
     case duckPlayer
+    case syncPromotionBookmarks
+    case syncPromotionPasswords
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -71,6 +73,10 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
+        case .syncPromotionBookmarks:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
+        case .syncPromotionPasswords:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         }
     }
 }

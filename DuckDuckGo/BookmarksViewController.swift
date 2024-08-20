@@ -47,7 +47,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     // Need to retain these as we're going to add/remove them from the view hierarchy
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var emptyStateContainer: UIView!
-    @IBOutlet var searchBar: UISearchBar!
 
     private let bookmarksDatabase: CoreDataDatabase
     private let favicons: Favicons
@@ -86,7 +85,23 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                       children: [exportAction(), importAction()])
     }
 
+    private lazy var headerView: UIView = UIView()
+
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = UserText.bookmarkSearchBarPlaceholder
+        searchBar.delegate = self
+        searchBar.sizeToFit()
+        return searchBar
+    }()
+
     private var searchController: UISearchController?
+
+    private lazy var searchBarBottomConstraint: NSLayoutConstraint = {
+        searchBar.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+    }()
+
     weak var delegate: BookmarksDelegate?
 
     fileprivate var viewModelCancellable: AnyCancellable?
@@ -798,15 +813,36 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         emptyStateContainer.isHidden = false
         importFooterButton.isHidden = false
         importFooterButton.isEnabled = true
-        searchBar.removeFromSuperview()
+        tableView.tableHeaderView = nil
     }
 
     private func hideEmptyState() {
         emptyStateContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
-        tableView.addSubview(searchBar)
-        tableView.tableHeaderView = searchBar
+        configureSearchBarHeaderView()
+    }
+
+    private func configureSearchBarHeaderView() {
+        guard !headerView.subviews.contains(searchBar) else {
+            return
+        }
+
+        headerView.addSubview(searchBar)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+                                        searchBar.topAnchor.constraint(equalTo: headerView.topAnchor),
+                                        searchBar.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+                                        searchBar.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+                                        searchBarBottomConstraint
+                                    ])
+
+        searchBar.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+
+        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: searchBar.intrinsicContentSize.height)
+
+        tableView.tableHeaderView = headerView
     }
 
     private func prepareForSearching() {

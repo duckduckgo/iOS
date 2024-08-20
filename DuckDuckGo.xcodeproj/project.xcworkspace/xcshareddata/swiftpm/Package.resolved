@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "2efee14db4d30ac73916794de4d262b745a5f413",
-        "version" : "185.0.0"
+        "branch" : "dominik/pixelkit-testutils-fix",
+        "revision" : "44b6719726089cb02a79b005e0e8aa7d4a8e6839"
       }
     },
     {

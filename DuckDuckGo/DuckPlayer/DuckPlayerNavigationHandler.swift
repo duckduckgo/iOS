@@ -108,7 +108,7 @@ final class DuckPlayerNavigationHandler {
             return
         }
         
-        // This setting allows the FE to skip showing the overlay on some videos
+        // This is passed to the FE overlay at init to disable the overlay for one video
         duckPlayer.settings.allowFirstVideo = false
         
         if let (videoID, _) = url.youtubeVideoParams,
@@ -147,7 +147,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
        
-        // This setting allows the FE to skip showing the overlay on some videos
+        // This is passed to the FE overlay at init to disable the overlay for one video
         duckPlayer.settings.allowFirstVideo = false
         
         guard let url = navigationAction.request.url else { return }
@@ -229,7 +229,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             return
         }
         
-        // This setting allows the FE to skip showing the overlay on some videos
+        // This is passed to the FE overlay at init to disable the overlay for one video
         duckPlayer.settings.allowFirstVideo = false
         
         if let (videoID, _) = url.youtubeVideoParams,

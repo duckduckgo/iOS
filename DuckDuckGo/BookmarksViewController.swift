@@ -28,6 +28,7 @@ import CoreData
 import Combine
 import Persistence
 import WidgetKit
+import SwiftUI
 
 class BookmarksViewController: UIViewController, UITableViewDelegate {
 
@@ -98,8 +99,40 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private var searchController: UISearchController?
 
+    private var isSearching: Bool = false {
+        didSet {
+            guard isSearching != oldValue else {
+                return
+            }
+            refreshTableHeaderView()
+        }
+    }
+
     private lazy var searchBarBottomConstraint: NSLayoutConstraint = {
         searchBar.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+    }()
+
+    private lazy var syncPromoViewTopConstraint: NSLayoutConstraint = {
+        syncPromoViewHostingController.view.topAnchor.constraint(equalTo: searchBar.bottomAnchor)
+    }()
+
+    private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
+
+    private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
+        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(modelType: .bookmarks, primaryButtonAction: { [weak self] in
+            if let mainVC = self?.presentingViewController as? MainViewController {
+                self?.dismiss(animated: true) {
+                    mainVC.segueToSettingsSync()
+                }
+            }
+        }, dismissButtonAction: { [weak self] in
+            self?.syncPromoManager.dismissPromoFor(.bookmarks)
+            self?.refreshTableHeaderView()
+        }))
+
+        let hostingController = UIHostingController(rootView: headerView)
+        hostingController.view.backgroundColor = .clear
+        return hostingController
     }()
 
     weak var delegate: BookmarksDelegate?
@@ -821,6 +854,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
         configureSearchBarHeaderView()
+        refreshTableHeaderView()
     }
 
     private func configureSearchBarHeaderView() {
@@ -845,10 +879,66 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         tableView.tableHeaderView = headerView
     }
 
+    private func showSyncPromo() -> Bool {
+        return !tableView.isEditing
+               && !isSearching
+               && !isNested
+               && syncPromoManager.shouldPresentPromoFor(.bookmarks, count: viewModel.totalBookmarksCount)
+    }
+
+    private func refreshTableHeaderView() {
+        if showSyncPromo() {
+            guard !headerView.subviews.contains(syncPromoViewHostingController.view) else {
+                return
+            }
+
+            syncPromoViewHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+            addChild(syncPromoViewHostingController)
+            headerView.addSubview(syncPromoViewHostingController.view)
+            syncPromoViewHostingController.didMove(toParent: self)
+
+            NSLayoutConstraint.deactivate([
+                searchBarBottomConstraint
+            ])
+
+            NSLayoutConstraint.activate([
+                syncPromoViewTopConstraint,
+                syncPromoViewHostingController.view.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+                syncPromoViewHostingController.view.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+                syncPromoViewHostingController.view.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+            ])
+
+            syncPromoViewHostingController.view.setNeedsLayout()
+            syncPromoViewHostingController.view.layoutIfNeeded()
+
+            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+            let totalHeight = searchBar.intrinsicContentSize.height + syncPromoViewHeight
+            headerView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: totalHeight)
+
+            tableView.tableHeaderView = headerView
+            tableView.layoutIfNeeded()
+        } else if !headerView.subviews.contains(searchBar) || headerView.subviews.count != 1 {
+
+            if syncPromoViewHostingController.view != nil {
+                syncPromoViewHostingController.view?.removeFromSuperview()
+            }
+
+            syncPromoViewTopConstraint.isActive = false
+            searchBarBottomConstraint.isActive = true
+
+            headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: searchBar.intrinsicContentSize.height)
+
+            tableView.tableHeaderView = headerView
+            searchBar.layoutIfNeeded()
+            tableView.layoutIfNeeded()
+        }
+    }
+
     private func prepareForSearching() {
         finishEditing()
         disableEditButton()
         disableAddFolderButton()
+        isSearching = true
     }
     
     private func finishSearching() {
@@ -857,6 +947,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         
         enableEditButton()
         enableAddFolderButton()
+        isSearching = false
     }
 
     fileprivate func select(bookmark: BookmarkEntity) {

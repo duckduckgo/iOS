@@ -148,6 +148,19 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         return tableView
     }()
 
+    private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
+        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(modelType: .passwords, primaryButtonAction: { [weak self] in
+            self?.segueToSync()
+        }, dismissButtonAction: { [weak self] in
+            self?.viewModel.dismissSyncPromo()
+            self?.updateTableHeaderView()
+        }))
+
+        let hostingController = UIHostingController(rootView: headerView)
+        hostingController.view.backgroundColor = .clear
+        return hostingController
+    }()
+
     private lazy var lockedViewBottomConstraint: NSLayoutConstraint = {
         NSLayoutConstraint(item: tableView,
                            attribute: .bottom,
@@ -184,7 +197,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         if secureVault == nil {
             os_log("Failed to make vault")
         }
-        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl, currentTabUid: currentTabUid)
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl, currentTabUid: currentTabUid, syncService: syncService)
         self.syncService = syncService
         self.selectedAccount = selectedAccount
         self.openSearch = openSearch
@@ -265,6 +278,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateNavigationBarButtons()
         updateSearchController()
         updateToolbar()
+        updateTableHeaderView()
     }
 
     @objc
@@ -331,6 +345,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
              .receive(on: DispatchQueue.main)
              .sink { [weak self] _ in
                  self?.updateToolbarLabel()
+                 self?.updateTableHeaderView()
              }
              .store(in: &cancellables)
 
@@ -401,6 +416,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let importController = ImportPasswordsViewController(syncService: syncService)
         importController.delegate = self
         navigationController?.pushViewController(importController, animated: true)
+    }
+
+    private func segueToSync() {
+        if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
+            navigationController?.popToRootViewController(animated: true)
+            settingsVC.viewModel.presentLegacyView(.sync)
+        } else if let mainVC = self.presentingViewController as? MainViewController {
+            dismiss(animated: true) {
+                mainVC.segueToSettingsSync()
+            }
+        }
     }
 
     private func showSelectedAccountIfRequired() {
@@ -562,6 +588,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateNavigationBarButtons()
         updateSearchController()
         updateToolbar()
+        updateTableHeaderView()
         tableView.reloadData()
     }
 
@@ -632,6 +659,27 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         accountsCountLabel.text = UserText.autofillLoginListToolbarPasswordsCount(viewModel.accountsCount)
         accountsCountLabel.sizeToFit()
+    }
+
+    private func updateTableHeaderView() {
+        if viewModel.shouldShowSyncPromo() {
+            guard tableView.tableHeaderView != syncPromoViewHostingController.view else {
+                return
+            }
+
+            addChild(syncPromoViewHostingController)
+
+            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+            syncPromoViewHostingController.view.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: syncPromoViewHeight)
+            tableView.tableHeaderView = syncPromoViewHostingController.view
+
+            syncPromoViewHostingController.didMove(toParent: self)
+        } else {
+            guard tableView.tableHeaderView != nil else {
+                return
+            }
+            tableView.tableHeaderView = nil
+        }
     }
 
     private func installSubviews() {
@@ -951,14 +999,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 extension AutofillLoginSettingsListViewController: ImportPasswordsViewControllerDelegate {
 
     func importPasswordsViewControllerDidRequestOpenSync(_ viewController: ImportPasswordsViewController) {
-        if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
-            navigationController?.popToRootViewController(animated: true)
-            settingsVC.viewModel.presentLegacyView(.sync)
-        } else if let mainVC = self.presentingViewController as? MainViewController {
-            dismiss(animated: true) {
-                mainVC.segueToSettingsSync()
-            }
-        }
+        segueToSync()
     }
 
 }

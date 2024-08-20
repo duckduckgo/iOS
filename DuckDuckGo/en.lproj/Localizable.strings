@@ -2406,6 +2406,21 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title of the dialog to confirm deleting Sync server data */
 "sync.delete.all.confirm.title" = "Delete Server Data?";
 
+/* Message for the Sync Promotion banner when user has bookmarks that can be synced */
+"sync.promo.bookmarks.message" = "No account needed. End-to-end encryption means nobody but you can see your bookmarks, not even us.";
+
+/* Caption for a button to set up Sync */
+"sync.promo.confirm.action" = "Set Up Sync";
+
+/* Caption for a button to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "Remove";
+
+/* Message for the Sync Promotion banner when user has passwords that can be synced */
+"sync.promo.passwords.message" = "No account needed. End-to-end encryption means nobody but you can see your passwords, not even us.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.title" = "Sync Securely Between Devices";
+
 /* Caption for a button to remove device from Sync */
 "sync.remove-device.action" = "Remove";
 

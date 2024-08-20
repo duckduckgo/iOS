@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "fcappelli/oslog_to_logger",
-        "revision" : "f61b54c293e5a5564694b5ba99873ca5e9ec1a05"
+        "revision" : "2efee14db4d30ac73916794de4d262b745a5f413",
+        "version" : "185.0.0"
       }
     },
     {

@@ -23,6 +23,7 @@ import RemoteMessaging
 import Common
 import Core
 import Bookmarks
+import os.log
 
 final class HomePageConfiguration: HomePageMessagesConfiguration {
     
@@ -79,14 +80,14 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
 
     private func remoteMessageToShow() -> HomeMessage? {
         guard let remoteMessageToPresent = remoteMessagingClient.store.fetchScheduledRemoteMessage() else { return nil }
-        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+        Logger.remoteMessaging.info("Remote message to show: \(remoteMessageToPresent.id)")
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
-            os_log("Home message dismissed: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Logger.remoteMessaging.info("Home message dismissed: \(remoteMessage.id)")
             remoteMessagingClient.store.dismissRemoteMessage(withID: remoteMessage.id)
 
             if let index = homeMessages.firstIndex(of: homeMessage) {
@@ -100,14 +101,14 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
     func didAppear(_ homeMessage: HomeMessage) {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
-            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Logger.remoteMessaging.info("Remote message shown: \(remoteMessage.id)")
             if remoteMessage.isMetricsEnabled {
                 Pixel.fire(pixel: .remoteMessageShown,
                            withAdditionalParameters: additionalParameters(for: remoteMessage.id))
             }
 
             if !remoteMessagingClient.store.hasShownRemoteMessage(withID: remoteMessage.id) {
-                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Logger.remoteMessaging.info("Remote message shown for first time: \(remoteMessage.id)")
                 if remoteMessage.isMetricsEnabled {
                     Pixel.fire(pixel: .remoteMessageShownUnique,
                                withAdditionalParameters: additionalParameters(for: remoteMessage.id))

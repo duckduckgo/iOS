@@ -100,6 +100,7 @@ import WebKit
     private var didCrashDuringCrashHandlersSetUp: Bool
 
     private let launchOptionsHandler = LaunchOptionsHandler()
+    private let onboardingPixelReporter = OnboardingPixelReporter()
 
     override init() {
         super.init()
@@ -336,7 +337,7 @@ import WebKit
                                           variantManager: variantManager,
                                           contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: OnboardingPixelReporter())
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -500,6 +501,7 @@ import WebKit
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.reportAdAttribution()
+            self.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
         }
         
         if appIsLaunching {

@@ -99,24 +99,8 @@ struct UnifiedFeedbackRootView: View {
             }
         }
         .onFirstAppear {
-            let selectedCategory: String?
-            switch UnifiedFeedbackFormViewModel.Source(rawValue: viewModel.source) {
-            case .ppro: selectedCategory = UnifiedFeedbackCategory.subscription.rawValue
-            case .vpn: selectedCategory = UnifiedFeedbackCategory.vpn.rawValue
-            case .pir: selectedCategory = UnifiedFeedbackCategory.pir.rawValue
-            case .itr: selectedCategory = UnifiedFeedbackCategory.itr.rawValue
-            case .settings, .unknown, nil:
-                selectedCategory = nil
-                Task {
-                    await viewModel.process(action: .reportCategory)
-                }
-            }
-
-            /// 1 is the magic number for this to work
-            /// If this is triggered before the push animation completes,
-            /// the screen will unpop itself for some reason
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                viewModel.selectedCategory = selectedCategory
+            Task {
+                await viewModel.process(action: .reportCategory)
             }
         }
     }
@@ -143,16 +127,17 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
 
     var body: some View {
         VStack {
-            List {
+            List(selection: selection) {
                 Section {
                     ForEach(sources.allCases) { option in
-                        NavigationLink(destination: destination(),
-                                       tag: option.rawValue,
-                                       selection: selection) {
+                        NavigationLink {
+                            destination()
+                        } label: {
                             Text(option.displayName)
                                 .daxBodyRegular()
                                 .foregroundColor(.init(designSystemColor: .textPrimary))
                         }
+                        .tag(option.rawValue)
                         .listRowBackground(Color(designSystemColor: .surface))
                     }
                 } header: {

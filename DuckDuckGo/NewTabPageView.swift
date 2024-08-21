@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import Bookmarks
 import RemoteMessaging
 
 struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptyStateModel>: View {
@@ -30,6 +31,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let bookmarksInteracting: MenuBookmarksInteracting
 
     @State private var customizeButtonShowedInline = false
     @State private var isAddingFavorite: Bool = false
@@ -37,6 +39,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
     init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
+         bookmarksInteracting: MenuBookmarksInteracting,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
@@ -46,6 +49,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
         self.shortcutsModel = shortcutsModel
         self.shortcutsSettingsModel = shortcutsSettingsModel
         self.sectionsSettingsModel = sectionsSettingsModel
+        self.bookmarksInteracting = bookmarksInteracting
 
         self.messagesModel.load()
     }
@@ -275,6 +279,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
+        bookmarksInteracting: NullMenuBookmarksInteracting(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -300,6 +305,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
+        bookmarksInteracting: NullMenuBookmarksInteracting(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -315,6 +321,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(favorites: []),
+        bookmarksInteracting: NullMenuBookmarksInteracting(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -330,6 +337,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
+        bookmarksInteracting: NullMenuBookmarksInteracting(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel(storage: .emptyStorage())
@@ -363,5 +371,26 @@ private extension NewTabPageSectionsSettingsStorage {
 
     private final class EmptyStore: NewTabPageSettingsPersistentStore {
         var data: Data?
+    }
+}
+
+struct NullMenuBookmarksInteracting: MenuBookmarksInteracting {
+
+    var favoritesDisplayMode: FavoritesDisplayMode = .default
+
+    func createOrToggleFavorite(title: String, url: URL) {
+
+    }
+
+    func createBookmark(title: String, url: URL) {
+
+    }
+
+    func favorite(for url: URL) -> BookmarkEntity? {
+        nil
+    }
+
+    func bookmark(for url: URL) -> BookmarkEntity? {
+        nil
     }
 }

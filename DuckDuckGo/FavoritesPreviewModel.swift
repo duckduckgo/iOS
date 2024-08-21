@@ -20,7 +20,7 @@
 import Bookmarks
 import Foundation
 
-final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel {
+final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel, FavoritesCreating {
 
     @Published var isShowingTooltip: Bool = false
     var isCollapsed: Bool = true
@@ -87,6 +87,10 @@ final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel {
 
     func toggleTooltip() {
     
+    }
+
+    func createFavorite(name: String, url: URL) {
+        
     }
 }
 

@@ -792,6 +792,7 @@ class MainViewController: UIViewController {
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(tab: tabModel,
                                                       interactionModel: favoritesViewModel,
+                                                      bookmarksInteracting: menuBookmarksViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                       homePageMessagesConfiguration: homePageConfiguration,

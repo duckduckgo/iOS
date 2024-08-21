@@ -47,6 +47,7 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
                             .contentShape(.capsule)
                             .onTapGesture {
                                 model.placeholderTapped()
+                                isAddingFavorite = true
                             }
                     }
                 }

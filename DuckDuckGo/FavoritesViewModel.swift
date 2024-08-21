@@ -19,8 +19,13 @@
 
 import Foundation
 
+protocol FavoritesCreating {
+    func createFavorite(name: String, url: URL)
+}
+
 protocol FavoritesViewModel: AnyObject, ObservableObject {
     var allFavorites: [FavoriteItem] { get }
+    
     var faviconLoader: FavoritesFaviconLoading? { get }
 
     var isEmpty: Bool { get }

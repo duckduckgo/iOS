@@ -45,6 +45,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     init(tab: Tab,
          interactionModel: FavoritesListInteracting,
+         bookmarksInteracting: MenuBookmarksInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
@@ -71,6 +72,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
                                             messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
+                                            bookmarksInteracting: bookmarksInteracting,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,
                                             sectionsSettingsModel: sectionsSettingsModel)

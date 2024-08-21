@@ -69,6 +69,7 @@ protocol DuckPlayerSettingsProtocol: AnyObject {
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
     var askModeOverlayHidden: Bool { get }
+    var allowFirstVideo: Bool { get set }
     
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
@@ -132,6 +133,8 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
             return false
         }
     }
+    
+    var allowFirstVideo: Bool = false
     
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher

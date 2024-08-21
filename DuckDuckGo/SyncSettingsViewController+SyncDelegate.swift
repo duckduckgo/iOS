@@ -210,8 +210,12 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
         let controller = UIHostingController(
-            rootView: DeviceConnectedView())
+            rootView: DeviceConnectedView(model: viewModel))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
         }

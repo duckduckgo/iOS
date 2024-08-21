@@ -108,6 +108,9 @@ final class DuckPlayerNavigationHandler {
             return
         }
         
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         if let (videoID, _) = url.youtubeVideoParams,
             videoID == lastHandledVideoID {
             os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
@@ -118,7 +121,8 @@ final class DuckPlayerNavigationHandler {
          // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
             url.hasWatchInYoutubeQueryParameter {
-                 return
+                duckPlayer.settings.allowFirstVideo = true
+            return
          }
                 
         if url.isYoutubeVideo,
@@ -143,6 +147,9 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
        
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         guard let url = navigationAction.request.url else { return }
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
@@ -167,6 +174,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
                    let id = videoParameterItem.value,
                     let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+                        // These links should always skip the overlay
+                        duckPlayer.settings.allowFirstVideo = true
                         Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
                         webView.load(URLRequest(url: newURL))
                         return
@@ -220,6 +229,9 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             return
         }
         
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         if let (videoID, _) = url.youtubeVideoParams,
            videoID == lastHandledVideoID,
             !url.hasWatchInYoutubeQueryParameter {
@@ -229,9 +241,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
          // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
-         // These should not be handled by DuckPlayer
+         // These should not be handled by DuckPlayer and not include overlays
          if url.isYoutubeVideo,
             url.hasWatchInYoutubeQueryParameter {
+                duckPlayer.settings.allowFirstVideo = true
                 completion(.allow)
                 return
          }

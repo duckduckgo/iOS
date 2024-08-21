@@ -50,7 +50,7 @@ struct ConfigurationManager {
     }
 
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
-    private let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog, eventMapping: Self.configurationDebugEvents)
+    private let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, eventMapping: Self.configurationDebugEvents)
 
     private static let configurationDebugEvents = EventMapping<ConfigurationDebugEvents> { event, error, _, _ in
         let domainEvent: Pixel.Event

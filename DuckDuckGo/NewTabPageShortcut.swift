@@ -40,4 +40,14 @@ extension NewTabPageShortcut {
             "shortcut.storage.identifier.settings"
         }
     }
+
+    var nameForPixel: String {
+        switch self {
+        case .bookmarks: return "bookmarks"
+        case .aiChat: return "chat"
+        case .passwords: return "passwords"
+        case .downloads: return "downloads"
+        case .settings: return "settings"
+        }
+    }
 }

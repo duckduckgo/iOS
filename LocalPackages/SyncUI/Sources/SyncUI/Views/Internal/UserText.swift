@@ -179,5 +179,6 @@ public struct UserText {
     static let syncGetOtherDevicesTitle = NSLocalizedString("sync.get.other.devices.card.title", bundle: Bundle.module, value: "Get DuckDuckGo on other devices", comment: "Title of card with share links for users to download DuckDuckGo on other devices")
     static let syncGetOtherDevicesMessage = NSLocalizedString("sync.get.other.devices.card.message", bundle: Bundle.module, value: "To download our app, visit:", comment: "Message before share link for downloading DuckDuckGo on other devices")
     static let syncGetOtherDevicesButtonTitle = NSLocalizedString("sync.get.other.devices.card.button.title", bundle: Bundle.module, value: "Share Download Link", comment: "Button title to share link for downloading DuckDuckGo on other devices")
+    static let syncGetOtherDeviceShareLinkMessage = NSLocalizedString("sync.get.other.devices.share.link.message", value: "Search privately and block trackers with the DuckDuckGo browser. Visit this link to download today.\n", comment: "Message included when sharing a url via the system share sheet")
 
 }

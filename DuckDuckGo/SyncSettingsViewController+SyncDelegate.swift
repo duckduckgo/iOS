@@ -230,8 +230,16 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         navigationController?.pushViewController(controller, animated: true)
     }
 
-    func shareLink(for url: URL, from rect: CGRect) {
-        // TODO
+    func shareLink(for url: URL, with message: String, from rect: CGRect) {
+        let activityItems: [Any] = [message, url]
+        let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.firstKeyWindow
+            activityViewController.popoverPresentationController?.sourceRect = rect
+        }
+
+        present(activityViewController, animated: true, completion: nil)
     }
 
     func showPreparingSync() {

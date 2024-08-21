@@ -779,6 +779,9 @@ extension Pixel {
         case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
+
+        // MARK: enhanced statistics
+        case retentionSegments
     }
 
 }
@@ -1551,6 +1554,9 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+
+        // MARK: Enhanced statistics
+        case .retentionSegments: return "m_retention_segments_d"
         }
     }
 }

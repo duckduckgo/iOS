@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct Atb: Decodable {
+public struct Atb: Decodable, Equatable {
 
     let version: String
     let updateVersion: String?

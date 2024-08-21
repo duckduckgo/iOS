@@ -27,13 +27,21 @@ protocol UserSegmenting {
 
 class UserSegmentation: UserSegmenting {
 
-    let pixelFiring: PixelFiring
+    private let pixelFiring: DailyPixelFiring.Type
+    private var storage: UserSegmentationStoring
 
-    init(pixelFiring: PixelFiring) {
+    init(pixelFiring: DailyPixelFiring.Type = DailyPixel.self,
+         storage: UserSegmentationStoring) {
         self.pixelFiring = pixelFiring
+        self.storage = storage
     }
 
     func processATB(_ atb: Atb) {
+        // Check most recent entries first so we exit faster
+        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else { return }
+
+        storage.atbs.append(atb)
+        pixelFiring.fireDaily(.retentionSegments)
     }
 
 }

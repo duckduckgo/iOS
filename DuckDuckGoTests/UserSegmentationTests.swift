@@ -22,5 +22,32 @@ import XCTest
 @testable import Core
 
 class UserSegmentationTests: XCTestCase {
-    
+
+    var atbs: [Atb] = []
+
+    func testWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+        let sut = UserSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+
+        let atb = Atb(version: "v100-1", updateVersion: nil)
+        self.atbs = [atb]
+        sut.processATB(atb)
+
+        XCTAssertEqual(atbs, [atb])
+        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+    }
+
+    func testWhenNewATBReceived_ThenStoredAndPixelFired() {
+        let sut = UserSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+
+        let atb = Atb(version: "v100-1", updateVersion: nil)
+        sut.processATB(atb)
+
+        XCTAssertEqual(atbs, [atb])
+        XCTAssertEqual(Pixel.Event.retentionSegments, PixelFiringMock.lastDailyPixelInfo?.pixel)
+    }
+
+}
+
+extension UserSegmentationTests: UserSegmentationStoring {
+
 }

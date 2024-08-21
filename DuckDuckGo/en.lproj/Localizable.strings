@@ -2412,11 +2412,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Message for the Sync Promotion banner when user has bookmarks that can be synced */
 "sync.promo.bookmarks.message" = "No account needed. End-to-end encryption means nobody but you can see your bookmarks, not even us.";
 
-/* Caption for a button to set up Sync */
+/* Title for a button in the Sync Promotion banner to set up Sync */
 "sync.promo.confirm.action" = "Set Up Sync";
 
-/* Caption for a button to dismiss Sync promotion banner */
-"sync.promo.dismiss.action" = "Remove";
+/* Title for a button in the Sync Promotion banner to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "No Thanks";
 
 /* Message for the Sync Promotion banner when user has passwords that can be synced */
 "sync.promo.passwords.message" = "No account needed. End-to-end encryption means nobody but you can see your passwords, not even us.";

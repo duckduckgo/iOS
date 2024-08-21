@@ -35,7 +35,7 @@ public struct UserText {
     static let recoverSyncedDataLink = NSLocalizedString("recover.synced.data.link", bundle: Bundle.module, value: "Recover Synced Data", comment: "Link label for recovering synced data")
     static let otherOptionsSectionHeader = NSLocalizedString("other.options.section.header", bundle: Bundle.module, value: "Other Options", comment: "Section header for other syncing options")
     // Other Platforms
-    static let syncGetOnOtherDevices = NSLocalizedString("sync.get.other.devices", value:"Get DuckDuckGo on Other Devices", comment: "Button to get DuckDuckGo on other devices")
+    static let syncGetOnOtherDevices = NSLocalizedString("sync.get.other.devices", value: "Get DuckDuckGo on Other Devices", comment: "Button to get DuckDuckGo on other devices")
 
     // Sync Enabled View
     // Turn Sync Off
@@ -95,7 +95,7 @@ public struct UserText {
 
     // Device Synced Sheet
     static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", bundle: Bundle.module, value: "Your data is synced!", comment: "Device SyncedSheet - Title")
-    static let deviceSyncedSheetGetOnOtherDevicesButton = NSLocalizedString("device.synced.sheet.button.get.other.devices", value:"Get DuckDuckGo on Other Devices", comment: "Device SyncedSheet Button to go get DuckDuckGo on other devices")
+    static let deviceSyncedSheetGetOnOtherDevicesButton = NSLocalizedString("device.synced.sheet.button.get.other.devices", value: "Get DuckDuckGo on Other Devices", comment: "Device SyncedSheet Button to go get DuckDuckGo on other devices")
 
     // Recover Synced Data Sheet
     static let recoverSyncedDataTitle = NSLocalizedString("recover.synced.data.sheet.title", bundle: Bundle.module, value: "Recover Synced Data", comment: "Recover Synced Data Sheet - Title")

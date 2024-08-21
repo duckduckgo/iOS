@@ -56,7 +56,7 @@ public struct PlatformLinksView: View {
     private var content: some View {
         VStack(alignment: .center, spacing: 0) {
 
-            Image("App-Download-128")
+            Image("Sync-App-Download-128")
                 .resizable()
                 .frame(width: 96, height: 72)
 

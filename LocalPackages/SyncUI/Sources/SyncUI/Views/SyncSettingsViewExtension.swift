@@ -111,7 +111,7 @@ extension SyncSettingsView {
         Section {
             NavigationLink(destination: PlatformLinksView(model: model)) {
                 HStack(spacing: 6) {
-                    Image("Downloads-24")
+                    Image("Sync-Downloads-24")
                     Text(UserText.syncGetOnOtherDevices)
                         .daxBodyRegular()
                 }

@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import Core
+import BrowserServicesKit
 
 struct WebPageSearchResultValue: Identifiable, Hashable {
     let id: String
@@ -33,15 +35,19 @@ protocol WebsiteSearch {
 struct BingWebsiteSearch {
 
     private let searchURL = URL(string: "https://api.bing.microsoft.com/v7.0/search")!
-    let key: String
+    private let subscriptionIDStorage = FavoritesBingSubscriptionStorage()
 
     func search(term: String) async throws -> [BingWebPageSearchResultValue] {
         let request = createRequest(term: term)
         let result = try await URLSession.shared.data(for: request)
 
-        let searchResult = try JSONDecoder().decode(BingSearchResponse.self, from: result.0)
-
-        return searchResult.webPages.value
+        if let urlResponse = result.1 as? HTTPURLResponse, urlResponse.isSuccessfulResponse {
+            let searchResult = try JSONDecoder().decode(BingSearchResponse.self, from: result.0)
+            return searchResult.webPages.value
+        } else {
+            let errorPayload = try JSONDecoder().decode(BingErrorPayload.self, from: result.0)
+            throw errorPayload.error
+        }
     }
 
     private func createRequest(term: String) -> URLRequest {
@@ -58,10 +64,19 @@ struct BingWebsiteSearch {
         let url = searchURL
             .appending(percentEncodedQueryItems: queryItems)
         var request = URLRequest(url: url)
-        request.addValue(key, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
+        request.addValue(subscriptionIDStorage.subscriptionID, forHTTPHeaderField: "Ocp-Apim-Subscription-Key")
 
         return request
     }
+}
+
+private struct BingErrorPayload: Codable {
+    let error: BingError
+}
+
+struct BingError: Error, Codable {
+    let code: String
+    let message: String
 }
 
 private struct BingSearchResponse: Codable {
@@ -85,4 +100,9 @@ extension BingWebsiteSearch: WebsiteSearch {
             WebPageSearchResultValue(id: bingResult.id, name: bingResult.name, displayUrl: bingResult.displayUrl, url: bingResult.url)
         }
     }
+}
+
+final class FavoritesBingSubscriptionStorage {
+    @UserDefaultsWrapper(key: .debugNewTabPageSectionsBingSubKey, defaultValue: "")
+    var subscriptionID: String
 }

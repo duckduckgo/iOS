@@ -27,7 +27,8 @@ struct AddFavoriteView: View {
     @ObservedObject private(set) var searchViewModel: FavoriteSearchViewModel
     let favoritesCreating: MenuBookmarksInteracting
 
-    @State var selectedItems = Set<WebPageSearchResultValue>()
+    @State private var selectedItems = Set<WebPageSearchResultValue>()
+    @State private var isShowingDebugSettings = false
 
     var body: some View {
         List {
@@ -56,11 +57,25 @@ struct AddFavoriteView: View {
             }
 
             Section {
-                ForEach(searchViewModel.results) { result in
-                    Button {
-                        selectedItems.insert(result)
-                    } label: {
-                        FavoriteSearchResultItemView(result: result, isSelected: selectedItems.contains(result))
+                if let errorMessage = searchViewModel.errorMessage {
+                    Text(verbatim: errorMessage)
+                        .daxFootnoteSemibold()
+                        .foregroundColor(.red)
+
+                    if errorMessage.contains("subscription") {
+                        Button {
+                            isShowingDebugSettings = true
+                        } label: {
+                            Text(verbatim: "Open NTP debug settings")
+                        }
+                    }
+                } else {
+                    ForEach(searchViewModel.results) { result in
+                        Button {
+                            selectedItems.insert(result)
+                        } label: {
+                            FavoriteSearchResultItemView(result: result, isSelected: selectedItems.contains(result))
+                        }
                     }
                 }
             }
@@ -89,32 +104,12 @@ struct AddFavoriteView: View {
             }
         }
         .tintIfAvailable(.black)
-        .if(searchViewModel.results.isEmpty) {
-            $0.mediumDetents()
-        }
-        .if(!searchViewModel.results.isEmpty) {
-            $0.largeDetents()
-        }
-    }
-}
-
-private extension View {
-    @ViewBuilder
-    func mediumDetents() -> some View {
-        if #available(iOS 16, *) {
-            self.presentationDetents([.medium])
-        } else {
-            self
-        }
-    }
-
-    @ViewBuilder
-    func largeDetents() -> some View {
-        if #available(iOS 16, *) {
-            self.presentationDetents([.large])
-        } else {
-            self
-        }
+        .sheet(isPresented: $isShowingDebugSettings, content: {
+            NavigationView {
+                NewTabPageSectionsDebugView()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+        })
     }
 }
 

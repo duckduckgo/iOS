@@ -31,8 +31,7 @@ struct FavoriteSearchResultItemView: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(minWidth: 32)
-                    .frame(maxWidth: 64)
+                    .frame(width: 24)
             }
 
             VStack(alignment: .leading) {
@@ -44,7 +43,7 @@ struct FavoriteSearchResultItemView: View {
                     .multilineTextAlignment(.leading)
                 if let host = result.url.host {
                     Text(verbatim: host)
-                        .daxFootnoteSemibold()
+                        .daxFootnoteRegular()
                         .multilineTextAlignment(.leading)
                 }
             }

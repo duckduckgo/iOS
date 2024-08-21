@@ -22,6 +22,7 @@ import Bookmarks
 import Combine
 
 class FavoriteSearchViewModel: ObservableObject {
+    @Published var errorMessage: String?
     @Published var results: [WebPageSearchResultValue] = []
     @Published var searchTerm: String = ""
 
@@ -43,6 +44,7 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     func clear() {
+        errorMessage = nil
         searchTerm = ""
         results = []
     }
@@ -54,11 +56,20 @@ class FavoriteSearchViewModel: ObservableObject {
         }
 
         Task {
-            let results = try await websiteSearch.search(term: searchTerm)
-
-            await MainActor.run {
-                self.results = results
+            do {
+                let results = try await websiteSearch.search(term: searchTerm)
+                await publishResults(results)
+            } catch let error as BingError {
+                await publishResults([], error: error)
+            } catch {
+                await publishResults([])
             }
         }
+    }
+
+    @MainActor
+    private func publishResults(_ results: [WebPageSearchResultValue], error: BingError? = nil) {
+        self.results = results
+        self.errorMessage = error?.message
     }
 }

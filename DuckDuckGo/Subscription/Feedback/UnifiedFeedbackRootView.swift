@@ -43,6 +43,9 @@ struct UnifiedFeedbackRootView: View {
                     reportProblemView()
                 }
             }
+            Button("OPen VPN") {
+                viewModel.selectedCategory = "vpn"
+            }
         }
         .onFirstAppear {
             Task {
@@ -53,29 +56,39 @@ struct UnifiedFeedbackRootView: View {
 
     @ViewBuilder
     func reportProblemView() -> some View {
-        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle, sources: UnifiedFeedbackCategory.self, selection: $viewModel.selectedCategory) {
+        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle,
+                                    sources: UnifiedFeedbackCategory.self,
+                                    selection: $viewModel.selectedCategory) {
             Group {
                 if let selectedCategory = viewModel.selectedCategory {
                     switch UnifiedFeedbackCategory(rawValue: selectedCategory) {
                     case nil:
                         EmptyView()
                     case .subscription:
-                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle, sources: PrivacyProFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle,
+                                                    sources: PrivacyProFeedbackSubcategory.self,
+                                                    selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .vpn:
-                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle, sources: VPNFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle,
+                                                    sources: VPNFeedbackSubcategory.self,
+                                                    selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .pir:
-                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle, sources: PIRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle,
+                                                    sources: PIRFeedbackSubcategory.self,
+                                                    selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .itr:
-                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle, sources: ITRFeedbackSubcategory.self, selection: $viewModel.selectedSubcategory) {
+                        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle,
+                                                    sources: ITRFeedbackSubcategory.self,
+                                                    selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
@@ -89,8 +102,24 @@ struct UnifiedFeedbackRootView: View {
             }
         }
         .onFirstAppear {
-            Task {
-                await viewModel.process(action: .reportCategory)
+            let selectedCategory: String?
+            switch UnifiedFeedbackFormViewModel.Source(rawValue: viewModel.source) {
+            case .ppro: selectedCategory = UnifiedFeedbackCategory.subscription.rawValue
+            case .vpn: selectedCategory = UnifiedFeedbackCategory.vpn.rawValue
+            case .pir: selectedCategory = UnifiedFeedbackCategory.pir.rawValue
+            case .itr: selectedCategory = UnifiedFeedbackCategory.itr.rawValue
+            case .settings, .unknown, nil:
+                selectedCategory = nil
+                Task {
+                    await viewModel.process(action: .reportCategory)
+                }
+            }
+
+            /// 1 is the magic number for this to work
+            /// If this is triggered before the push animation completes,
+            /// the screen will unpop itself for some reason
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                viewModel.selectedCategory = selectedCategory
             }
         }
     }
@@ -117,17 +146,16 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
 
     var body: some View {
         VStack {
-            List(selection: selection) {
+            List {
                 Section {
                     ForEach(sources.allCases) { option in
-                        NavigationLink {
-                            destination()
-                        } label: {
+                        NavigationLink(destination: destination(),
+                                       tag: option.rawValue,
+                                       selection: selection) {
                             Text(option.displayName)
                                 .daxBodyRegular()
                                 .foregroundColor(.init(designSystemColor: .textPrimary))
                         }
-                        .tag(option.rawValue)
                         .listRowBackground(Color(designSystemColor: .surface))
                     }
                 } header: {

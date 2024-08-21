@@ -796,7 +796,11 @@ class TabViewController: UIViewController {
         
         if let url = url, url.isDuckPlayer {
             webView.stopLoading()
-            duckPlayerNavigationHandler?.handleGoBack(webView: webView)
+            if webView.canGoBack {
+                duckPlayerNavigationHandler?.handleGoBack(webView: webView)
+            } else if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+            }
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }

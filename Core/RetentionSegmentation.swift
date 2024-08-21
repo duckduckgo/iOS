@@ -1,5 +1,5 @@
 //
-//  UserSegmentation.swift
+//  RetentionSegmentation.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,19 +19,19 @@
 
 import Foundation
 
-protocol UserSegmenting {
+protocol RetentionSegmenting {
 
     func processATB(_ atb: Atb)
 
 }
 
-class UserSegmentation: UserSegmenting {
+class RetentionSegmentation: RetentionSegmenting {
 
     private let pixelFiring: DailyPixelFiring.Type
-    private var storage: UserSegmentationStoring
+    private var storage: RetentionSegmentationStoring
 
     init(pixelFiring: DailyPixelFiring.Type = DailyPixel.self,
-         storage: UserSegmentationStoring) {
+         storage: RetentionSegmentationStoring = RetentionSegmentationStorage()) {
         self.pixelFiring = pixelFiring
         self.storage = storage
     }

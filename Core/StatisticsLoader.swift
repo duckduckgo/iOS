@@ -30,12 +30,15 @@ public class StatisticsLoader {
 
     private let statisticsStore: StatisticsStore
     private let returnUserMeasurement: ReturnUserMeasurement
+    private let retentionSegmentation: RetentionSegmenting
     private let parser = AtbParser()
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement()) {
+         returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
+         retentionSegmentation: RetentionSegmenting = RetentionSegmentation()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
+        self.retentionSegmentation = retentionSegmentation
     }
 
     public func load(completion: @escaping Completion = {}) {

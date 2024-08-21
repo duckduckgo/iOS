@@ -1,5 +1,5 @@
 //
-//  UserSegmentationTests.swift
+//  RetentionSegmentationTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,12 +21,12 @@ import Foundation
 import XCTest
 @testable import Core
 
-class UserSegmentationTests: XCTestCase {
+class RetentionSegmentationTests: XCTestCase {
 
     var atbs: [Atb] = []
 
     func testWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
-        let sut = UserSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+        let sut = RetentionSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
 
         let atb = Atb(version: "v100-1", updateVersion: nil)
         self.atbs = [atb]
@@ -37,7 +37,7 @@ class UserSegmentationTests: XCTestCase {
     }
 
     func testWhenNewATBReceived_ThenStoredAndPixelFired() {
-        let sut = UserSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+        let sut = RetentionSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
 
         let atb = Atb(version: "v100-1", updateVersion: nil)
         sut.processATB(atb)
@@ -48,6 +48,6 @@ class UserSegmentationTests: XCTestCase {
 
 }
 
-extension UserSegmentationTests: UserSegmentationStoring {
+extension RetentionSegmentationTests: RetentionSegmentationStoring {
 
 }

@@ -1,5 +1,5 @@
 //
-//  UserSegmentationStorageTests.swift
+//  RetentionSegmentationStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,9 +18,15 @@
 //
 
 import Foundation
-import XCTest
-@testable import Core
 
-class UserSegmentationStorageTests: XCTestCase {
+protocol RetentionSegmentationStoring {
+
+    var atbs: [Atb] { get set }
+
+}
+
+class RetentionSegmentationStorage: RetentionSegmentationStoring {
+
+    var atbs: [Atb] = []
 
 }

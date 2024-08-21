@@ -228,8 +228,9 @@ class TabViewController: UIViewController {
         guard let url = url else {
             return tabModel.link
         }
-        
-        let activeLink = Link(title: title, url: url)
+                        
+        let finalURL = duckPlayerNavigationHandler?.getDuckURLFor(url) ?? url
+        let activeLink = Link(title: title, url: finalURL)
         guard let storedLink = tabModel.link else {
             return activeLink
         }

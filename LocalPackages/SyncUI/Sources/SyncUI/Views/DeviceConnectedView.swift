@@ -54,7 +54,7 @@ public struct DeviceConnectedView: View {
 
                 Button {
                     presentation.wrappedValue.dismiss()
-                    // TODO
+                    model.showOtherPlatformsPressed()
                 } label: {
                     Text(UserText.deviceSyncedSheetGetOnOtherDevicesButton)
                 }

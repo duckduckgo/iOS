@@ -83,7 +83,7 @@ public struct PlatformLinksView: View {
 
                 Button {
                     if let url = URL(string: Constants.downloadUrl) {
-                        // TODO
+                        model.shareLinkPressed(for: url, from: shareButtonFrame)
                     }
                 } label: {
                     HStack(spacing: 6) {

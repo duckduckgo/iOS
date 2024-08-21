@@ -221,6 +221,19 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    func showOtherPlatformLinks() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        let controller = UIHostingController(rootView: PlatformLinksView(model: viewModel))
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func shareLink(for url: URL, from rect: CGRect) {
+        // TODO
+    }
+
     func showPreparingSync() {
         let controller = UIHostingController(rootView: PreparingToSyncView())
         navigationController?.present(controller, animated: true)

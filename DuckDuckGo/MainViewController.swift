@@ -106,7 +106,7 @@ class MainViewController: UIViewController {
     private let variantManager: VariantManager
     private let tutorialSettings: TutorialSettings
     private let contextualOnboardingLogic: ContextualOnboardingLogic
-    private let contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting
+    let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let statisticsStore: StatisticsStore
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
@@ -189,7 +189,7 @@ class MainViewController: UIViewController {
         variantManager: VariantManager,
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+        contextualOnboardingPixelReporter: OnboardingPixelReporting,
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults()
     ) {
@@ -212,7 +212,8 @@ class MainViewController: UIViewController {
                                      syncService: syncService,
                                      privacyProDataReporter: privacyProDataReporter,
                                      contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                     contextualOnboardingLogic: contextualOnboardingLogic)
+                                     contextualOnboardingLogic: contextualOnboardingLogic,
+                                     onboardingPixelReporter: contextualOnboardingPixelReporter)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -769,7 +770,7 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-        let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared)
+        let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared, onboardingPixelReporter: contextualOnboardingPixelReporter)
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(tab: tabModel,
                                                       interactionModel: favoritesViewModel,

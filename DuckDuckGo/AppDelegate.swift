@@ -323,6 +323,8 @@ import WebKit
 
             presentInsufficientDiskSpaceAlert()
         } else {
+            let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
+            let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
             let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                           bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                           historyManager: historyManager,
@@ -335,7 +337,7 @@ import WebKit
                                           syncPausedStateManager: syncErrorHandler,
                                           privacyProDataReporter: privacyProDataReporter,
                                           variantManager: variantManager,
-                                          contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
+                                          contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
                                           contextualOnboardingPixelReporter: onboardingPixelReporter)
 

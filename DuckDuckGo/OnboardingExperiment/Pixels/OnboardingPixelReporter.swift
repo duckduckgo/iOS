@@ -69,6 +69,8 @@ protocol OnboardingScreenImpressionReporting {
     func trackScreenImpression(event: Pixel.Event)
 }
 
+typealias OnboardingPixelReporting = OnboardingIntroImpressionReporting & OnboardingIntroPixelReporting & OnboardingSearchSuggestionsPixelReporting & OnboardingSiteSuggestionsPixelReporting & OnboardingCustomInteractionPixelReporting & OnboardingScreenImpressionReporting
+
 // MARK: - Implementation
 
 final class OnboardingPixelReporter {

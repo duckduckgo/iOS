@@ -40,6 +40,10 @@ class StatisticsLoaderTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenSearchRefreshHappensThenUserSegmentationNotified() {
+        XCTFail("Not implemented")
+    }
+
     func testWhenSearchRefreshHasSuccessfulUpdateAtbRequestThenSearchRetentionAtbUpdated() {
 
         mockStatisticsStore.atb = "atb"

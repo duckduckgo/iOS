@@ -95,6 +95,7 @@ public struct UserText {
 
     // Device Synced Sheet
     static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", bundle: Bundle.module, value: "Your data is synced!", comment: "Device SyncedSheet - Title")
+    static let deviceSyncedSheetGetOnOtherDevicesButton = NSLocalizedString("device.synced.sheet.button.get.other.devices", value:"Get DuckDuckGo on Other Devices", comment: "Device SyncedSheet Button to go get DuckDuckGo on other devices")
 
     // Recover Synced Data Sheet
     static let recoverSyncedDataTitle = NSLocalizedString("recover.synced.data.sheet.title", bundle: Bundle.module, value: "Recover Synced Data", comment: "Recover Synced Data Sheet - Title")
@@ -161,6 +162,7 @@ public struct UserText {
     static let backButton = NSLocalizedString("back.button", bundle: Bundle.module, value: "Back", comment: "Standard Buttons - Back Button")
     static let pasteButton = NSLocalizedString("paste.button", bundle: Bundle.module, value: "Paste", comment: "Standard Buttons - Paste Button")
     static let notNowButton = NSLocalizedString("not.now.button", bundle: Bundle.module, value: "Not Now", comment: "Standard Buttons - Not Now Button")
+    static let copyButton = NSLocalizedString("copy.button", bundle: Bundle.module, value: "Copy", comment: "Standard Buttons - Copy Button")
 
     // Fetch favicons
     static let fetchFaviconsOnboardingTitle = NSLocalizedString("fetch.favicons.onboarding.title", bundle: Bundle.module, value: "Download Missing Icons?", comment: "Fetch Favicons Onboarding - Title")
@@ -171,4 +173,11 @@ public struct UserText {
     static let syncUnavailableTitle = NSLocalizedString("sync.warning.sync.unavailable", bundle: Bundle.module, value: "Sync & Backup is Unavailable", comment: "Title of the warning message")
     static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", bundle: Bundle.module, value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
     static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", bundle: Bundle.module, value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
+
+    // Sync Get Other Devices
+    static let syncGetOtherDevicesScreenTitle = NSLocalizedString("sync.get.other.devices.screen.title", bundle: Bundle.module, value: "Get DuckDuckGo", comment: "Title of screen with share links for users to download DuckDuckGo on other devices")
+    static let syncGetOtherDevicesTitle = NSLocalizedString("sync.get.other.devices.card.title", bundle: Bundle.module, value: "Get DuckDuckGo on other devices", comment: "Title of card with share links for users to download DuckDuckGo on other devices")
+    static let syncGetOtherDevicesMessage = NSLocalizedString("sync.get.other.devices.card.message", bundle: Bundle.module, value: "To download our app, visit:", comment: "Message before share link for downloading DuckDuckGo on other devices")
+    static let syncGetOtherDevicesButtonTitle = NSLocalizedString("sync.get.other.devices.card.button.title", bundle: Bundle.module, value: "Share Download Link", comment: "Button title to share link for downloading DuckDuckGo on other devices")
+
 }

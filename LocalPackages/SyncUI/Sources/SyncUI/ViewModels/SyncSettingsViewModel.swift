@@ -40,7 +40,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func launchBookmarksViewController()
     func launchAutofillViewController()
     func showOtherPlatformLinks()
-    func shareLink(for url: URL, with messsage: String, from rect: CGRect)
+    func shareLink(for url: URL, with message: String, from rect: CGRect)
 
     var syncBookmarksPausedTitle: String? { get }
     var syncCredentialsPausedTitle: String? { get }

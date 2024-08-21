@@ -54,6 +54,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                     })
                     .previewShape()
+                    .transition(.opacity)
                 } preview: { favorite in
                     FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
                         .frame(width: NewTabPageGrid.Item.edgeSize)

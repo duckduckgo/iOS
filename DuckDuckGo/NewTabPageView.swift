@@ -148,6 +148,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
 
                     if customizeButtonShowedInline {
                         customizeButtonView
+                            .transition(.move(edge: .bottom))
                             .animation(.easeInOut, value: customizeButtonShowedInline)
                     }
                 }
@@ -168,6 +169,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
                 if !customizeButtonShowedInline {
                     customizeButtonView
                         .frame(maxWidth: .infinity)
+                        .transition(.move(edge: .bottom))
                         .animation(.easeInOut, value: customizeButtonShowedInline)
                 }
             }

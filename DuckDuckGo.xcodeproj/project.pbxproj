@@ -851,6 +851,7 @@
 		C1F341C52A6924000032057B /* EmailAddressPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C42A6924000032057B /* EmailAddressPromptView.swift */; };
 		C1F341C72A6924100032057B /* EmailAddressPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C62A6924100032057B /* EmailAddressPromptViewModel.swift */; };
 		C1F341C92A6926920032057B /* EmailAddressPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C82A6926920032057B /* EmailAddressPromptViewController.swift */; };
+		C1FFBD462C761BE20073622B /* SyncPromoManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FFBD452C761BE20073622B /* SyncPromoManagerTests.swift */; };
 		CB1143DE2AF6D4B600C1CCD3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB1143DC2AF6D4B600C1CCD3 /* InfoPlist.strings */; };
 		CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */; };
 		CB258D1329A4F24E00DEBA24 /* ConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84C7C029A3F0280088A5B8 /* ConfigurationStore.swift */; };
@@ -2597,6 +2598,7 @@
 		C1F341C42A6924000032057B /* EmailAddressPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressPromptView.swift; sourceTree = "<group>"; };
 		C1F341C62A6924100032057B /* EmailAddressPromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressPromptViewModel.swift; sourceTree = "<group>"; };
 		C1F341C82A6926920032057B /* EmailAddressPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressPromptViewController.swift; sourceTree = "<group>"; };
+		C1FFBD452C761BE20073622B /* SyncPromoManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPromoManagerTests.swift; sourceTree = "<group>"; };
 		CB1143DD2AF6D4B600C1CCD3 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB15F4762AF6D5100062A994 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB18F2712AF6D4E400A0F8FE /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3614,6 +3616,7 @@
 				5694372F2BE3F63B00C0881B /* SyncErrorHandlerSyncPausedAlertsTests.swift */,
 				569437322BE4E3DD00C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift */,
 				569437352BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift */,
+				C1FFBD452C761BE20073622B /* SyncPromoManagerTests.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -7702,6 +7705,7 @@
 				F17D72391E8B35C6003E8B0E /* AppURLsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
 				98629D342C21BE37001E6031 /* BookmarksStateValidationTests.swift in Sources */,
+				C1FFBD462C761BE20073622B /* SyncPromoManagerTests.swift in Sources */,
 				F1BDDBFF2C340D9C00459306 /* SubscriptionPagesUseSubscriptionFeatureTests.swift in Sources */,
 				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,
 				569437292BDD487600C0881B /* SyncCredentialsAdapterTests.swift in Sources */,

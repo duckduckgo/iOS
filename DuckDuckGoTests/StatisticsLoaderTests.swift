@@ -26,13 +26,15 @@ import OHHTTPStubsSwift
 class StatisticsLoaderTests: XCTestCase {
 
     var mockStatisticsStore: StatisticsStore!
+    var mockRetentionSegmentation: MockRetentionSegmentation!
     var testee: StatisticsLoader!
 
     override func setUp() {
         super.setUp()
         
         mockStatisticsStore = MockStatisticsStore()
-        testee = StatisticsLoader(statisticsStore: mockStatisticsStore)
+        mockRetentionSegmentation = MockRetentionSegmentation()
+        testee = StatisticsLoader(statisticsStore: mockStatisticsStore, retentionSegmentation: mockRetentionSegmentation)
     }
 
     override func tearDown() {
@@ -40,10 +42,52 @@ class StatisticsLoaderTests: XCTestCase {
         super.tearDown()
     }
 
-    func testWhenSearchRefreshHappensThenUserSegmentationNotified() {
-        XCTFail("Not implemented")
+    // Only used here, can move it if needed.
+    final class MockRetentionSegmentation: RetentionSegmenting {
+        var atbs: [Core.Atb] = []
+
+        func processATB(_ atb: Core.Atb) {
+            atbs.append(atb)
+        }
     }
 
+    func testWhenStatisticsInstalled_ThenRetentionSegmentationNotified() {
+        loadSuccessfulExiStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshAppRetentionAtb {
+            testExpectation.fulfill()
+        }
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertFalse(mockRetentionSegmentation.atbs.isEmpty)
+    }
+
+    func testWhenAppRefreshHappens_ThenRetentionSegmentationNotified() {
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.appRetentionAtb = "retentionatb"
+        loadSuccessfulAtbStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshAppRetentionAtb {
+            testExpectation.fulfill()
+        }
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertFalse(mockRetentionSegmentation.atbs.isEmpty)
+    }
+
+    func testWhenSearchRetentionRefreshHappens_ThenRetentionSegmentationNotified() {
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.searchRetentionAtb = "retentionatb"
+        loadSuccessfulAtbStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshSearchRetentionAtb {
+            testExpectation.fulfill()
+        }
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertFalse(mockRetentionSegmentation.atbs.isEmpty)
+    }
+    
     func testWhenSearchRefreshHasSuccessfulUpdateAtbRequestThenSearchRetentionAtbUpdated() {
 
         mockStatisticsStore.atb = "atb"

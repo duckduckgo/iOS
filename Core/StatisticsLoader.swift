@@ -84,6 +84,7 @@ public class StatisticsLoader {
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
+            self.retentionSegmentation.processATB(atb)
             completion()
         }
     }
@@ -106,6 +107,7 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
+                self.retentionSegmentation.processATB(atb)
                 NotificationCenter.default.post(name: .searchDAU,
                                                 object: nil, userInfo: nil)
             }
@@ -131,6 +133,7 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.appRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
+                self.retentionSegmentation.processATB(atb)
             }
             completion()
         }

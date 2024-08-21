@@ -43,9 +43,6 @@ struct UnifiedFeedbackRootView: View {
                     reportProblemView()
                 }
             }
-            Button("OPen VPN") {
-                viewModel.selectedCategory = "vpn"
-            }
         }
         .onFirstAppear {
             Task {

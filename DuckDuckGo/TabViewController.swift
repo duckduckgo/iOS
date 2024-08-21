@@ -1161,8 +1161,7 @@ extension TabViewController: WKNavigationDelegate {
     @MainActor
     private func loadSSLErrorHTML(url: URL) {
         let html = ErrorPageHTMLTemplate.htmlFromTemplate
-//        webView?.loadHTMLString(html, baseURL: .specialError) // why don't we just webView?.load(url: .specialError)? if we load html in the scheme handler?
-        webView?.load(URLRequest(url: .specialError))
+        webView?.loadHTMLString(html, baseURL: url)
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1482,7 +1481,7 @@ extension TabViewController: WKNavigationDelegate {
 
             let domain = url?.host ?? url?.absoluteString ?? ""
 
-            errorData = SpecialErrorData(kind: "ssl", errorType: SSLErrorType.forErrorCode(error.code).rawValue, domain: domain)
+            errorData = SpecialErrorData(kind: .ssl, errorType: SSLErrorType.forErrorCode(error.code).rawValue, domain: domain)
             loadSSLErrorHTML(url: error.failedUrl!) //todo force opt
         }
     }
@@ -1714,55 +1713,16 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            handleDuckNavigation(navigationAction: navigationAction, to: url, completion: completion)
+            if let handler = youtubeNavigationHandler {
+                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
+                return
+            }
+            completion(.cancel)
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
             } else {
                 presentOpenInExternalAppAlert(url: url)
-            }
-            completion(.cancel)
-        }
-    }
-
-    private func handleDuckNavigation(navigationAction: WKNavigationAction,
-                                      to url: URL,
-                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        if url.host == "special-error" {
-            var fileName = "index"
-            var fileExtension = "html"
-            var directoryURL = URL(fileURLWithPath: "/pages/special-error")
-            directoryURL.appendPathComponent(url.path)
-            if !directoryURL.pathExtension.isEmpty {
-                fileExtension = directoryURL.pathExtension
-                directoryURL.deletePathExtension()
-                fileName = directoryURL.lastPathComponent
-                directoryURL.deleteLastPathComponent()
-            }
-            guard let file = ContentScopeScripts.Bundle.path(forResource: fileName, ofType: fileExtension, inDirectory: directoryURL.path) else {
-                assertionFailure("\(fileExtension) template not found")
-                completion(.cancel)
-                return
-            }
-
-            guard let data = try? Data(contentsOf: URL(fileURLWithPath: file)) else {
-                completion(.cancel)
-                return
-            }
-
-//            let response = URLResponse(url: url, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil)
-
-
-            if #available(iOS 15.0, *) {
-                webView.loadSimulatedRequest(URLRequest(url: URL(string: "https://www.google.com")!), responseHTML: String(data: data, encoding: .utf8)!) // todo: google url is just for test, however, if we want to have duck://special-error displayed in the navigation bar (do we???) and so we if pass same url, we will end up in a infinite loop.
-            }
-            completion(.allow)
-
-        } else {
-            if let handler = youtubeNavigationHandler {
-                handler.handleNavigation(navigationAction, webView: webView, completion: completion)
-                return
             }
             completion(.cancel)
         }

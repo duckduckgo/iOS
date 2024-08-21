@@ -192,7 +192,10 @@ class TabViewController: UIViewController {
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
-            historyCapture.titleDidChange(title, forURL: url)
+            if let url {
+                let finalURL = duckPlayerNavigationHandler?.getDuckURLFor(url)
+                historyCapture.titleDidChange(title, forURL: finalURL)
+            }
         }
     }
     
@@ -798,11 +801,13 @@ class TabViewController: UIViewController {
             webView.stopLoading()
             if webView.canGoBack {
                 duckPlayerNavigationHandler?.handleGoBack(webView: webView)
-            } else if openingTab != nil {
-                delegate?.tabDidRequestClose(self)
+                chromeDelegate?.omniBar.resignFirstResponder()
+                return
             }
-            chromeDelegate?.omniBar.resignFirstResponder()
-            return
+            if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+                return
+            }
         }
 
         if isError {
@@ -1204,7 +1209,8 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
 
         if let url = webView.url {
-            historyCapture.webViewDidCommit(url: url)
+            let finalURL = duckPlayerNavigationHandler?.getDuckURLFor(url) ?? url
+            historyCapture.webViewDidCommit(url: finalURL)
             instrumentation.willLoad(url: url)
         }
 

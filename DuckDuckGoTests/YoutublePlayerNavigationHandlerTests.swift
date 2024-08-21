@@ -320,5 +320,53 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         }
     }
     
+    func testGetURLForYoutubeNoCookieWithDuckPlayerEnabled() {
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        
+        let player = MockDuckPlayer(settings: playerSettings)
+        let  handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
+        var url = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+        var duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, "duck://player/abc123?t=10s")
+        
+        url = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
+        duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, url.absoluteString)
+        
+    }
+    
+    func testGetURLForYoutubeNoCookieWithDuckPlayerAskMode() {
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .alwaysAsk
+        
+        let player = MockDuckPlayer(settings: playerSettings)
+        let  handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
+        var url = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+        var duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, "duck://player/abc123?t=10s")
+        
+        url = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
+        duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, url.absoluteString)
+        
+    }
+    
+    func testGetURLForYoutubeNoCookieWithDuckPlayerDisabled() {
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .disabled
+        
+        let player = MockDuckPlayer(settings: playerSettings)
+        let  handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger)
+        var url = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
+        var duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, url.absoluteString)
+        
+        url = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
+        duckURL = handler.getDuckURLFor(url).absoluteString
+        XCTAssertEqual(duckURL, url.absoluteString)
+        
+    }
+    
 
 }

@@ -354,4 +354,16 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
     }
+    
+    // Get the duck:// URL youtube-no-cookie URL
+    func getDuckURLFor(_ url: URL) -> URL {
+        guard let (youtubeVideoID, timestamp) = url.youtubeVideoParams,
+                url.isDuckPlayer,
+                !url.isDuckURLScheme,
+                duckPlayer.settings.mode != .disabled
+        else {
+            return url
+        }
+        return URL.duckPlayer(youtubeVideoID, timestamp: timestamp)
+    }
 }

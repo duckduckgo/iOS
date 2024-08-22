@@ -254,6 +254,14 @@ extension MainViewController {
         }
     }
 
+    func segueToVPN() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .netP)
+        }
+    }
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()

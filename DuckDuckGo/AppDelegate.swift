@@ -1031,10 +1031,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func presentNetworkProtectionStatusSettingsModal() {
         Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection),
-               hasEntitlements {
-                let networkProtectionRoot = NetworkProtectionRootViewController()
-                presentSettings(with: networkProtectionRoot)
+            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
+                (window?.rootViewController as? MainViewController)?.segueToVPN()
             } else {
                 (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }

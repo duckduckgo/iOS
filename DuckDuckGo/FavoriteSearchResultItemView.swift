@@ -36,6 +36,7 @@ struct FavoriteSearchResultItemView: View {
                 Text(verbatim: result.name)
                     .daxBodyRegular()
                     .multilineTextAlignment(.leading)
+                    .lineLimit(1)
                 Text(verbatim: result.displayUrl)
                     .daxFootnoteSemibold()
                     .multilineTextAlignment(.leading)

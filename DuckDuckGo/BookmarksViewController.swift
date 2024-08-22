@@ -122,7 +122,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .bookmarks, primaryButtonAction: { [weak self] in
             if let mainVC = self?.presentingViewController as? MainViewController {
                 self?.dismiss(animated: true) {
-                    mainVC.segueToSettingsSync()
+                    mainVC.segueToSettingsSync(with: "promotion_bookmarks")
                 }
             }
             Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.bookmarks.rawValue])

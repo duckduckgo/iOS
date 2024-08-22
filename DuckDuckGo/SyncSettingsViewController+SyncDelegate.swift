@@ -144,7 +144,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                     self.dismissPresentedViewController()
                     self.showPreparingSync()
                     try await self.syncService.createAccount(deviceName: self.deviceName, deviceType: self.deviceType)
-                    Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
+                    let additionalParameters = self.source.map { ["source": $0] } ?? [:]
+                    try await Pixel.fire(pixel: .syncSignupDirect, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion])
                     self.rootView.model.syncEnabled(recoveryCode: self.recoveryCode)
                     self.refreshDevices()
                     self.navigationController?.topViewController?.dismiss(animated: true, completion: self.showRecoveryPDF)

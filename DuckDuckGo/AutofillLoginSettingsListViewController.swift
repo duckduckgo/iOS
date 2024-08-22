@@ -150,6 +150,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
         let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .passwords, primaryButtonAction: { [weak self] in
+            self?.segueToSync(source: "promotion_passwords")
             Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.passwords.rawValue])
         }, dismissButtonAction: { [weak self] in
             self?.viewModel.dismissSyncPromo()
@@ -420,13 +421,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         navigationController?.pushViewController(importController, animated: true)
     }
 
-    private func segueToSync() {
+    private func segueToSync(source: String? = nil) {
         if let settingsVC = self.navigationController?.children.first as? SettingsHostingController {
             navigationController?.popToRootViewController(animated: true)
-            settingsVC.viewModel.presentLegacyView(.sync)
+            if let source = source {
+                settingsVC.viewModel.shouldPresentSyncViewWithSource(source)
+            } else {
+                settingsVC.viewModel.presentLegacyView(.sync)
+            }
         } else if let mainVC = self.presentingViewController as? MainViewController {
             dismiss(animated: true) {
-                mainVC.segueToSettingsSync()
+                mainVC.segueToSettingsSync(with: source)
             }
         }
     }

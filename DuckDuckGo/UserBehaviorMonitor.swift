@@ -66,7 +66,6 @@ final class UserBehaviorMonitor {
     enum Action: Equatable {
 
         case refresh
-        case reopenApp
 
     }
 
@@ -95,16 +94,16 @@ final class UserBehaviorMonitor {
     }
 
     func handleRefreshAction(date: Date = Date()) {
-            fireEventIfActionOccurredRecently(within: 12.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin12Seconds)
-            didRefreshTimestamp = date
+        fireEventIfActionOccurredRecently(within: 12.0, since: didRefreshTimestamp, eventToFire: .reloadTwiceWithin12Seconds)
+        didRefreshTimestamp = date
 
-            if didRefreshCounter == 0 {
-                didDoubleRefreshTimestamp = date
-            }
-            didRefreshCounter += 1
-            if didRefreshCounter > 2 {
-                fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
-                didRefreshCounter = 0
+        if didRefreshCounter == 0 {
+            didDoubleRefreshTimestamp = date
+        }
+        didRefreshCounter += 1
+        if didRefreshCounter > 2 {
+            fireEventIfActionOccurredRecently(within: 20.0, since: didDoubleRefreshTimestamp, eventToFire: .reloadThreeTimesWithin20Seconds)
+            didRefreshCounter = 0
         }
 
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {

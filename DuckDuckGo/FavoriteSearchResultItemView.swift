@@ -23,14 +23,12 @@ import LinkPresentation
 
 struct FavoriteSearchResultItemView: View {
     let result: WebPageSearchResultValue
-    let isSelected: Bool
+    let faviconLoader: FavoritesFaviconLoading?
 
     var body: some View {
         HStack(spacing: 16) {
-            if let image = FaviconsHelper.createFakeFavicon(forDomain: result.url.absoluteString) {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            if let domain = result.url.host {
+                FavoriteIconView(domain: domain, size: 24, faviconLoading: faviconLoader)
                     .frame(width: 24)
             }
 
@@ -47,29 +45,13 @@ struct FavoriteSearchResultItemView: View {
                         .multilineTextAlignment(.leading)
                 }
             }
-
-            Spacer()
-
-            selectedImage
-                .resizable()
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: 16)
-                .foregroundColor(Color(designSystemColor: .accent))
-                .padding(4)
-                .background {
-                    Circle().fill(Color(designSystemColor: .background))
-                }
         }
-    }
-
-    private var selectedImage: Image {
-        isSelected ? Image(.check24) : Image(.add24)
     }
 }
 
 #Preview {
     List {
-        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), isSelected: true)
-        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), isSelected: false)
+        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
+        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
     }
 }

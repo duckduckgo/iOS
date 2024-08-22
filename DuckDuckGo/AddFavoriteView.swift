@@ -26,8 +26,8 @@ struct AddFavoriteView: View {
 
     @ObservedObject private(set) var searchViewModel: FavoriteSearchViewModel
     let favoritesCreating: MenuBookmarksInteracting
+    let faviconLoader: FavoritesFaviconLoading?
 
-    @State private var selectedItems = Set<WebPageSearchResultValue>()
     @State private var isShowingDebugSettings = false
 
     var body: some View {
@@ -71,9 +71,10 @@ struct AddFavoriteView: View {
                 } else {
                     ForEach(searchViewModel.results) { result in
                         Button {
-                            selectedItems.insert(result)
+                            favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
+                            dismiss()
                         } label: {
-                            FavoriteSearchResultItemView(result: result, isSelected: selectedItems.contains(result))
+                            FavoriteSearchResultItemView(result: result, faviconLoader: faviconLoader)
                         }
                     }
                 }
@@ -89,18 +90,6 @@ struct AddFavoriteView: View {
                     Text(verbatim: "Cancel")
                 }
             }
-
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    for item in selectedItems {
-                        favoritesCreating.createOrToggleFavorite(title: item.name, url: item.url)
-                    }
-                    dismiss()
-                } label: {
-                    Text(verbatim: "Save")
-                }
-                .disabled(selectedItems.isEmpty)
-            }
         }
         .tintIfAvailable(.black)
         .sheet(isPresented: $isShowingDebugSettings, content: {
@@ -113,5 +102,5 @@ struct AddFavoriteView: View {
 }
 
 #Preview {
-    AddFavoriteView(searchViewModel: .fakeShared, favoritesCreating: NullMenuBookmarksInteracting())
+    AddFavoriteView(searchViewModel: .fake, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
 }

@@ -95,15 +95,15 @@ final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel, Fav
 }
 
 struct EmptyFaviconLoading: FavoritesFaviconLoading {
-    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+    func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
         nil
     }
-    
-    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+
+    func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
         .empty
     }
-    
-    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
         nil
     }
 }

@@ -26,7 +26,8 @@ class FavoriteSearchViewModel: ObservableObject {
     @Published var results: [WebPageSearchResultValue] = []
     @Published var searchTerm: String = ""
 
-    static private(set) var fakeShared = FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch())
+    static var fake: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch()) }
+    static var bing: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: BingWebsiteSearch()) }
 
     private var cancellables = Set<AnyCancellable>()
 

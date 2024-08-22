@@ -336,7 +336,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesModel: FavoritesPreviewModel(favorites: []),
         bookmarksInteracting: NullMenuBookmarksInteracting(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),

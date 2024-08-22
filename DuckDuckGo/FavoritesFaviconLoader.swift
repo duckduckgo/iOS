@@ -23,9 +23,7 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
     
     private var tasks: [String: Task<Favicon?, Never>] = [:]
 
-    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
-        let domain = favorite.domain
-
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
         if let task = tasks[domain] {
             if task.isCancelled {
                 tasks.removeValue(forKey: domain)
@@ -44,13 +42,12 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
         return await newTask.value
     }
 
-    nonisolated func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
-        let result = FaviconsHelper.loadFaviconSync(forDomain: favorite.domain, usingCache: .fireproof, useFakeFavicon: false)
-        return Favicon(domain: favorite.domain, expectedSize: size, faviconResult: result)
+    nonisolated func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
+        let result = FaviconsHelper.loadFaviconSync(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false)
+        return Favicon(domain: domain, expectedSize: size, faviconResult: result)
     }
 
-    nonisolated func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
-        let domain = favorite.domain
+    nonisolated func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
         let color = UIColor.forDomain(domain)
         let icon = FaviconsHelper.createFakeFavicon(
             forDomain: domain,

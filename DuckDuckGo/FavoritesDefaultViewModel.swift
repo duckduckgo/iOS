@@ -187,8 +187,8 @@ private final class MissingFaviconWrapper: FavoritesFaviconLoading {
         self.loader = loader
     }
 
-    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
-        let favicon = await loader.loadFavicon(for: favorite, size: size)
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
+        let favicon = await loader.loadFavicon(for: domain, size: size)
 
         if favicon == nil {
             await onFaviconMissing()
@@ -197,12 +197,12 @@ private final class MissingFaviconWrapper: FavoritesFaviconLoading {
         return favicon
     }
 
-    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
-        loader.fakeFavicon(for: favorite, size: size)
+    func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
+        loader.fakeFavicon(for: domain, size: size)
     }
 
-    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
-        loader.existingFavicon(for: favorite, size: size)
+    func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
+        loader.existingFavicon(for: domain, size: size)
     }
 }
 

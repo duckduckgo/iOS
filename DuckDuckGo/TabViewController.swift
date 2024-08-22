@@ -177,7 +177,6 @@ class TabViewController: UIViewController {
 
     // TODO
     private let certificateTrustEvaluator: CertificateTrustEvaluating
-    var isCertificateValid: Bool?
     private var shouldBypassSSLError = false
     var errorData: SpecialErrorData?
 
@@ -898,21 +897,25 @@ class TabViewController: UIViewController {
         } else {
             privacyInfo = nil
         }
-        
+
         onPrivacyInfoChanged()
     }
     
     public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
-        
+
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
-        
-        
+
+
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host))
-        privacyInfo.serverTrust = webView.serverTrust
-        
+        let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
+        if let isValid {
+            privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
+        }
+        privacyInfo.isSpecialErrorPageVisible = (isValid == nil)
+
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
@@ -1156,12 +1159,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         shouldBypassSSLError = false
         completionHandler(.useCredential, URLCredential(trust: trust))
-    }
-
-    @MainActor
-    private func loadSSLErrorHTML(url: URL) {
-        let html = ErrorPageHTMLTemplate.htmlFromTemplate
-        webView?.loadHTMLString(html, baseURL: url)
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1475,15 +1472,24 @@ extension TabViewController: WKNavigationDelegate {
             self.showErrorNow()
         }
 
-        if error.code == NSURLErrorServerCertificateUntrusted {
-            userScripts?.specialErrorPageUserScript?.delegate = self
-            userScripts?.specialErrorPageUserScript?.failingURL = error.failedUrl
+        loadSpecialErrorPageIfNeeded(error: error)
+    }
 
-            let domain = url?.host ?? url?.absoluteString ?? ""
-
-            errorData = SpecialErrorData(kind: .ssl, errorType: SSLErrorType.forErrorCode(error.code).rawValue, domain: domain)
-            loadSSLErrorHTML(url: error.failedUrl!) //todo force opt
+    private func loadSpecialErrorPageIfNeeded(error: NSError) {
+        guard error.code == NSURLErrorServerCertificateUntrusted,
+              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int,
+              let failedURL = error.failedUrl else {
+            return
         }
+        let domain = url?.host ?? url?.absoluteString ?? ""
+
+        errorData = SpecialErrorData(kind: .ssl, errorType: SSLErrorType.forErrorCode(errorCode).rawValue, domain: domain)
+        loadSpecialErrorPage(url: failedURL)
+    }
+
+    private func loadSpecialErrorPage(url: URL) {
+        let html = ErrorPageHTMLTemplate.htmlFromTemplate
+        webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -2363,7 +2369,8 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-        
+        userScripts.specialErrorPageUserScript?.delegate = self
+
         // Setup DuckPlayer
         userScripts.duckPlayer = duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView

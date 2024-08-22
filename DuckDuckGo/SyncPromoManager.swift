@@ -83,6 +83,8 @@ final class SyncPromoManager: SyncPromoManaging {
         case .passwords:
             syncPromoPasswordsDismissed = Date()
         }
+
+        Pixel.fire(.syncPromoDismissed, withAdditionalParameters: ["source": touchpoint.rawValue])
     }
 
     func resetPromos() {

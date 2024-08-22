@@ -125,10 +125,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                     mainVC.segueToSettingsSync()
                 }
             }
+            Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.bookmarks.rawValue])
         }, dismissButtonAction: { [weak self] in
             self?.syncPromoManager.dismissPromoFor(.bookmarks)
             self?.refreshTableHeaderView()
         }))
+
+        Pixel.fire(.syncPromoDisplayed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.bookmarks.rawValue])
 
         let hostingController = UIHostingController(rootView: headerView)
         hostingController.view.backgroundColor = .clear

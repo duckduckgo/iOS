@@ -612,6 +612,14 @@ extension Pixel {
         case syncDeleteAccountError
         case syncLoginExistingAccountError
 
+        case syncGetOtherDevices
+        case syncGetOtherDevicesCopy
+        case syncGetOtherDevicesShare
+
+        case syncPromoDisplayed
+        case syncPromoConfirmed
+        case syncPromoDismissed
+
         case swipeTabsUsedDaily
         case swipeToOpenNewTab
 
@@ -1363,6 +1371,14 @@ extension Pixel.Event {
         case .syncRemoveDeviceError: return "m_d_sync_remove_device_error"
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
+
+        case .syncGetOtherDevices: return "sync_get_other_devices"
+        case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
+        case .syncGetOtherDevicesShare: return "sync_get_other_devices_share"
+
+        case .syncPromoDisplayed: return "sync_promotion_displayed"
+        case .syncPromoConfirmed: return "sync_promotion_confirmed"
+        case .syncPromoDismissed: return "sync_promotion_dismissed"
 
         case .swipeTabsUsedDaily: return "m_swipe-tabs-used-daily"
         case .swipeToOpenNewTab: return "m_addressbar_swipe_new_tab"

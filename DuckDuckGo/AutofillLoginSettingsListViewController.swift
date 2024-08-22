@@ -150,11 +150,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
         let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .passwords, primaryButtonAction: { [weak self] in
-            self?.segueToSync()
+            Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.passwords.rawValue])
         }, dismissButtonAction: { [weak self] in
             self?.viewModel.dismissSyncPromo()
             self?.updateTableHeaderView()
         }))
+
+        Pixel.fire(.syncPromoDisplayed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.passwords.rawValue])
 
         let hostingController = UIHostingController(rootView: headerView)
         hostingController.view.backgroundColor = .clear

@@ -22,7 +22,7 @@ import Foundation
 struct MockWebsiteSearch: WebsiteSearch {
     func search(term: String) async throws -> [WebPageSearchResultValue] {
         (0...10).map { item in
-            WebPageSearchResultValue(id: String(item), name: "Item \(item)", displayUrl: "bbc.com/\(item)", url: URL(string: "https://bbc.com/\(item)")!)
+            WebPageSearchResultValue(id: String(item), name: "Item \(item)", displayUrl: "bbc.com/\(item)", url: URL(string: "https://www.bbc.com/\(item)")!)
         }
     }
 }

@@ -58,8 +58,14 @@ struct AddFavoriteView: View {
                 Text(verbatim: "You can also favorite any site through the ••• menu while on that page.")
             }
 
-            Section {
-                if let errorMessage = searchViewModel.errorMessage {
+            if let url = convertToURL(searchViewModel.searchTerm) {
+                Section {
+                    FavoriteSearchResultItemView(result: .init(id: "manual", name: searchViewModel.searchTerm, displayUrl: url.absoluteString, url: url), faviconLoader: faviconLoader)
+                }
+            }
+
+            if let errorMessage = searchViewModel.errorMessage {
+                Section {
                     Text(verbatim: errorMessage)
                         .daxFootnoteSemibold()
                         .foregroundColor(.red)
@@ -71,7 +77,9 @@ struct AddFavoriteView: View {
                             Text(verbatim: "Open NTP debug settings")
                         }
                     }
-                } else {
+                }
+            } else if !searchViewModel.results.isEmpty {
+                Section {
                     ForEach(searchViewModel.results) { result in
                         Button {
                             favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
@@ -79,6 +87,10 @@ struct AddFavoriteView: View {
                         } label: {
                             FavoriteSearchResultItemView(result: result, faviconLoader: faviconLoader)
                         }
+                    }
+                } header: {
+                    if !searchViewModel.results.isEmpty {
+                        Text(verbatim: "Did you mean one of the following?")
                     }
                 }
             }
@@ -104,6 +116,19 @@ struct AddFavoriteView: View {
         .onAppear {
             isFocused = true
         }
+    }
+
+    private func convertToURL(_ searchTerm: String) -> URL? {
+        guard !searchTerm.isEmpty,
+              var url = URL(string: searchTerm) else { return nil }
+
+        if url.isValid || url.isCustomURLScheme() {
+            return url
+        } else if url.scheme == nil {
+            return URL(string: "https://\(url.absoluteString)")
+        }
+
+        return nil
     }
 }
 

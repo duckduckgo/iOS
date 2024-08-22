@@ -65,7 +65,6 @@ struct FavoritesView<Model: FavoritesModel>: View {
                     }
                 }
             }
-            .clipped(antialiased: true)
 
             if result.isCollapsible {
                 Button(action: {
@@ -77,8 +76,12 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .resizable()
                 })
                 .buttonStyle(ToggleExpandButtonStyle())
+                // Masks the content, which will otherwise shop up underneath while chagning grid contents
+                .background(Color(designSystemColor: .background))
             }
         }
+        // Prevent the content to leak out of bounds while changing grid contents
+        .clipped()
     }
 }
 

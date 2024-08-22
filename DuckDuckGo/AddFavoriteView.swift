@@ -41,19 +41,18 @@ struct AddFavoriteView: View {
                         Button {
                             searchViewModel.clear()
                         } label: {
-                            Image(.remove)
+                            Image(.clear16)
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
                                 .frame(width: 16)
-                                .overlay {
-                                    Circle().stroke(.black)
-                                }
                         }
                     }
                 })
                 .keyboardType(.URL)
                 .autocorrectionDisabled()
                 .textFieldStyle(.automatic)
+            } footer: {
+                Text(verbatim: "You can also favorite any site through the ••• menu while on that page.")
             }
 
             Section {

@@ -224,7 +224,7 @@
 "sync.get.other.devices.screen.title" = "Get DuckDuckGo";
 
 /* Message included when sharing a url via the system share sheet */
-"sync.get.other.devices.share.link.message" = "Search privately and block trackers with the DuckDuckGo browser. Visit this link to download today.\n";
+"sync.get.other.devices.share.link.message" = "Search privately and block trackers with the DuckDuckGo browser. Visit this link to download today.";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";

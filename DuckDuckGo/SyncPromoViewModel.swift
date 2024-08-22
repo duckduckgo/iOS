@@ -22,25 +22,20 @@ import SwiftUI
 
 struct SyncPromoViewModel {
 
-    enum SyncPromoViewModelType {
-        case bookmarks
-        case passwords
-    }
-
-    var modelType: SyncPromoViewModelType = .bookmarks
+    var touchpointType: SyncPromoManager.Touchpoint = .bookmarks
 
     var primaryButtonAction: (() -> Void)?
     var dismissButtonAction: (() -> Void)?
 
     var title: String {
-        switch modelType {
+        switch touchpointType {
         case .bookmarks, .passwords:
             UserText.syncPromoTitle
         }
     }
 
     var subtitle: String {
-        switch modelType {
+        switch touchpointType {
         case .bookmarks:
             UserText.syncPromoBookmarksMessage
         case .passwords:
@@ -49,21 +44,21 @@ struct SyncPromoViewModel {
     }
 
     var image: String {
-        switch modelType {
+        switch touchpointType {
         default:
             return "Sync-Start-96"
         }
     }
 
     var primaryButtonTitle: String {
-        switch modelType {
+        switch touchpointType {
         case .bookmarks, .passwords:
             UserText.syncPromoConfirmAction
         }
     }
 
     var secondaryButtonTitle: String {
-        switch modelType {
+        switch touchpointType {
         case .bookmarks, .passwords:
             UserText.syncPromoDismissAction
         }

@@ -33,7 +33,7 @@ protocol SyncPromoManaging {
 
 final class SyncPromoManager: SyncPromoManaging {
 
-    enum Touchpoint {
+    enum Touchpoint: String {
         case bookmarks
         case passwords
     }

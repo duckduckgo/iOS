@@ -119,7 +119,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 
     private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
-        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(modelType: .bookmarks, primaryButtonAction: { [weak self] in
+        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .bookmarks, primaryButtonAction: { [weak self] in
             if let mainVC = self?.presentingViewController as? MainViewController {
                 self?.dismiss(animated: true) {
                     mainVC.segueToSettingsSync()

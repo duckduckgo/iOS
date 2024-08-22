@@ -149,7 +149,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }()
 
     private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
-        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(modelType: .passwords, primaryButtonAction: { [weak self] in
+        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .passwords, primaryButtonAction: { [weak self] in
             self?.segueToSync()
         }, dismissButtonAction: { [weak self] in
             self?.viewModel.dismissSyncPromo()

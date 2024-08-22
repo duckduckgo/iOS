@@ -25,28 +25,59 @@ class UsageSegmentationTests: XCTestCase {
 
     var atbs: [Atb] = []
 
-    func testWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired() {
-        assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.search)
+    override func tearDown() {
+        super.tearDown()
+        PixelFiringMock.tearDown()
+    }
+
+    func testWhenAppATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.app)
+    }
+
+    func testWhenSearchATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.search)
+    }
+
+    func testWhenNewAppATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired() {
         assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.app)
     }
 
-    private func assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(_ activityType: UsageActivityType) {
+    func testWhenNewSearchATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired() {
+        assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.search)
+    }
+
+    func testWhenSearchActvityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.search)
+    }
+
+    func testWhenAppActvityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.app)
+    }
+
+    private func assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
+
+        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let atb = Atb(version: "v100-1", updateVersion: nil)
+        sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
+
+        XCTAssertEqual(atbs, [installAtb])
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel)
+    }
+
+    private func assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
         let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
 
         let installAtb = Atb(version: "v100-1", updateVersion: nil)
         let atb = Atb(version: "v100-2", updateVersion: nil)
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [installAtb, atb])
-        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel)
+        XCTAssertEqual(atbs, [installAtb, atb], file: file, line: line)
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
-    func testWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
-        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.search)
-        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.app)
-    }
-
-    private func assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(_ activityType: UsageActivityType) {
+    private func assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
         let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
 
         let installAtb = Atb(version: "v100-1", updateVersion: nil)
@@ -54,8 +85,8 @@ class UsageSegmentationTests: XCTestCase {
         self.atbs = [installAtb, atb]
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [installAtb, atb])
-        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+        XCTAssertEqual(atbs, [installAtb, atb], file: file, line: line)
+        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
 }

@@ -44,14 +44,19 @@ class UsageSegmentation: UsageSegmenting {
     }
 
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
+
+        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else {
+            return
+        }
+
         if storage.atbs.isEmpty {
             storage.atbs.append(installAtb)
         }
 
-        // Check most recent entries first so we exit faster
-        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else { return }
+        if installAtb != atb {
+            storage.atbs.append(atb)
+        }
 
-        storage.atbs.append(atb)
         pixelFiring.fireDaily(.usageSegments)
     }
 

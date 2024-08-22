@@ -375,8 +375,6 @@ import WebKit
 
         widgetRefreshModel.beginObservingVPNStatus()
 
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
-
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         setUpAutofillPixelReporter()
@@ -665,8 +663,6 @@ import WebKit
             showKeyboardIfSettingOn = true
             syncService.scheduler.resumeSyncQueue()
         }
-
-        AppDependencyProvider.shared.userBehaviorMonitor.handleAction(.reopenApp)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

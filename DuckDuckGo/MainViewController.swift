@@ -1108,8 +1108,6 @@ class MainViewController: UIViewController {
         guard brokenSitePromptViewHostingController != nil,
                 let event = brokenSitePromptEvent?.rawValue else { return }
         brokenSitePromptViewHostingController = nil
-        let pixel: Pixel.Event = afterRefresh ? .siteNotWorkingDismissByRefresh: .siteNotWorkingDismissByNavigation
-        Pixel.fire(pixel: pixel, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event])
         hideNotification()
     }
 
@@ -1376,23 +1374,19 @@ class MainViewController: UIViewController {
         let host = makeBrokenSitePromptViewHostingController(event: event)
         brokenSitePromptViewHostingController = host
         brokenSitePromptEvent = event
-        Pixel.fire(pixel: .siteNotWorkingShown, withAdditionalParameters: [UserBehaviorEvent.Parameter.event: event.rawValue])
         showNotification(with: host.view)
     }
 
     private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
-        let parameters = [UserBehaviorEvent.Parameter.event: event.rawValue]
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             self?.hideNotification()
             self?.brokenSitePromptLimiter.didDismissToast()
             self?.brokenSitePromptViewHostingController = nil
-            Pixel.fire(pixel: .siteNotWorkingDismiss, withAdditionalParameters: parameters)
         }, onDidSubmit: { [weak self] in
             self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
             self?.hideNotification()
             self?.brokenSitePromptLimiter.didOpenReport()
             self?.brokenSitePromptViewHostingController = nil
-            Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken, withAdditionalParameters: parameters)
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
     }

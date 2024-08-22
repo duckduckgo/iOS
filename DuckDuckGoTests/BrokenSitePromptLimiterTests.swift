@@ -22,21 +22,24 @@ import BrowserServicesKit
 @testable import DuckDuckGo
 @testable import Core
 
+final class MockBrokenSitePromptLimiterStore: BrokenSitePromptLimiterStoring {
+    var lastToastShownDate: Date = .distantPast
+    var toastDismissStreakCounter: Int = 0
+}
+
 final class BrokenSitePromptLimiterTests: XCTestCase {
 
     let configManager = PrivacyConfigurationManagerMock()
     var brokenSiteLimiter: BrokenSitePromptLimiter!
+    var mockStore: MockBrokenSitePromptLimiterStore!
 
     override func setUp() {
         super.setUp()
 
-        setupUserDefault(with: #file)
-        UserDefaults.app.removeObject(forKey: UserDefaultsWrapper<String>.Key.lastBrokenSiteToastShownDate.rawValue)
-        UserDefaults.app.removeObject(forKey: UserDefaultsWrapper<String>.Key.toastDismissStreakCounter.rawValue)
-
         (configManager.privacyConfig as? PrivacyConfigurationMock)?.enabledFeaturesForVersions[.brokenSitePrompt] = [AppVersionProvider().appVersion() ?? ""]
-
-        brokenSiteLimiter = BrokenSitePromptLimiter(privacyConfigManager: configManager)
+        
+        mockStore = MockBrokenSitePromptLimiterStore()
+        brokenSiteLimiter = BrokenSitePromptLimiter(privacyConfigManager: configManager, store: mockStore)
     }
 
     func testShouldNotShowPromptIfConfigDisabled() throws {
@@ -54,7 +57,7 @@ final class BrokenSitePromptLimiterTests: XCTestCase {
         XCTAssertTrue(brokenSiteLimiter.shouldShowToast(), "Toast should show on first activation")
         brokenSiteLimiter.didShowToast()
         XCTAssertFalse(brokenSiteLimiter.shouldShowToast(), "Subsequent call should not show toast due to limiting logic")
-        UserDefaults.app.set(Date().addingTimeInterval(-7 * 24 * 60 * 60 - 1), forKey: UserDefaultsWrapper<String>.Key.lastBrokenSiteToastShownDate.rawValue)
+        mockStore.lastToastShownDate = Date().addingTimeInterval(-7 * 24 * 60 * 60 - 1)
         XCTAssertTrue(brokenSiteLimiter.shouldShowToast(), "Toast should show again after 7 days")
     }
 
@@ -63,7 +66,7 @@ final class BrokenSitePromptLimiterTests: XCTestCase {
         brokenSiteLimiter.didDismissToast()
         brokenSiteLimiter.didDismissToast()
         // Set last date 7 days back so the toast shows but doesn't reset dismiss counter
-        UserDefaults.app.set(Date().addingTimeInterval(-7 * 24 * 60 * 60 - 1), forKey: UserDefaultsWrapper<String>.Key.lastBrokenSiteToastShownDate.rawValue)
+        mockStore.lastToastShownDate = Date().addingTimeInterval(-7 * 24 * 60 * 60 - 1)
         XCTAssertFalse(brokenSiteLimiter.shouldShowToast(), "Toast should not show again after 3 dismissals")
     }
 
@@ -71,11 +74,9 @@ final class BrokenSitePromptLimiterTests: XCTestCase {
         brokenSiteLimiter.didDismissToast()
         brokenSiteLimiter.didDismissToast()
         brokenSiteLimiter.didDismissToast()
-        var count = UserDefaults.app.integer(forKey: UserDefaultsWrapper<String>.Key.toastDismissStreakCounter.rawValue)
-        XCTAssert(count == 3, "Dismiss count should be equal to 3 after 3 dismiss calls")
+        XCTAssert(mockStore.toastDismissStreakCounter == 3, "Dismiss count should be equal to 3 after 3 dismiss calls")
         XCTAssertTrue(brokenSiteLimiter.shouldShowToast(), "Toast should show after resetting counter")
-        count = UserDefaults.app.integer(forKey: UserDefaultsWrapper<String>.Key.toastDismissStreakCounter.rawValue)
-        XCTAssert(count == 0, "Dismiss count should be reset to 0 after 30 days")
+        XCTAssert(mockStore.toastDismissStreakCounter == 0, "Dismiss count should be reset to 0 after 30 days")
     }
 
 }

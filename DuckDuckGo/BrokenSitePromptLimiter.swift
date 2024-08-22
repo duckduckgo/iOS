@@ -21,7 +21,20 @@ import Foundation
 import Core
 import BrowserServicesKit
 
-class BrokenSitePromptLimiter {
+protocol BrokenSitePromptLimiterStoring {
+    var lastToastShownDate: Date { get set }
+    var toastDismissStreakCounter: Int { get set }
+}
+
+final class BrokenSitePromptLimiterStore: BrokenSitePromptLimiterStoring {
+    @UserDefaultsWrapper(key: .lastBrokenSiteToastShownDate, defaultValue: .distantPast)
+    var lastToastShownDate: Date
+
+    @UserDefaultsWrapper(key: .toastDismissStreakCounter, defaultValue: 0)
+    var toastDismissStreakCounter: Int
+}
+
+final class BrokenSitePromptLimiter {
 
     struct BrokenSitePromptLimiterSettings: Codable {
         let maxDismissStreak: Int
@@ -29,16 +42,23 @@ class BrokenSitePromptLimiter {
         let coolDownDays: Int
     }
 
-    @UserDefaultsWrapper(key: .lastBrokenSiteToastShownDate, defaultValue: .distantPast)
-    private var lastToastShownDate: Date
+    private var lastToastShownDate: Date {
+        get { store.lastToastShownDate }
+        set { store.lastToastShownDate = newValue }
+    }
 
-    @UserDefaultsWrapper(key: .toastDismissStreakCounter, defaultValue: 0)
-    private var toastDismissStreakCounter: Int
+    private var toastDismissStreakCounter: Int {
+        get { store.toastDismissStreakCounter }
+        set { store.toastDismissStreakCounter = newValue }
+    }
 
     private var privacyConfigManager: PrivacyConfigurationManaging
+    private var store: BrokenSitePromptLimiterStoring
 
-    init(privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+    init(privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         store: BrokenSitePromptLimiterStoring = BrokenSitePromptLimiterStore()) {
         self.privacyConfigManager = privacyConfigManager
+        self.store = store
     }
 
     private func getSettingsFromConfig() -> BrokenSitePromptLimiterSettings {

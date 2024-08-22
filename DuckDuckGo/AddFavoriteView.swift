@@ -29,6 +29,7 @@ struct AddFavoriteView: View {
     let faviconLoader: FavoritesFaviconLoading?
 
     @State private var isShowingDebugSettings = false
+    @FocusState private var isFocused: Bool
 
     var body: some View {
         List {
@@ -36,6 +37,7 @@ struct AddFavoriteView: View {
                 TextField(text: $searchViewModel.searchTerm) {
                     Text(verbatim: "Website URL")
                 }
+                .focused($isFocused)
                 .overlay(alignment: .trailing, content: {
                     if !searchViewModel.searchTerm.isEmpty {
                         Button {
@@ -98,6 +100,9 @@ struct AddFavoriteView: View {
                     .navigationBarTitleDisplayMode(.inline)
             }
         })
+        .onAppear {
+            isFocused = true
+        }
     }
 }
 

@@ -663,7 +663,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     private func updateTableHeaderView() {
         if viewModel.shouldShowSyncPromo() {
-            guard tableView.tableHeaderView != syncPromoViewHostingController.view else {
+            guard tableView.frame != .zero, tableView.tableHeaderView != syncPromoViewHostingController.view else {
                 return
             }
 

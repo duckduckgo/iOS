@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import BrowserServicesKit
+import Common
 
 struct WebPageSearchResultValue: Identifiable, Hashable {
     let id: String
@@ -36,6 +37,7 @@ struct BingWebsiteSearch {
 
     private let searchURL = URL(string: "https://api.bing.microsoft.com/v7.0/search")!
     private let subscriptionIDStorage = FavoritesBingSubscriptionStorage()
+    private let tld = TLD()
 
     func search(term: String) async throws -> [BingWebPageSearchResultValue] {
         let request = createRequest(term: term)
@@ -43,10 +45,29 @@ struct BingWebsiteSearch {
 
         if let urlResponse = result.1 as? HTTPURLResponse, urlResponse.isSuccessfulResponse {
             let searchResult = try JSONDecoder().decode(BingSearchResponse.self, from: result.0)
-            return searchResult.webPages.value
+            
+            let uniqueTLDResults = uniquingByTLDs(searchResult.webPages.value)
+
+            return uniqueTLDResults
         } else {
             let errorPayload = try JSONDecoder().decode(BingErrorPayload.self, from: result.0)
             throw errorPayload.error
+        }
+    }
+
+    private func uniquingByTLDs(_ results: [BingWebPageSearchResultValue]) -> [BingWebPageSearchResultValue] {
+
+        var seenTLDs = Set<String>()
+
+        return results.filter { searchResult in
+            guard let tldPlus1 = tld.eTLDplus1(forStringURL: searchResult.url.absoluteString),
+                  !seenTLDs.contains(tldPlus1)
+            else {
+                return false
+            }
+
+            seenTLDs.insert(tldPlus1)
+            return true
         }
     }
 
@@ -54,11 +75,13 @@ struct BingWebsiteSearch {
         let searchTermQueryItem = URLQueryItem(name: "q", value: term)
         let filterQueryItem = URLQueryItem(name: "responseFilter", value: "webpages")
         let marketQueryItem = URLQueryItem(name: "mkt", value: Locale.current.identifier)
+        let countQueryItem = URLQueryItem(name: "count", value: "20")
 
         let queryItems = [
             searchTermQueryItem,
             filterQueryItem,
-            marketQueryItem
+            marketQueryItem,
+            countQueryItem
         ]
 
         let url = searchURL

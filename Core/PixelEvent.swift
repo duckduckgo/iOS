@@ -781,7 +781,7 @@ extension Pixel {
         case duckPlayerContingencyLearnMoreClicked
 
         // MARK: enhanced statistics
-        case retentionSegments
+        case usageSegments
     }
 
 }
@@ -1556,7 +1556,7 @@ extension Pixel.Event {
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
 
         // MARK: Enhanced statistics
-        case .retentionSegments: return "m_retention_segments_d"
+        case .usageSegments: return "m_retention_segments_d"
         }
     }
 }

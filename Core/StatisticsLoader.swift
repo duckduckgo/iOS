@@ -30,15 +30,15 @@ public class StatisticsLoader {
 
     private let statisticsStore: StatisticsStore
     private let returnUserMeasurement: ReturnUserMeasurement
-    private let retentionSegmentation: UsageSegmenting
+    private let usageSegmentation: UsageSegmenting
     private let parser = AtbParser()
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-         retentionSegmentation: UsageSegmenting = UsageSegmentation()) {
+         usageSegmentation: UsageSegmenting = UsageSegmentation()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
-        self.retentionSegmentation = retentionSegmentation
+        self.usageSegmentation = usageSegmentation
     }
 
     public func load(completion: @escaping Completion = {}) {
@@ -84,14 +84,16 @@ public class StatisticsLoader {
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
-            self.retentionSegmentation.processATB(atb)
             completion()
         }
     }
 
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeSearchAtbURL() else {
-            requestInstallStatistics(completion: completion)
+            requestInstallStatistics {
+                self.updateUsageSegmentationAfterInstall(activityType: .search)
+                completion()
+            }
             return
         }
 
@@ -107,7 +109,7 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
-                self.retentionSegmentation.processATB(atb)
+                self.updateUsageSegmentationWithAtb(atb, activityType: .search)
                 NotificationCenter.default.post(name: .searchDAU,
                                                 object: nil, userInfo: nil)
             }
@@ -117,7 +119,10 @@ public class StatisticsLoader {
 
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
-            requestInstallStatistics(completion: completion)
+            requestInstallStatistics {
+                self.updateUsageSegmentationAfterInstall(activityType: .app)
+                completion()
+            }
             return
         }
 
@@ -133,7 +138,7 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.appRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
-                self.retentionSegmentation.processATB(atb)
+                self.updateUsageSegmentationWithAtb(atb, activityType: .app)
             }
             completion()
         }
@@ -145,5 +150,17 @@ public class StatisticsLoader {
             statisticsStore.variant = nil
             returnUserMeasurement.updateStoredATB(atb)
         }
+    }
+
+    private func updateUsageSegmentationWithAtb(_ atb: Atb, activityType: UsageActivityType) {
+        guard let installAtbValue = statisticsStore.atb else { return }
+        let installAtb = Atb(version: installAtbValue, updateVersion: nil)
+        self.usageSegmentation.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
+    }
+
+    private func updateUsageSegmentationAfterInstall(activityType: UsageActivityType) {
+        guard let installAtbValue = statisticsStore.atb else { return }
+        let installAtb = Atb(version: installAtbValue, updateVersion: nil)
+        self.usageSegmentation.processATB(installAtb, withInstallAtb: installAtb, andActivityType: activityType)
     }
 }

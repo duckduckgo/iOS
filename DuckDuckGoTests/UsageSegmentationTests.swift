@@ -25,29 +25,58 @@ class UsageSegmentationTests: XCTestCase {
 
     var atbs: [Atb] = []
 
-    func testWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
-        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
-
-        let atb = Atb(version: "v100-1", updateVersion: nil)
-        self.atbs = [atb]
-        sut.processATB(atb)
-
-        XCTAssertEqual(atbs, [atb])
-        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+    func testWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired() {
+        assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.search)
+        assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.app)
     }
 
-    func testWhenNewATBReceived_ThenStoredAndPixelFired() {
+    private func assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(_ activityType: UsageActivityType) {
         let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
 
-        let atb = Atb(version: "v100-1", updateVersion: nil)
-        sut.processATB(atb)
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let atb = Atb(version: "v100-2", updateVersion: nil)
+        sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [atb])
-        XCTAssertEqual(Pixel.Event.retentionSegments, PixelFiringMock.lastDailyPixelInfo?.pixel)
+        XCTAssertEqual(atbs, [installAtb, atb])
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel)
+    }
+
+    func testWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.search)
+        assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.app)
+    }
+
+    private func assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(_ activityType: UsageActivityType) {
+        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let atb = Atb(version: "v100-2", updateVersion: nil)
+        self.atbs = [installAtb, atb]
+        sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
+
+        XCTAssertEqual(atbs, [installAtb, atb])
+        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
     }
 
 }
 
 extension UsageSegmentationTests: UsageSegmentationStoring {
 
+}
+
+final class MockUsageSegmentation: UsageSegmenting {
+
+    struct ProcessATBArgs {
+
+        let atb: Atb
+        let installAtb: Atb
+        let activityType: UsageActivityType
+
+    }
+
+    var atbs: [ProcessATBArgs] = []
+
+    func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
+        atbs.append(ProcessATBArgs(atb: atb, installAtb: installAtb, activityType: activityType))
+    }
 }

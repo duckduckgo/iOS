@@ -19,9 +19,16 @@
 
 import Foundation
 
+enum UsageActivityType: String {
+
+    case search
+    case app
+
+}
+
 protocol UsageSegmenting {
 
-    func processATB(_ atb: Atb)
+    func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType)
 
 }
 
@@ -36,12 +43,16 @@ class UsageSegmentation: UsageSegmenting {
         self.storage = storage
     }
 
-    func processATB(_ atb: Atb) {
+    func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
+        if storage.atbs.isEmpty {
+            storage.atbs.append(installAtb)
+        }
+
         // Check most recent entries first so we exit faster
         guard !storage.atbs.reversed().contains(where: { $0 == atb }) else { return }
 
         storage.atbs.append(atb)
-        pixelFiring.fireDaily(.retentionSegments)
+        pixelFiring.fireDaily(.usageSegments)
     }
 
 }

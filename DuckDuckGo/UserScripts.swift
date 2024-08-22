@@ -24,6 +24,7 @@ import TrackerRadarKit
 import UserScript
 import WebKit
 import SSLErrors
+import ContentScopeScripts
 
 final class UserScripts: UserScriptsProvider {
 
@@ -72,11 +73,18 @@ final class UserScripts: UserScriptsProvider {
         if let specialPages {
             userScripts.append(specialPages)
         }
-        specialErrorPageUserScript = SpecialErrorPageUserScript()
+//
+        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: localeStrings)
         specialErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
 
     }
-    
+
+    lazy var localeStrings: String? = {
+        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "special-error", ofType: "json", inDirectory: "pages/special-error/locales/pl") {
+            return try? String(contentsOfFile: localizedFile)
+        }
+        return nil
+    }()
 
     lazy var userScripts: [UserScript] = [
         debugScript,

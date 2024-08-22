@@ -23,6 +23,7 @@ import Combine
 import SyncUI
 import DDGSync
 import Common
+import os.log
 
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
@@ -273,7 +274,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 mapDevices(devices)
             } catch {
                 // Not displaying error since there is the spinner and it is called every few seconds
-                os_log(error.localizedDescription, log: .syncLog, type: .error)
+                Logger.sync.error("Error: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

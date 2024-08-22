@@ -23,6 +23,7 @@ import BrowserServicesKit
 import History
 import Common
 import Persistence
+import os.log
 
 public protocol HistoryManaging {
     

@@ -22,6 +22,7 @@ import Foundation
 import CoreData
 import Persistence
 import Bookmarks
+import os.log
 
 public class BookmarksDatabase {
 
@@ -33,7 +34,7 @@ public class BookmarksDatabase {
     
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.bookmarksGroupID) else {
-            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.bookmarksGroupID)
+            Logger.bookmarks.fault("BookmarksDatabase.make - OUT, failed to get location \(Constants.bookmarksGroupID, privacy: .public)")
             fatalError("Failed to get location")
         }
         return url

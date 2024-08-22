@@ -19,6 +19,7 @@
 
 import Common
 import Foundation
+import os.log
 
 /// Class for persisting cookies for fire proofed sites to work around a WKWebView / DataStore bug which does not let data get persisted until the webview has loaded.
 ///
@@ -56,7 +57,7 @@ public class CookieStorage {
                     })
 
                     if let cookie = HTTPCookie(properties: properties) {
-                        os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
+                        Logger.general.debug("read cookie \(cookie.domain) \(cookie.name) \(cookie.value)")
                         storedCookies.append(cookie)
                     }
                 }

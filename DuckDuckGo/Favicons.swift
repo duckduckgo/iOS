@@ -23,6 +23,7 @@ import Kingfisher
 import UIKit
 import LinkPresentation
 import WidgetKit
+import os.log
 
 public class Favicons {
 

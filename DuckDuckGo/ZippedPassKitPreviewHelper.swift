@@ -22,6 +22,7 @@ import Foundation
 import UIKit
 import PassKit
 import ZIPFoundation
+import os.log
 
 class ZippedPassKitPreviewHelper: FilePreview {
     private weak var viewController: UIViewController?
@@ -39,10 +40,10 @@ class ZippedPassKitPreviewHelper: FilePreview {
                let controller = PKAddPassesViewController(passes: passes) {
                 viewController?.present(controller, animated: true)
             } else {
-                os_log("Can't present passkit: No valid passes in passes file", type: .error)
+                Logger.general.error("Can't present passkit: No valid passes in passes file")
             }
         } catch {
-            os_log("Can't present passkit: %{public}s", type: .error, error.localizedDescription)
+            Logger.general.error("Can't present passkit: \(error.localizedDescription, privacy: .public)")
         }
     }
  

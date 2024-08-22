@@ -22,6 +22,7 @@ import Common
 import Foundation
 import Persistence
 import SwiftSoup
+import os.log
 
 public enum BookmarksImportError: Error {
     case invalidHtmlNoDLTag

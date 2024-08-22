@@ -24,6 +24,7 @@ import Core
 import BrowserServicesKit
 import PrivacyDashboard
 import Common
+import os.log
 
 extension PixelExperiment {
 
@@ -250,7 +251,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
                 let report = try await makeBrokenSiteReport(category: category, description: description, source: privacyDashboardController.source)
                 try brokenSiteReporter.report(report, reportMode: .regular)
             } catch {
-                os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+                Logger.privacyDashboard.error("Failed to generate or send the broken site report: \(error.localizedDescription, privacy: .public)")
             }
             let message = PixelExperiment.cohort == .control ? UserText.feedbackSumbittedConfirmation : UserText.brokenSiteReportSuccessToast
             ActionMessageView.present(message: message)

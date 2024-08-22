@@ -1009,7 +1009,7 @@
 		F143C2EC1E4A4CD400CFDE3A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F143C3171E4A99D200CFDE3A /* AppURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3151E4A99D200CFDE3A /* AppURLs.swift */; };
 		F143C3181E4A99D200CFDE3A /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3161E4A99D200CFDE3A /* Link.swift */; };
-		F143C3271E4A9A0E00CFDE3A /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3231E4A9A0E00CFDE3A /* Logging.swift */; };
+		F143C3271E4A9A0E00CFDE3A /* Logger+Multiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3231E4A9A0E00CFDE3A /* Logger+Multiple.swift */; };
 		F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3241E4A9A0E00CFDE3A /* StringExtension.swift */; };
 		F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */; };
 		F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLExtensionTests.swift */; };
@@ -2789,7 +2789,7 @@
 		F143C2E71E4A4CD400CFDE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F143C3151E4A99D200CFDE3A /* AppURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppURLs.swift; sourceTree = "<group>"; };
 		F143C3161E4A99D200CFDE3A /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		F143C3231E4A9A0E00CFDE3A /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		F143C3231E4A9A0E00CFDE3A /* Logger+Multiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+Multiple.swift"; sourceTree = "<group>"; };
 		F143C3241E4A9A0E00CFDE3A /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoundedRectangleView.swift; path = ../Core/RoundedRectangleView.swift; sourceTree = "<group>"; };
@@ -5564,7 +5564,7 @@
 				9887DC242354D2AA005C85F5 /* Database.swift */,
 				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
 				F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */,
-				F143C3231E4A9A0E00CFDE3A /* Logging.swift */,
+				F143C3231E4A9A0E00CFDE3A /* Logger+Multiple.swift */,
 				F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */,
 				F143C3241E4A9A0E00CFDE3A /* StringExtension.swift */,
 				F1D477CA1F2149C40031ED49 /* Type.swift */,
@@ -7815,7 +7815,7 @@
 				85BDC3192436161C0053DB07 /* LoginFormDetectionUserScript.swift in Sources */,
 				37DF000A29F9C416002B7D3E /* SyncMetadataDatabase.swift in Sources */,
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
-				F143C3271E4A9A0E00CFDE3A /* Logging.swift in Sources */,
+				F143C3271E4A9A0E00CFDE3A /* Logger+Multiple.swift in Sources */,
 				85372447220DD103009D09CD /* UIKeyCommandExtension.swift in Sources */,
 				85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */,
 				9856A1992933D2EB00ACB44F /* BookmarksModelsErrorHandling.swift in Sources */,
@@ -10538,8 +10538,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 185.0.0;
+				branch = fcappelli/os_log_to_logger_2;
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

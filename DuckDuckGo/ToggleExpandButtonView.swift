@@ -30,26 +30,30 @@ struct ToggleExpandButtonStyle: ButtonStyle {
             VStack {
                 ExpandButtonDivider()
             }
-            ZStack {
-                Circle()
-                    .stroke(Color(designSystemColor: .lines), lineWidth: 1)
-                    .frame(width: 32)
-                    .if(configuration.isPressed, transform: {
-                        $0.background(Circle()
-                            .fill(isDark ? Color.tint(0.12) : Color.shade(0.06)))
-                    })
-                    .background(
-                        Circle()
-                            .fill(Color(designSystemColor: .background))
-                    )
-                configuration.label
-                    .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
-                    .frame(width: 16, height: 16)
-            }
+
+            Circle()
+                .stroke(Color(designSystemColor: .lines), lineWidth: 1)
+                .frame(width: 32, height: 32)
+                .if(configuration.isPressed) {
+                    $0.background(isDark ? Color.tint(0.12) : Color.shade(0.06))
+                        .clipShape(Circle())
+                }
+                .background(
+                    Circle()
+                        .fill(Color(designSystemColor: .background))
+                )
+                .overlay {
+                    configuration.label
+                        .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
+                        .frame(width: 16, height: 16)
+                        
+                }
+
             VStack {
                 ExpandButtonDivider()
             }
         }
+        .drawingGroup()
     }
 }
 

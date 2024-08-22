@@ -50,6 +50,7 @@ struct AddFavoriteView: View {
                         }
                     }
                 })
+                .textInputAutocapitalization(.never)
                 .keyboardType(.URL)
                 .autocorrectionDisabled()
                 .textFieldStyle(.automatic)

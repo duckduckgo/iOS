@@ -227,8 +227,21 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             return
         }
 
-        let controller = UIHostingController(rootView: PlatformLinksView(model: viewModel))
+        let controller = UIHostingController(rootView: PlatformLinksView(model: viewModel, source: .activating))
         navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func fireOtherPlatformLinksPixel(event: SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncSettingsViewModel.PlatformLinksPixelSource) {
+        let params = ["source": source.rawValue]
+
+        switch event {
+        case .appear:
+            Pixel.fire(.syncGetOtherDevices, withAdditionalParameters: params)
+        case .copy:
+            Pixel.fire(.syncGetOtherDevicesCopy, withAdditionalParameters: params)
+        case .share:
+            Pixel.fire(.syncGetOtherDevicesShare, withAdditionalParameters: params)
+        }
     }
 
     func showPreparingSync() {

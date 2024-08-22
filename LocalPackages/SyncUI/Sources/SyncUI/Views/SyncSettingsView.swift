@@ -72,7 +72,7 @@ public struct SyncSettingsView: View {
 
                     devices()
 
-                    otherPlatformsLinks()
+                    otherPlatformsLinks(source: .activated)
 
                     options()
 
@@ -88,7 +88,7 @@ public struct SyncSettingsView: View {
 
                     otherOptions()
 
-                    otherPlatformsLinks()
+                    otherPlatformsLinks(source: .notActivated)
                 }
             }
             .navigationTitle(UserText.syncTitle)

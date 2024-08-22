@@ -30,12 +30,12 @@ public class StatisticsLoader {
 
     private let statisticsStore: StatisticsStore
     private let returnUserMeasurement: ReturnUserMeasurement
-    private let retentionSegmentation: RetentionSegmenting
+    private let retentionSegmentation: UsageSegmenting
     private let parser = AtbParser()
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-         retentionSegmentation: RetentionSegmenting = RetentionSegmentation()) {
+         retentionSegmentation: UsageSegmenting = UsageSegmentation()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.retentionSegmentation = retentionSegmentation

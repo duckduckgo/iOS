@@ -26,14 +26,14 @@ import OHHTTPStubsSwift
 class StatisticsLoaderTests: XCTestCase {
 
     var mockStatisticsStore: StatisticsStore!
-    var mockRetentionSegmentation: MockRetentionSegmentation!
+    var mockRetentionSegmentation: MockUsageSegmentation!
     var testee: StatisticsLoader!
 
     override func setUp() {
         super.setUp()
         
         mockStatisticsStore = MockStatisticsStore()
-        mockRetentionSegmentation = MockRetentionSegmentation()
+        mockRetentionSegmentation = MockUsageSegmentation()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore, retentionSegmentation: mockRetentionSegmentation)
     }
 
@@ -43,7 +43,7 @@ class StatisticsLoaderTests: XCTestCase {
     }
 
     // Only used here, can move it if needed.
-    final class MockRetentionSegmentation: RetentionSegmenting {
+    final class MockUsageSegmentation: UsageSegmenting {
         var atbs: [Core.Atb] = []
 
         func processATB(_ atb: Core.Atb) {

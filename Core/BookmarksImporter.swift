@@ -95,7 +95,7 @@ final public class BookmarksImporter {
 
         if isDocumentInSafariFormat(document) {
             guard let newDocument = try transformSafariDocument(document: document) else {
-                os_log("Safari format could not be handled", type: .debug)
+                Logger.bookmarks.debug("Safari format could not be handled")
                 throw BookmarksImportError.safariTransformFailure
             }
             try parse(documentElement: newDocument, importedBookmark: nil)
@@ -209,7 +209,7 @@ final public class BookmarksImporter {
         do {
             try await coreDataStorage.importBookmarks(bookmarks)
         } catch {
-            os_log("Failed to save imported bookmarks to core data %s", type: .debug, error.localizedDescription)
+            Logger.bookmarks.error("Failed to save imported bookmarks to core data: \(error.localizedDescription, privacy: .public)")
             throw BookmarksImportError.saveFailure
         }
     }

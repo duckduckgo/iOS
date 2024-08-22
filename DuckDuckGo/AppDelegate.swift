@@ -474,7 +474,7 @@ import os.log
         do {
             try FileManager.default.removeItem(at: tmp)
         } catch {
-            os_log("Failed to delete tmp dir")
+            Logger.general.error("Failed to delete tmp dir")
         }
     }
 

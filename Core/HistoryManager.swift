@@ -153,7 +153,7 @@ public class HistoryDatabase {
 
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            os_log("HistoryDatabase.make - OUT, failed to get application support directory")
+            Logger.general.fault("HistoryDatabase.make - OUT, failed to get application support directory")
             fatalError("Failed to get location")
         }
         return url
@@ -164,10 +164,10 @@ public class HistoryDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("HistoryDatabase.make - IN - %s", location.absoluteString)
+        Logger.general.debug("HistoryDatabase.make - IN - \(location.absoluteString)")
         let bundle = History.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BrowsingHistory") else {
-            os_log("HistoryDatabase.make - OUT, failed to loadModel")
+            Logger.general.debug("HistoryDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
@@ -175,7 +175,7 @@ public class HistoryDatabase {
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly)
-        os_log("HistoryDatabase.make - OUT")
+        Logger.general.debug("HistoryDatabase.make - OUT")
         return db
     }
 }

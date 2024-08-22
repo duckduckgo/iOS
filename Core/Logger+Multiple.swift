@@ -1,7 +1,8 @@
 //
 //  Logger+Multiple.swift
+//  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -26,26 +27,3 @@ public extension Logger {
     static var configuration = { Logger(subsystem: "Configuration", category: "") }()
     static var duckPlayer = { Logger(subsystem: "DuckPlayer", category: "") }()
 }
-//
-//
-// public extension OSLog {
-//
-//    enum AppCategories: String, CaseIterable {
-////        case generalLog = "DDG General" // BSK .general
-////        case adAttributionLog = "DDG AdAttribution"
-////        case lifecycleLog = "DDG Lifecycle"
-////        case autoconsentLog = "DDG Autoconsent"
-//        case /*configuration*/Log = "DDG Configuration"
-//        case syncLog = "DDG Sync"
-//        case duckPlayerLog = "Duck Player"
-//    }
-//
-//    @OSLogWrapper(.generalLog) static var generalLog
-//    @OSLogWrapper(.adAttributionLog) static var adAttributionLog
-//    @OSLogWrapper(.lifecycleLog) static var lifecycleLog
-//    @OSLogWrapper(.autoconsentLog) static var autoconsentLog
-//    @OSLogWrapper(.configurationLog) static var configurationLog
-//    @OSLogWrapper(.syncLog) static var syncLog
-//    @OSLogWrapper(.duckPlayerLog) static var duckPlayerLog
-//
-// }

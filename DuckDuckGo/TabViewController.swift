@@ -2788,7 +2788,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
             NotificationCenter.default.post(name: .autofillSaveEvent, object: nil)
         } catch {
-            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+            Logger.general.error("failed to store credentials: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -2810,7 +2810,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                 }
             }
         } catch {
-            os_log("%: failed to fetch credentials %s", type: .error, #function, error.localizedDescription)
+            Logger.general.error("failed to fetch credentials: \(error.localizedDescription, privacy: .public)")
         }
     }
     
@@ -2838,7 +2838,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         do {
             _ = try autofillNeverPromptWebsitesManager.saveNeverPromptWebsite(domain)
         } catch {
-            os_log("%: failed to save never prompt for website %s", type: .error, #function, error.localizedDescription)
+            Logger.general.error("failed to save never prompt for website: \(error.localizedDescription, privacy: .public)")
         }
     }
     

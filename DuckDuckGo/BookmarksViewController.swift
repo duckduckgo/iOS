@@ -672,7 +672,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             try BookmarksExporter(coreDataStore: bookmarksDatabase, favoritesDisplayMode: viewModel.favoritesDisplayMode)
                 .exportBookmarksTo(url: tempFileUrl)
         } catch {
-            os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
+            Logger.general.error("bookmarks failed to export: \(error.localizedDescription, privacy: .public)")
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)
             return
         }

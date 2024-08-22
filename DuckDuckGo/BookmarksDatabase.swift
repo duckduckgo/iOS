@@ -45,10 +45,10 @@ public class BookmarksDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("BookmarksDatabase.make - IN - %s", location.absoluteString)
+        Logger.bookmarks.debug("BookmarksDatabase.make - IN - \(location.absoluteString, privacy: .public)")
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
-            os_log("BookmarksDatabase.make - OUT, failed to loadModel")
+            Logger.bookmarks.error("BookmarksDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
@@ -56,7 +56,7 @@ public class BookmarksDatabase {
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly)
-        os_log("BookmarksDatabase.make - OUT")
+        Logger.bookmarks.debug("BookmarksDatabase.make - OUT")
         return db
     }
 }

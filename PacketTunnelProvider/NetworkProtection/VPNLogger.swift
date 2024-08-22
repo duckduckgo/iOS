@@ -31,14 +31,16 @@ public final class VPNLogger {
     public typealias AttemptStep = PacketTunnelProvider.AttemptStep
     public typealias ConnectionAttempt = PacketTunnelProvider.ConnectionAttempt
     public typealias ConnectionTesterStatus = PacketTunnelProvider.ConnectionTesterStatus
-    public typealias LogCallback = (OSLogType, OSLogMessage) -> Void
+//    public typealias LogCallback = (OSLogType, OSLogMessage) -> Void
 
     public init() {}
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func logStartingWithoutAuthToken() {
         Logger.networkProtection.error("🔴 Starting tunnel without an auth token")
     }
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ step: AttemptStep, named name: String) {
         switch step {
         case .begin:
@@ -50,7 +52,7 @@ public final class VPNLogger {
         }
     }
 
-
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ step: ConnectionAttempt) {
         switch step {
         case .connecting:
@@ -62,6 +64,7 @@ public final class VPNLogger {
         }
     }
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ status: ConnectionTesterStatus, server: String) {
         switch status {
         case .failed(let duration):
@@ -71,6 +74,7 @@ public final class VPNLogger {
         }
     }
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ step: FailureRecoveryStep) {
         switch step {
         case .started:
@@ -87,6 +91,7 @@ public final class VPNLogger {
         }
     }
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ step: NetworkProtectionTunnelFailureMonitor.Result) {
         switch step {
         case .failureDetected:
@@ -98,6 +103,7 @@ public final class VPNLogger {
         }
     }
 
+    @available(*, deprecated, message: "This goes against Apple logging guidelines and will be removed, please don't use it anymore")
     public func log(_ result: NetworkProtectionLatencyMonitor.Result) {
         switch result {
         case .error:

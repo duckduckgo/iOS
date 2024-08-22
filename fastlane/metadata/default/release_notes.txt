@@ -1,1 +1,2 @@
 - New! VPN snooze lets you pause the VPN for 20 minutes at a time. Use snooze to briefly connect through your regular IP when signing in to banking apps (or similar) without triggering their understandably thorough fraud prevention alerts.
+- Bug fixes and other improvements.

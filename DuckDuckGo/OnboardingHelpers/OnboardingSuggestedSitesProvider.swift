@@ -30,7 +30,7 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
         self.countryProvider = countryProvider
     }
 
-    private let scheme = "https:"
+    private let scheme = "https://"
 
     enum Countries: String {
         case indonesia = "ID"
@@ -105,11 +105,11 @@ struct OnboardingSuggestedSitesProvider: OnboardingSuggestionsItemsProviding {
     private var surpriseMe: ContextualOnboardingListItem {
         let site: String
         switch Countries(rawValue: country) {
-        case .germany: site = "https://duden.de"
-        case .netherlands: site = "https://www.woorden.org/woord/eend"
-        case .sweden: site = "https://www.synonymer.se/sv-syn/anka"
-        default: site = "https:britannica.com/animal/duck"
+        case .germany: site = "duden.de"
+        case .netherlands: site = "www.woorden.org/woord/eend"
+        case .sweden: site = "www.synonymer.se/sv-syn/anka"
+        default: site = "britannica.com/animal/duck"
         }
-        return ContextualOnboardingListItem.surprise(title: site)
+        return ContextualOnboardingListItem.surprise(title: scheme + site)
     }
 }

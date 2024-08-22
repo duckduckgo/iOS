@@ -114,8 +114,8 @@ import WebKit
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // SKAD4 support
-        updateSKAd(conversionValue: 1)
+        // Attribution support
+        updateAttribution(conversionValue: 1)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {

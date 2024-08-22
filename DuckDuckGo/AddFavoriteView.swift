@@ -60,7 +60,13 @@ struct AddFavoriteView: View {
 
             if let url = convertToURL(searchViewModel.searchTerm) {
                 Section {
-                    FavoriteSearchResultItemView(result: .init(id: "manual", name: searchViewModel.searchTerm, displayUrl: url.absoluteString, url: url), faviconLoader: faviconLoader)
+                    let name = searchViewModel.searchTerm
+                    Button {
+                        favoritesCreating.createOrToggleFavorite(title: name, url: url)
+                        dismiss()
+                    } label: {
+                        FavoriteSearchResultItemView(result: .init(id: "manual", name: searchViewModel.searchTerm, displayUrl: url.absoluteString, url: url), faviconLoader: faviconLoader)
+                    }.disabled(url.isValid)
                 }
             }
 

@@ -39,11 +39,6 @@ struct FavoriteSearchResultItemView: View {
                 Text(verbatim: result.displayUrl)
                     .daxFootnoteSemibold()
                     .multilineTextAlignment(.leading)
-                if let host = result.url.host {
-                    Text(verbatim: host)
-                        .daxFootnoteRegular()
-                        .multilineTextAlignment(.leading)
-                }
             }
         }
     }

@@ -27,6 +27,29 @@ protocol UsageSegmentationStoring {
 
 class UsageSegmentationStorage: UsageSegmentationStoring {
 
-    var atbs: [Atb] = []
+    enum Keys {
+        static let atbs = "usageSegmentation.keys"
+    }
+
+    var atbs: [Atb] {
+        get {
+            let storedAtbs = userDefaults.stringArray(forKey: Keys.atbs) ?? []
+            return storedAtbs.map {
+                Atb(version: $0, updateVersion: nil)
+            }
+        }
+
+        set {
+            userDefaults.setValue(newValue.map {
+                $0.version
+            }, forKey: Keys.atbs)
+        }
+    }
+
+    let userDefaults: UserDefaults
+
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+    }
 
 }

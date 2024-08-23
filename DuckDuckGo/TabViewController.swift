@@ -901,6 +901,7 @@ class TabViewController: UIViewController {
     
     public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
+
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,

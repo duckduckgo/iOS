@@ -24,7 +24,6 @@ import TrackerRadarKit
 import UserScript
 import WebKit
 import SSLErrors
-import ContentScopeScripts
 
 final class UserScripts: UserScriptsProvider {
 

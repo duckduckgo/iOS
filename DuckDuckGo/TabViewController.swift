@@ -175,7 +175,6 @@ class TabViewController: UIViewController {
 
     private let refreshControl = UIRefreshControl()
 
-    // TODO
     private let certificateTrustEvaluator: CertificateTrustEvaluating
     private var shouldBypassSSLError = false
     var errorData: SpecialErrorData?
@@ -1150,7 +1149,6 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tab(self, didRequestPresentingAlert: alert)
     }
 
-    // TODO
     private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
                                             completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard shouldBypassSSLError, let trust = challenge.protectionSpace.serverTrust else {
@@ -2867,10 +2865,6 @@ extension WKWebView {
 
     func load(_ url: URL, in frame: WKFrameInfo?) {
         evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
-    }
-
-    func setDocumentHtml(_ html: String) {
-        self.evaluateJavaScript("document.open(); document.write('\(html)'); document.close()", in: nil, in: .defaultClient)
     }
 
 }

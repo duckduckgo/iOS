@@ -60,8 +60,6 @@ public extension URL {
 
     static func makeExtiURL(atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
-    static let specialError = URL(string: "duck://special-error")!
-
     static func isDuckDuckGo(domain: String?) -> Bool {
         guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
         return url.isDuckDuckGo

@@ -1553,8 +1553,12 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         let domain = url?.host ?? url?.absoluteString ?? ""
+        let tld = storageCache.tld
 
-        errorData = SpecialErrorData(kind: .ssl, errorType: SSLErrorType.forErrorCode(errorCode).rawValue, domain: domain)
+        errorData = SpecialErrorData(kind: .ssl,
+                                     errorType: SSLErrorType.forErrorCode(errorCode).rawValue,
+                                     domain: failedURL.host,
+                                     eTldPlus1: tld.eTLDplus1(failedURL.host))
         loadSpecialErrorPage(url: failedURL)
     }
 

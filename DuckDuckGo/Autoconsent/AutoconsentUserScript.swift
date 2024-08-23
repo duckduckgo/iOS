@@ -89,12 +89,10 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage,
                                replyHandler: @escaping (Any?, String?) -> Void) {
-        Logger.autoconsent.debug("Message received: \(String(describing: message.body))")
         return handleMessage(replyHandler: replyHandler, message: message)
     }
 }
 
-// @available(macOS 11, *)
 extension AutoconsentUserScript {
     enum MessageName: String, CaseIterable {
         case `init`

@@ -103,6 +103,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
             .onFirstAppear {
                 newTabPageModel.introMessageDisplayed()
             }
+            .transition(.scale.combined(with: .opacity))
         }
     }
 

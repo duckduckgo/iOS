@@ -24,12 +24,10 @@ import SwiftUI
 import Common
 import Combine
 import SyncUI
+import DuckPlayer
 
 import Subscription
-
-#if NETWORK_PROTECTION
 import NetworkProtection
-#endif
 
 final class SettingsViewModel: ObservableObject {
 
@@ -44,11 +42,14 @@ final class SettingsViewModel: ObservableObject {
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
-
+    let privacyProDataReporter: PrivacyProDataReporting?
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
-    
+    var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+        DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+    }
+
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"
     }
@@ -79,9 +80,7 @@ final class SettingsViewModel: ObservableObject {
         case voiceSearch
         case addressbarPosition
         case speechRecognition
-#if NETWORK_PROTECTION
         case networkProtection
-#endif
     }
     
     var shouldShowNoMicrophonePermissionAlert: Bool = false
@@ -128,11 +127,11 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.addressbar.position
+                self.state.addressBar.position
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.addressbar.position = $0
+                self.state.addressBar.position = $0
             }
         )
     }
@@ -345,7 +344,8 @@ final class SettingsViewModel: ObservableObject {
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
-         syncPausedStateManager: any SyncPausedStateManaging) {
+         syncPausedStateManager: any SyncPausedStateManaging,
+         privacyProDataReporter: PrivacyProDataReporting) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -354,6 +354,7 @@ final class SettingsViewModel: ObservableObject {
         self.deepLinkTarget = deepLink
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
+        self.privacyProDataReporter = privacyProDataReporter
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
@@ -378,7 +379,7 @@ extension SettingsViewModel {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
-            addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
@@ -395,10 +396,10 @@ extension SettingsViewModel {
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
-            networkProtection: getNetworkProtectionState(),
+            networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
-            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer),
+            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode
         )
         
@@ -419,10 +420,6 @@ extension SettingsViewModel {
                 await self.historyManager.removeAllHistory()
             }
         }
-    }
-
-    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -455,22 +452,19 @@ extension SettingsViewModel {
             completion(true)
         }
     }
-    
-    
-#if NETWORK_PROTECTION
+
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
         if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
-                self.state.networkProtection.status = UserText.netPCellConnected
+                self.state.networkProtectionConnected = true
             default:
-                self.state.networkProtection.status = UserText.netPCellDisconnected
+                self.state.networkProtectionConnected = false
             }
         } else {
-            self.state.networkProtection.status = ""
+            self.state.networkProtectionConnected = false
         }
     }
-#endif
     
 }
 
@@ -479,14 +473,12 @@ extension SettingsViewModel {
     
     private func setupSubscribers() {
 
-    #if NETWORK_PROTECTION
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasActiveSubscription in
-                self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
+            .sink { [weak self] status in
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
-    #endif
 
     }
 }
@@ -546,6 +538,18 @@ extension SettingsViewModel {
                                   completionHandler: nil)
     }
 
+    var shouldDisplayDuckPlayerContingencyMessage: Bool {
+        duckPlayerContingencyHandler.shouldDisplayContingencyMessage
+    }
+
+    func openDuckPlayerContingencyMessageSite() {
+        guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
     @MainActor func openCookiePopupManagement() {
         pushViewController(legacyViewProvider.autoConsent)
     }
@@ -594,14 +598,6 @@ extension SettingsViewModel {
         
         case .autoconsent:
             pushViewController(legacyViewProvider.autoConsent)
-     
-#if NETWORK_PROTECTION
-        case .netP:
-            if #available(iOS 15, *) {
-                firePixel(.privacyProVPNSettings)
-                pushViewController(legacyViewProvider.netP)
-            }
-#endif
         }
     }
  
@@ -634,6 +630,8 @@ extension SettingsViewModel {
         case dbp
         case itr
         case subscriptionFlow(origin: String? = nil)
+        case restoreFlow
+        case duckPlayer
         // Add other cases as needed
 
         var id: String {
@@ -642,6 +640,8 @@ extension SettingsViewModel {
             case .dbp: return "dbp"
             case .itr: return "itr"
             case .subscriptionFlow: return "subscriptionFlow"
+            case .restoreFlow: return "restoreFlow"
+            case .duckPlayer: return "duckPlayer"
             // Ensure all cases are covered
             }
         }
@@ -650,13 +650,7 @@ extension SettingsViewModel {
         // Default to .sheet, specify .push where needed
         var type: DeepLinkType {
             switch self {
-            // Specify cases that require .push presentation
-            // Example:
-            // case .dbp:
-            //     return .sheet
-            case .netP:
-                return .UIKitView
-            default:
+            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer:
                 return .navigationLink
             }
         }
@@ -666,7 +660,6 @@ extension SettingsViewModel {
     enum DeepLinkType {
         case sheet
         case navigationLink
-        case UIKitView
     }
             
     // Navigate to a section in settings
@@ -727,7 +720,7 @@ extension SettingsViewModel {
             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
 
             for entitlement in entitlementsToCheck {
-                if case .success = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
                     currentEntitlements.append(entitlement)
                 }
             }
@@ -746,12 +739,10 @@ extension SettingsViewModel {
         subscriptionSignOutObserver = NotificationCenter.default.addObserver(forName: .accountDidSignOut,
                                                                              object: nil,
                                                                              queue: .main) { [weak self] _ in
-            if #available(iOS 15.0, *) {
-                guard let strongSelf = self else { return }
-                Task {
-                    strongSelf.subscriptionStateCache.reset()
-                    await strongSelf.setupSubscriptionEnvironment()
-                }
+            guard let strongSelf = self else { return }
+            Task {
+                strongSelf.subscriptionStateCache.reset()
+                await strongSelf.setupSubscriptionEnvironment()
             }
         }
         
@@ -765,7 +756,6 @@ extension SettingsViewModel {
         
     }
     
-    @available(iOS 15.0, *)
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
@@ -790,4 +780,9 @@ extension SettingsViewModel {
         }
     }
     
+}
+
+// Deeplink notification handling
+extension NSNotification.Name {
+    static let settingsDeepLinkNotification: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.settingsDeepLink")
 }

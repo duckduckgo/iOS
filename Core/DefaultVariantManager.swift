@@ -40,17 +40,10 @@ public struct VariantIOS: Variant {
                 .contains(where: { Locale.current.regionCode == $0 }) }
 
         static let inEnglish = { return Locale.current.languageCode == "en" }
-
-        static let iOS15 = { () -> Bool in
-            if #available(iOS 15, *) {
-                return true
-            }
-            return false
-        }
     }
 
     /// This variant is used for returning users to separate them from really new users.
-    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
+    public static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
 
     static let doNotAllocate = 0
 
@@ -88,6 +81,10 @@ public protocol VariantRNG {
 
 }
 
+public protocol VariantNameOverriding {
+    var overriddenAppVariantName: String? { get }
+}
+
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
@@ -99,16 +96,19 @@ public class DefaultVariantManager: VariantManager {
     private let storage: StatisticsStore
     private let rng: VariantRNG
     private let returningUserMeasurement: ReturnUserMeasurement
+    private let variantNameOverride: VariantNameOverriding
 
     init(variants: [Variant],
          storage: StatisticsStore,
          rng: VariantRNG,
-         returningUserMeasurement: ReturnUserMeasurement) {
-
+         returningUserMeasurement: ReturnUserMeasurement,
+         variantNameOverride: VariantNameOverriding
+    ) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
         self.returningUserMeasurement = returningUserMeasurement
+        self.variantNameOverride = variantNameOverride
     }
 
     public convenience init() {
@@ -116,7 +116,8 @@ public class DefaultVariantManager: VariantManager {
             variants: VariantIOS.defaultVariants,
             storage: StatisticsUserDefaults(),
             rng: Arc4RandomUniformVariantRNG(),
-            returningUserMeasurement: KeychainReturnUserMeasurement()
+            returningUserMeasurement: KeychainReturnUserMeasurement(),
+            variantNameOverride: LaunchOptionsHandler()
         )
     }
 
@@ -148,6 +149,10 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
+        if let overriddenAppVariantName = variantNameOverride.overriddenAppVariantName {
+            return variants.first(where: { $0.name == overriddenAppVariantName })
+        }
+
         if returningUserMeasurement.isReturningUser {
             return VariantIOS.returningUser
         }

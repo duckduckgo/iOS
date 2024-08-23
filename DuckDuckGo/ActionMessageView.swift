@@ -90,6 +90,7 @@ class ActionMessageView: UIView {
                         numberOfLines: Int = 0,
                         actionTitle: String? = nil,
                         presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
+                        duration: TimeInterval = Constants.duration,
                         onAction: @escaping () -> Void = {},
                         onDidDismiss: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
@@ -99,6 +100,7 @@ class ActionMessageView: UIView {
                                   message: message.string,
                                   actionTitle: actionTitle,
                                   presentationLocation: presentationLocation,
+                                  duration: duration,
                                   onAction: onAction,
                                   onDidDismiss: onDidDismiss)
     }
@@ -106,6 +108,7 @@ class ActionMessageView: UIView {
     static func present(message: String,
                         actionTitle: String? = nil,
                         presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
+                        duration: TimeInterval = Constants.duration,
                         onAction: @escaping () -> Void = {},
                         onDidDismiss: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
@@ -114,6 +117,7 @@ class ActionMessageView: UIView {
                                   message: message,
                                   actionTitle: actionTitle,
                                   presentationLocation: presentationLocation,
+                                  duration: duration,
                                   onAction: onAction,
                                   onDidDismiss: onDidDismiss)
     }
@@ -122,9 +126,10 @@ class ActionMessageView: UIView {
                                 message: String,
                                 actionTitle: String? = nil,
                                 presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
+                                duration: TimeInterval = Constants.duration,
                                 onAction: @escaping () -> Void = {},
                                 onDidDismiss: @escaping () -> Void = {}) {
-        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
+        guard let window = UIApplication.shared.firstKeyWindow else { return }
         
         dismissAllMessages()
                 
@@ -159,7 +164,7 @@ class ActionMessageView: UIView {
             messageView?.dismissAndFadeOut()
         }
         messageView.dismissWorkItem = workItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.duration, execute: workItem)
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: workItem)
         presentedMessages.append(messageView)
     }
 

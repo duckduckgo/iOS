@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import DuckPlayer
 
 class TabViewGridCell: TabViewCell {
 
@@ -155,7 +156,16 @@ class TabViewGridCell: TabViewCell {
             title.isHidden = !tab.viewed
             favicon.isHidden = !tab.viewed
             removeButton.isHidden = !tab.viewed
+            
         } else {
+            
+            // Duck Player videos
+            if let url = tab.link?.url, url.isDuckPlayer {
+                favicon.image = UIImage(named: "DuckPlayerURLIcon")
+            } else {
+                favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
+            }
+            
             if let preview = preview {
                 self.updatePreviewToDisplay(image: preview)
                 self.preview.contentMode = .scaleAspectFill
@@ -165,7 +175,7 @@ class TabViewGridCell: TabViewCell {
             }
             
             removeButton.isHidden = false
-            favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
+            
         }
     }
 

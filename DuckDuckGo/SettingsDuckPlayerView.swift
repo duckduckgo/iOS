@@ -20,37 +20,58 @@
 import Core
 import SwiftUI
 import DesignResourcesKit
+import DuckUI
 
 struct SettingsDuckPlayerView: View {
     private static let learnMoreURL = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/duck-player/")!
 
+    /// The ContingencyMessageView may be redrawn multiple times in the onAppear method if the user scrolls it outside the list bounds.
+    /// This property ensures that the associated action is only triggered once per viewing session, preventing redundant executions.
+    @State private var hasFiredSettingsDisplayedPixel = false
+
     @EnvironmentObject var viewModel: SettingsViewModel
     var body: some View {
         List {
-            VStack(alignment: .center) {
-                Image("SettingsDuckPlayerHero")
-                    .padding(.top, -20) // Adjust for the image padding
-
-                Text(UserText.duckPlayerFeatureName)
-                    .daxTitle3()
-
-                Text(UserText.settingsDuckPlayerInfoText)
-                    .daxBodyRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .padding(.top, 12)
-
-                Link(UserText.settingsDuckPlayerLearnMore,
-                     destination: SettingsDuckPlayerView.learnMoreURL)
-                .daxBodyRegular()
-                .accentColor(Color.init(designSystemColor: .accent))
+            if viewModel.shouldDisplayDuckPlayerContingencyMessage {
+                Section {
+                    ContingencyMessageView {
+                        viewModel.openDuckPlayerContingencyMessageSite()
+                    }.onAppear {
+                        if !hasFiredSettingsDisplayedPixel {
+                            Pixel.fire(pixel: .duckPlayerContingencySettingsDisplayed)
+                            hasFiredSettingsDisplayedPixel = true
+                        }
+                    }
+                }
             }
-            .listRowBackground(Color.clear)
+
+            if !viewModel.shouldDisplayDuckPlayerContingencyMessage {
+                VStack(alignment: .center) {
+                    Image("SettingsDuckPlayerHero")
+                        .padding(.top, -20) // Adjust for the image padding
+
+                    Text(UserText.duckPlayerFeatureName)
+                        .daxTitle3()
+
+                    Text(UserText.settingsDuckPlayerInfoText)
+                        .daxBodyRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .padding(.top, 12)
+
+                    Link(UserText.settingsDuckPlayerLearnMore,
+                         destination: SettingsDuckPlayerView.learnMoreURL)
+                    .daxBodyRegular()
+                    .accentColor(Color.init(designSystemColor: .accent))
+                }
+                .listRowBackground(Color.clear)
+            }
 
             Section {
                 SettingsPickerCellView(label: UserText.settingsOpenVideosInDuckPlayerLabel,
                                        options: DuckPlayerMode.allCases,
                                        selectedOption: viewModel.duckPlayerModeBinding)
+                .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
             } footer: {
                 Text(UserText.settingsDuckPlayerFooter)
                     .daxFootnoteRegular()
@@ -60,5 +81,49 @@ struct SettingsDuckPlayerView: View {
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,
                                     displayMode: .inline,
                                     viewModel: viewModel)
+    }
+}
+
+private struct ContingencyMessageView: View {
+    let buttonCallback: () -> Void
+
+    private enum Copy {
+        static let title: String = UserText.duckPlayerContingencyMessageTitle
+        static let message: String = UserText.duckPlayerContingencyMessageBody
+        static let buttonTitle: String = UserText.duckPlayerContingencyMessageCTA
+    }
+    private enum Constants {
+        static let imageName: String = "WarningYoutube"
+        static let imageSize: CGSize = CGSize(width: 48, height: 48)
+        static let buttonCornerRadius: CGFloat = 8.0
+    }
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 8) {
+            Image(Constants.imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)
+                .padding(.bottom, 8)
+
+            Text(Copy.title)
+                .daxHeadline()
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+
+            Text(Copy.message)
+                .daxBodyRegular()
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+
+            Button {
+                buttonCallback()
+            } label: {
+                Text(Copy.buttonTitle)
+                    .bold()
+            }
+            .buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+            .padding(10)
+        }
     }
 }

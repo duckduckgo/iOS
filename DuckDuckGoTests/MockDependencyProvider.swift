@@ -46,6 +46,7 @@ class MockDependencyProvider: DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     var networkProtectionTunnelController: NetworkProtectionTunnelController
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
+    var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
@@ -64,21 +65,17 @@ class MockDependencyProvider: DependencyProvider {
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
         accountManager = AccountManagerMock()
-        if #available(iOS 15.0, *) {
-            let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
-            let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
-            let storePurchaseManager = DefaultStorePurchaseManager()
-            subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
-                                                          subscriptionEndpointService: subscriptionService,
-                                                          authEndpointService: authService,
-                                                          storePurchaseManager: storePurchaseManager,
-                                                          currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
-                                                                                                      purchasePlatform: .appStore),
-                                                          canPurchase: true)
-        } else {
-            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
-            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
-        }
+
+        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+        let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
+        let storePurchaseManager = DefaultStorePurchaseManager()
+        subscriptionManager = SubscriptionManagerMock(accountManager: accountManager,
+                                                      subscriptionEndpointService: subscriptionService,
+                                                      authEndpointService: authService,
+                                                      storePurchaseManager: storePurchaseManager,
+                                                      currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
+                                                                                                  purchasePlatform: .appStore),
+                                                      canPurchase: true)
 
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
@@ -88,6 +85,7 @@ class MockDependencyProvider: DependencyProvider {
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()
+        serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
     }
 }

@@ -48,6 +48,30 @@ Jeg har blokkert dem!
 ☝️ Du kan sjekke adresselinjen for å se hvem som prøver å spore deg når du besøker et nytt nettsted.️</string>
 		</dict>
 	</dict>
+    <key>contextual.onboarding.browsing.multiple.trackers</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1#@count@</string>
+        <key>count</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>*%2$@, %3$@* og *1 annen* prøvde å spore deg her. Jeg har blokkert dem!
+
+☝️ Trykk på skjoldet for å få mer informasjon.</string>
+            <key>other</key>
+            <string>*%2$@, %3$@* og *%d andre* prøvde å spore deg her. Jeg har blokkert dem!
+
+☝️ Trykk på skjoldet for å få mer informasjon.</string>
+            <key>zero</key>
+            <string>*%2$@ og %3$@* prøvde å spore deg her. Jeg har blokkert dem!
+
+☝️ Trykk på skjoldet for å få mer informasjon.</string>
+        </dict>
+    </dict>
 	<key>number.of.tabs</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

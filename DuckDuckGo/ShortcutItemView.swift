@@ -21,29 +21,117 @@ import DesignResourcesKit
 import SwiftUI
 
 struct ShortcutItemView: View {
-    let name: String
+    let shortcut: NewTabPageShortcut
+    let accessoryType: ShortcutAccessoryType?
 
     var body: some View {
         VStack(spacing: 6) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(designSystemColor: .surface))
-                    .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(width: NewTabPageGrid.Item.edgeSize)
-                Image("Login-32-Color")
-                    .resizable()
-                    .aspectRatio(1.0, contentMode: .fit)
-                    .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
-            }
-            Text(name)
-                .daxCaption()
+            ShortcutIconView(shortcut: shortcut)
+                .overlay(alignment: .topTrailing) {
+                    if let accessoryType {
+                        ShortcutAccessoryView(accessoryType: accessoryType)
+                            .alignedForOverlay(edgeSize: Constant.accessorySize)
+                    }
+                }
+
+            Text(shortcut.name)
+                .font(Font.system(size: 12))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .top)
+        }
+    }
+
+    private enum Constant {
+        static let accessorySize = 24.0
+    }
+}
+
+struct ShortcutIconView: View {
+    let shortcut: NewTabPageShortcut
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(designSystemColor: .surface))
+                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+                .aspectRatio(1, contentMode: .fit)
+                .frame(width: NewTabPageGrid.Item.edgeSize)
+            Image(shortcut.imageResource)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
+        }
+    }
+}
+
+private extension NewTabPageShortcut {
+    var name: String {
+        switch self {
+        case .bookmarks:
+            UserText.newTabPageShortcutBookmarks
+        case .aiChat:
+            UserText.newTabPageShortcutAIChat
+        case .passwords:
+            UserText.newTabPageShortcutPasswords
+        case .downloads:
+            UserText.newTabPageShortcutDownloads
+        case .settings:
+            UserText.newTabPageShortcutSettings
+        }
+    }
+
+    var imageResource: ImageResource {
+        switch self {
+        case .bookmarks:
+            return .bookmarksColor32
+        case .aiChat:
+            return .aiChatColor32
+        case .passwords:
+            return .passwordsAutofillColor32
+        case .downloads:
+            return .downloadsColor32
+        case .settings:
+            return .settingsColor32
+        }
+    }
+}
+
+private extension ShortcutAccessoryView {
+    @ViewBuilder func alignedForOverlay(edgeSize: CGFloat) -> some View {
+        let offset = CGSize(width: edgeSize/4.0, height: -edgeSize/4.0)
+        let size = CGSize(width: edgeSize, height: edgeSize)
+        
+        if #available(iOS 16, *) {
+            frame(width: edgeSize)
+                .offset(offset)
+        } else {
+            frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .offset(offset)
         }
     }
 }
 
 #Preview {
-    ShortcutItemView(name: "Shortcut")
+    ScrollView {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+            let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
+            
+            ForEach(accessoryTypes, id: \.?.hashValue) { type in
+                Section {
+                    ForEach(NewTabPageShortcut.allCases) { shortcut in
+                        ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                    }
+                    
+                } footer: {
+                    Spacer(minLength: 12)
+                    Divider()
+                    Spacer(minLength: 12)
+                }
+            }
+        })
+        .padding(8)
+    }
+    .background(Color(designSystemColor: .background))
 }

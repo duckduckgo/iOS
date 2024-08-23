@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import DuckPlayer
 
 class TabViewListCell: TabViewCell {
 
@@ -75,8 +76,20 @@ class TabViewListCell: TabViewCell {
             link.isHidden = !tab.viewed
         } else {
             removeButton.isHidden = false
+            
+            // Duck Player videos
+            if let url = tab.link?.url,
+                url.isDuckPlayer,
+                let (videoID, _) = url.youtubeVideoParams {
+                    link.text = URL.duckPlayer(videoID).absoluteString
+                    favicon.image = UIImage(named: "DuckPlayerURLIcon")
+                    return
+            }
+            
+            // Other URLs
             link.text = tab.link?.url.absoluteString ?? ""
             favicon.loadFavicon(forDomain: tab.link?.url.host, usingCache: .tabs)
+            
         }
     }
 

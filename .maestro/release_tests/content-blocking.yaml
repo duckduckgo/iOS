@@ -6,10 +6,8 @@ tags:
 ---
 
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:
@@ -18,10 +16,6 @@ tags:
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/"
 - pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
 
 - tapOn:
     id: "searchEntry"
@@ -47,8 +41,13 @@ tags:
 - tapOn: "Don't Send"
 
 - tapOn: "Refresh Page"
+- extendedWaitUntil: 
+    notVisible: "Nonsense text that won't exist"
+    timeout: 2000
+
 - assertVisible: "1 major tracker loaded via script src"
 
 - tapOn: 
     id: PrivacyIcon
 - assertVisible: "Protections are OFF for this site"
+

@@ -194,10 +194,10 @@
 "scan.or.see.code.footer" = "Nemůžeš skenovat?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Přejdi na jiném zařízení v prohlížeči DuckDuckGo do Nastavení › Synchronizace a zálohování a vyber možnost Synchronizace s jiným zařízením.";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Přejdi na jiném zařízení v prohlížeči DuckDuckGo do %@ a vyber možnost Synchronizace s jiným zařízením.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ruční zadání kódu";
@@ -209,7 +209,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Z mobilu na mobil?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Sdílet textový kód?";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skenování QR kódu";
@@ -254,7 +254,7 @@
 "synced.devices.section.header" = "Synchronizovaná zařízení";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Synchronizovat s jiným zařízením";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Tohle zařízení";

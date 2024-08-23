@@ -83,7 +83,7 @@ struct ProgressCircle: View {
                 .stroke(style: StrokeStyle(lineWidth: Const.Size.progressStrokeWidth, lineCap: .butt, lineJoin: .miter))
                 .foregroundColor(.progressFill)
                 .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear)
+                .animation(.linear, value: self.progress)
         }
     }
 }

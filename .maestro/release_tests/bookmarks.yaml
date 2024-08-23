@@ -6,10 +6,8 @@ tags:
 ---
 
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    file: ../shared/onboarding.yaml
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:
@@ -18,10 +16,6 @@ tags:
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.site"
 - pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
  
 # Bookmark site
 - assertVisible: "Browsing menu"

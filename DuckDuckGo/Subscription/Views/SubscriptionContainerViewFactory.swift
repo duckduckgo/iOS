@@ -20,10 +20,12 @@
 import SwiftUI
 import Subscription
 
-@available(iOS 15.0, *)
 enum SubscriptionContainerViewFactory {
 
-    static func makeSubscribeFlow(origin: String?, navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+    static func makeSubscribeFlow(origin: String?,
+                                  navigationCoordinator: SubscriptionNavigationCoordinator,
+                                  subscriptionManager: SubscriptionManager,
+                                  privacyProDataReporter: PrivacyProDataReporting?) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
@@ -45,13 +47,15 @@ enum SubscriptionContainerViewFactory {
                                                                 subscriptionAttributionOrigin: origin,
                                                                 appStorePurchaseFlow: appStorePurchaseFlow,
                                                                 appStoreRestoreFlow: appStoreRestoreFlow,
-                                                                appStoreAccountManagementFlow: appStoreAccountManagementFlow)
+                                                                appStoreAccountManagementFlow: appStoreAccountManagementFlow,
+                                                                privacyProDataReporter: privacyProDataReporter)
         )
         return SubscriptionContainerView(currentView: .subscribe, viewModel: viewModel)
             .environmentObject(navigationCoordinator)
     }
 
-    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator, subscriptionManager: SubscriptionManager) -> some View {
+    static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
+                                subscriptionManager: SubscriptionManager) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,

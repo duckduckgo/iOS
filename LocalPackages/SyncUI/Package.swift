@@ -23,7 +23,7 @@ let package = Package(
     name: "SyncUI",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -33,7 +33,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../DuckUI"),
-        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.0.0"),
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "3.2.0"),
         .package(url: "https://github.com/duckduckgo/apple-toolbox.git", exact: "3.1.2"),
     ],
     targets: [

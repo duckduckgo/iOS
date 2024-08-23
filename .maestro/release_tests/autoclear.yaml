@@ -5,14 +5,18 @@ tags:
 
 ---
 
-# Set up 
-- clearState
+# Set up  - custom setup
 - launchApp:
     appId: "com.duckduckgo.mobile.ios"
-    arguments: 
-       "autoclear-ui-test": true
+    clearState: true
+    clearKeychain: true
+    arguments:
+        isUITesting: true
+        isOnboardingCompleted: ${ONBOARDING_COMPLETED}
+        "autoclear-ui-test": true
 
-- runFlow: 
+# Get past onboarding screens
+- runFlow:
     file: ../shared/onboarding.yaml
 
 # Enable autoclear
@@ -45,10 +49,6 @@ tags:
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.site/features/local-storage.html"
 - pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
 
 # Add a cookie
 - assertVisible: "Storage Counter: undefined"

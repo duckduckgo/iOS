@@ -21,6 +21,7 @@ import UIKit
 import BrowserServicesKit
 import Core
 import Common
+import PrivacyDashboard
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -30,6 +31,7 @@ class AutofillDebugViewController: UITableViewController {
         case resetDaysSinceInstalledTo0 = 203
         case resetAutofillData = 204
         case addAutofillData = 205
+        case resetAutofillBrokenReports = 206
     }
 
     let defaults = AppUserDefaults()
@@ -39,6 +41,15 @@ class AutofillDebugViewController: UITableViewController {
             cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
         }
     }
+
+    @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
+    private var autofillSaveModalRejectionCount: Int
+
+    @UserDefaultsWrapper(key: .autofillSaveModalDisablePromptShown, defaultValue: false)
+    private var autofillSaveModalDisablePromptShown: Bool
+
+    @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
+    private var autofillFirstTimeUser: Bool
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -57,6 +68,10 @@ class AutofillDebugViewController: UITableViewController {
                         eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
                 ActionMessageView.present(message: "Autofill Data reset")
+                autofillSaveModalRejectionCount = 0
+                autofillSaveModalDisablePromptShown = false
+                autofillFirstTimeUser = true
+                _ = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.deleteAllNeverPromptWebsites()
             } else if cell.tag == Row.addAutofillData.rawValue {
                 promptForNumberOfLoginsToAdd()
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
@@ -65,6 +80,12 @@ class AutofillDebugViewController: UITableViewController {
             } else if cell.tag == Row.resetDaysSinceInstalledTo0.rawValue {
                 StatisticsUserDefaults().installDate = Date()
                 tableView.deselectRow(at: indexPath, animated: true)
+            } else if cell.tag == Row.resetAutofillBrokenReports.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let reporter = BrokenSiteReporter(pixelHandler: { _ in }, keyValueStoring: UserDefaults.standard, storageConfiguration: .autofillConfig)
+                let expiryDate = Calendar.current.date(byAdding: .day, value: 60, to: Date())!
+                _ = reporter.persistencyManager.removeExpiredItems(currentDate: expiryDate)
+                ActionMessageView.present(message: "Autofill Broken Reports reset")
             }
         }
     }

@@ -61,17 +61,6 @@ struct SettingsPrivacyProtectionsView: View {
                                  image: Image("SettingsEmailProtection"),
                                  statusIndicator: StatusIndicatorView(status: viewModel.emailProtectionStatus))
             }
-
-            // Network Protection
-#if NETWORK_PROTECTION
-            if viewModel.state.networkProtection.enabled {
-                SettingsCellView(label: UserText.netPSettingsTitle,
-                                 image: Image("SettingsNetworkProtection"),
-                                 action: { viewModel.presentLegacyView(.netP) },
-                                 disclosureIndicator: true,
-                                 isButton: true)
-            }
-#endif
         }
 
     }

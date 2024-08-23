@@ -21,41 +21,63 @@ import DesignResourcesKit
 import SwiftUI
 
 struct FavoriteItemView: View {
-    let favicon: Image?
-    let name: String
+    let favorite: Favorite
+    let faviconLoading: FavoritesFaviconLoading?
+    let onMenuAction: ((MenuAction) -> Void)?
 
     var body: some View {
         VStack(spacing: 6) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(designSystemColor: .surface))
-                    .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                    .aspectRatio(1, contentMode: .fit)
-                
-                FavoriteIconView(favicon: favicon)
-
+            FavoriteIconView(favorite: favorite, faviconLoading: faviconLoading)
+            .contextMenu {
+                // This context menu can be moved up in the hierarchy to `FavoritesView` once support for iOS 15 is removed. contextMenu with preview modifier can be used then.
+                    contextMenuItems()
             }
-            
-            Text(name)
-                .daxCaption()
+
+            Text(favorite.title)
+                .font(Font.system(size: 12))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .top)
+        }
+        .accessibilityElement()
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel("\(favorite.title). \(UserText.favorite)")
+    }
+
+    private func contextMenuItems() -> some View {
+        Section(favorite.menuTitle) {
+            Button {
+                onMenuAction?(.edit)
+            } label: {
+                Label(UserText.favoriteMenuEdit, image: "Edit")
+            }
+
+            Button {
+                onMenuAction?(.delete)
+            } label: {
+                Label(UserText.favoriteMenuRemove, image: "RemoveFavoriteMenuIcon")
+            }
         }
     }
 }
 
-private struct FavoriteIconView: View {
-    let favicon: Image?
-
-    var body: some View {
-        if let favicon {
-            favicon
-                .resizable()
-                .aspectRatio(1.0, contentMode: .fit)
-        }
+extension FavoriteItemView {
+    enum MenuAction {
+        case edit
+        case delete
     }
 }
 
 #Preview {
-    FavoriteItemView(favicon: nil, name: "Text").frame(width: 64, height: 64)
+    HStack(alignment: .top) {
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Text", domain: "facebook.com")).frame(width: 64)
+        FavoriteItemView(favorite: Favorite(id: UUID().uuidString, title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", domain: "duckduckgo.com")).frame(width: 64)
+    }
+}
+
+private extension FavoriteItemView {
+    init(favorite: Favorite) {
+        self.init(favorite: favorite, faviconLoading: nil, onMenuAction: nil)
+    }
 }

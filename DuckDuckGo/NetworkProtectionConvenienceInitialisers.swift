@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import NetworkProtection
 import UIKit
 import Common
@@ -28,13 +26,14 @@ import Subscription
 
 private class DefaultTunnelSessionProvider: TunnelSessionProvider {
     func activeSession() async -> NETunnelProviderSession? {
-        try? await ConnectionSessionUtilities.activeSession()
+        return await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession()
     }
 }
 
 extension ConnectionStatusObserverThroughSession {
     convenience init() {
         self.init(tunnelSessionProvider: DefaultTunnelSessionProvider(),
+                  platformSnoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                   platformNotificationCenter: .default,
                   platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
     }
@@ -103,5 +102,3 @@ extension NetworkProtectionVPNLocationViewModel {
         )
     }
 }
-
-#endif

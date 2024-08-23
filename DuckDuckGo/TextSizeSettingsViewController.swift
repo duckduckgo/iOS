@@ -58,21 +58,19 @@ class TextSizeSettingsViewController: UITableViewController {
     }
     
     private func adjustDetentOnPresentation() {
-        if #available(iOS 15.0, *) {
-            if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
-                sheetController.detents = [.medium(), .large()]
-                sheetController.delegate = self
-                sheetController.largestUndimmedDetentIdentifier = .medium
-                sheetController.preferredCornerRadius = 16
-                
-                sheetController.animateChanges {
-                    sheetController.selectedDetentIdentifier = .medium
-                }
-                
-                navigationItem.leftBarButtonItem = customBackBarButtonItem
-                
-                hasAdjustedDetent = true
+        if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
+            sheetController.detents = [.medium(), .large()]
+            sheetController.delegate = self
+            sheetController.largestUndimmedDetentIdentifier = .medium
+            sheetController.preferredCornerRadius = 16
+
+            sheetController.animateChanges {
+                sheetController.selectedDetentIdentifier = .medium
             }
+
+            navigationItem.leftBarButtonItem = customBackBarButtonItem
+
+            hasAdjustedDetent = true
         }
     }
     
@@ -135,28 +133,26 @@ class TextSizeSettingsViewController: UITableViewController {
     @IBAction func customBackButtonTapped(_ sender: AnyObject) {
         var shouldPopViewController: Bool = true
         
-        if #available(iOS 15.0, *) {
-            if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
-                sheetController.detents = [.large()]
-                
-                // We recreate two-step detent animation, like on push but in reverse
-                if sheetController.selectedDetentIdentifier != .large {
-                    shouldPopViewController = false
-                    
-                    // First step is to animate detent to large
-                    sheetController.animateChanges {
-                        sheetController.selectedDetentIdentifier = .large
-                    }
-                    
-                    // Second step is to actually pop the view controller
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                        self.navigationItem.leftBarButtonItem = nil
-                        self.navigationController?.popViewController(animated: true)
-                    }
+        if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
+            sheetController.detents = [.large()]
+
+            // We recreate two-step detent animation, like on push but in reverse
+            if sheetController.selectedDetentIdentifier != .large {
+                shouldPopViewController = false
+
+                // First step is to animate detent to large
+                sheetController.animateChanges {
+                    sheetController.selectedDetentIdentifier = .large
+                }
+
+                // Second step is to actually pop the view controller
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    self.navigationItem.leftBarButtonItem = nil
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }
-        
+
         if shouldPopViewController {
             navigationItem.leftBarButtonItem = nil
             navigationController?.popViewController(animated: true)
@@ -195,7 +191,6 @@ class TextSizeSettingsViewController: UITableViewController {
     }
 }
 
-@available(iOS 15.0, *)
 extension TextSizeSettingsViewController: UISheetPresentationControllerDelegate {
     
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {

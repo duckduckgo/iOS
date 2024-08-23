@@ -1,0 +1,21 @@
+# setup.yaml
+appId: com.duckduckgo.mobile.ios
+
+---
+
+# If you need more arguments, copy these two commands directly into your test
+# * See release_tests/autoclear.yaml for an example
+# isOnboardingCompleted is injected as an environment variable in the command to run the test suite. The ONBOARDING_COMPLETED variable should be set to false unless tests verifying the validity of the onboarding flow are executed.
+
+- launchApp:
+    appId: "com.duckduckgo.mobile.ios"
+    clearState: true
+    clearKeychain: true
+    arguments:
+        isUITesting: true # Renaming `isUITesting` requires to update LaunchOptionsHandler `isUITesting` key
+        isOnboardingCompleted: ${ONBOARDING_COMPLETED} # Renaming `isOnboardingCompleted` requires to update LaunchOptionsHandler `isOnboardingCompleted` key
+        currentAppVariant: ${APP_VARIANT} # Renaming `currentAppVariant` requires to update LaunchOptionsHandler `currentAppVariant` key
+
+# Get past onboarding screens
+- runFlow:
+    file: onboarding.yaml

@@ -64,16 +64,17 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-protocol DuckPlayerSettingsProtocol {
+protocol DuckPlayerSettingsProtocol: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
     var askModeOverlayHidden: Bool { get }
+    var allowFirstVideo: Bool { get set }
     
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
     func setMode(_ mode: DuckPlayerMode)
-    func setOverlayHidden(_ overlayHidden: Bool)
+    func setAskModeOverlayHidden(_ overlayHidden: Bool)
     func triggerNotification()
 }
 
@@ -125,7 +126,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    var overlayHidden: Bool {
+    var askModeOverlayHidden: Bool {
         if isFeatureEnabled {
             return appSettings.duckPlayerAskModeOverlayHidden
         } else {
@@ -133,8 +134,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
-    var askModeOverlayHidden: Bool
+    var allowFirstVideo: Bool = false
     
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher
@@ -161,7 +161,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
+    func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         if overlayHidden != appSettings.duckPlayerAskModeOverlayHidden {
             appSettings.duckPlayerAskModeOverlayHidden = overlayHidden
             triggerNotification()
@@ -177,6 +177,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        isFeatureEnabledCancellable?.cancel()
+        NotificationCenter.default.removeObserver(self, name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated, object: nil)
     }
 }

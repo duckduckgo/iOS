@@ -95,6 +95,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
     
     var mode: DuckPlayerMode = .disabled
     var askModeOverlayHidden: Bool = false
+    var allowFirstVideo: Bool = false
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}
@@ -103,13 +104,33 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
         self.mode = mode
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
+    func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         self.askModeOverlayHidden = overlayHidden
     }
     
 }
 
 final class MockDuckPlayer: DuckPlayerProtocol {
+    var hostView: UIViewController?
+    
+    func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func setHostViewController(_ vc: UIViewController) {}
+    
+    func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
     var settings: any DuckPlayerSettingsProtocol
     
     init(settings: DuckPlayerSettingsProtocol) {
@@ -131,4 +152,15 @@ final class MockDuckPlayer: DuckPlayerProtocol {
     func initialSetup(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
     }
+}
+
+final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
+    func isFeatureOn<F>(forProvider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
+        return true
+    }
+    
+}
+
+final class MockDuckPlayerStorage: DuckPlayerStorage {
+    var userInteractedWithDuckPlayer: Bool = false
 }

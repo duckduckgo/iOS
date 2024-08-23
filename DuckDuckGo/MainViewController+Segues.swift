@@ -35,11 +35,11 @@ extension MainViewController {
         var controller: (Onboarding & UIViewController)?
 
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
-            controller = OnboardingIntroViewController()
+            controller = OnboardingIntroViewController(onboardingPixelReporter: contextualOnboardingPixelReporter)
         } else {
             let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
             controller = storyboard.instantiateInitialViewController(creator: { coder in
-                DaxOnboardingViewController(coder: coder)
+                DaxOnboardingViewController(coder: coder, pixelReporting: self.contextualOnboardingPixelReporter)
             })
         }
         
@@ -246,6 +246,22 @@ extension MainViewController {
         }
     }
 
+    func segueToSubscriptionRestoreFlow() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .restoreFlow)
+        }
+    }
+
+    func segueToVPN() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .netP)
+        }
+    }
+
     func segueToDebugSettings() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -289,7 +305,8 @@ extension MainViewController {
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
-                                                  syncPausedStateManager: syncPausedStateManager)
+                                                  syncPausedStateManager: syncPausedStateManager,
+                                                  privacyProDataReporter: privacyProDataReporter)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,

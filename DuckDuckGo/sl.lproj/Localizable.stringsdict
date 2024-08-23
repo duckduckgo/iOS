@@ -58,6 +58,34 @@ Blokiral sem jih!
 ☝️ V naslovni vrstici lahko preverite kdo vam poskuša slediti, ko obiščete novo spletno mesto.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* in *še 1* so vam tukaj poskušali slediti. Blokiral sem jih!
+
+☝️ Za več informacij se dotaknite ščita.</string>
+			<key>two</key>
+			<string>*%2$@, %3$@* in *še %1$d* so vam tukaj poskušali slediti. Blokiral sem jih!
+
+☝️ Za več informacij se dotaknite ščita.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* in *še %1$d* so vam tukaj poskušali slediti. Blokiral sem jih!
+
+☝️ Za več informacij se dotaknite ščita.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* in *še %1$d* so vam tukaj poskušali slediti. Blokiral sem jih!
+
+☝️ Za več informacij se dotaknite ščita.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

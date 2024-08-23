@@ -31,6 +31,7 @@ struct HomeMessageViewModel {
     }
 
     let messageId: String
+    let sendPixels: Bool
     let modelType: RemoteMessageModelType
 
     var image: String? {
@@ -46,11 +47,6 @@ struct HomeMessageViewModel {
         case .promoSingleAction(_, _, let placeholder, _, _):
             return placeholder.rawValue
         }
-    }
-    
-    var topText: String? {
-        // actually unused!
-        return nil
     }
     
     var title: String {
@@ -124,6 +120,7 @@ struct HomeMessageViewModel {
     
     let onDidClose: (ButtonAction?) -> Void
     let onDidAppear: () -> Void
+    let onAttachAdditionalParameters: ((_ useCase: PrivacyProDataReportingUseCase, _ params: [String: String]) -> [String: String])?
 
     func mapActionToViewModel(remoteAction: RemoteAction,
                               buttonAction: HomeMessageViewModel.ButtonAction,

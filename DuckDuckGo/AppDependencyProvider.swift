@@ -47,6 +47,7 @@ protocol DependencyProvider {
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
+    var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
 }
 
@@ -88,6 +89,7 @@ class AppDependencyProvider: DependencyProvider {
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
     
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
+    let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
     init() {
@@ -109,16 +111,12 @@ class AppDependencyProvider: DependencyProvider {
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
-        if #available(iOS 15.0, *) {
-            subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                             accountManager: accountManager,
-                                                             subscriptionEndpointService: subscriptionService,
-                                                             authEndpointService: authService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
-        } else {
-            // This is used just for iOS <15, it's a sort of mocked environment that will not be used.
-            subscriptionManager = SubscriptionManageriOS14(accountManager: accountManager)
-        }
+        
+        subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+                                                         accountManager: accountManager,
+                                                         subscriptionEndpointService: subscriptionService,
+                                                         authEndpointService: authService,
+                                                         subscriptionEnvironment: subscriptionEnvironment)
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,

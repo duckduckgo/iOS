@@ -35,7 +35,7 @@ protocol OmniBarDelegate: AnyObject {
     
     func onEditingEnd() -> OmniBarEditingEndResult
 
-    func onPrivacyIconPressed()
+    func onPrivacyIconPressed(isHighlighted: Bool)
     
     func onMenuPressed()
 
@@ -82,8 +82,8 @@ extension OmniBarDelegate {
         
     }
     
-    func onPrivacyIconPressed() {
-        
+    func onPrivacyIconPressed(isHighlighted: Bool) {
+
     }
     
     func onMenuPressed() {

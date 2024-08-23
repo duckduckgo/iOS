@@ -5,15 +5,9 @@ tags:
 ---
 
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
-
+    file: ../shared/setup.yaml
+    
 # Load Site
 - assertVisible:
     id: "searchEntry"
@@ -21,14 +15,6 @@ tags:
     id: "searchEntry"
 - inputText: "https://www.search-company.site/#ad-id-2"
 - pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
-    file: ../shared/onboarding_browsing.yaml
 
 # Test Ad2
 - assertVisible:

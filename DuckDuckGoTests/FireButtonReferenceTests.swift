@@ -61,12 +61,9 @@ final class FireButtonReferenceTests: XCTestCase {
         }
                     
         let cookieStorage = CookieStorage()
-        
-        let idManager = DataStoreIdManager()
-        
+
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
-            XCTAssertFalse(idManager.hasId)
 
             let warmup = DataStoreWarmup()
             await warmup.ensureReady(applicationState: .unknown)
@@ -77,8 +74,8 @@ final class FireButtonReferenceTests: XCTestCase {
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
             
-            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager)
-            
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: NullDataStoreIdManager())
+
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 
             if test.expectCookieRemoved {
@@ -159,4 +156,12 @@ private struct Test: Codable {
     let name, cookieDomain, cookieName: String
     let expectCookieRemoved: Bool
     let exceptPlatforms: [String]
+}
+
+private struct NullDataStoreIdManager: DataStoreIdManaging {
+
+    var id: UUID? { return nil }
+    var hasId: Bool { return false }
+    func allocateNewContainerId() { }
+
 }

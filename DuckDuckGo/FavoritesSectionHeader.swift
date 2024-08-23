@@ -19,24 +19,31 @@
 
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 struct FavoritesSectionHeader: View {
+
+    let model: any FavoritesEmptyStateModel
+
     var body: some View {
         HStack(spacing: 16, content: {
             Text("Favorites")
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(alignment: .leading)
-            
+
             Spacer()
 
-            Button(action: {}, label: {
+            Button(action: {
+                model.toggleTooltip()
+            }, label: {
                 Image(.info12)
-            }).tintIfAvailable(Color(designSystemColor: .textPrimary))
+                    .foregroundStyle(Color(designSystemColor: .textPrimary))
+            })
         })
     }
 }
 
 #Preview {
-    FavoritesSectionHeader()
+    return FavoritesSectionHeader(model: FavoritesPreviewModel())
 }

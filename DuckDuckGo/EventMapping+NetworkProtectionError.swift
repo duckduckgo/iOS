@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import Foundation
 import NetworkProtection
 import Common
@@ -87,7 +85,6 @@ extension EventMapping where Event == NetworkProtectionError {
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,
                 .wireGuardSetNetworkSettings,
-                .startWireGuardBackend,
                 .failedToRetrieveAuthToken,
                 .failedToFetchServerStatus,
                 .failedToParseServerStatusResponse:
@@ -97,10 +94,14 @@ extension EventMapping where Event == NetworkProtectionError {
             // Should never be sent from from the app
         case .unhandledError(function: let function, line: let line, error: let error):
             pixelEvent = .networkProtectionUnhandledError
+        case .startWireGuardBackend(let error):
+            pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
+            pixelError = error
+        case .setWireguardConfig(let error):
+            pixelEvent = .networkProtectionWireguardErrorCannotSetWireguardConfig
+            pixelError = error
         }
 
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
     }
 }
-
-#endif

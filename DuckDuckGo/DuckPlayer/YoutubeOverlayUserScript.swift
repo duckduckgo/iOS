@@ -24,20 +24,24 @@ import UserScript
 import Combine
 import Core
 import BrowserServicesKit
+import DuckPlayer
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
     var duckPlayer: DuckPlayerProtocol
     private var cancellables = Set<AnyCancellable>()
     var statisticsStore: StatisticsStore
-    
+    private var duckPlayerStorage: DuckPlayerStorage
     struct Constants {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol, statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    init(duckPlayer: DuckPlayerProtocol,
+         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+         duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
         self.duckPlayer = duckPlayer
         self.statisticsStore = statisticsStore
+        self.duckPlayerStorage = duckPlayerStorage
         super.init()
         subscribeToDuckPlayerMode()
     }
@@ -76,12 +80,14 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let openDuckPlayer = "openDuckPlayer"
         static let sendDuckPlayerPixel = "sendDuckPlayerPixel"
         static let initialSetup = "initialSetup"
+        static let openInfo = "openInfo"
     }
 
     weak var broker: UserScriptMessageBroker?
     weak var webView: WKWebView?
     
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
+        .exact(hostname: "sosbourne.duckduckgo.com"),
         .exact(hostname: DuckPlayerSettings.OriginDomains.duckduckgo),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtube),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtubeMobile)
@@ -107,7 +113,9 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         case Handlers.sendDuckPlayerPixel:
             return handleSendJSPixel
         case Handlers.initialSetup:
-            return duckPlayer.initialSetup
+            return duckPlayer.initialSetupOverlay
+        case Handlers.openInfo:
+            return duckPlayer.openDuckPlayerInfo
         default:
             assertionFailure("YoutubeOverlayUserScript: Failed to parse User Script message: \(methodName)")
             // TODO: Send pixel here
@@ -157,18 +165,15 @@ extension YoutubeOverlayUserScript {
         
         switch pixelName {
         case "play.use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
-            
-            if let installDate = statisticsStore.installDate,
-                installDate > Date.yearAgo {
-                UniquePixel.fire(pixel: Pixel.Event.watchInDuckPlayerInitial)
-            }
-                
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay, debounce: 2)
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+                        
         case "play.do_not_use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
-                    
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere, debounce: 2)
+            duckPlayerStorage.userInteractedWithDuckPlayer = true
+
         case "overlay":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions, debounce: 2)
             
         default:
             break

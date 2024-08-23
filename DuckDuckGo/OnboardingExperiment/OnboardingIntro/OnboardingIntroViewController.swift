@@ -23,8 +23,8 @@ final class OnboardingIntroViewController: UIHostingController<OnboardingView>, 
     weak var delegate: OnboardingDelegate?
     private let viewModel: OnboardingIntroViewModel
 
-    init() {
-        viewModel = OnboardingIntroViewModel()
+    init(onboardingPixelReporter: OnboardingPixelReporting) {
+        viewModel = OnboardingIntroViewModel(pixelReporter: onboardingPixelReporter)
         let rootView = OnboardingView(model: viewModel)
         super.init(rootView: rootView)
         

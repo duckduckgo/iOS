@@ -49,10 +49,8 @@ struct HistoryDebugRootView: View {
         }
         .navigationTitle("\(model.history.count) History Items")
         .toolbar {
-            if #available(iOS 15, *) {
-                Button("Delete All", role: .destructive) {
-                    model.deleteAll()
-                }
+            Button("Delete All", role: .destructive) {
+                model.deleteAll()
             }
         }
     }

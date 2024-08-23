@@ -17,14 +17,13 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
 import NetworkProtection
 import Subscription
+import Core
 
-@available(iOS 15, *)
 struct NetworkProtectionRootView: View {
+
     let statusViewModel: NetworkProtectionStatusViewModel
 
     init() {
@@ -33,15 +32,15 @@ struct NetworkProtectionRootView: View {
         statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
                                                            settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
+                                                           serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository)
     }
+
     var body: some View {
-        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
-            NetworkProtectionStatusView(
-                statusModel: statusViewModel
-            )
-        }
+        NetworkProtectionStatusView(statusModel: statusViewModel)
+            .navigationTitle(UserText.netPNavTitle)
+            .onFirstAppear {
+                Pixel.fire(pixel: .privacyProVPNSettings)
+            }
     }
 }
-
-#endif

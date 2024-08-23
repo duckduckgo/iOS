@@ -6,15 +6,9 @@ tags:
 ---
 
 # Set up 
-- clearState
-- launchApp
 - runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
-
+    file: ../shared/setup.yaml
+   
 # Load Site
 - assertVisible:
     id: "searchEntry"
@@ -22,7 +16,4 @@ tags:
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.site"
 - pressKey: Enter
-- tapOn: 
-    optional: true 
-    text: "Got it"
 - assertVisible: ".*Privacy Test Pages.*"

@@ -21,78 +21,185 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView: View {
+struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    @ObservedObject var messagesModel: NewTabPageMessagesModel
-    @ObservedObject var favoritesModel: FavoritesModel
+    @ObservedObject private var newTabPageModel: NewTabPageModel
+    @ObservedObject private var messagesModel: NewTabPageMessagesModel
+    @ObservedObject private var favoritesModel: FavoritesModelType
+    @ObservedObject private var shortcutsModel: ShortcutsModel
+    @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
+    @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
-    init(messagesModel: NewTabPageMessagesModel, favoritesModel: FavoritesModel) {
+    init(newTabPageModel: NewTabPageModel,
+         messagesModel: NewTabPageMessagesModel,
+         favoritesModel: FavoritesModelType,
+         shortcutsModel: ShortcutsModel,
+         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
+         sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
+        self.newTabPageModel = newTabPageModel
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
+        self.shortcutsModel = shortcutsModel
+        self.shortcutsSettingsModel = shortcutsSettingsModel
+        self.sectionsSettingsModel = sectionsSettingsModel
 
         self.messagesModel.load()
     }
 
-    var body: some View {
-        ScrollView {
-            VStack {
-                // MARK: Messages
-                ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
-                    HomeMessageView(viewModel: messageModel)
-                        .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
-                        .padding(16)
+    private var messagesSectionView: some View {
+        ForEach(messagesModel.homeMessageViewModels, id: \.messageId) { messageModel in
+            HomeMessageView(viewModel: messageModel)
+                .frame(maxWidth: horizontalSizeClass == .regular ? Constant.messageMaximumWidthPad : Constant.messageMaximumWidth)
+                .padding(16)
+        }
+    }
+
+    private var favoritesSectionView: some View {
+        Group {
+            if favoritesModel.isEmpty {
+                FavoritesEmptyStateView(model: favoritesModel)
+            } else {
+                FavoritesView(model: favoritesModel)
+            }
+        }
+        .sectionPadding()
+    }
+
+    @ViewBuilder
+    private var shortcutsSectionView: some View {
+        if isShortcutsSectionVisible {
+            ShortcutsView(model: shortcutsModel, shortcuts: shortcutsSettingsModel.enabledItems)
+                .sectionPadding()
+        }
+    }
+
+    private var customizeButtonView: some View {
+        HStack {
+            Spacer()
+
+            Button(action: {
+                newTabPageModel.customizeNewTabPage()
+            }, label: {
+                NewTabPageCustomizeButtonView()
+                // Needed to reduce default button margins
+                    .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
+            }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                .padding(.top, 40)
+        }.sectionPadding()
+    }
+
+    @ViewBuilder
+    private var introMessageView: some View {
+        if newTabPageModel.isIntroMessageVisible {
+            NewTabPageIntroMessageView(onClose: {
+                withAnimation {
+                    newTabPageModel.dismissIntroMessage()
                 }
+            })
+            .sectionPadding()
+            .onFirstAppear {
+                newTabPageModel.introMessageDisplayed()
+            }
+        }
+    }
 
-                // MARK: Favorites
-                if favoritesModel.isEmpty {
-                    FavoritesEmptyStateView()
-                        .padding(Constant.sectionPadding)
-                } else {
-                    FavoritesView(model: favoritesModel)
-                        .padding(Constant.sectionPadding)
+    private var isAnySectionEnabled: Bool {
+        !sectionsSettingsModel.enabledItems.isEmpty
+    }
+
+    private var isShortcutsSectionVisible: Bool {
+        !shortcutsSettingsModel.enabledItems.isEmpty
+    }
+
+    private var mainView: some View {
+        GeometryReader { proxy in
+            ScrollView {
+                VStack {
+                    introMessageView
+
+                    messagesSectionView
+
+                    if isAnySectionEnabled {
+                        ForEach(sectionsSettingsModel.enabledItems, id: \.rawValue) { section in
+                            switch section {
+                            case .favorites:
+                                favoritesSectionView
+                            case .shortcuts:
+                                shortcutsSectionView
+                            }
+                        }
+                    } else {
+                        // MARK: Dax Logo
+                        Spacer()
+                        NewTabPageDaxLogoView()
+                    }
+
+                    Spacer()
+
+                    // MARK: Customize button
+                    customizeButtonView
                 }
-
-                // MARK: Shortcuts
-                ShortcutsView()
-                    .padding(Constant.sectionPadding)
-
-                // MARK: Customize
-                Button(action: {
-                    // Temporary action for testing purposes
-                    favoritesModel.toggleFavoritesPresence()
-                }, label: {
-                    NewTabPageCustomizeButtonView()
-                }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-                    .padding(EdgeInsets(top: 88, leading: 0, bottom: 16, trailing: 0))
+                .frame(minHeight: proxy.frame(in: .local).size.height)
             }
         }
         .background(Color(designSystemColor: .background))
+        .if(favoritesModel.isShowingTooltip) {
+            $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
+                favoritesModel.toggleTooltip()
+            })
+        }
+        .sheet(isPresented: $newTabPageModel.isShowingSettings, onDismiss: {
+            shortcutsSettingsModel.save()
+            sectionsSettingsModel.save()
+        }, content: {
+            NavigationView {
+                NewTabPageSettingsView(shortcutsSettingsModel: shortcutsSettingsModel,
+                                       sectionsSettingsModel: sectionsSettingsModel)
+            }
+        })
     }
 
-    private struct Constant {
-        static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
-
-        static let messageMaximumWidth: CGFloat = 380
-        static let messageMaximumWidthPad: CGFloat = 455
+    var body: some View {
+        if !newTabPageModel.isOnboarding {
+            mainView
+        }
     }
+}
+
+private extension View {
+        func sectionPadding() -> some View {
+            self.padding(Constant.sectionPadding)
+        }
+    }
+
+private struct Constant {
+    static let sectionPadding = EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+
+    static let messageMaximumWidth: CGFloat = 380
+    static let messageMaximumWidthPad: CGFloat = 455
 }
 
 // MARK: - Preview
 
 #Preview("Regular") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesModel()
+        favoritesModel: FavoritesPreviewModel(),
+        shortcutsModel: ShortcutsModel(),
+        shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
     )
 }
 
 #Preview("With message") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: [
@@ -101,13 +208,17 @@ struct NewTabPageView: View {
                             id: "0",
                             content: .small(titleText: "Title", descriptionText: "Description"),
                             matchingRules: [],
-                            exclusionRules: []
+                            exclusionRules: [],
+                            isMetricsEnabled: false
                         )
                     )
                 ]
             )
         ),
-        favoritesModel: FavoritesModel()
+        favoritesModel: FavoritesPreviewModel(),
+        shortcutsModel: ShortcutsModel(),
+        shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
     )
 }
 

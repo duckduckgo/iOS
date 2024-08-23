@@ -3,14 +3,10 @@ tags:
     - adClick
 
 ---
-- clearState
-- launchApp
-- runFlow: 
-    when: 
-      visible: 
-        text: "Let’s Do It!"
-        index: 0
-    file: ../shared/onboarding.yaml
+
+# Set up 
+- runFlow:
+    file: ../shared/setup.yaml
 
 # Load Site
 - assertVisible:
@@ -19,14 +15,6 @@ tags:
     id: "searchEntry"
 - inputText: "https://www.search-company.site/#ad-id-8"
 - pressKey: Enter
-
-# Manage onboarding
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
-    file: ../shared/onboarding_browsing.yaml
 
 - assertVisible: 
     text: "[Ad 8] Shopping Tab Ad (SERP-provided)"

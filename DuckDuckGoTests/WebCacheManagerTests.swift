@@ -22,13 +22,15 @@ import XCTest
 import WebKit
 
 class WebCacheManagerTests: XCTestCase {
-    
-    let dataStoreIdManager = DataStoreIdManager()
+
+    var userDefaults = UserDefaults(suiteName: "test")!
 
     override func setUp() {
         super.setUp()
         CookieStorage().cookies = []
         CookieStorage().isConsumed = true
+        userDefaults.removeSuite(named: "test")
+
         UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.webContainerId.rawValue)
         if #available(iOS 17, *) {
             WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
@@ -37,6 +39,29 @@ class WebCacheManagerTests: XCTestCase {
                 }
             }
         }
+    }
+
+    @available(iOS 17, *)
+    @MainActor
+    func testEnsureIdAllocatedAfterClearing() async throws {
+        let logins = MockPreservedLogins(domains: [])
+        let storage = CookieStorage()
+
+        let inMemoryDataStoreIdManager = DataStoreIdManager()
+        XCTAssertFalse(inMemoryDataStoreIdManager.hasId)
+        XCTAssertNil(inMemoryDataStoreIdManager.id)
+
+        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+
+        XCTAssertTrue(inMemoryDataStoreIdManager.hasId)
+        let oldId = inMemoryDataStoreIdManager.id?.uuidString
+        XCTAssertNotNil(oldId)
+
+        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+
+        XCTAssertTrue(inMemoryDataStoreIdManager.hasId)
+        XCTAssertNotNil(inMemoryDataStoreIdManager.id?.uuidString)
+        XCTAssertNotEqual(inMemoryDataStoreIdManager.id?.uuidString, oldId)
     }
 
     @available(iOS 17, *)
@@ -62,7 +87,7 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(5, loadedCount)
 
         let cookieStore = CookieStorage()
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: dataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager.shared)
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
@@ -83,10 +108,12 @@ class WebCacheManagerTests: XCTestCase {
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
         await defaultStore.httpCookieStore.setCookie(.make(domain: "www.example.com"))
         await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
-
-        await WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.current())
         let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 0)
+        XCTAssertEqual(cookies.count, 2)
+
+        await WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.default())
+        let cleanCookies = await defaultStore.httpCookieStore.allCookies()
+        XCTAssertEqual(cleanCookies.count, 0)
     }
 
     @MainActor
@@ -109,7 +136,7 @@ class WebCacheManagerTests: XCTestCase {
         
         await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
                                            logins: logins,
-                                           dataStoreIdManager: dataStoreIdManager)
+                                           dataStoreIdManager: DataStoreIdManager.shared)
         let cookies = await defaultStore.httpCookieStore.allCookies()
 
         XCTAssertEqual(cookies.count, 0)
@@ -131,9 +158,7 @@ class WebCacheManagerTests: XCTestCase {
         let logins = MockPreservedLogins(domains: [
             "www.example.com"
         ])
-        
-        XCTAssertFalse(dataStoreIdManager.hasId)
-        
+
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "subdomain.duckduckgo.com"))
@@ -141,8 +166,8 @@ class WebCacheManagerTests: XCTestCase {
         let storage = CookieStorage()
         storage.isConsumed = true
         
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: dataStoreIdManager)
-        
+        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: DataStoreIdManager.shared)
+
         XCTAssertEqual(storage.cookies.count, 2)
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
@@ -168,7 +193,7 @@ class WebCacheManagerTests: XCTestCase {
 
         let cookieStore = CookieStorage()
         
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: dataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager.shared)
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
@@ -199,4 +224,17 @@ class WebCacheManagerTests: XCTestCase {
         
     }
     
+}
+
+class InMemoryDataStoreIdManager: DataStoreIdManaging {
+
+    var id: UUID?
+    
+    var hasId: Bool {
+        id != nil
+    }
+
+    func allocateNewContainerId() {
+        id = UUID()
+    }
 }

@@ -33,11 +33,21 @@ struct HomeMessageViewModelBuilder {
     }
 
     static func build(for remoteMessage: RemoteMessageModel,
+                      with privacyProDataReporter: PrivacyProDataReporting?,
                       onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void,
                       onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
-        return HomeMessageViewModel(messageId: remoteMessage.id, modelType: content, onDidClose: onDidClose, onDidAppear: onDidAppear)
+        return HomeMessageViewModel(
+            messageId: remoteMessage.id,
+            sendPixels: remoteMessage.isMetricsEnabled,
+            modelType: content,
+            onDidClose: onDidClose,
+            onDidAppear: onDidAppear,
+            onAttachAdditionalParameters: { useCase, params in
+                privacyProDataReporter?.mergeRandomizedParameters(for: useCase, with: params) ?? params
+            }
+        )
     }
 
 }

@@ -19,26 +19,36 @@
 
 import Foundation
 
-struct Favorite: Identifiable, Equatable {
-    let id: Int
+protocol FavoritesModel: AnyObject, ObservableObject {
+    var allFavorites: [Favorite] { get }
+    var faviconLoader: FavoritesFaviconLoading? { get }
+
+    var isEmpty: Bool { get }
+    var isCollapsed: Bool { get }
+
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
+
+    func faviconMissing()
+
+    // MARK: - Interactions
+
+    func toggleCollapse()
+
+    func favoriteSelected(_ favorite: Favorite)
+    func editFavorite(_ favorite: Favorite)
+    func deleteFavorite(_ favorite: Favorite)
+    func moveFavorites(from indexSet: IndexSet, to index: Int)
 }
 
-final class FavoritesModel: ObservableObject {
+protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
 
-    @Published private(set) var allFavorites: [Favorite]
-    var isEmpty: Bool {
-        allFavorites.isEmpty
-    }
+    var isShowingTooltip: Bool { get }
 
-    init() {
-        self.allFavorites = []
-    }
+    func placeholderTapped()
+    func toggleTooltip()
+}
 
-    func toggleFavoritesPresence() {
-        if isEmpty {
-            allFavorites = (1...50).map { Favorite(id: $0) }
-        } else {
-            allFavorites = []
-        }
-    }
+struct FavoritesSlice {
+    let items: [Favorite]
+    let isCollapsible: Bool
 }

@@ -66,7 +66,6 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
-
         // Special pages - Such as Duck Player
         specialPages = SpecialPagesUserScript()
         if let specialPages {

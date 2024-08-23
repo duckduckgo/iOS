@@ -896,16 +896,12 @@ class TabViewController: UIViewController {
         } else {
             privacyInfo = nil
         }
-
         onPrivacyInfoChanged()
     }
     
     public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
-
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
-
-
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host))
@@ -1110,7 +1106,6 @@ extension TabViewController: LoginFormDetectionDelegate {
     }
     
 }
-
 
 // MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
@@ -1722,6 +1717,7 @@ extension TabViewController: WKNavigationDelegate {
                 return
             }
             completion(.cancel)
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)

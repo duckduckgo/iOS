@@ -26,6 +26,7 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 import WidgetKit
+import WireGuard
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -374,6 +375,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
+                   wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
@@ -443,4 +445,36 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             return .failure(error)
         }
     }
+}
+
+final class DefaultWireGuardInterface: WireGuardInterface {
+    func turnOn(settings: UnsafePointer<CChar>, handle: Int32) -> Int32 {
+        wgTurnOn(settings, handle)
+    }
+    
+    func turnOff(handle: Int32) {
+        wgTurnOff(handle)
+    }
+    
+    func getConfig(handle: Int32) -> UnsafeMutablePointer<CChar>? {
+        return wgGetConfig(handle)
+    }
+    
+    func setConfig(handle: Int32, config: String) -> Int64 {
+        return wgSetConfig(handle, config)
+    }
+    
+    func bumpSockets(handle: Int32) {
+        wgBumpSockets(handle)
+    }
+    
+    func disableSomeRoamingForBrokenMobileSemantics(handle: Int32) {
+        wgDisableSomeRoamingForBrokenMobileSemantics(handle)
+    }
+    
+    func setLogger(context: UnsafeMutableRawPointer?, logFunction: ((UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
+        // Temporarily unimplemented
+    }
+    
+
 }

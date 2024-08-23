@@ -23,7 +23,6 @@ import os.log
 public extension Logger {
     static var adAttribution = { Logger(subsystem: "AD Attribution", category: "") }()
     static var lifecycle = { Logger(subsystem: "Lifecycle", category: "") }()
-    static var autoconsent = { Logger(subsystem: "Autoconsent", category: "") }()
     static var configuration = { Logger(subsystem: "Configuration", category: "") }()
     static var duckPlayer = { Logger(subsystem: "DuckPlayer", category: "") }()
 }

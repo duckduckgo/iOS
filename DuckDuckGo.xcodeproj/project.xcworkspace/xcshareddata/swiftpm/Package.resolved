@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/os_log_to_logger_2",
-        "revision" : "0d2493e8cf1593213f655befdd07818719238ebf"
+        "revision" : "befd442fbd4c5041074fef43689757453d18f2bb"
       }
     },
     {

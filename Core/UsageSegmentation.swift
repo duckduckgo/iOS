@@ -22,7 +22,7 @@ import Foundation
 enum UsageActivityType: String {
 
     case search
-    case app
+    case appUse = "app_use"
 
 }
 
@@ -45,7 +45,7 @@ class UsageSegmentation: UsageSegmenting {
 
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
 
-        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else {
+        guard !storage.atbs.reversed().contains(where: { $0.droppingVariant == atb.droppingVariant }) else {
             return
         }
 
@@ -53,11 +53,22 @@ class UsageSegmentation: UsageSegmenting {
             storage.atbs.append(installAtb)
         }
 
-        if installAtb != atb {
+        if installAtb.droppingVariant != atb.droppingVariant {
             storage.atbs.append(atb)
         }
 
-        pixelFiring.fireDaily(.usageSegments)
+        // TODO write a stateful calculator
+        //  * should return no parameters unless a pixel should be fired
+
+        pixelFiring.fireDaily(.usageSegments) // , withAdditionalParameters: pixelInfo)
+    }
+
+}
+
+extension Atb {
+
+    var droppingVariant: String? {
+        String(version.prefix("v111-1".count))
     }
 
 }

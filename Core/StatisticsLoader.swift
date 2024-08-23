@@ -120,7 +120,7 @@ public class StatisticsLoader {
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
             requestInstallStatistics {
-                self.updateUsageSegmentationAfterInstall(activityType: .app)
+                self.updateUsageSegmentationAfterInstall(activityType: .appUse)
                 completion()
             }
             return
@@ -138,7 +138,7 @@ public class StatisticsLoader {
             if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.appRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
-                self.updateUsageSegmentationWithAtb(atb, activityType: .app)
+                self.updateUsageSegmentationWithAtb(atb, activityType: .appUse)
             }
             completion()
         }

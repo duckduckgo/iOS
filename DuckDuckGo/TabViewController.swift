@@ -1470,7 +1470,8 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func loadSpecialErrorPageIfNeeded(error: NSError) {
-        guard error.code == NSURLErrorServerCertificateUntrusted,
+        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
+              error.code == NSURLErrorServerCertificateUntrusted,
               let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int,
               let failedURL = error.failedUrl else {
             return

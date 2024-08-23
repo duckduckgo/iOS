@@ -73,18 +73,10 @@ final class UserScripts: UserScriptsProvider {
         if let specialPages {
             userScripts.append(specialPages)
         }
-//
-        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: localeStrings)
+        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: SpecialErrorPageUserScript.localeStrings, 
+                                                                languageCode: Locale.current.languageCode ?? "en")
         specialErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
-
     }
-
-    lazy var localeStrings: String? = {
-        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "special-error", ofType: "json", inDirectory: "pages/special-error/locales/pl") {
-            return try? String(contentsOfFile: localizedFile)
-        }
-        return nil
-    }()
 
     lazy var userScripts: [UserScript] = [
         debugScript,

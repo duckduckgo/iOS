@@ -777,6 +777,7 @@
 		CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */; };
 		CB48D3332B90CE9F00631D8B /* UserBehaviorMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3312B90CE9F00631D8B /* UserBehaviorMonitor.swift */; };
 		CB48D3372B90DF2000631D8B /* UserBehaviorMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */; };
+		CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
 		CB5516D2286500290079B175 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
@@ -2447,6 +2448,7 @@
 		CB4448752AF6D51D001F93F7 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB48D3312B90CE9F00631D8B /* UserBehaviorMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBehaviorMonitor.swift; sourceTree = "<group>"; };
 		CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBehaviorMonitorTests.swift; sourceTree = "<group>"; };
+		CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageUserScript.swift; sourceTree = "<group>"; };
 		CB5038622AF6D563007FD69F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB55FA9E2C46A5C20049D7C8 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		CB6ABD002AF6D52B004A8224 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5153,6 +5155,7 @@
 				F13B4BBF1F180D8A00814661 /* TabsModel.swift */,
 				988AC354257E47C100793C64 /* RequeryLogic.swift */,
 				B652DEFC287BE67400C12A9C /* UserScripts.swift */,
+				CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -6857,6 +6860,7 @@
 				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
 				1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
+				CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */,
 				EE0153ED2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift in Sources */,
 				EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,

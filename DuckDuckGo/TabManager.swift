@@ -39,6 +39,7 @@ class TabManager {
     private var privacyProDataReporter: PrivacyProDataReporting
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
+    private let onboardingPixelReporter: OnboardingPixelReporting
 
     weak var delegate: TabDelegate?
 
@@ -54,7 +55,8 @@ class TabManager {
          duckPlayer: DuckPlayer = DuckPlayer(),
          privacyProDataReporter: PrivacyProDataReporting,
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
-         contextualOnboardingLogic: ContextualOnboardingLogic) {
+         contextualOnboardingLogic: ContextualOnboardingLogic,
+         onboardingPixelReporter: OnboardingPixelReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -64,6 +66,7 @@ class TabManager {
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.onboardingPixelReporter = onboardingPixelReporter
         registerForNotifications()
     }
 
@@ -83,7 +86,8 @@ class TabManager {
                                                               duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic)
+                                                              contextualOnboardingLogic: contextualOnboardingLogic,
+                                                              onboardingPixelReporter: onboardingPixelReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -159,7 +163,8 @@ class TabManager {
                                                               duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic)
+                                                              contextualOnboardingLogic: contextualOnboardingLogic,
+                                                              onboardingPixelReporter: onboardingPixelReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

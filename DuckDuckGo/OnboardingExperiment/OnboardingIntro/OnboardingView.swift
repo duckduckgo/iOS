@@ -191,11 +191,11 @@ private enum Metrics {
 // MARK: - Preview
 
 #Preview("Onboarding - Light") {
-    OnboardingView(model: .init())
+    OnboardingView(model: .init(pixelReporter: OnboardingPixelReporter()))
         .preferredColorScheme(.light)
 }
 
 #Preview("Onboarding - Dark") {
-    OnboardingView(model: .init())
+    OnboardingView(model: .init(pixelReporter: OnboardingPixelReporter()))
         .preferredColorScheme(.dark)
 }

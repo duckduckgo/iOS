@@ -100,6 +100,7 @@ import WebKit
     private var didCrashDuringCrashHandlersSetUp: Bool
 
     private let launchOptionsHandler = LaunchOptionsHandler()
+    private let onboardingPixelReporter = OnboardingPixelReporter()
 
     override init() {
         super.init()
@@ -322,6 +323,8 @@ import WebKit
 
             presentInsufficientDiskSpaceAlert()
         } else {
+            let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
+            let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
             let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                           bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                           historyManager: historyManager,
@@ -334,9 +337,9 @@ import WebKit
                                           syncPausedStateManager: syncErrorHandler,
                                           privacyProDataReporter: privacyProDataReporter,
                                           variantManager: variantManager,
-                                          contextualOnboardingPresenter: ContextualOnboardingPresenter(variantManager: variantManager),
+                                          contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: OnboardingPixelReporter())
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -500,6 +503,7 @@ import WebKit
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
             self.reportAdAttribution()
+            self.onboardingPixelReporter.fireEnqueuedPixelsIfNeeded()
         }
         
         if appIsLaunching {

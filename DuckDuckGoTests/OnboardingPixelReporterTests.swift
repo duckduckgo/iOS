@@ -30,6 +30,7 @@ final class OnboardingPixelReporterTests: XCTestCase {
 
     override func setUpWithError() throws {
         statisticsStoreMock = MockStatisticsStore()
+        statisticsStoreMock.atb = "TESTATB"
         now = Date()
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 0))
@@ -285,5 +286,71 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
         XCTAssertEqual(expectedPixel.name, expectedPixel.name)
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    // Enqueuing / Dequeuing Pixels
+
+    func testWhenPixelIsFiredAndAndATBIsNotAvailableAndPixelNeedsATBThenEnqueuePixel() throws {
+        // GIVEN
+        statisticsStoreMock.atb = nil
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+        XCTAssertTrue(sut.enqueuedPixels.isEmpty)
+
+        // WHEN
+        sut.trackOnboardingIntroImpression()
+
+        // THEN
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+        XCTAssertEqual(sut.enqueuedPixels.count, 1)
+        let enqueuedPixel = try XCTUnwrap(sut.enqueuedPixels.first)
+        XCTAssertEqual(enqueuedPixel.event, .onboardingIntroShownUnique)
+        XCTAssertTrue(enqueuedPixel.unique)
+        XCTAssertTrue(enqueuedPixel.additionalParameters.isEmpty)
+        XCTAssertEqual(enqueuedPixel.includedParameters, [.appVersion, .atb])
+
+    }
+
+    func testWhenPixelIsFiredAndAndATBIsNotAvailableAndPixelDoesNotNeedATBThenFirePixel() {
+        // GIVEN
+        statisticsStoreMock.atb = nil
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+        XCTAssertTrue(sut.enqueuedPixels.isEmpty)
+
+        // WHEN
+        sut.trackPrivacyDashboardOpenedForFirstTime()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, .privacyDashboardFirstTimeOpenedUnique)
+        XCTAssertNotNil(OnboardingUniquePixelFireMock.capturedParams)
+        XCTAssertNotNil(OnboardingUniquePixelFireMock.capturedIncludeParameters)
+        XCTAssertTrue(sut.enqueuedPixels.isEmpty)
+    }
+
+    func testWhenFireEnqueuedPixelIsCalledThenFireEnqueuedPixels() {
+        // GIVEN
+        statisticsStoreMock.atb = nil
+        sut.trackOnboardingIntroImpression()
+        sut.trackBrowserComparisonImpression()
+        XCTAssertEqual(sut.enqueuedPixels.count, 2)
+        XCTAssertTrue(OnboardingUniquePixelFireMock.capturedPixelEventHistory.isEmpty)
+
+        // WHEN
+        sut.fireEnqueuedPixelsIfNeeded()
+
+        // THEN
+        XCTAssertEqual(sut.enqueuedPixels.count, 0)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEventHistory.count, 2)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEventHistory[0], .onboardingIntroShownUnique)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEventHistory[1], .onboardingIntroComparisonChartShownUnique)
     }
 }

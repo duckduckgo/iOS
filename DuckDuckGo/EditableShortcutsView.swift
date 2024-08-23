@@ -23,9 +23,10 @@ import UniformTypeIdentifiers
 struct EditableShortcutsView: View {
 
     @ObservedObject private(set) var model: NewTabPageShortcutsSettingsModel
+    let geometry: GeometryProxy?
 
     var body: some View {
-        NewTabPageGridView { _ in
+        NewTabPageGridView(geometry: geometry) { _ in
             ReorderableForEach(model.itemsSettings, id: \.item.id, isReorderingEnabled: true) { setting in
                 let isEnabled = model.enabledItems.contains(setting.item)
                 Button {
@@ -69,7 +70,7 @@ extension NewTabPageSettingsModel.NTPSetting<NewTabPageShortcut>: Reorderable, H
 
 #Preview {
     ScrollView {
-        EditableShortcutsView(model: NewTabPageShortcutsSettingsModel())
+        EditableShortcutsView(model: NewTabPageShortcutsSettingsModel(), geometry: nil)
     }
     .background(Color(designSystemColor: .background))
 }

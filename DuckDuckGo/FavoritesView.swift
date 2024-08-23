@@ -26,6 +26,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     @ObservedObject var model: Model
+    let geometry: GeometryProxy?
 
     private let selectionFeedback = UISelectionFeedbackGenerator()
 
@@ -35,7 +36,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
             let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
             let result = model.prefixedFavorites(for: columns)
 
-            NewTabPageGridView { _ in
+            NewTabPageGridView(geometry: geometry) { _ in
                 ReorderableForEach(result.items) { item in
                     Button(action: {
                         model.favoriteSelected(item)
@@ -59,6 +60,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                     FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                         .previewShape()
+                        .transition(.opacity)
                 } onMove: { from, to in
                     withAnimation {
                         model.moveFavorites(from: from, to: to)
@@ -102,5 +104,5 @@ extension Favorite: Reorderable {
 }
 
 #Preview {
-    FavoritesView(model: FavoritesPreviewModel())
+    FavoritesView(model: FavoritesPreviewModel(), geometry: nil)
 }

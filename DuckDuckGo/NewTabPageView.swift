@@ -55,25 +55,27 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
                 .frame(maxWidth: horizontalSizeClass == .regular ? Metrics.messageMaximumWidthPad : Metrics.messageMaximumWidth)
                 .padding(.horizontal, Metrics.regularPadding)
                 .padding(.bottom, Metrics.regularPadding)
+                .transition(.scale.combined(with: .opacity))
         }
     }
 
-    private var favoritesSectionView: some View {
+    private func favoritesSectionView(proxy: GeometryProxy) -> some View {
         Group {
             if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(model: favoritesModel)
+                FavoritesEmptyStateView(model: favoritesModel, geometry: proxy)
             } else {
-                FavoritesView(model: favoritesModel)
+                FavoritesView(model: favoritesModel, geometry: proxy)
             }
         }
         .sectionPadding()
     }
 
     @ViewBuilder
-    private var shortcutsSectionView: some View {
+    private func shortcutsSectionView(proxy: GeometryProxy) -> some View {
         if isShortcutsSectionVisible {
-            ShortcutsView(model: shortcutsModel, shortcuts: shortcutsSettingsModel.enabledItems)
+            ShortcutsView(model: shortcutsModel, shortcuts: shortcutsSettingsModel.enabledItems, proxy: proxy)
                 .sectionPadding()
+                .transition(.scale.combined(with: .opacity))
         }
     }
 
@@ -138,9 +140,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
                     ForEach(sectionsSettingsModel.enabledItems, id: \.rawValue) { section in
                         switch section {
                         case .favorites:
-                            favoritesSectionView
+                            favoritesSectionView(proxy: proxy)
                         case .shortcuts:
-                            shortcutsSectionView
+                            shortcutsSectionView(proxy: proxy)
                         }
                     }
 
@@ -149,8 +151,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
 
                     if customizeButtonShowedInline {
                         customizeButtonView
-                            .transition(.move(edge: .bottom))
-                            .animation(.easeInOut, value: customizeButtonShowedInline)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
                 .padding(.top, Metrics.regularPadding)
@@ -170,8 +171,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
                 if !customizeButtonShowedInline {
                     customizeButtonView
                         .frame(maxWidth: .infinity)
-                        .transition(.move(edge: .bottom))
-                        .animation(.easeInOut, value: customizeButtonShowedInline)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
         }

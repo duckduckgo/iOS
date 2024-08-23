@@ -23,32 +23,25 @@ struct NewTabPageGridView<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
-    @State private var gridWidth: CGFloat = .zero
+    let geometry: GeometryProxy?
+    @State var width: CGFloat = .zero
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
 
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
 
-        LazyVGrid(columns: flexibleColumns(columnsCount, width: gridWidth), spacing: 24, content: {
+        LazyVGrid(columns: flexibleColumns(columnsCount, width: width), spacing: 24, content: {
             content(columnsCount)
         })
         .frame(maxWidth: .infinity)
-        .background {
-            // Observing frame directly on grid didn't work for some reason, resulting in `.zero` frame.
-            Color.clear
-                .onFrameUpdate(in: .local, using: FramePreferenceKey.self) { rect in
-                    // Width needs to be reset, otherwise grid will grow forever with each size change (like rotation)
-                    let newGridWidth = rect.width
-                    guard newGridWidth != gridWidth else { return }
+        .anchorPreference(key: FramePreferenceKey.self, value: .bounds, transform: { anchor in
+            guard let geometry else { return FramePreferenceKey.defaultValue }
 
-                    if newGridWidth > gridWidth {
-                        gridWidth = 0
-                        Task { @MainActor in
-                            gridWidth = rect.width
-                        }
-                    }
-                }
-        }
+            return geometry[anchor].width
+        })
+        .onPreferenceChange(FramePreferenceKey.self, perform: { value in
+            width = value
+        })
     }
 
     private func flexibleColumns(_ count: Int, width: CGFloat) -> [GridItem] {
@@ -62,7 +55,7 @@ struct NewTabPageGridView<Content: View>: View {
             spacing = nil
         }
 
-        return Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize),
+        return Array(repeating: GridItem(.flexible(),
                                          spacing: spacing,
                                          alignment: .top),
                      count: count)
@@ -70,7 +63,7 @@ struct NewTabPageGridView<Content: View>: View {
 }
 
 private struct FramePreferenceKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
+    static var defaultValue: CGFloat = .zero
     static func reduce(value: inout Value, nextValue: () -> Value) {
         value = nextValue()
     }

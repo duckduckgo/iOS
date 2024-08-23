@@ -25,15 +25,14 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
 
     @ObservedObject var model: Model
 
-    @State private var headerPadding: CGFloat = 10
+    let geometry: GeometryProxy?
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
                 FavoritesSectionHeader(model: model)
-                    .padding(.horizontal, headerPadding)
 
-                NewTabPageGridView { placeholdersCount in
+                NewTabPageGridView(geometry: geometry) { placeholdersCount in
                     let placeholders = Array(0..<placeholdersCount)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
@@ -56,5 +55,5 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
 }
 
 #Preview {
-    return FavoritesEmptyStateView(model: FavoritesPreviewModel())
+    return FavoritesEmptyStateView(model: FavoritesPreviewModel(), geometry: nil)
 }

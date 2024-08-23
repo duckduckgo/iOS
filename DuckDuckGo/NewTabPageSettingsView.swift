@@ -56,7 +56,7 @@ struct NewTabPageSettingsView: View {
                             .withoutScroll()
                             .frame(height: listHeight)
 
-                        EditableShortcutsView(model: shortcutsSettingsModel)
+                        EditableShortcutsView(model: shortcutsSettingsModel, geometry: geometry)
                             .padding(.horizontal, Metrics.horizontalPadding)
                     }
                 }

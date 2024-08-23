@@ -72,7 +72,7 @@ final class UserScripts: UserScriptsProvider {
         if let specialPages {
             userScripts.append(specialPages)
         }
-        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: SpecialErrorPageUserScript.localeStrings, 
+        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: SpecialErrorPageUserScript.localeStrings,
                                                                 languageCode: Locale.current.languageCode ?? "en")
         specialErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
     }

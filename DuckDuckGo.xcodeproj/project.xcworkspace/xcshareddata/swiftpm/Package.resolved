@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/ssl-errors",
-        "revision" : "4b05052ae5163fa7e9f4618a27e335e1a9ba0635"
+        "revision" : "484b8e4d32a8da07ae6a5fac30456ff1e8d15143"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "2b81745565db09eee8c1cd44d38eefa1011a9f0a",
-        "version" : "12.0.1"
+        "revision" : "1f12b78d9bac4a1d9b6bad18dc2ef0593bed34a3",
+        "version" : "13.0.0"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/GRDB.swift.git",
       "state" : {
-        "revision" : "9f049d7b97b1e68ffd86744b500660d34a9e79b8",
-        "version" : "2.3.0"
+        "revision" : "4225b85c9a0c50544e413a1ea1e502c802b44b35",
+        "version" : "2.4.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "348594efe2cd40ef156e915c272d02ec22f1903f",
-        "version" : "4.2.0"
+        "revision" : "36dc07cba4bc1e7e0c1d1fb679c3cd077694a072",
+        "version" : "5.0.0"
       }
     },
     {

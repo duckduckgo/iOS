@@ -1546,7 +1546,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func loadSpecialErrorPageIfNeeded(error: NSError) {
-        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
+        guard true,//featureFlagger.isFeatureOn(.sslCertificatesBypass),
               error.code == NSURLErrorServerCertificateUntrusted,
               let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int,
               let failedURL = error.failedUrl else {
@@ -2143,6 +2143,7 @@ extension TabViewController {
             self.present(alert, animated: true)
         }
     }
+
 
     private func registerForDownloadsNotifications() {
         NotificationCenter.default.addObserver(self,

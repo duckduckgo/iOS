@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "jacek/ssl-errors",
-        "revision" : "63654e03dcfb3acfa2564e5f00fe00652c6099e4"
+        "revision" : "814c457fcc2dd7ff36c273b93414da258f25e515"
       }
     },
     {

@@ -36,11 +36,11 @@ extension MainViewController {
         var controller: (Onboarding & UIViewController)?
 
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
-            controller = OnboardingIntroViewController()
+            controller = OnboardingIntroViewController(onboardingPixelReporter: contextualOnboardingPixelReporter)
         } else {
             let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
             controller = storyboard.instantiateInitialViewController(creator: { coder in
-                DaxOnboardingViewController(coder: coder)
+                DaxOnboardingViewController(coder: coder, pixelReporting: self.contextualOnboardingPixelReporter)
             })
         }
         
@@ -252,6 +252,14 @@ extension MainViewController {
         hideAllHighlightsIfNeeded()
         launchSettings {
             $0.triggerDeepLinkNavigation(to: .restoreFlow)
+        }
+    }
+
+    func segueToVPN() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.triggerDeepLinkNavigation(to: .netP)
         }
     }
 

@@ -109,6 +109,10 @@ final class MockTabDelegate: TabDelegate {
         capturedQuery = query
     }
 
+    func tabDidRequestRefresh(tab: DuckDuckGo.TabViewController) {}
+
+    func tabDidRequestNavigationToDifferentSite(tab: DuckDuckGo.TabViewController) {}
+
 }
 
 extension TabViewController {

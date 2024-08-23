@@ -139,5 +139,5 @@ struct AddFavoriteView: View {
 }
 
 #Preview {
-    AddFavoriteView(searchViewModel: .fake, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
+    AddFavoriteView(searchViewModel: .ddg, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
 }

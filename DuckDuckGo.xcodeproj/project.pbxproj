@@ -314,6 +314,7 @@
 		6F655BE22BAB289E00AC3597 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */; };
 		6F689ED82C75EBA800A3B705 /* AddFavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F689ED72C75EBA800A3B705 /* AddFavoriteView.swift */; };
 		6F691CCA2C4979EC002E9553 /* FavoritesTooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F691CC92C4979EC002E9553 /* FavoritesTooltip.swift */; };
+		6F7E5DD52C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7E5DD42C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift */; };
 		6F7FB8E12C660B3E00867DA7 /* NewTabPageFavoritesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8DF2C660B1A00867DA7 /* NewTabPageFavoritesModelTests.swift */; };
 		6F7FB8E32C660BF300867DA7 /* DailyPixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8E22C660BF300867DA7 /* DailyPixelFiring.swift */; };
 		6F7FB8E52C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8E42C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift */; };
@@ -1598,6 +1599,7 @@
 		6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		6F689ED72C75EBA800A3B705 /* AddFavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoriteView.swift; sourceTree = "<group>"; };
 		6F691CC92C4979EC002E9553 /* FavoritesTooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTooltip.swift; sourceTree = "<group>"; };
+		6F7E5DD42C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGAutocompleteWebsiteSearch.swift; sourceTree = "<group>"; };
 		6F7FB8DF2C660B1A00867DA7 /* NewTabPageFavoritesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageFavoritesModelTests.swift; sourceTree = "<group>"; };
 		6F7FB8E22C660BF300867DA7 /* DailyPixelFiring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixelFiring.swift; sourceTree = "<group>"; };
 		6F7FB8E42C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageShortcutsSettingsModelTests.swift; sourceTree = "<group>"; };
@@ -3941,6 +3943,7 @@
 				6F689ED72C75EBA800A3B705 /* AddFavoriteView.swift */,
 				6F2F7B602C760EC200987FB4 /* FavoriteSearchViewModel.swift */,
 				6F2F7B622C760EE200987FB4 /* BingWebsiteSearch.swift */,
+				6F7E5DD42C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift */,
 				6F2F7B642C76119200987FB4 /* MockWebsiteSearch.swift */,
 				6F2F7B5E2C75FD1C00987FB4 /* FavoriteSearchResultItemView.swift */,
 			);
@@ -7337,6 +7340,7 @@
 				319A371028299A850079FBCE /* PasswordHider.swift in Sources */,
 				982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */,
 				B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */,
+				6F7E5DD52C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift in Sources */,
 				6FD1BAE42B87A107000C475C /* AdAttributionPixelReporter.swift in Sources */,
 				1E8AD1D927C4FEC100ABA377 /* DownloadsListSectioningHelper.swift in Sources */,
 				D60170BD2BA34CE8001911B5 /* Subscription.swift in Sources */,

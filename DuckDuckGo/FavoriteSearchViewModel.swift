@@ -28,6 +28,7 @@ class FavoriteSearchViewModel: ObservableObject {
 
     static var fake: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch()) }
     static var bing: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: BingWebsiteSearch()) }
+    static var ddg: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: DDGAutocompleteWebsiteSearch())}
 
     private var cancellables = Set<AnyCancellable>()
 

@@ -150,6 +150,7 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
+        return VariantIOS(name: "mb", weight: 1, isIncluded: VariantIOS.When.always, features: [.newOnboardingIntro])
         if let overriddenAppVariantName = variantNameOverride.overriddenAppVariantName {
             return variants.first(where: { $0.name == overriddenAppVariantName })
         }

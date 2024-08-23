@@ -34,6 +34,7 @@ import Suggestions
 import Subscription
 import SwiftUI
 import NetworkProtection
+import Onboarding
 import os.log
 
 class MainViewController: UIViewController {

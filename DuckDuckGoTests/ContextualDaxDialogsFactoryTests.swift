@@ -20,6 +20,7 @@
 import XCTest
 import SwiftUI
 import Core
+import Onboarding
 @testable import DuckDuckGo
 
 final class ContextualDaxDialogsFactoryTests: XCTestCase {

@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import Onboarding
 @testable import DuckDuckGo
 
 class OnboardingSuggestedSearchesProviderTests: XCTestCase {
@@ -32,7 +33,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1English),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption3),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish)
+            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -46,7 +47,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption3),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeInternational)
+            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeInternational, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -60,7 +61,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption3),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish)
+            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)

@@ -38,6 +38,7 @@ import History
 import ContentScopeScripts
 import SpecialErrorPages
 import NetworkProtection
+import Onboarding
 import os.log
 
 class TabViewController: UIViewController {

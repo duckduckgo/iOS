@@ -475,6 +475,4 @@ final class DefaultWireGuardInterface: WireGuardInterface {
     func setLogger(context: UnsafeMutableRawPointer?, logFunction: (@convention(c) (UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
         wgSetLogger(context, logFunction)
     }
-    
-
 }

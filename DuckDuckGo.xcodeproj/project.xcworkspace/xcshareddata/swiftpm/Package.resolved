@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/remove-wireguard-dependency",
-        "revision" : "bda237e9c560f63127ff0f9cd6136d177c21d04a"
+        "revision" : "df1597b7e51a08c7d6a5e445980159395742acec"
       }
     },
     {

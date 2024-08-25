@@ -472,8 +472,8 @@ final class DefaultWireGuardInterface: WireGuardInterface {
         wgDisableSomeRoamingForBrokenMobileSemantics(handle)
     }
     
-    func setLogger(context: UnsafeMutableRawPointer?, logFunction: ((UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
-        // Temporarily unimplemented
+    func setLogger(context: UnsafeMutableRawPointer?, logFunction: (@convention(c) (UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
+        wgSetLogger(context, logFunction)
     }
     
 

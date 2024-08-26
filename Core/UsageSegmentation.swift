@@ -48,7 +48,7 @@ class UsageSegmentation: UsageSegmenting {
 
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
 
-        guard !storage.atbs.reversed().contains(where: { $0.droppingVariant == atb.droppingVariant }) else {
+        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else {
             return
         }
 
@@ -57,7 +57,7 @@ class UsageSegmentation: UsageSegmenting {
             storage.atbs.append(installAtb)
         }
 
-        if installAtb.droppingVariant != atb.droppingVariant {
+        if installAtb != atb {
             storage.atbs.append(atb)
         }
 
@@ -72,14 +72,6 @@ class UsageSegmentation: UsageSegmenting {
         if let pixelInfo {
             pixelFiring.fireDaily(.usageSegments, withAdditionalParameters: pixelInfo)
         }
-    }
-
-}
-
-extension Atb {
-
-    var droppingVariant: String? {
-        String(version.prefix("v111-1".count))
     }
 
 }

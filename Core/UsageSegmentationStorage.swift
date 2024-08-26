@@ -48,6 +48,7 @@ class UsageSegmentationStorage: UsageSegmentationStoring {
 
     let userDefaults: UserDefaults
 
+    // TODO update this to use KeyValueStoring protocol
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }

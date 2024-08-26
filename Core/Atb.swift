@@ -24,4 +24,17 @@ public struct Atb: Decodable, Equatable {
     let version: String
     let updateVersion: String?
 
+    /// Equality is about the version dropping any variants.  e.g. v100-1 == v100-1ma
+    public static func == (lhs: Atb, rhs: Atb) -> Bool {
+        return lhs.droppingVariant == rhs.droppingVariant
+    }
+
+}
+
+extension Atb {
+
+    var droppingVariant: String? {
+        String(version.prefix("v111-1".count))
+    }
+
 }

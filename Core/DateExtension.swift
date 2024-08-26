@@ -28,4 +28,8 @@ extension Date {
     public func isLessThan48HoursAgo() -> Bool {
         self > Date().addingTimeInterval(-48 * 60 * 60)
     }
+
+    public func isLessThan(daysAgo days: Int) -> Bool {
+        self > Date().addingTimeInterval(Double(-days) * 24 * 60 * 60)
+    }
 }

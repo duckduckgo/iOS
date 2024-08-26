@@ -91,10 +91,6 @@ struct SettingsRootView: View {
                 DispatchQueue.main.async {
                     self.shouldDisplayDeepLinkPush = true
                 }
-            case.UIKitView:
-                DispatchQueue.main.async {
-                    triggerLegacyLink(link)
-                }
             }
         })
 
@@ -129,19 +125,11 @@ struct SettingsRootView: View {
                                                            onDisappear: {})
         case .duckPlayer:
             SettingsDuckPlayerView().environmentObject(viewModel)
-        default:
-            EmptyView()
+        case .netP:
+            NetworkProtectionRootView()
         }
     }
 
-    private func triggerLegacyLink(_ link: SettingsViewModel.SettingsDeepLinkSection) {
-        switch link {
-        case .netP:
-            viewModel.presentLegacyView(.netP)
-        default:
-            return
-        }
-    }
 }
 
 struct InsetGroupedListStyleModifier: ViewModifier {

@@ -20,8 +20,10 @@
 import SwiftUI
 import NetworkProtection
 import Subscription
+import Core
 
 struct NetworkProtectionRootView: View {
+
     let statusViewModel: NetworkProtectionStatusViewModel
 
     init() {
@@ -33,11 +35,12 @@ struct NetworkProtectionRootView: View {
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository)
     }
+
     var body: some View {
-        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
-            NetworkProtectionStatusView(
-                statusModel: statusViewModel
-            )
-        }
+        NetworkProtectionStatusView(statusModel: statusViewModel)
+            .navigationTitle(UserText.netPNavTitle)
+            .onFirstAppear {
+                Pixel.fire(pixel: .privacyProVPNSettings)
+            }
     }
 }

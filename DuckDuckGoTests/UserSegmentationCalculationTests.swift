@@ -23,13 +23,6 @@ import XCTest
 
 class UsageSegmentationCalculationTests: XCTestCase {
 
-    var atbs: [Atb] = []
-
-    override func tearDown() {
-        super.tearDown()
-        PixelFiringMock.tearDown()
-    }
-
     func testCalculations() throws {
         let data = JsonTestDataLoader().fromJsonFile("mobile_segments_test_cases.json")
         XCTAssertNotNil(data)
@@ -47,37 +40,28 @@ class UsageSegmentationCalculationTests: XCTestCase {
             return
         }
 
-        // Reset the storage
-        atbs = []
-
-        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
-
         let installAtb = Atb(version: testCase.client.atb, updateVersion: nil)
+        let calculator = DefaultCalculator(installAtb: installAtb)
         for index in 0 ..< testCase.client.usage.count {
-            // Each usage *could* fire a pixel, so clear the last one
-            PixelFiringMock.tearDown()
-
             let usage = testCase.client.usage[index]
-            let result = testCase.results[index]
+            let expectedResult = testCase.results[index]
 
             let atb = Atb(version: usage, updateVersion: nil)
-            sut.processATB(atb, withInstallAtb: installAtb, andActivityType: UsageActivityType(rawValue: testCase.client.activity_type)!)
+            let actualResult = calculator.processAtb(atb, forActivityType: UsageActivityType(rawValue: testCase.client.activity_type)!)
 
-            XCTAssertEqual(atb.version, result.set_atb)
-
-            if let uri = result.pixel_uri,
+            if let uri = expectedResult.pixel_uri,
                let components = URLComponents(string: uri),
                let queryItems = components.queryItems {
-                assertLastDailyPixelHasExpectedParameters(queryItems, caseIndex: caseIndex, usageIndex: index)
-            } else if PixelFiringMock.lastDailyPixelInfo != nil {
-                XCTFail("case index \(caseIndex) - result \(index) unexpected pixel fired for client \(testCase.client)")
+                assertActualResultMatchesQueryItems(queryItems, actualResult: actualResult, caseIndex: caseIndex, usageIndex: index)
+            } else if actualResult != nil {
+                XCTFail("case index \(caseIndex).\(index) returned unexpected result")
             }
         }
     }
 
-    private func assertLastDailyPixelHasExpectedParameters(_ queryItems: [URLQueryItem], caseIndex: Int, usageIndex: Int) {
-        guard let params = PixelFiringMock.lastDailyPixelInfo?.params else {
-            XCTFail("Fired pixel parameters missing")
+    private func assertActualResultMatchesQueryItems(_ queryItems: [URLQueryItem], actualResult: [String: String]?, caseIndex: Int, usageIndex: Int) {
+        guard let actualResult else {
+            XCTFail("Actual result is nil")
             return
         }
 
@@ -91,7 +75,7 @@ class UsageSegmentationCalculationTests: XCTestCase {
             guard item.name != "test",
                   item.name != "appVersion" else { continue }
 
-            XCTAssertEqual(params[item.name], item.value, "\(caseIndex)-\(usageIndex) \(item.name)")
+            XCTAssertEqual(actualResult[item.name], item.value, "\(caseIndex)-\(usageIndex) \(item.name)")
         }
     }
 
@@ -115,9 +99,5 @@ class UsageSegmentationCalculationTests: XCTestCase {
 
     }
     // swiftlint:enable identifier_name nesting
-
-}
-
-extension UsageSegmentationCalculationTests: UsageSegmentationStoring {
 
 }

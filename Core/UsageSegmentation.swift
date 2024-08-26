@@ -35,12 +35,15 @@ protocol UsageSegmenting {
 class UsageSegmentation: UsageSegmenting {
 
     private let pixelFiring: DailyPixelFiring.Type
-    private var storage: UsageSegmentationStoring
+    private let storage: UsageSegmentationStoring
+    private let calculatorFactory: UsageSegmentationCalculatorMaking
 
     init(pixelFiring: DailyPixelFiring.Type = DailyPixel.self,
-         storage: UsageSegmentationStoring = UsageSegmentationStorage()) {
+         storage: UsageSegmentationStoring = UsageSegmentationStorage(),
+         calculatorFactory: UsageSegmentationCalculatorMaking = DefaultCalculatorFactory()) {
         self.pixelFiring = pixelFiring
         self.storage = storage
+        self.calculatorFactory = calculatorFactory
     }
 
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
@@ -49,6 +52,7 @@ class UsageSegmentation: UsageSegmenting {
             return
         }
 
+        var storage = storage
         if storage.atbs.isEmpty {
             storage.atbs.append(installAtb)
         }
@@ -59,8 +63,15 @@ class UsageSegmentation: UsageSegmenting {
 
         // TODO write a stateful calculator
         //  * should return no parameters unless a pixel should be fired
+        var pixelInfo: [String: String]?
+        let calculator = calculatorFactory.make(installAtb: installAtb)
+        for atb in storage.atbs {
+            pixelInfo = calculator.processAtb(atb, forActivityType: activityType)
+        }
 
-        pixelFiring.fireDaily(.usageSegments) // , withAdditionalParameters: pixelInfo)
+        if let pixelInfo {
+            pixelFiring.fireDaily(.usageSegments, withAdditionalParameters: pixelInfo)
+        }
     }
 
 }

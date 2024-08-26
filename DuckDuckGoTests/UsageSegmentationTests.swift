@@ -23,6 +23,7 @@ import XCTest
 
 class UsageSegmentationTests: XCTestCase {
 
+    var defaultCalculatorResult: [String: String]? = [:]
     var atbs: [Atb] = []
 
     override func tearDown() {
@@ -30,18 +31,40 @@ class UsageSegmentationTests: XCTestCase {
         PixelFiringMock.tearDown()
     }
 
-    func testWhenAppATBReceivedWithSameInstallAtbThatHasVariant_ThenStoredAndNoPixelFired() {
-        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired(.appUse,
+    /// Activity type is not relevant here, that's tested elsewhere.
+    func testWhenValidATBReceivedAndCalculatorReturnsNoResult_ThenNoPixelFired() {
+        
+        defaultCalculatorResult = nil
+
+        let sut = makeSubject()
+
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let atb = Atb(version: "v100-2", updateVersion: nil)
+        sut.processATB(atb, withInstallAtb: installAtb, andActivityType: .search)
+
+        XCTAssertEqual(atbs, [installAtb, atb])
+        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+
+    }
+
+    func testWhenSearchATBReceivedWithSameInstallAtbThatHasVariant_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.search,
                                                                           installAtb: "v123-1ru",
                                                                           atb: "v123-1")
     }
 
-    func testWhenAppATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired() {
-        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired(.appUse)
+    func testWhenAppATBReceivedWithSameInstallAtbThatHasVariant_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.appUse,
+                                                                          installAtb: "v123-1ru",
+                                                                          atb: "v123-1")
     }
 
-    func testWhenSearchATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired() {
-        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired(.search)
+    func testWhenAppATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.appUse)
+    }
+
+    func testWhenSearchATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired() {
+        assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(.search)
     }
 
     func testWhenNewAppATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired() {
@@ -60,20 +83,20 @@ class UsageSegmentationTests: XCTestCase {
         assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.appUse)
     }
 
-    private func assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndNoPixelFired(_ activityType: UsageActivityType, installAtb: String = "v100-1", atb: String = "v100-1", file: StaticString = #filePath, line: UInt = #line) {
+    private func assertWhenATBReceivedWithSameInstallAtb_ThenStoredAndPixelFired(_ activityType: UsageActivityType, installAtb: String = "v100-1", atb: String = "v100-1", file: StaticString = #filePath, line: UInt = #line) {
 
-        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+        let sut = makeSubject()
 
         let installAtb = Atb(version: installAtb, updateVersion: nil)
         let atb = Atb(version: atb, updateVersion: nil)
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
         XCTAssertEqual(atbs, [installAtb])
-        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
     private func assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
-        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+        let sut = makeSubject()
 
         let installAtb = Atb(version: "v100-1", updateVersion: nil)
         let atb = Atb(version: "v100-2", updateVersion: nil)
@@ -84,7 +107,7 @@ class UsageSegmentationTests: XCTestCase {
     }
 
     private func assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
-        let sut = UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self)
+        let sut = makeSubject()
 
         let installAtb = Atb(version: "v100-1", updateVersion: nil)
         let atb = Atb(version: "v100-2", updateVersion: nil)
@@ -95,8 +118,35 @@ class UsageSegmentationTests: XCTestCase {
         XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
+    private func makeSubject() -> UsageSegmenting {
+        return UsageSegmentation(pixelFiring: PixelFiringMock.self, storage: self, calculatorFactory: self)
+    }
+
 }
 
 extension UsageSegmentationTests: UsageSegmentationStoring {
+
+}
+
+extension UsageSegmentationTests: UsageSegmentationCalculatorMaking {
+
+    func make(installAtb: Atb) -> any UsageSegmentationCalculating {
+        return MockUsageSegmentationCalculator(installAtb, defaultCalculatorResult)
+    }
+
+}
+
+class MockUsageSegmentationCalculator: UsageSegmentationCalculating {
+
+    let installAtb: Atb
+    let result: [String: String]?
+    init(_ installAtb: Atb, _ result: [String: String]?) {
+        self.installAtb = installAtb
+        self.result = result
+    }
+
+    func processAtb(_ atb: Atb, forActivityType activityType: UsageActivityType) -> [String: String]? {
+        return result
+    }
 
 }

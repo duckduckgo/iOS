@@ -42,6 +42,7 @@ struct NewTabPageGridView<Content: View>: View {
         .onPreferenceChange(FramePreferenceKey.self, perform: { value in
             width = value
         })
+        .padding(0)
     }
 
     private func flexibleColumns(_ count: Int, width: CGFloat) -> [GridItem] {

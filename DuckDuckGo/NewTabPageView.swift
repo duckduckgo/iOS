@@ -90,7 +90,9 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
                 // Needed to reduce default button margins
                     .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing: -8))
             }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
-        }.sectionPadding()
+        }
+        .sectionPadding()
+        .padding(.bottom, 8)
     }
 
     @ViewBuilder
@@ -132,7 +134,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
     private var sectionsView: some View {
         GeometryReader { proxy in
             ScrollView {
-                VStack {
+                VStack(spacing: 0) {
                     introMessageView
 
                     messagesSectionView

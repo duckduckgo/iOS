@@ -84,6 +84,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
         }
         // Prevent the content to leak out of bounds while changing grid contents
         .clipped()
+        .padding(0)
     }
 }
 

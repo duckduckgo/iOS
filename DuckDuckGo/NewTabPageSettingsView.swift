@@ -51,7 +51,7 @@ struct NewTabPageSettingsView: View {
         if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
             GeometryReader { geometry in
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 0) {
                         sectionsList(withFrameUpdates: true, geometry: geometry)
                             .withoutScroll()
                             .frame(height: listHeight)

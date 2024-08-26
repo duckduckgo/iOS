@@ -34,6 +34,8 @@ class FavoriteSearchViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
+    private var searchTask: Task<Void, Error>?
+    private var manualEntryTask: Task<Void, Error>?
     private let websiteSearch: any WebsiteSearch
 
     init(websiteSearch: WebsiteSearch) {
@@ -48,6 +50,10 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     func clear() {
+        manualEntryTask?.cancel()
+        manualEntryTask = nil
+        searchTask?.cancel()
+        searchTask = nil
         searchTerm = ""
         clearResults()
     }
@@ -65,10 +71,20 @@ class FavoriteSearchViewModel: ObservableObject {
             return
         }
 
-        Task {
+        searchTask?.cancel()
+        searchTask = Task {
             do {
                 let results = try await websiteSearch.search(term: searchTerm)
                 await publishResults(results)
+
+                try Task.checkCancellation()
+
+                let decorator = FavoriteSearchResultDecorator()
+                let decoratedResults = await decorator.decorate(results: results)
+
+                try Task.checkCancellation()
+
+                await publishResults(decoratedResults)
             } catch let error as BingError {
                 await publishResults([], error: error)
             } catch {
@@ -76,13 +92,29 @@ class FavoriteSearchViewModel: ObservableObject {
             }
         }
 
-        if let url = convertToURL(searchTerm) {
-            manualEntry = WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
-            isManualEntryValid = url.isValid
-        } else {
-            manualEntry = nil
-            isManualEntryValid = false
+        manualEntryTask?.cancel()
+        manualEntryTask = Task {
+            if let url = convertToURL(searchTerm) {
+                let entry = WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
+                await publisManualEntry(entry)
+
+                try Task.checkCancellation()
+                let decorator = FavoriteSearchResultDecorator()
+                let decoratedResults = await decorator.decorate(results: [entry])
+
+                try Task.checkCancellation()
+                await publisManualEntry(decoratedResults.first)
+            } else {
+                manualEntry = nil
+                isManualEntryValid = false
+            }
         }
+    }
+
+    @MainActor
+    private func publisManualEntry(_ entry: WebPageSearchResultValue?) {
+        manualEntry = entry
+        isManualEntryValid = entry?.url.isValid ?? false
     }
 
     @MainActor

@@ -27,6 +27,15 @@ struct WebPageSearchResultValue: Identifiable, Hashable {
     let name: String
     let displayUrl: String
     let url: URL
+    let icon: UIImage?
+
+    init(id: String, name: String, displayUrl: String, url: URL, icon: UIImage? = nil) {
+        self.id = id
+        self.name = name
+        self.displayUrl = displayUrl
+        self.url = url
+        self.icon = icon
+    }
 }
 
 protocol WebsiteSearch {

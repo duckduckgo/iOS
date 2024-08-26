@@ -27,7 +27,7 @@ protocol FavoritesFaviconLoading {
 }
 
 struct FavoriteIconView: View {
-    @State private var favicon: Favicon
+    @State var favicon: Favicon
 
     @State var size: CGFloat = Constant.faviconSize
     let domain: String
@@ -84,10 +84,12 @@ extension FavoriteIconView {
 
         self.init(favicon: favicon, size: size, domain: domain, faviconLoading: faviconLoading)
     }
-}
 
-extension FavoriteIconView {
     init(favorite: Favorite, size: CGFloat? = nil, faviconLoading: FavoritesFaviconLoading? = nil) {
         self.init(domain: favorite.domain, size: size, faviconLoading: faviconLoading)
+    }
+
+    init(favicon: Favicon) {
+        self.init(favicon: favicon, domain: "", faviconLoading: nil)
     }
 }

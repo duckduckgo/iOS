@@ -20,7 +20,6 @@
 import Foundation
 import Suggestions
 import Networking
-import LinkPresentation
 
 final class DDGAutocompleteWebsiteSearch: WebsiteSearch {
 
@@ -40,7 +39,7 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearch {
             return url
         })
 
-        return await withCheckedContinuation { continuation in
+        let results: [WebPageSearchResultValue] = await withCheckedContinuation { continuation in
             loader?.getSuggestions(query: term) { result, error in
                 guard let result, error == nil else {
                     continuation.resume(returning: [])
@@ -59,6 +58,8 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearch {
                 continuation.resume(returning: results)
             }
         }
+
+        return results
     }
 }
 

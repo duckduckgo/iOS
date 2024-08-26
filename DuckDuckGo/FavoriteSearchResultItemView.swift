@@ -27,7 +27,10 @@ struct FavoriteSearchResultItemView: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            if let domain = result.url.host {
+            if let icon = result.icon {
+                FavoriteIconView(favicon: Favicon(image: icon, isUsingBorder: false, isFake: false))
+                    .frame(width: 24)
+            } else if let domain = result.url.host {
                 FavoriteIconView(domain: domain, size: 24, faviconLoading: faviconLoader)
                     .frame(width: 24)
             }

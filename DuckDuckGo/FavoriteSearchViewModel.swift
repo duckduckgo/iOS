@@ -24,6 +24,8 @@ import Combine
 class FavoriteSearchViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var results: [WebPageSearchResultValue] = []
+    @Published var manualEntry: WebPageSearchResultValue?
+    @Published var isManualEntryValid: Bool = false
     @Published var searchTerm: String = ""
 
     static var fake: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch()) }
@@ -46,14 +48,20 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     func clear() {
-        errorMessage = nil
         searchTerm = ""
+        clearResults()
+    }
+
+    private func clearResults() {
+        errorMessage = nil
         results = []
+        manualEntry = nil
+        isManualEntryValid = false
     }
 
     private func runSearch() {
         guard !searchTerm.isEmpty else {
-            results = []
+            clearResults()
             return
         }
 
@@ -67,11 +75,32 @@ class FavoriteSearchViewModel: ObservableObject {
                 await publishResults([])
             }
         }
+
+        if let url = convertToURL(searchTerm) {
+            manualEntry = WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
+            isManualEntryValid = url.isValid
+        } else {
+            manualEntry = nil
+            isManualEntryValid = false
+        }
     }
 
     @MainActor
     private func publishResults(_ results: [WebPageSearchResultValue], error: BingError? = nil) {
         self.results = results
         self.errorMessage = error?.message
+    }
+
+    private func convertToURL(_ searchTerm: String) -> URL? {
+        guard !searchTerm.isEmpty,
+              var url = URL(string: searchTerm.trimmingWhitespace()) else { return nil }
+
+        if url.isValid || url.isCustomURLScheme() {
+            return url
+        } else if url.scheme == nil {
+            return URL(string: "https://\(url.absoluteString)")
+        }
+
+        return nil
     }
 }

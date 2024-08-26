@@ -58,15 +58,14 @@ struct AddFavoriteView: View {
                 Text(verbatim: "You can also favorite any site through the ••• menu while on that page.")
             }
 
-            if let url = convertToURL(searchViewModel.searchTerm) {
+            if let manualEntry = searchViewModel.manualEntry {
                 Section {
-                    let name = searchViewModel.searchTerm
                     Button {
-                        favoritesCreating.createOrToggleFavorite(title: name, url: url)
+                        favoritesCreating.createOrToggleFavorite(title: manualEntry.name, url: manualEntry.url)
                         dismiss()
                     } label: {
-                        FavoriteSearchResultItemView(result: .init(id: "manual", name: searchViewModel.searchTerm, displayUrl: url.absoluteString, url: url), faviconLoader: faviconLoader)
-                    }.disabled(url.isValid)
+                        FavoriteSearchResultItemView(result: manualEntry, faviconLoader: faviconLoader)
+                    }.disabled(!searchViewModel.isManualEntryValid)
                 }
             }
 
@@ -122,19 +121,6 @@ struct AddFavoriteView: View {
         .onAppear {
             isFocused = true
         }
-    }
-
-    private func convertToURL(_ searchTerm: String) -> URL? {
-        guard !searchTerm.isEmpty,
-              var url = URL(string: searchTerm) else { return nil }
-
-        if url.isValid || url.isCustomURLScheme() {
-            return url
-        } else if url.scheme == nil {
-            return URL(string: "https://\(url.absoluteString)")
-        }
-
-        return nil
     }
 }
 

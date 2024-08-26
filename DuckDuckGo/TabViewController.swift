@@ -302,7 +302,7 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporter()) -> TabViewController {
+                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -575,6 +575,7 @@ class TabViewController: UIViewController {
         refreshControl.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             reload()
+            delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
             AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
         }, for: .valueChanged)
@@ -1609,6 +1610,10 @@ extension TabViewController: WKNavigationDelegate {
             // Ignore .other actions because refresh can cause a redirect
             // This is also handled in loadRequest(_:)
             refreshCountSinceLoad = 0
+        }
+
+        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
+            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
         }
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`

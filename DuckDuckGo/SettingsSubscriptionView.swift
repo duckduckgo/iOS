@@ -38,6 +38,7 @@ struct SettingsSubscriptionView: View {
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
+    @State var isShowingVPN = false
     @State var isShowingRestoreFlow = false
     @State var isShowingGoogleView = false
     @State var isShowingStripeView = false
@@ -155,12 +156,13 @@ struct SettingsSubscriptionView: View {
     private var subscriptionDetailsView: some View {
         
         if viewModel.state.subscription.entitlements.contains(.networkProtection) {
-            SettingsCellView(label: UserText.settingsPProVPNTitle,
-                             image: Image("SettingsPrivacyProVPN"),
-                             action: { viewModel.presentLegacyView(.netP) },
-                             statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtectionConnected ? .on : .off),
-                             disclosureIndicator: true,
-                             isButton: true)
+            NavigationLink(destination: NetworkProtectionRootView(), isActive: $isShowingVPN) {
+                SettingsCellView(
+                    label: UserText.settingsPProVPNTitle,
+                    image: Image("SettingsPrivacyProVPN"),
+                    statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtectionConnected ? .on : .off)
+                )
+            }
         }
         
         if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {

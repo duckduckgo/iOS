@@ -54,7 +54,7 @@ class DaxOnboardingViewController: UIViewController, Onboarding {
 
     private let pixelReporting: OnboardingIntroImpressionReporting
 
-    init?(coder: NSCoder, pixelReporting: OnboardingIntroImpressionReporting = OnboardingPixelReporter()) {
+    init?(coder: NSCoder, pixelReporting: OnboardingIntroImpressionReporting) {
         self.pixelReporting = pixelReporting
         super.init(coder: coder)
     }

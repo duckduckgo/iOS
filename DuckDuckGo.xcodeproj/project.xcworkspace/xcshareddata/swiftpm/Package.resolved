@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "4a55217003ad7b2d44a1ac616d47596c0bda69dc",
-        "version" : "186.0.0"
+        "branch" : "michal/subs-keychain-errors",
+        "revision" : "37f1c9c257d2192830d5a003836164d1685ea84b"
       }
     },
     {

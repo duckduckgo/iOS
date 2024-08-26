@@ -688,6 +688,7 @@ extension Pixel {
         case privacyProSubscriptionManagementRemoval
         case privacyProTransactionProgressNotHiddenAfter60s
         case privacyProSuccessfulSubscriptionAttribution
+        case privacyProKeychainAccessError
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -1449,6 +1450,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
         case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
+        case .privacyProKeychainAccessError: return "m_privacy-pro_keychain_access_error"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

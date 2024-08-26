@@ -146,6 +146,10 @@ public struct PixelParameters {
     // Privacy Dashboard
     public static let daysSinceInstall = "daysSinceInstall"
     public static let fromOnboarding = "from_onboarding"
+
+    // Subscription
+    public static let privacyProKeychainAccessType = "access_type"
+    public static let privacyProKeychainError = "error"
 }
 
 public struct PixelValues {

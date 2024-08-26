@@ -38,7 +38,7 @@ class FavoriteSearchViewModel: ObservableObject {
         self.websiteSearch = websiteSearch
 
         $searchTerm
-            .debounce(for: .seconds(1), scheduler: RunLoop.main)
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 self?.runSearch()
             }

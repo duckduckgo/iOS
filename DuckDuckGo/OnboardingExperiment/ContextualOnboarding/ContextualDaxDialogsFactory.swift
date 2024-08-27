@@ -45,12 +45,12 @@ protocol ContextualDaxDialogsFactory {
 final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let contextualOnboardingSettings: ContextualOnboardingSettings
-    private let contextualOnboardingPixelReporter: OnboardingScreenImpressionReporting
+    private let contextualOnboardingPixelReporter: OnboardingPixelReporting
 
     init(
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
-        contextualOnboardingPixelReporter: OnboardingScreenImpressionReporting = OnboardingPixelReporter()
+        contextualOnboardingPixelReporter: OnboardingPixelReporting
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -103,8 +103,8 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         afterSearchPixelEvent: Pixel.Event,
         onSizeUpdate: @escaping () -> Void
     ) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
-        
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, pixelReporter: contextualOnboardingPixelReporter, delegate: delegate)
+
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
             { [weak delegate, weak self] in
@@ -125,7 +125,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, pixelReporter: contextualOnboardingPixelReporter, delegate: delegate)
         return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
             .onFirstAppear { [weak self] in
                 self?.contextualOnboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)

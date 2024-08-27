@@ -604,10 +604,6 @@ extension SettingsViewModel {
         
         case .autoconsent:
             pushViewController(legacyViewProvider.autoConsent)
-
-        case .netP:
-            firePixel(.privacyProVPNSettings)
-            pushViewController(legacyViewProvider.netP)
         }
     }
  
@@ -660,13 +656,7 @@ extension SettingsViewModel {
         // Default to .sheet, specify .push where needed
         var type: DeepLinkType {
             switch self {
-            // Specify cases that require .push presentation
-            // Example:
-            // case .dbp:
-            //     return .sheet
-            case .netP:
-                return .UIKitView
-            default:
+            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer:
                 return .navigationLink
             }
         }
@@ -676,7 +666,6 @@ extension SettingsViewModel {
     enum DeepLinkType {
         case sheet
         case navigationLink
-        case UIKitView
     }
             
     // Navigate to a section in settings

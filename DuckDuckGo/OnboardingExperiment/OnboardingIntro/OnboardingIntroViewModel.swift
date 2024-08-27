@@ -28,7 +28,7 @@ final class OnboardingIntroViewModel: ObservableObject {
     private let pixelReporter: OnboardingIntroPixelReporting
     private let urlOpener: URLOpener
 
-    init(pixelReporter: OnboardingIntroPixelReporting = OnboardingPixelReporter(), urlOpener: URLOpener = UIApplication.shared) {
+    init(pixelReporter: OnboardingIntroPixelReporting, urlOpener: URLOpener = UIApplication.shared) {
         self.pixelReporter = pixelReporter
         self.urlOpener = urlOpener
     }

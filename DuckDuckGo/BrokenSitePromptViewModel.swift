@@ -1,5 +1,5 @@
 //
-//  RootDebugViewController+Onboarding.swift
+//  BrokenSitePromptViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,23 +17,16 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-extension RootDebugViewController {
+final class BrokenSitePromptViewModel {
 
-    func showOnboardingIntro() {
-        let controller = OnboardingIntroViewController(onboardingPixelReporter: OnboardingPixelReporter())
-        controller.delegate = self
-        controller.modalPresentationStyle = .overFullScreen
-        present(controller: controller, fromView: self.view)
-    }
-    
-}
+    let onDidDismiss: () -> Void
+    let onDidSubmit: () -> Void
 
-extension RootDebugViewController: OnboardingDelegate {
-
-    func onboardingCompleted(controller: UIViewController) {
-        controller.presentingViewController?.dismiss(animated: true)
+    init(onDidDismiss: @escaping () -> Void, onDidSubmit: @escaping () -> Void) {
+        self.onDidDismiss = onDidDismiss
+        self.onDidSubmit = onDidSubmit
     }
 
 }

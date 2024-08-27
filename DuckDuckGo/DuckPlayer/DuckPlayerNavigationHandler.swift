@@ -213,7 +213,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Attempt to open in YouTube app (if installed) or load in webView
             if isSERPLink(navigationAction: navigationAction),
                appSettings.allowUniversalLinks,
-               isYouTubeAppInstalled, 
+               isYouTubeAppInstalled,
                 let url = URL(string: "\(Constants.youtubeScheme)\(id)") {
                 UIApplication.shared.open(url)
             } else {

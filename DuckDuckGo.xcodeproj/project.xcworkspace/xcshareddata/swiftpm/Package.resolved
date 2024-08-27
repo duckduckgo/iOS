@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "shane/dash-5-1-1",
-        "revision" : "066168e820c18db5bcd70d84c922c29e04e08233"
+        "revision" : "93fae8b6986a68bde9a4f59d2d5b739903723a8a",
+        "version" : "186.0.1"
       }
     },
     {

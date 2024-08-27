@@ -353,7 +353,8 @@ class TabViewController: UIViewController {
         self.syncService = syncService
         self.duckPlayer = duckPlayer
         if let duckPlayer {
-            self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer)
+            self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer,
+                                                                           appSettings: appSettings)
         }
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter

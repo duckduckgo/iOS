@@ -382,6 +382,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: true,
                    entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
+
+        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -442,5 +444,19 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .failure(let error):
             return .failure(error)
         }
+    }
+}
+
+extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
+
+    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+        let parameters = [
+            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+            PixelParameters.privacyProKeychainError: error.errorDescription,
+            PixelParameters.source: "vpn"
+        ]
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     withAdditionalParameters: parameters)
     }
 }

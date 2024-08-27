@@ -113,10 +113,10 @@ class AppDependencyProvider: DependencyProvider {
                                                    authEndpointService: authService)
         
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                         accountManager: accountManager,
-                                                         subscriptionEndpointService: subscriptionService,
-                                                         authEndpointService: authService,
-                                                         subscriptionEnvironment: subscriptionEnvironment)
+                                                             accountManager: accountManager,
+                                                             subscriptionEndpointService: subscriptionService,
+                                                             authEndpointService: authService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
         accountManager.delegate = subscriptionManager
 
         self.subscriptionManager = subscriptionManager

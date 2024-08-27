@@ -39,6 +39,7 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
@@ -338,7 +339,9 @@ final class SettingsViewModel: ObservableObject {
         legacyViewProvider.syncService.authState != .inactive ? .on : .off
     }
 
-    let usesUnifiedFeedbackForm: Bool
+    var usesUnifiedFeedbackForm: Bool {
+        subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
+    }
 
     // MARK: Default Init
     init(state: SettingsState? = nil,
@@ -355,12 +358,12 @@ final class SettingsViewModel: ObservableObject {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
         self.subscriptionManager = subscriptionManager
+        self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
         self.deepLinkTarget = deepLink
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
-        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()

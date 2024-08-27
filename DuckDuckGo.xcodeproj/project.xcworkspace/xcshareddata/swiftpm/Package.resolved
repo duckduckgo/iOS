@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "fcappelli/os_log_to_logger_2",
-        "revision" : "6c201e5fe131c2ec10aaeeca6b0ca51a1c2a194c"
+        "revision" : "0cc02b70461ec81062dc57b5dfc94daeaae15eeb"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "36dc07cba4bc1e7e0c1d1fb679c3cd077694a072",
-        "version" : "5.0.0"
+        "revision" : "665b23dc656c9f787494620494f8e56098a900b2",
+        "version" : "5.1.1"
       }
     },
     {

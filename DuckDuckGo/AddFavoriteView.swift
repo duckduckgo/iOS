@@ -61,7 +61,12 @@ struct AddFavoriteView: View {
             if let manualEntry = searchViewModel.manualEntry {
                 Section {
                     Button {
-                        favoritesCreating.createOrToggleFavorite(title: manualEntry.name, url: manualEntry.url)
+
+                        if favoritesCreating.bookmark(for: manualEntry.url) == nil {
+
+                            favoritesCreating.createOrToggleFavorite(title: manualEntry.name, url: manualEntry.url)
+                        }
+
                         dismiss()
                     } label: {
                         FavoriteSearchResultItemView(result: manualEntry, faviconLoader: faviconLoader)
@@ -92,10 +97,6 @@ struct AddFavoriteView: View {
                         } label: {
                             FavoriteSearchResultItemView(result: result, faviconLoader: faviconLoader)
                         }
-                    }
-                } header: {
-                    if !searchViewModel.results.isEmpty {
-                        Text(verbatim: "Did you mean one of the following?")
                     }
                 }
             }

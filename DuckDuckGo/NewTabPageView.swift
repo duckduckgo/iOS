@@ -85,11 +85,30 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
 
     @ViewBuilder
     private var mainView: some View {
-        if isAnySectionEnabled {
-            sectionsView
-        } else {
-            emptyStateView
+        VStack(spacing: 0) {
+            Button(action: {
+                isAddingFavorite = true
+            }, label: {
+                Text(verbatim: "Add Favorite Flow PoC")
+                    .tintIfAvailable(Color(designSystemColor: .accent))
+                    .daxTitle3()
+            })
+            .padding()
+
+            if isAnySectionEnabled {
+                sectionsView
+            } else {
+                emptyStateView
+            }
         }
+        .padding(0)
+        .sheet(isPresented: $isAddingFavorite, content: {
+            NavigationView {
+                AddFavoriteView(searchViewModel: .ddg,
+                                favoritesCreating: bookmarksInteracting,
+                                faviconLoader: favoritesModel.faviconLoader)
+            }
+        })
     }
 }
 

@@ -256,7 +256,7 @@ extension MainViewController {
     }
 
     func segueToVPN() {
-        os_log(#function, log: .generalLog, type: .debug)
+        Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
         launchSettings {
             $0.triggerDeepLinkNavigation(to: .netP)

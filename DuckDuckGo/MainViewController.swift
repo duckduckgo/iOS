@@ -121,6 +121,7 @@ class MainViewController: UIViewController {
     private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
+    private var feedbackCancellable: AnyCancellable?
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -285,6 +286,7 @@ class MainViewController: UIViewController {
         subscribeToURLInterceptorNotifications()
         subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
+        subscribeToUnifiedFeedbackNotifications()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1546,6 +1548,19 @@ class MainViewController: UIViewController {
                                         notificationCallback,
                                         Notification.Name.vpnEntitlementMessagingDidChange.rawValue as CFString,
                                         nil, .deliverImmediately)
+    }
+
+    private func subscribeToUnifiedFeedbackNotifications() {
+        feedbackCancellable = NotificationCenter.default.publisher(for: .unifiedFeedbackNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                DispatchQueue.main.async { [weak self] in
+                    guard let navigationController = self?.presentedViewController as? UINavigationController else { return }
+                    navigationController.popToRootViewController(animated: true)
+                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
+                                              presentationLocation: .withoutBottomBar)
+                }
+            }
     }
 
     private func onNetworkProtectionEntitlementMessagingChange() {

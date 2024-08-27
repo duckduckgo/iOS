@@ -93,22 +93,10 @@ struct VPNMetadata: Encodable {
 
         return String(data: encodedMetadata, encoding: .utf8)
     }
-
-    func toBase64() -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys]
-
-        do {
-            let encodedMetadata = try encoder.encode(self)
-            return encodedMetadata.base64EncodedString()
-        } catch {
-            return "Failed to encode metadata to JSON, error message: \(error.localizedDescription)"
-        }
-    }
 }
 
 protocol VPNMetadataCollector {
-    func collectMetadata() async -> VPNMetadata
+    func collectVPNMetadata() async -> VPNMetadata
 }
 
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
@@ -130,7 +118,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
         self.defaults = defaults
     }
 
-    func collectMetadata() async -> VPNMetadata {
+    func collectVPNMetadata() async -> VPNMetadata {
         let appInfoMetadata = collectAppInfoMetadata()
         let deviceInfoMetadata = collectDeviceInfoMetadata()
         let networkInfoMetadata = await collectNetworkInformation()
@@ -281,4 +269,18 @@ private extension NSError {
         return (metadataError, underlyingErrors)
     }
 
+}
+
+// MARK: - Unified feedback form support
+
+extension VPNMetadata: UnifiedFeedbackMetadata {}
+
+extension DefaultVPNMetadataCollector: UnifiedMetadataCollector {
+    convenience init() {
+        self.init(statusObserver: AppDependencyProvider.shared.connectionObserver)
+    }
+
+    func collectMetadata() async -> VPNMetadata? {
+        await collectVPNMetadata()
+    }
 }

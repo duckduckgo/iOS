@@ -103,16 +103,20 @@ final class DuckPlayer: DuckPlayerProtocol {
     struct Constants {
         static let duckPlayerHost: String = "player"
         static let commonName = "Duck Player"
+        static let translationFile = "duckplayer"
+        static let translationFileExtension = "duckplayer"
+        static let defaultLocale = "en"
+        static let translationPath = "pages/duckplayer/locales/"
     }
     
     private(set) var settings: DuckPlayerSettingsProtocol
     private(set) weak var hostView: UIViewController?
     
-    let localeStrings: String? = {
-        let languageCode = Locale.current.languageCode ?? "en"
-        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "duckplayer",
-                                                               ofType: "json",
-                                                               inDirectory: "pages/duckplayer/locales/\(languageCode)") {
+    lazy var localeStrings: String? = {
+        let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
+        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: Constants.translationFile,
+                                                               ofType: Constants.translationFileExtension,
+                                                               inDirectory: "\(Constants.translationPath)\(languageCode)") {
             return try? String(contentsOfFile: localizedFile)
         }
         return nil
@@ -221,7 +225,6 @@ final class DuckPlayer: DuckPlayerProtocol {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
         let platform = InitialPlayerSettings.Platform(name: "ios")
-        let environment = InitialPlayerSettings.Environment.development
         let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()

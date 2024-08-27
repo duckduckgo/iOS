@@ -24,6 +24,7 @@ import Foundation
 import WebKit
 import UserScript
 import Core
+import ContentScopeScripts
 
 /// Values that the Frontend can use to determine the current state.
 struct InitialPlayerSettings: Codable {
@@ -48,16 +49,13 @@ struct InitialPlayerSettings: Codable {
         case development
         case production
     }
-    
-    enum Locale: String, Codable {
-        case en
-    }
 
     let userValues: UserValues
     let ui: UIValues
     let settings: PlayerSettings
     let platform: Platform
-    let locale: Locale
+    let locale: String
+    let localeStrings: String?
 }
 
 /// Values that the Frontend can use to determine user settings
@@ -109,6 +107,16 @@ final class DuckPlayer: DuckPlayerProtocol {
     
     private(set) var settings: DuckPlayerSettingsProtocol
     private(set) weak var hostView: UIViewController?
+    
+    let localeStrings: String? = {
+        let languageCode = Locale.current.languageCode ?? "en"
+        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "duckplayer",
+                                                               ofType: "json",
+                                                               inDirectory: "pages/duckplayer/locales/\(languageCode)") {
+            return try? String(contentsOfFile: localizedFile)
+        }
+        return nil
+    }()
     
     private struct WKMessageData: Codable {
         var context: String?
@@ -214,15 +222,16 @@ final class DuckPlayer: DuckPlayerProtocol {
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
         let platform = InitialPlayerSettings.Platform(name: "ios")
         let environment = InitialPlayerSettings.Environment.development
-        let locale = InitialPlayerSettings.Locale.en
+        let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
         let uiValues = encodeUIValues()
         return InitialPlayerSettings(userValues: userValues,
-                                           ui: uiValues,
-                                           settings: playerSettings,
-                                           platform: platform,
-                                           locale: locale)
+                                            ui: uiValues,
+                                            settings: playerSettings,
+                                            platform: platform,
+                                            locale: locale,
+                                            localeStrings: localeStrings)
     }
         
     // Accessing WKMessage needs main thread

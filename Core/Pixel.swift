@@ -83,6 +83,7 @@ public struct PixelParameters {
     public static let tabControllerCacheCount = "tab_controller_cache_count"
 
     public static let count = "count"
+    public static let source = "source"
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"

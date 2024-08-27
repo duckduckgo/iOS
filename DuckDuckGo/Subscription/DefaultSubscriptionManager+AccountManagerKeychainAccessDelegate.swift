@@ -24,8 +24,13 @@ import Subscription
 extension DefaultSubscriptionManager: AccountManagerKeychainAccessDelegate {
 
     public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
-        Pixel.fire(.privacyProKeychainAccessError, withAdditionalParameters: [
+        let parameters = [
             PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
-            PixelParameters.privacyProKeychainError: error.errorDescription])
+            PixelParameters.privacyProKeychainError: error.errorDescription,
+            PixelParameters.source: "browser"
+        ]
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     withAdditionalParameters: parameters)
     }
 }

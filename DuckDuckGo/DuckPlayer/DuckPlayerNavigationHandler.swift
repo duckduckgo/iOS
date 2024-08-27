@@ -348,7 +348,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             break
         }
         
-        if let nonYoutubeItem = nonYoutubeItem {
+        if let nonYoutubeItem = nonYoutubeItem, duckPlayer.settings.mode == .enabled {
             os_log("DP: Navigating back to %s", log: .duckPlayerLog, type: .debug, nonYoutubeItem.url.absoluteString)
             webView.go(to: nonYoutubeItem)
         } else {

@@ -69,7 +69,9 @@ final class PrivacyProDataReporterTests: XCTestCase {
             tutorialSettings: MockTutorialSettings(hasSeenOnboarding: false),
             appSettings: AppSettingsMock(),
             statisticsStore: statisticsStore,
-            secureVault: nil,
+            featureFlagger: MockFeatureFlagger(),
+            autofillCheck: { true },
+            secureVaultMaker: { nil },
             tabsModel: TabsModel(tabs: [], desktop: false),
             dateGenerator: mockCalendar.now
         )
@@ -80,7 +82,9 @@ final class PrivacyProDataReporterTests: XCTestCase {
             emailManager: EmailManager(storage: MockEmailStorage.anotherMock),
             tutorialSettings: MockTutorialSettings(hasSeenOnboarding: true),
             appSettings: AppSettingsMock.mockWithWidget,
-            secureVault: nil,
+            featureFlagger: MockFeatureFlagger(),
+            autofillCheck: { true },
+            secureVaultMaker: { nil },
             tabsModel: TabsModel(tabs: [Tab(), Tab(), Tab(), Tab()], desktop: false)
         )
     }
@@ -169,15 +173,6 @@ final class PrivacyProDataReporterTests: XCTestCase {
             XCTAssertLessThanOrEqual(params.count, 8)
             XCTAssertGreaterThanOrEqual(params.count, 7)
         }
-    }
-}
-
-struct MockTutorialSettings: TutorialSettings {
-    var lastVersionSeen: Int { 0 }
-    var hasSeenOnboarding: Bool
-
-    init(hasSeenOnboarding: Bool) {
-        self.hasSeenOnboarding = hasSeenOnboarding
     }
 }
 

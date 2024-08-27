@@ -33,7 +33,7 @@ struct SubscriptionRestoreView: View {
     @State private var isAlertVisible = false
     @State private var isShowingWelcomePage = false
     @State private var isShowingActivationFlow = false
-    @Binding var currentView: SubscriptionContainerView.CurrentView
+    @Binding var currentView: SubscriptionContainerView.CurrentViewType
     
     private enum Constants {
         static let heroImage = "ManageSubscriptionHero"

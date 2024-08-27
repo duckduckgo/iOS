@@ -38,7 +38,7 @@
 "action.title.copy.message" = "Nettadresse kopiert";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Delete";
+"action.title.delete" = "Slett";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Deaktiver personvernbeskyttelse";
@@ -119,7 +119,7 @@
 "addWidget.description" = "Få rask tilgang til privat søk og nettstedene du liker best.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
+"addWidget.settings.firstParagraph" = "Trykk lenge på startskjermen for å gå inn i ristemodus.";
 
 /* Replacement string is a plus button icon. */
 "addWidget.settings.secondParagraph.%@" = "Trykk på %@-knappen.";
@@ -200,7 +200,7 @@
 "alert.unable-to-delete-data-description" = "Kan ikke slette data på serveren.";
 
 /* Description for unable to merge two accounts error */
-"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync With Another Device\" on the other device.";
+"alert.unable-to-merge-two-accounts-description" = "For å pare disse enhetene må du slå av «Synkronisering og sikkerhetskopiering» på den ene enheten og trykke på «Synkroniser med en annen enhet» på den andre.";
 
 /* Description for unable to remove device error */
 "alert.unable-to-remove-device-description" = "Kan ikke fjerne denne enheten fra Synkronisering og sikkerhetskopiering.";
@@ -274,6 +274,12 @@
 /* Do not translate - stringsdict entry */
 "autofill.delete.all.passwords.sync.confirmation.body" = "autofill.delete.all.passwords.sync.confirmation.body";
 
+/* Open Settings action for disabling autofill in Settings */
+"autofill.disable.prompt.action.open-settings" = "Åpne innstillingene";
+
+/* Message for informing user that they can disable autofill in Settings */
+"autofill.disable.prompt.message" = "Du kan slå av passordlagring når som helst.";
+
 /* Text link to email protection website */
 "autofill.enable.email.protection" = "Aktiver e-postbeskyttelse";
 
@@ -318,15 +324,6 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Slå av";
-
-/* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Fortsett å lagre";
-
-/* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Du kan deaktivere dette når som helst i innstillingene.";
-
-/* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vil du fortsette å lagre passord?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vis";
@@ -508,6 +505,37 @@
 /* Do not translate - stringsdict entry */
 "autofill.number.of.passwords" = "autofill.number.of.passwords";
 
+/* Description of autofill onboarding prompt's secure storage feature
+   Description of autofill onboarding prompt's secure storage feature with a string describing the available biometry + passcode as a parameter */
+"autofill.onboarding.key-features.secure-storage.description" = "Passord er kryptert, lagret på enheten og låst med %@.";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Face ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.face-id" = "Face ID eller passord";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing passcode only if no biometry are available */
+"autofill.onboarding.key-features.secure-storage.description.parameter.passcode" = "passord";
+
+/* Parameter for the description of autofill onboarding prompt's secure storage feature describing Touch ID biometry + passcode */
+"autofill.onboarding.key-features.secure-storage.description.parameter.touch-id" = "Touch ID eller passord";
+
+/* Title of autofill onboarding prompt's secure storage feature */
+"autofill.onboarding.key-features.secure-storage.title" = "Sikker lagring";
+
+/* Description of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.description" = "Du trenger ikke å huske påloggingsinformasjon.";
+
+/* Title of autofill onboarding prompt's sign-in feature */
+"autofill.onboarding.key-features.sign-ins.title" = "Sømløse pålogginger";
+
+/* Description of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.description" = "Ende-til-ende-kryptert og lett å konfigurere når du er klar.";
+
+/* Title of autofill onboarding prompt's sync feature */
+"autofill.onboarding.key-features.sync.title" = "Synkroniser mellom enheter";
+
+/* Title of autofill onboarding prompt's features list */
+"autofill.onboarding.key-features.title" = "Viktige funksjoner";
+
 /* Subtitle for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.subtitle" = "Passord lagres på enheten din på en sikker måte.";
 
@@ -554,13 +582,10 @@
 "autofill.save-login.never-prompt.CTA" = "Aldri spør for dette nettstedet";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Passord lagres på enheten din på en sikker måte.";
+"autofill.save-login.new-user.message" = "DuckDuckGo-passord og -autofyll lagrer passord trygt på enheten din.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre passordet ditt?";
-
-/* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Ikke lagre";
+"autofill.save-login.new-user.title" = "Vil du lagre dette passordet?";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Vil du lagre passordet?";
@@ -629,7 +654,7 @@
 "bookmark.delete.alert.message" = "Dette vil slette bokmerket for \"%@\"";
 
 /* Delete bookmark alert title */
-"bookmark.delete.alert.title" = "Delete?";
+"bookmark.delete.alert.title" = "Vil du slette?";
 
 /* The message shown after a bookmark has been deleted */
 "bookmark.deleted.toast" = "Bokmerket er slettet";
@@ -724,11 +749,74 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
 
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
+
+/* Parameter is domain name (string) */
+"contextual.onboarding.browsing.one.tracker" = "*%1$@* prøvde å spore deg her. Jeg blokkerte dem!\n\n☝️ Trykk på skjoldet for å få mer informasjon.";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.final-screen.button" = "High five!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.final-screen.message" = "Husk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse. 👌";
+
+/* Title of the last screen of the onboarding to the browser app */
+"contextual.onboarding.final-screen.title" = "Dette går bra!";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.first-search-done.message" = "Det er DuckDuckGo Search. Privat. Raskt. Færre annonser.";
+
+/* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
+"contextual.onboarding.got-it.button" = "Skjønner!";
+
+/* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
+"contextual.onboarding.ntp.try-a-site.title" = "Prøv å besøke et nettsted!";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
+"contextual.onboarding.try-a-search.message" = "DuckDuckGo-søkene dine er alltid anonyme.";
+
+/* Title of a popover on the browser that invites the user to try a search */
+"contextual.onboarding.try-a-search.title" = "Er du klar til å komme i gang?\nPrøv et søk!";
+
+/* Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers */
+"contextual.onboarding.try-a-site.message" = "Jeg blokkerer sporingsforsøk slik at de ikke kan spionere på deg.";
+
+/* Title of a popover on the browser that invites the user to try a visiting a website */
+"contextual.onboarding.try-a-site.title" = "Nå kan du prøve å besøke et nettsted!";
+
+/* Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break */
+"contextual.onboarding.try-fire-button.message" = "Fjern nettleseraktiviteten din på et blunk med Fire Button.\n\nPrøv den! 🔥";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1-English" = "hvordan si «duck» på spansk";
+
+/* Browser Search query for how to say duck in english */
+"contextual.onboarding.try-search.option1international" = "hva heter «and» på engelsk";
+
+/* Search query for the cast of Mighty Ducks */
+"contextual.onboarding.try-search.option2-english" = "mighty ducks rolleinnehavere";
+
+/* Search query for the cast of Avatar */
+"contextual.onboarding.try-search.option2-international" = "rollebesetningen i avatar";
+
+/* Browser Search query for local weather */
+"contextual.onboarding.try-search.option3" = "lokalt vær";
+
+/* Browser Search query for chocolate chip cookie recipes */
+"contextual.onboarding.try-search.surprise-me-english" = "oppskrifter på sjokoladekjeks";
+
+/* Browser Search query for dinner recipes */
+"contextual.onboarding.try-search.surprise-me-international" = "middagsoppskrifter";
+
+/* Title for a button that triggers an unknown search query for the user. */
+"contextual.onboarding.try-search.surprise-me-title" = "Overrask meg!";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Send alltid krasjrapporter";
 
 /* Crash Report hide details button title */
-"crash.report.dialog.hide.details" = "Hide";
+"crash.report.dialog.hide.details" = "Skjul";
 
 /* Crash Report dialog message */
 "crash.report.dialog.message" = "Krasjrapporter hjelper DuckDuckGo med å diagnostisere problemer og forbedre produktene våre. De inneholder ingen personlig identifiserbar informasjon.";
@@ -827,7 +915,7 @@
 "dax.onboarding.message" = "Internettet kan være ganske skummelt.\n\nMen ikke vær redd! Det er enklere enn du tror å søke og surfe privat.";
 
 /* No comment provided by engineer. */
-"Debug" = "Debug";
+"Debug" = "Feilsøke";
 
 /* Default string used if users device is not iPhone or iPad */
 "device.type.default" = "enhet";
@@ -853,17 +941,20 @@
 /* Alert action for starting a file dowload */
 "downloads.alert.action.save-to-downloads" = "Lagre til nedlastinger";
 
-/* Cancel download action for alert when trying to cancel the file download */
+/* Cancel download action for downloads */
 "downloads.cancel-download.alert.cancel" = "Avbryt";
 
 /* Message for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.message" = "Er du sikker på at du vil avbryte denne nedlastingen?";
 
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Gjenoppta";
+/* Confirm action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.no" = "Nei";
 
 /* Title for alert when trying to cancel the file download */
 "downloads.cancel-download.alert.title" = "Vil du avbryte nedlastingen?";
+
+/* Confirm action for for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.yes" = "Ja";
 
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Slett alt";
@@ -901,8 +992,50 @@
 /* No comment provided by engineer. */
 "Duck Address" = "Duck-adresse";
 
+/* Title for message explaining to the user that Duck Player is not available */
+"duck-player.contingency-title" = "Duck Player er utilgjengelig";
+
+/* Button for the message explaining to the user that Duck Player is not available so the user can learn more */
+"duck-player.video-contingency-cta" = "Finn ut mer";
+
+/* Message explaining to the user that Duck Player is not available */
+"duck-player.video-contingency-message" = "Duck Players funksjonalitet har blitt påvirket av nylige endringer i YouTube. Vi jobber med å løse disse problemene og setter pris på forståelsen din.";
+
 /* No comment provided by engineer. */
 "DuckDuckGo for iOS" = "DuckDuckGo for iOS";
+
+/* Text displayed when DuckPlayer is always enabled */
+"duckPlayer.alwaysEnabled.label" = "Alltid";
+
+/* Text displayed when DuckPlayer is in 'Ask' mode. */
+"duckPlayer.ask.label" = "Spør hver gang";
+
+/* Text displayed when DuckPlayer is in off. */
+"duckPlayer.never.label" = "Aldri";
+
+/* Body text for the modal feature explanation */
+"duckplayer.presentation.modal.body" = "Med Duck Player kan du se på YouTube uten målrettede annonser i en kinolignende opplevelse i DuckDuckGo. Det du ser på, påvirker ikke anbefalingene du får.";
+
+/* Button that will dismiss the modal */
+"duckplayer.presentation.modal.dismiss-button" = "Skjønner!";
+
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title" = "Drukner du i annonser på YouTube? Prøv Duck Player!";
+
+/* Footer label in the settings screen for Duck Player */
+"duckplayer.settings.footer" = "DuckDuckGo gir deg alt du trenger for å beskytte personvernet ditt, når du surfer på nettet.";
+
+/* Text explaining what Duck Player is in the settings screen. */
+"duckplayer.settings.info-text" = "Duck Player tilbyr en ren seeropplevelse uten tilpassede annonser og forhindrer at seeraktiviteten din påvirker YouTube-anbefalingene dine.";
+
+/* Button that takes the user to learn more about Duck Player. */
+"duckplayer.settings.learn-more" = "Finn ut mer";
+
+/* Settings screen cell text for DuckPlayer settings */
+"duckplayer.settings.open-videos-in" = "Åpne videoer i Duck Player";
+
+/* Settings screen cell text for DuckPlayer settings */
+"duckplayer.settings.title" = "Duck Player";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "E-postbeskyttelse";
@@ -970,6 +1103,9 @@
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Skjul e-postadressen din og\nblokker sporere";
 
+/* No comment provided by engineer. */
+"empty!" = "empty!";
+
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bokmerker lagt til ennå";
 
@@ -1004,7 +1140,7 @@
 "error.preemptive-crash.title" = "Problem med appen er oppdaget";
 
 /* Generic error message on a dialog for when the cause is not known. */
-"error.unknown.try.again" = "An unknown error has occurred";
+"error.unknown.try.again" = "Det har oppstått en ukjent feil";
 
 /* No comment provided by engineer. */
 "favorite" = "Favoritt";
@@ -1014,6 +1150,9 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Fjern";
+
+/* No comment provided by engineer. */
+"Favorites" = "Favoritter";
 
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Alle favoritter på enheten";
@@ -1026,6 +1165,9 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Kun favoritter på mobil";
+
+/* No comment provided by engineer. */
+"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokkering av reklame og popups";
@@ -1238,9 +1380,6 @@
 "get.browser.title" = "Skaff deg DuckDuckGo for Mac eller Windows";
 
 /* No comment provided by engineer. */
-"Help us improve!" = "Help us improve!";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Legg til DuckDuckGo på startskjermen!";
 
 /* No comment provided by engineer. */
@@ -1254,6 +1393,9 @@
 
 /* Home tab title */
 "homeTab.title" = "Hjem";
+
+/* No comment provided by engineer. */
+"ID: %@ | %@ | %@" = "ID: %1$@ | %2$@ | %3$@";
 
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
@@ -1331,6 +1473,9 @@
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
+"Local setting enabled" = "Local setting enabled";
+
+/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1396,96 +1541,6 @@
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 
-/* Privacy Policy title for Network Protection */
-"network-protection.privacy-policy.title" = "Personvernerklæring";
-
-/* Title text for the Network Protection terms and conditions accept button */
-"network-protection.waitlist.agree-and-continue" = "Enig og fortsett";
-
-/* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "DuckDuckGo VPN er gratis under tidlig tilgang.";
-
-/* Agree and Continue button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.agree-and-continue" = "Godta og fortsett";
-
-/* Enable Notifications button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.enable-notifications" = "Aktiver varslinger";
-
-/* Button title for users who already have an invite code */
-"network-protection.waitlist.button.existing-invite-code" = "Jeg har en invitasjonskode";
-
-/* Join Waitlist button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.join-waitlist" = "Sett deg på ventelisten";
-
-/* Button title text for the Network Protection waitlist confirmation prompt */
-"network-protection.waitlist.get-started" = "Kom i gang";
-
-/* Subtitle for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.subtitle" = "Krypter netttrafikk på tvers av nettlesere og apper.";
-
-/* Title for section 1 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-1.title" = "Full enhetsdekning";
-
-/* Subtitle for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.subtitle" = "Du trenger ikke en egen app. Koble til med ett klikk. Sjekk status med et øyekast.";
-
-/* Title for section 2 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-2.title" = "Rask, pålitelig og brukervennlig";
-
-/* Subtitle for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.subtitle" = "Vi logger ikke og lagrer ikke data som kan forbinde deg med nettaktiviteten din.";
-
-/* Title for section 3 of the Network Protection invited screen */
-"network-protection.waitlist.invited.section-3.title" = "Strenge retningslinjer, ingen logging";
-
-/* Subtitle for Network Protection invited screen */
-"network-protection.waitlist.invited.subtitle" = "Få et ekstra lag med beskyttelse på nett med et raskt og lettvint VPN. Krypter internettforbindelsen på hele enheten, og hold posisjonen og IP-adressen din skjult for nettsteder du besøker.";
-
-/* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "Du er invitert til å prøve\ntidlig tilgang til DuckDuckGo VPN!";
-
-/* First subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.1" = "Sikre tilkoblingen din når som helst og hvor som helst med Nettverksbeskyttelse, VPN-et fra DuckDuckGo.";
-
-/* Second subtitle for Network Protection join waitlist screen */
-"network-protection.waitlist.join.subtitle.2" = "Sett deg på ventelisten, så varsler vi deg når det er din tur.";
-
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Tidlig tilgang til VPN";
-
-/* Title for Network Protection joined waitlist screen */
-"network-protection.waitlist.joined.title" = "Du står på listen!";
-
-/* Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.1" = "Nye invitasjoner sendes ut med noen dagers mellomrom, etter først-til-mølla-prinsippet.";
-
-/* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
-"network-protection.waitlist.joined.with-notifications.subtitle.2" = "Vi varsler deg når invitasjonen din er klar.";
-
-/* Body text for the alert to enable notifications */
-"network-protection.waitlist.notification-alert.description" = "Vi sender deg et varsel når invitasjonen din til å teste DuckDuckGo VPN er klar.";
-
-/* Subtitle for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-description" = "Få en varsling når eksemplaret ditt av tidlig tilgang til Nettverksbeskyttelse er klart.";
-
-/* Title for the alert to confirm enabling notifications */
-"network-protection.waitlist.notification-prompt-title" = "Få beskjed umiddelbart når du inviteres";
-
-/* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.text" = "Åpne invitasjonen din";
-
-/* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "DuckDuckGo VPN er klar!";
-
-/* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-and-invited" = "Invitasjonen din er klar!";
-
-/* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.joined-but-not-invited" = "Du står på listen!";
-
-/* Subtitle text for the Network Protection settings row */
-"network-protection.waitlist.settings-subtitle.waitlist-not-joined" = "Sett deg på den private ventelisten";
-
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
 
@@ -1549,6 +1604,9 @@
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
 
+/* Custom DNS label shown in NetworkProtection's status view. */
+"network.protection.status.view.custom.dns" = "DNS Server";
+
 /* Generic connection failed error message shown in NetworkProtection's status view. */
 "network.protection.status.view.error.connection.failed.message" = "Please try again later.";
 
@@ -1582,17 +1640,23 @@
 /* Title of the About section in the VPN status screen */
 "network.protection.vpn.about" = "Om";
 
+/* Section header for the toggle for VPN notifications. */
+"network.protection.vpn.alerts.section.header" = "Notifications";
+
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Få varsel hvis tilkoblingen blir brutt eller VPN-statusen endret.";
 
-/* Title for the toggle for VPN alerts. */
-"network.protection.vpn.alerts.toggle.title" = "VPN-varsler";
+/* Title for the toggle for VPN notifications. */
+"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Datavolum";
 
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "La lokal trafikk omgå VPN-et og koble til enheter på det lokale nettverket, for eksempel en skriver.";
+
+/* Header text for the Exclude Local Networks setting item. */
+"network.protection.vpn.exclude.local.networks.setting.header" = "General";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Ekskluder lokale nettverk";
@@ -1633,17 +1697,51 @@
 /* Title for the Preferred Location VPN Settings item. */
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Vi holder nettaktiviteten din privat med Secure DNS, slik at internettleverandøren din ikke kan se hvilke nettsteder du besøker.";
+/* Footer text for the DNS server setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "Ofte stilte spørsmål";
+"network.protection.vpn.settings.faq" = "FAQs and Support";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Del tilbakemelding om VPN";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
+
+/* Information message about New Tab Page redesign */
+"new.tab.page.intro.message.body" = "Tilpass favorittene dine og de funksjonene du bruker mest. Endre på rekkefølgen av ting eller skjul dem for å holde orden.";
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Vis, skjul og endre rekkefølgen av delene på den nye fanesiden";
+
+/* Title of information message about New Tab Page redesign */
+"new.tab.page.intro.message.title" = "Den nye fanesiden din er … ny!";
+/* Header title of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.header.title" = "DELER";
+
+/* Header title of the shortcuts in New Tab Page preferences. */
+"new.tab.page.settings.shortcuts.header.title" = "SNARVEIER";
+
+/* Title of New Tab Page preferences page. */
+"new.tab.page.settings.title" = "Tilpass ny fane";
+
+/* Shortcut title leading to AI Chat */
+"new.tab.page.shortcut.ai.chat" = "KI-chat";
+
+/* Shortcut title leading to Bookmarks */
+"new.tab.page.shortcut.bookmarks" = "Bokmerker";
+
+/* Shortcut title leading to Downloads */
+"new.tab.page.shortcut.downloads" = "Nedlastinger";
+
+/* Shortcut title leading to Passwords */
+"new.tab.page.shortcut.passwords" = "Passord";
+
+/* Shortcut title leading to app settings */
+"new.tab.page.shortcut.settings" = "Innstillinger";
+
+/* Text shown on the favorites info tooltip */
+"new.tab.page.tooltip.body" = "Åpne menyen under de tre prikkene (•••) og velg **Legg til favoritt** for å legge den til ny fane-siden.";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1718,13 +1816,13 @@
 "open.externally.failed" = "Appen som kreves for å åpne koblingen ble ikke funnet";
 
 /* Activate button */
-"pm.activate" = "Reactivate";
+"pm.activate" = "Aktiver på nytt";
 
 /* Cancel button */
-"pm.cancel" = "Cancel";
+"pm.cancel" = "Avbryt";
 
 /* Deactivate button */
-"pm.deactivate" = "Deactivate";
+"pm.deactivate" = "Deaktiver";
 
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Administrer bokmerker";
@@ -1807,6 +1905,9 @@
 "prompt.custom.url.scheme.title" = "Åpne i en annen app?";
 
 /* No comment provided by engineer. */
+"Requires internal user" = "Requires internal user";
+
+/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søk eller skriv inn adresse";
 
 /* No comment provided by engineer. */
@@ -1841,7 +1942,7 @@
 "settings.address.full.url" = "Vis fullstendig nettstedsadresse";
 
 /* Label describing a feature which is turned on always */
-"settings.always.on" = "Always On";
+"settings.always.on" = "Alltid på";
 
 /* Settings screen appearance section title */
 "settings.appearance" = "Utseende";
@@ -1959,13 +2060,16 @@
 "settings.next.steps" = "Neste trinn";
 
 /* Label describing a feature which is turned off */
-"settings.off" = "Off";
+"settings.off" = "Av";
 
 /* Label describing a feature which is turned on */
-"settings.on" = "On";
+"settings.on" = "På";
 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
+
+/* Title for Link in the Footer of Privacy Pro section */
+"settings.ppro.footer" = "Privacy Policy and Terms of Service";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Forhåndsvisning ved å trykke og holde";
@@ -1995,7 +2099,7 @@
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
 
 /* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Your Subscription is Being Activated";
+"settings.subscription.activation.pending.title" = "Abonnementet ditt blir aktivert";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
@@ -2004,16 +2108,16 @@
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
 /* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections, including:";
+"settings.subscription.description" = "Mer sømløst personvern med tre nye beskyttelsesfunksjoner:";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
 
 /* Subscription expired description */
-"settings.subscription.expired.comment" = "Subscribe again to continue using Privacy Pro";
+"settings.subscription.expired.comment" = "Abonner igjen for å fortsette å bruke Privacy Pro";
 
 /* Subscription expired tittle message */
-"settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
+"settings.subscription.expired.title" = "Abonnementet ditt på Privacy Pro har utløpt";
 
 /* Privacy pro features list */
 "settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
@@ -2099,13 +2203,10 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket nettsted fungerer ikke?";
 
-/* Subscription Activation Window Title */
-"subscription.activate" = "Activate Subscription";
-
 /* Subscription Activation Info */
 "subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
 
-/* Restore button title for Email */
+/* Button for adding email address to subscription */
 "subscription.activate.add.email.button" = "Add Email";
 
 /* Apple ID option for activation */
@@ -2120,6 +2221,12 @@
 /* Subscription Activation Info */
 "subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
 
+/* Button for editing email address added to subscription */
+"subscription.activate.edit.email.button" = "Edit Email";
+
+/* View Title for editing your email account */
+"subscription.activate.edit.email.title" = "Edit Email";
+
 /* Email option for activation */
 "subscription.activate.email" = "Email";
 
@@ -2132,17 +2239,11 @@
 /* Activate subscription title */
 "subscription.activate.email.title" = "Aktiver abonnement";
 
-/* Restore button title for Managing Email */
-"subscription.activate.manage.email.button" = "Manage";
-
 /* Button title for cancelling email deletion */
 "subscription.activate.manage.email.cancel" = "Cancel";
 
 /* Button title for confirming email deletion */
 "subscription.activate.manage.email.OK" = "OK";
-
-/* View Title for managing your email account */
-"subscription.activate.manage.email.title" = "Manage Email";
 
 /* Restore button title for AppleID */
 "subscription.activate.restore.apple" = "Restore Purchase";
@@ -2150,38 +2251,17 @@
 /* Subscription Activation Title */
 "subscription.activate.title" = "Activate your subscription on this device";
 
-/* Add to another device button */
-"subscription.add.device.button" = "Add to Another Device";
-
-/* Subscription Add device Info */
-"subscription.add.device.description" = "Få tilgang til Privacy Pro-abonnementet ditt via en e-postadresse.";
-
-/* Add subscription to other device title */
-"subscription.add.device.header.title" = "Bruk abonnementet ditt på andre enheter";
-
 /* Resend activation instructions button */
 "subscription.add.device.resend.instructions" = "Resend Instructions";
-
-/* Add to another device view title */
-"subscription.add.device.title" = "Add Device";
 
 /* Add email to an existing subscription */
 "subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
 
-/* Button title for adding email to subscription */
-"subscription.add.email.button" = "Add Email";
-
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
-/* Description for Email adding */
-"subscription.addDevice.email.description" = "Add an email address to access your subscription in DuckDuckGo on other devices. We’ll only use this address to verify your subscription.";
-
 /* Title for Alert messages */
 "subscription.alert.title" = "subscription.alert.title";
-
-/* Subscription type */
-"subscription.annual" = "Annual Subscription";
 
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
@@ -2192,17 +2272,32 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Abonnementer";
 
+/* Subscription annual billing period type */
+"subscription.billing.period.annual" = "annual";
+
+/* Subscription monthly billing period type */
+"subscription.billing.period.monthly" = "monthly";
+
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
 
-/* Change plan or billing title */
-"subscription.change.plan" = "Change Plan or Billing";
+/* Change plan or cancel title */
+"subscription.change.plan" = "Update Plan or Cancel";
 
 /* Navigation Button for closing subscription view */
 "subscription.close" = "Close";
 
 /* Title for Confirm messages */
 "subscription.confirm.title" = "Are you sure?";
+
+/* Header for section for activating subscription on other devices */
+"subscription.devices.header" = "Activate on Other Devices";
+
+/* Footer for section for activating subscription on other devices when email was not yet added */
+"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+
+/* Footer for section for activating subscription on other devices when email is added */
+"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
 "subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
@@ -2213,14 +2308,11 @@
 /* Alert content for not found subscription */
 "subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
 
-/* text for expiration string */
-"subscription.expires" = "expires";
-
 /* FAQ Button */
-"subscription.faq" = "Privacy Pro FAQ";
+"subscription.faq" = "FAQs and Support";
 
 /* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions about Privacy Pro in our help pages.";
+"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2237,20 +2329,11 @@
 /* Help and support Section header */
 "subscription.help" = "Help and support";
 
-/* Header for the device management section */
-"subscription.manage.devices" = "Manage Devices";
-
-/* Description for Email Management options */
-"subscription.manage.email.description" = "You can use this email to activate your subscription from browser settings in the DuckDuckGo app on your other devices.";
-
 /* Manage Plan header */
 "subscription.manage.plan" = "Manage Plan";
 
 /* Header for the subscription section */
 "subscription.manage.title" = "Subscription";
-
-/* Subscription type */
-"subscription.monthly" = "Monthly Subscription";
 
 /* Alert content for not found subscription */
 "subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
@@ -2274,7 +2357,7 @@
 "subscription.pir.heroTextMenyEntry" = "I have a subscription";
 
 /* Text for the 'macOS' button */
-"subscription.pir.macos" = "macOS";
+"subscription.pir.macos" = "Mac";
 
 /* Text for the 'Windows' button */
 "subscription.pir.windows" = "Windows";
@@ -2303,9 +2386,6 @@
 /* Remove subscription cancel button text */
 "subscription.remove.subscription.cancel" = "Cancel";
 
-/* text for renewal string */
-"subscription.renews" = "renews";
-
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Tilbake til Innstillinger";
 
@@ -2330,11 +2410,14 @@
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
-/* Subscription Expiration Data. This reads as 'Your subscription (renews or expires) on (date)' */
-"subscription.subscription.active.caption" = "Your subscription %1$@ on %2$@";
-
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
-"subscription.subscription.expired.caption" = "Your subscription expired on %@";
+"subscription.subscription.expired.caption" = "Abonnementet ditt utløp den %@";
+
+/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
+"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+
+/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
+"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2370,7 +2453,7 @@
 "sync.turn.off.confirm.title" = "Vil du slå av synkronisering?\n";
 
 /* Reason for auth when setting up Sync */
-"sync.user.auth.reason" = "Unlock device to set up Sync & Backup";
+"sync.user.auth.reason" = "Lås opp enheten for å konfigurere Sync & Backup";
 
 /* Data syncing unavailable warning message */
 "sync.warning.data.syncing.disabled" = "Beklager, men synkronisering og sikkerhetskopiering er ikke tilgjengelig for øyeblikket. Prøv igjen senere.";
@@ -2392,9 +2475,6 @@
 
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Fanebytter";
-
-/* No comment provided by engineer. */
-"Take Survey" = "Take Survey";
 
 /* Description text for the text size adjustment setting */
 "textSize.description" = "Velg ønsket tekststørrelse. Nettsteder du ser på i DuckDuckGo tilpasser seg den.";
@@ -2419,6 +2499,9 @@
 
 /* Light Theme entry */
 "theme.name.light" = "Lyst";
+
+/* No comment provided by engineer. */
+"This list contains messages that have been shown plus at most 1 message that is scheduled for showing. There may be more messages in the config that will be presented, but they haven't been processed yet." = "Denne listen inneholder meldinger som er blitt vist, pluss maksimalt én melding som er planlagt for visning. Det kan være flere meldinger i konfigurasjonen som skal vises, men de er ikke behandlet ennå.";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.disabled" = "Personvern er deaktivert for %@";
@@ -2475,7 +2558,7 @@
 "vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
 
 /* Title for the VPN widget onboarding screen */
-"vpn.addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
+"vpn.addWidget.settings.title" = "Finn og velg DuckDuckGo. Sveip deretter til VPN og velg Legg til widget.";
 
 /* Title for the Cancel button of the VPN feedback form */
 "vpn.feedback-form.button.cancel" = "Cancel";
@@ -2547,7 +2630,34 @@
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
-"vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+"vpn.settings.add.widget" = "Legg til VPN-widgeten på startskjermen";
+
+/* Disclaimer for the DNS Server section on the DNS Server screen */
+"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
+
+/* Header text for the DNS section on the VPN Settings screen */
+"vpn.settings.dns.section-header" = "DNS";
+
+/* Title for the Apply button on the DNS Server setting screen */
+"vpn.settings.dns.server.apply.button.title" = "Apply";
+
+/* Default value for the DNS Server row on the VPN Settings screen */
+"vpn.settings.dns.server.default.value" = "DuckDuckGo";
+
+/* Title for the IPv4 Address setting */
+"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
+
+/* Custom option for the DNS Server setting */
+"vpn.settings.dns.server.option.custom" = "Custom";
+
+/* Recommended option for the DNS Server setting */
+"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
+
+/* Title for the DNS Server setting screen */
+"vpn.settings.dns.server.screen.title" = "DNS Server";
+
+/* Title for the DNS Server row on the VPN Settings screen */
+"vpn.settings.dns.server.title" = "DNS Server";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Tillat varsler";
@@ -2599,9 +2709,6 @@
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "Du er invitert!";
-
-/* No comment provided by engineer. */
-"We want to make using passwords in DuckDuckGo better." = "We want to make using passwords in DuckDuckGo better.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favoritt er fjernet";

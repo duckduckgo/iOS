@@ -19,10 +19,6 @@ appId: com.duckduckgo.mobile.ios
 - inputText: "https://privacy-test-pages.site/"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
-
 # Prepare to add widgets
 - pressKey: HOME
 

@@ -24,6 +24,7 @@ import SwiftUI
 import Common
 import Combine
 import SyncUI
+import DuckPlayer
 
 import Subscription
 import NetworkProtection
@@ -42,11 +43,13 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
-
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     private var subscriptionSignOutObserver: Any?
-    
+    var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
+        DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+    }
+
     private enum UserDefaultsCacheKey: String, UserDefaultsCacheKeyStore {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"
     }
@@ -124,11 +127,11 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.addressbar.position
+                self.state.addressBar.position
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.addressbar.position = $0
+                self.state.addressBar.position = $0
             }
         )
     }
@@ -376,7 +379,7 @@ extension SettingsViewModel {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
-            addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
@@ -393,10 +396,10 @@ extension SettingsViewModel {
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
             speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
-            networkProtection: getNetworkProtectionState(),
+            networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
-            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer),
+            duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode
         )
         
@@ -417,10 +420,6 @@ extension SettingsViewModel {
                 await self.historyManager.removeAllHistory()
             }
         }
-    }
-
-    private func getNetworkProtectionState() -> SettingsState.NetworkProtection {
-        return SettingsState.NetworkProtection(enabled: false, status: "")
     }
 
     private func getSyncState() -> SettingsState.SyncSettings {
@@ -458,12 +457,12 @@ extension SettingsViewModel {
         if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
             switch connectionStatus {
             case .connected:
-                self.state.networkProtection.status = UserText.netPCellConnected
+                self.state.networkProtectionConnected = true
             default:
-                self.state.networkProtection.status = UserText.netPCellDisconnected
+                self.state.networkProtectionConnected = false
             }
         } else {
-            self.state.networkProtection.status = ""
+            self.state.networkProtectionConnected = false
         }
     }
     
@@ -476,8 +475,8 @@ extension SettingsViewModel {
 
         AppDependencyProvider.shared.connectionObserver.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasActiveSubscription in
-                self?.updateNetPStatus(connectionStatus: hasActiveSubscription)
+            .sink { [weak self] status in
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
 
@@ -539,6 +538,18 @@ extension SettingsViewModel {
                                   completionHandler: nil)
     }
 
+    var shouldDisplayDuckPlayerContingencyMessage: Bool {
+        duckPlayerContingencyHandler.shouldDisplayContingencyMessage
+    }
+
+    func openDuckPlayerContingencyMessageSite() {
+        guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
+        Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+
     @MainActor func openCookiePopupManagement() {
         pushViewController(legacyViewProvider.autoConsent)
     }
@@ -587,10 +598,6 @@ extension SettingsViewModel {
         
         case .autoconsent:
             pushViewController(legacyViewProvider.autoConsent)
-
-        case .netP:
-            firePixel(.privacyProVPNSettings)
-            pushViewController(legacyViewProvider.netP)
         }
     }
  
@@ -643,13 +650,7 @@ extension SettingsViewModel {
         // Default to .sheet, specify .push where needed
         var type: DeepLinkType {
             switch self {
-            // Specify cases that require .push presentation
-            // Example:
-            // case .dbp:
-            //     return .sheet
-            case .netP:
-                return .UIKitView
-            default:
+            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer:
                 return .navigationLink
             }
         }
@@ -659,7 +660,6 @@ extension SettingsViewModel {
     enum DeepLinkType {
         case sheet
         case navigationLink
-        case UIKitView
     }
             
     // Navigate to a section in settings

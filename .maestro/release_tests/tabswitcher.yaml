@@ -1,0 +1,56 @@
+# tabswitcher.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site"
+- pressKey: Enter
+    
+- assertVisible: ".*Privacy Test Pages.*"
+
+# Add tab
+- assertVisible: Tab Switcher
+- tapOn: Tab Switcher
+- assertVisible: ".*Privacy Test Pages.*"
+- assertVisible: 
+    id: "Add"
+- tapOn:
+    id: "Add"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://www.search-company.site"
+- pressKey: Enter
+- assertVisible: "Search engine"
+
+# Bookmark all
+- assertVisible: Tab Switcher
+- tapOn: Tab Switcher
+- tapOn: "Add all tabs as bookmarks"
+- assertVisible: "Bookmark All Tabs?"
+- tapOn: "Bookmark"
+
+# can't really tell if it works, but at least it won't crash
+- tapOn: "Toggle between grid and list view"
+
+# Check bookmarks were added
+- tapOn: "Done"
+
+- tapOn: "Browsing menu"
+- tapOn: "Bookmarks"
+- assertVisible: "Privacy Test Pages - Home"
+- assertVisible: "Ad Click Flow"
+
+

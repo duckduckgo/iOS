@@ -115,6 +115,15 @@ struct VPNStatusView: View {
     @Environment(\.openURL) private var openURL
     var entry: VPNStatusTimelineProvider.Entry
 
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+    private let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
+
     @ViewBuilder
     var body: some View {
         Group {
@@ -141,13 +150,39 @@ struct VPNStatusView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(Color(designSystemColor: .textPrimary))
 
-                Text(status == .connected ? entry.location : UserText.vpnWidgetDisconnectedSubtitle)
-                    .font(.system(size: 12, weight: .regular))
-                    .foregroundStyle(Color(designSystemColor: .textSecondary))
-                    .opacity(status.isConnected ? 0.8 : 0.6)
+                if status == .connected {
+                    Text(snoozeTimingStore.isSnoozing ? UserText.vpnWidgetSnoozingUntil(endDate: snoozeEndDateString) : entry.location)
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundStyle(Color(designSystemColor: .textSecondary))
+                        .opacity(status.isConnected ? 0.8 : 0.6)
+                } else {
+                    Text(UserText.vpnWidgetDisconnectedSubtitle)
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundStyle(Color(designSystemColor: .textSecondary))
+                        .opacity(status.isConnected ? 0.8 : 0.6)
+                }
 
                 switch status {
-                case .connected, .connecting, .reasserting:
+                case .connected:
+                    let buttonTitle = snoozeTimingStore.isSnoozing ? UserText.vpnWidgetLiveActivityWakeUpButton : UserText.vpnWidgetDisconnectButton
+                    let intent: any AppIntent = snoozeTimingStore.isSnoozing ? CancelSnoozeVPNIntent() : DisableVPNIntent()
+
+                    Button(buttonTitle, intent: intent)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(snoozeTimingStore.isSnoozing ?
+                                         connectButtonForegroundColor(isDisabled: false) :
+                                         disconnectButtonForegroundColor(isDisabled: status != .connected))
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.roundedRectangle(radius: 8))
+                        .tint(snoozeTimingStore.isSnoozing ?
+                              Color(designSystemColor: .accent) :
+                                disconnectButtonBackgroundColor(isDisabled: status != .connected)
+                        )
+                        .disabled(status != .connected)
+                        .frame(height: 28)
+                        .padding(.top, 6)
+                        .padding(.bottom, 16)
+                case .connecting, .reasserting:
                     Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
@@ -176,6 +211,14 @@ struct VPNStatusView: View {
             .padding(.horizontal, 14)
             .padding(.top, 16)
             Spacer()
+        }
+    }
+
+    private var snoozeEndDateString: String {
+        if let activeTiming = snoozeTimingStore.activeTiming {
+            return dateFormatter.string(from: activeTiming.endDate)
+        } else {
+            return ""
         }
     }
 
@@ -213,7 +256,13 @@ struct VPNStatusView: View {
 
     private func headerImageName(with status: NEVPNStatus) -> String {
         switch status {
-        case .connecting, .connected, .reasserting: return "vpn-on"
+        case .connected:
+            if snoozeTimingStore.isSnoozing {
+                return "vpn-off"
+            } else {
+                return "vpn-on"
+            }
+        case .connecting, .reasserting: return "vpn-on"
         case .disconnecting, .disconnected: return "vpn-off"
         case .invalid: return "vpn-off"
         @unknown default: return "vpn-off"
@@ -222,7 +271,14 @@ struct VPNStatusView: View {
 
     private func title(with status: NEVPNStatus) -> String {
         switch status {
-        case .connecting, .connected, .reasserting: return UserText.vpnWidgetConnectedStatus
+        case .connected:
+            let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
+            if snoozeTimingStore.activeTiming != nil {
+                return UserText.vpnWidgetSnoozingStatus
+            } else {
+                return UserText.vpnWidgetConnectedStatus
+            }
+        case .connecting, .reasserting: return UserText.vpnWidgetConnectedStatus
         case .disconnecting, .disconnected, .invalid: return UserText.vpnWidgetDisconnectedStatus
         @unknown default: return "Unknown"
         }

@@ -34,7 +34,7 @@ class VariantManagerTests: XCTestCase {
     func testWhenVariantIsExcludedThenItIsNotInVariantList() {
         
         let subject = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 500),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         XCTAssertTrue(!subject.isSupported(feature: .dummy))
         
     }
@@ -48,7 +48,7 @@ class VariantManagerTests: XCTestCase {
         let mockStore = MockStatisticsStore()
         mockStore.variant = "test"
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
 
         // temporarily use this feature name
         XCTAssertTrue(subject.isSupported(feature: .dummy))
@@ -65,7 +65,7 @@ class VariantManagerTests: XCTestCase {
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i),
-                                                returningUserMeasurement: MockReturningUserMeasurement())
+                                                returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
             subject.assignVariantIfNeeded { _ in }
             XCTAssertNotEqual("mt", subject.currentVariant?.name)
 
@@ -79,7 +79,7 @@ class VariantManagerTests: XCTestCase {
         mockStore.atb = "atb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertNil(subject.currentVariant)
 
@@ -89,7 +89,7 @@ class VariantManagerTests: XCTestCase {
 
         let variant = VariantIOS(name: "anything", weight: 100, isIncluded: VariantIOS.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
@@ -100,7 +100,7 @@ class VariantManagerTests: XCTestCase {
         let mockStore = MockStatisticsStore()
         mockStore.variant = "mb"
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
 
@@ -119,7 +119,7 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
@@ -130,20 +130,46 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         XCTAssertNil(subject.currentVariant)
 
     }
 
     func testWhenNoVariantsThenAssignsNothing() {
         let subject = DefaultVariantManager(variants: [], storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: MockReturningUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         XCTAssertNil(subject.currentVariant)
     }
 
+    // MARK: - Variant Override
+
+    func testWhenVariantOverrideIsNotNilThenVariantIsReturned() {
+        // GIVEN
+        let expectedVariantName = "experiment-test"
+        let variants = testVariants + [VariantIOS(name: expectedVariantName, weight: 50, isIncluded: VariantIOS.When.always, features: [])]
+        let mockVariantOverride = MockVariantNameOverride()
+        mockVariantOverride.overriddenAppVariantName = expectedVariantName
+        let sut = DefaultVariantManager(
+            variants: variants,
+            storage: MockStatisticsStore(),
+            rng: MockVariantRNG(returnValue: 0),
+            returningUserMeasurement: MockReturningUserMeasurement(),
+            variantNameOverride: mockVariantOverride
+        )
+        sut.assignVariantIfNeeded { _ in }
+
+        // WHEN
+        let result = sut.currentVariant
+
+        // THEN
+        XCTAssertEqual(result?.name, expectedVariantName)
+    }
+
+    // MARK: - Helpers
+
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
         let variantManager = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: rng,
-                                                   returningUserMeasurement: MockReturningUserMeasurement())
+                                                   returningUserMeasurement: MockReturningUserMeasurement(), variantNameOverride: MockVariantNameOverride())
         variantManager.assignVariantIfNeeded { _ in }
         return variantManager
     }
@@ -166,4 +192,8 @@ class MockReturningUserMeasurement: ReturnUserMeasurement {
     }
     func updateStoredATB(_ atb: Core.Atb) {
     }
+}
+
+final class MockVariantNameOverride: VariantNameOverriding {
+    var overriddenAppVariantName: String?
 }

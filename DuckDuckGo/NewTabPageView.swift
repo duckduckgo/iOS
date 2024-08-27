@@ -21,23 +21,23 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
+struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
+    @ObservedObject private var newTabPageModel: NewTabPageModel
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
     @ObservedObject private var favoritesModel: FavoritesModelType
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
-    
-    @State var isShowingTooltip: Bool = false
-    @State private var isShowingSettings: Bool = false
 
-    init(messagesModel: NewTabPageMessagesModel,
+    init(newTabPageModel: NewTabPageModel,
+         messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
+        self.newTabPageModel = newTabPageModel
         self.messagesModel = messagesModel
         self.favoritesModel = favoritesModel
         self.shortcutsModel = shortcutsModel
@@ -58,7 +58,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
     private var favoritesSectionView: some View {
         Group {
             if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
+                FavoritesEmptyStateView(model: favoritesModel)
             } else {
                 FavoritesView(model: favoritesModel)
             }
@@ -79,7 +79,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             Spacer()
 
             Button(action: {
-                isShowingSettings = true
+                newTabPageModel.customizeNewTabPage()
             }, label: {
                 NewTabPageCustomizeButtonView()
                 // Needed to reduce default button margins
@@ -87,6 +87,21 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             }).buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
                 .padding(.top, 40)
         }.sectionPadding()
+    }
+
+    @ViewBuilder
+    private var introMessageView: some View {
+        if newTabPageModel.isIntroMessageVisible {
+            NewTabPageIntroMessageView(onClose: {
+                withAnimation {
+                    newTabPageModel.dismissIntroMessage()
+                }
+            })
+            .sectionPadding()
+            .onFirstAppear {
+                newTabPageModel.introMessageDisplayed()
+            }
+        }
     }
 
     private var isAnySectionEnabled: Bool {
@@ -97,10 +112,12 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
         !shortcutsSettingsModel.enabledItems.isEmpty
     }
 
-    var body: some View {
+    private var mainView: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack {
+                    introMessageView
+
                     messagesSectionView
 
                     if isAnySectionEnabled {
@@ -127,20 +144,26 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel>: View {
             }
         }
         .background(Color(designSystemColor: .background))
-        .if(isShowingTooltip) {
+        .if(favoritesModel.isShowingTooltip) {
             $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
-                isShowingTooltip = false
+                favoritesModel.toggleTooltip()
             })
         }
-        .sheet(isPresented: $isShowingSettings, onDismiss: {
+        .sheet(isPresented: $newTabPageModel.isShowingSettings, onDismiss: {
             shortcutsSettingsModel.save()
             sectionsSettingsModel.save()
         }, content: {
             NavigationView {
                 NewTabPageSettingsView(shortcutsSettingsModel: shortcutsSettingsModel,
-                                          sectionsSettingsModel: sectionsSettingsModel)
+                                       sectionsSettingsModel: sectionsSettingsModel)
             }
         })
+    }
+
+    var body: some View {
+        if !newTabPageModel.isOnboarding {
+            mainView
+        }
     }
 }
 
@@ -161,6 +184,7 @@ private struct Constant {
 
 #Preview("Regular") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: []
@@ -175,6 +199,7 @@ private struct Constant {
 
 #Preview("With message") {
     NewTabPageView(
+        newTabPageModel: NewTabPageModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: [

@@ -24,6 +24,7 @@ import UserScript
 import Combine
 import Core
 import BrowserServicesKit
+import DuckPlayer
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
@@ -86,6 +87,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     weak var webView: WKWebView?
     
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
+        .exact(hostname: "sosbourne.duckduckgo.com"),
         .exact(hostname: DuckPlayerSettings.OriginDomains.duckduckgo),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtube),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtubeMobile)
@@ -163,15 +165,15 @@ extension YoutubeOverlayUserScript {
         
         switch pixelName {
         case "play.use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay, debounce: 2)
             duckPlayerStorage.userInteractedWithDuckPlayer = true
-
+                        
         case "play.do_not_use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeWatchHere, debounce: 2)
             duckPlayerStorage.userInteractedWithDuckPlayer = true
 
         case "overlay":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions)
+            Pixel.fire(pixel: Pixel.Event.duckPlayerOverlayYoutubeImpressions, debounce: 2)
             
         default:
             break

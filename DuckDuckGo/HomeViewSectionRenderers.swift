@@ -38,8 +38,6 @@ protocol HomeViewSectionRenderer: AnyObject {
     
     func remove(from controller: HomeViewController)
     
-    func omniBarCancelPressed()
-    
     func openedAsNewTab(allowingKeyboard: Bool)
 
     func launchNewSearch()
@@ -134,12 +132,6 @@ class HomeViewSectionRenderers: NSObject,
     
     func rendererFor(section: Int) -> HomeViewSectionRenderer {
         return renderers[section]
-    }
-    
-    func omniBarCancelPressed() {
-        renderers.forEach { renderer in
-            renderer.omniBarCancelPressed()
-        }
     }
     
     func openedAsNewTab(allowingKeyboard: Bool) {

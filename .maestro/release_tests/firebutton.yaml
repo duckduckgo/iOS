@@ -17,10 +17,6 @@ tags:
 - inputText: "https://privacy-test-pages.site/features/local-storage.html"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    file: ../shared/onboarding_browsing.yaml
-
 # Add a cookie
 - assertVisible: "Storage Counter: undefined"
 - assertVisible: "Cookie Counter:"

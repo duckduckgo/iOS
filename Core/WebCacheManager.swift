@@ -78,7 +78,7 @@ public class WebCacheManager {
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
-                      dataStoreIdManager: DataStoreIdManager = .shared) async {
+                      dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
         if #available(iOS 17, *), dataStoreIdManager.hasId {
@@ -88,6 +88,10 @@ public class WebCacheManager {
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
 
+        if #available(iOS 17, *) {
+            dataStoreIdManager.allocateNewContainerId()
+        }
+
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
 
@@ -96,29 +100,35 @@ public class WebCacheManager {
 extension WebCacheManager {
 
     @available(iOS 17, *)
-    private func checkForLeftBehindDataStores() async {
+    private func checkForLeftBehindDataStores(previousLeftOversCount: Int) async {
+        let params = [
+            "left_overs_count": "\(previousLeftOversCount)"
+        ]
+
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
         if ids.count > 1 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple, withAdditionalParameters: params)
         } else if ids.count > 0 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne, withAdditionalParameters: params)
+        } else if previousLeftOversCount > 0 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresCleared, withAdditionalParameters: params)
         }
     }
 
     @available(iOS 17, *)
-    private func containerBasedClearing(storeIdManager: DataStoreIdManager) async -> [HTTPCookie]? {
+    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
         guard let containerId = storeIdManager.id else { return [] }
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
 
         let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because there should be a current store
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
-        await checkForLeftBehindDataStores()
+        await checkForLeftBehindDataStores(previousLeftOversCount: previousLeftOversCount)
 
-        storeIdManager.allocateNewContainerId()
         return cookies
     }
 

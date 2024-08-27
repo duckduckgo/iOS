@@ -37,6 +37,15 @@ protocol FavoritesModel: AnyObject, ObservableObject {
     func favoriteSelected(_ favorite: Favorite)
     func editFavorite(_ favorite: Favorite)
     func deleteFavorite(_ favorite: Favorite)
+    func moveFavorites(from indexSet: IndexSet, to index: Int)
+}
+
+protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
+
+    var isShowingTooltip: Bool { get }
+
+    func placeholderTapped()
+    func toggleTooltip()
 }
 
 struct FavoritesSlice {

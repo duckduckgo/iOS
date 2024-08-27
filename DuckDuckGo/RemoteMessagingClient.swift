@@ -26,6 +26,7 @@ import BrowserServicesKit
 import Persistence
 import Bookmarks
 import RemoteMessaging
+import os.log
 
 final class RemoteMessagingClient: RemoteMessagingProcessing {
 
@@ -65,15 +66,14 @@ final class RemoteMessagingClient: RemoteMessagingProcessing {
             duckPlayerStorage: duckPlayerStorage
         )
         let configFetcher = RemoteMessagingConfigFetcher(
-            configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), log: .remoteMessaging, eventMapping: nil),
+            configurationFetcher: ConfigurationFetcher(store: configurationStore, urlSession: .session(), eventMapping: nil),
             configurationStore: configurationStore
         )
         let remoteMessagingStore = RemoteMessagingStore(
             database: database,
             notificationCenter: notificationCenter,
             errorEvents: errorEvents,
-            remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider,
-            log: .remoteMessaging
+            remoteMessagingAvailabilityProvider: remoteMessagingAvailabilityProvider
         )
         self.init(
             configMatcherProvider: provider,
@@ -146,7 +146,7 @@ extension RemoteMessagingClient {
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
-            os_log("Failed to schedule background task: %@", log: OSLog.remoteMessaging, type: .error, error.localizedDescription)
+            Logger.remoteMessaging.error("Failed to schedule background task: \(error.localizedDescription, privacy: .public)")
         }
         #endif
     }

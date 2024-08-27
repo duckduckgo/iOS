@@ -38,8 +38,8 @@ final class PrivacyIconAndTrackersAnimator {
     
     private(set) var state: State = .notStarted
     
-    var onAnimationCompletion: (() -> Void)?
-    
+    private var animationCompletionObservers: [() -> Void] = []
+
     func configure(_ container: PrivacyInfoContainerView, with privacyInfo: PrivacyInfo) {
         state = .notStarted
         isAnimatingForDaxDialog = false
@@ -96,8 +96,8 @@ final class PrivacyIconAndTrackersAnimator {
             
             if completed {
                 self?.state = .completed
-                self?.onAnimationCompletion?()
-                self?.onAnimationCompletion = nil
+                self?.animationCompletionObservers.forEach { action in action() }
+                self?.animationCompletionObservers = []
             }
         }
     }
@@ -143,8 +143,8 @@ final class PrivacyIconAndTrackersAnimator {
     
     func completeForNoAnimation() {
         state = .completed
-        onAnimationCompletion?()
-        onAnimationCompletion = nil
+        animationCompletionObservers.forEach { action in action() }
+        animationCompletionObservers = []
     }
     
     func cancelAnimations(in omniBar: OmniBar) {
@@ -169,4 +169,9 @@ final class PrivacyIconAndTrackersAnimator {
     func resetImageProvider() {
         trackerAnimationImageProvider.reset()
     }
+
+    func onAnimationCompletion(_ completion: @escaping () -> Void) {
+        animationCompletionObservers.append(completion)
+    }
+
 }

@@ -49,7 +49,12 @@ public struct UserDefaultsWrapper<T> {
         case daxBrowsingMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingMajorTrackingSiteShown"
         case daxBrowsingOwnedByMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingOwnedByMajorTrackingSiteShown"
         case daxFireButtonEducationShownOrExpired = "com.duckduckgo.ios.daxfireButtonEducationShownOrExpired"
+        case daxFireMessageExperimentShown = "com.duckduckgo.ios.fireMessageShown"
         case fireButtonPulseDateShown = "com.duckduckgo.ios.fireButtonPulseDateShown"
+        case privacyButtonPulseShown = "com.duckduckgo.ios.privacyButtonPulseShown"
+        case daxBrowsingFinalDialogShown = "com.duckduckgo.ios.daxOnboardingFinalDialogSeen"
+        case daxLastVisitedOnboardingWebsite = "com.duckduckgo.ios.daxOnboardingLastVisitedWebsite"
+        case daxLastShownContextualOnboardingDialogType = "com.duckduckgo.ios.daxLastShownContextualOnboardingDialogType"
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
         case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"
@@ -139,7 +144,8 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
         case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
-        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
+        case lastBrokenSiteToastShownDate = "com.duckduckgo.ios.userBehavior.lastBrokenSiteToastShownDate"
+        case toastDismissStreakCounter = "com.duckduckgo.ios.userBehavior.toastDismissStreakCounter"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
@@ -156,6 +162,8 @@ public struct UserDefaultsWrapper<T> {
 
         case newTabPageSectionsSettings = "com.duckduckgo.ios.newTabPage.sections.settings"
         case newTabPageShortcutsSettings = "com.duckduckgo.ios.newTabPage.shortcuts.settings"
+        case newTabPageIntroMessageEnabled = "com.duckduckgo.ios.newTabPage.introMessageEnabled"
+        case newTabPageIntroMessageSeenCount = "com.duckduckgo.ios.newTabPage.introMessageSeenCount"
 
         // Debug keys
 

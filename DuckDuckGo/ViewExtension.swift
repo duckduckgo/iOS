@@ -35,16 +35,13 @@ extension View {
 }
 
 extension View {
-    /// Disables scroll in a backwards-compatible way. 
-    ///
-    /// Keep in mind fallback version may have unforeseen consequences.
-    /// Verify if it does not break anything else for you.
+    /// Disables scroll if allowed by system version
     @ViewBuilder
-    func withoutScroll() -> some View {
+    func withoutScroll(_ isScrollDisabled: Bool = true) -> some View {
         if #available(iOS 16, *) {
-            scrollDisabled(true)
+            scrollDisabled(isScrollDisabled)
         } else {
-            gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local), including: .gesture)
+            self
         }
     }
 }

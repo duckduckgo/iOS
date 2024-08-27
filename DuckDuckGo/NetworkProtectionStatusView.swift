@@ -37,7 +37,7 @@ struct NetworkProtectionStatusView: View {
             toggle()
             locationDetails()
 
-            if statusModel.isNetPEnabled && statusModel.shouldShowConnectionDetails && statusModel.ipAddress != nil {
+            if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing {
                 connectionDetails()
             }
 
@@ -47,8 +47,8 @@ struct NetworkProtectionStatusView: View {
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
             $0
-                .animation(.default, value: statusModel.shouldShowConnectionDetails)
-                .animation(.default, value: statusModel.shouldShowError)
+                .animation(.easeOut, value: statusModel.hasServerInfo)
+                .animation(.easeOut, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
     }
@@ -70,6 +70,7 @@ struct NetworkProtectionStatusView: View {
                             .foregroundColor(.init(designSystemColor: .textSecondary))
                     }
                 }
+                .layoutPriority(1)
 
                 Toggle("", isOn: Binding(
                     get: { statusModel.isNetPEnabled },
@@ -83,6 +84,8 @@ struct NetworkProtectionStatusView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
             .padding([.top, .bottom], 2)
+
+            snooze()
         } header: {
             header()
         }
@@ -126,9 +129,30 @@ struct NetworkProtectionStatusView: View {
     }
 
     @ViewBuilder
+    private func snooze() -> some View {
+        if statusModel.isSnoozing {
+            Button(UserText.netPStatusViewWakeUp) {
+                Task {
+                    await statusModel.cancelSnooze()
+                }
+            }
+            .tint(Color(designSystemColor: .accent))
+            .disabled(statusModel.snoozeRequestPending)
+        } else if statusModel.hasServerInfo {
+            Button(UserText.netPStatusViewSnooze) {
+                Task {
+                    await statusModel.startSnooze()
+                }
+            }
+            .tint(Color(designSystemColor: .accent))
+            .disabled(statusModel.snoozeRequestPending)
+        }
+    }
+
+    @ViewBuilder
     private func locationDetails() -> some View {
-        Section {
-            if let location = statusModel.location {
+        if !statusModel.isSnoozing, let location = statusModel.location {
+            Section {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(
                         statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location
@@ -143,7 +167,13 @@ struct NetworkProtectionStatusView: View {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(title: locationAttributedString, imageName: nil)
                 }
-            } else {
+            } header: {
+                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
+            }
+            .listRowBackground(Color(designSystemColor: .surface))
+        } else {
+            Section {
                 let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
                 var nearestLocationAttributedString: AttributedString {
                     var attributedString = AttributedString(statusModel.preferredLocation.title)
@@ -154,12 +184,12 @@ struct NetworkProtectionStatusView: View {
                 NavigationLink(destination: NetworkProtectionVPNLocationView()) {
                     NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
+            } header: {
+                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
             }
-        } header: {
-            Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
-                .foregroundColor(.init(designSystemColor: .textSecondary))
+            .listRowBackground(Color(designSystemColor: .surface))
         }
-        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder

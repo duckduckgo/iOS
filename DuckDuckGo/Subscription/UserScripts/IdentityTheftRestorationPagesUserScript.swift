@@ -23,6 +23,7 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
+import os.log
 
 ///
 /// The user script that will be the broker for all identity theft protection features
@@ -54,6 +55,7 @@ extension IdentityTheftRestorationPagesUserScript: WKScriptMessageHandlerWithRep
             return (json, nil)
         } catch {
             // forward uncaught errors to the client
+            Logger.subscription.error("IdentityTheftRestorationPagesUserScript error: \(error.localizedDescription)")
             return (nil, error.localizedDescription)
         }
     }
@@ -62,5 +64,6 @@ extension IdentityTheftRestorationPagesUserScript: WKScriptMessageHandlerWithRep
 extension IdentityTheftRestorationPagesUserScript: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // unsupported
+        Logger.subscription.debug("Unsupported function: \(#function)")
     }
 }

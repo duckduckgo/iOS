@@ -22,28 +22,66 @@ import SwiftUI
 struct NewTabPageSectionsDebugView: View {
     
     private var newTabPageDebugging: NewTabPageDebugging
+    private var appSettings: AppSettings
+    
     @State private var isFeatureEnabled: Bool
+    @State private var introMessageCount: Int
+    @State private var isIntroMessageInitialized: Bool
+
     private var localFlagEnabled: Binding<Bool> {
         Binding {
             newTabPageDebugging.isLocalFlagEnabled
         } set: {
             newTabPageDebugging.isLocalFlagEnabled = $0
             isFeatureEnabled = newTabPageDebugging.isNewTabPageSectionsEnabled
+            isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
         }
-
     }
-
+    
+    private var introMessageEnabled: Binding<Bool> {
+        Binding {
+            appSettings.newTabPageIntroMessageEnabled ?? false
+        } set: {
+            appSettings.newTabPageIntroMessageEnabled = $0
+            isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
+        }
+    }
+    
+    private var introMessageCountBinding: Binding<Int> {
+        Binding {
+            appSettings.newTabPageIntroMessageSeenCount
+        } set: {
+            appSettings.newTabPageIntroMessageSeenCount = $0
+            introMessageCount = $0
+        }
+    }
+    
     init() {
         let manager = NewTabPageManager()
         newTabPageDebugging = manager
         isFeatureEnabled = manager.isNewTabPageSectionsEnabled
+        
+        appSettings = AppDependencyProvider.shared.appSettings
+        introMessageCount = appSettings.newTabPageIntroMessageSeenCount
+        isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
     }
-
+    
     var body: some View {
         List {
             Section {
+                Toggle(isOn: localFlagEnabled,
+                       label: {
+                    Text(verbatim: "Local setting enabled")
+                })
+            } header: {
+                Text(verbatim: "Feature settings")
+            } footer: {
+                Text(verbatim: "Requires internal user flag set to have an effect.")
+            }
+
+            Section {
                 HStack {
-                    Text("New tab page sections enabled")
+                    Text(verbatim: "New tab page sections enabled")
                     Spacer()
                     if isFeatureEnabled {
                         Image(systemName: "checkmark")
@@ -53,11 +91,11 @@ struct NewTabPageSectionsDebugView: View {
                             .foregroundColor(Color.red40)
                     }
                 }
-            }
 
-            Section {
                 HStack {
-                    Text("Feature flag enabled")
+                    VStack {
+                        Text(verbatim: "Feature flag enabled")
+                    }
                     Spacer()
                     if newTabPageDebugging.isFeatureFlagEnabled {
                         Image(systemName: "checkmark")
@@ -69,17 +107,43 @@ struct NewTabPageSectionsDebugView: View {
                             .foregroundColor(Color.red40)
                     }
                 }
-            } footer: {
-                Text("Requires internal user")
             }
 
             Section {
-                Toggle(isOn: localFlagEnabled,
-                       label: {
-                    Text("Local setting enabled")
+                HStack {
+                    Text(verbatim: "Intro message initialized")
+                    Spacer()
+                    Text(verbatim: isIntroMessageInitialized.description.localizedCapitalized)
+                        .frame(alignment: .trailing)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Toggle(isOn: introMessageEnabled) {
+                    Text(verbatim: "Intro message")
+                }
+                
+                HStack {
+                    Text(verbatim: "Message seen count")
+                    Spacer()
+                    Text(verbatim: "\(introMessageCount)")
+                        .frame(alignment: .trailing)
+                        .foregroundStyle(.secondary)
+                }
+                Button("Reset message seen count", action: {
+                    introMessageCountBinding.wrappedValue = 0
                 })
+
+                Button("Reset intro message", action: {
+                    appSettings.newTabPageIntroMessageEnabled = nil
+                    introMessageCountBinding.wrappedValue = 0
+                    isIntroMessageInitialized = false
+                })
+            } header: {
+                Text(verbatim: "Intro message")
             }
         }
+        .applyInsetGroupedListStyle()
+        .navigationTitle("New Tab Page Improvements")
     }
 }
 

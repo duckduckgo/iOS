@@ -20,7 +20,9 @@
 import Bookmarks
 import Foundation
 
-final class FavoritesPreviewModel: FavoritesModel {
+final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel {
+
+    @Published var isShowingTooltip: Bool = false
     var isCollapsed: Bool = true
     
     @Published var allFavorites: [Favorite]
@@ -71,8 +73,20 @@ final class FavoritesPreviewModel: FavoritesModel {
 
     }
 
+    func moveFavorites(from indexSet: IndexSet, to index: Int) {
+        allFavorites.move(fromOffsets: indexSet, toOffset: index)
+    }
+
     func loadFavicon(for favorite: Favorite, size: CGFloat) async {
         
+    }
+
+    func placeholderTapped() {
+
+    }
+
+    func toggleTooltip() {
+    
     }
 }
 

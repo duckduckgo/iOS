@@ -42,6 +42,26 @@ Blokeerisin nad!
 ☝️Võid vaadata aadressiriba, et näha, kes üritab sind jälgida, kui külastad uut saiti.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* ja *veel 1* üritasid sind siin jälgida. Ma blokeerisin need!
+
+☝️ Lisateabe saamiseks vajuta kilbile.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* ja *veel %1$d* üritasid sind siin jälgida. Ma blokeerisin need!
+
+☝️ Lisateabe saamiseks vajuta kilbile.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

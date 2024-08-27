@@ -18,27 +18,51 @@
 //
 
 import Foundation
+import Core
 import SwiftUI
+
+typealias SettingItemEnabledFunction<I> = (_ item: I, _ isEnabled: Bool) -> Void
 
 final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, Storage: NewTabPageSettingsStorage>: ObservableObject where Storage.SettingItem == SettingItem {
 
     /// Settings page settings collection with bindings
     @Published private(set) var itemsSettings: [NTPSetting<SettingItem>] = []
 
+    private var filteredItemsOrder: [SettingItem] = []
+
     /// Enabled items, ordered.
     @Published private(set) var enabledItems: [SettingItem] = []
 
-    private let settingsStorage: Storage
+    private var indexMapping: [Int: Int] = [:]
 
-    init(settingsStorage: Storage) {
+    private let settingsStorage: Storage
+    private let visibilityFilter: ((SettingItem) -> Bool)
+    private let onItemEnabled: SettingItemEnabledFunction<SettingItem>?
+    private let onItemReordered: (() -> Void)?
+
+    init(settingsStorage: Storage,
+         onItemEnabled: SettingItemEnabledFunction<SettingItem>? = nil,
+         onItemReordered: (() -> Void)? = nil,
+         visibilityFilter: @escaping ((SettingItem) -> Bool) = { _ in true }) {
         self.settingsStorage = settingsStorage
+        self.visibilityFilter = visibilityFilter
+        self.onItemEnabled = onItemEnabled
+        self.onItemReordered = onItemReordered
 
         updatePublishedValues()
     }
 
     func moveItems(from: IndexSet, to: Int) {
+        let from = mapIndexSet(from)
+
+        // If index is not found it means we're moving to the end.
+        // Guard index range in case there's no filtering.
+        let to = indexMapping[to] ?? min(settingsStorage.itemsOrder.count, to + 1)
+
         settingsStorage.moveItems(from, toOffset: to)
         updatePublishedValues()
+
+        onItemReordered?()
     }
 
     func save() {
@@ -51,18 +75,37 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
     }
 
     private func populateEnabledItems() {
-        enabledItems = settingsStorage.enabledItems
+        enabledItems = filteredItemsOrder.filter(settingsStorage.isEnabled(_:))
     }
 
     private func populateSettings() {
-        itemsSettings = settingsStorage.itemsOrder.map { item in
-            NTPSetting(item: item, isEnabled: Binding(get: {
+        let allItemsOrder = settingsStorage.itemsOrder
+        filteredItemsOrder = allItemsOrder.filter(visibilityFilter)
+
+        itemsSettings = filteredItemsOrder.compactMap { item in
+            return NTPSetting(item: item,
+                       isEnabled: Binding(get: {
                 self.settingsStorage.isEnabled(item)
             }, set: { newValue in
+                self.onItemEnabled?(item, newValue)
                 self.settingsStorage.setItem(item, enabled: newValue)
                 self.updatePublishedValues()
             }))
         }
+
+        for (index, item) in allItemsOrder.enumerated() {
+            if let filteredIndex = filteredItemsOrder.firstIndex(of: item) {
+                 indexMapping[filteredIndex] = index
+             }
+        }
+    }
+
+    private func mapIndexSet(_ indexSet: IndexSet) -> IndexSet {
+        let mappedIndices = indexSet.compactMap { index in
+            indexMapping[index]
+        }
+
+        return IndexSet(mappedIndices)
     }
 }
 

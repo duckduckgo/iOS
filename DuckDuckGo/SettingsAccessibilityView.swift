@@ -33,7 +33,7 @@ struct SettingsAccessibilityView: View {
                 if viewModel.state.textSize.enabled {
                     SettingsCellView(label: UserText.settingsText,
                                      action: { viewModel.presentLegacyView(.textSize) },
-                                     accesory: .rightDetail("\(viewModel.state.textSize.size)%"),
+                                     accessory: .rightDetail("\(viewModel.state.textSize.size)%"),
                                      disclosureIndicator: true,
                                      isButton: true)
                 }
@@ -43,7 +43,7 @@ struct SettingsAccessibilityView: View {
                 // Private Voice Search
                 if viewModel.state.speechRecognitionAvailable {
                     SettingsCellView(label: UserText.settingsVoiceSearch,
-                                     accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
+                                     accessory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
                 }
             }
             .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {

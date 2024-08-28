@@ -72,10 +72,6 @@ struct SettingsDuckPlayerView: View {
                                        options: DuckPlayerMode.allCases,
                                        selectedOption: viewModel.duckPlayerModeBinding)
                 .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
-            } footer: {
-                Text(UserText.settingsDuckPlayerFooter)
-                    .daxFootnoteRegular()
-                    .multilineTextAlignment(.center)
             }
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,

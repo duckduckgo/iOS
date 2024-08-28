@@ -145,14 +145,14 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
 
         // py:198
         let countAsMAUn = (0 ..< 4).map {
-            countAsMAU($0, atb) ? "t" : "f"
+            _countAsMAU($0, atb) ? "t" : "f"
         }.joined()
 
         // py:203
         if countAsMAUn != "ffff" {
             pixel[Params.countAsMAUn] = countAsMAUn
             for n in 0 ..< 4 {
-                if countsAsMAUAndActivePreviousMonth(n, atb) &&
+                if _countsAsMAUAndActivePreviousMonth(n, atb) &&
                     !previousMAUSegments[n].isEmpty {
                     pixel[Params.segmentsPreviousMonthPrefix + "\(n)"] = previousMAUSegments[n]
                 }
@@ -214,27 +214,28 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         }
 
         // py:124
-        if countAsWAU(atb) // prev atb or install atb??
-            && !countsAsWAUAndActivePreviousWeek(atb) // prev atb or install atb??
+        if countAsWAU(atb) // TODO validate prev atb or install atb??
+            && !countsAsWAUAndActivePreviousWeek(atb) // TODO validate prev atb or install atb??
             && atb.week >= installAtb.week + 2 {
             segments.append("reactivated_wau")
         }
 
         // py:131
         for n in 0..<4 {
-            if countAsMAU(n, atb) // prev atb or install atb??
-                && !countsAsMAUAndActivePreviousMonth(n, atb)
+            if _countAsMAU(n, atb) // TODO validate prev atb or install atb??
+                && !_countsAsMAUAndActivePreviousMonth(n, atb)
                 && atb.week >= installAtb.week + 4 {
                 segments.append("reactivated_mau_\(n)")
             }
         }
 
         // py:139
-        if segmentRegular(atb) {
+        if _segmentRegular(atb) {
             segments.append("regular")
         }
 
-        if segmentIntermittent(atb) {
+        // py:142
+        if _segmentIntermittent(atb) {
             segments.append("intermittent")
         }
 
@@ -242,32 +243,64 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return segments.sorted().joined(separator: ",")
     }
 
+    /// py:48 `count_as_wau`
     private func countAsWAU(_ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
+        // py:49
+        if atb == installAtb {
+            // # Install day - this code should not be running! Report nothing.
+            assertionFailure("See comment")
+            return false
+        }
+
+        // py:52
+        if previousAtb == nil || previousAtb == installAtb {
+            // # First post-install activity
+            return true
+        }
+
+        // py:55 - This deviates because the python *sometimes* passes in installAtb if previousAtb is nil
+        return atb.week > (previousAtb ?? installAtb).week
     }
 
+    /// py:58 caw_and_active_prev_week
     private func countsAsWAUAndActivePreviousWeek(_ atb: Atb) -> Bool {
+        // py:59
+        if atb == installAtb {
+            // # Install day - this code should not be running! Report nothing.
+            assertionFailure("See comment")
+            return false
+        }
+
+        // py: 62
+        if previousAtb == nil || previousAtb == installAtb {
+            // # First post-install activity
+            return false
+        }
+
+        if !countAsWAU(atb) {
+            return false
+        }
+
+        // py: 68 - This deviates because the python *sometimes* passes in installAtb if previousAtb is nil
+        return atb.week == (previousAtb ?? installAtb).week + 1
+    }
+
+    private func _countAsMAU(_ n: Int, _ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
     }
 
-    private func countAsMAU(_ n: Int, _ atb: Atb) -> Bool {
+    private func _countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
     }
 
-    private func countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {
+    private func _segmentRegular(_ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
     }
 
-    private func segmentRegular(_ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
-    }
-
-    private func segmentIntermittent(_ atb: Atb) -> Bool {
+    private func _segmentIntermittent(_ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
     }

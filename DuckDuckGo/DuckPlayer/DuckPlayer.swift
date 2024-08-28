@@ -104,7 +104,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         static let duckPlayerHost: String = "player"
         static let commonName = "Duck Player"
         static let translationFile = "duckplayer"
-        static let translationFileExtension = "duckplayer"
+        static let translationFileExtension = "json"
         static let defaultLocale = "en"
         static let translationPath = "pages/duckplayer/locales/"
     }
@@ -112,7 +112,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     private(set) var settings: DuckPlayerSettingsProtocol
     private(set) weak var hostView: UIViewController?
     
-    lazy var localeStrings: String? = {
+    private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
         if let localizedFile = ContentScopeScripts.Bundle.path(forResource: Constants.translationFile,
                                                                ofType: Constants.translationFileExtension,
@@ -229,12 +229,13 @@ final class DuckPlayer: DuckPlayerProtocol {
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
         let uiValues = encodeUIValues()
-        return InitialPlayerSettings(userValues: userValues,
-                                            ui: uiValues,
-                                            settings: playerSettings,
-                                            platform: platform,
-                                            locale: locale,
-                                            localeStrings: localeStrings)
+        let settings = InitialPlayerSettings(userValues: userValues,
+                                                   ui: uiValues,
+                                                   settings: playerSettings,
+                                                   platform: platform,
+                                                   locale: locale,
+                                                   localeStrings: localeStrings)
+        return settings
     }
         
     // Accessing WKMessage needs main thread

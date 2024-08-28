@@ -51,17 +51,22 @@ final class DefaultCalculatorFactory: UsageSegmentationCalculatorMaking {
 
 /// This implementation is based on https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/blob/master/segments_reference.py and has been written to try and 
 ///  closely resemble the original code as possible.
+///
+///  Some general terminology changes:
+///  * new_set_atb => atb
+///  * atb_cohort => installAtb
+///
 final class DefaultCalculator: UsageSegmentationCalculating {
 
-    enum Params: String {
+    enum Params {
 
-        case activityType = "activity_type"
-        case newSetAtb = "new_set_atb"
-        case segmentsToday = "segments_today"
-        case segmentsPreviousWeek = "segments_prev_week"
-        case segmentsPreviousMonthPrefix = "segments_prev_month_"
-        case countAsWAU = "count_as_wau"
-        case countAsMAUn = "count_as_mau_n"
+        static let activityType = "activity_type"
+        static let newSetAtb = "new_set_atb"
+        static let segmentsToday = "segments_today"
+        static let segmentsPreviousWeek = "segments_prev_week"
+        static let segmentsPreviousMonthPrefix = "segments_prev_month_"
+        static let countAsWAU = "count_as_wau"
+        static let countAsMAUn = "count_as_mau_n"
 
     }
 
@@ -103,11 +108,11 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         var pixel: [String: String] = [:]
 
         // py:174
-        pixel[Params.activityType.rawValue] = activityType.rawValue
-        pixel[Params.newSetAtb.rawValue] = atb.version
+        pixel[Params.activityType] = activityType.rawValue
+        pixel[Params.newSetAtb] = atb.version
 
         // py:178
-        pixel[Params.segmentsToday.rawValue] = getSegments(atb)
+        pixel[Params.segmentsToday] = getSegments(atb)
 
         // py:182
         if previousAtb == nil {
@@ -116,20 +121,20 @@ final class DefaultCalculator: UsageSegmentationCalculating {
              # This is a special case (lots of initialization to do)
              # Let's handle it all in one place.
              */
-            pixel[Params.countAsWAU.rawValue] = "true"
-            pixel[Params.countAsMAUn.rawValue] = "tttt"
+            pixel[Params.countAsWAU] = "true"
+            pixel[Params.countAsMAUn] = "tttt"
             return pixel
         }
 
         // py:190
         if countAsWAU(atb) {
-            pixel[Params.countAsWAU.rawValue] = "true"
+            pixel[Params.countAsWAU] = "true"
         }
 
         // py:192
         if countsAsWAUAndActivePreviousWeek(atb) &&
             !previousWAUSegments.isEmpty {
-            pixel[Params.segmentsPreviousWeek.rawValue] = previousWAUSegments
+            pixel[Params.segmentsPreviousWeek] = previousWAUSegments
         }
 
         // py:198
@@ -139,11 +144,11 @@ final class DefaultCalculator: UsageSegmentationCalculating {
 
         // py:203
         if countAsMAUn != "ffff" {
-            pixel[Params.countAsMAUn.rawValue] = countAsMAUn
+            pixel[Params.countAsMAUn] = countAsMAUn
             for n in 0 ..< 4 {
                 if countsAsMAUAndActivePreviousMonth(n, atb) &&
                     !previousMAUSegments[n].isEmpty {
-                    pixel[Params.segmentsPreviousMonthPrefix.rawValue + "\(n)"] = previousMAUSegments[n]
+                    pixel[Params.segmentsPreviousMonthPrefix + "\(n)"] = previousMAUSegments[n]
                 }
             }
         }
@@ -151,7 +156,7 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         return pixel
     }
 
-    /// py:255 update_client
+    /// py:255 `update_client`
     private func updateState(_ atb: Atb, pixelInfo: [String: String]) {
         // ignore `new_set_atb` as that's always passed in
         previousAtb = atb
@@ -163,20 +168,19 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         } + [atb]
 
         // py:266
-        if let countAsWAU = pixelInfo[Params.countAsWAU.rawValue] {
-            previousWAUSegments = pixelInfo.safeValue(forKey: Params.segmentsToday.rawValue)
+        if pixelInfo[Params.countAsWAU] != nil {
+            previousWAUSegments = pixelInfo.safeValue(forKey: Params.segmentsToday)
         }
 
         // py:269
-        if let countAsMAUn = pixelInfo[Params.countAsMAUn.rawValue] {
-            for n in 0 ..< 4 {
-                if countAsMAUn.safeCharAt(n) == "t" {
-                    previousMAUSegments[n] = pixelInfo.safeValue(forKey: Params.segmentsToday.rawValue)
-                }
+        if let countAsMAUn = pixelInfo[Params.countAsMAUn] {
+            for n in 0 ..< 4 where countAsMAUn.safeCharAt(n) == "t" {
+                previousMAUSegments[n] = pixelInfo.safeValue(forKey: Params.segmentsToday)
             }
         }
     }
 
+    /// py:95 `get_segments`
     private func getSegments(_ atb: Atb) -> String {
 #warning("not implemented")
         return ""

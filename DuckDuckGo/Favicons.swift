@@ -23,6 +23,7 @@ import Kingfisher
 import UIKit
 import LinkPresentation
 import WidgetKit
+import os.log
 
 public class Favicons {
 
@@ -84,7 +85,7 @@ public class Favicons {
                 try? url.setResourceValues(resourceValues)
             }
             
-            os_log("favicons %s location %s", type: .debug, rawValue, url.absoluteString)
+            Logger.general.debug("favicons \(rawValue) location \(url.absoluteString)")
             return try? ImageCache(name: self.rawValue, cacheDirectoryURL: url)
         }
 
@@ -116,7 +117,7 @@ public class Favicons {
             do {
                 try FileManager.default.removeItem(at: bookmarksCache)
             } catch {
-                os_log("Failed to remove favicon bookmarks cache: %s", type: .error, error.localizedDescription)
+                Logger.general.error("Failed to remove favicon bookmarks cache: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

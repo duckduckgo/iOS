@@ -24,6 +24,7 @@ import Core
 import Common
 import BrowserServicesKit
 import DuckPlayer
+import os.log
 
 final class DuckPlayerNavigationHandler {
     
@@ -113,7 +114,7 @@ final class DuckPlayerNavigationHandler {
         
         if let (videoID, _) = url.youtubeVideoParams,
             videoID == lastHandledVideoID {
-            os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("URL (\(url.absoluteString) already handled, skipping")
             return
         }
         
@@ -130,7 +131,7 @@ final class DuckPlayerNavigationHandler {
             let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
             
-            os_log("DP: Handling URL change: %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("Handling URL change: \(url.absoluteString)")
             webView.load(URLRequest(url: URL.duckPlayer(videoID, timestamp: timestamp)))
             lastHandledVideoID = videoID
         }
@@ -145,8 +146,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
         
-        os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
-       
+        Logger.duckPlayer.debug("Handling DuckPlayer Player Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
+
         // This is passed to the FE overlay at init to disable the overlay for one video
         duckPlayer.settings.allowFirstVideo = false
         
@@ -202,7 +203,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             !url.hasWatchInYoutubeQueryParameter {
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
 
-            os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
+            Logger.duckPlayer.debug("DP: Loading Simulated Request for \(navigationAction.request.url?.absoluteString ?? "")")
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.performRequest(request: newRequest, webView: webView)
@@ -235,7 +236,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         if let (videoID, _) = url.youtubeVideoParams,
            videoID == lastHandledVideoID,
             !url.hasWatchInYoutubeQueryParameter {
-            os_log("DP: DecidePolicy: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: DecidePolicy: URL (\(url.absoluteString)) already handled, skipping")
             completion(.cancel)
             return
         }
@@ -260,7 +261,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         if url.isYoutubeVideo,
            !url.isDuckPlayer,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-                os_log("DP: Handling decidePolicy for Duck Player with %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+                Logger.duckPlayer.debug("DP: Handling decidePolicy for Duck Player with \(url.absoluteString)")
                 completion(.cancel)
                 handleURLChange(url: url, webView: webView)
                 return
@@ -282,7 +283,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleGoBack(webView: WKWebView) {
         
-        os_log("DP: Handling Back Navigation", log: .duckPlayerLog, type: .debug)
+        Logger.duckPlayer.debug("DP: Handling Back Navigation")
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.goBack()
@@ -309,10 +310,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
         if let nonYoutubeItem = nonYoutubeItem {
-            os_log("DP: Navigating back to %s", log: .duckPlayerLog, type: .debug, nonYoutubeItem.url.absoluteString)
+            Logger.duckPlayer.debug("DP: Navigating back to \(nonYoutubeItem.url.absoluteString)")
             webView.go(to: nonYoutubeItem)
         } else {
-            os_log("DP: Navigating back to previous page", log: .duckPlayerLog, type: .debug)
+            Logger.duckPlayer.debug("DP: Navigating back to previous page")
             webView.goBack()
         }
     }
@@ -332,7 +333,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            os_log("DP: Handling DuckPlayer Reload for %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: Handling DuckPlayer Reload for \(url.absoluteString)")
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
         } else {
             webView.reload()
@@ -349,7 +350,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            os_log("DP: Handling Initial Load of a video for %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: Handling Initial Load of a video for \(url.absoluteString)")
             handleReload(webView: webView)
         }
         

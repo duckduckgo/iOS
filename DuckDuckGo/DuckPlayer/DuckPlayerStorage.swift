@@ -20,6 +20,7 @@
 import Core
 import Foundation
 import Common
+import os.log
 
 protocol DuckPlayerStorage {
     /// Description: Checks whether the user has seen and interacted with (i.e. clicked any button) the Duck Player overlay on a YouTube video.
@@ -30,8 +31,8 @@ protocol DuckPlayerStorage {
 struct DefaultDuckPlayerStorage: DuckPlayerStorage {
     @UserDefaultsWrapper(key: .userInteractedWithDuckPlayer, defaultValue: false)
     var userInteractedWithDuckPlayer: Bool {
-        didSet {
-            os_log("DP: Flagging userInteractedWithDuckPlayer [%@]", log: .duckPlayerLog, type: .debug, userInteractedWithDuckPlayer ? "true" : "false")
+        didSet(newValue) {
+            Logger.duckPlayer.debug("Flagging userInteractedWithDuckPlayer [\(newValue ? "true" : "false")]")
         }
     }
 }

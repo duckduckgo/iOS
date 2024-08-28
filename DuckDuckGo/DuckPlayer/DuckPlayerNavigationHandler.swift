@@ -200,7 +200,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-        if url.scheme == Constants.duckPlayerScheme,
+         if url.scheme == Constants.duckPlayerScheme,
            let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
            urlComponents.path == "/\(Constants.watchInYoutubePath)",
            let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
@@ -224,11 +224,13 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             return
         }
         
-        // Daily Unique View Pixel
+        
+        // If DuckPlayer is disabled and we
         if url.isDuckPlayer,
            duckPlayer.settings.mode != .disabled {
             let setting = duckPlayer.settings.mode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
             DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
+            
         }
         
         // Pixel for Views From Youtube
@@ -237,16 +239,27 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
         
-        // If DuckPlayer is Enabled or in ask mode, render the video
-        if url.isDuckURLScheme,
-           duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
-            !url.hasWatchInYoutubeQueryParameter {
-            let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-
-            Logger.duckPlayer.debug("DP: Loading Simulated Request for \(navigationAction.request.url?.absoluteString ?? "")")
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.performRequest(request: newRequest, webView: webView)
+        
+        if url.isDuckURLScheme {
+           
+            // If DuckPlayer is Enabled or in ask mode, render the video
+            if duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
+               !url.hasWatchInYoutubeQueryParameter {
+                let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
+                
+                Logger.duckPlayer.debug("DP: Loading Simulated Request for \(navigationAction.request.url?.absoluteString ?? "")")
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.performRequest(request: newRequest, webView: webView)
+                }
+                            
+            // Otherwise, just redirect to YouTube
+            } else {
+                if let (videoID, timestamp) = url.youtubeVideoParams {
+                    let youtubeURL = URL.youtube(videoID, timestamp: timestamp)
+                    let request = URLRequest(url: youtubeURL)
+                    webView.load(request)
+                }
             }
             return
         }

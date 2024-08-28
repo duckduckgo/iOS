@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/remove-wireguard-dependency",
-        "revision" : "4fd509b8ca1ed35de3924a595dcac396444d5eb1"
+        "revision" : "db0a7b47918ccfea0946d88424415c104f67c37d",
+        "version" : "187.0.0"
       }
     },
     {

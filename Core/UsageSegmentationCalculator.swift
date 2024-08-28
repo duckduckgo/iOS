@@ -197,12 +197,14 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         }
 
         // py:104
-        if atb.week == installAtb.week + 1 {
+        if atb.week == installAtb.week + 1
+            && countAsWAU(atb) {
             segments.append("second_week")
         }
 
         // py:110
-        if atb.week < installAtb.week + 4 {
+        if atb.week < installAtb.week + 4
+            && (previousAtb == nil || previousAtb == installAtb) {
             segments.append("first_month")
         }
 

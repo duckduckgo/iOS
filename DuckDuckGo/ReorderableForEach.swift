@@ -28,13 +28,14 @@ protocol Reorderable: Hashable {
 struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Preview: View>: View {
 
     typealias ContentBuilder = (Data) -> Content
+    typealias PreviewBuilder = (Data) -> Preview
 
     private let data: [Data]
     private let isReorderingEnabled: Bool
     private let id: KeyPath<Data, ID>
 
     private let content: ContentBuilder
-    private let preview: ((Data) -> Preview)?
+    private let preview: PreviewBuilder?
     private let onMove: (_ from: IndexSet, _ to: Int) -> Void
 
     @State private var movedItem: Data?
@@ -148,7 +149,7 @@ extension ReorderableForEach where Data: Identifiable, ID == Data.ID {
     init(_ data: [Data],
          isReorderingEnabled: Bool = true,
          @ViewBuilder content: @escaping ContentBuilder,
-         @ViewBuilder preview: @escaping (Data) -> Preview,
+         @ViewBuilder preview: @escaping PreviewBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) {
         self.data = data
         self.id = \Data.id

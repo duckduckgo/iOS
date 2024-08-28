@@ -23,14 +23,13 @@ import ContentScopeScripts
 
 extension SpecialErrorPageUserScript {
 
-    static let localeStrings: String? = {
-        let languageCode = Locale.current.languageCode ?? "en"
+    static func localeStrings(for languageCode: String = Locale.current.languageCode ?? "en") -> String? {
         if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "special-error",
                                                                ofType: "json",
                                                                inDirectory: "pages/special-error/locales/\(languageCode)") {
             return try? String(contentsOfFile: localizedFile)
         }
         return nil
-    }()
+    }
 
 }

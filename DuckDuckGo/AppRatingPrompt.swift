@@ -20,7 +20,7 @@
 import Foundation
 import Core
 import CoreData
-import Common
+import os.log
 
 protocol AppRatingPromptStorage {
     
@@ -141,7 +141,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         do {
             results = try context.fetch(fetchRequest)
         } catch {
-            os_log("Error while fetching AppRatingPromptEntity: %s", log: .generalLog, type: .debug, error.localizedDescription)
+            Logger.general.error("Error while fetching AppRatingPromptEntity: \(error.localizedDescription, privacy: .public)")
             return nil
         }
 

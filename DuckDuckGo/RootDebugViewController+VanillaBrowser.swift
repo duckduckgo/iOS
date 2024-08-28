@@ -23,6 +23,7 @@ import SwiftUI
 import WebKit
 import Core
 import Common
+import os.log
 
 extension RootDebugViewController {
 
@@ -40,7 +41,7 @@ extension RootDebugViewController {
     }()
 
     fileprivate func openVanillaBrowser(url: URL) {
-        os_log(.debug, "Vanilla Browser open URL %s", url.absoluteString)
+        Logger.lifecycle.debug("Vanilla Browser open URL \(url.absoluteString)")
         let browserView = BareBonesBrowserView(initialURL: url,
                                                homeURL: RootDebugViewController.ddgURL,
                                                uiDelegate: nil,

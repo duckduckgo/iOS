@@ -37,6 +37,7 @@ import SyncDataProviders
 import Subscription
 import NetworkProtection
 import WebKit
+import os.log
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -79,7 +80,7 @@ import WebKit
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
-    private let crashCollection = CrashCollection(platform: .iOS, log: .generalLog)
+    private let crashCollection = CrashCollection(platform: .iOS)
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?
@@ -272,7 +273,6 @@ import WebKit
             dataProvidersSource: syncDataProviders,
             errorEvents: SyncErrorHandler(),
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            log: .syncLog,
             environment: environment
         )
         syncService.initializeIfNeeded()
@@ -477,7 +477,7 @@ import WebKit
         do {
             try FileManager.default.removeItem(at: tmp)
         } catch {
-            os_log("Failed to delete tmp dir")
+            Logger.general.error("Failed to delete tmp dir")
         }
     }
 
@@ -681,11 +681,11 @@ import WebKit
 
     private func suspendSync() {
         if syncService.isSyncInProgress {
-            os_log(.debug, log: .syncLog, "Sync is in progress. Starting background task to allow it to gracefully complete.")
+            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
 
             var taskID: UIBackgroundTaskIdentifier!
             taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
-                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                Logger.sync.debug("Forcing background task completion")
                 UIApplication.shared.endBackgroundTask(taskID)
             }
             syncDidFinishCancellable?.cancel()
@@ -693,7 +693,7 @@ import WebKit
                 .prefix(1)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
-                    os_log(.debug, log: .syncLog, "Ending background task")
+                    Logger.sync.debug("Ending background task")
                     UIApplication.shared.endBackgroundTask(taskID)
                 }
         }
@@ -708,7 +708,7 @@ import WebKit
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+        Logger.sync.debug("App launched with url \(url.absoluteString)")
 
         // If showing the onboarding intro ignore deeplinks
         guard mainViewController?.needsToShowOnboardingIntro() == false else {
@@ -740,7 +740,7 @@ import WebKit
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        os_log(#function, log: .lifecycleLog, type: .debug)
+        Logger.lifecycle.debug(#function)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { result in
             switch result {
@@ -858,7 +858,7 @@ import WebKit
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
+        Logger.general.debug("Handling shortcut item: \(shortcutItem.type)")
 
         Task { @MainActor in
 

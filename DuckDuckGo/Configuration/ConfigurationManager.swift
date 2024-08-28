@@ -22,6 +22,7 @@ import Core
 import Configuration
 import BrowserServicesKit
 import Common
+import os.log
 
 struct ConfigurationManager {
 
@@ -101,7 +102,7 @@ struct ConfigurationManager {
                 try await task.value
                 didFetchAnyTrackerBlockingDependencies = true
             } catch {
-                os_log("Did not apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
+                Logger.general.error("Did not apply update to \(configuration.rawValue, privacy: .public): \(error.localizedDescription, privacy: .public)")
             }
         }
 
@@ -123,7 +124,7 @@ struct ConfigurationManager {
             try await updateBloomFilterExclusions()
             return true
         } catch {
-            os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
+            Logger.general.error("Failed to apply update to bloom filter exclusions: \(error.localizedDescription, privacy: .public)")
             return false
         }
     }
@@ -135,7 +136,7 @@ struct ConfigurationManager {
             try await updateBloomFilter()
             return true
         } catch {
-            os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
+            Logger.general.error("Failed to apply update to bloom filter: \(error.localizedDescription, privacy: .public)")
             return false
         }
     }

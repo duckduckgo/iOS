@@ -25,6 +25,7 @@ import Foundation
 import Persistence
 import SyncDataProviders
 import WidgetKit
+import os.log
 
 public protocol FavoritesDisplayModeStoring: AnyObject {
     var favoritesDisplayMode: FavoritesDisplayMode { get set }
@@ -94,8 +95,7 @@ public final class SyncBookmarksAdapter {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
-            errorEvents: BookmarksCleanupErrorHandling(),
-            log: .generalLog
+            errorEvents: BookmarksCleanupErrorHandling()
         )
         widgetRefreshCancellable = syncDidCompletePublisher.sink { _ in
             WidgetCenter.shared.reloadAllTimelines()
@@ -164,7 +164,7 @@ public final class SyncBookmarksAdapter {
             stateStore = try BookmarksFaviconsFetcherStateStore(applicationSupportURL: url)
         } catch {
             Pixel.fire(pixel: .bookmarksFaviconsFetcherStateStoreInitializationFailed, error: error)
-            os_log(.error, log: .syncLog, "Failed to initialize BookmarksFaviconsFetcherStateStore: %{public}s", String(reflecting: error))
+            Logger.sync.error("Failed to initialize BookmarksFaviconsFetcherStateStore:: \(error.localizedDescription, privacy: .public)")
             return nil
         }
 
@@ -173,8 +173,7 @@ public final class SyncBookmarksAdapter {
             stateStore: stateStore,
             fetcher: FaviconFetcher(),
             faviconStore: Favicons.shared,
-            errorEvents: BookmarksFaviconsFetcherErrorHandler(),
-            log: .syncLog
+            errorEvents: BookmarksFaviconsFetcherErrorHandler()
         )
     }
 
@@ -190,11 +189,11 @@ public final class SyncBookmarksAdapter {
             return
         }
         if faviconsFetcher.isFetchingInProgress == true {
-            os_log(.debug, log: .syncLog, "Favicons Fetching is in progress. Starting background task to allow it to gracefully complete.")
+            Logger.sync.debug("Favicons Fetching is in progress. Starting background task to allow it to gracefully complete.")
 
             var taskID: UIBackgroundTaskIdentifier!
             taskID = application.beginBackgroundTask(withName: "Cancelled Favicons Fetching Completion Task") {
-                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                Logger.sync.debug("Forcing background task completion")
                 application.endBackgroundTask(taskID)
             }
             faviconsFetchingDidFinishCancellable?.cancel()
@@ -202,7 +201,7 @@ public final class SyncBookmarksAdapter {
                 .prefix(1)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
-                    os_log(.debug, log: .syncLog, "Ending background task")
+                    Logger.sync.debug("Ending background task")
                     application.endBackgroundTask(taskID)
                 }
         }

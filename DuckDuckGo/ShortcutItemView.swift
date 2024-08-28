@@ -101,7 +101,6 @@ private extension NewTabPageShortcut {
 private extension ShortcutAccessoryView {
     @ViewBuilder func alignedForOverlay(edgeSize: CGFloat) -> some View {
         let offset = CGSize(width: edgeSize/4.0, height: -edgeSize/4.0)
-        let size = CGSize(width: edgeSize, height: edgeSize)
         
         if #available(iOS 16, *) {
             frame(width: edgeSize)

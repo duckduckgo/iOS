@@ -24,8 +24,9 @@ struct NewTabPageGridView<Content: View>: View {
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     let geometry: GeometryProxy?
-    @State var width: CGFloat = .zero
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
+
+    @State private var width: CGFloat = .zero
 
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)

@@ -25,18 +25,18 @@ struct ShortcutAccessoryView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     let accessoryType: ShortcutAccessoryType
-    let expectedSize: CGSize
 
     var body: some View {
         Circle()
             .foregroundStyle(bgColorForAccessoryType(accessoryType))
             .overlay {
                 Image(accessoryType.iconResource)
+                    .resizable()
                     .foregroundColor(accessoryType.foregroundColor)
                     .aspectRatio(contentMode: .fit)
+                    .scaleEffect(x: Constant.imageScaleRatio, y: Constant.imageScaleRatio)
             }
             .shadow(color: .shade(0.15), radius: 1, y: 1)
-            .frame(width: expectedSize.width, height: expectedSize.height)
     }
 
     func bgColorForAccessoryType(_ accessoryType: ShortcutAccessoryType) -> Color {
@@ -49,11 +49,9 @@ struct ShortcutAccessoryView: View {
             return colorScheme == .dark ? .gray85 : Color(designSystemColor: .surface)
         }
     }
-}
 
-extension ShortcutAccessoryView {
-    init(accessoryType: ShortcutAccessoryType) {
-        self.init(accessoryType: accessoryType, expectedSize: CGSize(width: 24, height: 24))
+    private enum Constant {
+        static let imageScaleRatio: CGFloat = 2.0/3.0
     }
 }
 

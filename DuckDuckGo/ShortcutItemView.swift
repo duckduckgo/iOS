@@ -29,8 +29,13 @@ struct ShortcutItemView: View {
             ShortcutIconView(shortcut: shortcut)
                 .overlay(alignment: .topTrailing) {
                     if let accessoryType {
-                        ShortcutAccessoryView(accessoryType: accessoryType)
-                            .alignedForOverlay(edgeSize: Constant.accessorySize)
+                        Group {
+                            let offset = Constant.accessorySize/4.0
+                            ShortcutAccessoryView(accessoryType: accessoryType)
+                                .frame(width: Constant.accessorySize, height: Constant.accessorySize)
+                                .offset(x: offset, y: -offset)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     }
                 }
 
@@ -52,17 +57,16 @@ struct ShortcutIconView: View {
     let shortcut: NewTabPageShortcut
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color(designSystemColor: .surface))
-                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: NewTabPageGrid.Item.edgeSize)
-            Image(shortcut.imageResource)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
-        }
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color(designSystemColor: .surface))
+            .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+            .aspectRatio(1, contentMode: .fit)
+            .overlay {
+                Image(shortcut.imageResource)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .scaleEffect(x: 0.5, y: 0.5)
+            }
     }
 }
 
@@ -98,29 +102,16 @@ private extension NewTabPageShortcut {
     }
 }
 
-private extension ShortcutAccessoryView {
-    @ViewBuilder func alignedForOverlay(edgeSize: CGFloat) -> some View {
-        let offset = CGSize(width: edgeSize/4.0, height: -edgeSize/4.0)
-        
-        if #available(iOS 16, *) {
-            frame(width: edgeSize)
-                .offset(offset)
-        } else {
-            frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .offset(offset)
-        }
-    }
-}
-
 #Preview {
     ScrollView {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 68), spacing: 8, alignment: .top)], content: {
             let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
             
             ForEach(accessoryTypes, id: \.?.hashValue) { type in
                 Section {
                     ForEach(NewTabPageShortcut.allCases) { shortcut in
                         ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                            .frame(width: 64)
                     }
                     
                 } footer: {

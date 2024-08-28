@@ -27,11 +27,13 @@ protocol Reorderable: Hashable {
 
 struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Preview: View>: View {
 
+    typealias ContentBuilder = (Data) -> Content
+
     private let data: [Data]
     private let isReorderingEnabled: Bool
     private let id: KeyPath<Data, ID>
 
-    private let content: (Data) -> Content
+    private let content: ContentBuilder
     private let preview: ((Data) -> Preview)?
     private let onMove: (_ from: IndexSet, _ to: Int) -> Void
 
@@ -41,7 +43,7 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
     init(_ data: [Data],
          id: KeyPath<Data, ID>,
          isReorderingEnabled: Bool = true,
-         @ViewBuilder content: @escaping (Data) -> Content,
+         @ViewBuilder content: @escaping ContentBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) where Preview == EmptyView {
         self.data = data
         self.id = id
@@ -54,7 +56,7 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
     init(_ data: [Data],
          id: KeyPath<Data, ID>,
          isReorderingEnabled: Bool = true,
-         @ViewBuilder content: @escaping (Data) -> Content,
+         @ViewBuilder content: @escaping ContentBuilder,
          @ViewBuilder preview: @escaping (Data) -> Preview,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) {
         self.data = data
@@ -100,7 +102,7 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
     }
 }
 
-private struct ReorderDropDelegate<Data: Equatable>: DropDelegate {
+private struct ReorderDropDelegate<Data: Reorderable>: DropDelegate {
 
     let data: [Data]
     let item: Data
@@ -132,14 +134,14 @@ private struct ReorderDropDelegate<Data: Equatable>: DropDelegate {
     func performDrop(info: DropInfo) -> Bool {
         isItemLocationChanged = false
         movedItem = nil
-        return true
+        return info.hasItemsConforming(to: [item.dropType])
     }
 }
 
 extension ReorderableForEach where Data: Identifiable, ID == Data.ID {
     init(_ data: [Data],
          isReorderingEnabled: Bool = true,
-         @ViewBuilder content: @escaping (Data) -> Content,
+         @ViewBuilder content: @escaping ContentBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) where Preview == EmptyView {
         self.data = data
         self.id = \Data.id
@@ -151,7 +153,7 @@ extension ReorderableForEach where Data: Identifiable, ID == Data.ID {
 
     init(_ data: [Data],
          isReorderingEnabled: Bool = true,
-         @ViewBuilder content: @escaping (Data) -> Content,
+         @ViewBuilder content: @escaping ContentBuilder,
          @ViewBuilder preview: @escaping (Data) -> Preview,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) {
         self.data = data

@@ -33,9 +33,14 @@ struct EditableShortcutsView: View {
                     setting.isEnabled.wrappedValue.toggle()
                 } label: {
                     ShortcutItemView(shortcut: setting.item, accessoryType: isEnabled ? .selected : .add)
+                        .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
+                .padding([.horizontal, .top], 6) // Adjust for the accessory being cut-off when lifting for preview
+                .previewShape()
             } preview: { setting in
-                ShortcutIconView(shortcut: setting.item).previewShape()
+                ShortcutIconView(shortcut: setting.item)
+                    .previewShape()
+                    .frame(width: NewTabPageGrid.Item.edgeSize)
             } onMove: { indices, newOffset in
                 withAnimation {
                     model.moveItems(from: indices, to: newOffset)
@@ -47,7 +52,7 @@ struct EditableShortcutsView: View {
 
 private extension View {
     func previewShape() -> some View {
-        contentShape(.dragPreview, RoundedRectangle(cornerRadius: 8))
+        contentShape([.dragPreview, .contextMenuPreview], RoundedRectangle(cornerRadius: 8))
     }
 }
 
@@ -69,8 +74,10 @@ extension NewTabPageSettingsModel.NTPSetting<NewTabPageShortcut>: Reorderable, H
 }
 
 #Preview {
-    ScrollView {
-        EditableShortcutsView(model: NewTabPageShortcutsSettingsModel(), geometry: nil)
+    GeometryReader { proxy in
+        ScrollView {
+            EditableShortcutsView(model: NewTabPageShortcutsSettingsModel(), geometry: proxy)
+        }
     }
     .background(Color(designSystemColor: .background))
 }

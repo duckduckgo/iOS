@@ -27,6 +27,7 @@ import Persistence
 import RemoteMessaging
 import SwiftUI
 import BrowserServicesKit
+import os.log
 
 class HomeViewController: UIViewController, NewTabPage {
 
@@ -183,7 +184,7 @@ class HomeViewController: UIViewController, NewTabPage {
     
     @objc func remoteMessagesDidChange() {
         DispatchQueue.main.async {
-            os_log("Remote messages did change", log: .remoteMessaging, type: .info)
+            Logger.remoteMessaging.info("Remote messages did change")
             self.collectionView.refreshHomeConfiguration()
             self.refresh()
         }

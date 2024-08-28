@@ -19,18 +19,18 @@
 
 import SwiftUI
 
-struct FavoritesEmptyStateView: View {
+struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
-    @State private var headerPadding: CGFloat = 10
+    @ObservedObject var model: Model
 
-    @Binding var isShowingTooltip: Bool
+    @State private var headerPadding: CGFloat = 10
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
+                FavoritesSectionHeader(model: model)
                     .padding(.horizontal, headerPadding)
 
                 NewTabPageGridView { placeholdersCount in
@@ -38,6 +38,10 @@ struct FavoritesEmptyStateView: View {
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                            .contentShape(.capsule)
+                            .onTapGesture {
+                                model.placeholderTapped()
+                            }
                     }
                 }.overlay(
                     GeometryReader(content: { geometry in
@@ -53,7 +57,7 @@ struct FavoritesEmptyStateView: View {
                 })
             }
 
-            if isShowingTooltip {
+            if model.isShowingTooltip {
                 FavoritesTooltip()
                     .offset(x: -headerPadding + 18, y: 24)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
@@ -63,8 +67,7 @@ struct FavoritesEmptyStateView: View {
 }
 
 #Preview {
-    @State var isShowingTooltip = false
-    return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
+    return FavoritesEmptyStateView(model: FavoritesPreviewModel())
 }
 
 private struct WidthKey: PreferenceKey {
@@ -72,4 +75,14 @@ private struct WidthKey: PreferenceKey {
         value = nextValue()
     }
     static var defaultValue: CGFloat = .zero
+}
+
+private final class PreviewEmptyStateModel: FavoritesEmptyStateModel {
+    @Published var isShowingTooltip: Bool = true
+
+    func toggleTooltip() {
+    }
+
+    func placeholderTapped() {
+    }
 }

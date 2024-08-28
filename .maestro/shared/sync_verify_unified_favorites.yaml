@@ -4,9 +4,15 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: Sync & Backup
 - scroll
 - assertVisible: Unify Favorites Across Devices
-- tapOn:
-     rightOf: 
-      id: "UnifiedFavoritesToggle"
+- runFlow: # TODO: Remove this! This was added to validate an hypothesis about some flacky tests. If this test doesn't fail anymore, we need to investigate why the toggle is already enabled when the test starts.
+    when:
+      visible: # Check that UnifiedFavoritesToggle is off
+        text: "0" 
+        index: 1 
+    commands:
+        - tapOn:
+            rightOf: 
+              id: "UnifiedFavoritesToggle"
 - tapOn: Settings
 - tapOn: Done
 - tapOn: Bookmarks

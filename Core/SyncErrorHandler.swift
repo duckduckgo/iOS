@@ -24,6 +24,7 @@ import Persistence
 import Foundation
 import SyncUI
 import SyncDataProviders
+import os.log
 
 public enum AsyncErrorType: String {
     case bookmarksCountLimitExceeded
@@ -176,7 +177,7 @@ extension SyncErrorHandler {
             }
         }
         let modelTypeString = modelType.rawValue.capitalized
-        os_log(.error, log: OSLog.syncLog, "%{public}@ Sync error: %{public}s", modelTypeString, String(reflecting: error))
+        Logger.sync.error("\(modelTypeString, privacy: .public) Sync error: \(error.localizedDescription, privacy: .public)")
     }
 
     private func handleSyncError(_ syncError: SyncError, modelType: ModelType) {

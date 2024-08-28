@@ -22,6 +22,18 @@ import SwiftUI
 @testable import DuckDuckGo
 
 final class ContextualOnboardingPresenterTests: XCTestCase {
+    private var contextualDaxDialogsFactory: ExperimentContextualDaxDialogsFactory!
+
+    override func setUpWithError() throws {
+        contextualDaxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: DaxDialogs.shared, contextualOnboardingPixelReporter: OnboardingPixelReporterMock())
+        try super.setUpWithError()
+    }
+
+    override func tearDownWithError() throws {
+        contextualDaxDialogsFactory = nil
+        try super.tearDownWithError()
+    }
+
 
     func testWhenPresentContextualOnboardingAndVariantDoesNotSupportOnboardingIntroThenOldContextualOnboardingIsPresented() throws {
         // GIVEN
@@ -29,7 +41,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         variantManagerMock.isSupportedBlock = { feature in
             feature != .newOnboardingIntro
         }
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory)
         let parent = TabViewControllerMock()
         XCTAssertFalse(parent.didCallPerformSegue)
         XCTAssertNil(parent.capturedSegueIdentifier)
@@ -51,7 +63,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         variantManagerMock.isSupportedBlock = { feature in
             feature == .newOnboardingIntro
         }
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory)
         let parent = TabViewControllerMock()
         XCTAssertFalse(parent.didCallAddChild)
         XCTAssertNil(parent.capturedChild)
@@ -71,7 +83,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
             feature == .newOnboardingIntro
         }
         let appSettings = AppSettingsMock()
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, appSettings: appSettings)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory, appSettings: appSettings)
         let parent = TabViewControllerMock()
 
         // WHEN
@@ -90,7 +102,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         }
         let appSettings = AppSettingsMock()
         appSettings.currentAddressBarPosition = .bottom
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, appSettings: appSettings)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory, appSettings: appSettings)
         let parent = TabViewControllerMock()
 
         // WHEN
@@ -108,7 +120,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         variantManagerMock.isSupportedBlock = { feature in
             feature == .newOnboardingIntro
         }
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory)
         let parent = TabViewControllerMock()
         let daxController = DaxContextualOnboardingControllerMock()
         daxController.removeFromParentExpectation = expectation
@@ -136,7 +148,7 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         variantManagerMock.isSupportedBlock = { feature in
             feature != .newOnboardingIntro
         }
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock)
+        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory)
         let parent = TabViewControllerMock()
         let daxController = DaxContextualOnboardingControllerMock()
         daxController.removeFromParentExpectation = expectation

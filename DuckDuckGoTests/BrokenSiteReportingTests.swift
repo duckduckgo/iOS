@@ -88,7 +88,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             return
         }
         
-        os_log("Testing [%s]", type: .info, test.name)
+        print("Testing [%s]", test.name)
 
         var errors: [Error]?
         if let errs = test.errorDescriptions {

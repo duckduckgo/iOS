@@ -32,8 +32,8 @@ final class OnboardingSuggestionsViewModelsTests: XCTestCase {
         suggestionsProvider = MockOnboardingSuggestionsProvider()
         navigationDelegate = CapturingOnboardingNavigationDelegate()
         pixelReporterMock = OnboardingPixelReporterMock()
-        searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
-        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate, pixelReporter: pixelReporterMock)
+        searchSuggestionsVM = OnboardingSearchSuggestionsViewModel(pixelReporter: pixelReporterMock, suggestedSearchesProvider: suggestionsProvider, delegate: navigationDelegate)
+        siteSuggestionsVM = OnboardingSiteSuggestionsViewModel(title: "", pixelReporter: pixelReporterMock, suggestedSitesProvider: suggestionsProvider, delegate: navigationDelegate)
     }
 
     override func tearDown() {

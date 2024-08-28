@@ -24,6 +24,7 @@ import Foundation
 import WebKit
 import UserScript
 import Core
+import ContentScopeScripts
 
 /// Values that the Frontend can use to determine the current state.
 struct InitialPlayerSettings: Codable {
@@ -48,21 +49,14 @@ struct InitialPlayerSettings: Codable {
         case development
         case production
     }
-    
-    enum Locale: String, Codable {
-        case en
-    }
 
     let userValues: UserValues
+    let ui: UIValues
     let settings: PlayerSettings
     let platform: Platform
-    let locale: Locale
+    let locale: String
+    let localeStrings: String?
 }
-
-struct InitialOverlaySettings: Codable {
-    let userValues: UserValues
-}
-
 
 /// Values that the Frontend can use to determine user settings
 public struct UserValues: Codable {
@@ -72,6 +66,13 @@ public struct UserValues: Codable {
     }
     let duckPlayerMode: DuckPlayerMode
     let askModeOverlayHidden: Bool
+}
+
+public struct UIValues: Codable {
+    enum CodingKeys: String, CodingKey {
+        case allowFirstVideo
+    }
+    let allowFirstVideo: Bool
 }
 
 public enum DuckPlayerReferrer {
@@ -102,10 +103,24 @@ final class DuckPlayer: DuckPlayerProtocol {
     struct Constants {
         static let duckPlayerHost: String = "player"
         static let commonName = "Duck Player"
+        static let translationFile = "duckplayer"
+        static let translationFileExtension = "json"
+        static let defaultLocale = "en"
+        static let translationPath = "pages/duckplayer/locales/"
     }
     
     private(set) var settings: DuckPlayerSettingsProtocol
     private(set) weak var hostView: UIViewController?
+    
+    private lazy var localeStrings: String? = {
+        let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
+        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: Constants.translationFile,
+                                                               ofType: Constants.translationFileExtension,
+                                                               inDirectory: "\(Constants.translationPath)\(languageCode)") {
+            return try? String(contentsOfFile: localizedFile)
+        }
+        return nil
+    }()
     
     private struct WKMessageData: Codable {
         var context: String?
@@ -148,7 +163,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         
     private func updateSettings(userValues: UserValues) async {
         settings.setMode(userValues.duckPlayerMode)
-        settings.setOverlayHidden(userValues.askModeOverlayHidden)
+        settings.setAskModeOverlayHidden(userValues.askModeOverlayHidden)
     }
     
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
@@ -198,25 +213,31 @@ final class DuckPlayer: DuckPlayerProtocol {
             askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }
+    
+    private func encodeUIValues() -> UIValues {
+        UIValues(
+            allowFirstVideo: settings.allowFirstVideo
+        )
+    }
 
     @MainActor
     private func encodedPlayerSettings(with webView: WKWebView?) async -> InitialPlayerSettings {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
         let platform = InitialPlayerSettings.Platform(name: "ios")
-        let environment = InitialPlayerSettings.Environment.development
-        let locale = InitialPlayerSettings.Locale.en
+        let locale = Locale.current.languageCode ?? "en"
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()
-        return InitialPlayerSettings(userValues: userValues, settings: playerSettings, platform: platform, locale: locale)
+        let uiValues = encodeUIValues()
+        let settings = InitialPlayerSettings(userValues: userValues,
+                                                   ui: uiValues,
+                                                   settings: playerSettings,
+                                                   platform: platform,
+                                                   locale: locale,
+                                                   localeStrings: localeStrings)
+        return settings
     }
-    
-    @MainActor
-    private func encodedOverlaySettings(with webView: WKWebView?) async -> InitialOverlaySettings {
-        let userValues = encodeUserValues()
-        return InitialOverlaySettings(userValues: userValues)
-    }
-    
+        
     // Accessing WKMessage needs main thread
     @MainActor
     private func firePixels(message: WKScriptMessage, userValues: UserValues) {

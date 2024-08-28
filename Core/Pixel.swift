@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Common
 import Networking
+import os.log
 
 public struct PixelParameters {
     public static let url = "url"
@@ -223,9 +224,7 @@ public class Pixel {
         }
 
         guard !isDryRun else {
-            os_log(.debug, log: .generalLog, "Pixel fired %{public}@ %{public}@",
-                   pixelName.replacingOccurrences(of: "_", with: "."),
-                   params.count > 0 ? "\(params)" : "")
+            Logger.general.debug("Pixel fired \(pixelName.replacingOccurrences(of: "_", with: "."), privacy: .public) \(params.count > 0 ? "\(params)" : "", privacy: .public)")
             // simulate server response time for Dry Run mode
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 onComplete(nil)
@@ -256,7 +255,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, pixelName, "\(params)")
+            Logger.general.debug("Pixel fired \(pixelName, privacy: .public) \(params, privacy: .public)")
             onComplete(error)
         }
     }

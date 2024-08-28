@@ -25,14 +25,13 @@ import Core
 struct SubscriptionFlowView: View {
         
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @StateObject var viewModel: SubscriptionFlowViewModel
     
     @State private var isPurchaseInProgress = false
     @State private var isShowingITR = false
     @State private var isShowingDBP = false
     @State private var isShowingNetP = false
-    @Binding var currentView: SubscriptionContainerView.CurrentView
+    @Binding var currentView: SubscriptionContainerView.CurrentViewType
     
     // Local View State
     @State private var errorMessage: SubscriptionErrorMessage = .general
@@ -111,8 +110,7 @@ struct SubscriptionFlowView: View {
             return ""
         }
     }
-    
-    
+
     @ViewBuilder
     private var baseView: some View {
         ZStack(alignment: .top) {
@@ -180,9 +178,7 @@ struct SubscriptionFlowView: View {
                 
         .alert(isPresented: $isPresentingError) {
             getAlert(error: self.errorMessage)
-            
         }
-        
     }
         
     private func getAlert(error: SubscriptionErrorMessage) -> Alert {
@@ -194,7 +190,7 @@ struct SubscriptionFlowView: View {
                 message: Text(UserText.subscriptionFoundText),
                 primaryButton: .cancel(Text(UserText.subscriptionFoundCancel)) {
                      viewModel.clearTransactionError()
-                     dismiss()
+                      dismiss()
                 },
                 secondaryButton: .default(Text(UserText.subscriptionFoundRestore)) {
                     viewModel.restoreAppstoreTransaction()
@@ -223,9 +219,7 @@ struct SubscriptionFlowView: View {
 
     @ViewBuilder
     private var webView: some View {
-        
         ZStack(alignment: .top) {
-
             AsyncHeadlessWebView(viewModel: viewModel.webViewModel)
                 .background()
             

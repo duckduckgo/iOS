@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import Common
 import PrivacyDashboard
+import os.log
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -118,9 +119,8 @@ class AutofillDebugViewController: UITableViewController {
             do {
                 _ = try secureVault?.storeWebsiteCredentials(credentials)
             } catch let error {
-                os_log(.debug, "Error inserting credential \(error.localizedDescription)")
+                Logger.general.error("Error inserting credential \(error.localizedDescription, privacy: .public)")
             }
-
         }
 
         ActionMessageView.present(message: "Autofill Data added")

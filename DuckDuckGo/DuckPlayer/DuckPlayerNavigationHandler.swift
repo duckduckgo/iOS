@@ -24,6 +24,7 @@ import Core
 import Common
 import BrowserServicesKit
 import DuckPlayer
+import os.log
 
 final class DuckPlayerNavigationHandler {
     
@@ -31,9 +32,10 @@ final class DuckPlayerNavigationHandler {
     var referrer: DuckPlayerReferrer = .other
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
+    var appSettings: AppSettings
     
     private struct Constants {
-        static let SERPURL =  "https://duckduckgo.com/"
+        static let SERPURL =  "duckduckgo.com/"
         static let refererHeader = "Referer"
         static let templateDirectory = "pages/duckplayer"
         static let templateName = "index"
@@ -46,12 +48,16 @@ final class DuckPlayerNavigationHandler {
         static let watchInYoutubePath = "openInYoutube"
         static let watchInYoutubeVideoParameter = "v"
         static let urlInternalReferrer = "embeds_referring_euri"
+        static let youtubeScheme = "youtube://"
+        static let duckPlayerScheme = URL.NavigationalScheme.duck.rawValue
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
-         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         appSettings: AppSettings) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
+        self.appSettings = appSettings
     }
     
     static var htmlTemplatePath: String {
@@ -108,9 +114,12 @@ final class DuckPlayerNavigationHandler {
             return
         }
         
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         if let (videoID, _) = url.youtubeVideoParams,
             videoID == lastHandledVideoID {
-            os_log("DP: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("URL (\(url.absoluteString) already handled, skipping")
             return
         }
         
@@ -118,7 +127,8 @@ final class DuckPlayerNavigationHandler {
          // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
             url.hasWatchInYoutubeQueryParameter {
-                 return
+                duckPlayer.settings.allowFirstVideo = true
+            return
          }
                 
         if url.isYoutubeVideo,
@@ -126,10 +136,39 @@ final class DuckPlayerNavigationHandler {
             let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
             
-            os_log("DP: Handling URL change: %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("Handling URL change: \(url.absoluteString)")
             webView.load(URLRequest(url: URL.duckPlayer(videoID, timestamp: timestamp)))
             lastHandledVideoID = videoID
         }
+    }
+    
+    // Get the duck:// URL youtube-no-cookie URL
+    func getDuckURLFor(_ url: URL) -> URL {
+        guard let (youtubeVideoID, timestamp) = url.youtubeVideoParams,
+                url.isDuckPlayer,
+                !url.isDuckURLScheme,
+                duckPlayer.settings.mode != .disabled
+        else {
+            return url
+        }
+        return URL.duckPlayer(youtubeVideoID, timestamp: timestamp)
+    }
+    
+    private var isYouTubeAppInstalled: Bool {
+        if let youtubeURL = URL(string: Constants.youtubeScheme) {
+            return UIApplication.shared.canOpenURL(youtubeURL)
+        }
+        return false
+    }
+    
+    private func isSERPLink(navigationAction: WKNavigationAction) -> Bool {
+        guard let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] else {
+            return false
+        }
+        if referrer.contains(Constants.SERPURL) {
+            return true
+        }
+        return false
     }
     
 }
@@ -141,8 +180,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
         
-        os_log("DP: Handling DuckPlayer Player Navigation for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
-       
+        Logger.duckPlayer.debug("Handling DuckPlayer Player Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
+
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         guard let url = navigationAction.request.url else { return }
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
@@ -158,20 +200,28 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-        if url.scheme == "duck" {
-            let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            
-            if urlComponents?.path == "/\(Constants.watchInYoutubePath)",
-               let queryItems = urlComponents?.queryItems {
-                
-                if let videoParameterItem = queryItems.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
-                   let id = videoParameterItem.value,
-                    let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
-                        Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
-                        webView.load(URLRequest(url: newURL))
-                        return
-                }
+        if url.scheme == Constants.duckPlayerScheme,
+           let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           urlComponents.path == "/\(Constants.watchInYoutubePath)",
+           let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
+           let id = videoParameterItem.value,
+           let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
+
+            Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
+
+            // These links should always skip the overlay
+            duckPlayer.settings.allowFirstVideo = true
+
+            // Attempt to open in YouTube app (if installed) or load in webView
+            if isSERPLink(navigationAction: navigationAction),
+               appSettings.allowUniversalLinks,
+               isYouTubeAppInstalled,
+                let url = URL(string: "\(Constants.youtubeScheme)\(id)") {
+                UIApplication.shared.open(url)
+            } else {
+                webView.load(URLRequest(url: newURL))
             }
+            return
         }
         
         // Daily Unique View Pixel
@@ -193,7 +243,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             !url.hasWatchInYoutubeQueryParameter {
             let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
 
-            os_log("DP: Loading Simulated Request for %s", log: .duckPlayerLog, type: .debug, navigationAction.request.url?.absoluteString ?? "")
+            Logger.duckPlayer.debug("DP: Loading Simulated Request for \(navigationAction.request.url?.absoluteString ?? "")")
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.performRequest(request: newRequest, webView: webView)
@@ -220,34 +270,39 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             return
         }
         
+        // This is passed to the FE overlay at init to disable the overlay for one video
+        duckPlayer.settings.allowFirstVideo = false
+        
         if let (videoID, _) = url.youtubeVideoParams,
            videoID == lastHandledVideoID,
             !url.hasWatchInYoutubeQueryParameter {
-            os_log("DP: DecidePolicy: URL (%s) already handled, skipping", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: DecidePolicy: URL (\(url.absoluteString)) already handled, skipping")
             completion(.cancel)
             return
         }
         
          // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
-         // These should not be handled by DuckPlayer
+         // These should not be handled by DuckPlayer and not include overlays
          if url.isYoutubeVideo,
             url.hasWatchInYoutubeQueryParameter {
+                duckPlayer.settings.allowFirstVideo = true
                 completion(.allow)
                 return
          }
 
         // Pixel for Views From SERP
-        if navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] == Constants.SERPURL,
-            duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
+        if isSERPLink(navigationAction: navigationAction),
+           duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
         } else {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
         }
         
+        
         if url.isYoutubeVideo,
            !url.isDuckPlayer,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-                os_log("DP: Handling decidePolicy for Duck Player with %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+                Logger.duckPlayer.debug("DP: Handling decidePolicy for Duck Player with \(url.absoluteString)")
                 completion(.cancel)
                 handleURLChange(url: url, webView: webView)
                 return
@@ -269,7 +324,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleGoBack(webView: WKWebView) {
         
-        os_log("DP: Handling Back Navigation", log: .duckPlayerLog, type: .debug)
+        Logger.duckPlayer.debug("DP: Handling Back Navigation")
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.goBack()
@@ -295,11 +350,11 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             break
         }
         
-        if let nonYoutubeItem = nonYoutubeItem {
-            os_log("DP: Navigating back to %s", log: .duckPlayerLog, type: .debug, nonYoutubeItem.url.absoluteString)
+        if let nonYoutubeItem = nonYoutubeItem, duckPlayer.settings.mode == .enabled {
+            Logger.duckPlayer.debug("DP: Navigating back to \(nonYoutubeItem.url.absoluteString)")
             webView.go(to: nonYoutubeItem)
         } else {
-            os_log("DP: Navigating back to previous page", log: .duckPlayerLog, type: .debug)
+            Logger.duckPlayer.debug("DP: Navigating back to previous page")
             webView.goBack()
         }
     }
@@ -319,7 +374,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            os_log("DP: Handling DuckPlayer Reload for %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: Handling DuckPlayer Reload for \(url.absoluteString)")
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
         } else {
             webView.reload()
@@ -336,9 +391,10 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
             duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
-            os_log("DP: Handling Initial Load of a video for %s", log: .duckPlayerLog, type: .debug, url.absoluteString)
+            Logger.duckPlayer.debug("DP: Handling Initial Load of a video for \(url.absoluteString)")
             handleReload(webView: webView)
         }
         
     }
+
 }

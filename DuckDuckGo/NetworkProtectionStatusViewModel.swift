@@ -23,6 +23,7 @@ import NetworkProtection
 import WidgetKit
 import BrowserServicesKit
 import Core
+import Subscription
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -149,17 +150,22 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @Published public var animationsOn: Bool = false
 
+    public let usesUnifiedFeedbackForm: Bool
+
     public init(tunnelController: (TunnelController & TunnelSessionProvider),
                 settings: VPNSettings,
                 statusObserver: ConnectionStatusObserver,
                 serverInfoObserver: ConnectionServerInfoObserver,
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
-                locationListRepository: NetworkProtectionLocationListRepository) {
+                locationListRepository: NetworkProtectionLocationListRepository,
+                usesUnifiedFeedbackForm: Bool) {
         self.tunnelController = tunnelController
         self.settings = settings
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
+        self.usesUnifiedFeedbackForm = usesUnifiedFeedbackForm
+
         statusMessage = Self.message(for: statusObserver.recentValue)
         self.headerTitle = Self.titleText(status: statusObserver.recentValue)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)

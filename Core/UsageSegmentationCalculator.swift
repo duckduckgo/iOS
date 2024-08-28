@@ -236,7 +236,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         }
 
         // py:142
-        if _segmentIntermittent(atb) {
+        if segmentIntermittent(atb) {
             segments.append("intermittent")
         }
 
@@ -338,9 +338,21 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return relevantHistoryNums(atb).count >= 14
     }
 
-    private func _segmentIntermittent(_ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
+    /// py: 161 `segment_intermittent`
+    private func segmentIntermittent(_ atb: Atb) -> Bool {
+        let today = atb.ageInDays
+        let history = relevantHistoryNums(atb)
+
+        // py: 164
+        if history.count > 14 {
+            return false
+        }
+
+        // py: 167
+        let rollingWeeksActive = Set(history.map { (today - $0 - 1) / 7 })
+
+        // py: 170
+        return rollingWeeksActive.count == 4
     }
 
     /// py: 148 `relevant_history_nums`

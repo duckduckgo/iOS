@@ -49,7 +49,7 @@ private class ShareItemSource: NSObject, UIActivityItemSource {
 
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         if activityType == .mail || activityType == .message {
-            return "\(message)\n\n\(url.absoluteString)"
+            return "\(message) \(url.absoluteString)"
         }
         return url
     }

@@ -898,7 +898,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             syncPromoViewHostingController.view.translatesAutoresizingMaskIntoConstraints = false
             addChild(syncPromoViewHostingController)
             headerView.addSubview(syncPromoViewHostingController.view)
-            syncPromoViewHostingController.didMove(toParent: self)
 
             NSLayoutConstraint.deactivate([
                 searchBarBottomConstraint
@@ -914,11 +913,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             syncPromoViewHostingController.view.setNeedsLayout()
             syncPromoViewHostingController.view.layoutIfNeeded()
 
-            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+            let horizontalMargins = tableView.layoutMargins.left + tableView.layoutMargins.right + 40
+            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width - horizontalMargins, height: CGFloat.greatestFiniteMagnitude)).height
             let totalHeight = searchBar.intrinsicContentSize.height + syncPromoViewHeight
             headerView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: totalHeight)
 
             tableView.tableHeaderView = headerView
+            syncPromoViewHostingController.didMove(toParent: self)
+
             tableView.layoutIfNeeded()
         } else if !headerView.subviews.contains(searchBar) || headerView.subviews.count != 1 {
 

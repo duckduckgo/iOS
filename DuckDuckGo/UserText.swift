@@ -892,7 +892,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
 
     // Mark: Sync Promotion
-    public static let syncPromoTitle = NSLocalizedString("sync.promo.title", value:"Sync Securely Between Devices", comment: "Title for the Sync Promotion banner")
+    public static let syncPromoBookmarksTitle = NSLocalizedString("sync.promo.bookmarks.title", value:"Sync & Back Up Your Bookmarks", comment: "Title for the Sync Promotion banner")
+    public static let syncPromoPasswordsTitle = NSLocalizedString("sync.promo.passwords.title", value:"Sync & Back Up Your Passwords", comment: "Title for the Sync Promotion banner")
     public static let syncPromoBookmarksMessage = NSLocalizedString("sync.promo.bookmarks.message", value:"No account needed. End-to-end encryption means nobody but you can see your bookmarks, not even us.", comment: "Message for the Sync Promotion banner when user has bookmarks that can be synced")
     public static let syncPromoPasswordsMessage = NSLocalizedString("sync.promo.passwords.message", value:"No account needed. End-to-end encryption means nobody but you can see your passwords, not even us.", comment: "Message for the Sync Promotion banner when user has passwords that can be synced")
     public static let syncPromoConfirmAction = NSLocalizedString("sync.promo.confirm.action", value:"Set Up Sync", comment: "Title for a button in the Sync Promotion banner to set up Sync")

@@ -29,8 +29,10 @@ struct SyncPromoViewModel {
 
     var title: String {
         switch touchpointType {
-        case .bookmarks, .passwords:
-            UserText.syncPromoTitle
+        case .bookmarks:
+            UserText.syncPromoBookmarksTitle
+        case .passwords:
+            UserText.syncPromoPasswordsTitle
         }
     }
 

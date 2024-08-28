@@ -215,16 +215,16 @@
 "sync.get.other.devices.card.button.title" = "Share Download Link";
 
 /* Message before share link for downloading DuckDuckGo on other devices */
-"sync.get.other.devices.card.message" = "To download our app, visit:";
+"sync.get.other.devices.card.message" = "To download DuckDuckGo on desktop or another mobile device, visit:";
 
 /* Title of card with share links for users to download DuckDuckGo on other devices */
-"sync.get.other.devices.card.title" = "Get DuckDuckGo on other devices";
+"sync.get.other.devices.card.title" = "Get DuckDuckGo on other devices to sync with this one";
 
 /* Title of screen with share links for users to download DuckDuckGo on other devices */
 "sync.get.other.devices.screen.title" = "Get DuckDuckGo";
 
 /* Message included when sharing a url via the system share sheet */
-"sync.get.other.devices.share.link.message" = "Search privately and block trackers with the DuckDuckGo browser. Visit this link to download today.";
+"sync.get.other.devices.share.link.message" = "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";

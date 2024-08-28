@@ -499,7 +499,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 if authenticated {
                     let accountsCount = self?.viewModel.accountsCount ?? 0
                     self?.viewModel.clearAllAccounts()
-                    self?.presentDeleteAllConfirmation(accountsCount)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        self?.presentDeleteAllConfirmation(accountsCount)
+                    })
                 }
             }
         )
@@ -676,7 +678,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
             addChild(syncPromoViewHostingController)
 
-            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width - tableView.layoutMargins.left - tableView.layoutMargins.right, height: CGFloat.greatestFiniteMagnitude)).height
             syncPromoViewHostingController.view.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: syncPromoViewHeight)
             tableView.tableHeaderView = syncPromoViewHostingController.view
 

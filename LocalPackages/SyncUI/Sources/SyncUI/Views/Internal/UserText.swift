@@ -176,9 +176,9 @@ public struct UserText {
 
     // Sync Get Other Devices
     static let syncGetOtherDevicesScreenTitle = NSLocalizedString("sync.get.other.devices.screen.title", bundle: Bundle.module, value: "Get DuckDuckGo", comment: "Title of screen with share links for users to download DuckDuckGo on other devices")
-    static let syncGetOtherDevicesTitle = NSLocalizedString("sync.get.other.devices.card.title", bundle: Bundle.module, value: "Get DuckDuckGo on other devices", comment: "Title of card with share links for users to download DuckDuckGo on other devices")
-    static let syncGetOtherDevicesMessage = NSLocalizedString("sync.get.other.devices.card.message", bundle: Bundle.module, value: "To download our app, visit:", comment: "Message before share link for downloading DuckDuckGo on other devices")
+    static let syncGetOtherDevicesTitle = NSLocalizedString("sync.get.other.devices.card.title", bundle: Bundle.module, value: "Get DuckDuckGo on other devices to sync with this one", comment: "Title of card with share links for users to download DuckDuckGo on other devices")
+    static let syncGetOtherDevicesMessage = NSLocalizedString("sync.get.other.devices.card.message", bundle: Bundle.module, value: "To download DuckDuckGo on desktop or another mobile device, visit:", comment: "Message before share link for downloading DuckDuckGo on other devices")
     static let syncGetOtherDevicesButtonTitle = NSLocalizedString("sync.get.other.devices.card.button.title", bundle: Bundle.module, value: "Share Download Link", comment: "Button title to share link for downloading DuckDuckGo on other devices")
-    static let syncGetOtherDeviceShareLinkMessage = NSLocalizedString("sync.get.other.devices.share.link.message", value: "Search privately and block trackers with the DuckDuckGo browser. Visit this link to download today.", comment: "Message included when sharing a url via the system share sheet")
+    static let syncGetOtherDeviceShareLinkMessage = NSLocalizedString("sync.get.other.devices.share.link.message", value: "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:", comment: "Message included when sharing a url via the system share sheet")
 
 }

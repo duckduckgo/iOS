@@ -48,6 +48,7 @@ final class DuckPlayerNavigationHandler {
         static let watchInYoutubeVideoParameter = "v"
         static let urlInternalReferrer = "embeds_referring_euri"
         static let youtubeScheme = "youtube://"
+        static let duckPlayerScheme = URL.NavigationalScheme.duck.rawValue
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
@@ -198,7 +199,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-        if url.scheme == "duck",
+        if url.scheme == Constants.duckPlayerScheme,
            let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
            urlComponents.path == "/\(Constants.watchInYoutubePath)",
            let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),

@@ -66,12 +66,14 @@ public struct PlatformLinksView: View {
                 .daxTitle3()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .padding([.top, .horizontal], 16)
+                .multilineTextAlignment(.center)
 
             Group {
                 Text(UserText.syncGetOtherDevicesMessage)
                     .daxBodyRegular()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.top, 8)
+                    .multilineTextAlignment(.center)
 
                 Text(Constants.goToUrl)
                     .daxBodyBold()

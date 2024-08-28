@@ -231,7 +231,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         }
 
         // py:139
-        if _segmentRegular(atb) {
+        if segmentRegular(atb) {
             segments.append("regular")
         }
 
@@ -333,14 +333,25 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return (atb.week - n) / 4 == ((previousAtb ?? installAtb).week - n) / 4 + 1
     }
 
-    private func _segmentRegular(_ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
+    /// py: 157 `segment_regular`
+    private func segmentRegular(_ atb: Atb) -> Bool {
+        return relevantHistoryNums(atb).count >= 14
     }
 
     private func _segmentIntermittent(_ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
+    }
+
+    /// py: 148 `relevant_history_nums`
+    private func relevantHistoryNums(_ atb: Atb) -> [Int] {
+        let installDay = installAtb.ageInDays
+        let today = atb.ageInDays
+        let history = usageHistory.map { $0.ageInDays }
+        return Set(history.filter {
+            // py: 153
+            $0 < today && $0 >= today - 29 && $0 > installDay
+        }).sorted()
     }
 }
 

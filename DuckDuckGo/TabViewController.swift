@@ -178,6 +178,8 @@ class TabViewController: UIViewController {
     private let certificateTrustEvaluator: CertificateTrustEvaluating
     private var shouldBypassSSLError = false
     var errorData: SpecialErrorData?
+    private var failedURL: URL?
+
 
     let syncService: DDGSyncing
 
@@ -1363,6 +1365,8 @@ extension TabViewController: WKNavigationDelegate {
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
+
+        userScripts?.specialErrorPageUserScript?.isEnabled = webView.url == failedURL
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1567,6 +1571,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         let tld = storageCache.tld
         let errorType = SSLErrorType.forErrorCode(errorCode)
+        self.failedURL = failedURL
         errorData = SpecialErrorData(kind: .ssl,
                                      errorType: errorType.rawValue,
                                      domain: failedURL.host,

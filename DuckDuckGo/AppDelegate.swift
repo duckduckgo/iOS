@@ -295,7 +295,7 @@ import os.log
             bookmarksDatabase: bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
             internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-            configurationStore: ConfigurationStore.shared,
+            configurationStore: ConfigurationStore(),
             database: Database.shared,
             errorEvents: RemoteMessagingStoreErrorHandling(),
             remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(
@@ -522,6 +522,7 @@ import os.log
             ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
+        AppDependencyProvider.shared.configurationManager.loadPrivacyConfigFromDiskIfNeeded()
 
         AppConfigurationFetch().start { result in
             if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {

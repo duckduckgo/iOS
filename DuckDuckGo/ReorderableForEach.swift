@@ -38,7 +38,6 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
     private let onMove: (_ from: IndexSet, _ to: Int) -> Void
 
     @State private var movedItem: Data?
-    @State private var isItemLocationChanged: Bool = false
 
     init(_ data: [Data],
          id: KeyPath<Data, ID>,
@@ -97,8 +96,7 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
                 data: data,
                 item: item,
                 onMove: onMove,
-                movedItem: $movedItem,
-                isItemLocationChanged: $isItemLocationChanged))
+                movedItem: $movedItem))
     }
 }
 
@@ -109,7 +107,6 @@ private struct ReorderDropDelegate<Data: Reorderable>: DropDelegate {
     let onMove: (_ from: IndexSet, _ to: Int) -> Void
 
     @Binding var movedItem: Data?
-    @Binding var isItemLocationChanged: Bool
 
     func dropEntered(info: DropInfo) {
         guard item != movedItem,
@@ -117,8 +114,6 @@ private struct ReorderDropDelegate<Data: Reorderable>: DropDelegate {
               let from = data.firstIndex(of: current),
               let to = data.firstIndex(of: item)
         else { return }
-
-        isItemLocationChanged = true
 
         if data[to] != current {
             let fromIndices = IndexSet(integer: from)
@@ -132,7 +127,6 @@ private struct ReorderDropDelegate<Data: Reorderable>: DropDelegate {
     }
 
     func performDrop(info: DropInfo) -> Bool {
-        isItemLocationChanged = false
         movedItem = nil
         return info.hasItemsConforming(to: [item.dropType])
     }

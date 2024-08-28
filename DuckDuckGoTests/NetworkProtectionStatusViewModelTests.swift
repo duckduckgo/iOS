@@ -44,7 +44,8 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
                                                      settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
                                                      statusObserver: statusObserver,
                                                      serverInfoObserver: serverInfoObserver,
-                                                     locationListRepository: MockNetworkProtectionLocationListRepository())
+                                                     locationListRepository: MockNetworkProtectionLocationListRepository(),
+                                                     usesUnifiedFeedbackForm: false)
     }
 
     override func tearDown() {

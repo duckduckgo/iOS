@@ -22,6 +22,7 @@ import Common
 import Foundation
 import CoreData
 import Core
+import os.log
 
 class DatabaseMigration {
     
@@ -105,7 +106,7 @@ class DatabaseMigration {
                 try stack.persistenceStoreCoordinator.remove(store)
             } catch {
                 Pixel.fire(pixel: .dbRemovalError, error: error)
-                os_log("Error removing store: %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Error removing store: \(error.localizedDescription, privacy: .public)")
             }
         }
     }
@@ -154,15 +155,15 @@ class DatabaseMigration {
                                                      concurrencyType: .privateQueueConcurrencyType),
             let storeURL = oldStack.persistenceStoreCoordinator.persistentStores.last?.url else { return }
 
-        os_log("Destroying store: %s", log: .generalLog, type: .debug, dbName)
-        
+        Logger.general.debug("Destroying store: \(dbName)")
+
         do {
             try oldStack.persistenceStoreCoordinator.destroyPersistentStore(at: storeURL,
                                                                             ofType: NSSQLiteStoreType,
                                                                             options: nil)
         } catch {
             Pixel.fire(pixel: .dbDestroyError, error: error)
-            os_log("Error destroying store: %s", log: .generalLog, type: .debug, error.localizedDescription)
+            Logger.general.error("Error destroying store: \(error.localizedDescription, privacy: .public)")
         }
         
         removeFile(at: storeURL)
@@ -181,7 +182,7 @@ class DatabaseMigration {
             if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileNoSuchFileError {
                 Pixel.fire(pixel: .dbDestroyFileError, error: error)
             }
-            os_log("Error removing file: %s", log: .generalLog, type: .debug, error.localizedDescription)
+            Logger.general.error("Error removing file: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

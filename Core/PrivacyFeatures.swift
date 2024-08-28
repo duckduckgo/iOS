@@ -19,6 +19,7 @@
 
 import BrowserServicesKit
 import Common
+import os.log
 
 public final class PrivacyFeatures {
 
@@ -54,9 +55,11 @@ public final class PrivacyFeatures {
         AppHTTPSUpgradeStore(database: Database.shared,
                              bloomFilterDataURL: bloomFilterDataURL,
                              embeddedResources: embeddedBloomFilterResources,
-                             errorEvents: httpsUpgradeDebugEvents)
+                             errorEvents: httpsUpgradeDebugEvents,
+                             logger: Logger.general)
     }
 
-    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)
+    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                  logger: Logger.general)
 
 }

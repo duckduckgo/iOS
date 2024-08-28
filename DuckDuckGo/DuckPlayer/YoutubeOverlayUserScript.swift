@@ -88,6 +88,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
         .exact(hostname: "sosbourne.duckduckgo.com"),
+        .exact(hostname: "use-devtesting18.duckduckgo.com"),
         .exact(hostname: DuckPlayerSettings.OriginDomains.duckduckgo),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtube),
         .exact(hostname: DuckPlayerSettings.OriginDomains.youtubeMobile)

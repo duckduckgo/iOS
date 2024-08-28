@@ -22,6 +22,7 @@ import UIKit
 import MobileCoreServices
 import Core
 import UniformTypeIdentifiers
+import os.log
 
 class ActionViewController: UIViewController {
 
@@ -35,7 +36,7 @@ class ActionViewController: UIViewController {
                     provider.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { text, _ in
                         guard let text = text as? String else { return }
                         guard let url = URL.makeSearchURL(text: text) else {
-                            os_log("Couldn‘t for URL for query “%s”", log: .lifecycleLog, type: .error, text)
+                            Logger.lifecycle.error("Couldn‘t form URL for query “\(text, privacy: .public)”")
                             return
                         }
                         self.launchBrowser(withUrl: url)

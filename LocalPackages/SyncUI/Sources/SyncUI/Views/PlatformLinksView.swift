@@ -19,7 +19,6 @@
 
 import SwiftUI
 import DesignResourcesKit
-import LinkPresentation
 import DuckUI
 
 public struct PlatformLinksView: View {
@@ -30,11 +29,13 @@ public struct PlatformLinksView: View {
     }
 
     private var model: SyncSettingsViewModel
+    private var source: SyncSettingsViewModel.PlatformLinksPixelSource
 
     @State private var shareButtonFrame: CGRect = .zero
 
-    public init(model: SyncSettingsViewModel) {
+    public init(model: SyncSettingsViewModel, source: SyncSettingsViewModel.PlatformLinksPixelSource) {
         self.model = model
+        self.source = source
     }
 
     public var body: some View {
@@ -76,14 +77,17 @@ public struct PlatformLinksView: View {
                     .daxBodyBold()
                     .foregroundColor(Color(designSystemColor: .accent))
                     .overlay(
-                        CopyActionOverlay(copyText: Constants.downloadUrl)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        CopyActionOverlay(copyText: Constants.downloadUrl, onCopy: {
+                            model.fireOtherPlatformLinksPixel(for: .copy, source: source)
+                        })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     )
                     .padding(.top, 2)
 
                 Button {
                     if let url = URL(string: Constants.downloadUrl) {
                         model.shareLinkPressed(for: url, with: UserText.syncGetOtherDeviceShareLinkMessage, from: shareButtonFrame)
+                        model.fireOtherPlatformLinksPixel(for: .share, source: source)
                     }
                 } label: {
                     HStack(spacing: 6) {
@@ -112,6 +116,9 @@ public struct PlatformLinksView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(designSystemColor: .surface))
         )
+        .onAppear {
+            model.fireOtherPlatformLinksPixel(for: .appear, source: source)
+        }
     }
 }
 
@@ -125,12 +132,15 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
 
 private struct CopyActionOverlay: UIViewRepresentable {
     let copyText: String
+    let onCopy: () -> Void
 
     class Coordinator: NSObject {
         var copyText: String
+        var onCopy: () -> Void
 
-        init(copyText: String) {
+        init(copyText: String, onCopy: @escaping () -> Void) {
             self.copyText = copyText
+            self.onCopy = onCopy
         }
 
         @objc func showMenu(_ sender: UITapGestureRecognizer) {
@@ -146,11 +156,13 @@ private struct CopyActionOverlay: UIViewRepresentable {
 
         @objc func copyTextAction() {
             UIPasteboard.general.string = copyText
+
+            onCopy()
         }
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(copyText: copyText)
+        Coordinator(copyText: copyText, onCopy: onCopy)
     }
 
     func makeUIView(context: Context) -> UIView {
@@ -188,5 +200,5 @@ private class CopyableUIView: UIView {
 }
 
 #Preview {
-    PlatformLinksView(model: SyncSettingsViewModel(isOnDevEnvironment: { true }, switchToProdEnvironment: {}))
+    PlatformLinksView(model: SyncSettingsViewModel(isOnDevEnvironment: { true }, switchToProdEnvironment: {}), source: .activated)
 }

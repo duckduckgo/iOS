@@ -107,9 +107,9 @@ extension SyncSettingsView {
     }
 
     @ViewBuilder
-    func otherPlatformsLinks() -> some View {
+    func otherPlatformsLinks(source: SyncSettingsViewModel.PlatformLinksPixelSource) -> some View {
         Section {
-            NavigationLink(destination: PlatformLinksView(model: model)) {
+            NavigationLink(destination: PlatformLinksView(model: model, source: source)) {
                 HStack(spacing: 6) {
                     Image("Sync-Downloads-24")
                     Text(UserText.syncGetOnOtherDevices)

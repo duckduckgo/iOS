@@ -57,6 +57,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let syncPausedStateManager: any SyncPausedStateManaging
     var viewModel: SyncSettingsViewModel?
 
+    var source: String?
+
     var onConfirmSyncDisable: (() -> Void)?
     var onConfirmAndDeleteAllData: (() -> Void)?
 
@@ -66,12 +68,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncBookmarksAdapter: SyncBookmarksAdapter,
         syncCredentialsAdapter: SyncCredentialsAdapter,
         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-        syncPausedStateManager: any SyncPausedStateManaging
+        syncPausedStateManager: any SyncPausedStateManaging,
+        source: String? = nil
     ) {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.syncCredentialsAdapter = syncCredentialsAdapter
         self.syncPausedStateManager = syncPausedStateManager
+        self.source = source
 
         let viewModel = SyncSettingsViewModel(
             isOnDevEnvironment: { syncService.serverEnvironment == .development },
@@ -361,7 +365,8 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             if syncService.account == nil {
                 do {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                    Pixel.fire(pixel: .syncSignupConnect, includedParameters: [.appVersion])
+                    let additionalParameters = source.map { ["source": $0] } ?? [:]
+                    try await Pixel.fire(pixel: .syncSignupConnect, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion])
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)

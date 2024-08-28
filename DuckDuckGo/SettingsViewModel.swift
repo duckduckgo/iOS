@@ -399,6 +399,7 @@ extension SettingsViewModel {
             networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
+            syncSource: nil,
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode
         )
@@ -507,7 +508,12 @@ extension SettingsViewModel {
         state.activeWebsiteAccount = accountDetails
         presentLegacyView(.logins)
     }
-    
+
+    @MainActor func shouldPresentSyncViewWithSource(_ source: String? = nil) {
+        state.syncSource = source
+        presentLegacyView(.sync)
+    }
+
     func openEmailProtection() {
         UIApplication.shared.open(URL.emailProtectionQuickLink,
                                   options: [:],
@@ -573,7 +579,7 @@ extension SettingsViewModel {
         case .addToDock:
             presentViewController(legacyViewProvider.addToDock, modal: true)
         case .sync:
-            pushViewController(legacyViewProvider.syncSettings)
+            pushViewController(legacyViewProvider.syncSettings(source: state.syncSource))
         case .appIcon: pushViewController(legacyViewProvider.appIcon)
         case .unprotectedSites: pushViewController(legacyViewProvider.unprotectedSites)
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)

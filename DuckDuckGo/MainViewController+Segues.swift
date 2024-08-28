@@ -276,14 +276,18 @@ extension MainViewController {
         }
     }
 
-    func segueToSettingsSync() {
+    func segueToSettingsSync(with source: String? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.presentLegacyView(.sync)
+            if let source = source {
+                $0.shouldPresentSyncViewWithSource(source)
+            } else {
+                $0.presentLegacyView(.sync)
+            }
         }
     }
-    
+
     func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil,
                         deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,

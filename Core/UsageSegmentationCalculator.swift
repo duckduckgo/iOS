@@ -346,7 +346,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         let history = relevantHistoryNums(atb)
 
         // py: 164
-        if history.count > 14 {
+        if history.count >= 14 {
             return false
         }
 

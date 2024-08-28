@@ -110,6 +110,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return result
     }
 
+    /// py: 172 `get_pixel_info`
     private func getPixelInfo(_ atb: Atb, _ activityType: UsageActivityType) -> [String: String] {
         var pixel: [String: String] = [:]
 
@@ -152,7 +153,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         if countAsMAUn != "ffff" {
             pixel[Params.countAsMAUn] = countAsMAUn
             for n in 0 ..< 4 {
-                if _countsAsMAUAndActivePreviousMonth(n, atb) &&
+                if countsAsMAUAndActivePreviousMonth(n, atb) &&
                     !previousMAUSegments[n].isEmpty {
                     pixel[Params.segmentsPreviousMonthPrefix + "\(n)"] = previousMAUSegments[n]
                 }
@@ -223,7 +224,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         // py:131
         for n in 0..<4 {
             if countAsMAU(n, atb) // TODO validate prev atb or install atb??
-                && !_countsAsMAUAndActivePreviousMonth(n, atb)
+                && !countsAsMAUAndActivePreviousMonth(n, atb)
                 && atb.week >= installAtb.week + 4 {
                 segments.append("reactivated_mau_\(n)")
             }
@@ -262,7 +263,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return atb.week > (previousAtb ?? installAtb).week
     }
 
-    /// py:58 caw_and_active_prev_week
+    /// py:58 `caw_and_active_prev_week`
     private func countsAsWAUAndActivePreviousWeek(_ atb: Atb) -> Bool {
         // py:59
         if atb == installAtb {
@@ -285,7 +286,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return atb.week == (previousAtb ?? installAtb).week + 1
     }
 
-    /// py:71 count_as_mau
+    /// py:71 `count_as_mau`
     private func countAsMAU(_ n: Int, _ atb: Atb) -> Bool {
         assert(n < 4)
 
@@ -306,9 +307,30 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return (atb.week - n) / 4 > ((previousAtb ?? installAtb).week - n) / 4
     }
 
-    private func _countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
+    /// py: 82 `cam_and_active_prev_month`
+    private func countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {
+        assert(n < 4)
+
+        // py:84
+        if atb == installAtb {
+            // # Install day - this code should not be running! Report nothing.
+            assertionFailure("See comment")
+            return false
+        }
+
+        // py:87
+        if previousAtb == nil || previousAtb == installAtb {
+            // # First post-install activity
+            return false
+        }
+
+        // py:90
+        if !countAsMAU(n, atb) {
+            return false
+        }
+
+        // py:93
+        return (atb.week - n) / 4 == ((previousAtb ?? installAtb).week - n) / 4 + 1
     }
 
     private func _segmentRegular(_ atb: Atb) -> Bool {

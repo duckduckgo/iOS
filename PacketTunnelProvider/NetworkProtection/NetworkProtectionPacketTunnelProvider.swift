@@ -26,6 +26,7 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 import WidgetKit
+import WireGuard
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -374,6 +375,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
+                   wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
@@ -382,6 +384,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: true,
                    entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
+
+        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -442,5 +446,49 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .failure(let error):
             return .failure(error)
         }
+    }
+}
+
+final class DefaultWireGuardInterface: WireGuardInterface {
+    func turnOn(settings: UnsafePointer<CChar>, handle: Int32) -> Int32 {
+        wgTurnOn(settings, handle)
+    }
+    
+    func turnOff(handle: Int32) {
+        wgTurnOff(handle)
+    }
+    
+    func getConfig(handle: Int32) -> UnsafeMutablePointer<CChar>? {
+        return wgGetConfig(handle)
+    }
+    
+    func setConfig(handle: Int32, config: String) -> Int64 {
+        return wgSetConfig(handle, config)
+    }
+    
+    func bumpSockets(handle: Int32) {
+        wgBumpSockets(handle)
+    }
+    
+    func disableSomeRoamingForBrokenMobileSemantics(handle: Int32) {
+        wgDisableSomeRoamingForBrokenMobileSemantics(handle)
+    }
+    
+    func setLogger(context: UnsafeMutableRawPointer?, logFunction: (@convention(c) (UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
+        wgSetLogger(context, logFunction)
+    }
+}
+
+extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
+
+    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+        let parameters = [
+            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+            PixelParameters.privacyProKeychainError: error.errorDescription,
+            PixelParameters.source: "vpn"
+        ]
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     withAdditionalParameters: parameters)
     }
 }

@@ -24,6 +24,7 @@ import DDGSync
 import WebKit
 import Bookmarks
 import Persistence
+import os.log
 
 class TabSwitcherViewController: UIViewController {
     
@@ -223,7 +224,7 @@ class TabSwitcherViewController: UIViewController {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
-            os_log("Failed to save %d tabs", log: .generalLog, type: .debug, failedToSaveCount)
+            Logger.general.debug("Failed to save \(failedToSaveCount) tabs")
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }

@@ -24,6 +24,7 @@ import WebKit
 import BrowserServicesKit
 import Persistence
 import History
+import os.log
 
 class TabManager {
 
@@ -105,7 +106,7 @@ class TabManager {
         if let controller = controller(for: tab) {
             return controller
         } else if createIfNeeded {
-            os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
+            Logger.general.debug("Tab not in cache, creating")
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller

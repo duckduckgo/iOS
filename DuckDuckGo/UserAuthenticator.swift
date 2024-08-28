@@ -21,6 +21,7 @@ import Common
 import Foundation
 import LocalAuthentication
 import Core
+import os.log
 
 class UserAuthenticator {
     enum AuthError: Error, Equatable {
@@ -75,7 +76,7 @@ class UserAuthenticator {
                         self?.state = .loggedIn
                         completion?(nil)
                     } else {
-                        os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        Logger.general.error("Failed to authenticate: \(error?.localizedDescription ?? "nil", privacy: .public)")
                         completion?(.failedToAuthenticate)
                     }
                 }

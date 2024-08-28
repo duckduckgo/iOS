@@ -195,18 +195,18 @@ struct SubscriptionSettingsView: View {
     }
 
     @ViewBuilder var helpSection: some View {
-        Section(header: Text(UserText.subscriptionHelpAndSupport),
-                footer: Text(UserText.subscriptionFAQFooter)) {
-
-            SettingsCustomCell(content: {
-                Text(UserText.subscriptionFAQ)
-                    .daxBodyRegular()
-                    .foregroundColor(Color(designSystemColor: .accent))
-            },
-                               action: { viewModel.displayFAQView(true) },
-                               disclosureIndicator: false,
-                               isButton: true)
-
+        if viewModel.usesUnifiedFeedbackForm {
+            Section {
+                faqButton
+                supportButton
+            } header: {
+                Text(UserText.subscriptionHelpAndSupport)
+            }
+        } else {
+            Section(header: Text(UserText.subscriptionHelpAndSupport),
+                    footer: Text(UserText.subscriptionFAQFooter)) {
+                faqButton
+            }
         }
     }
 
@@ -221,6 +221,27 @@ struct SubscriptionSettingsView: View {
                                disclosureIndicator: false,
                                isButton: true)
         }
+
+    }
+
+    @ViewBuilder
+    private var faqButton: some View {
+        SettingsCustomCell(content: {
+            Text(UserText.subscriptionFAQ)
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .accent))
+        },
+                           action: { viewModel.displayFAQView(true) },
+                           disclosureIndicator: false,
+                           isButton: true)
+    }
+
+    @ViewBuilder
+    private var supportButton: some View {
+        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .ppro)
+        NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
+            .daxBodyRegular()
+            .foregroundColor(.init(designSystemColor: .textPrimary))
     }
 
     @ViewBuilder

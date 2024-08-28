@@ -112,11 +112,14 @@ class AppDependencyProvider: DependencyProvider {
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
         
-        subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                         accountManager: accountManager,
-                                                         subscriptionEndpointService: subscriptionService,
-                                                         authEndpointService: authService,
-                                                         subscriptionEnvironment: subscriptionEnvironment)
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+                                                             accountManager: accountManager,
+                                                             subscriptionEndpointService: subscriptionService,
+                                                             authEndpointService: authService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
+        accountManager.delegate = subscriptionManager
+
+        self.subscriptionManager = subscriptionManager
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,

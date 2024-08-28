@@ -384,6 +384,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    defaults: .networkProtectionGroupDefaults,
                    isSubscriptionEnabled: true,
                    entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
+
+        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -474,5 +476,19 @@ final class DefaultWireGuardInterface: WireGuardInterface {
     
     func setLogger(context: UnsafeMutableRawPointer?, logFunction: (@convention(c) (UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
         wgSetLogger(context, logFunction)
+    }
+}
+
+extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
+
+    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+        let parameters = [
+            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+            PixelParameters.privacyProKeychainError: error.errorDescription,
+            PixelParameters.source: "vpn"
+        ]
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     withAdditionalParameters: parameters)
     }
 }

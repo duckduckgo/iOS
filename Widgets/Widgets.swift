@@ -26,6 +26,7 @@ import Kingfisher
 import Bookmarks
 import Persistence
 import NetworkExtension
+import os.log
 
 struct Favorite {
 
@@ -103,24 +104,24 @@ class Provider: TimelineProvider {
         
         if bookmarksDB == nil {
             let db = BookmarksDatabase.make(readOnly: true)
-            os_log("BookmarksDatabase load store started")
+            Logger.general.debug("BookmarksDatabase load store started")
             db.loadStore { _, error in
                 guard error == nil else { return }
                 self.bookmarksDB = db
             }
-            os_log("BookmarksDatabase store loaded")
+            Logger.general.debug("BookmarksDatabase store loaded")
         }
         
         if maxFavorites > 0,
            let db = bookmarksDB {
             let model = FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: fetchFavoritesDisplayMode())
-            os_log("model created")
+            Logger.general.debug("model created")
             let dbFavorites = model.favorites
-            os_log("dbFavorites loaded %d", dbFavorites.count)
+            Logger.general.debug("dbFavorites loaded \(dbFavorites.count)")
             let favorites = coreDataFavoritesToFavorites(dbFavorites, returningNoMoreThan: maxFavorites)
-            os_log("favorites converted %d", favorites.count)
+            Logger.general.debug("favorites converted \(favorites.count)")
             let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
-            os_log("entry created")
+            Logger.general.debug("entry created")
             completion(entry)
         } else {
             let entry = FavoritesEntry(date: Date(), favorites: [], isPreview: context.isPreview)

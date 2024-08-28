@@ -24,6 +24,7 @@ import UIKit
 import Combine
 import Core
 import PrivacyDashboard
+import os.log
 
 internal enum AutofillLoginListSectionType: Comparable {
     case enableAutofill
@@ -362,7 +363,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         do {
             return try secureVault.accounts()
         } catch {
-            os_log("Failed to fetch accounts")
+            Logger.autofill.error("Failed to fetch accounts \(error.localizedDescription, privacy: .public)")
             return []
         }
     }

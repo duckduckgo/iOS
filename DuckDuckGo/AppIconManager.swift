@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
-import Common
+import Foundation
 import UIKit
 import Core
+import os.log
 
 class AppIconManager {
 
@@ -38,7 +39,7 @@ class AppIconManager {
         let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
         UIApplication.shared.setAlternateIconName(alternateIconName) { error in
             if let error = error {
-                os_log("Error while changing app icon: %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Error while changing app icon: \(error.localizedDescription, privacy: .public)")
                 completionHandler?(error)
             } else {
                 completionHandler?(nil)

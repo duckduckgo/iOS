@@ -29,6 +29,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
     let geometry: GeometryProxy?
 
     private let selectionFeedback = UISelectionFeedbackGenerator()
+    private let haptics = UIImpactFeedbackGenerator()
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
@@ -62,6 +63,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .previewShape()
                         .transition(.opacity)
                 } onMove: { from, to in
+                    haptics.impactOccurred()
                     withAnimation {
                         model.moveFavorites(from: from, to: to)
                     }

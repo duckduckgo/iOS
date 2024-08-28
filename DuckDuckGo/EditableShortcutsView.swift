@@ -25,6 +25,8 @@ struct EditableShortcutsView: View {
     @ObservedObject private(set) var model: NewTabPageShortcutsSettingsModel
     let geometry: GeometryProxy?
 
+    private let haptics = UIImpactFeedbackGenerator()
+
     var body: some View {
         NewTabPageGridView(geometry: geometry) { _ in
             ReorderableForEach(model.itemsSettings, id: \.item.id, isReorderingEnabled: true) { setting in
@@ -42,6 +44,7 @@ struct EditableShortcutsView: View {
                     .previewShape()
                     .frame(width: NewTabPageGrid.Item.edgeSize)
             } onMove: { indices, newOffset in
+                haptics.impactOccurred()
                 withAnimation {
                     model.moveItems(from: indices, to: newOffset)
                 }

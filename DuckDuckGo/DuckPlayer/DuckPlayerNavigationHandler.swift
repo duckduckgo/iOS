@@ -200,7 +200,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-         if url.scheme == Constants.duckPlayerScheme,
+        if url.scheme == Constants.duckPlayerScheme,
            let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
            urlComponents.path == "/\(Constants.watchInYoutubePath)",
            let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),

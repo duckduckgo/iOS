@@ -565,6 +565,27 @@ public struct UserText {
     static let inviteDialogErrorAlertOKButton = NSLocalizedString("invite.alert.ok.button", value: "OK", comment: "OK title for invite screen alert dismissal button")
 
     // MARK: - Feedback Form
+    static let pproFeedbackFormTitle = NSLocalizedString("ppro.feedback-form.title", value: "Send Feedback", comment: "Title for the Privacy Pro feedback form")
+    static let pproFeedbackFormReportProblemTitle = NSLocalizedString("ppro.feedback-form.report-problem.title", value: "Report a Problem", comment: "Title for the Report a Problem step in the Privacy Pro feedback form")
+    static let pproFeedbackFormGeneralFeedbackTitle = NSLocalizedString("ppro.feedback-form.general-feedback.title", value: "General Feedback", comment: "Title for the General Feedback step in the Privacy Pro feedback form")
+    static let pproFeedbackFormRequestFeatureTitle = NSLocalizedString("ppro.feedback-form.request-feature.title", value: "Feature Request", comment: "Title for the Feature Request step in the Privacy Pro feedback form")
+    static let pproFeedbackFormSelectCategoryTitle = NSLocalizedString("ppro.feedback-form.select-category.title", value: "Select a category", comment: "Title for the category selection section in the Privacy Pro feedback form")
+    static let pproFeedbackFormTextBoxTitle = NSLocalizedString("ppro.feedback-form.text-box.title", value: "Feedback", comment: "Title for the text box in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportPProProblemTitle = NSLocalizedString("ppro.feedback-form.report-ppro-problem.title", value: "Subscriptions and Payments", comment: "Title for the Subscriptions and Payments category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportVPNProblemTitle = NSLocalizedString("ppro.feedback-form.report-vpn-problem.title", value: "VPN", comment: "Title for the VPN category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportPIRProblemTitle = NSLocalizedString("ppro.feedback-form.report-pir-problem.title", value: "Personal Information Removal", comment: "Title for the PIR category in the Privacy Pro feedback form")
+    static let pproFeedbackFormReportITRProblemTitle = NSLocalizedString("ppro.feedback-form.report-itr-problem.title", value: "Identity Theft Restoration", comment: "Title for the ITR category in the Privacy Pro feedback form")
+
+    static let pproFeedbackFormReportProblemPlaceholder = NSLocalizedString("ppro.feedback-form.report-problem.placeholder", value: "Tell us what's going on…", comment: "Placeholder for the Report a Problem step in the Privacy Pro feedback form")
+    static let pproFeedbackFormGeneralFeedbackPlaceholder = NSLocalizedString("ppro.feedback-form.general-feedback.placeholder", value: "Please give us your feedback…", comment: "Placeholder for the General Feedback step in the Privacy Pro feedback form")
+    static let pproFeedbackFormRequestFeaturePlaceholder = NSLocalizedString("ppro.feedback-form.request-feature.placeholder", value: "What feature would you like to see?", comment: "Placeholder for the Feature Request step in the Privacy Pro feedback form")
+
+    static let pproFeedbackFormText1 = NSLocalizedString("ppro.feedback-form.text-1", value: "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.", comment: "Text for the body of the PPro feedback form")
+    static let pproFeedbackFormText2 = NSLocalizedString("ppro.feedback-form.text-2", value: "In addition to the details entered above, we send some anonymized info with your feedback:", comment: "Text for the body of the PPro feedback form")
+    static let pproFeedbackFormText3 = NSLocalizedString("ppro.feedback-form.text-3", value: "• Whether some browser features are active", comment: "Bullet text for the body of the PPro feedback form")
+    static let pproFeedbackFormText4 = NSLocalizedString("ppro.feedback-form.text-4", value: "• Aggregate app diagnostics (e.g., error codes)", comment: "Bullet text for the body of the PPro feedback form")
+    static let pproFeedbackFormText5 = NSLocalizedString("ppro.feedback-form.text-5", value: "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.", comment: "Text for the body of the PPro feedback form")
+
     static let vpnFeedbackFormTitle = NSLocalizedString("vpn.feedback-form.title", value: "Help Improve the DuckDuckGo VPN", comment: "Title for each screen of the VPN feedback form")
     static let vpnFeedbackFormCategorySelect = NSLocalizedString("vpn.feedback-form.category.select-category", value: "Select a category", comment: "Title for the category selection state of the VPN feedback form")
     static let vpnFeedbackFormCategoryUnableToInstall = NSLocalizedString("vpn.feedback-form.category.unable-to-install", value: "Unable to install VPN", comment: "Title for the 'unable to install' category of the VPN feedback form")
@@ -597,6 +618,32 @@ public struct UserText {
     static let vpnAccessRevokedAlertMessage = NSLocalizedString("vpn.access-revoked.alert.message", value: "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.", comment: "Alert message for the alert when the Privacy Pro subscription expiress")
     static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
+
+    // MARK: Unified Feedback Form
+    static let browserFeedbackReportProblem = NSLocalizedString("send.browser.feedback.report-problem", value: "Report a problem", comment: "Name of the option the user can chose to give browser feedback about a problem they enountered")
+    static let browserFeedbackRequestFeature = NSLocalizedString("send.browser.feedback.request-feature", value: "Request a feature", comment: "Name of the option the user can chose to give browser feedback about a feature they would like")
+    static let browserFeedbackGeneralFeedback = NSLocalizedString("send.browser.feedback.general-feedback", value: "General feedback", comment: "Name of the option the user can chose to give general browser feedback")
+    static let browserFeedbackSelectCategory = NSLocalizedString("send.browser.feedback.select-category", value: "Select a category", comment: "Title of the picker where the user can chose the category of the feedback they want ot send.")
+    static let feedbackFormTitle = NSLocalizedString("feedback.form.title", value: "Help Improve Privacy Pro", comment: "Title of the feedback form")
+    static let generalFeedbackFormCategorySelect = NSLocalizedString("feedback.general.category.select", value: "Select a category", comment: "Prompt to select a category for general feedback")
+    static let generalFeedbackFormCategoryPPro = NSLocalizedString("feedback.general.category.ppro", value: "Subscription and Payments", comment: "Category for subscription and payments feedback")
+    static let generalFeedbackFormCategoryVPN = NSLocalizedString("feedback.general.category.vpn", value: "VPN", comment: "Category for VPN feedback")
+    static let generalFeedbackFormCategoryPIR = NSLocalizedString("feedback.general.category.pir", value: "Personal Info Removal", comment: "Category for Personal Info Removal feedback")
+    static let generalFeedbackFormCategoryITR = NSLocalizedString("feedback.general.category.itr", value: "Identity Theft Restoration", comment: "Category for Identity Theft Restoration feedback")
+    static let pproFeedbackFormCategorySelect = NSLocalizedString("feedback.ppro.category.select", value: "Select a category", comment: "Prompt to select a category for Privacy Pro feedback")
+    static let pproFeedbackFormCategoryOTP = NSLocalizedString("feedback.ppro.category.otp", value: "Issue with one-time password", comment: "Category for one-time password issues")
+    static let pproFeedbackFormCategoryOther = NSLocalizedString("feedback.ppro.category.other", value: "Something else", comment: "Category for other Privacy Pro issues")
+    static let pirFeedbackFormCategorySelect = NSLocalizedString("feedback.pir.category.select", value: "Select a category", comment: "Prompt to select a category for Personal Info Removal feedback")
+    static let pirFeedbackFormCategoryNothingOnSpecificSite = NSLocalizedString("feedback.pir.category.nothing-on-site", value: "The scan didn't find my info on a specific site", comment: "Category for when scan doesn't find info on a specific site")
+    static let pirFeedbackFormCategoryNotMe = NSLocalizedString("feedback.pir.category.not-me", value: "The scan found records which aren't me", comment: "Category for when scan finds incorrect records")
+    static let pirFeedbackFormCategoryScanStuck = NSLocalizedString("feedback.pir.category.scan-stuck", value: "The scan for records is stuck", comment: "Category for when the scan is stuck")
+    static let pirFeedbackFormCategoryRemovalStuck = NSLocalizedString("feedback.pir.category.removal-stuck", value: "The removal process is stuck", comment: "Category for when the removal process is stuck")
+    static let pirFeedbackFormCategoryOther = NSLocalizedString("feedback.pir.category.other", value: "Something else", comment: "Category for other Personal Info Removal issues")
+    static let itrFeedbackFormCategorySelect = NSLocalizedString("feedback.itr.category.select", value: "Select a category", comment: "Prompt to select a category for Identity Theft Restoration feedback")
+    static let itrFeedbackFormCategoryAccessCode = NSLocalizedString("feedback.itr.category.access-code", value: "Issue with access code", comment: "Category for access code issues")
+    static let itrFeedbackFormCategoryCantContactAdvisor = NSLocalizedString("feedback.itr.category.cant-contact-advisor", value: "Unable to contact advisor", comment: "Category for issues contacting an advisor")
+    static let itrFeedbackFormCategoryUnhelpful = NSLocalizedString("feedback.itr.category.unhelpful", value: "Call to Advisor was unhelpful", comment: "Category for unhelpful advisor calls")
+    static let itrFeedbackFormCategorySomethingElse = NSLocalizedString("feedback.itr.category.something-else", value: "Something else", comment: "Category for other Identity Theft Restoration issues")
 
     // MARK: VPN Widget
 
@@ -982,6 +1029,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     // Others
     public static let settingsAboutSection = NSLocalizedString("settings.about.section", value: "About", comment: "Settings section title for About DuckDuckGo")
     public static let settingsFeedback = NSLocalizedString("settings.feedback", value: "Share Feedback", comment: "Settings cell for Feedback")
+    public static let settingsBrowserFeedback = NSLocalizedString("settings.browser.feedback", value: "Browser Feedback", comment: "Settings cell for Browser Feedback")
     public static let duckduckgoOnOtherPlatforms = NSLocalizedString("settings.duckduckgo.on.other.platforms", value: "DuckDuckGo on Other Platforms", comment: "Settings cell to link users to other products by DuckDuckGo")
 
     // General Section
@@ -1110,6 +1158,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionChangePlan = NSLocalizedString("subscription.change.plan", value: "Update Plan or Cancel", comment: "Change plan or cancel title")
     public static let subscriptionHelpAndSupport = NSLocalizedString("subscription.help", value: "Help and support", comment: "Help and support Section header")
     public static let subscriptionFAQ = NSLocalizedString("subscription.faq", value: "FAQs and Support", comment: "FAQ Button")
+    public static let subscriptionFeedback = NSLocalizedString("subscription.feedback", value: "Send Feedback", comment: "Send Feedback Button")
     public static let subscriptionFAQFooter = NSLocalizedString("subscription.faq.description", value: "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.", comment: "FAQ Description")
     
     // Remove subscription confirmation

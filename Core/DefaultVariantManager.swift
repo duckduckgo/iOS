@@ -21,6 +21,7 @@ import Common
 import Foundation
 import Speech
 import BrowserServicesKit
+import os.log
 
 extension FeatureName {
     // Define your feature e.g.:
@@ -127,17 +128,17 @@ public class DefaultVariantManager: VariantManager {
 
     public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
-            os_log("no new variant needed for existing user", log: .generalLog, type: .debug)
+            Logger.general.debug("no new variant needed for existing user")
             return
         }
 
         if let variant = currentVariant {
-            os_log("already assigned variant: %s", log: .generalLog, type: .debug, String(describing: variant))
+            Logger.general.debug("already assigned variant: \(String(describing: variant))")
             return
         }
 
         guard let variant = selectVariant() else {
-            os_log("Failed to assign variant", log: .generalLog, type: .debug)
+            Logger.general.debug("Failed to assign variant")
 
             // it's possible this failed because there are none to assign, we should still let new install logic execute
             _ = newInstallCompletion(self)

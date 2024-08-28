@@ -20,6 +20,7 @@
 import Common
 import UIKit
 import PassKit
+import os.log
 
 class PassKitPreviewHelper: FilePreview {
     private weak var viewController: UIViewController?
@@ -38,7 +39,7 @@ class PassKitPreviewHelper: FilePreview {
                 viewController?.present(controller, animated: true)
             }
         } catch {
-            os_log("Can't present passkit: %{public}s", type: .error, error.localizedDescription)
+            Logger.general.error("Can't present passkit: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  DuckPlayerStorage.swift
+//  UnifiedMetadataCollector.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,22 +17,27 @@
 //  limitations under the License.
 //
 
-import Core
 import Foundation
-import Common
-import os.log
 
-protocol DuckPlayerStorage {
-    /// Description: Checks whether the user has seen and interacted with (i.e. clicked any button) the Duck Player overlay on a YouTube video.
-    /// https://app.asana.com/0/1207619243206445/1207785962765265/f
-    var userInteractedWithDuckPlayer: Bool { get set }
+protocol UnifiedMetadataCollector {
+    associatedtype Metadata: UnifiedFeedbackMetadata
+
+    func collectMetadata() async -> Metadata?
 }
 
-struct DefaultDuckPlayerStorage: DuckPlayerStorage {
-    @UserDefaultsWrapper(key: .userInteractedWithDuckPlayer, defaultValue: false)
-    var userInteractedWithDuckPlayer: Bool {
-        didSet(newValue) {
-            Logger.duckPlayer.debug("Flagging userInteractedWithDuckPlayer [\(newValue ? "true" : "false")]")
+protocol UnifiedFeedbackMetadata: Encodable {
+    func toBase64() -> String
+}
+
+extension UnifiedFeedbackMetadata {
+    func toBase64() -> String {
+        let encoder = JSONEncoder()
+
+        do {
+            let encodedMetadata = try encoder.encode(self)
+            return encodedMetadata.base64EncodedString()
+        } catch {
+            return "Failed to encode metadata to JSON, error message: \(error.localizedDescription)"
         }
     }
 }

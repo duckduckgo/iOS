@@ -213,7 +213,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         let isPiPEnabled = webView?.configuration.allowsPictureInPictureMediaPlayback == true
         let pip = InitialPlayerSettings.PIP(status: isPiPEnabled ? .enabled : .disabled)
         let platform = InitialPlayerSettings.Platform(name: "ios")
-        let environment = InitialPlayerSettings.Environment.development
+//        let environment = InitialPlayerSettings.Environment.development
         let locale = InitialPlayerSettings.Locale.en
         let playerSettings = InitialPlayerSettings.PlayerSettings(pip: pip)
         let userValues = encodeUserValues()

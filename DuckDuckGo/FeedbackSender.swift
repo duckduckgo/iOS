@@ -20,8 +20,9 @@
 import Foundation
 import Core
 import BrowserServicesKit
-import Common
+import os.log
 import Networking
+import Common
 
 /// Represents single component that is being sent to the server.
 /// Feedback as a whole can consist of multiple components. These components are included both in
@@ -94,9 +95,9 @@ struct FeedbackSubmitter: FeedbackSender {
         
         request.fetch { _, error in
             if let error = error {
-                os_log("Feedback request failed, %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Feedback request failed: \(error.localizedDescription, privacy: .public)")
             } else {
-                os_log("Feedback response successful", log: .generalLog, type: .debug)
+                Logger.general.debug("Feedback response successful")
             }
         }
     }

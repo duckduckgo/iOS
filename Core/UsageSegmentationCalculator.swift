@@ -94,7 +94,7 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         let result = getPixelInfo(atb, activityType)
 
         // py:247
-        updateState()
+        updateState(atb, pixelInfo: result)
 
         return result
     }
@@ -151,8 +151,30 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         return pixel
     }
 
-    private func updateState() {
-#warning("not implemented")
+    /// py:255 update_client
+    private func updateState(_ atb: Atb, pixelInfo: [String: String]) {
+        // ignore `new_set_atb` as that's always passed in
+        previousAtb = atb
+
+        // py:261
+        // # Trim history to 28d and add today
+        usageHistory = usageHistory.filter {
+            atb - $0 <= 28
+        } + [atb]
+
+        // py:266
+        if let countAsWAU = pixelInfo[Params.countAsWAU.rawValue] {
+            previousWAUSegments = pixelInfo.safeValue(forKey: Params.segmentsToday.rawValue)
+        }
+
+        // py:269
+        if let countAsMAUn = pixelInfo[Params.countAsMAUn.rawValue] {
+            for n in 0 ..< 4 {
+                if countAsMAUn.safeCharAt(n) == "t" {
+                    previousMAUSegments[n] = pixelInfo.safeValue(forKey: Params.segmentsToday.rawValue)
+                }
+            }
+        }
     }
 
     private func getSegments(_ atb: Atb) -> String {
@@ -178,6 +200,29 @@ final class DefaultCalculator: UsageSegmentationCalculating {
     private func countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {
 #warning("not implemented")
         return false
+    }
+
+}
+
+private extension Dictionary where Key == String, Value == String {
+    func safeValue(forKey key: String) -> String {
+        if let value = self[key] {
+            return value
+        } else {
+            assertionFailure("Value for key '\(key)' is nil.")
+            return ""
+        }
+    }
+}
+
+private extension String {
+
+    func safeCharAt(_ index: Int) -> String {
+        guard self.count > index else {
+            assertionFailure("index out of bounds")
+            return ""
+        }
+        return String(self[self.index(self.startIndex, offsetBy: index)])
     }
 
 }

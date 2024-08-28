@@ -19,6 +19,8 @@
 
 import Foundation
 
+// TODO consider just using AtbNumeric here directly and removing it from Atb class
+
 protocol UsageSegmentationCalculatorMaking {
 
     /// Creates a calculator with the provided initial state
@@ -36,7 +38,7 @@ protocol UsageSegmentationCalculating {
 final class UsageSegmentationCalculatorFactory: UsageSegmentationCalculatorMaking {
 
     func make(installAtb: Atb) -> any UsageSegmentationCalculating {
-        return DefaultCalculator(installAtb: installAtb)
+        return UsageSegmentationCalculator(installAtb: installAtb)
     }
 
 }
@@ -44,7 +46,7 @@ final class UsageSegmentationCalculatorFactory: UsageSegmentationCalculatorMakin
 final class DefaultCalculatorFactory: UsageSegmentationCalculatorMaking {
 
     func make(installAtb: Atb) -> any UsageSegmentationCalculating {
-        return DefaultCalculator(installAtb: installAtb)
+        return UsageSegmentationCalculator(installAtb: installAtb)
     }
 
 }
@@ -56,7 +58,11 @@ final class DefaultCalculatorFactory: UsageSegmentationCalculatorMaking {
 ///  * new_set_atb => atb
 ///  * atb_cohort => installAtb
 ///
-final class DefaultCalculator: UsageSegmentationCalculating {
+/// Commented code starting with # indicate comments copied over from the reference implementation.
+///
+///  The code is arranged so that the public function which is the one that matters the most is the first thing you read.  Private functions are added to the end as they are encounted during the process of coverting the Python to Swift.
+///
+final class UsageSegmentationCalculator: UsageSegmentationCalculating {
 
     enum Params {
 
@@ -182,8 +188,58 @@ final class DefaultCalculator: UsageSegmentationCalculating {
 
     /// py:95 `get_segments`
     private func getSegments(_ atb: Atb) -> String {
-#warning("not implemented")
-        return ""
+        var segments: [String] = []
+
+        // py:98
+        if atb.week == installAtb.week && countAsWAU(atb) {
+            segments.append("first_week")
+        }
+
+        // py:104
+        if atb.week == installAtb.week + 1 {
+            segments.append("second_week")
+        }
+
+        // py:110
+        if atb.week < installAtb.week + 4 {
+            segments.append("first_month")
+        }
+
+        // py:116
+        if installAtb.isReturningUser
+            // # ATB cohorts get generalized after 28d
+            // # Hopefully this is handled elsewhere in the real code!
+            && atb.ageInDays <= installAtb.ageInDays + 28 {
+            segments.append("reinstaller")
+        }
+
+        // py:124
+        if countAsWAU(atb) // prev atb or install atb??
+            && !countsAsWAUAndActivePreviousWeek(atb) // prev atb or install atb??
+            && atb.week >= installAtb.week + 2 {
+            segments.append("reactivated_wau")
+        }
+
+        // py:131
+        for n in 0..<4 {
+            if countAsMAU(n, atb) // prev atb or install atb??
+                && !countsAsMAUAndActivePreviousMonth(n, atb)
+                && atb.week >= installAtb.week + 4 {
+                segments.append("reactivated_mau_\(n)")
+            }
+        }
+
+        // py:139
+        if segmentRegular(atb) {
+            segments.append("regular")
+        }
+
+        if segmentIntermittent(atb) {
+            segments.append("intermittent")
+        }
+
+        // py:145
+        return segments.sorted().joined(separator: ",")
     }
 
     private func countAsWAU(_ atb: Atb) -> Bool {
@@ -206,6 +262,15 @@ final class DefaultCalculator: UsageSegmentationCalculating {
         return false
     }
 
+    private func segmentRegular(_ atb: Atb) -> Bool {
+#warning("not implemented")
+        return false
+    }
+
+    private func segmentIntermittent(_ atb: Atb) -> Bool {
+#warning("not implemented")
+        return false
+    }
 }
 
 private extension Dictionary where Key == String, Value == String {

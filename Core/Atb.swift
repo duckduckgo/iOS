@@ -37,13 +37,35 @@ public struct Atb: Decodable, Equatable {
 
     /// Gives age in days since first ATB.  If badly formatted returns -1. Only the server should be giving us ATB values, so if it is giving us something wrong there are bigger problems in the world.
     var ageInDays: Int {
+        numeric?.ageInDays ?? -1
+    }
+
+    /// Gives the current week or -1 if badly formatted
+    var week: Int {
+        numeric?.week ?? -1
+    }
+
+    var isReturningUser: Bool {
+        version.count == 8 && version.hasSuffix("ru")
+    }
+
+    private var numeric: AtbNumeric? {
         guard let version = droppingVariant,
               let week = Int(version.substring(1...3)),
               let day = Int(version.substring(5...5)),
-              (1...7).contains(day)
-        else { return -1 }
+              (1...7).contains(day) else {
+            return nil
+        }
 
-        return (week * 7) + (day - 1)
+        return AtbNumeric(week: week, day: day, ageInDays: (week * 7) + (day - 1))
+    }
+
+    struct AtbNumeric {
+
+        let week: Int
+        let day: Int
+        let ageInDays: Int
+
     }
 
 }

@@ -41,7 +41,7 @@ class UsageSegmentationCalculationTests: XCTestCase {
         }
 
         let installAtb = Atb(version: testCase.client.atb, updateVersion: nil)
-        let calculator = DefaultCalculator(installAtb: installAtb)
+        let calculator = UsageSegmentationCalculator(installAtb: installAtb)
         for index in 0 ..< testCase.client.usage.count {
             let usage = testCase.client.usage[index]
             let expectedResult = testCase.results[index]

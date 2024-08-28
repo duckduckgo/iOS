@@ -36,6 +36,13 @@ class AtbTests: XCTestCase {
         XCTAssertEqual(Atb(version: "v100-7", updateVersion: nil).ageInDays, 706)
     }
 
+    func testWeek() {
+        XCTAssertEqual(Atb(version: "", updateVersion: nil).week, -1)
+        XCTAssertEqual(Atb(version: "v000-7", updateVersion: nil).week, 0)
+        XCTAssertEqual(Atb(version: "v100-7", updateVersion: nil).week, 100)
+        XCTAssertEqual(Atb(version: "v200-7", updateVersion: nil).week, 200)
+    }
+
     func testSubtractingAtbs() {
         XCTAssertEqual(Atb(version: "v100-7", updateVersion: nil) - Atb(version: "v100-7", updateVersion: nil), 0)
         XCTAssertEqual(Atb(version: "v100-7", updateVersion: nil) - Atb(version: "v100-2", updateVersion: nil), 5)
@@ -43,6 +50,14 @@ class AtbTests: XCTestCase {
         XCTAssertEqual(Atb(version: "v101-1", updateVersion: nil) - Atb(version: "v201-1", updateVersion: nil), -700)
         XCTAssertEqual(Atb(version: "v201-1", updateVersion: nil) - Atb(version: "v101-1", updateVersion: nil), 700)
         XCTAssertEqual(Atb(version: "v201-7", updateVersion: nil) - Atb(version: "v123-1", updateVersion: nil), 552)
+    }
+
+    func testIsReturningUser() {
+        XCTAssertFalse(Atb(version: "", updateVersion: nil).isReturningUser)
+        XCTAssertFalse(Atb(version: "v100-1", updateVersion: nil).isReturningUser)
+        XCTAssertFalse(Atb(version: "ru", updateVersion: nil).isReturningUser)
+        XCTAssertFalse(Atb(version: "longatb-1ru", updateVersion: nil).isReturningUser)
+        XCTAssertTrue(Atb(version: "v100-1ru", updateVersion: nil).isReturningUser)
     }
 
 }

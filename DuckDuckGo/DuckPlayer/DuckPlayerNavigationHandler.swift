@@ -225,7 +225,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
         
-        // If DuckPlayer is disabled and we
+        // Daily Unique View Pixel
         if url.isDuckPlayer,
            duckPlayer.settings.mode != .disabled {
             let setting = duckPlayer.settings.mode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString

@@ -1,5 +1,5 @@
 //
-//  SpecialErrorPageUserScript.swift
+//  SSLErrorType.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,19 +18,6 @@
 //
 
 import Foundation
-import SpecialErrorPages
-import ContentScopeScripts
+import SSLErrors
 
-extension SpecialErrorPageUserScript {
 
-    static let localeStrings: String? = {
-        let languageCode = Locale.current.languageCode ?? "en"
-        if let localizedFile = ContentScopeScripts.Bundle.path(forResource: "special-error",
-                                                               ofType: "json",
-                                                               inDirectory: "pages/special-error/locales/\(languageCode)") {
-            return try? String(contentsOfFile: localizedFile)
-        }
-        return nil
-    }()
-
-}

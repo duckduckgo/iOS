@@ -864,7 +864,8 @@
 		CB48D3332B90CE9F00631D8B /* UserBehaviorMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3312B90CE9F00631D8B /* UserBehaviorMonitor.swift */; };
 		CB48D3372B90DF2000631D8B /* UserBehaviorMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */; };
 		CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */; };
-		CB4FA4542C78C19700A16F5A /* SSLErrors in Frameworks */ = {isa = PBXBuildFile; productRef = CB4FA4532C78C19700A16F5A /* SSLErrors */; };
+		CB516D992C7CDA910020DB3A /* OmniBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB516D982C7CDA910020DB3A /* OmniBarTests.swift */; };
+		CB516D9E2C7F62760020DB3A /* SpecialErrorPages in Frameworks */ = {isa = PBXBuildFile; productRef = CB516D9D2C7F62760020DB3A /* SpecialErrorPages */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
 		CB5516D2286500290079B175 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
@@ -2619,6 +2620,8 @@
 		CB48D3352B90CECD00631D8B /* UserBehaviorMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBehaviorMonitorTests.swift; sourceTree = "<group>"; };
 		CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageUserScript.swift; sourceTree = "<group>"; };
 		CB5038622AF6D563007FD69F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB516D982C7CDA910020DB3A /* OmniBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarTests.swift; sourceTree = "<group>"; };
+		CB516D9C2C7DFD750020DB3A /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		CB5418622BD90CD000C2CD26 /* BrokenSitePromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSitePromptViewModel.swift; sourceTree = "<group>"; };
 		CB6ABD002AF6D52B004A8224 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB6CE65B2AF6D4EE00119848 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3024,10 +3027,10 @@
 				D6BC8ACB2C5AA3860025375B /* DuckPlayer in Frameworks */,
 				CBC83E3429B631780008E19C /* Configuration in Frameworks */,
 				D61CDA182B7CF78300A0FBB9 /* ZIPFoundation in Frameworks */,
+				CB516D9E2C7F62760020DB3A /* SpecialErrorPages in Frameworks */,
 				851F74262B9A1BFD00747C42 /* Suggestions in Frameworks */,
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
 				8599690F29D2F1C100DBF9FA /* DDGSync in Frameworks */,
-				CB4FA4542C78C19700A16F5A /* SSLErrors in Frameworks */,
 				851481882A600EFC00ABC65F /* RemoteMessaging in Frameworks */,
 				37DF000C29F9CA80002B7D3E /* SyncDataProviders in Frameworks */,
 				1E6098A1290011E600A508F9 /* UserScript in Frameworks */,
@@ -4009,6 +4012,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				CB516D9C2C7DFD750020DB3A /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -5968,6 +5972,7 @@
 				85F20005221702F7006BB258 /* AddressDisplayHelperTests.swift */,
 				F1D477C81F2139410031ED49 /* SmallOmniBarStateTests.swift */,
 				1E8146A628C8AAF500D1AF63 /* PrivacyIconAndTrackers */,
+				CB516D982C7CDA910020DB3A /* OmniBarTests.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -6443,7 +6448,7 @@
 				858D009C2B9799FC004E5B4C /* History */,
 				851F74252B9A1BFD00747C42 /* Suggestions */,
 				D6BC8ACA2C5AA3860025375B /* DuckPlayer */,
-				CB4FA4532C78C19700A16F5A /* SSLErrors */,
+				CB516D9D2C7F62760020DB3A /* SpecialErrorPages */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -7619,6 +7624,7 @@
 				D625AAEC2BBEF27600BC189A /* TabURLInterceptorTests.swift in Sources */,
 				EE7623BE2C5D038200FA061C /* MockFeatureFlagger.swift in Sources */,
 				5694372B2BE3F2D900C0881B /* SyncErrorHandlerTests.swift in Sources */,
+				CB516D992C7CDA910020DB3A /* OmniBarTests.swift in Sources */,
 				987130C7294AAB9F00AB05E0 /* MenuBookmarksViewModelTests.swift in Sources */,
 				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */,
@@ -10796,10 +10802,9 @@
 			package = C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
-		CB4FA4532C78C19700A16F5A /* SSLErrors */ = {
+		CB516D9D2C7F62760020DB3A /* SpecialErrorPages */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
-			productName = SSLErrors;
+			productName = SpecialErrorPages;
 		};
 		CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */ = {
 			isa = XCSwiftPackageProductDependency;

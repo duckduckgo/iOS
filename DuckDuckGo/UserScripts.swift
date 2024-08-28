@@ -23,7 +23,7 @@ import BrowserServicesKit
 import TrackerRadarKit
 import UserScript
 import WebKit
-import SSLErrors
+import SpecialErrorPages
 
 final class UserScripts: UserScriptsProvider {
 

@@ -779,6 +779,13 @@ extension Pixel {
         case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
+
+        // MARK: Certificate warnings
+        case certificateWarningDisplayed(_ errorType: String)
+        case certificateWarningLeaveClicked
+        case certificateWarningAdvancedClicked
+        case certificateWarningProceedClicked
+
     }
 
 }
@@ -1551,6 +1558,14 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+
+        // MARK: Certificate warnings
+        case .certificateWarningDisplayed(let errorType):
+            return "m_certificate_warning_displayed_\(errorType)"
+        case .certificateWarningLeaveClicked: return "m_certificate_warning_leave_clicked"
+        case .certificateWarningAdvancedClicked: return "m_certificate_warning_advanced_clicked"
+        case .certificateWarningProceedClicked: return "m_certificate_warning_proceed_clicked"
+
         }
     }
 }

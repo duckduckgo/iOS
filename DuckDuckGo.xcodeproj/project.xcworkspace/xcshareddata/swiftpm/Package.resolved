@@ -28,21 +28,12 @@
       }
     },
     {
-      "identity" : "browserserviceskit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
-      "state" : {
-        "branch" : "jacek/ssl-errors",
-        "revision" : "814c457fcc2dd7ff36c273b93414da258f25e515"
-      }
-    },
-    {
       "identity" : "content-scope-scripts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
         "branch" : "pr-releases/pr-1009",
-        "revision" : "ddea3edf705bd9b5759dfecf56e3fc0415ebb525"
+        "revision" : "b7f1c1ee8a37e1a10cf71a6f73d23f6a8e79e77c"
       }
     },
     {
@@ -122,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "36dc07cba4bc1e7e0c1d1fb679c3cd077694a072",
-        "version" : "5.0.0"
+        "revision" : "665b23dc656c9f787494620494f8e56098a900b2",
+        "version" : "5.1.1"
       }
     },
     {
@@ -187,15 +178,6 @@
       "state" : {
         "revision" : "1403e17eeeb8493b92fb9d11eb8c846bb9776581",
         "version" : "2.1.2"
-      }
-    },
-    {
-      "identity" : "wireguard-apple",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/wireguard-apple",
-      "state" : {
-        "revision" : "13fd026384b1af11048451061cc1b21434990668",
-        "version" : "1.1.3"
       }
     },
     {

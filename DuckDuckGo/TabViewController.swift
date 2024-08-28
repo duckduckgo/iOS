@@ -36,7 +36,7 @@ import Networking
 import SecureStorage
 import History
 import ContentScopeScripts
-import SSLErrors
+import SpecialErrorPages
 import NetworkProtection
 
 class TabViewController: UIViewController {
@@ -1552,18 +1552,18 @@ extension TabViewController: WKNavigationDelegate {
               let failedURL = error.failedUrl else {
             return
         }
-        let domain = url?.host ?? url?.absoluteString ?? ""
         let tld = storageCache.tld
-
+        let errorType = SSLErrorType.forErrorCode(errorCode)
         errorData = SpecialErrorData(kind: .ssl,
-                                     errorType: SSLErrorType.forErrorCode(errorCode).rawValue,
+                                     errorType: errorType.rawValue,
                                      domain: failedURL.host,
                                      eTldPlus1: tld.eTLDplus1(failedURL.host))
         loadSpecialErrorPage(url: failedURL)
+        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.rawParameter))
     }
 
     private func loadSpecialErrorPage(url: URL) {
-        let html = ErrorPageHTMLTemplate.htmlFromTemplate
+        let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
         webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
     }
 
@@ -2966,6 +2966,7 @@ extension UserContentController {
 extension TabViewController: SpecialErrorPageUserScriptDelegate {
 
     func leaveSite() {
+        Pixel.fire(pixel: .certificateWarningLeaveClicked)
         guard webView?.canGoBack == true else {
             delegate?.tabDidRequestClose(self)
             return
@@ -2974,8 +2975,13 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
     }
 
     func visitSite() {
+        Pixel.fire(pixel: .certificateWarningProceedClicked)
         shouldBypassSSLError = true
         _ = webView.reload()
+    }
+
+    func advancedInfoPresented() {
+        Pixel.fire(pixel: .certificateWarningAdvancedClicked)
     }
 
 }

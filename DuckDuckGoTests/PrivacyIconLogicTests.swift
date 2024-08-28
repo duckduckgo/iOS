@@ -94,7 +94,6 @@ class PrivacyIconLogicTests: XCTestCase {
 
     func testPrivacyIconIsShieldWithDotForNoSecTrust() {
         let url = PrivacyIconLogicTests.pageURL
-        // We don't have constants for major tracker network now now so just use a huge, unlikely prevalence
         let entity = Entity(displayName: "E", domains: [], prevalence: 100.0)
         let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
         let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus)

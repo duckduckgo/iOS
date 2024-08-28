@@ -145,7 +145,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
 
         // py:198
         let countAsMAUn = (0 ..< 4).map {
-            _countAsMAU($0, atb) ? "t" : "f"
+            countAsMAU($0, atb) ? "t" : "f"
         }.joined()
 
         // py:203
@@ -222,7 +222,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
 
         // py:131
         for n in 0..<4 {
-            if _countAsMAU(n, atb) // TODO validate prev atb or install atb??
+            if countAsMAU(n, atb) // TODO validate prev atb or install atb??
                 && !_countsAsMAUAndActivePreviousMonth(n, atb)
                 && atb.week >= installAtb.week + 4 {
                 segments.append("reactivated_mau_\(n)")
@@ -285,9 +285,25 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return atb.week == (previousAtb ?? installAtb).week + 1
     }
 
-    private func _countAsMAU(_ n: Int, _ atb: Atb) -> Bool {
-#warning("not implemented")
-        return false
+    /// py:71 count_as_mau
+    private func countAsMAU(_ n: Int, _ atb: Atb) -> Bool {
+        assert(n < 4)
+
+        // py:73
+        if atb == installAtb {
+            // # Install day - this code should not be running! Report nothing.
+            assertionFailure("See comment")
+            return false
+        }
+
+        // py:76
+        if previousAtb == nil || previousAtb == installAtb {
+            // # First post-install activity
+            return true
+        }
+
+        // py:79 - not that in python // means "floor division" which is the equivalent of doing integer devision in Swift
+        return (atb.week - n) / 4 > ((previousAtb ?? installAtb).week - n) / 4
     }
 
     private func _countsAsMAUAndActivePreviousMonth(_ n: Int, _ atb: Atb) -> Bool {

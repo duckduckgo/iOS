@@ -23,6 +23,7 @@ import StoreKit
 import Subscription
 import Core
 import os.log
+import BrowserServicesKit
 
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -66,12 +67,15 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     // Read only View State - Should only be modified from the VM
     @Published private(set) var state: State
 
-    
-    init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager) {
+    public let usesUnifiedFeedbackForm: Bool
+
+    init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability) {
         self.subscriptionManager = subscriptionManager
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
         self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)
+        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
 
         setupNotificationObservers()
     }

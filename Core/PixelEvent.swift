@@ -779,6 +779,17 @@ extension Pixel {
         case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
+
+        // MARK: Unified Feedback Form
+        case pproFeedbackFeatureRequest(description: String, source: String)
+        case pproFeedbackGeneralFeedback(description: String, source: String)
+        case pproFeedbackReportIssue(source: String, category: String, subcategory: String, description: String, metadata: String)
+        case pproFeedbackFormShow
+        case pproFeedbackActionsScreenShow(source: String)
+        case pproFeedbackCategoryScreenShow(source: String, reportType: String)
+        case pproFeedbackSubcategoryScreenShow(source: String, reportType: String, category: String)
+        case pproFeedbackSubmitScreenShow(source: String, reportType: String, category: String, subcategory: String)
+        case pproFeedbackSubmitScreenFAQClick(source: String, reportType: String, category: String, subcategory: String)
     }
 
 }
@@ -1551,6 +1562,17 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+        
+        // MARK: Unified Feedback Form
+        case .pproFeedbackFeatureRequest: return "m_ppro_feedback_feature-request"
+        case .pproFeedbackGeneralFeedback: return "m_ppro_feedback_general-feedback"
+        case .pproFeedbackReportIssue: return "m_ppro_feedback_report-issue"
+        case .pproFeedbackFormShow: return "m_ppro_feedback_general-screen_show"
+        case .pproFeedbackActionsScreenShow: return "m_ppro_feedback_actions-screen_show"
+        case .pproFeedbackCategoryScreenShow: return "m_ppro_feedback_category-screen_show"
+        case .pproFeedbackSubcategoryScreenShow: return "m_ppro_feedback_subcategory-screen_show"
+        case .pproFeedbackSubmitScreenShow: return "m_ppro_feedback_submit-screen_show"
+        case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
         }
     }
 }

@@ -38,8 +38,9 @@ struct FavoriteSearchResultDecorator {
                     if let provider = metadata.iconProvider {
                         icon = try? await self.getIcon(using: provider)
                     }
+                    let url = metadata.url ?? result.url
 
-                    return WebPageSearchResultValue(id: result.id, name: name, displayUrl: result.displayUrl, url: result.url, icon: icon)
+                    return WebPageSearchResultValue(id: result.id, name: name, displayUrl: result.displayUrl, url: url, icon: icon)
                 }
 
                 if !isAdded {

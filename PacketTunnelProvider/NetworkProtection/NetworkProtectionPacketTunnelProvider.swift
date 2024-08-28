@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Configuration
 import Combine
 import Core
 import Networking
@@ -34,6 +35,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var vpnLogger = VPNLogger()
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
+
+    private let configuratioManager: ConfigurationManager
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -329,6 +332,14 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     @objc init() {
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
+        Configuration.setURLProvider(VPNAgentConfigurationURLProvider())
+        configuratioManager = ConfigurationManager()
+        configuratioManager.start()
+        let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
+        // Load cached config (if any)
+        let configStore = ConfigurationStore()
+        privacyConfigurationManager.reload(etag: configStore.loadEtag(for: .privacyConfiguration), data: configStore.loadData(for: .privacyConfiguration))
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default

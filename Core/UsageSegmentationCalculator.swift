@@ -303,7 +303,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return true
         }
 
-        // py:79 - not that in python // means "floor division" which is the equivalent of doing integer devision in Swift
+        // py:79 - note that in python // means "floor division" which is the equivalent of doing integer division in Swift
         return (atb.week - n) / 4 > ((previousAtb ?? installAtb).week - n) / 4
     }
 
@@ -329,7 +329,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return false
         }
 
-        // py:93
+        // py:93 - note that in python // means "floor division" which is the equivalent of doing integer division in Swift
         return (atb.week - n) / 4 == ((previousAtb ?? installAtb).week - n) / 4 + 1
     }
 

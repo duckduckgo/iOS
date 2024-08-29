@@ -54,7 +54,7 @@ final class SpecialErrorPageTests: XCTestCase {
         let featureFlagger = MockFeatureFlagger()
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         sut = .fake(customWebView: { [weak self] configuration in
-            guard let self else { fatalError() }
+            guard let self else { fatalError("") }
             self.webView = MockSpecialErrorWebView(frame: CGRect(), configuration: configuration)
             return self.webView
         }, featureFlagger: featureFlagger)
@@ -133,6 +133,7 @@ final class SpecialErrorPageTests: XCTestCase {
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("is not trusted"))
             XCTAssertEqual(request.url!.host, URL(string: "https://self-signed.badssl.com")!.host)
+            expectation.fulfill()
         }
 
         // WHEN
@@ -160,8 +161,9 @@ final class SpecialErrorPageTests: XCTestCase {
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("is not trusted"))
             XCTAssertEqual(request.url!.host, URL(string: "https://untrusted-root.badssl.com")!.host)
+            expectation.fulfill()
         }
-        
+
         // WHEN
         sut.webView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
 

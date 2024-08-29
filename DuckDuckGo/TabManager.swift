@@ -24,6 +24,7 @@ import WebKit
 import BrowserServicesKit
 import Persistence
 import History
+import os.log
 
 class TabManager {
 
@@ -39,6 +40,7 @@ class TabManager {
     private var privacyProDataReporter: PrivacyProDataReporting
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
+    private let onboardingPixelReporter: OnboardingPixelReporting
 
     weak var delegate: TabDelegate?
 
@@ -54,7 +56,8 @@ class TabManager {
          duckPlayer: DuckPlayer = DuckPlayer(),
          privacyProDataReporter: PrivacyProDataReporting,
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
-         contextualOnboardingLogic: ContextualOnboardingLogic) {
+         contextualOnboardingLogic: ContextualOnboardingLogic,
+         onboardingPixelReporter: OnboardingPixelReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -64,6 +67,7 @@ class TabManager {
         self.privacyProDataReporter = privacyProDataReporter
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
+        self.onboardingPixelReporter = onboardingPixelReporter
         registerForNotifications()
     }
 
@@ -83,7 +87,8 @@ class TabManager {
                                                               duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic)
+                                                              contextualOnboardingLogic: contextualOnboardingLogic,
+                                                              onboardingPixelReporter: onboardingPixelReporter)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -101,7 +106,7 @@ class TabManager {
         if let controller = controller(for: tab) {
             return controller
         } else if createIfNeeded {
-            os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
+            Logger.general.debug("Tab not in cache, creating")
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller
@@ -159,7 +164,8 @@ class TabManager {
                                                               duckPlayer: duckPlayer,
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic)
+                                                              contextualOnboardingLogic: contextualOnboardingLogic,
+                                                              onboardingPixelReporter: onboardingPixelReporter)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

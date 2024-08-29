@@ -20,6 +20,7 @@
 import Common
 import WebKit
 import GRDB
+import os.log
 
 extension WKWebsiteDataStore {
 
@@ -161,7 +162,7 @@ extension WebCacheManager {
         if let pool = getValidDatabasePool() {
             removeObservationsData(from: pool)
         } else {
-            os_log("Could not find valid pool to clear observations data", log: .generalLog, type: .debug)
+            Logger.general.debug("Could not find valid pool to clear observations data")
         }
     }
 

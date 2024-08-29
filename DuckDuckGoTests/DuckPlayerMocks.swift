@@ -95,6 +95,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
     
     var mode: DuckPlayerMode = .disabled
     var askModeOverlayHidden: Bool = false
+    var allowFirstVideo: Bool = false
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}
@@ -103,7 +104,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
         self.mode = mode
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
+    func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         self.askModeOverlayHidden = overlayHidden
     }
     

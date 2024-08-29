@@ -26,7 +26,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
     func testWhenSubscribeToViewStateThenShouldSendLanding() {
         // GIVEN
-        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), urlOpener: MockURLOpener())
 
         // WHEN
         let result = sut.state
@@ -37,7 +37,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
     func testWhenOnAppearIsCalledThenViewStateChangesToStartOnboardingDialog() {
         // GIVEN
-        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), urlOpener: MockURLOpener())
         XCTAssertEqual(sut.state, .landing)
 
         // WHEN
@@ -49,7 +49,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
     func testWhenStartOnboardingActionIsCalledThenViewStateChangesToBrowsersComparisonDialog() {
         // GIVEN
-        let sut = OnboardingIntroViewModel()
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock())
         XCTAssertEqual(sut.state, .landing)
 
         // WHEN
@@ -62,7 +62,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenSetDefaultBrowserActionIsCalledThenURLOpenerOpensSettingsURL() {
         // GIVEN
         let urlOpenerMock = MockURLOpener()
-        let sut = OnboardingIntroViewModel(urlOpener: urlOpenerMock)
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), urlOpener: urlOpenerMock)
         XCTAssertFalse(urlOpenerMock.didCallOpenURL)
         XCTAssertNil(urlOpenerMock.capturedURL)
 
@@ -77,7 +77,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenSetDefaultBrowserActionIsCalledThenOnCompletingOnboardingIntroIsCalled() {
         // GIVEN
         var didCallOnCompletingOnboardingIntro = false
-        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), urlOpener: MockURLOpener())
         sut.onCompletingOnboardingIntro = {
             didCallOnCompletingOnboardingIntro = true
         }
@@ -93,7 +93,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenCancelSetDefaultBrowserActionIsCalledThenOnCompletingOnboardingIntroIsCalled() {
         // GIVEN
         var didCallOnCompletingOnboardingIntro = false
-        let sut = OnboardingIntroViewModel(urlOpener: MockURLOpener())
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), urlOpener: MockURLOpener())
         sut.onCompletingOnboardingIntro = {
             didCallOnCompletingOnboardingIntro = true
         }

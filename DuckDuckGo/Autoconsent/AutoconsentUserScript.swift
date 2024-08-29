@@ -23,6 +23,7 @@ import Core
 import BrowserServicesKit
 import UserScript
 import PrivacyDashboard
+import os.log
 
 protocol AutoconsentPreferences {
     var autoconsentEnabled: Bool { get set }
@@ -61,7 +62,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     weak var delegate: AutoconsentUserScriptDelegate?
 
     init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults(), ignoreNonHTTPURLs: Bool = true) {
-        os_log("Initialising autoconsent userscript", log: .autoconsentLog, type: .debug)
+        Logger.autoconsent.debug("Initialising autoconsent userscript")
         source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
         self.config = config
         self.preferences = preferences
@@ -80,7 +81,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
                                                     optoutFailed: optoutFailed,
                                                     selftestFailed: selftestFailed)
         
-        os_log("Refreshing dashboard state: %s", log: .autoconsentLog, type: .debug, String(describing: cookieConsentStatus))
+        Logger.autoconsent.debug("Refreshing dashboard state: \(String(describing: cookieConsentStatus))")
         self.delegate?.autoconsentUserScript(self, didUpdateCookieConsentStatus: cookieConsentStatus)
     }
 
@@ -88,12 +89,10 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage,
                                replyHandler: @escaping (Any?, String?) -> Void) {
-        os_log("Message received: %s", log: .autoconsentLog, type: .debug, String(describing: message.body))
         return handleMessage(replyHandler: replyHandler, message: message)
     }
 }
 
-// @available(macOS 11, *)
 extension AutoconsentUserScript {
     enum MessageName: String, CaseIterable {
         case `init`
@@ -165,7 +164,7 @@ extension AutoconsentUserScript {
             let json = try JSONSerialization.data(withJSONObject: message)
             return try JSONDecoder().decode(Target.self, from: json)
         } catch {
-            os_log(.error, "Error decoding message body: %{public}@", error.localizedDescription)
+            Logger.autoconsent.error("Error decoding message body: \(error.localizedDescription, privacy: .public)")
             return nil
         }
     }
@@ -192,7 +191,7 @@ extension AutoconsentUserScript {
             handleOptOutResult(message: message, replyHandler: replyHandler)
         case MessageName.optInResult:
             // this is not supported in browser
-            os_log("ignoring optInResult: %s", log: .autoconsentLog, type: .debug, String(describing: message.body))
+            Logger.autoconsent.debug("ignoring optInResult: \(String(describing: message.body))")
             replyHandler(nil, "opt-in is not supported")
         case MessageName.cmpDetected:
             // no need to do anything here
@@ -202,14 +201,14 @@ extension AutoconsentUserScript {
         case MessageName.autoconsentDone:
             handleAutoconsentDone(message: message, replyHandler: replyHandler)
         case MessageName.autoconsentError:
-            os_log("Autoconsent error: %s", log: .autoconsentLog, String(describing: message.body))
+            Logger.autoconsent.debug("Autoconsent error: \(String(describing: message.body))")
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
         }
     }
 
     @MainActor
     func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
-        os_log("Autoconsent popup found", log: .autoconsentLog)
+        Logger.autoconsent.debug("Autoconsent popup found")
         replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
     }
 
@@ -226,7 +225,7 @@ extension AutoconsentUserScript {
 
         if ignoreNonHTTPURLs && !url.isHttp && !url.isHttps {
             // ignore special schemes
-            os_log("Ignoring special URL scheme: %s", log: .autoconsentLog, type: .debug, messageData.url)
+            Logger.autoconsent.debug("Ignoring special URL scheme: \(messageData.url)")
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
         }
@@ -239,7 +238,7 @@ extension AutoconsentUserScript {
 
         let topURLDomain = message.webView?.url?.host
         guard config.isFeature(.autoconsent, enabledForDomain: topURLDomain) else {
-            os_log("disabled for site: %s", log: .autoconsentLog, type: .info, String(describing: url.absoluteString))
+            Logger.autoconsent.info("disabled for site: \(String(describing: url.absoluteString))")
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
         }
@@ -316,7 +315,7 @@ extension AutoconsentUserScript {
             replyHandler(nil, "cannot decode message")
             return
         }
-        os_log("opt-out result: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
+        Logger.autoconsent.debug("opt-out result: \(String(describing: messageData))")
 
         if !messageData.result {
             refreshDashboardState(consentManaged: true, cosmetic: nil, optoutFailed: true, selftestFailed: nil)
@@ -336,8 +335,8 @@ extension AutoconsentUserScript {
             replyHandler(nil, "cannot decode message")
             return
         }
-        os_log("opt-out successful: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
-        
+        Logger.autoconsent.debug("opt-out successful: \(String(describing: messageData))")
+
         guard let url = URL(string: messageData.url),
               let host = url.host else {
             replyHandler(nil, "cannot decode message")
@@ -348,7 +347,7 @@ extension AutoconsentUserScript {
         
         // trigger popup once per domain
         if !management.sitesNotifiedCache.contains(host) {
-            os_log("bragging that we closed a popup", log: .autoconsentLog, type: .debug)
+            Logger.autoconsent.debug("bragging that we closed a popup")
             management.sitesNotifiedCache.insert(host)
             // post popover notification on main thread
             DispatchQueue.main.async {
@@ -363,7 +362,7 @@ extension AutoconsentUserScript {
 
         if let selfTestWebView = selfTestWebView,
            let selfTestFrameInfo = selfTestFrameInfo {
-            os_log("requesting self-test in: %s", log: .autoconsentLog, type: .debug, messageData.url)
+            Logger.autoconsent.debug("requesting self-test in: \(messageData.url)")
             selfTestWebView.evaluateJavaScript(
                 "window.autoconsentMessageCallback({ type: 'selfTest' })",
                 in: selfTestFrameInfo,
@@ -371,14 +370,14 @@ extension AutoconsentUserScript {
                 completionHandler: { (result) in
                     switch result {
                     case.failure(let error):
-                        os_log("Error running self-test: %s", log: .autoconsentLog, type: .debug, String(describing: error))
+                        Logger.autoconsent.error("Error running self-test: \(error.localizedDescription, privacy: .public)")
                     case.success:
-                        os_log("self-test requested", log: .autoconsentLog, type: .debug)
+                        Logger.autoconsent.debug("self-test requested")
                     }
                 }
             )
         } else {
-            os_log("no self-test scheduled in this tab", log: .autoconsentLog, type: .debug)
+            Logger.autoconsent.debug("no self-test scheduled in this tab")
         }
         selfTestWebView = nil
         selfTestFrameInfo = nil
@@ -391,7 +390,7 @@ extension AutoconsentUserScript {
             return
         }
         // store self-test result
-        os_log("self-test result: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
+        Logger.autoconsent.debug("self-test result: \(String(describing: messageData))")
         refreshDashboardState(consentManaged: true, cosmetic: nil, optoutFailed: false, selftestFailed: messageData.result)
         replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
     }

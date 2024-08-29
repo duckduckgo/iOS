@@ -18,7 +18,7 @@
 //
 
 import AdServices
-import Common
+import os.log
 
 protocol AdAttributionFetcher {
     func fetch() async -> AdServicesAttributionResponse?
@@ -56,7 +56,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
                 lastToken = token
                 return try await fetchAttributionData(using: token)
             } catch let error as AdAttributionFetcherError {
-                os_log("AdAttributionFetcher failed to fetch attribution data: %@. Retrying.", log: .adAttributionLog, error.localizedDescription)
+                Logger.adAttribution.error("AdAttributionFetcher failed to fetch attribution data: \(error.localizedDescription, privacy: .public). Retrying.")
 
                 if error == .invalidToken {
                     lastToken = nil
@@ -69,7 +69,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
                     break
                 }
             } catch {
-                os_log("AdAttributionFetcher failed to fetch attribution data: %@", log: .adAttributionLog, error.localizedDescription)
+                Logger.adAttribution.error("AdAttributionFetcher failed to fetch attribution data: \(error.localizedDescription, privacy: .public)")
 
                 // Do not retry
                 break

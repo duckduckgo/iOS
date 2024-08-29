@@ -65,10 +65,10 @@ class DomainMatchingTests: XCTestCase {
         for test in tests {
             let skip = test.exceptPlatforms?.contains("ios-browser")
             if skip == true {
-                os_log("!!SKIPPING TEST: %s", test.name)
+                print("!!SKIPPING TEST: %s", test.name)
                 continue
             }
-            os_log("TEST: %s", test.name)
+            print("TEST: %s", test.name)
             let requestURL = URL(string: test.requestURL)
             let siteURL = URL(string: test.siteURL)
             let requestType = ContentBlockerRulesBuilder.resourceMapping[test.requestType]

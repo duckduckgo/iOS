@@ -92,10 +92,7 @@ public class TabInstrumentation {
 
             // 0 is treated as 1ms
             let timeInNS: UInt64 = timeInMs.asNanos
-
-            os_log(.debug,
-                   log: type(of: self).tabsLog,
-                   "[%@] Request: %@ - %@ - %@ (%@) in %llu", currentURL, url, requestType, status, reason, timeInNS)
+            Logger.general.debug("[\(currentURL)] Request: \(url) - \(requestType) - \(status) (\(reason)) in \(timeInNS)")
         }
     }
 
@@ -104,10 +101,7 @@ public class TabInstrumentation {
             let currentURL = self.currentURL ?? "unknown"
             // 0 is treated as 1ms
             let timeInNS: UInt64 = timeInMs.asNanos
-
-            os_log(.debug,
-                   log: type(of: self).tabsLog,
-                   "[%@] JSEvent: %@ executedIn: %llu", currentURL, name, timeInNS)
+            Logger.general.debug("[\(currentURL)] JSEvent: \(name) executedIn: \(timeInNS)")
         }
     }
 }

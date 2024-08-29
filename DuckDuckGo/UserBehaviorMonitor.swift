@@ -21,6 +21,25 @@ import Foundation
 import Common
 import Core
 
+public extension Notification.Name {
+
+    static let userBehaviorDidMatchBrokenSiteCriteria = Notification.Name("com.duckduckgo.app.userBehaviorDidMatchBrokenSiteCriteria")
+
+}
+
+public enum UserBehaviorEvent: String {
+
+    public enum Key {
+
+        static let event = "com.duckduckgo.com.userBehaviorEvent.key"
+
+    }
+
+    case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
+    case reloadThreeTimesWithin20Seconds = "reload-three-times-within-20-seconds"
+
+}
+
 protocol UserBehaviorStoring {
 
     var didRefreshTimestamp: Date? { get set }
@@ -39,13 +58,6 @@ final class UserBehaviorStore: UserBehaviorStoring {
 
     @UserDefaultsWrapper(key: .didRefreshCounter, defaultValue: 0)
     var didRefreshCounter: Int
-
-}
-
-public enum UserBehaviorEvent: String {
-
-    case reloadTwiceWithin12Seconds = "reload-twice-within-12-seconds"
-    case reloadThreeTimesWithin20Seconds = "reload-three-times-within-20-seconds"
 
 }
 
@@ -97,6 +109,9 @@ final class UserBehaviorMonitor {
         func fireEventIfActionOccurredRecently(within interval: Double = 30.0, since timestamp: Date?, eventToFire: UserBehaviorEvent) {
             if let timestamp = timestamp, date.timeIntervalSince(timestamp) < interval {
                 eventMapping.fire(eventToFire)
+                NotificationCenter.default.post(name: .userBehaviorDidMatchBrokenSiteCriteria,
+                                                object: self,
+                                                userInfo: [UserBehaviorEvent.Key.event: eventToFire])
             }
         }
     }

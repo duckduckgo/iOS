@@ -21,6 +21,7 @@ import Common
 import Foundation
 import BrowserServicesKit
 import Networking
+import os.log
 
 public class StatisticsLoader {
 
@@ -52,7 +53,7 @@ public class StatisticsLoader {
 
         request.fetch { response, error in
             if let error = error {
-                os_log("Initial atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Initial atb request failed with error: \(error.localizedDescription, privacy: .public)")
                 completion()
                 return
             }
@@ -74,7 +75,7 @@ public class StatisticsLoader {
 
         request.fetch { _, error in
             if let error = error {
-                os_log("Exti request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Exit request failed with error: \(error.localizedDescription, privacy: .public)")
                 completion()
                 return
             }
@@ -96,7 +97,7 @@ public class StatisticsLoader {
 
         request.fetch { response, error in
             if let error = error {
-                os_log("Search atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Search atb request failed with error: \(error.localizedDescription, privacy: .public)")
                 completion()
                 return
             }
@@ -121,7 +122,7 @@ public class StatisticsLoader {
 
         request.fetch { response, error in
             if let error = error {
-                os_log("App atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("App atb request failed with error: \(error.localizedDescription, privacy: .public)")
                 completion()
                 return
             }

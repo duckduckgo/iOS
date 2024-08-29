@@ -20,24 +20,30 @@
 import SwiftUI
 import NetworkProtection
 import Subscription
+import Core
 
 struct NetworkProtectionRootView: View {
+
     let statusViewModel: NetworkProtectionStatusViewModel
 
     init() {
         let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
+        let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
+        let usesUnifiedFeedbackForm = accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
         statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
                                                            settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
-                                                           locationListRepository: locationListRepository)
+                                                           locationListRepository: locationListRepository,
+                                                           usesUnifiedFeedbackForm: usesUnifiedFeedbackForm)
     }
+
     var body: some View {
-        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
-            NetworkProtectionStatusView(
-                statusModel: statusViewModel
-            )
-        }
+        NetworkProtectionStatusView(statusModel: statusViewModel)
+            .navigationTitle(UserText.netPNavTitle)
+            .onFirstAppear {
+                Pixel.fire(pixel: .privacyProVPNSettings)
+            }
     }
 }

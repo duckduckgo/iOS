@@ -28,12 +28,12 @@ protocol NewTabDaxDialogProvider {
 final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     private var delegate: OnboardingNavigationDelegate?
     private let contextualOnboardingLogic: ContextualOnboardingLogic
-    private let onboardingPixelReporter: OnboardingScreenImpressionReporting
+    private let onboardingPixelReporter: OnboardingPixelReporting
 
     init(
         delegate: OnboardingNavigationDelegate?,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        onboardingPixelReporter: OnboardingScreenImpressionReporting = OnboardingPixelReporter()
+        onboardingPixelReporter: OnboardingPixelReporting
     ) {
         self.delegate = delegate
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -58,7 +58,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createInitialDialog() -> some View {
-        let viewModel = OnboardingSearchSuggestionsViewModel(delegate: delegate)
+        let viewModel = OnboardingSearchSuggestionsViewModel(pixelReporter: onboardingPixelReporter, delegate: delegate)
         return FadeInView {
             OnboardingTrySearchDialog(viewModel: viewModel)
                 .onboardingDaxDialogStyle()
@@ -70,7 +70,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createSubsequentDialog() -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, pixelReporter: onboardingPixelReporter, delegate: delegate)
         return FadeInView {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
                 .onboardingDaxDialogStyle()

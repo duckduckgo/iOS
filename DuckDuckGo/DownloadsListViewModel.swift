@@ -21,6 +21,7 @@ import SwiftUI
 import Combine
 import Common
 import Core
+import os.log
 
 class DownloadsListViewModel: ObservableObject {
 
@@ -31,25 +32,21 @@ class DownloadsListViewModel: ObservableObject {
     private var subscribers: Set<AnyCancellable> = []
     
     init(dataSource: DownloadsListDataSource) {
-        os_log("DownloadsListViewModel init", log: .generalLog, type: .debug)
-        
+        Logger.general.debug("DownloadsListViewModel init")
+
         self.dataSource = dataSource
         
         dataSource.$model
             .sink { [weak self] in
-                os_log("DownloadsListViewModel changed - ongoing:%d complete:%d",
-                       log: .generalLog,
-                       type: .debug,
-                       $0.ongoingDownloads.count,
-                       $0.completeDownloads.count)
-                
+                Logger.general.debug("DownloadsListViewModel changed - ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
+
                 self?.sections = DownloadsListSectioningHelper().makeSections(from: $0.ongoingDownloads + $0.completeDownloads)
             }
             .store(in: &subscribers)
     }
     
     deinit {
-        os_log("DownloadsListViewModel deinit", log: .generalLog, type: .debug)
+        Logger.general.debug("DownloadsListViewModel deinit")
     }
     
     // MARK: - Intents
@@ -72,7 +69,7 @@ class DownloadsListViewModel: ObservableObject {
                 presentDeleteConfirmation(message: message,
                                           undoHandler: undoHandler)
             case .failure(let error):
-                os_log("Error deleting a download %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Error deleting a download: \(error.localizedDescription, privacy: .public)")
             }
         }
     }
@@ -85,7 +82,7 @@ class DownloadsListViewModel: ObservableObject {
                 presentDeleteConfirmation(message: UserText.messageAllFilesDeleted,
                                           undoHandler: undoHandler)
             case .failure(let error):
-                os_log("Error deleting all downloads %s", log: .generalLog, type: .debug, error.localizedDescription)
+                Logger.general.error("Error deleting all downloads: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

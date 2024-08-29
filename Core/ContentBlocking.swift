@@ -138,8 +138,7 @@ public final class ContentBlocking {
         AdClickAttributionDetection(feature: adClickAttribution,
                                     tld: tld,
                                     eventReporting: attributionEvents,
-                                    errorReporting: attributionDebugEvents,
-                                    log: .adAttributionLog)
+                                    errorReporting: attributionDebugEvents)
     }
 
     public func makeAdClickAttributionLogic(tld: TLD) -> AdClickAttributionLogic {
@@ -147,8 +146,7 @@ public final class ContentBlocking {
                                 rulesProvider: adClickAttributionRulesProvider,
                                 tld: tld,
                                 eventReporting: attributionEvents,
-                                errorReporting: attributionDebugEvents,
-                                log: .adAttributionLog)
+                                errorReporting: attributionDebugEvents)
     }
 
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in

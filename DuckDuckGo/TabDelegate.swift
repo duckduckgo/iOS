@@ -93,4 +93,7 @@ protocol TabDelegate: AnyObject {
 
     func tab(_ tab: TabViewController, didRequestLoadURL url: URL)
     func tab(_ tab: TabViewController, didRequestLoadQuery query: String)
+
+    func tabDidRequestRefresh(tab: TabViewController)
+    func tabDidRequestNavigationToDifferentSite(tab: TabViewController)
 }

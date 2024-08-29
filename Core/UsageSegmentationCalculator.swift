@@ -79,8 +79,8 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
     let installAtb: Atb
     var usageHistory = [Atb]()
     var previousAtb: Atb?
-    var previousWAUSegments = ""
-    var previousMAUSegments = Array(repeating: "", count: 4)
+    var previousWAUSegments = [String]()
+    var previousMAUSegments = Array(repeating: Array(repeating: "", count: 4), count: 4)
 
     init(installAtb: Atb) {
         self.installAtb = installAtb
@@ -107,12 +107,12 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         // py:247
         updateState(atb, pixelInfo: result)
 
-        return result
+        return result.toStringDict()
     }
 
     /// py: 172 `get_pixel_info`
-    private func getPixelInfo(_ atb: Atb, _ activityType: UsageActivityType) -> [String: String] {
-        var pixel: [String: String] = [:]
+    private func getPixelInfo(_ atb: Atb, _ activityType: UsageActivityType) -> [String: Any] {
+        var pixel: [String: Any] = [:]
 
         // py:174
         pixel[Params.activityType] = activityType.rawValue
@@ -164,7 +164,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
     }
 
     /// py:255 `update_client`
-    private func updateState(_ atb: Atb, pixelInfo: [String: String]) {
+    private func updateState(_ atb: Atb, pixelInfo: [String: Any]) {
         // ignore `new_set_atb` as that's always passed in
         previousAtb = atb
 
@@ -176,36 +176,59 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
 
         // py:266
         if pixelInfo[Params.countAsWAU] != nil {
-            previousWAUSegments = pixelInfo.safeValue(forKey: Params.segmentsToday)
+            let segments = pixelInfo[Params.segmentsToday] as? [String] ?? []
+            // https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/compare/364eef61604e8007c88f221e93ec631ace161540...master#diff-9146873f083fb94de115ebed6c6bc762122f116b38ac21f38b952ce648577a86R254-R258
+            // # Filter out segments irrelevant to wau
+            previousWAUSegments = segments.filter {
+                return !$0.contains("_mau") && $0 != "first_month"
+            }
         }
 
         // py:269
-        if let countAsMAUn = pixelInfo[Params.countAsMAUn] {
+        if let countAsMAUn = pixelInfo[Params.countAsMAUn] as? String {
+            let segments = pixelInfo[Params.segmentsToday] as? [String] ?? []
             for n in 0 ..< 4 where countAsMAUn.safeCharAt(n) == "t" {
-                previousMAUSegments[n] = pixelInfo.safeValue(forKey: Params.segmentsToday)
+                // https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/compare/364eef61604e8007c88f221e93ec631ace161540...master#diff-9146873f083fb94de115ebed6c6bc762122f116b38ac21f38b952ce648577a86R263-R271
+                previousMAUSegments[n] = segments.filter {
+                    // # Filter out irrelevant to MAU
+                    return !$0.contains("_wau") && !$0.contains("_week")
+                    //  # Filter out irrelevant to _this_ MAU
+                    && ($0.contains("_mau_\(n)") || !$0.contains("_mau_"))
+                }
             }
         }
     }
 
     /// py:95 `get_segments`
-    private func getSegments(_ atb: Atb) -> String {
+    private func getSegments(_ atb: Atb) -> [String] {
         var segments: [String] = []
 
-        // py:98
-        if atb.week == installAtb.week && countAsWAU(atb) {
-            segments.append("first_week")
+        // https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/compare/364eef61604e8007c88f221e93ec631ace161540...master#diff-9146873f083fb94de115ebed6c6bc762122f116b38ac21f38b952ce648577a86R93-R101
+        if countAsWAU(atb) {
+            if atb.week == installAtb.week {
+                segments.append("first_week")
+            } else if atb.week == installAtb.week + 1 {
+                segments.append("second_week")
+            } else if countsAsWAUAndActivePreviousWeek(atb) {
+                segments.append("current_user_wau")
+            } else {
+                segments.append("reactivated_wau")
+            }
         }
 
-        // py:104
-        if atb.week == installAtb.week + 1
-            && countAsWAU(atb) {
-            segments.append("second_week")
-        }
-
-        // py:110
-        if atb.week < installAtb.week + 4
-            && (previousAtb == nil || previousAtb == installAtb) {
+        // https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/compare/364eef61604e8007c88f221e93ec631ace161540...master#diff-9146873f083fb94de115ebed6c6bc762122f116b38ac21f38b952ce648577a86R104-R107
+        if (previousAtb == nil || previousAtb == installAtb)
+            && atb.week < installAtb.week + 4 {
             segments.append("first_month")
+        } else {
+            // https://dub.duckduckgo.com/flawrence/felix-jupyter-modules/compare/364eef61604e8007c88f221e93ec631ace161540...master#diff-9146873f083fb94de115ebed6c6bc762122f116b38ac21f38b952ce648577a86R110-R116
+            for n in 0 ..< 4 where countAsMAU(n, atb) {
+                if countsAsMAUAndActivePreviousMonth(n, atb) {
+                    segments.append("current_user_mau_\(n)")
+                } else {
+                    segments.append("reactivated_mau_\(n)")
+                }
+            }
         }
 
         // py:116
@@ -214,22 +237,6 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             // # Hopefully this is handled elsewhere in the real code!
             && atb.ageInDays <= installAtb.ageInDays + 28 {
             segments.append("reinstaller")
-        }
-
-        // py:124
-        if countAsWAU(atb) // TODO validate prev atb or install atb??
-            && !countsAsWAUAndActivePreviousWeek(atb) // TODO validate prev atb or install atb??
-            && atb.week >= installAtb.week + 2 {
-            segments.append("reactivated_wau")
-        }
-
-        // py:131
-        for n in 0..<4 {
-            if countAsMAU(n, atb) // TODO validate prev atb or install atb??
-                && !countsAsMAUAndActivePreviousMonth(n, atb)
-                && atb.week >= installAtb.week + 4 {
-                segments.append("reactivated_mau_\(n)")
-            }
         }
 
         // py:139
@@ -243,7 +250,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         }
 
         // py:145
-        return segments.sorted().joined(separator: ",")
+        return segments.sorted()
     }
 
     /// py:48 `count_as_wau`
@@ -367,6 +374,26 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             $0 < today && $0 >= today - 29 && $0 > installDay
         }).sorted()
     }
+}
+
+private extension Dictionary where Key == String, Value == Any {
+    
+    func toStringDict() -> [String: String] {
+        var dict: [String: String] = [:]
+
+        self.forEach { entry in
+            if let array = entry.value as? [String] {
+                dict[entry.key] = array.joined(separator: ",")
+            } else if let string = entry.value as? String {
+                dict[entry.key] = string
+            } else {
+                assertionFailure("Unexpected value type")
+            }
+        }
+
+        return dict
+    }
+
 }
 
 private extension Dictionary where Key == String, Value == String {

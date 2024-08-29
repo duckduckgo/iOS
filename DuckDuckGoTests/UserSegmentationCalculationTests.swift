@@ -28,6 +28,13 @@ class UsageSegmentationCalculationTests: XCTestCase {
         XCTAssertNotNil(data)
 
         let cases = try JSONDecoder().decode([UsageSegmentationTestCase].self, from: data)
+
+        // Ensure we've read the file correctly and is the expected test cases.
+        XCTAssertEqual(cases.count, 92)
+        XCTAssertEqual(cases.reduce(0, { partialResult, testCase in
+            return partialResult + testCase.results.count
+        }), 378)
+
         for index in 0 ..< cases.count {
             assertTestCase(cases[index], caseIndex: index)
         }

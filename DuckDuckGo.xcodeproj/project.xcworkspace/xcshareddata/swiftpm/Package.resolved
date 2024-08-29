@@ -28,12 +28,21 @@
       }
     },
     {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "branch" : "jacek/ssl-errors",
+        "revision" : "ce80ec921a90e3aebdef7a7fb8cd2c467e2fbe79"
+      }
+    },
+    {
       "identity" : "content-scope-scripts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
         "branch" : "pr-releases/pr-1009",
-        "revision" : "b7f1c1ee8a37e1a10cf71a6f73d23f6a8e79e77c"
+        "revision" : "315b56a0b4167e01d08273de7e9e00a91d7f9ca9"
       }
     },
     {

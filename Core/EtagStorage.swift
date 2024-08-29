@@ -20,6 +20,7 @@
 import Common
 import Foundation
 import Configuration
+import os.log
 
 public protocol BlockerListETagStorage {
 
@@ -36,7 +37,7 @@ public struct UserDefaultsETagStorage: BlockerListETagStorage {
 
     public func loadEtag(for configuration: Configuration) -> String? {
         let etag = defaults?.string(forKey: configuration.storeKey)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, configuration.storeKey, etag ?? "nil")
+        Logger.general.debug("Stored etag for \(configuration.storeKey) \(etag ?? "nil")")
         return etag
     }
 

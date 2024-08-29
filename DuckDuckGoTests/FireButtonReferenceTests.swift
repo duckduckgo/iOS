@@ -52,7 +52,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         
@@ -96,7 +96,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         

@@ -21,6 +21,7 @@ import Foundation
 import Common
 import StoreKit
 import AdAttributionKit
+import os.log
 
 extension AppDelegate {
     
@@ -40,9 +41,9 @@ extension AppDelegate {
     private func updateAdAttributionKitPostback(conversionValue: Int) async {
         do {
             try await AdAttributionKit.Postback.updateConversionValue(conversionValue, coarseConversionValue: .high, lockPostback: true)
-            os_log("Attribution: AdAttributionKit postback succeeded", type: .debug)
+            Logger.general.debug("Attribution: AdAttributionKit postback succeeded")
         } catch {
-            os_log("Attribution: AdAttributionKit postback failed %@", type: .error, error.localizedDescription)
+            Logger.general.error("Attribution: AdAttributionKit postback failed \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -50,9 +51,9 @@ extension AppDelegate {
     private func updateSKANPostback(conversionValue: Int) async {
         do {
             try await SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: .high, lockWindow: true)
-            os_log("Attribution: SKAN 4 postback succeeded", type: .debug)
+            Logger.general.debug("Attribution: SKAN 4 postback succeeded")
         } catch {
-            os_log("Attribution: SKAN 4 postback failed %@", type: .error, error.localizedDescription)
+            Logger.general.error("Attribution: SKAN 4 postback failed \(error.localizedDescription, privacy: .public)")
         }
     }
 

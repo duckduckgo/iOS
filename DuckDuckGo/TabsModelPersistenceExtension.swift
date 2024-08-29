@@ -19,7 +19,7 @@
 
 import Foundation
 import Core
-import Common
+import os.log
 
 extension TabsModel {
 
@@ -40,7 +40,7 @@ extension TabsModel {
                 throw error
             }
         } catch {
-            os_log("Something went wrong unarchiving TabsModel %@", log: .generalLog, type: .error, error.localizedDescription)
+            Logger.general.error("Something went wrong unarchiving TabsModel \(error.localizedDescription, privacy: .public)")
         }
         return tabsModel
     }
@@ -54,7 +54,7 @@ extension TabsModel {
             let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
             UserDefaults.app.set(data, forKey: Constants.key)
         } catch {
-            os_log("Something went wrong archiving TabsModel %@", log: .generalLog, type: .error, error.localizedDescription)
+            Logger.general.error("Something went wrong archiving TabsModel: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

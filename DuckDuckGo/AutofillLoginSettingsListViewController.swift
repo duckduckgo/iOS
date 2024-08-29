@@ -25,6 +25,7 @@ import Common
 import DDGSync
 import DesignResourcesKit
 import SwiftUI
+import os.log
 
 enum AutofillSettingsSource: String {
     case settings
@@ -198,7 +199,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
          source: AutofillSettingsSource) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
         if secureVault == nil {
-            os_log("Failed to make vault")
+            Logger.autofill.fault("Failed to make vault")
         }
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl, currentTabUid: currentTabUid, syncService: syncService)
         self.syncService = syncService

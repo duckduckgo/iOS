@@ -28,6 +28,7 @@ import CoreData
 import Combine
 import Persistence
 import WidgetKit
+import os.log
 import SwiftUI
 
 class BookmarksViewController: UIViewController, UITableViewDelegate {
@@ -683,7 +684,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
             let result = await BookmarksImporter(
                 coreDataStore: bookmarksDatabase,
-                favoritesDisplayMode: appSettings.favoritesDisplayMode
+                favoritesDisplayMode: self.appSettings.favoritesDisplayMode
             ).parseAndSave(html: html)
             switch result {
             case .success:
@@ -696,7 +697,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                     ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
                 }
             case .failure(let bookmarksImportError):
-                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
+                Logger.bookmarks.error("Bookmarks import error \(bookmarksImportError.localizedDescription, privacy: .public)")
                 Pixel.fire(pixel: .bookmarkImportFailure)
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
@@ -722,7 +723,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             try BookmarksExporter(coreDataStore: bookmarksDatabase, favoritesDisplayMode: viewModel.favoritesDisplayMode)
                 .exportBookmarksTo(url: tempFileUrl)
         } catch {
-            os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
+            Logger.general.error("bookmarks failed to export: \(error.localizedDescription, privacy: .public)")
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)
             return
         }

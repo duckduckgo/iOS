@@ -23,10 +23,6 @@ import BrowserServicesKit
 import Network
 import Common
 
-public extension URL.NavigationalScheme {
-    static let duck = URL.NavigationalScheme(rawValue: "duck")
-}
-
 extension URL {
     
     enum Host: String {

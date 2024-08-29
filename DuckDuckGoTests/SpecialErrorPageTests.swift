@@ -53,7 +53,8 @@ final class SpecialErrorPageTests: XCTestCase {
         try super.setUpWithError()
         let featureFlagger = MockFeatureFlagger()
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
-        sut = .fake(customWebView: { configuration in
+        sut = .fake(customWebView: { [weak self] configuration in
+            guard let self else { fatalError() }
             self.webView = MockSpecialErrorWebView(frame: CGRect(), configuration: configuration)
             return self.webView
         }, featureFlagger: featureFlagger)
@@ -72,15 +73,11 @@ final class SpecialErrorPageTests: XCTestCase {
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLCertExpired,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://expired.badssl.com")!])
         let expectation = self.expectation(description: "Special error page should be loaded")
-        var didFulfill = false
         webView.loadRequestHandler = { request, html in
-            if !didFulfill {
-                XCTAssertTrue(html.contains("Warning: This site may be insecure"))
-                XCTAssertTrue(html.contains("is expired"))
-                XCTAssertEqual(request.url!.host, URL(string: "https://expired.badssl.com")!.host)
-                expectation.fulfill()
-                didFulfill = true
-            }
+            XCTAssertTrue(html.contains("Warning: This site may be insecure"))
+            XCTAssertTrue(html.contains("is expired"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://expired.badssl.com")!.host)
+            expectation.fulfill()
         }
 
         // WHEN
@@ -92,7 +89,7 @@ final class SpecialErrorPageTests: XCTestCase {
                                                        errorType: "expired",
                                                        domain: "expired.badssl.com",
                                                        eTldPlus1: "badssl.com"))
-        waitForExpectations(timeout: 5) { error in
+        waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
     }
@@ -104,15 +101,11 @@ final class SpecialErrorPageTests: XCTestCase {
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLHostNameMismatch,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://wrong.host.badssl.com")!])
         let expectation = self.expectation(description: "Special error page should be loaded")
-        var didFulfill = false
         webView.loadRequestHandler = { request, html in
-            if !didFulfill {
-                XCTAssertTrue(html.contains("Warning: This site may be insecure"))
-                XCTAssertTrue(html.contains("does not match"))
-                XCTAssertEqual(request.url!.host, URL(string: "https://wrong.host.badssl.com")!.host)
-                expectation.fulfill()
-                didFulfill = true
-            }
+            XCTAssertTrue(html.contains("Warning: This site may be insecure"))
+            XCTAssertTrue(html.contains("does not match"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://wrong.host.badssl.com")!.host)
+            expectation.fulfill()
         }
 
         // WHEN
@@ -124,7 +117,7 @@ final class SpecialErrorPageTests: XCTestCase {
                                                        errorType: "wrongHost",
                                                        domain: "wrong.host.badssl.com",
                                                        eTldPlus1: "badssl.com"))
-        waitForExpectations(timeout: 5) { error in
+        waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
     }
@@ -136,15 +129,10 @@ final class SpecialErrorPageTests: XCTestCase {
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLXCertChainInvalid,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://self-signed.badssl.com")!])
         let expectation = self.expectation(description: "Special error page should be loaded")
-        var didFulfill = false
         webView.loadRequestHandler = { request, html in
-            if !didFulfill {
-                XCTAssertTrue(html.contains("Warning: This site may be insecure"))
-                XCTAssertTrue(html.contains("is not trusted"))
-                XCTAssertEqual(request.url!.host, URL(string: "https://self-signed.badssl.com")!.host)
-                expectation.fulfill()
-                didFulfill = true
-            }
+            XCTAssertTrue(html.contains("Warning: This site may be insecure"))
+            XCTAssertTrue(html.contains("is not trusted"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://self-signed.badssl.com")!.host)
         }
 
         // WHEN
@@ -156,7 +144,7 @@ final class SpecialErrorPageTests: XCTestCase {
                                                        errorType: "selfSigned",
                                                        domain: "self-signed.badssl.com",
                                                        eTldPlus1: "badssl.com"))
-        waitForExpectations(timeout: 5) { error in
+        waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
     }
@@ -168,17 +156,12 @@ final class SpecialErrorPageTests: XCTestCase {
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLUnknownRootCert,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://untrusted-root.badssl.com")!])
         let expectation = self.expectation(description: "Special error page should be loaded")
-        var didFulfill = false
         webView.loadRequestHandler = { request, html in
-            if !didFulfill {
-                XCTAssertTrue(html.contains("Warning: This site may be insecure"))
-                XCTAssertTrue(html.contains("is not trusted"))
-                XCTAssertEqual(request.url!.host, URL(string: "https://untrusted-root.badssl.com")!.host)
-                expectation.fulfill()
-                didFulfill = true
-            }
+            XCTAssertTrue(html.contains("Warning: This site may be insecure"))
+            XCTAssertTrue(html.contains("is not trusted"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://untrusted-root.badssl.com")!.host)
         }
-
+        
         // WHEN
         sut.webView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
 
@@ -188,7 +171,7 @@ final class SpecialErrorPageTests: XCTestCase {
                                                        errorType: "invalid",
                                                        domain: "untrusted-root.badssl.com",
                                                        eTldPlus1: "badssl.com"))
-        waitForExpectations(timeout: 5) { error in
+        waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
     }

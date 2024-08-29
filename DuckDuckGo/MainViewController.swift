@@ -34,6 +34,7 @@ import Suggestions
 import Subscription
 import SwiftUI
 import NetworkProtection
+import os.log
 
 class MainViewController: UIViewController {
     
@@ -121,6 +122,7 @@ class MainViewController: UIViewController {
     private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
+    private var feedbackCancellable: AnyCancellable?
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -285,6 +287,7 @@ class MainViewController: UIViewController {
         subscribeToURLInterceptorNotifications()
         subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
+        subscribeToUnifiedFeedbackNotifications()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -901,7 +904,7 @@ class MainViewController: UIViewController {
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         guard let url = URL.makeSearchURL(query: query) else {
-            os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
+            Logger.lifecycle.error("Couldn‘t form URL for query: \(query, privacy: .public)")
             return
         }
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
@@ -947,11 +950,7 @@ class MainViewController: UIViewController {
 
     fileprivate func loadQuery(_ query: String) {
         guard let url = URL.makeSearchURL(query: query, queryContext: currentTab?.url) else {
-            os_log("Couldn‘t form URL for query “%s” with context “%s”",
-                   log: .lifecycleLog,
-                   type: .error,
-                   query,
-                   currentTab?.url?.absoluteString ?? "<nil>")
+            Logger.general.error("Couldn‘t form URL for query “\(query, privacy: .public)” with context “\(self.currentTab?.url?.absoluteString ?? "<nil>", privacy: .public)”")
             return
         }
         // Make sure that once query is submitted, we don't trigger the non-SERP flow
@@ -1548,6 +1547,19 @@ class MainViewController: UIViewController {
                                         nil, .deliverImmediately)
     }
 
+    private func subscribeToUnifiedFeedbackNotifications() {
+        feedbackCancellable = NotificationCenter.default.publisher(for: .unifiedFeedbackNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                DispatchQueue.main.async { [weak self] in
+                    guard let navigationController = self?.presentedViewController as? UINavigationController else { return }
+                    navigationController.popToRootViewController(animated: true)
+                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
+                                              presentationLocation: .withoutBottomBar)
+                }
+            }
+    }
+
     private func onNetworkProtectionEntitlementMessagingChange() {
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
@@ -1578,7 +1590,7 @@ class MainViewController: UIViewController {
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         tunnelDefaults.resetEntitlementMessaging()
-        os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
+        Logger.networkProtection.info("[NetP Subscription] Reset expired entitlement messaging")
     }
 
     var networkProtectionTunnelController: NetworkProtectionTunnelController {
@@ -2065,7 +2077,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if let url = URL.makeSearchURL(text: phrase) {
                 loadUrl(url)
             } else {
-                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+                Logger.lifecycle.error("Couldn‘t form URL for suggestion: \(phrase, privacy: .public)")
             }
         case .website(url: let url):
             if url.isBookmarklet() {

@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import Common
 import SecureStorage
+import os.log
 
 final class SecureVaultKeyStoreEventMapper: EventMapping<SecureStorageKeyStoreEvent> {
      public init() {
@@ -70,10 +71,7 @@ final class SecureVaultReporter: SecureVaultReporting {
                    let secureVaultError = error as? SecureStorageError,
                    let userInfo = secureVaultError.errorUserInfo["NSUnderlyingError"] as? NSError,
                    userInfo.code == -25308 {
-                    os_log("SecureVault attempt to access keystore while device is locked: %@",
-                           log: .generalLog,
-                           type: .debug,
-                           error.localizedDescription)
+                    Logger.general.error("SecureVault attempt to access keystore while device is locked: \(error.localizedDescription, privacy: .public)")
                     return
                 }
                 DailyPixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)

@@ -21,6 +21,7 @@ import Common
 import UIKit
 import Social
 import Core
+import os.log
 
 class ShareViewController: SLComposeServiceViewController {
 
@@ -71,7 +72,7 @@ class ShareViewController: SLComposeServiceViewController {
         textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, _) in
             guard let query = item as? String else { return }
             guard let url = URL.makeSearchURL(query: query) else {
-                os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
+                Logger.lifecycle.error("Couldn‘t form URL for query “\(query, privacy: .public)”")
                 return
             }
             self?.open(url: url)

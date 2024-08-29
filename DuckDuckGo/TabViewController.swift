@@ -89,7 +89,7 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
 
-    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    var featureFlagger: FeatureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
     private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
@@ -176,10 +176,11 @@ class TabViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
 
     private let certificateTrustEvaluator: CertificateTrustEvaluating
+    private let urlCredentialCreator: URLCredentialCreating
     private var shouldBypassSSLError = false
     var errorData: SpecialErrorData?
-    private var failedURL: URL?
-
+    var failedURL: URL?
+    var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
 
     let syncService: DDGSyncing
 
@@ -310,7 +311,9 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) -> TabViewController {
+                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+                                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
+                                   featureFlagger: FeatureFlagger) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -323,7 +326,9 @@ class TabViewController: UIViewController {
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                               contextualOnboardingLogic: contextualOnboardingLogic,
-                              onboardingPixelReporter: onboardingPixelReporter
+                              onboardingPixelReporter: onboardingPixelReporter,
+                              urlCredentialCreator: urlCredentialCreator,
+                              featureFlagger: featureFlagger
             )
         })
         return controller
@@ -353,7 +358,9 @@ class TabViewController: UIViewController {
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) {
+                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
+                   featureFlagger: FeatureFlagger) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -370,6 +377,8 @@ class TabViewController: UIViewController {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.urlCredentialCreator = urlCredentialCreator
+        self.featureFlagger = featureFlagger
         super.init(coder: aDecoder)
     }
 
@@ -493,14 +502,20 @@ class TabViewController: UIViewController {
     func attachWebView(configuration: WKWebViewConfiguration,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
-                       loadingInitiatedByParentTab: Bool = false) {
+                       loadingInitiatedByParentTab: Bool = false,
+                       customWebView: ((WKWebViewConfiguration) -> WKWebView)? = nil) {
         instrumentation.willPrepareWebView()
 
         let userContentController = UserContentController()
         configuration.userContentController = userContentController
         userContentController.delegate = self
 
-        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        if let customWebView {
+            webView = customWebView(configuration)
+            view.layoutIfNeeded()
+        } else {
+            webView = WKWebView(frame: view.bounds, configuration: configuration)
+        }
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -1187,7 +1202,7 @@ extension TabViewController: LoginFormDetectionDelegate {
 
 // MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
-    
+
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -1199,7 +1214,7 @@ extension TabViewController: WKNavigationDelegate {
             completionHandler(.performDefaultHandling, nil)
         }
     }
-    
+
     func performBasicHTTPAuthentication(protectionSpace: URLProtectionSpace,
                                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if let urlProvidedBasicAuthCredential,
@@ -1218,18 +1233,19 @@ extension TabViewController: WKNavigationDelegate {
         }, cancelCompletion: {
             completionHandler(.rejectProtectionSpace, nil)
         })
-        
+
         delegate?.tab(self, didRequestPresentingAlert: alert)
     }
 
     private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
                                             completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        guard shouldBypassSSLError, let trust = challenge.protectionSpace.serverTrust else {
+        guard shouldBypassSSLError,
+        let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
             completionHandler(.performDefaultHandling, nil)
             return
         }
         shouldBypassSSLError = false
-        completionHandler(.useCredential, URLCredential(trust: trust))
+        completionHandler(.useCredential, credential)
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1245,7 +1261,7 @@ extension TabViewController: WKNavigationDelegate {
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
-    
+
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         Logger.general.debug("webpageLoading started")
 
@@ -1256,12 +1272,12 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.showBars()
 
         resetDashboardInfo()
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-        
+
         appRatingPrompt.registerUsage()
-     
+
         if let scene = self.view.window?.windowScene,
            webView.url?.isDuckDuckGoSearch == true,
            appRatingPrompt.shouldPrompt() {
@@ -1273,7 +1289,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        
+
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1331,7 +1347,7 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
-    
+
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
         lastRenderedURL = webView.url
@@ -1344,7 +1360,7 @@ extension TabViewController: WKNavigationDelegate {
         referrerTrimming.onBeginNavigation(to: webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentlyLoadedURL = webView.url
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
@@ -1366,9 +1382,18 @@ extension TabViewController: WKNavigationDelegate {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
 
-        userScripts?.specialErrorPageUserScript?.isEnabled = webView.url == failedURL
+        specialErrorPageUserScript?.isEnabled = webView.url == failedURL
     }
-    
+
+    var specialErrorPageUserScript: SpecialErrorPageUserScript? {
+        get {
+            return storedSpecialErrorPageUserScript ?? userScripts?.specialErrorPageUserScript
+        }
+        set {
+            storedSpecialErrorPageUserScript = newValue
+        }
+    }
+
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.main.async { [weak self] in
             guard let webView = self?.webView,
@@ -1563,14 +1588,14 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func loadSpecialErrorPageIfNeeded(error: NSError) {
-        guard true,// featureFlagger.isFeatureOn(.sslCertificatesBypass),
+        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
               error.code == NSURLErrorServerCertificateUntrusted,
-              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int,
+              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
               let failedURL = error.failedUrl else {
             return
         }
         let tld = storageCache.tld
-        let errorType = SSLErrorType.forErrorCode(errorCode)
+        let errorType = SSLErrorType.forErrorCode(Int(errorCode))
         self.failedURL = failedURL
         errorData = SpecialErrorData(kind: .ssl,
                                      errorType: errorType.rawValue,
@@ -2396,7 +2421,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 // MARK: - UserContentControllerDelegate
 extension TabViewController: UserContentControllerDelegate {
 
-    private var userScripts: UserScripts? {
+    var userScripts: UserScripts? {
         userContentController.contentBlockingAssets?.userScripts as? UserScripts
     }
     private var findInPageScript: FindInPageUserScript? {

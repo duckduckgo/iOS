@@ -61,10 +61,9 @@ class UsageSegmentation: UsageSegmenting {
             storage.atbs.append(atb)
         }
 
-        // TODO write a stateful calculator
-        //  * should return no parameters unless a pixel should be fired
         var pixelInfo: [String: String]?
         let calculator = calculatorFactory.make(installAtb: installAtb)
+        
         for atb in storage.atbs {
             pixelInfo = calculator.processAtb(atb, forActivityType: activityType)
         }

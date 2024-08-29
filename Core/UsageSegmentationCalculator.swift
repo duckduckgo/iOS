@@ -19,8 +19,6 @@
 
 import Foundation
 
-// TODO consider just using AtbNumeric here directly and removing it from Atb class
-
 protocol UsageSegmentationCalculatorMaking {
 
     /// Creates a calculator with the provided initial state

@@ -23,6 +23,29 @@ import XCTest
 
 class UsageSegmentationCalculationTests: XCTestCase {
 
+    func testPerformance() throws {
+        throw XCTSkip("Only used for performance testing and optimisation")
+
+        var atbs = [Atb]()
+        for week in 100 ..< 800 {
+            for day in 1...7 {
+                atbs.append(Atb(version: "v\(week)-\(day)", updateVersion: nil))
+            }
+        }
+
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let calculator = UsageSegmentationCalculator(installAtb: installAtb)
+
+        XCTAssertEqual(atbs.count, 4900)
+
+        measure {
+            for atb in atbs {
+                _ = calculator.processAtb(atb, forActivityType: .appUse)
+            }
+        }
+
+    }
+
     func testCalculations() throws {
         let data = JsonTestDataLoader().fromJsonFile("mobile_segments_test_cases.json")
         XCTAssertNotNil(data)

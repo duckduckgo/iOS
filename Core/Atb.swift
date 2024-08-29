@@ -21,8 +21,30 @@ import Foundation
 
 public struct Atb: Decodable, Equatable {
 
+    static let template = "v100-1"
+    static let templateWithVariant = "v100-1xx"
+
     let version: String
     let updateVersion: String?
+    let numeric: AtbNumeric?
+
+    init(version: String, updateVersion: String?) {
+        self.version = version
+        self.updateVersion = updateVersion
+        self.numeric = AtbNumeric.makeFromVersion(version)
+    }
+
+    enum CodingKeys: CodingKey {
+        case version
+        case updateVersion
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.version = try container.decode(String.self, forKey: .version)
+        self.updateVersion = try container.decodeIfPresent(String.self, forKey: .updateVersion)
+        self.numeric = AtbNumeric.makeFromVersion(version)
+    }
 
     /// Equality is about the version without any variants.  e.g. v100-1 == v100-1ma.  `updateVersion` is ignored because that's a signal from the server to update the locally stored Atb so not relevant to any calculation
     public static func == (lhs: Atb, rhs: Atb) -> Bool {
@@ -46,18 +68,7 @@ public struct Atb: Decodable, Equatable {
     }
 
     var isReturningUser: Bool {
-        version.count == 8 && version.hasSuffix("ru")
-    }
-
-    private var numeric: AtbNumeric? {
-        guard let version = droppingVariant,
-              let week = Int(version.substring(1...3)),
-              let day = Int(version.substring(5...5)),
-              (1...7).contains(day) else {
-            return nil
-        }
-
-        return AtbNumeric(week: week, day: day, ageInDays: (week * 7) + (day - 1))
+        version.count == Self.templateWithVariant.count && version.hasSuffix("ru")
     }
 
     struct AtbNumeric {
@@ -66,6 +77,18 @@ public struct Atb: Decodable, Equatable {
         let day: Int
         let ageInDays: Int
 
+        static func makeFromVersion(_ version: String) -> AtbNumeric? {
+            let version = String(version.prefix(Atb.template.count))
+            guard version.count == Atb.template.count,
+                  let week = Int(version.substring(1...3)),
+                  let day = Int(version.substring(5...5)),
+                  (1...7).contains(day) else {
+                return nil
+            }
+
+            return AtbNumeric(week: week, day: day, ageInDays: (week * 7) + (day - 1))
+        }
+
     }
 
 }
@@ -73,7 +96,7 @@ public struct Atb: Decodable, Equatable {
 extension Atb {
 
     var droppingVariant: String? {
-        let minSize = "v111-1".count
+        let minSize = Atb.template.count
         guard version.count >= minSize else { return nil }
         return String(version.prefix(minSize))
     }

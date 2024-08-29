@@ -876,6 +876,7 @@
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
 		CB5516D1286500290079B175 /* ContentBlockingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */; };
 		CB5516D2286500290079B175 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
+		CB6D8E982C80A9B100D0E772 /* SpecialErrorPages in Frameworks */ = {isa = PBXBuildFile; productRef = CB6D8E972C80A9B100D0E772 /* SpecialErrorPages */; };
 		CB825C922C071B1400BCC586 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB825C912C071B1400BCC586 /* AlertView.swift */; };
 		CB825C962C071C9300BCC586 /* AlertViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB825C952C071C9300BCC586 /* AlertViewPresenter.swift */; };
 		CB84C7BD29A3EF530088A5B8 /* AppConfigurationURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */; };
@@ -3047,6 +3048,7 @@
 				D6BC8ACB2C5AA3860025375B /* DuckPlayer in Frameworks */,
 				CBC83E3429B631780008E19C /* Configuration in Frameworks */,
 				D61CDA182B7CF78300A0FBB9 /* ZIPFoundation in Frameworks */,
+				CB6D8E982C80A9B100D0E772 /* SpecialErrorPages in Frameworks */,
 				851F74262B9A1BFD00747C42 /* Suggestions in Frameworks */,
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
 				8599690F29D2F1C100DBF9FA /* DDGSync in Frameworks */,
@@ -6485,6 +6487,7 @@
 				858D009C2B9799FC004E5B4C /* History */,
 				851F74252B9A1BFD00747C42 /* Suggestions */,
 				D6BC8ACA2C5AA3860025375B /* DuckPlayer */,
+				CB6D8E972C80A9B100D0E772 /* SpecialErrorPages */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -10861,6 +10864,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		CB6D8E972C80A9B100D0E772 /* SpecialErrorPages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = SpecialErrorPages;
 		};
 		CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */ = {
 			isa = XCSwiftPackageProductDependency;

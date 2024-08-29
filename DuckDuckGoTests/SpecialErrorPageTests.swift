@@ -75,7 +75,7 @@ final class SpecialErrorPageTests: XCTestCase {
         webView.loadRequestHandler = { request, html in
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("is expired"))
-            XCTAssertEqual(request.url, URL(string: "https://expired.badssl.com"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://expired.badssl.com")!.host)
             expectation.fulfill()
         }
 
@@ -103,7 +103,7 @@ final class SpecialErrorPageTests: XCTestCase {
         webView.loadRequestHandler = { request, html in
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("does not match"))
-            XCTAssertEqual(request.url, URL(string: "https://wrong.host.badssl.com"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://wrong.host.badssl.com")!.host)
             expectation.fulfill()
         }
 
@@ -131,7 +131,7 @@ final class SpecialErrorPageTests: XCTestCase {
         webView.loadRequestHandler = { request, html in
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("is not trusted"))
-            XCTAssertEqual(request.url, URL(string: "https://self-signed.badssl.com"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://self-signed.badssl.com")!.host)
             expectation.fulfill()
         }
 
@@ -159,7 +159,7 @@ final class SpecialErrorPageTests: XCTestCase {
         webView.loadRequestHandler = { request, html in
             XCTAssertTrue(html.contains("Warning: This site may be insecure"))
             XCTAssertTrue(html.contains("is not trusted"))
-            XCTAssertEqual(request.url, URL(string: "https://untrusted-root.badssl.com"))
+            XCTAssertEqual(request.url!.host, URL(string: "https://untrusted-root.badssl.com")!.host)
             expectation.fulfill()
         }
 

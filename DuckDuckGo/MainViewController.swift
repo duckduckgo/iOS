@@ -34,6 +34,7 @@ import Suggestions
 import Subscription
 import SwiftUI
 import NetworkProtection
+import os.log
 
 class MainViewController: UIViewController {
     
@@ -106,7 +107,7 @@ class MainViewController: UIViewController {
     private let variantManager: VariantManager
     private let tutorialSettings: TutorialSettings
     private let contextualOnboardingLogic: ContextualOnboardingLogic
-    private let contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting
+    let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let statisticsStore: StatisticsStore
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
@@ -121,6 +122,7 @@ class MainViewController: UIViewController {
     private var settingsDeepLinkcancellables = Set<AnyCancellable>()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
+    private var feedbackCancellable: AnyCancellable?
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -189,7 +191,7 @@ class MainViewController: UIViewController {
         variantManager: VariantManager,
         contextualOnboardingPresenter: ContextualOnboardingPresenting,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+        contextualOnboardingPixelReporter: OnboardingPixelReporting,
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults()
     ) {
@@ -212,7 +214,8 @@ class MainViewController: UIViewController {
                                      syncService: syncService,
                                      privacyProDataReporter: privacyProDataReporter,
                                      contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                     contextualOnboardingLogic: contextualOnboardingLogic)
+                                     contextualOnboardingLogic: contextualOnboardingLogic,
+                                     onboardingPixelReporter: contextualOnboardingPixelReporter)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -284,10 +287,12 @@ class MainViewController: UIViewController {
         subscribeToURLInterceptorNotifications()
         subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
+        subscribeToUnifiedFeedbackNotifications()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForUserBehaviorEvents()
         registerForSyncFeatureFlagsUpdates()
 
         decorate()
@@ -478,6 +483,14 @@ class MainViewController: UIViewController {
     @objc
     private func keyboardDidHide() {
         keyboardShowing = false
+    }
+
+    private func registerForUserBehaviorEvents() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(attemptToShowBrokenSitePrompt(_:)),
+            name: .userBehaviorDidMatchBrokenSiteCriteria,
+            object: nil)
     }
 
     private func registerForSyncFeatureFlagsUpdates() {
@@ -770,7 +783,7 @@ class MainViewController: UIViewController {
             fatalError("No tab model")
         }
 
-        let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared)
+        let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared, onboardingPixelReporter: contextualOnboardingPixelReporter)
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(tab: tabModel,
                                                       interactionModel: favoritesViewModel,
@@ -830,6 +843,7 @@ class MainViewController: UIViewController {
         }
 
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
         if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
@@ -867,6 +881,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarBackPressed)
         performCancel()
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goBack()
     }
 
@@ -874,6 +889,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarForwardPressed)
         performCancel()
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.goForward()
     }
     
@@ -889,7 +905,7 @@ class MainViewController: UIViewController {
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         guard let url = URL.makeSearchURL(query: query) else {
-            os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
+            Logger.lifecycle.error("Couldn‘t form URL for query: \(query, privacy: .public)")
             return
         }
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
@@ -935,11 +951,7 @@ class MainViewController: UIViewController {
 
     fileprivate func loadQuery(_ query: String) {
         guard let url = URL.makeSearchURL(query: query, queryContext: currentTab?.url) else {
-            os_log("Couldn‘t form URL for query “%s” with context “%s”",
-                   log: .lifecycleLog,
-                   type: .error,
-                   query,
-                   currentTab?.url?.absoluteString ?? "<nil>")
+            Logger.general.error("Couldn‘t form URL for query “\(query, privacy: .public)” with context “\(self.currentTab?.url?.absoluteString ?? "<nil>", privacy: .public)”")
             return
         }
         // Make sure that once query is submitted, we don't trigger the non-SERP flow
@@ -1005,6 +1017,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown()
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -1021,6 +1034,7 @@ class MainViewController: UIViewController {
     private func attachTab(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
             
@@ -1091,6 +1105,13 @@ class MainViewController: UIViewController {
         refreshOmniBar()
     }
 
+    private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
+        guard brokenSitePromptViewHostingController != nil,
+                let event = brokenSitePromptEvent?.rawValue else { return }
+        brokenSitePromptViewHostingController = nil
+        hideNotification()
+    }
+
     fileprivate func refreshBackForwardButtons() {
         viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
         viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
@@ -1117,6 +1138,8 @@ class MainViewController: UIViewController {
         } completion: { _ in
             ViewHighlighter.updatePositions()
         }
+
+        hideNotificationBarIfBrokenSitePromptShown()
     }
 
     private func deferredFireOrientationPixel() {
@@ -1328,6 +1351,47 @@ class MainViewController: UIViewController {
         }
     }
 
+    private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
+    private var brokenSitePromptEvent: UserBehaviorEvent?
+    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter()
+
+    @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
+        guard brokenSitePromptLimiter.shouldShowToast(),
+            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
+            let url = currentTab?.url, !url.isDuckDuckGo,
+            notificationView == nil,
+            !isPad,
+            DefaultTutorialSettings().hasSeenOnboarding,
+            !DaxDialogs.shared.isStillOnboarding(),
+            isPortrait else { return }
+        // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
+        brokenSitePromptLimiter.didShowToast()
+        DispatchQueue.main.async {
+            self.showBrokenSitePrompt(after: event)
+        }
+    }
+
+    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
+        let host = makeBrokenSitePromptViewHostingController(event: event)
+        brokenSitePromptViewHostingController = host
+        brokenSitePromptEvent = event
+        showNotification(with: host.view)
+    }
+
+    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+        let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
+            self?.hideNotification()
+            self?.brokenSitePromptLimiter.didDismissToast()
+            self?.brokenSitePromptViewHostingController = nil
+        }, onDidSubmit: { [weak self] in
+            self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+            self?.hideNotification()
+            self?.brokenSitePromptLimiter.didOpenReport()
+            self?.brokenSitePromptViewHostingController = nil
+        })
+        return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
+    }
+
     func animateBackgroundTab() {
         showBars()
         tabSwitcherButton.incrementAnimated()
@@ -1340,6 +1404,7 @@ class MainViewController: UIViewController {
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {
@@ -1483,6 +1548,19 @@ class MainViewController: UIViewController {
                                         nil, .deliverImmediately)
     }
 
+    private func subscribeToUnifiedFeedbackNotifications() {
+        feedbackCancellable = NotificationCenter.default.publisher(for: .unifiedFeedbackNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                DispatchQueue.main.async { [weak self] in
+                    guard let navigationController = self?.presentedViewController as? UINavigationController else { return }
+                    navigationController.popToRootViewController(animated: true)
+                    ActionMessageView.present(message: UserText.vpnFeedbackFormSubmittedMessage,
+                                              presentationLocation: .withoutBottomBar)
+                }
+            }
+    }
+
     private func onNetworkProtectionEntitlementMessagingChange() {
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()
@@ -1513,7 +1591,7 @@ class MainViewController: UIViewController {
     @objc
     private func onNetworkProtectionAccountSignIn(_ notification: Notification) {
         tunnelDefaults.resetEntitlementMessaging()
-        os_log("[NetP Subscription] Reset expired entitlement messaging", log: .networkProtection, type: .info)
+        Logger.networkProtection.info("[NetP Subscription] Reset expired entitlement messaging")
     }
 
     var networkProtectionTunnelController: NetworkProtectionTunnelController {
@@ -1748,6 +1826,7 @@ extension MainViewController: OmniBarDelegate {
         omniBar.cancel()
         loadQuery(query)
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         showHomeRowReminder()
         fireOnboardingCustomSearchPixelIfNeeded(query: query)
     }
@@ -1935,6 +2014,7 @@ extension MainViewController: OmniBarDelegate {
     func onRefreshPressed() {
         hideSuggestionTray()
         currentTab?.refresh()
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
     }
 
     func onSharePressed() {
@@ -1998,7 +2078,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if let url = URL.makeSearchURL(text: phrase) {
                 loadUrl(url)
             } else {
-                os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, phrase)
+                Logger.lifecycle.error("Couldn‘t form URL for suggestion: \(phrase, privacy: .public)")
             }
         case .website(url: let url):
             if url.isBookmarklet() {
@@ -2173,6 +2253,7 @@ extension MainViewController: TabDelegate {
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
              for navigationAction: WKNavigationAction,
              inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView? {
+        hideNotificationBarIfBrokenSitePromptShown()
         showBars()
         currentTab?.dismiss()
 
@@ -2233,6 +2314,7 @@ extension MainViewController: TabDelegate {
              openedByPage: Bool,
              inheritingAttribution attribution: AdClickAttributionLogic.State?) {
         _ = findInPageView.resignFirstResponder()
+        hideNotificationBarIfBrokenSitePromptShown()
         if openedByPage {
             showBars()
             newTabAnimation {
@@ -2391,6 +2473,14 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController, didRequestLoadQuery query: String) {
         loadQuery(query)
     }
+    
+    func tabDidRequestRefresh(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown(afterRefresh: true)
+    }
+
+    func tabDidRequestNavigationToDifferentSite(tab: TabViewController) {
+        hideNotificationBarIfBrokenSitePromptShown()
+    }
 
 }
 
@@ -2438,6 +2528,7 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
+        hideNotificationBarIfBrokenSitePromptShown()
         tabManager.remove(at: index)
         updateCurrentTab()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -2481,6 +2572,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
         guard currentTab ?? tabManager.current(createIfNeeded: true) != nil else {
             fatalError("Unable to get current tab")
         }
+        hideNotificationBarIfBrokenSitePromptShown()
         updatePreviewForCurrentTab {
             ViewHighlighter.hideAll()
             self.segueToTabSwitcher()

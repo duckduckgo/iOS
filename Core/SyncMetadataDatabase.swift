@@ -22,6 +22,7 @@ import CoreData
 import DDGSync
 import Persistence
 import Common
+import os.log
 
 public final class SyncMetadataDatabase {
 
@@ -29,17 +30,17 @@ public final class SyncMetadataDatabase {
 
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            os_log("SyncMetadataDatabase.make - OUT, failed to get location")
+            Logger.sync.fault("SyncMetadataDatabase.make - OUT, failed to get location")
             fatalError("Failed to get location")
         }
         return url
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("SyncMetadataDatabase.make - IN - %s", location.absoluteString)
+        Logger.sync.debug("SyncMetadataDatabase.make - IN - \(location.absoluteString)")
         let bundle = DDGSync.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "SyncMetadata") else {
-            os_log("SyncMetadataDatabase.make - OUT, failed to loadModel")
+            Logger.sync.fault("SyncMetadataDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
@@ -47,7 +48,7 @@ public final class SyncMetadataDatabase {
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly)
-        os_log("SyncMetadataDatabase.make - OUT")
+        Logger.sync.debug("SyncMetadataDatabase.make - OUT")
         return db
     }
 

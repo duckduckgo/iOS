@@ -46,6 +46,11 @@ struct FaviconsHelper {
             return (resultImage, fake)
         }
         
+        if domain == "player" {
+            complete(UIImage(named: "DuckPlayer"))
+            return
+        }
+        
         if URL.isDuckDuckGo(domain: domain) {
             return complete(UIImage(named: "Logo"))
         }

@@ -22,6 +22,7 @@ import Foundation
 import Core
 import WebKit
 import UniformTypeIdentifiers
+import os.log
 
 class DownloadManager {
     
@@ -46,7 +47,7 @@ class DownloadManager {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         } catch {
-            os_log("Failed to create downloads directory: %s", type: .debug, error.localizedDescription)
+            Logger.general.error("Failed to create downloads directory: \(error.localizedDescription, privacy: .public)")
             let temporaryDirectory = FileManager.default.temporaryDirectory
             return temporaryDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         }
@@ -62,7 +63,7 @@ class DownloadManager {
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
         createDownloadsDirectoryIfNeeded()
-        os_log("Downloads directory location %s", type: .debug, downloadsDirectory.absoluteString)
+        Logger.general.debug("Downloads directory location \(self.downloadsDirectory.absoluteString)")
     }
     
     private func createDownloadsDirectoryIfNeeded() {
@@ -157,7 +158,7 @@ class DownloadManager {
              try FileManager.default.moveItem(at: location, to: newPath)
              download.location = newPath
          } catch {
-             os_log("Error moving file to downloads directory: %s", type: .debug, error.localizedDescription)
+             Logger.general.error("Error moving file to downloads directory: \(error.localizedDescription, privacy: .public)")
          }
     }
     

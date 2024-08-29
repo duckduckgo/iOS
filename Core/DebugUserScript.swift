@@ -20,6 +20,7 @@
 import Common
 import WebKit
 import UserScript
+import os.log
 
 public class DebugUserScript: NSObject, UserScript {
 
@@ -56,7 +57,7 @@ public class DebugUserScript: NSObject, UserScript {
     }
 
     private func handleLog(message: WKScriptMessage) {
-        os_log("%s", log: .generalLog, type: .debug, String(describing: message.body))
+        Logger.general.debug("\(String(describing: message.body))")
     }
 
     private func handleSignpost(message: WKScriptMessage) {

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/duckplayer/onboarding",
-        "revision" : "f46f2d9778e8993ae3d5846dc0f50cd81afa9c98"
+        "revision" : "65bfdadf4150e89f8bac3a53fe949fad711649cb",
+        "version" : "189.1.0"
       }
     },
     {

@@ -413,7 +413,6 @@ extension Pixel {
         case networkProtectionFailedToLoadFromPreferences
         case networkProtectionFailedToSaveToPreferences
         case networkProtectionActivationRequestFailed
-        case networkProtectionFailedToStartTunnel
         
         case networkProtectionDisconnected
         
@@ -688,6 +687,7 @@ extension Pixel {
         case privacyProSubscriptionManagementRemoval
         case privacyProTransactionProgressNotHiddenAfter60s
         case privacyProSuccessfulSubscriptionAttribution
+        case privacyProKeychainAccessError
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -1186,7 +1186,6 @@ extension Pixel.Event {
         case .networkProtectionFailedToLoadFromPreferences: return "m_netp_network_extension_error_failed_to_load_from_preferences"
         case .networkProtectionFailedToSaveToPreferences: return "m_netp_network_extension_error_failed_to_save_to_preferences"
         case .networkProtectionActivationRequestFailed: return "m_netp_network_extension_error_activation_request_failed"
-        case .networkProtectionFailedToStartTunnel: return "m_netp_failed_to_start_tunnel"
         case .networkProtectionDisconnected: return "m_netp_vpn_disconnect"
         case .networkProtectionNoAccessTokenFoundError: return "m_netp_no_access_token_found_error"
         case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
@@ -1466,6 +1465,7 @@ extension Pixel.Event {
         case .privacyProSubscriptionManagementRemoval: return "m_privacy-pro_settings_remove-from-device_click"
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
         case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
+        case .privacyProKeychainAccessError: return "m_privacy-pro_keychain_access_error"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"

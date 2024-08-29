@@ -54,7 +54,7 @@ final class SpecialErrorPageTests: XCTestCase {
         let featureFlagger = MockFeatureFlagger()
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         sut = .fake(customWebView: { [weak self] configuration in
-            guard let self else { fatalError("") }
+            guard let self else { fatalError("It has to exist") }
             self.webView = MockSpecialErrorWebView(frame: CGRect(), configuration: configuration)
             return self.webView
         }, featureFlagger: featureFlagger)

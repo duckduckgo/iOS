@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/netp/geolocation-issues",
-        "revision" : "dd663b3f3716c0dc43e19f5043742ac122772f7b"
+        "revision" : "1ee09794449969fe1f6bc73a43199ef711fb7c44",
+        "version" : "189.0.0"
       }
     },
     {

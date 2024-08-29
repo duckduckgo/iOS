@@ -285,6 +285,30 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     @MainActor
+    func testHandleNavigationWithDuckPlayerDisabledRedirectsToYoutube() {
+        
+        let link = URL(string: "duck://player/12345")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link))
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .disabled
+        let player = MockDuckPlayer(settings: playerSettings)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Youtube URL request")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            
+            XCTAssertEqual(self.webView.url?.absoluteString, "https://m.youtube.com/watch?v=12345")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    
+    }
+    
+    @MainActor
     func testHandleReloadForDuckPlayerVideo() {
         let duckPlayerURL = URL(string: "https://www.youtube-nocookie.com/embed/abc123?t=10s")!
                 

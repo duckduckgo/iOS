@@ -39,7 +39,6 @@ class UserAuthenticator {
     private var context = LAContext()
     private var reason: String
     @Published private(set) var state = AuthenticationState.loggedOut
-    private var authenticationCallTimestamps: [Date] = []
 
     init(reason: String) {
         self.reason = reason
@@ -79,8 +78,6 @@ class UserAuthenticator {
                         completion?(.failedToAuthenticate)
                     }
                 }
-                
-                self?.monitorAuthenticationCalls()
             }
         } else {
             state = .notAvailable
@@ -92,14 +89,4 @@ class UserAuthenticator {
         context.invalidate()
     }
 
-    func monitorAuthenticationCalls() {
-        authenticationCallTimestamps.append(Date())
-
-        // we only care about timestamps from the last 10 seconds
-        authenticationCallTimestamps = authenticationCallTimestamps.filter { Date().timeIntervalSince($0) <= 10 }
-
-        if authenticationCallTimestamps.count > 2 {
-            DailyPixel.fire(pixel: .autofillMultipleAuthCallsTriggered)
-        }
-    }
 }

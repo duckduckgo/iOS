@@ -292,7 +292,6 @@ extension Pixel {
         case autofillManagementSaveLogin
         case autofillManagementUpdateLogin
 
-        case autofillMultipleAuthCallsTriggered
         case autofillLoginsReportFailure
         case autofillLoginsReportAvailable
         case autofillLoginsReportConfirmationPromptDisplayed
@@ -1076,7 +1075,6 @@ extension Pixel.Event {
         case .autofillManagementUpdateLogin:
             return "m_autofill_management_update_login"
 
-        case .autofillMultipleAuthCallsTriggered: return "m_autofill_multiple_auth_calls_triggered"
         case .autofillLoginsReportFailure: return "autofill_logins_report_failure"
         case .autofillLoginsReportAvailable: return "autofill_logins_report_available"
         case .autofillLoginsReportConfirmationPromptDisplayed: return "autofill_logins_report_confirmation_prompt_displayed"

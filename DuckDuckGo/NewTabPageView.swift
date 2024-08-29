@@ -118,11 +118,17 @@ private extension NewTabPageView {
                 }
                 .padding(Metrics.largePadding)
                 .anchorPreference(key: CustomizeButtonPrefKey.self, value: .bounds, transform: { vStackBoundsAnchor in
-                    let verticalRoomForButton = Metrics.customizeButtonHeight + Metrics.sectionSpacing + Metrics.largePadding
-                    let contentSizeAdjustmentValue = customizeButtonShowedInline ? -verticalRoomForButton : 0
-                    let adjustedContentSize = proxy[vStackBoundsAnchor].height + contentSizeAdjustmentValue
+                    let buttonSizeWithPadding = Metrics.customizeButtonHeight + Metrics.sectionSpacing + Metrics.largePadding
 
-                    return proxy.size.height < adjustedContentSize
+                    let buttonVSpaceRequired = !customizeButtonShowedInline ? buttonSizeWithPadding : 0
+
+                    let availableVerticalSpace = proxy.size.height
+                    let currentStackHeight = proxy[vStackBoundsAnchor].height
+
+                    let buttonHasRoomInViewport = availableVerticalSpace >= currentStackHeight + buttonVSpaceRequired
+
+                    // If there's no room, show the button inside the stack view, after sections
+                    return !buttonHasRoomInViewport
                 })
                 .onPreferenceChange(CustomizeButtonPrefKey.self, perform: { value in
                     customizeButtonShowedInline = isAnySectionEnabled ? value : false

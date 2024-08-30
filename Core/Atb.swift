@@ -21,8 +21,14 @@ import Foundation
 
 public struct Atb: Decodable, Equatable {
 
+    /// Format is v&lt;week&gt;-&lt;day&gt;
+    /// * day is `1...7` with 1 being Wednesday
+    /// * note that week is NOT padded but ATBs older than week 100 should never be seen by the apps, ie no one has this installed before Feb 2018 and week 99 is Jan 2018
+    /// * ATBs > 999 would be about 10 years in the future (Apr 2035), we can fix it nearer the time
     static let template = "v100-1"
-    static let templateWithVariant = "v100-1xx"
+
+    /// Same as `template` two characters on the end, e.g. `ma`
+    static let templateWithVariant = template + "xx"
 
     let version: String
     let updateVersion: String?
@@ -83,6 +89,10 @@ public struct Atb: Decodable, Equatable {
                   let week = Int(version.substring(1...3)),
                   let day = Int(version.substring(5...5)),
                   (1...7).contains(day) else {
+
+                if !ProcessInfo().arguments.contains("testing") {
+                    assertionFailure("bad atb")
+                }
                 return nil
             }
 
@@ -95,10 +105,8 @@ public struct Atb: Decodable, Equatable {
 
 extension Atb {
 
-    var droppingVariant: String? {
-        let minSize = Atb.template.count
-        guard version.count >= minSize else { return nil }
-        return String(version.prefix(minSize))
+    var droppingVariant: String {
+        return String(version.prefix(Atb.template.count))
     }
 
 }

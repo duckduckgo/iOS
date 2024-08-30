@@ -24,6 +24,16 @@ import Common
 
 class AtbTests: XCTestCase {
 
+    func testEquality() {
+        XCTAssertEqual(Atb(version: "", updateVersion: nil), Atb(version: "", updateVersion: nil))
+        XCTAssertEqual(Atb(version: "v100-1", updateVersion: nil), Atb(version: "v100-1", updateVersion: nil))
+        XCTAssertEqual(Atb(version: "v100-1ru", updateVersion: nil), Atb(version: "v100-1", updateVersion: nil))
+
+        XCTAssertNotEqual(Atb(version: "v100-2", updateVersion: nil), Atb(version: "v100-1", updateVersion: nil))
+        XCTAssertNotEqual(Atb(version: "v203-1", updateVersion: nil), Atb(version: "v100-1", updateVersion: nil))
+        XCTAssertNotEqual(Atb(version: "v203-1", updateVersion: nil), Atb(version: "v100-1ru", updateVersion: nil))
+    }
+
     func testAgeInDays() {
         XCTAssertEqual(Atb(version: "", updateVersion: nil).ageInDays, -1)
         XCTAssertEqual(Atb(version: "v000-0", updateVersion: nil).ageInDays, -1)

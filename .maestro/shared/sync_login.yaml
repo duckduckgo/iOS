@@ -6,6 +6,11 @@ appId: com.duckduckgo.mobile.ios
 - inputText: "0000"
 - pressKey: Enter
 - assertVisible: Scan QR Code
+- runFlow:
+    when:
+      visible: "Don't Allow"
+    commands:
+        - tapOn: "Ok"
 - tapOn: Manually Enter Code
 - tapOn: Paste
 - assertVisible: Save Recovery Code

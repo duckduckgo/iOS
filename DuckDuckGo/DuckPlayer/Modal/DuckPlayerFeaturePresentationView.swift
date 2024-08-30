@@ -35,7 +35,7 @@ struct DuckPlayerFeaturePresentationView: View {
             VStack(alignment: .center, spacing: stackVerticalSpacing) {
                 animation
                 
-                Text(context == .SERP 
+                Text(context == .SERP
                      ? UserText.duckPlayerPresentationModalTitle
                      : UserText.duckPlayerPresentationModalTitleYouTube)
                     .daxTitle2()

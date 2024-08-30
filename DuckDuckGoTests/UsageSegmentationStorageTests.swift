@@ -21,15 +21,23 @@ import Foundation
 import XCTest
 @testable import Core
 @testable import TestUtils
+@testable import Persistence
 
 class UsageSegmentationStorageTests: XCTestCase {
 
-    let keyValueStore = MockKeyValueStore()
+    func testWithKeyValueStoring() {
+        assertStorage(MockKeyValueStore())
+    }
 
-    func test() {
+    func testWithActualUserDefaults() {
+        let defaults = UserDefaults(suiteName: "test")
+        defaults?.removeSuite(named: "test")
+        assertStorage(defaults!)
+    }
 
+    func assertStorage(_ store: KeyValueStoring) {
         // Initial state
-        let storage = UsageSegmentationStorage(keyValueStore: keyValueStore)
+        let storage = UsageSegmentationStorage(keyValueStore: store)
         XCTAssertEqual(storage.atbs, [])
 
         // Save some data and get it back from same instance
@@ -38,12 +46,13 @@ class UsageSegmentationStorageTests: XCTestCase {
         XCTAssertEqual(storage.atbs, [testAtb1])
 
         // Get it back from a different instance
-        let newStorage = UsageSegmentationStorage(keyValueStore: keyValueStore)
+        let newStorage = UsageSegmentationStorage(keyValueStore: store)
         XCTAssertEqual(newStorage.atbs, [testAtb1])
 
         // Check we use underlying storage by saving on one instance and getting back on the other
         storage.atbs = []
         XCTAssertEqual(newStorage.atbs, [])
+
     }
 
 }

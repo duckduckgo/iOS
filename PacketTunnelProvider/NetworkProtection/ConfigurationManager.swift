@@ -24,7 +24,6 @@ import BrowserServicesKit
 import Common
 import Configuration
 import Persistence
-import PixelKit
 
 final class ConfigurationManager: DefaultConfigurationManager {
 

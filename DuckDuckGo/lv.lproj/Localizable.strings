@@ -1151,9 +1151,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Noņemt";
 
-/* No comment provided by engineer. */
-"Favorites" = "Izlase";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Visu ierīču izlase";
 
@@ -1165,9 +1162,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Tikai mobilā izlase";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklāmu un uznirstošo logu bloķēšana";
@@ -1473,9 +1467,6 @@
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1709,11 +1700,20 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Izlase";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tava jaunas cilnes lapa ir... atjaunota!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Izlase";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "SAĪSNES";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Rādīt, paslēpt un pārkārtot sadaļas jaunās cilnes lapā";
@@ -1905,9 +1905,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Vai atvērt citā lietotnē?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Meklē vai ievadi adresi";

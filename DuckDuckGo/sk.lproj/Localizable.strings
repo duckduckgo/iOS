@@ -1151,9 +1151,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Odstrániť";
 
-/* No comment provided by engineer. */
-"Favorites" = "Obľúbené položky";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Obľúbené položky zo všetkých zariadení";
 
@@ -1165,9 +1162,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Iba obľúbené mobilné položky";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokovanie reklám a automaticky otváraných okien";
@@ -1473,9 +1467,6 @@
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1709,11 +1700,20 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavenia siete VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Obľúbené položky";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prispôsobenie obľúbených položiek a funkcií. Pre prehľadnosť zmeňte usporiadanie vecí alebo ich skryte.";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Vaša stránka Nová karta je... Nová!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Obľúbené položky";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "SKRATKY";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Zobrazenie, skrytie a zmena poradia častí na novej stránke karty";
@@ -1905,9 +1905,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otvoriť v inej aplikácii?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhľadajte alebo zadajte adresu";

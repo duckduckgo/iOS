@@ -1151,9 +1151,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Ukloni";
 
-/* No comment provided by engineer. */
-"Favorites" = "Omiljeno";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Svi favoriti na uređaju";
 
@@ -1165,9 +1162,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Samo favoriti na mobilnom uređaju";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokiranje oglasa i skočnih prozora";
@@ -1473,9 +1467,6 @@
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1709,11 +1700,20 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN postavke";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Omiljeno";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodi svoje favorite i najdraže značajke. Preuredi stvari ili ih sakrij kako bi sve bilo jasno.";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tvoja stranica nove kartice je... nova!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Omiljeno";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "PREČACI";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Prikaži, sakrij i promijeni redoslijed odjeljaka na stranici nove kartice";
@@ -1905,9 +1905,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otvori u drugoj aplikaciji?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Pretraži ili unesi adresu";

@@ -1151,9 +1151,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Eliminar";
 
-/* No comment provided by engineer. */
-"Favorites" = "Favoritos";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Todos los favoritos del dispositivo";
 
@@ -1165,9 +1162,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Solo favoritos móviles";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Bloquear anuncios y mensajes emergentes";
@@ -1473,9 +1467,6 @@
 "launchscreenWelcomeMessage" = "¡Bienvenido a\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1709,11 +1700,20 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Configuración de VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Favoritos";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personaliza tus favoritos y funciones de acceso. Reordena los elementos o escóndelos para mantener el orden.";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Tu nueva pestaña es... ¡Novedad!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favoritos";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Accesos directos";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Mostrar, ocultar y reordenar las secciones de la página nueva pestaña";
@@ -1905,9 +1905,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "¿Abrir en otra aplicación?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Buscar o introducir dirección";

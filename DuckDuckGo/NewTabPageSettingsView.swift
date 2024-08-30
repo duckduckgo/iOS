@@ -104,11 +104,11 @@ struct NewTabPageSettingsView: View {
         ForEach(sectionsSettingsModel.itemsSettings, id: \.item) { setting in
             switch setting.item {
             case .favorites:
-                NewTabPageSettingsSectionItemView(title: "Favorites",
+                NewTabPageSettingsSectionItemView(title: UserText.newTabPageSettingsSectionNameFavorites,
                                                   iconResource: .favorite24,
                                                   isEnabled: setting.isEnabled)
             case .shortcuts:
-                NewTabPageSettingsSectionItemView(title: "Shortcuts",
+                NewTabPageSettingsSectionItemView(title: UserText.newTabPageSettingsSectionNameShortcuts,
                                                   iconResource: .shortcut24,
                                                   isEnabled: setting.isEnabled)
             }

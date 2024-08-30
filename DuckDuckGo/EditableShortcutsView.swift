@@ -25,7 +25,7 @@ struct EditableShortcutsView: View {
     @ObservedObject private(set) var model: NewTabPageShortcutsSettingsModel
     let geometry: GeometryProxy?
 
-    private let haptics = UIImpactFeedbackGenerator()
+    private let haptics = UISelectionFeedbackGenerator()
 
     var body: some View {
         NewTabPageGridView(geometry: geometry) { _ in
@@ -44,7 +44,7 @@ struct EditableShortcutsView: View {
                     .previewShape()
                     .frame(width: NewTabPageGrid.Item.edgeSize)
             } onMove: { indices, newOffset in
-                haptics.impactOccurred()
+                haptics.selectionChanged()
                 withAnimation {
                     model.moveItems(from: indices, to: newOffset)
                 }

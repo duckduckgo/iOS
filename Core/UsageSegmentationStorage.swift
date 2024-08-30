@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Persistence
 
 protocol UsageSegmentationStoring {
 
@@ -33,24 +34,23 @@ class UsageSegmentationStorage: UsageSegmentationStoring {
 
     var atbs: [Atb] {
         get {
-            let storedAtbs = userDefaults.stringArray(forKey: Keys.atbs) ?? []
+            let storedAtbs: [String] = (keyValueStore.object(forKey: Keys.atbs) as? [String]) ?? []
             return storedAtbs.map {
                 Atb(version: $0, updateVersion: nil)
             }
         }
 
         set {
-            userDefaults.setValue(newValue.map {
+            keyValueStore.set(newValue.map {
                 $0.version
             }, forKey: Keys.atbs)
         }
     }
 
-    let userDefaults: UserDefaults
+    let keyValueStore: KeyValueStoring
 
-    // TODO update this to use KeyValueStoring protocol
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
+    init(keyValueStore: KeyValueStoring = UserDefaults.app) {
+        self.keyValueStore = keyValueStore
     }
 
 }

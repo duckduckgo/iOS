@@ -277,7 +277,7 @@ class OmniBar: UIView {
         }
 
         customIconView.isHidden = true
-        privacyInfoContainer.privacyIcon.isHidden = false
+        privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
     }

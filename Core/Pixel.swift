@@ -141,6 +141,7 @@ public struct PixelParameters {
     public static let adAttributionCountryOrRegion = "country_or_region"
     public static let adAttributionKeywordID = "keyword_id"
     public static let adAttributionAdID = "ad_id"
+    public static let adAttributionToken = "attribution_token"
 
     // Autofill
     public static let countBucket = "count_bucket"

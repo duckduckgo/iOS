@@ -8,7 +8,7 @@ appId: com.duckduckgo.mobile.ios
 - assertVisible: Scan QR Code
 - runFlow:
     when:
-      visible: "Don't Allow"
+      visible: '"DuckDuckGo" Would Like to Acces the Camera'
     commands:
         - tapOn: "Ok"
 - tapOn: Manually Enter Code

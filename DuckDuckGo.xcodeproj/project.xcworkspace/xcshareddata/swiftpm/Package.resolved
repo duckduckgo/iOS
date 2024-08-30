@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "ac53011582abcca4aefd66f15308332273eecb49",
-        "version" : "190.0.0"
+        "branch" : "mariusz/ntp-flag",
+        "revision" : "19d0405c0556fc9be69ae804e92d76d3b275f8ec"
       }
     },
     {

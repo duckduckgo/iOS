@@ -69,7 +69,7 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .history:
             return .remoteReleasable(.feature(.history))
         case .newTabPageSections:
-            return .internalOnly
+            return .remoteDevelopment(.feature(.newTabPageImprovements))
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
         case .sslCertificatesBypass:

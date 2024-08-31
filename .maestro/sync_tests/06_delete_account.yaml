@@ -27,6 +27,11 @@ name: 06_delete_account
 - inputText: "0000"
 - pressKey: Enter
 - assertVisible: Scan QR Code
+- runFlow:
+    when:
+      visible: '"DuckDuckGo" Would Like to Acces the Camera'
+    commands:
+        - tapOn: "Ok"
 - tapOn: Manually Enter Code
 - tapOn: Paste
 - assertVisible: Sync & Backup Error

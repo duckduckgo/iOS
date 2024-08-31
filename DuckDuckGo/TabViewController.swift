@@ -1040,7 +1040,7 @@ class TabViewController: UIViewController {
     private func openExternally(url: URL) {
         self.url = webView.url
         delegate?.tabLoadingStateDidChange(tab: self)
-        UIApplication.shared.open(url, options: [:]) { opened in
+        UIApplication.shared.open(url) { opened in
             if !opened {
                 let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
                 ActionMessageView.present(message: UserText.failedToOpenExternally,

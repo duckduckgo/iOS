@@ -35,7 +35,7 @@ public struct UserText {
     static let recoverSyncedDataLink = NSLocalizedString("recover.synced.data.link", bundle: Bundle.module, value: "Recover Synced Data", comment: "Link label for recovering synced data")
     static let otherOptionsSectionHeader = NSLocalizedString("other.options.section.header", bundle: Bundle.module, value: "Other Options", comment: "Section header for other syncing options")
     // Other Platforms
-    static let syncGetOnOtherDevices = NSLocalizedString("sync.get.other.devices", value: "Get DuckDuckGo on Other Devices", comment: "Button to get DuckDuckGo on other devices")
+    static let syncGetOnOtherDevices = NSLocalizedString("sync.get.other.devices", bundle: Bundle.module, value: "Get DuckDuckGo on Other Devices", comment: "Button to get DuckDuckGo on other devices")
 
     // Sync Enabled View
     // Turn Sync Off
@@ -179,6 +179,6 @@ public struct UserText {
     static let syncGetOtherDevicesTitle = NSLocalizedString("sync.get.other.devices.card.title", bundle: Bundle.module, value: "Get DuckDuckGo on other devices to sync with this one", comment: "Title of card with share links for users to download DuckDuckGo on other devices")
     static let syncGetOtherDevicesMessage = NSLocalizedString("sync.get.other.devices.card.message", bundle: Bundle.module, value: "To download DuckDuckGo on desktop or another mobile device, visit:", comment: "Message before share link for downloading DuckDuckGo on other devices")
     static let syncGetOtherDevicesButtonTitle = NSLocalizedString("sync.get.other.devices.card.button.title", bundle: Bundle.module, value: "Share Download Link", comment: "Button title to share link for downloading DuckDuckGo on other devices")
-    static let syncGetOtherDeviceShareLinkMessage = NSLocalizedString("sync.get.other.devices.share.link.message", value: "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:", comment: "Message included when sharing a url via the system share sheet")
+    static let syncGetOtherDeviceShareLinkMessage = NSLocalizedString("sync.get.other.devices.share.link.message", bundle: Bundle.module, value: "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:", comment: "Message included when sharing a url via the system share sheet")
 
 }

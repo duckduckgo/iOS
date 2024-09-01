@@ -1,8 +1,8 @@
 //
-//  Configuration.swift
+//  URLCredentialCreator.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@
 //
 
 import Foundation
-import Configuration
 
-public extension Configuration {
+protocol URLCredentialCreating {
 
-    var storeKey: String {
-        switch self {
-        case .bloomFilterBinary: return "httpsBloomFilter"
-        case .bloomFilterSpec: return "httpsBloomFilterSpec"
-        case .bloomFilterExcludedDomains: return "httpsExcludedDomains"
-        case .privacyConfiguration: return "privacyConfiguration"
-        case .surrogates: return "surrogates"
-        case .trackerDataSet: return "trackerDataSet"
-        case .remoteMessagingConfig: return "remoteMessagingConfig"
+    func urlCredentialFrom(trust: SecTrust?) -> URLCredential?
+
+}
+
+struct URLCredentialCreator: URLCredentialCreating {
+
+    func urlCredentialFrom(trust: SecTrust?) -> URLCredential? {
+        if let trust {
+            return URLCredential(trust: trust)
         }
+        return nil
     }
 
 }

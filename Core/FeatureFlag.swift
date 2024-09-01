@@ -36,6 +36,7 @@ public enum FeatureFlag: String {
     case history
     case newTabPageSections
     case duckPlayer
+    case sslCertificatesBypass
     case syncPromotionBookmarks
     case syncPromotionPasswords
 }
@@ -73,6 +74,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
+        case .sslCertificatesBypass:
+            return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
         case .syncPromotionBookmarks:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
         case .syncPromotionPasswords:

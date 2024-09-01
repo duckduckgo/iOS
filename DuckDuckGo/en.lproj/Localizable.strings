@@ -1011,7 +1011,10 @@
 "duckplayer.presentation.modal.dismiss-button" = "Got it!";
 
 /* Two line title (separated by \n) for the feature explanation */
-"duckplayer.presentation.modal.title" = "Drowning in ads on YouTube? Not with Duck Player!";
+"duckplayer.presentation.modal.title" = "Drowning in ads on YouTube? Try Duck Player!";
+
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "Drowning in ads on YouTube? Not with Duck Player!";
 
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.";

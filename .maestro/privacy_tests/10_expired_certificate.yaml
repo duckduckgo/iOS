@@ -1,0 +1,37 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - privacy
+
+---
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+- assertVisible:
+    id: "searchEntry"
+
+# Test 1 - Leave the dangerous site
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://expired.badssl.com"
+- pressKey: Enter
+- assertVisible: "Warning: This site may be insecure"
+- assertNotVisible: 
+    id: "LogoIcon"
+- tapOn: "Leave This Site"
+- assertNotVisible: "Warning: This site may be insecure"
+
+# Test 2 - Visit the dangerous site
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://expired.badssl.com"
+- pressKey: Enter
+- tapOn: "Advanced"
+- scroll
+- tapOn: "Accept Risk and Visit Site"
+- assertVisible: 
+    id: "LogoIcon"
+- assertVisible: "expired.badssl.com"
+
+

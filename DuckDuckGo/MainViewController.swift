@@ -832,13 +832,43 @@ class MainViewController: UIViewController {
         newTabPageViewController = nil
     }
 
+    class SwipeToBurnController: UIHostingController<SwipeToBurnView> {
+
+        let confirmAction: () -> Void
+
+        init(confirmAction: @escaping () -> Void) {
+            self.confirmAction = confirmAction
+            super.init(rootView: SwipeToBurnView(confirm: confirmAction))
+        }
+        
+        @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+    }
+
     @IBAction func onFirePressed() {
 
         func showClearDataAlert() {
-            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            //            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+            //                self?.forgetAllWithAnimation {}
+            //            })
+            //            self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
+
+            let controller = SwipeToBurnController { [weak self] in
                 self?.forgetAllWithAnimation {}
-            })
-            self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
+            }
+
+            if let presentationController = controller.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in 100 })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+
+            self.present(controller: controller, fromView: self.viewCoordinator.toolbar)
+
         }
 
         Pixel.fire(pixel: .forgetAllPressedBrowsing)

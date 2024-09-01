@@ -56,7 +56,12 @@ public struct DeviceConnectedView: View {
                     presentation.wrappedValue.dismiss()
                     model.showOtherPlatformsPressed()
                 } label: {
-                    Text(UserText.deviceSyncedSheetGetOnOtherDevicesButton)
+                    VStack {
+                        Text(UserText.deviceSyncedSheetGetOnOtherDevicesButton)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 .buttonStyle(GhostButtonStyle())
             }

@@ -26,18 +26,6 @@ import PrivacyDashboard
 import Common
 import os.log
 
-extension PixelExperiment {
-
-    static var privacyDashboardVariant: PrivacyDashboardVariant {
-        switch Self.cohort {
-        case .breakageSiteReportingFlowA: return .a
-        case .breakageSiteReportingFlowB: return .b
-        default: return .control
-        }
-    }
-
-}
-
 protocol PrivacyDashboardViewControllerDelegate: AnyObject {
 
     func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController,
@@ -102,7 +90,7 @@ final class PrivacyDashboardViewController: UIViewController {
 
         var variant: PrivacyDashboardVariant {
             let isExperimentEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment)
-            return isExperimentEnabled ? PixelExperiment.privacyDashboardVariant : PrivacyDashboardVariant.control
+            return PrivacyDashboardVariant.control
         }
 
         let toggleReportingConfiguration = ToggleReportingConfiguration(privacyConfigurationManager: privacyConfigurationManager)

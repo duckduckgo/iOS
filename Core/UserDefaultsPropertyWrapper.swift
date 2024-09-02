@@ -171,6 +171,12 @@ public struct UserDefaultsWrapper<T> {
         // Debug keys
 
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
+        
+        // Duck Player Pixel Experiment
+        case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed"
+        case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort"
+        case duckPlayerPixelExperimentEnrollmentDate = "com.duckduckgo.ios.duckplayer.pixel.experiment.enrollment.date"
+        
     }
 
     private let key: Key

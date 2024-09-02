@@ -803,6 +803,13 @@ extension Pixel {
         case pproFeedbackSubcategoryScreenShow(source: String, reportType: String, category: String)
         case pproFeedbackSubmitScreenShow(source: String, reportType: String, category: String, subcategory: String)
         case pproFeedbackSubmitScreenFAQClick(source: String, reportType: String, category: String, subcategory: String)
+        
+        // MARK: DuckPlayer Pixel Experiment
+        case duckplayerExperimentCohortAssign(variant: String, enrollment: Int)
+        case duckplayerExperimentSearch(variant: String, day: Int, enrollment: Int)
+        case duckplayerExperimentDailySearch(variant: String, day: Int, enrollment: Int)
+        case duckplayerExperimentWeeklySearch(variant: String, week: Int, enrollment: Int)
+        case duckplayerExperimentYoutubePageView(variant: String, state: String, referrer: String, enrollment: Int)
     }
 
 }
@@ -1600,6 +1607,14 @@ extension Pixel.Event {
         case .pproFeedbackSubcategoryScreenShow: return "m_ppro_feedback_subcategory-screen_show"
         case .pproFeedbackSubmitScreenShow: return "m_ppro_feedback_submit-screen_show"
         case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
+            
+        // MARK: Duckplayer experiment
+        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign"
+        case .duckplayerExperimentSearch: return "duckplayer_experiment_search"
+        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search"
+        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search"
+        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view"
+            
         }
     }
 }

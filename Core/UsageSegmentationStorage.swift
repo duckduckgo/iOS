@@ -22,19 +22,21 @@ import Persistence
 
 protocol UsageSegmentationStoring {
 
-    var atbs: [Atb] { get set }
+    var searchAtbs: [Atb] { get set }
+    var appUseAtbs: [Atb] { get set }
 
 }
 
 class UsageSegmentationStorage: UsageSegmentationStoring {
 
     enum Keys {
-        static let atbs = "usageSegmentation.keys"
+        static let search = "usageSegmentation.atbs.search"
+        static let appUse = "usageSegmentation.atbs.appUse"
     }
 
-    var atbs: [Atb] {
+    var searchAtbs: [Atb] {
         get {
-            let storedAtbs: [String] = (keyValueStore.object(forKey: Keys.atbs) as? [String]) ?? []
+            let storedAtbs: [String] = (keyValueStore.object(forKey: Keys.search) as? [String]) ?? []
             return storedAtbs.map {
                 Atb(version: $0, updateVersion: nil)
             }
@@ -43,7 +45,22 @@ class UsageSegmentationStorage: UsageSegmentationStoring {
         set {
             keyValueStore.set(newValue.map {
                 $0.version
-            }, forKey: Keys.atbs)
+            }, forKey: Keys.search)
+        }
+    }
+
+    var appUseAtbs: [Atb] {
+        get {
+            let storedAtbs: [String] = (keyValueStore.object(forKey: Keys.appUse) as? [String]) ?? []
+            return storedAtbs.map {
+                Atb(version: $0, updateVersion: nil)
+            }
+        }
+
+        set {
+            keyValueStore.set(newValue.map {
+                $0.version
+            }, forKey: Keys.appUse)
         }
     }
 

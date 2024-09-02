@@ -24,11 +24,42 @@ import XCTest
 class UsageSegmentationTests: XCTestCase {
 
     var defaultCalculatorResult: [String: String]? = [:]
-    var atbs: [Atb] = []
+    var searchAtbs: [Atb] = []
+    var appUseAtbs: [Atb] = []
 
     override func tearDown() {
         super.tearDown()
         PixelFiringMock.tearDown()
+    }
+
+    func testWhenActivitiesOccur_ThenAtbsStoredAccordingToType() {
+
+        let sut = makeSubject()
+        let installAtb = Atb(version: "v100-1", updateVersion: nil)
+        let todayAtb = Atb(version: "v100-2", updateVersion: nil)
+
+        // Installation, just the install atb gets added, calcluator does not get used
+        sut.processATB(installAtb, withInstallAtb: installAtb, andActivityType: .appUse)
+
+        XCTAssertEqual([installAtb], appUseAtbs)
+        XCTAssertEqual([], searchAtbs)
+
+        // App use on the next day
+        sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .appUse)
+        XCTAssertEqual([installAtb, todayAtb], appUseAtbs)
+        XCTAssertEqual([], searchAtbs)
+        XCTAssertNotNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+
+        // Then a search
+        sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .search)
+        XCTAssertEqual([installAtb, todayAtb], appUseAtbs)
+        XCTAssertEqual([installAtb, todayAtb], searchAtbs)
+        XCTAssertNotNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
+
+        // Then another search shouldn't change anything else
+        sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .search)
+        XCTAssertEqual([installAtb, todayAtb], appUseAtbs)
+        XCTAssertEqual([installAtb, todayAtb], searchAtbs)
     }
 
     /// Activity type is not relevant here, that's tested elsewhere.
@@ -42,7 +73,7 @@ class UsageSegmentationTests: XCTestCase {
         let atb = Atb(version: "v100-2", updateVersion: nil)
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: .search)
 
-        XCTAssertEqual(atbs, [installAtb, atb])
+        XCTAssertEqual(searchAtbs, [installAtb, atb])
         XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel)
 
     }
@@ -91,7 +122,7 @@ class UsageSegmentationTests: XCTestCase {
         let atb = Atb(version: atb, updateVersion: nil)
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [installAtb])
+        XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb])
         XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
@@ -102,7 +133,7 @@ class UsageSegmentationTests: XCTestCase {
         let atb = Atb(version: "v100-2", updateVersion: nil)
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [installAtb, atb], file: file, line: line)
+        XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb, atb], file: file, line: line)
         XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 
@@ -111,10 +142,16 @@ class UsageSegmentationTests: XCTestCase {
 
         let installAtb = Atb(version: "v100-1", updateVersion: nil)
         let atb = Atb(version: "v100-2", updateVersion: nil)
-        self.atbs = [installAtb, atb]
+
+        if activityType == .appUse {
+            self.appUseAtbs = [installAtb, atb]
+        } else {
+            self.searchAtbs = [installAtb, atb]
+        }
+
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
-        XCTAssertEqual(atbs, [installAtb, atb], file: file, line: line)
+        XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb, atb], file: file, line: line)
         XCTAssertNil(PixelFiringMock.lastDailyPixelInfo?.pixel, file: file, line: line)
     }
 

@@ -38,21 +38,30 @@ class UsageSegmentationStorageTests: XCTestCase {
     func assertStorage(_ store: KeyValueStoring) {
         // Initial state
         let storage = UsageSegmentationStorage(keyValueStore: store)
-        XCTAssertEqual(storage.atbs, [])
+        XCTAssertEqual(storage.searchAtbs, [])
+        XCTAssertEqual(storage.appUseAtbs, [])
 
         // Save some data and get it back from same instance
         let testAtb1 = Atb(version: "test1", updateVersion: nil)
-        storage.atbs = [testAtb1]
-        XCTAssertEqual(storage.atbs, [testAtb1])
+        let testAtb2 = Atb(version: "test2", updateVersion: nil)
+
+        storage.searchAtbs = [testAtb1]
+        XCTAssertEqual(storage.searchAtbs, [testAtb1])
+
+        storage.appUseAtbs = [testAtb2]
+        XCTAssertEqual(storage.appUseAtbs, [testAtb2])
 
         // Get it back from a different instance
         let newStorage = UsageSegmentationStorage(keyValueStore: store)
-        XCTAssertEqual(newStorage.atbs, [testAtb1])
+        XCTAssertEqual(newStorage.searchAtbs, [testAtb1])
+        XCTAssertEqual(newStorage.appUseAtbs, [testAtb2])
 
         // Check we use underlying storage by saving on one instance and getting back on the other
-        storage.atbs = []
-        XCTAssertEqual(newStorage.atbs, [])
+        storage.searchAtbs = []
+        XCTAssertEqual(newStorage.searchAtbs, [])
 
+        storage.appUseAtbs = []
+        XCTAssertEqual(newStorage.appUseAtbs, [])
     }
 
 }

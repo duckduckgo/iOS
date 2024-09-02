@@ -47,29 +47,53 @@ class UsageSegmentation: UsageSegmenting {
     }
 
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
+        var atbs = activityType.atbsFromStorage(storage)
 
-        guard !storage.atbs.reversed().contains(where: { $0 == atb }) else {
-            return
+        // Fail fast by looking at the end of the list
+        guard !atbs.reversed().contains(where: { $0 == atb }) else { return }
+
+        defer {
+            activityType.updateStorage(storage, withAtbs: atbs)
         }
 
-        var storage = storage
-        if storage.atbs.isEmpty {
-            storage.atbs.append(installAtb)
+        if atbs.isEmpty {
+           atbs.append(installAtb)
         }
 
         if installAtb != atb {
-            storage.atbs.append(atb)
+           atbs.append(atb)
         }
 
         var pixelInfo: [String: String]?
         let calculator = calculatorFactory.make(installAtb: installAtb)
         
-        for atb in storage.atbs {
+        for atb in atbs {
             pixelInfo = calculator.processAtb(atb, forActivityType: activityType)
         }
 
         if let pixelInfo {
             pixelFiring.fireDaily(.usageSegments, withAdditionalParameters: pixelInfo)
+        }
+    }
+
+}
+
+private extension UsageActivityType {
+
+    func atbsFromStorage(_ storage: UsageSegmentationStoring) -> [Atb] {
+        switch self {
+        case .appUse: return storage.appUseAtbs
+        case .search: return storage.searchAtbs
+        }
+    }
+
+    func updateStorage(_ storage: UsageSegmentationStoring, withAtbs atbs: [Atb]) {
+        var storage = storage
+        switch self {
+        case .appUse:
+            storage.appUseAtbs = atbs
+        case .search:
+            storage.searchAtbs = atbs
         }
     }
 

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/set-vpn-user-agent",
-        "revision" : "4d3e43bcd624c0c9f4ac6ffdee5af170ad61dcc0"
+        "revision" : "07989cdb77b49984167a2e5080a22d02ac438066"
       }
     },
     {

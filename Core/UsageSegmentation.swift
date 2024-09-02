@@ -34,11 +34,11 @@ protocol UsageSegmenting {
 
 class UsageSegmentation: UsageSegmenting {
 
-    private let pixelFiring: DailyPixelFiring.Type
+    private let pixelFiring: PixelFiring.Type
     private let storage: UsageSegmentationStoring
     private let calculatorFactory: UsageSegmentationCalculatorMaking
 
-    init(pixelFiring: DailyPixelFiring.Type = DailyPixel.self,
+    init(pixelFiring: PixelFiring.Type = Pixel.self,
          storage: UsageSegmentationStoring = UsageSegmentationStorage(),
          calculatorFactory: UsageSegmentationCalculatorMaking = DefaultCalculatorFactory()) {
         self.pixelFiring = pixelFiring
@@ -72,7 +72,7 @@ class UsageSegmentation: UsageSegmenting {
         }
 
         if let pixelInfo {
-            pixelFiring.fireDaily(.usageSegments, withAdditionalParameters: pixelInfo)
+            pixelFiring.fire(.usageSegments, withAdditionalParameters: pixelInfo)
         }
     }
 

@@ -54,7 +54,7 @@ protocol ContextualOnboardingLogic {
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
-        currentMainRules?.trackerData.findEntity(forHost: host)
+        currentMainRules?.trackerData.findParentEntityOrFallback(forHost: host)
     }
     
 }

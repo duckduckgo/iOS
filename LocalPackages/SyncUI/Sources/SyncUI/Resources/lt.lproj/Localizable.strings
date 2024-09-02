@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sinchronizuokite ir sukurkite atsarginę šio įrenginio kopiją";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopijuoti";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Kūrėjo aplinka";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Atsisiųskite „DuckDuckGo“ į kitus įrenginius";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Jūsų duomenys sinchronizuoti!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinchronizuokite ir sukurkite atsarginę šio įrenginio kopiją";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Atsisiųskite „DuckDuckGo“ į kitus įrenginius";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Bendrinti atsisiuntimo nuorodą";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Norėdami atsisiųsti „DuckDuckGo“ į kompiuterį arba kitą mobilųjį įrenginį, apsilankykite:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Atsisiųskite „DuckDuckGo“ į kitus įrenginius, kad sinchronizuotumėte su šiuo įrenginiu";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Atsisiųskite „DuckDuckGo“";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Įdiekite „DuckDuckGo“ naršyklę savo įrenginiuose ir pradėkite saugiai sinchronizuoti žymes ir slaptažodžius:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Nustatymai > Sinchronizavimas ir atsarginė kopijos kūrimas > Sinchronizuoti su kitu įrenginiu";

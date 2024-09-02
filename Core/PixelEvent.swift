@@ -1587,7 +1587,7 @@ extension Pixel.Event {
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
 
         // MARK: Enhanced statistics
-        case .usageSegments: return "m_retention_segments_d"
+        case .usageSegments: return "m_retention_segments"
 
         // MARK: Certificate warnings
         case .certificateWarningDisplayed(let errorType):

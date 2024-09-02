@@ -417,7 +417,7 @@
 		85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */; };
 		8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8521FDE4238D411400A44CC3 /* FileStoreTests.swift */; };
 		8524092D2C77EF7A00CB28FC /* mobile_segments_test_cases.json in Resources */ = {isa = PBXBuildFile; fileRef = 8524092C2C77EF7A00CB28FC /* mobile_segments_test_cases.json */; };
-		8524092F2C78024900CB28FC /* UserSegmentationCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524092E2C78024900CB28FC /* UserSegmentationCalculationTests.swift */; };
+		8524092F2C78024900CB28FC /* UsageSegmentationCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524092E2C78024900CB28FC /* UsageSegmentationCalculationTests.swift */; };
 		852409312C78030D00CB28FC /* MockUsageSegmentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852409302C78030D00CB28FC /* MockUsageSegmentation.swift */; };
 		8524AAAC2A3888FE00EEC6D2 /* Waitlist.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8524AAAB2A3888FE00EEC6D2 /* Waitlist.xcassets */; };
 		8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */; };
@@ -1670,7 +1670,7 @@
 		85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGPersistenceContainer.swift; sourceTree = "<group>"; };
 		8521FDE4238D411400A44CC3 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
 		8524092C2C77EF7A00CB28FC /* mobile_segments_test_cases.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mobile_segments_test_cases.json; sourceTree = "<group>"; };
-		8524092E2C78024900CB28FC /* UserSegmentationCalculationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSegmentationCalculationTests.swift; sourceTree = "<group>"; };
+		8524092E2C78024900CB28FC /* UsageSegmentationCalculationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageSegmentationCalculationTests.swift; sourceTree = "<group>"; };
 		852409302C78030D00CB28FC /* MockUsageSegmentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUsageSegmentation.swift; sourceTree = "<group>"; };
 		8524AAAB2A3888FE00EEC6D2 /* Waitlist.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Waitlist.xcassets; sourceTree = "<group>"; };
 		8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogViewController.swift; sourceTree = "<group>"; };
@@ -5451,7 +5451,7 @@
 				83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */,
 				F1134ED31F40F12B00B73467 /* Store */,
 				85E065BD2C73AD7F00D73E2A /* UsageSegmentationTests.swift */,
-				8524092E2C78024900CB28FC /* UserSegmentationCalculationTests.swift */,
+				8524092E2C78024900CB28FC /* UsageSegmentationCalculationTests.swift */,
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
 			);
 			name = Statistics;
@@ -7838,7 +7838,7 @@
 				6F03CB022C32ED47004179A8 /* NewTabPageMessagesModelTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
-				8524092F2C78024900CB28FC /* UserSegmentationCalculationTests.swift in Sources */,
+				8524092F2C78024900CB28FC /* UsageSegmentationCalculationTests.swift in Sources */,
 				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,
 				C14882E727F20DAB00D59F0C /* HtmlTestDataLoader.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppURLsTests.swift in Sources */,

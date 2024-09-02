@@ -26,6 +26,7 @@ struct DuckPlayerFeaturePresentationView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var isAnimating: Bool = false
+    @State var context: DuckPlayerModalPresenter.PresentationContext
     var dismisPresentation: (() -> Void)?
 
     var body: some View {
@@ -34,17 +35,20 @@ struct DuckPlayerFeaturePresentationView: View {
             VStack(alignment: .center, spacing: stackVerticalSpacing) {
                 animation
                 
-                Text(UserText.duckPlayerPresentationModalTitle)
+                Text(context == .SERP
+                     ? UserText.duckPlayerPresentationModalTitle
+                     : UserText.duckPlayerPresentationModalTitleYouTube)
                     .daxTitle2()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .minimumScaleFactor(Constants.textMinimumScaleFactor)
-
+                
                 Text(UserText.duckPlayerPresentationModalBody)
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(designSystemColor: .textSecondary))
                     .minimumScaleFactor(Constants.textMinimumScaleFactor)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer()
 
@@ -101,7 +105,6 @@ extension DuckPlayerFeaturePresentationView {
         static let textMinimumScaleFactor: CGFloat = 0.8
         static let horizontalPadding: CGFloat = 30
         static let animationDelay: Double = 2
-
     }
 
     private var isSpaceConstrained: Bool {
@@ -109,22 +112,14 @@ extension DuckPlayerFeaturePresentationView {
     }
 
     private var stackVerticalSpacing: CGFloat {
-        if isSpaceConstrained {
-            return 5
-        } else {
-            return 22
-        }
+        isSpaceConstrained ? 5 : 22
     }
 
     private var contentVerticalPadding: CGFloat {
-        if isSpaceConstrained {
-            return 4
-        } else {
-            return 40
-        }
+        isSpaceConstrained ? 4 : 40
     }
 }
 
 #Preview {
-    DuckPlayerFeaturePresentationView()
+    DuckPlayerFeaturePresentationView(context: .SERP)
 }

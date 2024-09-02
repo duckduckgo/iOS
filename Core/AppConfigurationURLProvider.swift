@@ -31,7 +31,6 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
         case .privacyConfiguration: return URL.privacyConfig
         case .trackerDataSet: return URL.trackerDataSet
         case .surrogates: return URL.surrogates
-        case .FBConfig: fatalError("This feature is not supported on iOS")
         case .remoteMessagingConfig: return RemoteMessagingClient.Constants.endpoint
         }
     }

@@ -22,9 +22,13 @@ import DuckUI
 
 public struct DeviceConnectedView: View {
 
+    var model: SyncSettingsViewModel
+
     @Environment(\.presentationMode) var presentation
 
-    public init() {}
+    public init(model: SyncSettingsViewModel) {
+        self.model = model
+    }
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
@@ -40,12 +44,22 @@ public struct DeviceConnectedView: View {
             .padding(.horizontal, 20)
             .padding(.top, 56)
         } foregroundContent: {
-            Button {
-                presentation.wrappedValue.dismiss()
-            } label: {
-                Text(UserText.doneButton)
+            VStack {
+                Button {
+                    presentation.wrappedValue.dismiss()
+                } label: {
+                    Text(UserText.doneButton)
+                }
+                .buttonStyle(PrimaryButtonStyle())
+
+                Button {
+                    presentation.wrappedValue.dismiss()
+                    model.showOtherPlatformsPressed()
+                } label: {
+                    Text(UserText.deviceSyncedSheetGetOnOtherDevicesButton)
+                }
+                .buttonStyle(GhostButtonStyle())
             }
-            .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
         }

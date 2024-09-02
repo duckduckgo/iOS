@@ -144,7 +144,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                     self.dismissPresentedViewController()
                     self.showPreparingSync()
                     try await self.syncService.createAccount(deviceName: self.deviceName, deviceType: self.deviceType)
-                    Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
+                    let additionalParameters = self.source.map { ["source": $0] } ?? [:]
+                    try await Pixel.fire(pixel: .syncSignupDirect, withAdditionalParameters: additionalParameters, includedParameters: [.appVersion])
                     self.rootView.model.syncEnabled(recoveryCode: self.recoveryCode)
                     self.refreshDevices()
                     self.navigationController?.topViewController?.dismiss(animated: true, completion: self.showRecoveryPDF)
@@ -210,10 +211,36 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
         let controller = UIHostingController(
-            rootView: DeviceConnectedView())
+            rootView: DeviceConnectedView(model: viewModel))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
+        }
+    }
+
+    func showOtherPlatformLinks() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        let controller = UIHostingController(rootView: PlatformLinksView(model: viewModel, source: .activating))
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func fireOtherPlatformLinksPixel(event: SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncSettingsViewModel.PlatformLinksPixelSource) {
+        let params = ["source": source.rawValue]
+
+        switch event {
+        case .appear:
+            Pixel.fire(.syncGetOtherDevices, withAdditionalParameters: params)
+        case .copy:
+            Pixel.fire(.syncGetOtherDevicesCopy, withAdditionalParameters: params)
+        case .share:
+            Pixel.fire(.syncGetOtherDevicesShare, withAdditionalParameters: params)
         }
     }
 

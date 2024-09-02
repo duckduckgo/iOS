@@ -179,7 +179,6 @@ struct CustomConfigurationURLProvider: ConfigurationURLProviding {
     var customPrivacyConfigurationURL: URL?
     var customTrackerDataSetURL: URL?
     var customSurrogatesURL: URL?
-    var customFBConfigURL: URL?
     var customRemoteMessagingConfigURL: URL?
 
     let defaultProvider = AppConfigurationURLProvider()
@@ -194,7 +193,6 @@ struct CustomConfigurationURLProvider: ConfigurationURLProviding {
         case .privacyConfiguration: customURL = customPrivacyConfigurationURL
         case .trackerDataSet: customURL = customTrackerDataSetURL
         case .surrogates: customURL = customSurrogatesURL
-        case .FBConfig: customURL = nil
         case .remoteMessagingConfig: customURL = customRemoteMessagingConfigURL
         }
         return customURL ?? defaultURL

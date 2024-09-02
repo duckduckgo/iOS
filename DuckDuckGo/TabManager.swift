@@ -88,7 +88,8 @@ class TabManager {
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
-                                                              onboardingPixelReporter: onboardingPixelReporter)
+                                                              onboardingPixelReporter: onboardingPixelReporter,
+                                                              featureFlagger: AppDependencyProvider().featureFlagger)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -165,7 +166,8 @@ class TabManager {
                                                               privacyProDataReporter: privacyProDataReporter,
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
-                                                              onboardingPixelReporter: onboardingPixelReporter)
+                                                              onboardingPixelReporter: onboardingPixelReporter,
+                                                              featureFlagger: AppDependencyProvider().featureFlagger)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

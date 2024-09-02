@@ -204,7 +204,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     // MARK: - Error Reporting
 
-    private static func networkProtectionDebugEvents(controllerErrorStore: NetworkProtectionTunnelErrorStore) -> EventMapping<NetworkProtectionError>? {
+    private static func networkProtectionDebugEvents(controllerErrorStore: NetworkProtectionTunnelErrorStore) -> EventMapping<NetworkProtectionError> {
         return EventMapping { event, _, _, _ in
             let pixelEvent: Pixel.Event
             var pixelError: Error?
@@ -301,15 +301,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelError = error
             }
             DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
-        }
-    }
-
-    public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        super.startTunnel(options: options) { error in
-            if error != nil {
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
-            }
-            completionHandler(error)
         }
     }
 

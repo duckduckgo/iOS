@@ -118,9 +118,11 @@ final class MockTabDelegate: TabDelegate {
 extension TabViewController {
 
     static func fake(
+        customWebView: ((WKWebViewConfiguration) -> WKWebView)? = nil,
         contextualOnboardingPresenter: ContextualOnboardingPresenting = ContextualOnboardingPresenterMock(),
         contextualOnboardingLogic: ContextualOnboardingLogic = ContextualOnboardingLogicMock(),
-        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporterMock()
+        contextualOnboardingPixelReporter: OnboardingCustomInteractionPixelReporting = OnboardingPixelReporterMock(),
+        featureFlagger: MockFeatureFlagger = MockFeatureFlagger()
     ) -> TabViewController {
         let tab = TabViewController.loadFromStoryboard(
             model: .init(link: Link(title: nil, url: .ddg)),
@@ -132,9 +134,11 @@ extension TabViewController {
             privacyProDataReporter: MockPrivacyProDataReporter(),
             contextualOnboardingPresenter: contextualOnboardingPresenter,
             contextualOnboardingLogic: contextualOnboardingLogic,
-            onboardingPixelReporter: contextualOnboardingPixelReporter
+            onboardingPixelReporter: contextualOnboardingPixelReporter,
+            urlCredentialCreator: MockCredentialCreator(),
+            featureFlagger: featureFlagger
         )
-        tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false)
+        tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab
     }
 

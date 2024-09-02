@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sinhronizirajte in varnostno kopirajte to napravo";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopiraj";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Razvojno okolje";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Prenesite DuckDuckGo v drugih napravah";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Vaši podatki so sinhronizirani!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinhronizirajte in varnostno kopirajte to napravo";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Prenesite DuckDuckGo v drugih napravah";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Deli povezavo za prenos";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Če želite prenesti DuckDuckGo v namiznem računalniku ali drugi mobilni napravi, obiščite:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Prenesite DuckDuckGo v drugih napravah in ga sinhronizirajte s tem brskalnikom";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Prenos brskalnika DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Namestite brskalnik DuckDuckGo v svojih napravah in začnite varno sinhronizirati zaznamke in gesla:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Nastavitve > Sinhronizacija in varnostno kopiranje > Sinhronizacija z drugo napravo";

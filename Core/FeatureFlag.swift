@@ -37,6 +37,8 @@ public enum FeatureFlag: String {
     case newTabPageSections
     case duckPlayer
     case sslCertificatesBypass
+    case syncPromotionBookmarks
+    case syncPromotionPasswords
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -74,6 +76,10 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.duckPlayer))
         case .sslCertificatesBypass:
             return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
+        case .syncPromotionBookmarks:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
+        case .syncPromotionPasswords:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         }
     }
 }

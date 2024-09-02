@@ -72,6 +72,8 @@ public struct SyncSettingsView: View {
 
                     devices()
 
+                    otherPlatformsLinks(source: .activated)
+
                     options()
 
                     saveRecoveryPDF()
@@ -85,6 +87,8 @@ public struct SyncSettingsView: View {
                     syncWithAnotherDeviceView()
 
                     otherOptions()
+
+                    otherPlatformsLinks(source: .notActivated)
                 }
             }
             .navigationTitle(UserText.syncTitle)

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "mariusz/ntp-flag",
-        "revision" : "19d0405c0556fc9be69ae804e92d76d3b275f8ec"
+        "revision" : "afdab422a36d6ab20ab08a407927f0e50d683ff5",
+        "version" : "191.1.0"
       }
     },
     {
@@ -138,7 +138,7 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
         "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
         "version" : "1.4.0"
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
-        "revision" : "1403e17eeeb8493b92fb9d11eb8c846bb9776581",
-        "version" : "2.1.2"
+        "revision" : "5de0a610a7927b638a5fd463a53032c9934a2c3b",
+        "version" : "3.0.0"
       }
     },
     {

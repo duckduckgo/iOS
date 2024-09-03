@@ -27,7 +27,7 @@ protocol UsageSegmentationStoring {
 
 }
 
-class UsageSegmentationStorage: UsageSegmentationStoring {
+final class UsageSegmentationStorage: UsageSegmentationStoring {
 
     enum Keys {
         static let search = "usageSegmentation.atbs.search"

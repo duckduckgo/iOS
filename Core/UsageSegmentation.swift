@@ -32,7 +32,7 @@ protocol UsageSegmenting {
 
 }
 
-class UsageSegmentation: UsageSegmenting {
+final class UsageSegmentation: UsageSegmenting {
 
     private let pixelFiring: PixelFiring.Type
     private let storage: UsageSegmentationStoring

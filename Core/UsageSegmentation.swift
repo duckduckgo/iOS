@@ -49,8 +49,7 @@ final class UsageSegmentation: UsageSegmenting {
     func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
         var atbs = activityType.atbsFromStorage(storage)
 
-        // Fail fast by looking at the end of the list
-        guard !atbs.reversed().contains(where: { $0 == atb }) else { return }
+        guard !atbs.contains(where: { $0 == atb }) else { return }
 
         defer {
             activityType.updateStorage(storage, withAtbs: atbs)

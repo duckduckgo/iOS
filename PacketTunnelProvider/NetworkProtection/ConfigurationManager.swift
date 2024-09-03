@@ -39,7 +39,7 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
     override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
                   store: ConfigurationStoring = ConfigurationStore(),
-                  defaults: KeyValueStoring = UserDefaults()) {
+                  defaults: KeyValueStoring = UserDefaults.configurationGroupDefaults) {
         super.init(fetcher: fetcher, store: store, defaults: defaults)
     }
 

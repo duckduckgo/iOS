@@ -42,7 +42,7 @@ struct ConfigurationStore: ConfigurationStoring {
         }
     }
 
-    init(defaults: KeyValueStoring = UserDefaults.networkProtectionGroupDefaults) {
+    init(defaults: KeyValueStoring = UserDefaults.configurationGroupDefaults) {
         self.defaults = defaults
     }
 

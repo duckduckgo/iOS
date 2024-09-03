@@ -84,7 +84,7 @@ final class ConfigurationManager: DefaultConfigurationManager {
     // TODO: Use app config group
     override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
                   store: ConfigurationStoring = ConfigurationStore(),
-                  defaults: KeyValueStoring = UserDefaults()) {
+                  defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
         self.defaults = defaults
         super.init(fetcher: fetcher, store: store, defaults: defaults)
         addPresenter()

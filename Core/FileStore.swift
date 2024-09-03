@@ -22,7 +22,7 @@ import Configuration
 
 public class FileStore {
 
-    private let groupIdentifier: String = ContentBlockerStoreConstants.groupName
+    private let groupIdentifier: String = ContentBlockerStoreConstants.configurationGroupName
 
     public init() { }
 

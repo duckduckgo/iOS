@@ -31,7 +31,7 @@ public protocol BlockerListETagStorage {
 
 public struct UserDefaultsETagStorage: BlockerListETagStorage {
 
-    private let defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
+    private let defaults = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration")
 
     public init() { }
 

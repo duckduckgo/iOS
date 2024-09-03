@@ -23,7 +23,7 @@ import XCTest
 @testable import TestUtils
 @testable import Persistence
 
-class UsageSegmentationStorageTests: XCTestCase {
+final class UsageSegmentationStorageTests: XCTestCase {
 
     func testWithKeyValueStoring() {
         assertStorage(MockKeyValueStore())

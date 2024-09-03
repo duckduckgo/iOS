@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import Core
 
-class UsageSegmentationCalculationTests: XCTestCase {
+final class UsageSegmentationCalculationTests: XCTestCase {
 
     func testPerformance() throws {
         throw XCTSkip("Only used for performance testing and optimisation")

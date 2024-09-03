@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import Core
 
-class UsageSegmentationTests: XCTestCase {
+final class UsageSegmentationTests: XCTestCase {
 
     var defaultCalculatorResult: [String: String]? = [:]
     var searchAtbs: [Atb] = []
@@ -173,7 +173,7 @@ extension UsageSegmentationTests: UsageSegmentationCalculatorMaking {
 
 }
 
-class MockUsageSegmentationCalculator: UsageSegmentationCalculating {
+final class MockUsageSegmentationCalculator: UsageSegmentationCalculating {
 
     let installAtb: Atb
     let result: [String: String]?

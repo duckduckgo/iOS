@@ -24,14 +24,14 @@ protocol DuckPlayerExperimentHandling {
     var isEnrolled: Bool { get }
     var enrollmentDate: Date? { get set }
     var experimentCohort: String? { get set }
-    init(referrer: DuckPlayerReferrer, duckPlayerMode: DuckPlayerMode?)
+    init(duckPlayerMode: DuckPlayerMode?, referrer: DuckPlayerReferrer?)
     func assignUserToCohort()
     func fireEnrollmentPixel()
     func fireSearchPixels()
     func fireYoutubePixel()
 }
 
-final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
+final class DuckPlayerLaunchExperiment {
         
     private struct Constants {
         static let dateFormat = "yyyyMMDD"
@@ -43,7 +43,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
         static let referrerKey = "referrer"
     }
     
-    private let referrer: DuckPlayerReferrer
+    private let referrer: DuckPlayerReferrer?
     private let duckPlayerMode: DuckPlayerMode?
             
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
@@ -60,14 +60,10 @@ final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
         case control
         case experiment
     }
-    
-    init(referrer: DuckPlayerReferrer, duckPlayerMode: DuckPlayerMode?) {
+            
+    required init(duckPlayerMode: DuckPlayerMode? = nil, referrer: DuckPlayerReferrer? = nil) {
         self.referrer = referrer
         self.duckPlayerMode = duckPlayerMode
-    }
-    
-    var isEnrolled: Bool {
-        return enrollmentDate != nil && experimentCohort != nil
     }
     
     private var dates: (day: Int, week: Int)? {
@@ -88,7 +84,17 @@ final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Constants.dateFormat
-        let enrollmentDateString = dateFormatter.string(from: enrollmentDate)
+        return dateFormatter.string(from: enrollmentDate)
+    }
+    
+    
+}
+
+extension DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
+    
+    
+    var isEnrolled: Bool {
+        return enrollmentDate != nil && experimentCohort != nil
     }
     
     func assignUserToCohort() {
@@ -111,7 +117,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
     
     func fireSearchPixels() {
         if isEnrolled {
-            guard isEnrolled, 
+            guard isEnrolled,
                     let experimentCohort = experimentCohort,
                     let enrollmentDate = enrollmentDate,
                     let dates,
@@ -148,7 +154,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
             Constants.variantKey: experimentCohort,
             Constants.dayKey: "\(dates.day)",
             Constants.stateKey:  duckPlayerMode?.stringValue ?? "",
-            Constants.referrerKey: referrer.stringValue,
+            Constants.referrerKey: referrer?.stringValue ?? "",
             Constants.enrollmentKey: formattedEnrollmentDate
         ]
         

@@ -426,13 +426,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return
         }
         
-        let experiment = DuckPlayerLaunchExperiment(referrer: referrer, duckPlayerMode: duckPlayer.settings.mode)
+        let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer.settings.mode, referrer: referrer)
         experiment.assignUserToCohort()
         
         // Keep track of the last fired pixel in this tab
         // to avoid duplicates
         if videoID != lastPixelEventID {
-            
             experiment.fireYoutubePixel()
             lastPixelEventID = videoID
             Logger.duckPlayer.debug("DP: Fired Pixel for \(videoID)")

@@ -1769,9 +1769,7 @@ extension TabViewController: WKNavigationDelegate {
                     privacyProDataReporter.saveSearchCount()
                     
                     // Duck Player Search Experiment
-                    let experiment = DuckPlayerLaunchExperiment(referrer: .serp, duckPlayerMode: duckPlayer?.settings.mode)
-                    experiment.fireSearchPixels()
-                    
+                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()                    
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

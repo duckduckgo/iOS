@@ -787,6 +787,9 @@ extension Pixel {
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
 
+        // MARK: enhanced statistics
+        case usageSegments
+
         // MARK: Certificate warnings
         case certificateWarningDisplayed(_ errorType: String)
         case certificateWarningLeaveClicked
@@ -1582,6 +1585,9 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+
+        // MARK: Enhanced statistics
+        case .usageSegments: return "m_retention_segments"
 
         // MARK: Certificate warnings
         case .certificateWarningDisplayed(let errorType):

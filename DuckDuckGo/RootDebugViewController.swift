@@ -45,7 +45,7 @@ class RootDebugViewController: UITableViewController {
         case resetSendCrashLogs = 671
         case refreshConfig = 672
         case newTabPageSections = 674
-        case showNewOnboardingIntro = 676
+        case onboarding = 676
         case resetSyncPromoPrompts = 677
     }
 
@@ -169,8 +169,13 @@ class RootDebugViewController: UITableViewController {
             case .newTabPageSections:
                 let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
                 show(controller, sender: nil)
-            case .showNewOnboardingIntro:
-                showOnboardingIntro()
+            case .onboarding:
+                let action = { [weak self] in
+                    guard let self else { return }
+                    self.showOnboardingIntro()
+                }
+                let controller = UIHostingController(rootView: OnboardingDebugView(onNewOnboardingIntroStartAction: action))
+                show(controller, sender: nil)
             case .resetSyncPromoPrompts:
                 guard let sync = sync else { return }
                 let syncPromoPresenter = SyncPromoManager(syncService: sync)

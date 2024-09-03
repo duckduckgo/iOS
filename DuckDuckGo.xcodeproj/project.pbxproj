@@ -687,8 +687,10 @@
 		9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */; };
 		9F69331F2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */; };
 		9F6933212C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */; };
+		9F7CFF782C86E3E10012833E /* OnboardingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */; };
 		9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
+		9F9A922E2C86A56B001D036D /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A922D2C86A56B001D036D /* OnboardingManager.swift */; };
 		9F9EE4CE2C377D4900D4118E /* OnboardingFirePixelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */; };
 		9F9EE4D42C37BB1300D4118E /* OnboardingView+Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9EE4D32C37BB1300D4118E /* OnboardingView+Landing.swift */; };
 		9FA5E44B2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA5E44A2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift */; };
@@ -2446,7 +2448,9 @@
 		9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTutorialSettings.swift; sourceTree = "<group>"; };
 		9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppearViewModifier.swift; sourceTree = "<group>"; };
 		9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHostingControllerMock.swift; sourceTree = "<group>"; };
+		9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerTests.swift; sourceTree = "<group>"; };
 		9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyDataReporter.swift; sourceTree = "<group>"; };
+		9F9A922D2C86A56B001D036D /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
 		9F9EE4CC2C377D3F00D4118E /* OnboardingFirePixelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFirePixelMock.swift; sourceTree = "<group>"; };
 		9F9EE4D32C37BB1300D4118E /* OnboardingView+Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+Landing.swift"; sourceTree = "<group>"; };
 		9FA5E44A2BF1AF3400BDEF02 /* SubscriptionContainerViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionContainerViewFactory.swift; sourceTree = "<group>"; };
@@ -4632,6 +4636,7 @@
 				9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */,
 				9F4CC51E2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift */,
 				9F69331A2C5A16E200CD6A5D /* OnboardingDaxFavouritesTests.swift */,
+				9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -4651,6 +4656,14 @@
 				9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */,
 			);
 			path = ContextualOnboarding;
+			sourceTree = "<group>";
+		};
+		9F9A922C2C86A560001D036D /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				9F9A922D2C86A56B001D036D /* OnboardingManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		9F9EE4CB2C377D2400D4118E /* Mocks */ = {
@@ -4701,6 +4714,7 @@
 		9FF7E9802C22A19800902BE5 /* OnboardingExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				9F9A922C2C86A560001D036D /* Manager */,
 				9FE05CEC2C36423C00D9046B /* Pixels */,
 				56D060202C356B0B003BAEB5 /* ContextualDaxDialogs */,
 				9FE08BD42C2A60BD001D5EBC /* MetricBuilder */,
@@ -7268,6 +7282,7 @@
 				BDE91CDC2C62AA3A0005CB74 /* DefaultMetadataCollector.swift in Sources */,
 				D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */,
 				EE458D142ABB652900FC651A /* NetworkProtectionDebugUtilities.swift in Sources */,
+				9F9A922E2C86A56B001D036D /* OnboardingManager.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				BD2F39EB2C19F955005B19E7 /* NetworkProtectionDNSSettingsView.swift in Sources */,
 				CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */,
@@ -7740,6 +7755,7 @@
 				F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */,
 				564DE45E2C45218500D23241 /* OnboardingNavigationDelegateTests.swift in Sources */,
 				C14E2F7729DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift in Sources */,
+				9F7CFF782C86E3E10012833E /* OnboardingManagerTests.swift in Sources */,
 				564DE45A2C450BE600D23241 /* DaxDialogsNewTabTests.swift in Sources */,
 				C174CE602BD6A6CE00AED2EA /* MockDDGSyncing.swift in Sources */,
 				9F4CC51F2C48D758006A96EB /* ContextualDaxDialogsFactoryTests.swift in Sources */,

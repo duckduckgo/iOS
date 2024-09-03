@@ -26,10 +26,16 @@ final class OnboardingIntroViewModel: ObservableObject {
 
     var onCompletingOnboardingIntro: (() -> Void)?
     private let pixelReporter: OnboardingIntroPixelReporting
+    private let onboardingManager: OnboardingHighlightsManaging
     private let urlOpener: URLOpener
 
-    init(pixelReporter: OnboardingIntroPixelReporting, urlOpener: URLOpener = UIApplication.shared) {
+    init(
+        pixelReporter: OnboardingIntroPixelReporting,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager(),
+        urlOpener: URLOpener = UIApplication.shared
+    ) {
         self.pixelReporter = pixelReporter
+        self.onboardingManager = onboardingManager
         self.urlOpener = urlOpener
     }
 
@@ -48,10 +54,31 @@ final class OnboardingIntroViewModel: ObservableObject {
             urlOpener.open(url)
         }
         pixelReporter.trackChooseBrowserCTAAction()
-        onCompletingOnboardingIntro?()
+
+        handleSetDefaultBrowserAction()
     }
 
     func cancelSetDefaultBrowserAction() {
+        handleSetDefaultBrowserAction()
+    }
+
+    func appIconPickerContinueAction() {
+       // TODO: Remove below and implement proper logic
         onCompletingOnboardingIntro?()
     }
+
+}
+
+// MARK: - Private
+
+private extension OnboardingIntroViewModel {
+
+    func handleSetDefaultBrowserAction() {
+        if onboardingManager.isOnboardingHighlightsEnabled {
+            state = .onboarding(.chooseAppIconDialog)
+        } else {
+            onCompletingOnboardingIntro?()
+        }
+    }
+
 }

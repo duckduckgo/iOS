@@ -24,7 +24,10 @@ import XCTest
 final class UsageSegmentationCalculationTests: XCTestCase {
 
     func testPerformance() throws {
-        throw XCTSkip("Only used for performance testing and optimisation")
+        // Use this to suppress warning about code below not being run
+        if ProcessInfo().arguments.contains("testing") {
+            throw XCTSkip("Only used for performance testing and optimisation")
+        }
 
         var atbs = [Atb]()
         for week in 100 ..< 800 {

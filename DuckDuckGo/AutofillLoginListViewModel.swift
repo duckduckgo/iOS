@@ -23,6 +23,7 @@ import Common
 import UIKit
 import Combine
 import Core
+import DDGSync
 import PrivacyDashboard
 import os.log
 
@@ -93,6 +94,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+    private let syncService: DDGSyncing
     private var showBreakageReporter: Bool = false
 
     private lazy var reporterDateFormatter = {
@@ -105,6 +107,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         let settings = privacyConfig.settings(for: .autofillBreakageReporter)
         return settings["monitorIntervalDays"] as? Int ?? 42
     }()
+
+    private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 
     internal lazy var breakageReporter = BrokenSiteReporter(pixelHandler: { [weak self] _ in
         if let currentTabUid = self?.currentTabUid {
@@ -151,7 +155,8 @@ final class AutofillLoginListViewModel: ObservableObject {
          currentTabUid: String? = nil,
          autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager,
          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
-         keyValueStore: KeyValueStoringDictionaryRepresentable = UserDefaults.standard) {
+         keyValueStore: KeyValueStoringDictionaryRepresentable = UserDefaults.standard,
+         syncService: DDGSyncing) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
@@ -160,6 +165,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
         self.privacyConfig = privacyConfig
         self.keyValueStore = keyValueStore
+        self.syncService = syncService
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
@@ -313,6 +319,18 @@ final class AutofillLoginListViewModel: ObservableObject {
         return alert
     }
 
+    func shouldShowSyncPromo() -> Bool {
+        return viewState == .showItems
+               && !isEditing
+               && syncPromoManager.shouldPresentPromoFor(.passwords, count: accountsCount)
+    }
+
+    func dismissSyncPromo() {
+        syncPromoManager.dismissPromoFor(.passwords)
+    }
+
+    // MARK: Private Methods
+
     private func saveReport(for currentTabUrl: URL) {
         let report = BrokenSiteReport(siteUrl: currentTabUrl,
                                       category: "",
@@ -341,8 +359,6 @@ final class AutofillLoginListViewModel: ObservableObject {
 
         try? breakageReporter.report(report, reportMode: .regular, daysToExpiry: breakageReportIntervalDays)
     }
-
-    // MARK: Private Methods
 
     private func getAccountsCount() -> Int? {
         guard let secureVault = secureVault else {

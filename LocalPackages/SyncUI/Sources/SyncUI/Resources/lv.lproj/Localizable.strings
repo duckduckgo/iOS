@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Šīs ierīces sinhronizācija un dublēšana";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopēt";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Izstrādes vide";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Iegūt DuckDuckGo citās ierīcēs";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Tavi dati ir sinhronizēti!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinhronizēt un dublēt šo ierīci";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Iegūt DuckDuckGo citās ierīcēs";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Kopīgot lejupielādes saiti";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Lai lejupielādētu DuckDuckGo datorā vai citā mobilajā ierīcē, apmeklē:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Iegūsti DuckDuckGo citās ierīcēs, lai sinhronizētu ar šo ierīci";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Iegūsti DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instalē DuckDuckGo pārlūkprogrammu savās ierīcēs, lai sāktu droši sinhronizēt grāmatzīmes un paroles:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Iestatījumi > Sinhronizācija un dublēšana > Sinhronizācija ar citu ierīci";

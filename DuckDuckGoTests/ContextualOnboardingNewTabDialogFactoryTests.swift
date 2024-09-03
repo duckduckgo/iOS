@@ -20,6 +20,7 @@
 import XCTest
 import SwiftUI
 import Core
+import Onboarding
 @testable import DuckDuckGo
 
 class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
@@ -170,4 +171,17 @@ private extension ContextualOnboardingNewTabDialogFactoryTests {
         XCTAssertEqual(pixelReporterMock.capturedScreenImpression, event)
     }
 
+}
+
+class CapturingOnboardingNavigationDelegate: OnboardingNavigationDelegate {
+    var suggestedSearchQuery: String?
+    var urlToNavigateTo: URL?
+
+    func searchFor(_ query: String) {
+        suggestedSearchQuery = query
+    }
+
+    func navigateTo(url: URL) {
+        urlToNavigateTo = url
+    }
 }

@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import Onboarding
 @testable import DuckDuckGo
 
 final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingScreenImpressionReporting {

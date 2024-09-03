@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Dieses Gerät synchronisieren und sichern";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopieren";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Entwicklungsumgebung";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Hol dir DuckDuckGo auf anderen Geräten";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Deine Daten sind synchronisiert!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Dieses Gerät synchronisieren und sichern";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Hol dir DuckDuckGo auf anderen Geräten";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Download-Link teilen";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Um DuckDuckGo auf einen Desktop-Computer oder ein anderes mobiles Gerät herunterzuladen, besuche:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "DuckDuckGo auf anderen Geräten installieren, um sie mit diesem zu synchronisieren";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "DuckDuckGo herunterladen";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installiere den DuckDuckGo-Browser auf deinen Geräten, um deine Lesezeichen und Passwörter sicher zu synchronisieren:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Einstellungen > Synchronisieren und sichern > Mit einem anderen Gerät synchronisieren";

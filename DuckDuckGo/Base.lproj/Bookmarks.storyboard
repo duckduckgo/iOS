@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -122,17 +122,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" preservesSuperviewLayoutMargins="YES" searchBarStyle="minimal" placeholder="Search" id="1tO-s1-k2W">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="aq5-lx-Pms" id="1gC-pf-z7r"/>
-                                    </connections>
-                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="44" id="14A-Y0-GYO" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="99.5" width="343" height="44"/>
+                                        <rect key="frame" x="16" y="55.5" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="14A-Y0-GYO" id="2vh-lJ-WoO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
@@ -196,7 +188,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoResultsCell" rowHeight="44" id="F5Y-vs-m8j" customClass="NoResultsCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="143.5" width="343" height="44"/>
+                                        <rect key="frame" x="16" y="99.5" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F5Y-vs-m8j" id="e0A-ci-ZLj">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
@@ -230,7 +222,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FolderCell" rowHeight="44" id="KGu-j0-KJK" userLabel="FolderCell" customClass="FolderCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="187.5" width="343" height="44"/>
+                                        <rect key="frame" x="16" y="143.5" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGu-j0-KJK" id="1hV-h5-0bK">
                                             <rect key="frame" x="0.0" y="0.0" width="316.5" height="44"/>
@@ -351,7 +343,6 @@
                         <outlet property="emptyStateContainer" destination="PgY-PQ-Rpw" id="F72-bA-dTB"/>
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
                         <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
-                        <outlet property="searchBar" destination="1tO-s1-k2W" id="5AZ-6I-Dq5"/>
                         <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>
                         <outlet property="tableView" destination="vYN-5M-awE" id="4rq-bu-ZLw"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="Uhm-2I-Xo5"/>

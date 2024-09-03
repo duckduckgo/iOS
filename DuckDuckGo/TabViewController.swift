@@ -38,6 +38,7 @@ import History
 import ContentScopeScripts
 import SpecialErrorPages
 import NetworkProtection
+import Onboarding
 import os.log
 
 class TabViewController: UIViewController {
@@ -993,8 +994,9 @@ class TabViewController: UIViewController {
     
     public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
+        
+        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findParentEntityOrFallback(forHost: host)
 
-        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host))
@@ -1225,6 +1227,9 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
+        // Update the address bar instantly when page presents a dialog to prevent spoofing attacks
+        // https://app.asana.com/0/414709148257752/1208060693227754/f
+        self.url = webView.url
         let isHttps = protectionSpace.protocol == "https"
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,

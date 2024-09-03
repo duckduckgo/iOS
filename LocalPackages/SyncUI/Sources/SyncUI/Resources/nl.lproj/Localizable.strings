@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Dit apparaat synchroniseren en back-up maken";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopiëren";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Ontwikkelomgeving";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "DuckDuckGo downloaden op andere apparaten";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Je gegevens zijn gesynchroniseerd!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Dit apparaat synchroniseren en back-up maken";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "DuckDuckGo downloaden op andere apparaten";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Downloadlink delen";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Om DuckDuckGo te downloaden op een desktop of een ander mobiel apparaat, ga naar:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Download DuckDuckGo op andere apparaten om met dit apparaat te synchroniseren";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Download DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installeer de DuckDuckGo-browser op je apparaten om je bladwijzers en wachtwoorden veilig te synchroniseren:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "'Instellingen' > 'Synchronisatie en back-up' > 'Synchroniseren met een ander apparaat'";

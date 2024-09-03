@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import Onboarding
 
 extension OnboardingView {
 

@@ -46,6 +46,7 @@ class RootDebugViewController: UITableViewController {
         case refreshConfig = 672
         case newTabPageSections = 674
         case showNewOnboardingIntro = 676
+        case resetSyncPromoPrompts = 677
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -170,6 +171,11 @@ class RootDebugViewController: UITableViewController {
                 show(controller, sender: nil)
             case .showNewOnboardingIntro:
                 showOnboardingIntro()
+            case .resetSyncPromoPrompts:
+                guard let sync = sync else { return }
+                let syncPromoPresenter = SyncPromoManager(syncService: sync)
+                syncPromoPresenter.resetPromos()
+                ActionMessageView.present(message: "Sync Promos reset")
             }
         }
     }

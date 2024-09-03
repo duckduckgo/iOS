@@ -278,7 +278,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
 
     static let tracker = KnownTracker(domain: "tracker.com",
                                defaultAction: .block,
-                               owner: KnownTracker.Owner(name: "Tracker Inc", displayName: "Tracker Inc company"),
+                               owner: KnownTracker.Owner(name: "Tracker Inc", displayName: "Tracker Inc company", ownedBy: nil),
                                prevalence: 0.1,
                                subdomains: nil,
                                categories: nil,

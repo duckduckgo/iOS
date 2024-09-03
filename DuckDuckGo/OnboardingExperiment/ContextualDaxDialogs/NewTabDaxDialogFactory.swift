@@ -19,6 +19,7 @@
 
 import Foundation
 import SwiftUI
+import Onboarding
 
 protocol NewTabDaxDialogProvider {
     associatedtype DaxDialog: View
@@ -58,7 +59,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createInitialDialog() -> some View {
-        let viewModel = OnboardingSearchSuggestionsViewModel(pixelReporter: onboardingPixelReporter, delegate: delegate)
+        let viewModel = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), delegate: delegate, pixelReporter: onboardingPixelReporter)
         return FadeInView {
             OnboardingTrySearchDialog(viewModel: viewModel)
                 .onboardingDaxDialogStyle()
@@ -70,7 +71,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createSubsequentDialog() -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, pixelReporter: onboardingPixelReporter, delegate: delegate)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), delegate: delegate, pixelReporter: onboardingPixelReporter)
         return FadeInView {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
                 .onboardingDaxDialogStyle()

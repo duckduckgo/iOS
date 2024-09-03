@@ -18,11 +18,7 @@
 //
 
 import Foundation
-
-protocol OnboardingRegionAndLanguageProvider {
-    var regionCode: String? { get }
-    var languageCode: String? { get }
-}
+import Onboarding
 
 struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding {
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
@@ -79,9 +75,7 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
         } else {
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
         }
-        return ContextualOnboardingListItem.surprise(title: search)
+        return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
     }
 
 }
-
-extension Locale: OnboardingRegionAndLanguageProvider {}

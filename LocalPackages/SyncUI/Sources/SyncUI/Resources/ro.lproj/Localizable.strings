@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sincronizează și fă backup pentru acest dispozitiv";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Copiere";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Mediu de dezvoltare";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Obține DuckDuckGo pe alte dispozitive";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Datele tale sunt sincronizate!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sincronizează și fă backup pentru acest dispozitiv";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Obține DuckDuckGo pe alte dispozitive";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Trimite linkul de descărcare";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Pentru a descărca DuckDuckGo pe desktop sau pe un alt dispozitiv mobil, vizitează:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Obține DuckDuckGo pe alte dispozitive pentru a le sincroniza cu acesta";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Obține DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instalează browserul DuckDuckGo pe dispozitivele tale pentru a începe să îți sincronizezi în siguranță marcajele și parolele:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Setări > Sincronizare și backup > Sincronizează cu un alt dispozitiv";

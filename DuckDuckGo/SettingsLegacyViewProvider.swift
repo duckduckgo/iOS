@@ -83,12 +83,13 @@ class SettingsLegacyViewProvider: ObservableObject {
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
     
     @MainActor
-    var syncSettings: UIViewController {
+    func syncSettings(source: String? = nil) -> SyncSettingsViewController {
         return SyncSettingsViewController(syncService: self.syncService,
                                           syncBookmarksAdapter: self.syncDataProviders.bookmarksAdapter,
                                           syncCredentialsAdapter: self.syncDataProviders.credentialsAdapter,
                                           appSettings: self.appSettings,
-                                          syncPausedStateManager: self.syncPausedStateManager)
+                                          syncPausedStateManager: self.syncPausedStateManager,
+                                          source: source)
     }
     
     func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,

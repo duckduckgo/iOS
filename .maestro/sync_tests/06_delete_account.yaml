@@ -27,6 +27,11 @@ name: 06_delete_account
 - inputText: "0000"
 - pressKey: Enter
 - assertVisible: Scan QR Code
+- runFlow:
+    when:
+      visible: Allows you to upload photographs and videos
+    commands:
+        - tapOn: "OK"
 - tapOn: Manually Enter Code
 - tapOn: Paste
 - assertVisible: Sync & Backup Error

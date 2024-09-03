@@ -61,7 +61,6 @@ class TextSizeSettingsViewController: UITableViewController {
         if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
             sheetController.detents = [.medium(), .large()]
             sheetController.delegate = self
-            sheetController.largestUndimmedDetentIdentifier = .medium
             sheetController.preferredCornerRadius = 16
 
             sheetController.animateChanges {

@@ -35,6 +35,7 @@ extension ContentScopeFeatureToggles {
                                    credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isAutofillEnabledInSettings,
                                    passwordGeneration: featureFlagger.isFeatureOn(.autofillPasswordGeneration) && isAutofillEnabledInSettings,
                                    inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isAutofillEnabledInSettings,
-                                   thirdPartyCredentialsProvider: false)
+                                   thirdPartyCredentialsProvider: false,
+                                   unknownUsernameCategorization: featureFlagger.isFeatureOn(.autofillUnknownUsernameCategorization) && isAutofillEnabledInSettings)
     }
 }

@@ -22,7 +22,7 @@ import XCTest
 
 /// To be fleshed out when UI is settled
 class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate {
-    
+
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
     var syncBookmarksPausedTitle: String? = "syncBookmarksPausedTitle"
     var syncCredentialsPausedTitle: String? = "syncCredentialsPausedTitle"
@@ -244,6 +244,19 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     func launchAutofillViewController() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
+
+    func showOtherPlatformLinks() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func fireOtherPlatformLinksPixel(event: SyncUI.SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncUI.SyncSettingsViewModel.PlatformLinksPixelSource) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func shareLink(for url: URL, with message: String, from rect: CGRect) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
 
 }
 

@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Az eszköz szinkronizálása és biztonsági mentése";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Másolás";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Fejlesztői környezet";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "DuckDuckGo letöltése más eszközökre";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Az adatszinkronizálás megtörtént.";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Az eszköz szinkronizálása és biztonsági mentése";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "DuckDuckGo letöltése más eszközökre";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Letöltési link megosztása";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "A DuckDuckGo asztali számítógépre vagy más mobileszközre való letöltése:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "DuckDuckGo letöltése más eszközökre ezen eszközzel való szinkronizáláshoz";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "DuckDuckGo letöltése";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Telepítsd a DuckDuckGo böngészőt az eszközeidre a könyvjelzők és jelszavak biztonságos szinkronizálásának megkezdéséhez:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Beállítások > Szinkronizálás és biztonsági mentés > szinkronizálás másik eszközzel";

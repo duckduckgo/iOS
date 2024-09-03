@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1724668148700,
+    "version": 1725043256685,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -87,10 +87,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -117,7 +117,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "f480c22abb392f288fbf2caf186ce082"
+            "hash": "39481c86e0647ab1f235b35986da0fa0"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -294,9 +294,6 @@
                     "domain": "bitsofwar.com"
                 },
                 {
-                    "domain": "mitglieder.franzspitzer.de"
-                },
-                {
                     "domain": "disneyplus.com"
                 },
                 {
@@ -322,12 +319,6 @@
                 },
                 {
                     "domain": "hertz.com"
-                },
-                {
-                    "domain": "www.thrifty.com"
-                },
-                {
-                    "domain": "sports.tipico.de"
                 },
                 {
                     "domain": "lotusbakeries.com"
@@ -357,13 +348,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
-                },
-                {
-                    "domain": "instagram.com"
-                },
-                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -394,7 +382,7 @@
                     }
                 }
             },
-            "hash": "6ed8b1964ecfe94246ad3191db03b2ea"
+            "hash": "5a81046c452177af48157543487a38d5"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -432,6 +420,9 @@
                     "state": "enabled",
                     "minSupportedVersion": "7.75.0"
                 },
+                "unknownUsernameCategorization": {
+                    "state": "enabled"
+                },
                 "onByDefault": {
                     "state": "enabled",
                     "minSupportedVersion": "7.93.0",
@@ -455,12 +446,15 @@
                         "steps": [
                             {
                                 "percent": 10
+                            },
+                            {
+                                "percent": 25
                             }
                         ]
                     }
                 }
             },
-            "hash": "2408c5de35db50491d915a9c8f3c8388"
+            "hash": "471e5069536f5b7824c5e4b60e5be274"
         },
         "breakageReporting": {
             "state": "disabled",
@@ -478,13 +472,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "1cc5be3534e326e74083566308e726f4"
+            "hash": "28a9e2628d3c372ae3434c9166031693"
         },
         "brokenSitePrompt": {
             "state": "enabled",
@@ -1182,10 +1176,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1203,7 +1197,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "7ada7fa991eb882cb8af0e25dcfad795"
+            "hash": "600351972c8dec803846ad9c596164bd"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1220,10 +1214,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1236,7 +1230,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "341206546d27661e0fbd9221e877c628"
+            "hash": "ab8fd25afb81834139eabf76f3e0db20"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1280,13 +1274,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "51628b06bd28538540ce9e5262e42070"
+            "hash": "6b730954cd0f48a877191e501bf431fc"
         },
         "cookie": {
             "settings": {
@@ -1350,14 +1344,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "518de3f4cdd6f78e664c00ea2ec349cb"
+            "hash": "081af6c291ebfb57c69ccb7dd486c671"
         },
         "customUserAgent": {
             "settings": {
@@ -1526,10 +1520,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -4797,7 +4791,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "0113a5d0bef9f1c96fa55eeb45a74521"
+            "hash": "ad92e313ec7c6f14ad7d142d04bccf72"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4814,14 +4808,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4818e6983b16ddfdd078a2565bc69859"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4847,13 +4841,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "429a0ad38c859268f48d96c4c46864c6"
+            "hash": "1699e10a89e3f845b762d979c7784e07"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4873,14 +4867,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "90b6dc456856fdf817cb7432955cd5c6"
+            "hash": "7d41daff22dc87c5e77130ecfe07a5b2"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -4984,14 +4978,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "69e97b215250895325a279ae6203e6fe"
+            "hash": "2d8237d98a58f72e1722594501e7a10a"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -5053,17 +5047,17 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
-                },
-                {
                     "domain": "target.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "cf1530a8c5c582d22af16b84bc7f7ced"
+            "hash": "9f2be706bd8afb4ab5b20bcf105f3029"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5116,14 +5110,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "5c2980807a1f9023ce99182ed38b0642"
+            "hash": "af086ad86fb05240c6ae07b4f27990cb"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -5149,14 +5143,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "8630cb28f77d9598f61a908c5aa3f1ed"
+            "hash": "7503c4ad77f4d9a2e679c89f3a6d7758"
         },
         "googleRejected": {
             "exceptions": [
@@ -5173,14 +5167,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4818e6983b16ddfdd078a2565bc69859"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "gpc": {
             "state": "enabled",
@@ -5246,13 +5240,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
-                },
-                {
                     "domain": "oreillyauto.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5264,7 +5258,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "9a262bdeaa03e8f693963d73d1b4028b"
+            "hash": "d84eb509cdbdc25d46085688260ac6fa"
         },
         "harmfulApis": {
             "settings": {
@@ -5379,14 +5373,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "8cb27af67989404f1651e164f90b7940"
+            "hash": "179ae7bb9c2f25cdca27e9ae3da9f506"
         },
         "history": {
             "state": "enabled",
@@ -5436,13 +5430,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "8e60b4c39599560b0bea1030299fb3a7"
+            "hash": "3beb9d0dc3e5b08f87862264e6845d22"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5490,10 +5484,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5504,7 +5498,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "4877b3fce635ba78a673e87943f53091"
+            "hash": "85c8d252b38056bb00cb6846fe2793cc"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5542,14 +5536,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "596714c5b23bcdd1e0181ca2af22001d"
+            "hash": "09dadf2e11272ecfd8637c057f9970c3"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5567,13 +5561,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "a81619b928b99f1d21c9d513faf69b30"
+            "hash": "d6d280cf631363943027afc66a36ffff"
         },
         "phishingDetection": {
             "state": "disabled",
@@ -5591,13 +5585,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "1cc5be3534e326e74083566308e726f4"
+            "hash": "28a9e2628d3c372ae3434c9166031693"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5709,14 +5703,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "9e37b1b1111a12703ba85b825a5ee6cf"
+            "hash": "10bf3098ef71a9cac101c1fdce462b22"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -5739,16 +5733,16 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "f37136d479956daf56bcd58e02eee96a"
+            "hash": "72518a0c7421196ec071b1fb9167fde7"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5766,14 +5760,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {},
-            "hash": "8b903028eea1ff475f6a25035e428558"
+            "hash": "baf8b326d74f71ed4f63a1ffa3d42794"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -5790,19 +5784,24 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4818e6983b16ddfdd078a2565bc69859"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "sslCertificates": {
-            "state": "disabled",
+            "state": "enabled",
             "exceptions": [],
-            "hash": "c292bb627849854515cebbded288ef5a"
+            "features": {
+                "allowBypass": {
+                    "state": "enabled"
+                }
+            },
+            "hash": "abe9584048f7f8157f71a14e7914cb1c"
         },
         "syncPromotion": {
             "state": "enabled",
@@ -6775,6 +6774,7 @@
                             {
                                 "rule": "eccmp.com/sts/scripts/conversen-SDK.js",
                                 "domains": [
+                                    "citi.com",
                                     "pch.com"
                                 ]
                             }
@@ -9167,13 +9167,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "f406d2cabddadaa502127f5f8a171370"
+            "hash": "70bdfe11b5235b40019495340bd91154"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9196,14 +9196,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "af648fa280cea7a9d0d10c90cd704b60"
+            "hash": "3266e0df13e8d3959de6e9d0bf35c089"
         },
         "trackingCookies3p": {
             "settings": {
@@ -9223,14 +9223,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "596714c5b23bcdd1e0181ca2af22001d"
+            "hash": "09dadf2e11272ecfd8637c057f9970c3"
         },
         "trackingParameters": {
             "exceptions": [
@@ -9250,13 +9250,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
-                },
-                {
                     "domain": "theverge.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -9289,7 +9289,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "65b2886bc6717924eb0d272ab01d7e52"
+            "hash": "6aa495863362a10fcd54398369d780a4"
         },
         "userAgentRotation": {
             "settings": {
@@ -9309,14 +9309,14 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "66f96a6be1339c70b110cef3abd09a98"
+            "hash": "b1ca9a99352f9a9f1da0bce34d66a2fa"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -9343,13 +9343,13 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "capitalone.com"
-                },
-                {
                     "domain": "wsj.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
@@ -9392,7 +9392,7 @@
                     }
                 ]
             },
-            "hash": "b6c4ad9d1a4cfd2314aac44bc37a43b8"
+            "hash": "efc01837e0f1a6d59fffd8d00f67be41"
         },
         "webViewBlobDownload": {
             "exceptions": [],
@@ -9428,6 +9428,11 @@
             "exceptions": [],
             "state": "enabled",
             "hash": "52857469413a66e8b0c7b00de5589162"
+        },
+        "windowsWebviewFailures": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "windowsDownloadLink": {
             "exceptions": [],

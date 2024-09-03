@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sincronizar y hacer una copia de seguridad de este dispositivo";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Copiar";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Entorno de desarrollo";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Obtener DuckDuckGo en otros dispositivos";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "¡Tus datos están sincronizados!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sincronizar y hacer una copia de seguridad de este dispositivo";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Obtener DuckDuckGo en otros dispositivos";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Compartir enlace de descarga";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Para descargar DuckDuckGo en un ordenador de escritorio u otro dispositivo móvil, visita:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Obtener DuckDuckGo en otros dispositivos para sincronizarlo con este";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Obtener DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instala el navegador DuckDuckGo en tus dispositivos para empezar a sincronizar de forma segura tus marcadores y contraseñas:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Ajustes > Sincronización y copia de seguridad > Sincronizar con otro dispositivo";

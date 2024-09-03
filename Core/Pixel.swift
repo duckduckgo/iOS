@@ -84,6 +84,7 @@ public struct PixelParameters {
     public static let tabControllerCacheCount = "tab_controller_cache_count"
 
     public static let count = "count"
+    public static let source = "source"
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"
@@ -140,6 +141,7 @@ public struct PixelParameters {
     public static let adAttributionCountryOrRegion = "country_or_region"
     public static let adAttributionKeywordID = "keyword_id"
     public static let adAttributionAdID = "ad_id"
+    public static let adAttributionToken = "attribution_token"
 
     // Autofill
     public static let countBucket = "count_bucket"
@@ -147,6 +149,10 @@ public struct PixelParameters {
     // Privacy Dashboard
     public static let daysSinceInstall = "daysSinceInstall"
     public static let fromOnboarding = "from_onboarding"
+
+    // Subscription
+    public static let privacyProKeychainAccessType = "access_type"
+    public static let privacyProKeychainError = "error"
 }
 
 public struct PixelValues {

@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Synkroniser og sikkerhetskopier denne enheten";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopier";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Utviklermiljø";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Få DuckDuckGo på andre enheter";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Dataene dine er synkronisert!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synkroniser og sikkerhetskopier denne enheten";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Få DuckDuckGo på andre enheter";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Del nedlastingslenke";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "For å laste ned DuckDuckGo på skrivebordet eller en annen mobil enhet, besøk:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Få DuckDuckGo på andre enheter for å synkronisere med denne";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Få DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installer DuckDuckGo-nettleseren på enhetene dine for å synkronisere bokmerker og passord på en sikker måte:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Innstillinger > Synkroniser og sikkerhetskopier > Synkroniser med en annen enhet";

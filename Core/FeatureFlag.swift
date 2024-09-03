@@ -31,11 +31,15 @@ public enum FeatureFlag: String {
     case autofillOnByDefault
     case autofillFailureReporting
     case autofillOnForExistingUsers
+    case autofillUnknownUsernameCategorization
     case incontextSignup
     case autoconsentOnByDefault
     case history
     case newTabPageSections
     case duckPlayer
+    case sslCertificatesBypass
+    case syncPromotionBookmarks
+    case syncPromotionPasswords
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -61,6 +65,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.autofillBreakageReporter))
         case .autofillOnForExistingUsers:
             return .remoteReleasable(.subfeature(AutofillSubfeature.onForExistingUsers))
+        case .autofillUnknownUsernameCategorization:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:
@@ -68,9 +74,15 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .history:
             return .remoteReleasable(.feature(.history))
         case .newTabPageSections:
-            return .internalOnly
+            return .remoteDevelopment(.feature(.newTabPageImprovements))
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
+        case .sslCertificatesBypass:
+            return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
+        case .syncPromotionBookmarks:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
+        case .syncPromotionPasswords:
+            return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         }
     }
 }

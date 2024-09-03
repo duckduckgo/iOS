@@ -38,8 +38,8 @@ final class PrivacyIconLogic {
             let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
             let isUserUnprotected = config.isUserUnprotected(domain: privacyInfo.url.host)
  
-            let notFullyProtected = !privacyInfo.https || isUserUnprotected
-            
+            let notFullyProtected = !privacyInfo.https || isUserUnprotected || privacyInfo.serverTrust == nil
+
             return notFullyProtected ? .shieldWithDot : .shield
         }
     }

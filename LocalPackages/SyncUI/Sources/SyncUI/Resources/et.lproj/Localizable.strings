@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Selle seadme sünkroonimine ja varundamine";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopeeri";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Arenduskeskkond";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Hangi DuckDuckGo teistele seadmetele";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Sinu andmed on sünkroonitud!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sünkroonimi ja varunda see seade";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Hangi DuckDuckGo teistele seadmetele";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Jaga allalaadimise linki";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "DuckDuckGo arvutisse või muusse mobiilseadmesse allalaadimiseks külasta:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Hangi DuckDuckGo teistesse seadmetesse, et selle seadmega sünkroonida";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Hangi DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installi DuckDuckGo brauser oma seadmetesse, et alustada oma järjehoidjate ja paroolide turvalise sünkroonimisega:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Seaded > Sünkroonimine ja varundamine > Sünkrooni teise seadmega";

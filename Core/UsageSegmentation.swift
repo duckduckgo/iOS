@@ -66,6 +66,11 @@ final class UsageSegmentation: UsageSegmenting {
         var pixelInfo: [String: String]?
         let calculator = calculatorFactory.make(installAtb: installAtb)
         
+        // The calculator updates its internal state starting from the first atb, so iterate over them all and take
+        //  the last result.
+        // 
+        // This is pretty fast (see performance test) and consider that we'll have max 1 atb per day so over a few years it's up
+        //  to the mid thousands so hardly taxing.
         for atb in atbs {
             pixelInfo = calculator.processAtb(atb, forActivityType: activityType)
         }

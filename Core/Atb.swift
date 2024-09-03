@@ -115,7 +115,7 @@ private extension String {
 
     func substring(_ range: ClosedRange<Int>) -> String {
         let startIndex = self.index(self.startIndex, offsetBy: range.lowerBound)
-        let endIndex = self.index(self.startIndex, offsetBy: range.upperBound + 1)
+        let endIndex = self.index(self.startIndex, offsetBy: min(self.count, range.upperBound + 1))
         let substring = self[startIndex..<endIndex]
         return String(substring)
     }

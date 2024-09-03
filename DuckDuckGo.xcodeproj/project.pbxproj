@@ -248,12 +248,10 @@
 		4BE67B072B96B9B0007335F7 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE67B062B96B9B0007335F7 /* Common */; };
 		4BF3E4AF2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3E4AE2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift */; };
 		560E990F2BEE2CB800507CE0 /* SyncErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */; };
-		564DE4512C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4502C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift */; };
 		564DE4532C3ED1B700D23241 /* NewTabDaxDialogFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */; };
 		564DE4552C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */; };
 		564DE4572C4150E600D23241 /* HomeViewControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4562C4150E600D23241 /* HomeViewControllerDaxDialogTests.swift */; };
 		564DE45A2C450BE600D23241 /* DaxDialogsNewTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */; };
-		564DE45C2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45B2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift */; };
 		564DE45E2C45218500D23241 /* OnboardingNavigationDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */; };
 		564DE4602C4544CA00D23241 /* HomePageDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE45F2C4544CA00D23241 /* HomePageDependencies.swift */; };
 		564DE4622C4546BE00D23241 /* HomeViewController+DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564DE4612C4546BE00D23241 /* HomeViewController+DaxDialogs.swift */; };
@@ -269,13 +267,9 @@
 		569437362BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437352BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift */; };
 		56A061442BEE086700F24B36 /* CapturingAdapterErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437262BDD467400C0881B /* CapturingAdapterErrorHandler.swift */; };
 		56A061452BEE086E00F24B36 /* CapturingSyncPausedStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569437372BE530D300C0881B /* CapturingSyncPausedStateManager.swift */; };
-		56D060222C356B5C003BAEB5 /* ContextualDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */; };
-		56D060242C35918D003BAEB5 /* ContextualOnboardingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */; };
 		56D060262C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */; };
 		56D060282C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */; };
-		56D0602B2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */; };
 		56D0602D2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */; };
-		56D0602F2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */; };
 		56D8556A2BEA9169009F9698 /* CurrentDateProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D855692BEA9169009F9698 /* CurrentDateProviding.swift */; };
 		56D8556C2BEA91C4009F9698 /* SyncAlertsPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */; };
 		6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6DAB228804F97002723C0 /* BarsAnimator.swift */; };
@@ -712,6 +706,7 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
+		9FB893F82C784A1700332E5E /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB893F72C784A1700332E5E /* Onboarding */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FE05CEE2C36424E00D9046B /* OnboardingPixelReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE05CED2C36424E00D9046B /* OnboardingPixelReporter.swift */; };
@@ -721,12 +716,9 @@
 		9FE08BDA2C2A86D0001D5EBC /* URLOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */; };
 		9FE08BDC2C2A88FA001D5EBC /* OnboardingIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */; };
 		9FEA22272C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */; };
-		9FEA22292C2E38FA006B03BF /* AnimatableTypingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */; };
 		9FEA222E2C324ECD006B03BF /* ViewVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */; };
-		9FEA22302C325125006B03BF /* AnimatableTypingTextModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */; };
 		9FEA22322C3270BD006B03BF /* TimerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22312C3270BD006B03BF /* TimerInterface.swift */; };
 		9FEA22352C327226006B03BF /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA22332C3271DC006B03BF /* MockTimer.swift */; };
-		9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */; };
 		9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
@@ -1495,12 +1487,10 @@
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		4BF3E4AE2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNRedditSessionWorkaround.swift; sourceTree = "<group>"; };
 		560E990E2BEE2CB800507CE0 /* SyncErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorMessage.swift; sourceTree = "<group>"; };
-		564DE4502C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestionsViewModel.swift; sourceTree = "<group>"; };
 		564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabDaxDialogFactory.swift; sourceTree = "<group>"; };
 		564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingNewTabDialogFactoryTests.swift; sourceTree = "<group>"; };
 		564DE4562C4150E600D23241 /* HomeViewControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerDaxDialogTests.swift; sourceTree = "<group>"; };
 		564DE4592C450BE600D23241 /* DaxDialogsNewTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsNewTabTests.swift; sourceTree = "<group>"; };
-		564DE45B2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestionsViewModelsTests.swift; sourceTree = "<group>"; };
 		564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationDelegateTests.swift; sourceTree = "<group>"; };
 		564DE45F2C4544CA00D23241 /* HomePageDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDependencies.swift; sourceTree = "<group>"; };
 		564DE4612C4546BE00D23241 /* HomeViewController+DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+DaxDialogs.swift"; sourceTree = "<group>"; };
@@ -1516,13 +1506,9 @@
 		569437322BE4E3DD00C0881B /* SyncErrorHandlerSyncErrorsAlertsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncErrorHandlerSyncErrorsAlertsTests.swift; sourceTree = "<group>"; };
 		569437352BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSettingsViewControllerErrorTests.swift; sourceTree = "<group>"; };
 		569437372BE530D300C0881B /* CapturingSyncPausedStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturingSyncPausedStateManager.swift; sourceTree = "<group>"; };
-		56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualDaxDialog.swift; sourceTree = "<group>"; };
-		56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingList.swift; sourceTree = "<group>"; };
 		56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingDialogs.swift; sourceTree = "<group>"; };
 		56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSearchesProvider.swift; sourceTree = "<group>"; };
-		56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSitesProvider.swift; sourceTree = "<group>"; };
 		56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSearchesProviderTests.swift; sourceTree = "<group>"; };
-		56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSuggestedSitesProviderTests.swift; sourceTree = "<group>"; };
 		56D855692BEA9169009F9698 /* CurrentDateProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateProviding.swift; sourceTree = "<group>"; };
 		56D8556B2BEA91C4009F9698 /* SyncAlertsPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertsPresenting.swift; sourceTree = "<group>"; };
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
@@ -2496,12 +2482,9 @@
 		9FE08BD92C2A86D0001D5EBC /* URLOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLOpener.swift; sourceTree = "<group>"; };
 		9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewController.swift; sourceTree = "<group>"; };
 		9FEA22262C2D2BDA006B03BF /* RootDebugViewController+Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootDebugViewController+Onboarding.swift"; sourceTree = "<group>"; };
-		9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableTypingText.swift; sourceTree = "<group>"; };
 		9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewVisibility.swift; sourceTree = "<group>"; };
-		9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableTypingTextModelTests.swift; sourceTree = "<group>"; };
 		9FEA22312C3270BD006B03BF /* TimerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInterface.swift; sourceTree = "<group>"; };
 		9FEA22332C3271DC006B03BF /* MockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
-		9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogView.swift; sourceTree = "<group>"; };
 		9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonChart.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
@@ -2986,6 +2969,7 @@
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
+				9FB893F82C784A1700332E5E /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
 			);
@@ -3226,7 +3210,6 @@
 				CB825C952C071C9300BCC586 /* AlertViewPresenter.swift */,
 				6FD3F80E2C3EF4F000DA5797 /* DeviceOrientationEnvironmentValue.swift */,
 				9FEA222D2C324ECD006B03BF /* ViewVisibility.swift */,
-				9FEA22282C2E38FA006B03BF /* AnimatableTypingText.swift */,
 				9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */,
 			);
 			name = SwiftUI;
@@ -3717,9 +3700,6 @@
 		56D060202C356B0B003BAEB5 /* ContextualDaxDialogs */ = {
 			isa = PBXGroup;
 			children = (
-				564DE4502C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift */,
-				56D060212C356B5C003BAEB5 /* ContextualDaxDialog.swift */,
-				56D060232C35918D003BAEB5 /* ContextualOnboardingList.swift */,
 				56D060252C359D2E003BAEB5 /* ContextualOnboardingDialogs.swift */,
 				564DE4522C3ED1B700D23241 /* NewTabDaxDialogFactory.swift */,
 			);
@@ -3730,7 +3710,6 @@
 			isa = PBXGroup;
 			children = (
 				56D060272C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift */,
-				56D0602A2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift */,
 			);
 			path = OnboardingHelpers;
 			sourceTree = "<group>";
@@ -4663,9 +4642,7 @@
 			children = (
 				9F23B8052C2BE22700950875 /* OnboardingIntroViewModelTests.swift */,
 				56D0602C2C383FD2003BAEB5 /* OnboardingSuggestedSearchesProviderTests.swift */,
-				56D0602E2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift */,
 				564DE4542C3EDEF200D23241 /* ContextualOnboardingNewTabDialogFactoryTests.swift */,
-				564DE45B2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift */,
 				564DE45D2C45218500D23241 /* OnboardingNavigationDelegateTests.swift */,
 				9F9EE4CB2C377D2400D4118E /* Mocks */,
 				9FE05CEF2C3642F900D9046B /* OnboardingPixelReporterTests.swift */,
@@ -4703,14 +4680,6 @@
 				9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */,
 			);
 			name = Mocks;
-			sourceTree = "<group>";
-		};
-		9FB027102C2526A8009EA190 /* DaxDialogs */ = {
-			isa = PBXGroup;
-			children = (
-				9FF7E9812C22A1F100902BE5 /* DaxDialogView.swift */,
-			);
-			path = DaxDialogs;
 			sourceTree = "<group>";
 		};
 		9FB027172C26BC0F009EA190 /* BrowsersComparison */ = {
@@ -4755,7 +4724,6 @@
 				9FE08BD42C2A60BD001D5EBC /* MetricBuilder */,
 				9FE08BD12C2A5B77001D5EBC /* Styles */,
 				9FB027172C26BC0F009EA190 /* BrowsersComparison */,
-				9FB027102C2526A8009EA190 /* DaxDialogs */,
 				9F23B7FF2C2BABE000950875 /* OnboardingIntro */,
 				9F5E5AAA2C3D0FAA00165F54 /* ContextualOnboarding */,
 				9F23B8002C2BC94400950875 /* OnboardingBackground.swift */,
@@ -5845,7 +5813,6 @@
 			children = (
 				F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */,
 				F194FAFA1F14E622009B4DF8 /* UIFontExtensionTests.swift */,
-				9FEA222F2C325125006B03BF /* AnimatableTypingTextModelTests.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -6333,6 +6300,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
+				9FB893F72C784A1700332E5E /* Onboarding */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -7180,7 +7148,6 @@
 				C12726EE2A5FF88C00215B02 /* EmailSignupPromptView.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
 				B652DF12287C336E00C12A9C /* ContentBlockingUpdating.swift in Sources */,
-				56D0602B2C381B23003BAEB5 /* OnboardingSuggestedSitesProvider.swift in Sources */,
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
@@ -7266,11 +7233,9 @@
 				F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */,
 				6FE1273A2C204BD000EB5724 /* NewTabPageView.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
-				9FF7E9822C22A1F100902BE5 /* DaxDialogView.swift in Sources */,
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				C1641EB32BC2F53C0012607A /* ImportPasswordsViewModel.swift in Sources */,
 				8536A1FD2ACF114B003AC5BA /* Theme+DesignSystem.swift in Sources */,
-				9FEA22292C2E38FA006B03BF /* AnimatableTypingText.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */,
 				D668D9252B693778008E2FF2 /* SubscriptionITPView.swift in Sources */,
@@ -7322,7 +7287,6 @@
 				D68DF81E2B5830380023DBEA /* SubscriptionRestoreViewModel.swift in Sources */,
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
 				D6F93E3E2B50A8A0004C268D /* SubscriptionSettingsView.swift in Sources */,
-				56D060222C356B5C003BAEB5 /* ContextualDaxDialog.swift in Sources */,
 				1D200C9B2BA31A6A00108701 /* AboutView.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				D668D92B2B696840008E2FF2 /* IdentityTheftRestorationPagesFeature.swift in Sources */,
@@ -7350,7 +7314,6 @@
 				1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */,
-				56D060242C35918D003BAEB5 /* ContextualOnboardingList.swift in Sources */,
 				EE0153ED2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift in Sources */,
 				EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
@@ -7367,7 +7330,6 @@
 				D63FF8952C1B67E9006DE24D /* YoutubePlayerUserScript.swift in Sources */,
 				4BF3E4AF2C06A85200ED5D57 /* VPNRedditSessionWorkaround.swift in Sources */,
 				6F40D15B2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift in Sources */,
-				564DE4512C3EBF2E00D23241 /* OnboardingSuggestionsViewModel.swift in Sources */,
 				311BD1AF2836BB4200AEF6C1 /* AutofillItemsLockedView.swift in Sources */,
 				85DE681A2B6A8BB000DED4FE /* MainViewCoordinator.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
@@ -7759,7 +7721,6 @@
 				BDFF03262BA3DA4900F324C9 /* NetworkProtectionFeatureVisibilityTests.swift in Sources */,
 				0283A2042C6E572F00508FBD /* BrokenSitePromptLimiterTests.swift in Sources */,
 				D62EC3BA2C246A7000FC9D04 /* YoutublePlayerNavigationHandlerTests.swift in Sources */,
-				9FEA22302C325125006B03BF /* AnimatableTypingTextModelTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				C1D21E2F293A599C006E5A05 /* AutofillLoginSessionTests.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
@@ -7780,7 +7741,6 @@
 				9F9EE4CE2C377D4900D4118E /* OnboardingFirePixelMock.swift in Sources */,
 				4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */,
 				314A3EFC293905EC00D3D4C8 /* BrokenSiteReportingTests.swift in Sources */,
-				56D0602F2C384F70003BAEB5 /* OnboardingSuggestedSitesProviderTests.swift in Sources */,
 				851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,
 				BBFF18B12C76448100C48D7D /* QuerySubmittedTests.swift in Sources */,
@@ -7855,7 +7815,6 @@
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,
 				D6B67A122C332B6E002122EB /* DuckPlayerMocks.swift in Sources */,
 				9FEA22352C327226006B03BF /* MockTimer.swift in Sources */,
-				564DE45C2C45160500D23241 /* OnboardingSuggestionsViewModelsTests.swift in Sources */,
 				EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */,
 				6FD0C41F2C5BF097000561C9 /* NewTabPageIntroMessageSetupTests.swift in Sources */,
 				8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */,
@@ -8929,7 +8888,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -8966,7 +8925,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9056,7 +9015,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9083,7 +9042,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9232,7 +9191,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9257,7 +9216,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9326,7 +9285,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -9360,7 +9319,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9393,7 +9352,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9423,7 +9382,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -9733,7 +9692,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -9764,7 +9723,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9792,7 +9751,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9825,7 +9784,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -9855,7 +9814,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProviderAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -9888,11 +9847,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10125,7 +10084,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -10152,7 +10111,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -10184,7 +10143,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -10221,7 +10180,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -10256,7 +10215,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -10291,11 +10250,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10468,11 +10427,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10501,10 +10460,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -10714,7 +10673,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 191.0.1;
+				version = 191.1.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -10918,6 +10877,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		9FB893F72C784A1700332E5E /* Onboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Onboarding;
 		};
 		B6DFE6D52BC7E47F00A9CE59 /* SwiftLintTool */ = {
 			isa = XCSwiftPackageProductDependency;

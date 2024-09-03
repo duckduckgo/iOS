@@ -39,7 +39,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
-    private let _tab: Tab
+    private let associatedTab: Tab
 
     private var hostingController: UIHostingController<AnyView>?
 
@@ -53,7 +53,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
          newTabDialogFactory: any NewTabDaxDialogProvider,
          newTabDialogTypeProvider: NewTabDialogSpecProvider) {
 
-        self._tab = tab
+        self.associatedTab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.variantManager = variantManager
@@ -82,7 +82,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        _tab.viewed = true
+        associatedTab.viewed = true
 
         presentNextDaxDialog()
 

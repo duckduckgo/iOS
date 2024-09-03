@@ -77,10 +77,10 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
     }
 
     let installAtb: Atb
-    var usageHistory = [Atb]()
-    var previousAtb: Atb?
-    var previousWAUSegments = [String]()
-    var previousMAUSegments = Array(repeating: Array(repeating: "", count: 4), count: 4)
+    private var usageHistory = [Atb]()
+    private var previousAtb: Atb?
+    private var previousWAUSegments = [String]()
+    private var previousMAUSegments = Array(repeating: Array(repeating: "", count: 4), count: 4)
 
     init(installAtb: Atb) {
         self.installAtb = installAtb

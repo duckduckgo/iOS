@@ -200,7 +200,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             }
         }
 
-        if (previousAtb == nil || previousAtb == installAtb)
+        if (isFirstPostInstallActivity(installAtb))
             && atb.week < installAtb.week + 4 {
             segments.append("first_month")
         } else {
@@ -239,7 +239,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return false
         }
 
-        if previousAtb == nil || previousAtb == installAtb {
+        if isFirstPostInstallActivity(installAtb) {
             // # First post-install activity
             return true
         }
@@ -255,7 +255,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return false
         }
 
-        if previousAtb == nil || previousAtb == installAtb {
+        if isFirstPostInstallActivity(installAtb) {
             // # First post-install activity
             return false
         }
@@ -277,7 +277,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return false
         }
 
-        if previousAtb == nil || previousAtb == installAtb {
+        if isFirstPostInstallActivity(installAtb) {
             // # First post-install activity
             return true
         }
@@ -296,7 +296,7 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
             return false
         }
 
-        if previousAtb == nil || previousAtb == installAtb {
+        if isFirstPostInstallActivity(installAtb) {
             // # First post-install activity
             return false
         }
@@ -336,6 +336,10 @@ final class UsageSegmentationCalculator: UsageSegmentationCalculating {
         return Set(history.filter {
             $0 < today && $0 >= today - 29 && $0 > installDay
         }).sorted()
+    }
+
+    private func isFirstPostInstallActivity(_ installAtb: Atb) -> Bool {
+        return previousAtb == nil || previousAtb == installAtb
     }
 }
 

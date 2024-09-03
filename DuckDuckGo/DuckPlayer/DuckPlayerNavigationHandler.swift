@@ -33,6 +33,7 @@ final class DuckPlayerNavigationHandler {
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
+    var lastPixelEventID: String?
     
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
@@ -57,7 +58,7 @@ final class DuckPlayerNavigationHandler {
          appSettings: AppSettings) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
-        self.appSettings = appSettings
+        self.appSettings = appSettings        
     }
     
     static var htmlTemplatePath: String {
@@ -173,7 +174,7 @@ final class DuckPlayerNavigationHandler {
     
 }
 
-extension DuckPlayerNavigationHandler: DuckNavigationHandling {
+extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
 
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk
@@ -273,6 +274,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                                completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView) {
         
+        Logger.duckPlayer.debug("Handling DecidePolicyFor for \(navigationAction.request.url?.absoluteString ?? "")")
+        
         guard let url = navigationAction.request.url else {
             completion(.cancel)
             return
@@ -327,6 +330,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleJSNavigation(url: URL?, webView: WKWebView) {
         
+        Logger.duckPlayer.debug("Handling JS Navigation for \(url?.absoluteString ?? "")")
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
@@ -376,6 +381,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleReload(webView: WKWebView) {
         
+        Logger.duckPlayer.debug("DP: Handling Reload")
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.reload()
             return
@@ -397,6 +404,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleAttach(webView: WKWebView) {
         
+        Logger.duckPlayer.debug("DP: Attach WebView")
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
@@ -409,5 +418,27 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         }
         
     }
-
+    
+    // Temporary DuckPlayer launch experiment
+    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?) {
+        
+        guard let (videoID, _) = url?.youtubeVideoParams else {
+            return
+        }
+        
+        let experiment = DuckPlayerLaunchExperiment(referrer: referrer, duckPlayerMode: duckPlayer.settings.mode)
+        experiment.assignUserToCohort()
+        
+        // Keep track of the last fired pixel in this tab
+        // to avoid duplicates
+        if videoID != lastPixelEventID {
+            
+            experiment.fireYoutubePixel()
+            lastPixelEventID = videoID
+            Logger.duckPlayer.debug("DP: Fired Pixel for \(videoID)")
+        }
+        
+    }
+    
+    
 }

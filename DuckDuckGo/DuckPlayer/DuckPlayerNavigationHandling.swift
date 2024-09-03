@@ -19,7 +19,11 @@
 
 import WebKit
 
-protocol DuckNavigationHandling: AnyObject {
+enum DuckPlayerNavigationEvent {
+    case youtubeVideoPageVisited
+}
+
+protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
@@ -31,4 +35,5 @@ protocol DuckNavigationHandling: AnyObject {
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
+    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?)
 }

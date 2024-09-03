@@ -805,11 +805,11 @@ extension Pixel {
         case pproFeedbackSubmitScreenFAQClick(source: String, reportType: String, category: String, subcategory: String)
         
         // MARK: DuckPlayer Pixel Experiment
-        case duckplayerExperimentCohortAssign(variant: String, enrollment: Int)
-        case duckplayerExperimentSearch(variant: String, day: Int, enrollment: Int)
-        case duckplayerExperimentDailySearch(variant: String, day: Int, enrollment: Int)
-        case duckplayerExperimentWeeklySearch(variant: String, week: Int, enrollment: Int)
-        case duckplayerExperimentYoutubePageView(variant: String, state: String, referrer: String, enrollment: Int)
+        case duckplayerExperimentCohortAssign
+        case duckplayerExperimentSearch
+        case duckplayerExperimentDailySearch
+        case duckplayerExperimentWeeklySearch
+        case duckplayerExperimentYoutubePageView
     }
 
 }

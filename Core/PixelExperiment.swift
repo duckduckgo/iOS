@@ -64,11 +64,11 @@ public enum PixelExperiment: String, CaseIterable {
     // https://app.asana.com/0/1202500774821704/1207478569595510/f
 
     case control
-    case experiment
-    
+    case breakageSiteReportingFlowA
+    case breakageSiteReportingFlowB
+
     // Internal state for users not included in any variant
     case noVariant
-    
 
 }
 
@@ -76,7 +76,7 @@ extension PixelExperiment {
 
     // Pixel parameter - cohort
     public static var parameters: [String: String] {
-        guard let cohort else {
+        guard let cohort, cohort != .noVariant else {
             return [:]
         }
 
@@ -101,7 +101,7 @@ final internal class PixelExperimentLogic {
             return cohort
         }
 
-        let variants: [PixelExperiment] = [.control, .experiment]
+        let variants: [PixelExperiment] = [.control, .breakageSiteReportingFlowA, .breakageSiteReportingFlowB]
         let cohort: PixelExperiment = variants[Int.random(in: variants.indices)]
 
         // Store and use the selected cohort
@@ -109,16 +109,12 @@ final internal class PixelExperimentLogic {
         fireEnrollmentPixel()
         return cohort
     }
-    
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentInstalled, defaultValue: false)
-    var isInstalled: Bool
-    
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: 0)
-    var enrollmentDate: Int
 
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
+    @UserDefaultsWrapper(key: .pixelExperimentInstalled, defaultValue: false)
+    var isInstalled: Bool
+
+    @UserDefaultsWrapper(key: .pixelExperimentCohort, defaultValue: nil)
     var allocatedCohort: String?
-    
 
     private let fire: (Pixel.Event) -> Void
     private let customCohort: PixelExperiment?
@@ -134,17 +130,15 @@ final internal class PixelExperimentLogic {
     }
 
     private func fireEnrollmentPixel() {
-        if let cohort = allocatedCohort {
-            fire(.duckplayerExperimentCohortAssign(variant: cohort, enrollment: enrollmentDate))
+        guard cohort != .noVariant else {
+            return
         }
+
+        fire(.pixelExperimentEnrollment)
     }
 
     func cleanup() {
         isInstalled = false
-        allocatedCohort = nil
-        
-        // Duck Player Settings
-        enrollmentDate = 0
         allocatedCohort = nil
     }
 

@@ -86,7 +86,7 @@ class MockNavigationAction: WKNavigationAction {
     }
 }
 
-final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class MockDuckPlayerSettings: DuckPlayerSettings {
     
     private let duckPlayerSettingsSubject = PassthroughSubject<Void, Never>()
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> {
@@ -131,9 +131,9 @@ final class MockDuckPlayer: DuckPlayerProtocol {
         nil
     }
     
-    var settings: any DuckPlayerSettingsProtocol
+    var settings: any DuckPlayerSettings
     
-    init(settings: DuckPlayerSettingsProtocol) {
+    init(settings: DuckPlayerSettings) {
         self.settings = settings
     }
     

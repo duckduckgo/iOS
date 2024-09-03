@@ -176,6 +176,7 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed"
         case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort"
         case duckPlayerPixelExperimentEnrollmentDate = "com.duckduckgo.ios.duckplayer.pixel.experiment.enrollment.date"
+        case duckPlayerPixelExperimentLastWeekPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.week.pixel.fired"
         
     }
 

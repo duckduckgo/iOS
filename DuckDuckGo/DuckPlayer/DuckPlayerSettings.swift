@@ -64,7 +64,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-protocol DuckPlayerSettingsProtocol: AnyObject {
+protocol DuckPlayerSettings: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
@@ -78,7 +78,7 @@ protocol DuckPlayerSettingsProtocol: AnyObject {
     func triggerNotification()
 }
 
-final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging

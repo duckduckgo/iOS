@@ -153,15 +153,18 @@ public class StatisticsLoader {
         }
     }
 
-    private func updateUsageSegmentationWithAtb(_ atb: Atb, activityType: UsageActivityType) {
+    private func processUsageSegmentation(atb: Atb?, activityType: UsageActivityType) {
         guard let installAtbValue = statisticsStore.atb else { return }
         let installAtb = Atb(version: installAtbValue, updateVersion: nil)
-        self.usageSegmentation.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
+        let actualAtb = atb ?? installAtb
+        self.usageSegmentation.processATB(actualAtb, withInstallAtb: installAtb, andActivityType: activityType)
+    }
+
+    private func updateUsageSegmentationWithAtb(_ atb: Atb, activityType: UsageActivityType) {
+        processUsageSegmentation(atb: atb, activityType: activityType)
     }
 
     private func updateUsageSegmentationAfterInstall(activityType: UsageActivityType) {
-        guard let installAtbValue = statisticsStore.atb else { return }
-        let installAtb = Atb(version: installAtbValue, updateVersion: nil)
-        self.usageSegmentation.processATB(installAtb, withInstallAtb: installAtb, andActivityType: activityType)
+        processUsageSegmentation(atb: nil, activityType: activityType)
     }
 }

@@ -40,6 +40,7 @@ public enum FeatureFlag: String {
     case sslCertificatesBypass
     case syncPromotionBookmarks
     case syncPromotionPasswords
+    case autofillSurveys
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -67,6 +68,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onForExistingUsers))
         case .autofillUnknownUsernameCategorization:
             return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
+        case .autofillSurveys:
+            return .remoteReleasable(.feature(.autofillSurveys))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:

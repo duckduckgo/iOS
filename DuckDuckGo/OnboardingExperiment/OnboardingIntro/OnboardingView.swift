@@ -88,6 +88,7 @@ struct OnboardingView: View {
                         }
                     }
                 )
+                .progressIndicator()
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
@@ -202,6 +203,22 @@ private enum Metrics {
     static let daxDialogVisibilityDelay: TimeInterval = 0.5
     static let comparisonChartAnimationDuration = 0.25
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(value: 0.1).smallIphone(0.01)
+    static let progressBarTrailingPadding: CGFloat = 16.0
+    static let progressBarTopPadding: CGFloat = 12.0
+}
+
+// MARK: - Helpers
+
+private extension View {
+
+    func progressIndicator() -> some View {
+        overlay(alignment: .topTrailing) {
+            OnboardingProgressIndicator(stepInfo: .init(currentStep: 1, totalSteps: 3))
+                .padding(.trailing, Metrics.progressBarTrailingPadding)
+                .padding(.top, Metrics.progressBarTopPadding)
+        }
+    }
+
 }
 
 // MARK: - Preview

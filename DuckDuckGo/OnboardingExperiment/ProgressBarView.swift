@@ -33,38 +33,64 @@ struct OnboardingProgressIndicator: View {
     let stepInfo: StepInfo
 
     var body: some View {
-        VStack(spacing: 16.0) {
+        VStack(spacing: OnboardingProgressMetrics.verticalSpacing) {
             HStack {
                 Spacer()
                 Text("\(stepInfo.currentStep) / \(stepInfo.totalSteps)")
-                    .padding(.trailing, 4)
+                    .onboardingProgressTitleStyle()
+                    .padding(.trailing, OnboardingProgressMetrics.textPadding)
             }
             ProgressBarView(progress: stepInfo.percentage)
-                .frame(width: 200, height: 8)
+                .frame(width: OnboardingProgressMetrics.progressBarSize.width, height: OnboardingProgressMetrics.progressBarSize.height)
         }
         .fixedSize()
     }
 }
 
+private enum OnboardingProgressMetrics {
+    static let verticalSpacing: CGFloat = 8
+    static let textPadding: CGFloat = 4
+    static let progressBarSize = CGSize(width: 64, height: 4)
+}
+
 struct ProgressBarView: View {
+    @Environment(\.colorScheme) private var colorScheme
 
     let progress: Double
 
     var body: some View {
         Capsule()
-            .foregroundColor(.black.opacity(0.06))
-            .background(
+            .foregroundStyle(backgroundColor)
+            .overlay(
                 GeometryReader { proxy in
                     ProgressBarGradient()
-                        .clipShape(Capsule().inset(by: 0.6))
+                        .clipShape(Capsule().inset(by: ProgressBarMetrics.strokeWidth / 2))
                         .frame(width: progress * proxy.size.width / 100)
+                        .animation(.easeInOut, value: progress)
                 }
             )
             .overlay(
                 Capsule()
-                    .stroke(.black.opacity(0.18), lineWidth: 1)
+                    .stroke(borderColor, lineWidth: ProgressBarMetrics.strokeWidth)
             )
     }
+
+    private var backgroundColor: Color {
+        colorScheme == .light ? ProgressBarMetrics.backgroundLight : ProgressBarMetrics.backgroundDark
+    }
+
+    private var borderColor: Color {
+        colorScheme == .light ? ProgressBarMetrics.borderLight : ProgressBarMetrics.borderDark
+    }
+
+}
+
+private enum ProgressBarMetrics {
+    static let backgroundLight: Color = .black.opacity(0.06)
+    static let borderLight: Color = .black.opacity(0.18)
+    static let backgroundDark: Color = .white.opacity(0.09)
+    static let borderDark: Color = .white.opacity(0.18)
+    static let strokeWidth: CGFloat = 1
 }
 
 struct ProgressBarGradient: View {
@@ -106,19 +132,24 @@ struct ProgressBarGradient: View {
 }
 
 #Preview("Onboarding Progress Indicator") {
+    struct PreviewWrapper: View {
+        @State var stepInfo = OnboardingProgressIndicator.StepInfo(currentStep: 1, totalSteps: 3)
 
-    @State var stepInfo = OnboardingProgressIndicator.StepInfo(currentStep: 1, totalSteps: 3)
+        var body: some View {
+            VStack(spacing: 100) {
+                OnboardingProgressIndicator(stepInfo: stepInfo)
 
-    return VStack(spacing: 100) {
-        OnboardingProgressIndicator(stepInfo: stepInfo)
-
-        Button(action: {
-            let nextStep = stepInfo.currentStep < stepInfo.totalSteps ? stepInfo.currentStep + 1 : 1
-            stepInfo = OnboardingProgressIndicator.StepInfo(currentStep: nextStep, totalSteps: stepInfo.totalSteps)
-        }, label: {
-            Text("Update Progress")
-        })
+                Button(action: {
+                    let nextStep = stepInfo.currentStep < stepInfo.totalSteps ? stepInfo.currentStep + 1 : 1
+                    stepInfo = OnboardingProgressIndicator.StepInfo(currentStep: nextStep, totalSteps: stepInfo.totalSteps)
+                }, label: {
+                    Text("Update Progress")
+                })
+            }
+        }
     }
+
+    return PreviewWrapper()
 }
 
 #Preview("Progress Bar") {

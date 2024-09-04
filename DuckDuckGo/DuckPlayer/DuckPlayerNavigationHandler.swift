@@ -172,6 +172,30 @@ final class DuckPlayerNavigationHandler {
         return false
     }
     
+    private func isOpenInYoutubeURL(url: URL) -> Bool {
+        return validateYoutubeURL(url: url)
+    }
+
+    private func getYoutubeURLFromOpenInYoutubeLink(url: URL) -> URL? {
+        guard validateYoutubeURL(url: url),
+              let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
+              let id = videoParameterItem.value,
+              let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() else {
+            return nil
+        }
+        return newURL
+    }
+
+    private func validateYoutubeURL(url: URL) -> Bool {
+        guard url.scheme == Constants.duckPlayerScheme,
+              let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              urlComponents.path == "/\(Constants.watchInYoutubePath)" else {
+            return false
+        }
+        return true
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -201,13 +225,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-        if url.scheme == Constants.duckPlayerScheme,
-           let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-           urlComponents.path == "/\(Constants.watchInYoutubePath)",
-           let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
-           let id = videoParameterItem.value,
-           let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
-
+        if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
+                        
             Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
 
             // These links should always skip the overlay
@@ -217,7 +236,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if isSERPLink(navigationAction: navigationAction),
                appSettings.allowUniversalLinks,
                isYouTubeAppInstalled,
-                let url = URL(string: "\(Constants.youtubeScheme)\(id)") {
+                let (videoID, _) =  newURL.youtubeVideoParams,
+                let url = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
                 UIApplication.shared.open(url)
             } else {
                 webView.load(URLRequest(url: newURL))
@@ -422,9 +442,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Temporary DuckPlayer launch experiment
     func handleEvent(event: DuckPlayerNavigationEvent, url: URL?) {
         
-        guard let (videoID, _) = url?.youtubeVideoParams else {
-            return
-        }
+        guard let url else { return }
+        
+        // Parse openInYoutubeURL if present
+        let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
+        
+        guard let (videoID, _) = newURL.youtubeVideoParams else { return }
         
         let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer.settings.mode, referrer: referrer)
         experiment.assignUserToCohort()

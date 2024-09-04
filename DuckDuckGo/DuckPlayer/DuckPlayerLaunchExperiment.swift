@@ -20,21 +20,37 @@
 import Foundation
 import Core
 
-protocol DuckPlayerExperimentHandling {
-    var isEnrolled: Bool { get }
-    var enrollmentDate: Date? { get set }
-    var experimentCohort: String? { get set }
-    init(duckPlayerMode: DuckPlayerMode?, referrer: DuckPlayerReferrer?)
-    func assignUserToCohort()
-    func fireEnrollmentPixel()
-    func fireSearchPixels()
-    func fireYoutubePixel()
+
+public protocol DuckPlayerExperimentDateProvider {
+    var currentDate: Date { get }
+}
+
+public class DefaultDuckPlayerExperimentDateProvider: DuckPlayerExperimentDateProvider {
+    public var currentDate: Date {
+        return Date()
+    }
+}
+
+protocol DuckPlayerExperimentPixelFiring {
+    static func fireDuckPlayerExperimentPixel(pixel: Pixel.Event, withAdditionalParameters params: [String: String])
+}
+
+extension Pixel: DuckPlayerExperimentPixelFiring {
+    static func fireDuckPlayerExperimentPixel(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
+        self.fire(pixel: pixel, withAdditionalParameters: params, onComplete: { _ in })
+    }
+}
+
+extension DailyPixel: DuckPlayerExperimentPixelFiring {
+    static func fireDuckPlayerExperimentPixel(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
+        self.fire(pixel: pixel, withAdditionalParameters: params, onComplete: { _ in })
+    }
 }
 
 final class DuckPlayerLaunchExperiment {
         
     private struct Constants {
-        static let dateFormat = "yyyyMMDD"
+        static let dateFormat = "yyyyMMdd"
         static let enrollmentKey = "enrollment"
         static let variantKey = "variant"
         static let dayKey = "day"
@@ -45,6 +61,13 @@ final class DuckPlayerLaunchExperiment {
     
     private let referrer: DuckPlayerReferrer?
     private let duckPlayerMode: DuckPlayerMode?
+    
+    // Abstract Pixel firing for proper testing
+    private let pixel: DuckPlayerExperimentPixelFiring.Type
+    private let dailyPixel: DuckPlayerExperimentPixelFiring.Type
+    
+    // Date Provider
+    private let dateProvider: DuckPlayerExperimentDateProvider
             
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
     var enrollmentDate: Date?
@@ -53,45 +76,52 @@ final class DuckPlayerLaunchExperiment {
     var experimentCohort: String?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastWeekPixelFired, defaultValue: nil)
-    var lastWeekPixelFired: String?
+    var lastWeekPixelFired: Int?
     
+    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastDayPixelFired, defaultValue: nil)
+    var lastDayPixelFired: Int?
     
     enum Cohort: String {
         case control
         case experiment
     }
             
-    required init(duckPlayerMode: DuckPlayerMode? = nil, referrer: DuckPlayerReferrer? = nil) {
+    init(duckPlayerMode: DuckPlayerMode? = nil,
+         referrer: DuckPlayerReferrer? = nil,
+         userDefaults: UserDefaults = UserDefaults.standard,
+         pixel: DuckPlayerExperimentPixelFiring.Type = Pixel.self,
+         dailyPixel: DuckPlayerExperimentPixelFiring.Type = DailyPixel.self,
+         dateProvider: DuckPlayerExperimentDateProvider = DefaultDuckPlayerExperimentDateProvider()) {
         self.referrer = referrer
         self.duckPlayerMode = duckPlayerMode
+        self.pixel = pixel
+        self.dailyPixel = dailyPixel
+        self.dateProvider = dateProvider
     }
     
     private var dates: (day: Int, week: Int)? {
         guard isEnrolled,
-              let experimentCohort = experimentCohort,
               let enrollmentDate = enrollmentDate else { return nil }
-        let currentDate = Date()
+        let currentDate = dateProvider.currentDate
         let calendar = Calendar.current
         let dayDifference = calendar.dateComponents([.day], from: enrollmentDate, to: currentDate).day ?? 0
-        let weekDifference = (dayDifference / 7) + 1
+        let weekDifference = (dayDifference / 7)  + 1
         return (day: dayDifference, week: weekDifference)
     }
     
     private var formattedEnrollmentDate: String? {
         guard isEnrolled,
-              let experimentCohort = experimentCohort,
               let enrollmentDate = enrollmentDate else { return nil }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Constants.dateFormat
-        return dateFormatter.string(from: enrollmentDate)
+        return Self.formattedDate(enrollmentDate)
     }
     
-    
-}
-
-extension DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
-    
+    static func formattedDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.dateFormat
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return dateFormatter.string(from: date)
+    }
     
     var isEnrolled: Bool {
         return enrollmentDate != nil && experimentCohort != nil
@@ -101,42 +131,50 @@ extension DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
         if !isEnrolled {
             let cohort: Cohort = Bool.random() ? .experiment : .control
             experimentCohort = cohort.rawValue
-            enrollmentDate = Date()
+            enrollmentDate = dateProvider.currentDate
             fireEnrollmentPixel()
         }
     }
 
-    func fireEnrollmentPixel() {
+    private func fireEnrollmentPixel() {
         guard isEnrolled,
-              let experimentCohort = experimentCohort,
-              let enrollmentDate = enrollmentDate else { return }
-        
-        let params = [Constants.variantKey: experimentCohort]
-        Pixel.fire(pixel: .duckplayerExperimentCohortAssign, withAdditionalParameters: params)
+                let experimentCohort = experimentCohort,
+                let formattedEnrollmentDate else { return }
+                
+        let params = [Constants.variantKey: experimentCohort, Constants.enrollmentKey: formattedEnrollmentDate]
+        pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentCohortAssign, withAdditionalParameters: params)
     }
     
     func fireSearchPixels() {
         if isEnrolled {
             guard isEnrolled,
                     let experimentCohort = experimentCohort,
-                    let enrollmentDate = enrollmentDate,
                     let dates,
                     let formattedEnrollmentDate else {
                 return
             }
             
-            let params = [
+            var params = [
                 Constants.variantKey: experimentCohort,
                 Constants.dayKey: "\(dates.day)",
-                Constants.weekKey: "\(dates.week)",
                 Constants.enrollmentKey: formattedEnrollmentDate
             ]
-            Pixel.fire(pixel: .duckplayerExperimentSearch, withAdditionalParameters: params)
-            DailyPixel.fire(pixel: .duckplayerExperimentDailySearch, withAdditionalParameters: params)
+                                    
+            // Fire a base search pixel
+            pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentSearch, withAdditionalParameters: params)
             
-            if params[Constants.weekKey] != lastWeekPixelFired {
-                Pixel.fire(pixel: .duckplayerExperimentWeeklySearch, withAdditionalParameters: params)
-                lastWeekPixelFired = params[Constants.weekKey]
+            // Fire a daily pixel
+            if dates.day != lastDayPixelFired {
+                pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentDailySearch, withAdditionalParameters: params)
+                lastDayPixelFired = dates.day
+            }
+            
+            // Fire a weekly pixel
+            if dates.week != lastWeekPixelFired && dates.day > 0 {
+                params.removeValue(forKey: Constants.dayKey)
+                params[Constants.weekKey] = "\(dates.week)"
+                pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentWeeklySearch, withAdditionalParameters: params)
+                lastWeekPixelFired = dates.week
             }
         }
     }
@@ -144,7 +182,6 @@ extension DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
     func fireYoutubePixel() {
         guard isEnrolled,
               let experimentCohort = experimentCohort,
-              let enrollmentDate = enrollmentDate,
               let dates,
               let formattedEnrollmentDate else {
             return
@@ -157,8 +194,13 @@ extension DuckPlayerLaunchExperiment: DuckPlayerExperimentHandling {
             Constants.referrerKey: referrer?.stringValue ?? "",
             Constants.enrollmentKey: formattedEnrollmentDate
         ]
-        
-        Pixel.fire(pixel: .duckplayerExperimentYoutubePageView, withAdditionalParameters: params)
+        pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentYoutubePageView, withAdditionalParameters: params)
     }
     
+    func cleanup() {
+        enrollmentDate =  nil
+        experimentCohort = nil
+        lastWeekPixelFired = nil
+    }
+        
 }

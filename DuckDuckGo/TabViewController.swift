@@ -181,6 +181,7 @@ class TabViewController: UIViewController {
     var errorData: SpecialErrorData?
     var failedURL: URL?
     var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
+    var isSpecialErrorPageVisible: Bool = false
 
     let syncService: DDGSyncing
 
@@ -1003,7 +1004,7 @@ class TabViewController: UIViewController {
         if let isValid {
             privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
         }
-        privacyInfo.isSpecialErrorPageVisible = (isValid == nil)
+        privacyInfo.isSpecialErrorPageVisible = isSpecialErrorPageVisible
 
         previousPrivacyInfosByURL[url] = privacyInfo
         
@@ -1384,6 +1385,9 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         specialErrorPageUserScript?.isEnabled = webView.url == failedURL
+        if webView.url != failedURL {
+            isSpecialErrorPageVisible = false
+        }
     }
 
     var specialErrorPageUserScript: SpecialErrorPageUserScript? {
@@ -1609,6 +1613,7 @@ extension TabViewController: WKNavigationDelegate {
     private func loadSpecialErrorPage(url: URL) {
         let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
         webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
+        isSpecialErrorPageVisible = true
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -3020,6 +3025,7 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
 
     func visitSite() {
         Pixel.fire(pixel: .certificateWarningProceedClicked)
+        isSpecialErrorPageVisible = false
         shouldBypassSSLError = true
         _ = webView.reload()
     }

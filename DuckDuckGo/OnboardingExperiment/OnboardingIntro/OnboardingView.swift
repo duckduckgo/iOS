@@ -64,11 +64,11 @@ struct OnboardingView: View {
                     showDialogBox: $showDaxDialogBox,
                     onTapGesture: {
                         withAnimation {
-                            switch model.state {
-                            case .onboarding(.startOnboardingDialog):
+                            switch model.state.intro?.type {
+                            case .startOnboardingDialog:
                                 showIntroButton = true
                                 animateIntroText = false
-                            case .onboarding(.browsersComparisonDialog):
+                            case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
                             default: break
@@ -77,18 +77,23 @@ struct OnboardingView: View {
                     },
                     content: {
                         VStack {
-                            switch state {
+                            switch state.type {
                             case .startOnboardingDialog:
                                 introView
                             case .browsersComparisonDialog:
                                 browsersComparisonView
                             case .chooseAppIconDialog:
                                 appIconPickerView
+                            case .chooseAddressBarPositionDialog:
+                                EmptyView()
                             }
                         }
                     }
                 )
-                .progressIndicator()
+                .ifLet(state.step) { view, stepInfo in
+                    view.onboardingProgressIndicator(currentStep: stepInfo.currentStep, totalSteps: stepInfo.totalSteps)
+                }
+
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
@@ -182,18 +187,42 @@ extension OnboardingView {
     enum ViewState: Equatable {
         case landing
         case onboarding(Intro)
+
+        var intro: Intro? {
+            switch self {
+            case .landing:
+                return nil
+            case let .onboarding(intro):
+                return intro
+            }
+        }
     }
     
 }
 
 extension OnboardingView.ViewState {
+    
+    struct Intro: Equatable {
+        let type: IntroType
+        let step: StepInfo?
+    }
 
-    enum Intro: Equatable {
+}
+
+extension OnboardingView.ViewState.Intro {
+
+    enum IntroType: Equatable {
         case startOnboardingDialog
         case browsersComparisonDialog
         case chooseAppIconDialog
+        case chooseAddressBarPositionDialog
     }
-    
+
+    struct StepInfo: Equatable {
+        let currentStep: Int
+        let totalSteps: Int
+    }
+
 }
 
 // MARK: - Metrics
@@ -211,11 +240,12 @@ private enum Metrics {
 
 private extension View {
 
-    func progressIndicator() -> some View {
+    func onboardingProgressIndicator(currentStep: Int, totalSteps: Int) -> some View {
         overlay(alignment: .topTrailing) {
-            OnboardingProgressIndicator(stepInfo: .init(currentStep: 1, totalSteps: 3))
+            OnboardingProgressIndicator(stepInfo: .init(currentStep: currentStep, totalSteps: totalSteps))
                 .padding(.trailing, Metrics.progressBarTrailingPadding)
                 .padding(.top, Metrics.progressBarTopPadding)
+                .transition(.identity)
         }
     }
 

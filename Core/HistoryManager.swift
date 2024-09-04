@@ -224,8 +224,11 @@ extension HistoryManager {
 
         let database = HistoryDatabase.make()
         var loadError: Error?
+
+        DebugDataCollector.current.loadingHistoryDB()
         database.loadStore { _, error in
             loadError = error
+            DebugDataCollector.current.finishedLoadingHistoryDB(error)
         }
 
         if let loadError {

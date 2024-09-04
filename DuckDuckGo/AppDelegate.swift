@@ -115,6 +115,8 @@ import os.log
 
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        DebugDataCollector.current.isLaunching(application, with: launchOptions)
 
         // Attribution support
         updateAttribution(conversionValue: 1)
@@ -386,6 +388,8 @@ import os.log
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false
         }
+
+        DebugDataCollector.current.finishedLaunching()
 
         return true
     }
@@ -741,6 +745,7 @@ import os.log
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
         Logger.lifecycle.debug(#function)
+        DebugDataCollector.current.startedBackgroundFetch()
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { result in
             switch result {
@@ -749,6 +754,8 @@ import os.log
             case .assetsUpdated:
                 completionHandler(.newData)
             }
+
+            DebugDataCollector.current.finishedBackgroundFetch()
         }
     }
 

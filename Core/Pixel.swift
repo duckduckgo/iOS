@@ -229,6 +229,8 @@ public class Pixel {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         }
 
+        newParams.merge(DebugDataCollector.current.debugParameters, uniquingKeysWith: { k1, _ in k1 })
+
         guard !isDryRun else {
             Logger.general.debug("Pixel fired \(pixelName.replacingOccurrences(of: "_", with: "."), privacy: .public) \(params.count > 0 ? "\(params)" : "", privacy: .public)")
             // simulate server response time for Dry Run mode

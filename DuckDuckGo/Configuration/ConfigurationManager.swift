@@ -205,10 +205,16 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
 extension ConfigurationManager {
     override var presentedItemURL: URL? {
-        return store.fileUrl(for: .privacyConfiguration)
+        return store.fileUrl(for: .privacyConfiguration).deletingLastPathComponent()
     }
 
-    override func presentedItemDidChange() {
+    override func presentedSubitemDidAppear(at url: URL) {
+        guard url == store.fileUrl(for: .privacyConfiguration) else { return }
+        updateTrackerBlockingDependencies()
+    }
+
+    override func presentedSubitemDidChange(at url: URL) {
+        guard url == store.fileUrl(for: .privacyConfiguration) else { return }
         updateTrackerBlockingDependencies()
     }
 

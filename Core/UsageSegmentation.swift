@@ -76,7 +76,7 @@ final class UsageSegmentation: UsageSegmenting {
         }
 
         if let pixelInfo {
-            pixelFiring.fire(.usageSegments, withAdditionalParameters: pixelInfo)
+            pixelFiring.fire(.usageSegments, withAdditionalParameters: pixelInfo, includedParameters: [], onComplete: { _ in })
         }
     }
 

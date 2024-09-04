@@ -1,5 +1,5 @@
 //
-//  MockURLOpener.swift
+//  MockUsageSegmentation.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,22 +20,19 @@
 import Foundation
 @testable import Core
 
-final class MockURLOpener: URLOpener {
-    private(set) var didCallCanOpenURL = false
-    private(set) var didCallOpenURL = false
-    private(set) var capturedURL: URL?
+final class MockUsageSegmentation: UsageSegmenting {
 
-    var canOpenURL = false
+    struct ProcessATBArgs {
 
-    func canOpenURL(_ url: URL) -> Bool {
-        didCallCanOpenURL = true
-        capturedURL = url
-        return canOpenURL
+        let atb: Atb
+        let installAtb: Atb
+        let activityType: UsageActivityType
+
     }
 
-    func open(_ url: URL) {
-        didCallOpenURL = true
-        capturedURL = url
-    }
+    var atbs: [ProcessATBArgs] = []
 
+    func processATB(_ atb: Atb, withInstallAtb installAtb: Atb, andActivityType activityType: UsageActivityType) {
+        atbs.append(ProcessATBArgs(atb: atb, installAtb: installAtb, activityType: activityType))
+    }
 }

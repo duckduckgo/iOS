@@ -407,7 +407,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
     func gotoSettings() {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+            UIApplication.shared.open(appSettings)
         }
     }
 

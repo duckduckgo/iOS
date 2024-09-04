@@ -26,7 +26,7 @@ extension MainViewController {
 
     func newEmailAddress() {
         guard emailManager.isSignedIn else {
-            UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL.emailProtectionQuickLink)
             return
         }
 

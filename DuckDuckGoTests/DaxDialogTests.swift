@@ -1002,6 +1002,40 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result?.type, .siteOwnedByMajorTracker)
     }
 
+    func testWhenExperimentGroup_AndDismissIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        sut.dismiss()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
+    func testWhenExperimentGroup_AndIsEnabledIsFalse_AndReloadWebsite_ThenReturnNilBrowsingSpec() throws {
+        // GIVEN
+        let lastVisitedWebsitePath = "https://www.example.com"
+        let lastVisitedWebsiteURL = try XCTUnwrap(URL(string: lastVisitedWebsitePath))
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = lastVisitedWebsitePath
+        let sut = makeExperimentSUT(settings: settings)
+        sut.dismiss()
+
+        // WHEN
+        let result = sut.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: lastVisitedWebsiteURL))
+
+        // THEN
+        XCTAssertNil(result)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,

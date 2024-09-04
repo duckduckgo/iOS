@@ -1,5 +1,5 @@
 //
-//  MockURLOpener.swift
+//  mobile_segments_test_cases.js
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,25 +17,24 @@
 //  limitations under the License.
 //
 
-import Foundation
-@testable import Core
+/*
+This is a debugging tool.  If a test case fails then you can use this to dump the specific 
+test case and compare it with the reference implementation's output.
 
-final class MockURLOpener: URLOpener {
-    private(set) var didCallCanOpenURL = false
-    private(set) var didCallOpenURL = false
-    private(set) var capturedURL: URL?
+usage: node mobile_segments_test_cases.js <test-case-index>
+*/
 
-    var canOpenURL = false
+const fs = require('fs');
+const path = './mobile_segments_test_cases.json';
 
-    func canOpenURL(_ url: URL) -> Bool {
-        didCallCanOpenURL = true
-        capturedURL = url
-        return canOpenURL
-    }
+try {
+    const data = fs.readFileSync(path, 'utf8');
+    const jsonData = JSON.parse(data);
 
-    func open(_ url: URL) {
-        didCallOpenURL = true
-        capturedURL = url
-    }
+    const args = process.argv.slice(2); 
+    const test = +args[0];
 
+    console.log(JSON.stringify(jsonData[test]));
+} catch (err) {
+    console.error('Error reading the file:', err);
 }

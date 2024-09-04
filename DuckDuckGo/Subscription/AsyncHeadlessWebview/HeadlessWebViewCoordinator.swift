@@ -164,7 +164,7 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
         
         // Handle custom schemes (e.g., tel:, facetime:, etc.)
         if Constants.externalSchemes.contains(scheme), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url)
             decisionHandler(.cancel)
             return
         }

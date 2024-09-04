@@ -524,33 +524,23 @@ extension SettingsViewModel {
     }
 
     func openEmailProtection() {
-        UIApplication.shared.open(URL.emailProtectionQuickLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionQuickLink)
     }
 
     func openEmailAccountManagement() {
-        UIApplication.shared.open(URL.emailProtectionAccountLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionAccountLink)
     }
 
     func openEmailSupport() {
-        UIApplication.shared.open(URL.emailProtectionSupportLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionSupportLink)
     }
 
     func openOtherPlatforms() {
-        UIApplication.shared.open(URL.apps,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.apps)
     }
 
     func openMoreSearchSettings() {
-        UIApplication.shared.open(URL.searchSettings,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.searchSettings)
     }
 
     var shouldDisplayDuckPlayerContingencyMessage: Bool {
@@ -560,9 +550,7 @@ extension SettingsViewModel {
     func openDuckPlayerContingencyMessageSite() {
         guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
         Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
-        UIApplication.shared.open(url,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(url)
     }
 
     @MainActor func openCookiePopupManagement() {

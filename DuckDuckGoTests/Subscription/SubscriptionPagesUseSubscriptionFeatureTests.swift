@@ -39,7 +39,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         static let entitlements = [Entitlement(product: .dataBrokerProtection),
                                    Entitlement(product: .identityTheftRestoration),
                                    Entitlement(product: .networkProtection)]
-//
+
         static let mostRecentTransactionJWS = "dGhpcyBpcyBub3QgYSByZWFsIEFw(...)cCBTdG9yZSB0cmFuc2FjdGlvbiBKV1M="
 
         static let subscriptionOptions = SubscriptionOptions(platform: SubscriptionPlatformName.ios.rawValue,
@@ -54,11 +54,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                                 SubscriptionFeature(name: "personal-information-removal"),
                                                                 SubscriptionFeature(name: "identity-theft-restoration")
                                                              ])
-//        static let storeLoginResponse = StoreLoginResponse(authToken: Constants.authToken,
-//                                                           email: "",
-//                                                           externalID: Constants.externalID,
-//                                                           id: 1,
-//                                                           status: "ok")
+
         static let validateTokenResponse = ValidateTokenResponse(account: ValidateTokenResponse.Account(email: Constants.email,
                                                                                                         entitlements: Constants.entitlements,
                                                                                                         externalID: Constants.externalID))
@@ -163,14 +159,13 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         entitlementsCache.reset()
         entitlementsCache = nil
 
-        // Real AccountManager
         accountManager = nil
 
         // Real Flows
         appStorePurchaseFlow = nil
         appStoreRestoreFlow = nil
         appStoreAccountManagementFlow = nil
-        // Real SubscriptionManager
+
         subscriptionManager = nil
 
         feature = nil
@@ -413,18 +408,104 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
     // MARK: - Tests for restoreAccountFromAppStorePurchase
 
     func testRestoreAccountFromAppStorePurchaseSuccess() async throws {
-        // uses appStoreRestoreFlow
-        // TODO:
+        ensureUserUnauthenticatedState()
 
-        ensureUserAuthenticatedState()
+        storePurchaseManager.onMostRecentTransaction = { Constants.mostRecentTransactionJWS }
+        authService.storeLoginResult = .success(StoreLoginResponse(authToken: Constants.authToken,
+                                                                   email: Constants.email,
+                                                                   externalID: Constants.externalID,
+                                                                   id: 1, status: "ok"))
+        authService.accessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
+        authService.validateTokenResult = .success(Constants.validateTokenResponse)
+        subscriptionService.getSubscriptionResult = .success(SubscriptionMockFactory.subscription)
+
+        do {
+            try await feature.restoreAccountFromAppStorePurchase()
+
+            XCTAssertTrue(accountManager.isUserAuthenticated)
+
+            XCTAssertEqual(feature.transactionStatus, .idle)
+            XCTAssertEqual(feature.transactionError, nil)
+        } catch let error {
+            XCTFail("Unexpected error \(error)")
+        }
     }
 
-    // MARK: - Tests for mapAppStoreRestoreErrorToTransactionError
+    func testRestoreAccountFromAppStorePurchaseErrorDueToExpiredSubscription() async throws {
+        ensureUserUnauthenticatedState()
 
-    func testMapAppStoreRestoreErrorToTransactionErrorSuccess() async throws {
-        // TODO:
+        storePurchaseManager.onMostRecentTransaction = { Constants.mostRecentTransactionJWS }
+        authService.storeLoginResult = .success(StoreLoginResponse(authToken: Constants.authToken,
+                                                                   email: Constants.email,
+                                                                   externalID: Constants.externalID,
+                                                                   id: 1, status: "ok"))
+        authService.accessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
+        authService.validateTokenResult = .success(Constants.validateTokenResponse)
+        subscriptionService.getSubscriptionResult = .success(SubscriptionMockFactory.expiredSubscription)
 
-        ensureUserAuthenticatedState()
+        do {
+            try await feature.restoreAccountFromAppStorePurchase()
+
+            XCTFail("Unexpected success")
+        } catch let error {
+            guard let error = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError else {
+                XCTFail("Unexpected error type")
+                return
+            }
+
+            XCTAssertEqual(error, .subscriptionExpired)
+            XCTAssertFalse(accountManager.isUserAuthenticated)
+
+            XCTAssertEqual(feature.transactionStatus, .idle)
+            XCTAssertEqual(feature.transactionError, nil)
+        }
+    }
+
+    func testRestoreAccountFromAppStorePurchaseErrorDueToNoTransaction() async throws {
+        ensureUserUnauthenticatedState()
+
+        storePurchaseManager.onMostRecentTransaction = { nil }
+
+        do {
+            try await feature.restoreAccountFromAppStorePurchase()
+
+            XCTFail("Unexpected success")
+        } catch let error {
+            guard let error = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError else {
+                XCTFail("Unexpected error type")
+                return
+            }
+
+            XCTAssertEqual(error, .subscriptionNotFound)
+            XCTAssertFalse(accountManager.isUserAuthenticated)
+
+            XCTAssertEqual(feature.transactionStatus, .idle)
+            XCTAssertEqual(feature.transactionError, nil)
+        }
+    }
+
+    func testRestoreAccountFromAppStorePurchaseErrorDueToOtherError() async throws {
+        ensureUserUnauthenticatedState()
+
+        storePurchaseManager.onMostRecentTransaction = { Constants.mostRecentTransactionJWS }
+        authService.storeLoginResult = .failure(Constants.invalidTokenError)
+
+        do {
+            try await feature.restoreAccountFromAppStorePurchase()
+
+            XCTFail("Unexpected success")
+        } catch let error {
+            guard let error = error as? SubscriptionPagesUseSubscriptionFeature.UseSubscriptionError else {
+                XCTFail("Unexpected error type")
+                return
+            }
+
+            XCTAssertEqual(error, .failedToRestorePastPurchase)
+            XCTAssertFalse(accountManager.isUserAuthenticated)
+
+            XCTAssertEqual(feature.transactionStatus, .idle)
+            XCTAssertEqual(feature.transactionError, nil)
+        }
     }
 }
 

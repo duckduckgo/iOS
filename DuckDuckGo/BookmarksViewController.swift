@@ -924,8 +924,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             headerView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: totalHeight)
 
             tableView.tableHeaderView = headerView
-
-            tableView.layoutIfNeeded()
         } else if !headerView.subviews.contains(searchBar) || headerView.subviews.count != 1 {
 
             if syncPromoViewHostingController.view != nil {

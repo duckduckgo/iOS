@@ -897,12 +897,17 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
 
             syncPromoViewHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
             // This is needed to ensure the toolbar displays correctly on iOS 15
             if #available(iOS 16.0, *) {
                 addChild(syncPromoViewHostingController)
+            }
+
+            headerView.addSubview(syncPromoViewHostingController.view)
+
+            if #available(iOS 16.0, *) {
                 syncPromoViewHostingController.didMove(toParent: self)
             }
-            headerView.addSubview(syncPromoViewHostingController.view)
 
             NSLayoutConstraint.deactivate([
                 searchBarBottomConstraint

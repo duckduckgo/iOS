@@ -66,7 +66,10 @@ final class OnboardingIntroViewModel: ObservableObject {
     }
 
     func appIconPickerContinueAction() {
-       // TODO: Remove below and implement proper logic
+        state = makeViewState(for: .addressBarPositionSelection)
+    }
+
+    func selectAddressBarPositionAction() {
         onCompletingOnboardingIntro?()
     }
 
@@ -78,7 +81,8 @@ private extension OnboardingIntroViewModel {
 
     func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
         let stepInfo: OnboardingView.ViewState.Intro.StepInfo? = if let currentStepIndex = introSteps.firstIndex(of: introStep), onboardingManager.isOnboardingHighlightsEnabled {
-            .init(currentStep: currentStepIndex, totalSteps: introSteps.count)
+            // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
+            .init(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
         } else {
             nil
         }

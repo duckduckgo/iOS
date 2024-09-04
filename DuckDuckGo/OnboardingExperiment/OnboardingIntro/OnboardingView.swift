@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Onboarding
+import struct DuckUI.PrimaryButtonStyle
 
 // MARK: - OnboardingView
 
@@ -85,7 +86,7 @@ struct OnboardingView: View {
                             case .chooseAppIconDialog:
                                 appIconPickerView
                             case .chooseAddressBarPositionDialog:
-                                EmptyView()
+                                addressBarPreferenceSelectionView
                             }
                         }
                     }
@@ -142,13 +143,27 @@ struct OnboardingView: View {
     }
 
     private var appIconPickerView: some View {
-        // TODO: Implement AppIconPicker
+        // TODO: Implement View
         VStack(spacing: 30) {
             Text(verbatim: "Choose App Icon")
 
             Button(action: model.appIconPickerContinueAction) {
                 Text(verbatim: "Continue")
             }
+            .buttonStyle(PrimaryButtonStyle())
+        }
+        .onboardingDaxDialogStyle()
+    }
+
+    private var addressBarPreferenceSelectionView: some View {
+        // TODO: Implement View
+        VStack(spacing: 30) {
+            Text(verbatim: "Choose Address Bar Position")
+
+            Button(action: model.selectAddressBarPositionAction) {
+                Text(verbatim: "Continue")
+            }
+            .buttonStyle(PrimaryButtonStyle())
         }
         .onboardingDaxDialogStyle()
     }

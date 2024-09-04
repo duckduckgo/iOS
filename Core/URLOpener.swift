@@ -21,13 +21,11 @@ import UIKit
 
 public protocol URLOpener: AnyObject {
     func canOpenURL(_ url: URL) -> Bool
-    func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler completion: ((Bool) -> Void)?)
+    func open(_ url: URL)
 }
 
-public extension URLOpener {
-    func open(_ url: URL) {
+extension UIApplication: URLOpener {
+    public func open(_ url: URL) {
         open(url, options: [:], completionHandler: nil)
     }
 }
-
-extension UIApplication: URLOpener {}

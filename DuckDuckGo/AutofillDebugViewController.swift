@@ -33,6 +33,7 @@ class AutofillDebugViewController: UITableViewController {
         case resetAutofillData = 204
         case addAutofillData = 205
         case resetAutofillBrokenReports = 206
+        case resetAutofillSurveys = 207
     }
 
     let defaults = AppUserDefaults()
@@ -87,6 +88,11 @@ class AutofillDebugViewController: UITableViewController {
                 let expiryDate = Calendar.current.date(byAdding: .day, value: 60, to: Date())!
                 _ = reporter.persistencyManager.removeExpiredItems(currentDate: expiryDate)
                 ActionMessageView.present(message: "Autofill Broken Reports reset")
+            } else if cell.tag == Row.resetAutofillSurveys.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let autofillSurveyManager = AutofillSurveyManager()
+                autofillSurveyManager.resetSurveys()
+                ActionMessageView.present(message: "Autofill Surveys reset")
             }
         }
     }

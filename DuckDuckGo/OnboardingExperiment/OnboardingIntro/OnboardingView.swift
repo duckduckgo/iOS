@@ -82,6 +82,8 @@ struct OnboardingView: View {
                                 introView
                             case .browsersComparisonDialog:
                                 browsersComparisonView
+                            case .chooseAppIconDialog:
+                                appIconPickerView
                             }
                         }
                     }
@@ -133,6 +135,18 @@ struct OnboardingView: View {
         .onboardingDaxDialogStyle()
     }
 
+    private var appIconPickerView: some View {
+        // TODO: Implement AppIconPicker
+        VStack(spacing: 30) {
+            Text(verbatim: "Choose App Icon")
+
+            Button(action: model.appIconPickerContinueAction) {
+                Text(verbatim: "Continue")
+            }
+        }
+        .onboardingDaxDialogStyle()
+    }
+
     private func animateBrowserComparisonViewState() {
         // Hide content of Intro dialog before animating
         showIntroViewContent = false
@@ -176,6 +190,7 @@ extension OnboardingView.ViewState {
     enum Intro: Equatable {
         case startOnboardingDialog
         case browsersComparisonDialog
+        case chooseAppIconDialog
     }
     
 }

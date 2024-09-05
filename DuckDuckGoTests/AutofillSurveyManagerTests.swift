@@ -40,7 +40,6 @@ final class AutofillSurveyManagerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-
     func testSurveyToPresentReturnsCorrectSurvey() {
         let settings: [String: Any] = [
             "surveys": [

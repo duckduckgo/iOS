@@ -97,7 +97,7 @@ protocol DuckPlayerProtocol: AnyObject {
     var settings: DuckPlayerSettings { get }
     var hostView: UIViewController? { get }
     
-    init(settings: DuckPlayerSettings)
+    init(settings: DuckPlayerSettings, featureFlagger: FeatureFlagger)
 
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
@@ -125,6 +125,7 @@ final class DuckPlayer: DuckPlayerProtocol {
     
     private(set) var settings: DuckPlayerSettings
     private(set) weak var hostView: UIViewController?
+    private var featureFlagger: FeatureFlagger
     
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
@@ -147,8 +148,10 @@ final class DuckPlayer: DuckPlayerProtocol {
         case overlay = "duckPlayer"
     }
     
-    init(settings: DuckPlayerSettings = DuckPlayerSettingsDefault()) {
+    init(settings: DuckPlayerSettings = DuckPlayerSettingsDefault(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
+        self.featureFlagger = featureFlagger
     }
     
     // Sets a presenting VC, so DuckPlayer can present the
@@ -230,9 +233,10 @@ final class DuckPlayer: DuckPlayerProtocol {
 
     private func encodeUserValues() -> UserValues {
         let experiment = DuckPlayerLaunchExperiment()
-        let isExperiment = experiment.isEnrolled && experiment.isExperimentCohort
+        let isEnabled = experiment.isEnrolled && experiment.isExperimentCohort && featureFlagger.isFeatureOn(.duckPlayer)
+        
         return UserValues(
-            duckPlayerMode: isExperiment ? settings.mode : .disabled,
+            duckPlayerMode: isEnabled ? settings.mode : .disabled,
             askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }

@@ -60,7 +60,7 @@ final class DuckPlayerNavigationHandler {
          experiment: DuckPlayerLaunchExperimentHandling = DuckPlayerLaunchExperiment()) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
-        self.appSettings = appSettings   
+        self.appSettings = appSettings
         self.experiment = experiment
     }
     
@@ -108,7 +108,8 @@ final class DuckPlayerNavigationHandler {
     }
     
     private var duckPlayerMode: DuckPlayerMode {
-        return experiment.isExperimentCohort ? duckPlayer.settings.mode : .disabled
+        let isEnabled = experiment.isEnrolled && experiment.isExperimentCohort && featureFlagger.isFeatureOn(.duckPlayer)
+        return isEnabled ? duckPlayer.settings.mode : .disabled
     }
     
     // Handle URL changes not triggered via Omnibar

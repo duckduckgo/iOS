@@ -124,6 +124,7 @@ final class UsageSegmentationTests: XCTestCase {
 
         XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb])
         XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastPixel, file: file, line: line)
+        XCTAssertEqual([], PixelFiringMock.lastPixelInfo?.includedParams)
     }
 
     private func assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {
@@ -135,6 +136,7 @@ final class UsageSegmentationTests: XCTestCase {
 
         XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb, atb], file: file, line: line)
         XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastPixel, file: file, line: line)
+        XCTAssertEqual([], PixelFiringMock.lastPixelInfo?.includedParams)
     }
 
     private func assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(_ activityType: UsageActivityType, file: StaticString = #filePath, line: UInt = #line) {

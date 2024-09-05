@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import BrowserServicesKit
 import Configuration
 
@@ -25,6 +26,6 @@ struct VPNAgentConfigurationURLProvider: ConfigurationURLProviding {
     func url(for configuration: Configuration) -> URL {
         guard configuration == .privacyConfiguration else { fatalError("\(configuration.rawValue) is not supported on this target") }
 
-        return URL(string: "http://localhost:3000/generated/v4/macos-config.json")!
+        return URL.privacyConfig
     }
 }

@@ -110,6 +110,8 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 
+    private lazy var autofillSurveyManager: AutofillSurveyManaging = AutofillSurveyManager()
+
     internal lazy var breakageReporter = BrokenSiteReporter(pixelHandler: { [weak self] _ in
         if let currentTabUid = self?.currentTabUid {
             NotificationCenter.default.post(name: .autofillFailureReport, object: self, userInfo: [UserInfoKeys.tabUid: currentTabUid])
@@ -327,6 +329,24 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     func dismissSyncPromo() {
         syncPromoManager.dismissPromoFor(.passwords)
+    }
+
+    func shouldShowSurvey() -> AutofillSurveyManager.AutofillSurvey? {
+        guard Locale.current.isEnglishLanguage,
+              viewState == .showItems || viewState == .empty,
+              !isEditing,
+              privacyConfig.isEnabled(featureKey: .autofillSurveys) else {
+            return nil
+        }
+        return autofillSurveyManager.surveyToPresent(settings: privacyConfig.settings(for: .autofillSurveys))
+    }
+
+    func surveyUrl(survey: String) -> URL? {
+        return autofillSurveyManager.buildSurveyUrl(survey, accountsCount: accountsCount)
+    }
+
+    func dismissSurvey(id: String) {
+        autofillSurveyManager.markSurveyAsCompleted(id: id)
     }
 
     // MARK: Private Methods

@@ -312,6 +312,7 @@
 		6FA3438F2C3D3BC300470677 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA3438E2C3D3BC300470677 /* Favorite.swift */; };
 		6FA343922C3D3C3B00470677 /* FavoriteIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA343912C3D3C3B00470677 /* FavoriteIconView.swift */; };
 		6FA563CE2C88AB0F00C6BE54 /* DebugDataCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA563CC2C888D6500C6BE54 /* DebugDataCollector.swift */; };
+		6FA563D22C89E1EE00C6BE54 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 6FA563D12C89E1EE00C6BE54 /* Onboarding */; };
 		6FABAA692C6116FD003762EC /* NewTabPageShortcutsSettingsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FABAA682C6116FD003762EC /* NewTabPageShortcutsSettingsStorageTests.swift */; };
 		6FB1FE9E2C24D41D0075B68B /* NewTabPageSectionsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1FE9D2C24D41D0075B68B /* NewTabPageSectionsDebugView.swift */; };
 		6FB1FEA22C256ACD0075B68B /* NewTabPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1FEA12C256ACD0075B68B /* NewTabPageManager.swift */; };
@@ -2976,6 +2977,7 @@
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
+				6FA563D22C89E1EE00C6BE54 /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
 			);
@@ -6334,6 +6336,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
+				6FA563D12C89E1EE00C6BE54 /* Onboarding */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -10870,6 +10873,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Common;
+		};
+		6FA563D12C89E1EE00C6BE54 /* Onboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Onboarding;
 		};
 		851481872A600EFC00ABC65F /* RemoteMessaging */ = {
 			isa = XCSwiftPackageProductDependency;

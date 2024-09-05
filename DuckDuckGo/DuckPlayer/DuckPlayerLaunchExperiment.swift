@@ -122,8 +122,7 @@ final class DuckPlayerLaunchExperiment {
     static func formattedDate(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Constants.dateFormat
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)        
         return dateFormatter.string(from: date)
     }
     

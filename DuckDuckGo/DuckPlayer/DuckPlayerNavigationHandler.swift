@@ -197,13 +197,18 @@ final class DuckPlayerNavigationHandler {
     }
     
     // DuckPlayer Experiment Handling
-    private func handleYouTubePageVisited(url: URL?) {
+    private func handleYouTubePageVisited(url: URL?, navigationAction: WKNavigationAction?) {
         guard let url else { return }
         
         // Parse openInYoutubeURL if present
         let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
         
         guard let (videoID, _) = newURL.youtubeVideoParams else { return }
+        
+        // If this is a SERP link, set the referrer accordingly
+        if let navigationAction, isSERPLink(navigationAction: navigationAction) {
+            referrer = .serp
+        }
         
         let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer.settings.mode, referrer: referrer)
         experiment.assignUserToCohort()
@@ -468,11 +473,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     // Handle custom events
-    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction) {
+    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction?) {
         
         switch event {
         case .youtubeVideoPageVisited:
-            handleYouTubePageVisited(url: url)
+            handleYouTubePageVisited(url: url, navigationAction: navigationAction)
         }
     }
     

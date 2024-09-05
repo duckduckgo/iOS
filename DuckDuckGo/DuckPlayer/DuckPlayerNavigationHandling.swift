@@ -37,5 +37,5 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func getDuckURLFor(_ url: URL) -> URL
     func handleEvent(event: DuckPlayerNavigationEvent, 
                      url: URL?,
-                     navigationAction: WKNavigationAction)
+                     navigationAction: WKNavigationAction?)
 }

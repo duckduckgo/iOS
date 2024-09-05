@@ -749,7 +749,9 @@ class TabViewController: UIViewController {
             if let url,
                url.isYoutubeVideo {
                 
-                duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited, url: url)
+                duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                         url: url,
+                                                         navigationAction: nil)
                 
                 if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
                  duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)

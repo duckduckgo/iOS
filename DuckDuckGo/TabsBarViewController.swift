@@ -52,7 +52,7 @@ class TabsBarViewController: UIViewController {
     weak var delegate: TabsBarDelegate?
     private weak var tabsModel: TabsModel?
 
-    let tabSwitcherButton = TabSwitcherButton()
+    var tabSwitcherButton: TabSwitcherButton!
     private let longPressTabGesture = UILongPressGestureRecognizer()
     
     private weak var pressedCell: TabsBarCell?
@@ -71,6 +71,8 @@ class TabsBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tabSwitcherButton = TabSwitcherButton()
 
         decorate()
 

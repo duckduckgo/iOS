@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import Core
 import Configuration
 import Persistence
 
@@ -62,8 +63,7 @@ struct ConfigurationStore: ConfigurationStoring {
                 let nserror = error as NSError
 
                 if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
-                    // TODO: Fire pixel
-//                    PixelKit.fire(DebugEvent(DataBrokerProtectionPixels.errorLoadingCachedConfig(error)))
+                    Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error, withAdditionalParameters: ["target": "vpn"])
                 }
             }
         }

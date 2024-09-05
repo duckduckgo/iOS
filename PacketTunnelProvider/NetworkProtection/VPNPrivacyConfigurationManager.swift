@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import BrowserServicesKit
 import Combine
 import Common
@@ -93,7 +94,7 @@ public final class VPNPrivacyConfigurationManager: PrivacyConfigurationManaging 
                 let configData = try PrivacyConfigurationData(data: data)
                 fetchedConfigData = (data, configData, etag)
             } catch {
-                // TODO: Fire failed to parse pixel
+                Pixel.fire(pixel: .trackerDataParseFailed, error: error, withAdditionalParameters: ["target": "vpn"])
                 fetchedConfigData = nil
                 return .embeddedFallback
             }

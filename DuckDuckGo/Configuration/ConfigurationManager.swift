@@ -81,7 +81,6 @@ final class ConfigurationManager: DefaultConfigurationManager {
         }
     }
 
-    // TODO: Use app config group
     override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
                   store: ConfigurationStoring = ConfigurationStore(),
                   defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {

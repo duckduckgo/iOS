@@ -28,6 +28,7 @@ import NetworkProtection
 import Subscription
 import WidgetKit
 import WireGuard
+import BrowserServicesKit
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -331,6 +332,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         // Load cached config (if any)
         let configStore = ConfigurationStore()
         privacyConfigurationManager.reload(etag: configStore.loadEtag(for: .privacyConfiguration), data: configStore.loadData(for: .privacyConfiguration))
+
+        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest)
+            && !UserDefaults.configurationGroupDefaults.bool(forKey: BackgroundAgentPixelTestSubfeature.pixelTest.rawValue) {
+            Pixel.fire(pixel: .networkProtectionConfigurationPixelTest)
+            UserDefaults.configurationGroupDefaults.set(true, forKey: BackgroundAgentPixelTestSubfeature.pixelTest.rawValue)
+        }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default

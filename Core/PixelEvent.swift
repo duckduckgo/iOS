@@ -448,6 +448,7 @@ extension Pixel {
         case networkProtectionVPNConfigurationRemovalFailed
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
+        case networkProtectionConfigurationPixelTest
 
         // MARK: remote messaging pixels
         
@@ -1227,6 +1228,7 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
         case .networkProtectionConfigurationInvalidPayload: return "m_netp_vpn_configuration_invalid_payload"
+        case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
 
             // MARK: remote messaging pixels
             

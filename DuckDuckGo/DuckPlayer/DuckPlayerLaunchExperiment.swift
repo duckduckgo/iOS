@@ -44,17 +44,17 @@ extension Pixel: DuckPlayerExperimentPixelFiring {
 }
 
 
-
 // Experiment Protocol
 protocol DuckPlayerLaunchExperimentHandling {
     var isEnrolled: Bool { get }
+    var isExperimentCohort: Bool { get }
     func assignUserToCohort()
-    func sendSearchPixels()
-    func sendYoutubePixel()
+    func fireSearchPixels()
+    func fireYoutubePixel(videoID: String)
 }
 
 
-final class DuckPlayerLaunchExperiment {
+final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
         
     private struct Constants {
         static let dateFormat = "yyyyMMdd"
@@ -74,18 +74,21 @@ final class DuckPlayerLaunchExperiment {
     
     // Date Provider
     private let dateProvider: DuckPlayerExperimentDateProvider
-            
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
-    private var enrollmentDate: Date?
-
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
-    private var experimentCohort: String?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastWeekPixelFired, defaultValue: nil)
     private var lastWeekPixelFired: Int?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastDayPixelFired, defaultValue: nil)
     private var lastDayPixelFired: Int?
+       
+    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastVideoIDRendered, defaultValue: nil)
+    private var lastVideoIDReported: String?
+    
+    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
+    var enrollmentDate: Date?
+
+    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
+    var experimentCohort: String?
     
     enum Cohort: String {
         case control
@@ -186,7 +189,7 @@ final class DuckPlayerLaunchExperiment {
         }
     }
     
-    func fireYoutubePixel() {
+    func fireYoutubePixel(videoID: String) {
         guard isEnrolled,
               let experimentCohort = experimentCohort,
               let dates,
@@ -201,7 +204,10 @@ final class DuckPlayerLaunchExperiment {
             Constants.referrerKey: referrer?.stringValue ?? "",
             Constants.enrollmentKey: formattedEnrollmentDate
         ]
-        pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentYoutubePageView, withAdditionalParameters: params)
+        if lastVideoIDReported != videoID {
+            pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentYoutubePageView, withAdditionalParameters: params)
+            lastVideoIDReported = videoID
+        }
     }
     
     func cleanup() {

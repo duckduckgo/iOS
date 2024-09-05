@@ -34,6 +34,7 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var lastPixelEventID: String?
+    var experiment: DuckPlayerLaunchExperimentHandling
     
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
@@ -55,10 +56,12 @@ final class DuckPlayerNavigationHandler {
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         appSettings: AppSettings) {
+         appSettings: AppSettings,
+         experiment: DuckPlayerLaunchExperimentHandling = DuckPlayerLaunchExperiment()) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
-        self.appSettings = appSettings        
+        self.appSettings = appSettings   
+        self.experiment = experiment
     }
     
     static var htmlTemplatePath: String {
@@ -105,7 +108,6 @@ final class DuckPlayerNavigationHandler {
     }
     
     private var duckPlayerMode: DuckPlayerMode {
-        let experiment = DuckPlayerLaunchExperiment()
         return experiment.isExperimentCohort ? duckPlayer.settings.mode : .disabled
     }
     
@@ -217,14 +219,8 @@ final class DuckPlayerNavigationHandler {
         
         let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
         experiment.assignUserToCohort()
-        
-        // Keep track of the last fired pixel in this tab
-        // to avoid duplicates
-        if videoID != lastPixelEventID {
-            experiment.fireYoutubePixel()
-            lastPixelEventID = videoID
-            Logger.duckPlayer.debug("DP: Fired Pixel for \(videoID)")
-        }
+        experiment.fireYoutubePixel(videoID: videoID)
+
     }
     
 }

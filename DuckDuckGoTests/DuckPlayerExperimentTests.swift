@@ -98,7 +98,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
 
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
 
         sut.cleanup()
@@ -128,7 +127,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
 
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
 
         sut.cleanup()
@@ -156,7 +154,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
                 
@@ -194,7 +191,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -233,7 +229,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -272,7 +267,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -310,7 +304,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
                 
@@ -347,7 +340,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -384,7 +376,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         
         let sut = DuckPlayerLaunchExperiment(userDefaults: userDefaults,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -415,7 +406,6 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         let sut = DuckPlayerLaunchExperiment(duckPlayerMode: .alwaysAsk,
                                              referrer: .serp,
                                              pixel: DuckPlayerExperimentPixelFireMock.self,
-                                             dailyPixel: DuckPlayerExperimentDailyPixelFireMock.self,
                                              dateProvider: dateProvider)
         sut.cleanup()
         
@@ -424,7 +414,7 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         XCTAssertTrue(sut.isEnrolled, "User should be enrolled after assigning to cohort.")
         
         dateProvider.setCurrentDate(Date(timeIntervalSince1970: startDate + (3 * 86400))) // Day 3
-        sut.fireYoutubePixel()
+        sut.fireYoutubePixel(videoID: "testVideoID")
         
         let history = DuckPlayerExperimentPixelFireMock.capturedPixelEventHistory
         let youtubePixel = history.filter { $0.pixel == .duckplayerExperimentYoutubePageView }

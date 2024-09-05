@@ -80,22 +80,28 @@ final class OnboardingIntroViewModel: ObservableObject {
 private extension OnboardingIntroViewModel {
 
     func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
-        let stepInfo: OnboardingView.ViewState.Intro.StepInfo? = if let currentStepIndex = introSteps.firstIndex(of: introStep), onboardingManager.isOnboardingHighlightsEnabled {
+        
+        func stepInfo() -> OnboardingView.ViewState.Intro.StepInfo {
+            guard
+                let currentStepIndex = introSteps.firstIndex(of: introStep),
+                    onboardingManager.isOnboardingHighlightsEnabled
+            else {
+                return .hidden
+            }
+
             // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
-            .init(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
-        } else {
-            nil
+            return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
         }
 
         let viewState = switch introStep {
         case .introDialog:
-            OnboardingView.ViewState.onboarding(.init(type: .startOnboardingDialog, step: nil))
+            OnboardingView.ViewState.onboarding(.init(type: .startOnboardingDialog, step: .hidden))
         case .browserComparison:
-            OnboardingView.ViewState.onboarding(.init(type: .browsersComparisonDialog, step: stepInfo))
+            OnboardingView.ViewState.onboarding(.init(type: .browsersComparisonDialog, step: stepInfo()))
         case .appIconSelection:
-            OnboardingView.ViewState.onboarding(.init(type: .chooseAppIconDialog, step: stepInfo))
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAppIconDialog, step: stepInfo()))
         case .addressBarPositionSelection:
-            OnboardingView.ViewState.onboarding(.init(type: .chooseAddressBarPositionDialog, step: stepInfo))
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAddressBarPositionDialog, step: stepInfo()))
         }
 
         return viewState

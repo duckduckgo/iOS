@@ -91,10 +91,7 @@ struct OnboardingView: View {
                         }
                     }
                 )
-                .ifLet(state.step) { view, stepInfo in
-                    view.onboardingProgressIndicator(currentStep: stepInfo.currentStep, totalSteps: stepInfo.totalSteps)
-                }
-
+                .onboardingProgressIndicator(currentStep: state.step.currentStep, totalSteps: state.step.totalSteps)
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
@@ -219,7 +216,7 @@ extension OnboardingView.ViewState {
     
     struct Intro: Equatable {
         let type: IntroType
-        let step: StepInfo?
+        let step: StepInfo
     }
 
 }
@@ -236,6 +233,8 @@ extension OnboardingView.ViewState.Intro {
     struct StepInfo: Equatable {
         let currentStep: Int
         let totalSteps: Int
+
+        static let hidden = StepInfo(currentStep: 0, totalSteps: 0)
     }
 
 }
@@ -261,6 +260,7 @@ private extension View {
                 .padding(.trailing, Metrics.progressBarTrailingPadding)
                 .padding(.top, Metrics.progressBarTopPadding)
                 .transition(.identity)
+                .visibility(totalSteps == 0 ? .invisible : .visible)
         }
     }
 

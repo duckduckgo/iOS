@@ -35,5 +35,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
-    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?)
+    func handleEvent(event: DuckPlayerNavigationEvent, 
+                     url: URL?,
+                     navigationAction: WKNavigationAction)
 }

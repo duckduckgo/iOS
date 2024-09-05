@@ -244,6 +244,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 return
         }
         
+        
+        
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
         if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
@@ -347,10 +349,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 return
          }
 
-        // Pixel for Views From SERP
-        if isSERPLink(navigationAction: navigationAction),
-           duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
+        // SERP referals
+        if isSERPLink(navigationAction: navigationAction) {
+            // Set the referer
+            referrer = .serp
+            
+            if duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
+                Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
+            }
+            
         } else {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
         }
@@ -461,7 +468,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     // Handle custom events
-    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?) {
+    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction) {
         
         switch event {
         case .youtubeVideoPageVisited:

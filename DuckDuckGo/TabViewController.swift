@@ -1769,7 +1769,7 @@ extension TabViewController: WKNavigationDelegate {
                     privacyProDataReporter.saveSearchCount()
                     
                     // Duck Player Search Experiment
-                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()                    
+                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)
@@ -1828,7 +1828,9 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame(),
            url.isYoutubeVideo {
             
-            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited, url: url)
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                     url: url,
+                                                     navigationAction: navigationAction)
             
             // Handle decidePolicy For
             if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
@@ -1857,7 +1859,9 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited, url: url)
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited, 
+                                                     url: url,
+                                                     navigationAction: navigationAction)
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return

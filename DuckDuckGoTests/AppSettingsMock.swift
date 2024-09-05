@@ -92,4 +92,6 @@ class AppSettingsMock: AppSettings {
 
     var newTabPageIntroMessageEnabled: Bool?
     var newTabPageIntroMessageSeenCount: Int = 0
+
+    var onboardingHighlightsEnabled: Bool = false
 }

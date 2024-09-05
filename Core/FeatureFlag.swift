@@ -40,6 +40,7 @@ public enum FeatureFlag: String {
     case sslCertificatesBypass
     case syncPromotionBookmarks
     case syncPromotionPasswords
+    case onboardingHighlights
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -83,6 +84,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
+        case .onboardingHighlights:
+            return .internalOnly
         }
     }
 }

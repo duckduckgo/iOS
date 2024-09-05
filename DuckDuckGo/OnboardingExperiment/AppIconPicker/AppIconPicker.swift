@@ -35,7 +35,7 @@ struct AppIconPicker: View {
     var body: some View {
         LazyVGrid(columns: layout, spacing: Metrics.spacing) {
             ForEach(viewModel.items, id: \.self) { item in
-                Image(uiImage: item.mediumImage!)
+                Image(uiImage: item.mediumImage ?? UIImage())
                     .resizable()
                     .frame(width: Metrics.iconSize, height: Metrics.iconSize)
                     .cornerRadius(Metrics.cornerRadius)

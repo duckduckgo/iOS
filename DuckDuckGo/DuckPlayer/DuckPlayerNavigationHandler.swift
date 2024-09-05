@@ -239,21 +239,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         guard let url = navigationAction.request.url else { return }
         
-        guard featureFlagger.isFeatureOn(.duckPlayer) else {
-            return
-        }
-        
-        // If User tried a duck:// video, but DuckPlayer is disabled, just redirect to YT
-        if url.isDuckURLScheme,
-           duckPlayerMode == .disabled,
-            !isOpenInYoutubeURL(url: url),
-            let (videoID, _) = url.youtubeVideoParams {
-                let newURL = URL.youtube(videoID)
-                webView.load(URLRequest(url: newURL))
-                return
-        }
-                        
-        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else { return }
+                                
         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
         // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
@@ -289,7 +276,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
            duckPlayerMode != .disabled {
             let setting = duckPlayerMode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
             DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
-            
         }
         
         // Pixel for Views From Youtube
@@ -297,8 +283,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
            duckPlayerMode == .enabled {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
-        
-        
+                
         if url.isDuckURLScheme {
            
             // If DuckPlayer is Enabled or in ask mode, render the video

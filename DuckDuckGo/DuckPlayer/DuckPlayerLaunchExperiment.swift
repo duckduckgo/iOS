@@ -21,6 +21,7 @@ import Foundation
 import Core
 
 
+// Date manipulation protocol to allow testing
 public protocol DuckPlayerExperimentDateProvider {
     var currentDate: Date { get }
 }
@@ -31,6 +32,7 @@ public class DefaultDuckPlayerExperimentDateProvider: DuckPlayerExperimentDatePr
     }
 }
 
+// Wrap Pixel firing in a protocol for better testing
 protocol DuckPlayerExperimentPixelFiring {
     static func fireDuckPlayerExperimentPixel(pixel: Pixel.Event, withAdditionalParameters params: [String: String])
 }
@@ -41,11 +43,16 @@ extension Pixel: DuckPlayerExperimentPixelFiring {
     }
 }
 
-extension DailyPixel: DuckPlayerExperimentPixelFiring {
-    static func fireDuckPlayerExperimentPixel(pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
-        self.fire(pixel: pixel, withAdditionalParameters: params, onComplete: { _ in })
-    }
+
+
+// Experiment Protocol
+protocol DuckPlayerLaunchExperimentHandling {
+    var isEnrolled: Bool { get }
+    func assignUserToCohort()
+    func sendSearchPixels()
+    func sendYoutubePixel()
 }
+
 
 final class DuckPlayerLaunchExperiment {
         
@@ -64,22 +71,21 @@ final class DuckPlayerLaunchExperiment {
     
     // Abstract Pixel firing for proper testing
     private let pixel: DuckPlayerExperimentPixelFiring.Type
-    private let dailyPixel: DuckPlayerExperimentPixelFiring.Type
     
     // Date Provider
     private let dateProvider: DuckPlayerExperimentDateProvider
             
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
-    var enrollmentDate: Date?
+    private var enrollmentDate: Date?
 
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
-    var experimentCohort: String?
+    private var experimentCohort: String?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastWeekPixelFired, defaultValue: nil)
-    var lastWeekPixelFired: Int?
+    private var lastWeekPixelFired: Int?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastDayPixelFired, defaultValue: nil)
-    var lastDayPixelFired: Int?
+    private var lastDayPixelFired: Int?
     
     enum Cohort: String {
         case control
@@ -90,12 +96,10 @@ final class DuckPlayerLaunchExperiment {
          referrer: DuckPlayerReferrer? = nil,
          userDefaults: UserDefaults = UserDefaults.standard,
          pixel: DuckPlayerExperimentPixelFiring.Type = Pixel.self,
-         dailyPixel: DuckPlayerExperimentPixelFiring.Type = DailyPixel.self,
          dateProvider: DuckPlayerExperimentDateProvider = DefaultDuckPlayerExperimentDateProvider()) {
         self.referrer = referrer
         self.duckPlayerMode = duckPlayerMode
         self.pixel = pixel
-        self.dailyPixel = dailyPixel
         self.dateProvider = dateProvider
     }
     

@@ -196,6 +196,27 @@ final class DuckPlayerNavigationHandler {
         return true
     }
     
+    // DuckPlayer Experiment Handling
+    private func handleYouTubePageVisited(url: URL?) {
+        guard let url else { return }
+        
+        // Parse openInYoutubeURL if present
+        let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
+        
+        guard let (videoID, _) = newURL.youtubeVideoParams else { return }
+        
+        let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer.settings.mode, referrer: referrer)
+        experiment.assignUserToCohort()
+        
+        // Keep track of the last fired pixel in this tab
+        // to avoid duplicates
+        if videoID != lastPixelEventID {
+            experiment.fireYoutubePixel()
+            lastPixelEventID = videoID
+            Logger.duckPlayer.debug("DP: Fired Pixel for \(videoID)")
+        }
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -439,28 +460,13 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
     }
     
-    // Temporary DuckPlayer launch experiment
+    // Handle custom events
     func handleEvent(event: DuckPlayerNavigationEvent, url: URL?) {
         
-        guard let url else { return }
-        
-        // Parse openInYoutubeURL if present
-        let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
-        
-        guard let (videoID, _) = newURL.youtubeVideoParams else { return }
-        
-        let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer.settings.mode, referrer: referrer)
-        experiment.assignUserToCohort()
-        
-        // Keep track of the last fired pixel in this tab
-        // to avoid duplicates
-        if videoID != lastPixelEventID {
-            experiment.fireYoutubePixel()
-            lastPixelEventID = videoID
-            Logger.duckPlayer.debug("DP: Fired Pixel for \(videoID)")
+        switch event {
+        case .youtubeVideoPageVisited:
+            handleYouTubePageVisited(url: url)
         }
-        
     }
-    
     
 }

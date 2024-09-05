@@ -113,20 +113,20 @@ public final class DebugDataCollector {
     }
 
     private struct PixelName {
-        static let launchingEntry = "debug_app_launching_entry"
-        static let launchingReturn = "debug_app_launching_return"
+        static let launchingEntry = "m_debug_app_launching_entry"
+        static let launchingReturn = "m_debug_app_launching_return"
 
-        static let startedBGFetch = "debug_bg_fetch_start"
-        static let finishedBGFetch = "debug_bg_fetch_start"
+        static let startedBGFetch = "m_debug_bg_fetch_start"
+        static let finishedBGFetch = "m_debug_bg_fetch_start"
 
-        static let staredAutoclear = "debug_ac_start"
-        static let finishedAutoclear = "debug_ac_finish"
+        static let staredAutoclear = "m_debug_ac_start"
+        static let finishedAutoclear = "m_debug_ac_finish"
 
-        static let startedLoadingHistory = "debug_loading_history_db_start"
-        static let finishedLoadingHistory = "debug_loading_history_db_finish"
+        static let startedLoadingHistory = "m_debug_loading_history_db_start"
+        static let finishedLoadingHistory = "m_debug_loading_history_db_finish"
 
-        static let loadingHistoryDataStarted = "debug_loading_history_data_start"
-        static let historyDataCleaningFinished = "debug_history_data_cleaning_finished"
+        static let loadingHistoryDataStarted = "m_debug_loading_history_data_start"
+        static let historyDataCleaningFinished = "m_debug_history_data_cleaning_finished"
     }
 
     private struct PixelParameters {

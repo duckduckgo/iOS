@@ -95,6 +95,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
     private let syncService: DDGSyncing
+    private let locale: Locale
     private var showBreakageReporter: Bool = false
 
     private lazy var reporterDateFormatter = {
@@ -120,7 +121,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self?.showBreakageReporter = false
     }, keyValueStoring: keyValueStore, storageConfiguration: .autofillConfig)
 
-    @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
+    @Published private(set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
         didSet {
             updateViewState()
@@ -158,7 +159,8 @@ final class AutofillLoginListViewModel: ObservableObject {
          autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager,
          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
          keyValueStore: KeyValueStoringDictionaryRepresentable = UserDefaults.standard,
-         syncService: DDGSyncing) {
+         syncService: DDGSyncing,
+         locale: Locale = Locale.current) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
@@ -168,6 +170,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.privacyConfig = privacyConfig
         self.keyValueStore = keyValueStore
         self.syncService = syncService
+        self.locale = locale
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
@@ -331,8 +334,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         syncPromoManager.dismissPromoFor(.passwords)
     }
 
-    func shouldShowSurvey() -> AutofillSurveyManager.AutofillSurvey? {
-        guard Locale.current.isEnglishLanguage,
+    func getSurveyToPresent() -> AutofillSurveyManager.AutofillSurvey? {
+        guard locale.isEnglishLanguage,
               viewState == .showItems || viewState == .empty,
               !isEditing,
               privacyConfig.isEnabled(featureKey: .autofillSurveys) else {

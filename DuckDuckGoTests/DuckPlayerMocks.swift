@@ -111,6 +111,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
 }
 
 final class MockDuckPlayer: DuckPlayerProtocol {
+    
     var hostView: UIViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
@@ -132,9 +133,11 @@ final class MockDuckPlayer: DuckPlayerProtocol {
     }
     
     var settings: any DuckPlayerSettings
+    private var featureFlagger: FeatureFlagger
     
-    init(settings: DuckPlayerSettings) {
+    init(settings: any DuckDuckGo.DuckPlayerSettings, featureFlagger: any BrowserServicesKit.FeatureFlagger) {
         self.settings = settings
+        self.featureFlagger = featureFlagger
     }
     
     func setUserValues(params: Any, message: WKScriptMessage) -> (any Encodable)? {

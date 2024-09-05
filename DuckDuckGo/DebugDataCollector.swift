@@ -31,9 +31,8 @@ public final class DebugDataCollector {
     private var isRunningAutoclear = false
     private var instanceUUID = UUID()
 
-    public var debugParameters: [String: String] {
-
-        let getParams: () -> [String: String] = {
+    public func getDebugParameters(_ completion: @escaping ([String: String]) -> Void) {
+        DispatchQueue.main.async {
             var params = [String: String]()
             if let application = self.application {
                 params[PixelParameters.applicationState] = "\(application.applicationState.rawValue)"
@@ -48,15 +47,7 @@ public final class DebugDataCollector {
             params[PixelParameters.launchOptions] = self.launchOptions?.description
             params[PixelParameters.instanceUUID] = self.instanceUUID.uuidString
 
-            return params
-        }
-
-        if Thread.isMainThread {
-            return getParams()
-        } else {
-            return DispatchQueue.main.sync {
-                getParams()
-            }
+            completion(params)
         }
     }
 

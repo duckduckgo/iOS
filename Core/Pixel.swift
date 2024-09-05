@@ -229,42 +229,44 @@ public class Pixel {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         }
 
-        newParams.merge(DebugDataCollector.current.debugParameters, uniquingKeysWith: { k1, _ in k1 })
+        DebugDataCollector.current.getDebugParameters { debugParameters in
+            newParams.merge(debugParameters, uniquingKeysWith: { k1, _ in k1 })
 
-        guard !isDryRun else {
-            Logger.general.debug("Pixel fired \(pixelName.replacingOccurrences(of: "_", with: "."), privacy: .public) \(params.count > 0 ? "\(params)" : "", privacy: .public)")
-            // simulate server response time for Dry Run mode
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                onComplete(nil)
+            guard !isDryRun else {
+                Logger.general.debug("Pixel fired \(pixelName.replacingOccurrences(of: "_", with: "."), privacy: .public) \(params.count > 0 ? "\(params)" : "", privacy: .public)")
+                // simulate server response time for Dry Run mode
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    onComplete(nil)
+                }
+                return
             }
-            return
-        }
 
-        if isDebugBuild {
-            newParams[PixelParameters.test] = PixelValues.test
-        }
-        if isInternalUser {
-            newParams[PixelParameters.isInternalUser] = "true"
-        }
+            if isDebugBuild {
+                newParams[PixelParameters.test] = PixelValues.test
+            }
+            if isInternalUser {
+                newParams[PixelParameters.isInternalUser] = "true"
+            }
 
-        let url: URL
-        if let deviceType = deviceType {
-            let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = URL.makePixelURL(pixelName: pixelName,
-                                   formFactor: formFactor,
-                                   includeATB: includedParameters.contains(.atb))
-        } else {
-            url = URL.makePixelURL(pixelName: pixelName, includeATB: includedParameters.contains(.atb) )
-        }
+            let url: URL
+            if let deviceType = deviceType {
+                let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
+                url = URL.makePixelURL(pixelName: pixelName,
+                                       formFactor: formFactor,
+                                       includeATB: includedParameters.contains(.atb))
+            } else {
+                url = URL.makePixelURL(pixelName: pixelName, includeATB: includedParameters.contains(.atb) )
+            }
 
-        let configuration = APIRequest.Configuration(url: url,
-                                                     queryParameters: newParams,
-                                                     allowedQueryReservedCharacters: allowedQueryReservedCharacters,
-                                                     headers: headers)
-        let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
-        request.fetch { _, error in
-            Logger.general.debug("Pixel fired \(pixelName, privacy: .public) \(params, privacy: .public)")
-            onComplete(error)
+            let configuration = APIRequest.Configuration(url: url,
+                                                         queryParameters: newParams,
+                                                         allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                                                         headers: headers)
+            let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
+            request.fetch { _, error in
+                Logger.general.debug("Pixel fired \(pixelName, privacy: .public) \(params, privacy: .public)")
+                onComplete(error)
+            }
         }
     }
 

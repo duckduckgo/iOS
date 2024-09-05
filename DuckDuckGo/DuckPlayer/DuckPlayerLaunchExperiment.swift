@@ -140,8 +140,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     
     func assignUserToCohort() {
         if !isEnrolled {
-            //let cohort: Cohort = Bool.random() ? .experiment : .control
-            let cohort: Cohort = .experiment
+            let cohort: Cohort = Bool.random() ? .experiment : .control
             experimentCohort = cohort.rawValue
             enrollmentDate = dateProvider.currentDate
             fireEnrollmentPixel()

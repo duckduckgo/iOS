@@ -666,7 +666,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             return
         }
 
-        if let survey = viewModel.shouldShowSurvey() {
+        if let survey = viewModel.getSurveyToPresent() {
             if shouldUpdateHeaderView(for: .survey(survey)) {
                 configureTableHeaderView(for: .survey(survey))
                 surveyPromptPresented = true

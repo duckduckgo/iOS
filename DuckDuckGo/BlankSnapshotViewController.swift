@@ -35,7 +35,7 @@ class BlankSnapshotViewController: UIViewController {
     
     let menuButton = MenuButton()
 
-    let tabSwitcherButton = TabSwitcherButton()
+    var tabSwitcherButton: TabSwitcherButton!
     let appSettings: AppSettings
 
     var viewCoordinator: MainViewCoordinator!
@@ -53,6 +53,8 @@ class BlankSnapshotViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tabSwitcherButton = TabSwitcherButton()
 
         viewCoordinator = MainViewFactory.createViewHierarchy(view)
         if appSettings.currentAddressBarPosition.isBottom {

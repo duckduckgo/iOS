@@ -48,6 +48,7 @@ extension Pixel: DuckPlayerExperimentPixelFiring {
 protocol DuckPlayerLaunchExperimentHandling {
     var isEnrolled: Bool { get }
     var isExperimentCohort: Bool { get }
+    var duckPlayerMode: DuckPlayerMode? { get set }
     func assignUserToCohort()
     func fireSearchPixels()
     func fireYoutubePixel(videoID: String)
@@ -67,7 +68,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     }
     
     private let referrer: DuckPlayerReferrer?
-    private let duckPlayerMode: DuckPlayerMode?
+    var duckPlayerMode: DuckPlayerMode?
     
     // Abstract Pixel firing for proper testing
     private let pixel: DuckPlayerExperimentPixelFiring.Type
@@ -139,7 +140,8 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     
     func assignUserToCohort() {
         if !isEnrolled {
-            let cohort: Cohort = Bool.random() ? .experiment : .control
+            //let cohort: Cohort = Bool.random() ? .experiment : .control
+            let cohort: Cohort = .experiment
             experimentCohort = cohort.rawValue
             enrollmentDate = dateProvider.currentDate
             fireEnrollmentPixel()
@@ -215,6 +217,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
         experimentCohort = nil
         lastDayPixelFired = nil
         lastWeekPixelFired = nil
+        lastVideoIDReported = nil
     }
         
 }

@@ -33,7 +33,6 @@ final class DuckPlayerNavigationHandler {
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
-    var lastPixelEventID: String?
     var experiment: DuckPlayerLaunchExperimentHandling
     
     private struct Constants {
@@ -218,8 +217,24 @@ final class DuckPlayerNavigationHandler {
             referrer = .serp
         }
         
+        
+        // DuckPlayer Experiment run
         let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
-        experiment.assignUserToCohort()
+        
+        // Enroll user if not enrolled
+        if !experiment.isEnrolled {
+            experiment.assignUserToCohort()
+        }
+        
+        // DuckPlayer is disabled before user enrolls,
+        // So trigger a settings change notification
+        // to let the FE know about the 'actual' setting
+        // and update Experiment value
+        if experiment.isExperimentCohort {
+            duckPlayer.settings.triggerNotification()
+            experiment.duckPlayerMode = duckPlayer.settings.mode
+        }
+        
         experiment.fireYoutubePixel(videoID: videoID)
 
     }

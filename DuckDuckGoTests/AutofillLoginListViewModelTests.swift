@@ -60,7 +60,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
                       }
                     ]
                 },
-            },     
+            },
         },
         "unprotectedTemporary": []
     }

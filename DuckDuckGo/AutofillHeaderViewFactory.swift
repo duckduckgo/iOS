@@ -29,23 +29,23 @@ protocol AutofillHeaderViewDelegate: AnyObject {
 
 protocol AutofillHeaderViewFactoryProtocol: AnyObject {
     var delegate: AutofillHeaderViewDelegate? { get set }
-
+    
     func makeHeaderView(for type: AutofillHeaderViewFactory.ViewType) -> UIViewController
 }
 
 final class AutofillHeaderViewFactory: AutofillHeaderViewFactoryProtocol {
-
+    
     weak var delegate: AutofillHeaderViewDelegate?
-
+    
     enum ViewType {
         case syncPromo(SyncPromoManager.Touchpoint)
         case survey(AutofillSurveyManager.AutofillSurvey)
     }
-
+    
     init(delegate: AutofillHeaderViewDelegate?) {
         self.delegate = delegate
     }
-
+    
     func makeHeaderView(for type: ViewType) -> UIViewController {
         switch type {
         case .syncPromo(let touchpointType):
@@ -54,7 +54,7 @@ final class AutofillHeaderViewFactory: AutofillHeaderViewFactoryProtocol {
             return makeSurveyView(survey: survey)
         }
     }
-
+    
     private func makeSyncPromoView(touchpointType: SyncPromoManager.Touchpoint) -> UIHostingController<SyncPromoView> {
         let headerView = SyncPromoView(viewModel: SyncPromoViewModel(
             touchpointType: touchpointType,
@@ -65,14 +65,14 @@ final class AutofillHeaderViewFactory: AutofillHeaderViewFactoryProtocol {
                 delegate?.handleDismissAction(for: .syncPromo(touchpointType))
             }
         ))
-
+        
         Pixel.fire(.syncPromoDisplayed, withAdditionalParameters: ["source": touchpointType.rawValue])
-
+        
         let hostingController = UIHostingController(rootView: headerView)
         hostingController.view.backgroundColor = .clear
         return hostingController
     }
-
+    
     private func makeSurveyView(survey: AutofillSurveyManager.AutofillSurvey) -> UIHostingController<AutofillSurveyView> {
         let headerView = AutofillSurveyView(
             primaryButtonAction: { [weak delegate] in
@@ -82,9 +82,9 @@ final class AutofillHeaderViewFactory: AutofillHeaderViewFactoryProtocol {
                 delegate?.handleDismissAction(for: .survey(survey))
             }
         )
-
+        
         Pixel.fire(pixel: .autofillManagementScreenVisitSurveyAvailable)
-
+        
         let hostingController = UIHostingController(rootView: headerView)
         hostingController.view.backgroundColor = .clear
         return hostingController

@@ -51,7 +51,7 @@ class AppConfigurationFetch {
         
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
-        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30
+        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 5 // 60 * 30
 
     }
     

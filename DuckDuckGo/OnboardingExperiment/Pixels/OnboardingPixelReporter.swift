@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import BrowserServicesKit
+import Onboarding
 
 // MARK: - Pixel Fire Interface
 
@@ -48,14 +49,6 @@ protocol OnboardingIntroImpressionReporting {
 protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
     func trackBrowserComparisonImpression()
     func trackChooseBrowserCTAAction()
-}
-
-protocol OnboardingSearchSuggestionsPixelReporting {
-    func trackSearchSuggetionOptionTapped()
-}
-
-protocol OnboardingSiteSuggestionsPixelReporting {
-    func trackSiteSuggetionOptionTapped()
 }
 
 protocol OnboardingCustomInteractionPixelReporting {

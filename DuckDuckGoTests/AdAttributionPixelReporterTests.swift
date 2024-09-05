@@ -124,13 +124,16 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertNil(pixelAttributes["ad_id"])
     }
 
-    func testPixelNotFiredAndMarksReport_WhenAttributionFalse() async {
+    func testNotAttributedPixelFiredAndMarkedReported_WhenAttributionFalse() async throws {
         let sut = createSUT()
         attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: false))
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertNil(PixelFiringMock.lastPixel)
+        let pixelAttributes = try XCTUnwrap(PixelFiringMock.lastParams)
+
+        XCTAssertEqual(pixelAttributes, [:])
+        XCTAssertEqual(PixelFiringMock.lastPixel?.name, "m_apple-ad-attribution_not-attributed")
         XCTAssertTrue(fetcherStorage.wasAttributionReportSuccessful)
         XCTAssertTrue(result)
     }

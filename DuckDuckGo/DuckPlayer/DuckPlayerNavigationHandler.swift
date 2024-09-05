@@ -274,8 +274,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             duckPlayer.settings.allowFirstVideo = true
 
             // Attempt to open in YouTube app (if installed) or load in webView
-            if isSERPLink(navigationAction: navigationAction),
-               appSettings.allowUniversalLinks,
+            if appSettings.allowUniversalLinks,
                isYouTubeAppInstalled,
                 let (videoID, _) =  newURL.youtubeVideoParams,
                 let url = URL(string: "\(Constants.youtubeScheme)\(videoID)") {

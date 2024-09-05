@@ -91,4 +91,5 @@ protocol AppSettings: AnyObject, AppDebugSettings {
 
 protocol AppDebugSettings {
     var newTabPageSectionsEnabled: Bool { get set }
+    var onboardingHighlightsEnabled: Bool { get set }
 }

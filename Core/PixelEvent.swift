@@ -723,6 +723,7 @@ extension Pixel {
 
         // MARK: Apple Ad Attribution
         case appleAdAttribution
+        case appleAdAttributionNotAttributed
 
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
@@ -786,6 +787,9 @@ extension Pixel {
         case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
+
+        // MARK: enhanced statistics
+        case usageSegments
 
         // MARK: Certificate warnings
         case certificateWarningDisplayed(_ errorType: String)
@@ -1438,6 +1442,7 @@ extension Pixel.Event {
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
+        case .appleAdAttributionNotAttributed: return "m_apple-ad-attribution_not-attributed"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
@@ -1589,6 +1594,9 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+
+        // MARK: Enhanced statistics
+        case .usageSegments: return "m_retention_segments"
 
         // MARK: Certificate warnings
         case .certificateWarningDisplayed(let errorType):

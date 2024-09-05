@@ -57,16 +57,6 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
 
-    private let defaults: KeyValueStoring
-    public var lastConfigInstallDate: Date? {
-        get {
-            defaults.object(forKey: Constants.lastConfigurationInstallDateKey) as? Date
-        }
-        set {
-            defaults.set(newValue, forKey: Constants.lastConfigurationInstallDateKey)
-        }
-    }
-
     private static let configurationDebugEvents = EventMapping<ConfigurationDebugEvents> { event, error, _, _ in
         let domainEvent: Pixel.Event
         switch event {
@@ -84,7 +74,6 @@ final class ConfigurationManager: DefaultConfigurationManager {
     override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
                   store: ConfigurationStoring = ConfigurationStore(),
                   defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
-        self.defaults = defaults
         super.init(fetcher: fetcher, store: store, defaults: defaults)
         addPresenter()
         subscribeToLifecycleNotifications()
@@ -111,8 +100,9 @@ final class ConfigurationManager: DefaultConfigurationManager {
     }
 
     func loadPrivacyConfigFromDiskIfNeeded() {
-        guard let lastConfigInstallDate else { updateTrackerBlockingDependencies(); return }
-        if lastUpdateTime.timeIntervalSince(lastConfigInstallDate) > 1 {
+        let storedEtag = store.loadEtag(for: .privacyConfiguration)
+        let privacyManagerEtag = (ContentBlocking.shared.privacyConfigurationManager as? PrivacyConfigurationManager)?.fetchedConfigData?.etag
+        if let privacyManagerEtag, privacyManagerEtag != storedEtag {
             updateTrackerBlockingDependencies()
         }
     }
@@ -147,7 +137,6 @@ final class ConfigurationManager: DefaultConfigurationManager {
     }
     
     private func updateTrackerBlockingDependencies() {
-        lastConfigInstallDate = Date()
         ContentBlocking.shared.privacyConfigurationManager.reload(etag: store.loadEtag(for: .privacyConfiguration),
                                                                   data: store.loadData(for: .privacyConfiguration))
         ContentBlocking.shared.trackerDataManager.reload(etag: store.loadEtag(for: .trackerDataSet),

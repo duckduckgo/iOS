@@ -26,7 +26,8 @@ struct OnboardingProgressIndicator: View {
         let totalSteps: Int
 
         fileprivate var percentage: Double {
-            Double(currentStep) / Double(totalSteps) * 100
+            guard totalSteps > 0 else { return 0 }
+            return Double(currentStep) / Double(totalSteps) * 100
         }
     }
 

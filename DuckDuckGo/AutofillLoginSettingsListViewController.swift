@@ -149,21 +149,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         return tableView
     }()
 
-    private lazy var syncPromoViewHostingController: UIHostingController<SyncPromoView> = {
-        let headerView = SyncPromoView(viewModel: SyncPromoViewModel(touchpointType: .passwords, primaryButtonAction: { [weak self] in
-            self?.segueToSync(source: "promotion_passwords")
-            Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.passwords.rawValue])
-        }, dismissButtonAction: { [weak self] in
-            self?.viewModel.dismissSyncPromo()
-            self?.updateTableHeaderView()
-        }))
+    private lazy var headerViewFactory: AutofillHeaderViewFactoryProtocol = AutofillHeaderViewFactory(delegate: self)
+    private var currentHeaderHostingController: UIViewController?
 
-        Pixel.fire(.syncPromoDisplayed, withAdditionalParameters: ["source": SyncPromoManager.Touchpoint.passwords.rawValue])
-
-        let hostingController = UIHostingController(rootView: headerView)
-        hostingController.view.backgroundColor = .clear
-        return hostingController
-    }()
+    // This is used to prevent the Sync Promo from being displayed immediately after the Survey is dismissed
+    private var surveyPromptPresented: Bool = false
 
     private lazy var lockedViewBottomConstraint: NSLayoutConstraint = {
         NSLayoutConstraint(item: tableView,
@@ -672,22 +662,67 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func updateTableHeaderView() {
-        if viewModel.shouldShowSyncPromo() {
-            guard tableView.frame != .zero, tableView.tableHeaderView != syncPromoViewHostingController.view else {
-                return
+        guard tableView.frame != .zero else {
+            return
+        }
+
+        if let survey = viewModel.shouldShowSurvey() {
+            if shouldUpdateHeaderView(for: .survey(survey)) {
+                configureTableHeaderView(for: .survey(survey))
+                surveyPromptPresented = true
             }
+            return
+        }
 
-            addChild(syncPromoViewHostingController)
-
-            let syncPromoViewHeight = syncPromoViewHostingController.view.sizeThatFits(CGSize(width: tableView.bounds.width - tableView.layoutMargins.left - tableView.layoutMargins.right, height: CGFloat.greatestFiniteMagnitude)).height
-            syncPromoViewHostingController.view.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: syncPromoViewHeight)
-            tableView.tableHeaderView = syncPromoViewHostingController.view
-
-            syncPromoViewHostingController.didMove(toParent: self)
-        } else {
-            guard tableView.tableHeaderView != nil else {
-                return
+        if viewModel.shouldShowSyncPromo() && !surveyPromptPresented {
+            if shouldUpdateHeaderView(for: .syncPromo(.passwords)) {
+                configureTableHeaderView(for: .syncPromo(.passwords))
             }
+            return
+        }
+
+        // No header view is needed, clear the table header
+        clearTableHeaderView()
+    }
+
+    private func shouldUpdateHeaderView(for type: AutofillHeaderViewFactory.ViewType) -> Bool {
+        if let currentHeaderView = tableView.tableHeaderView,
+           let headerView = currentHeaderHostingController?.view,
+           currentHeaderView == headerView {
+            return false
+        }
+        return true
+    }
+
+    private func configureTableHeaderView(for type: AutofillHeaderViewFactory.ViewType) {
+        switch type {
+        case .survey(let survey):
+            currentHeaderHostingController = headerViewFactory.makeHeaderView(for: .survey(survey))
+            if let hostingController = currentHeaderHostingController as? UIHostingController<AutofillSurveyView> {
+                setupTableHeaderView(with: hostingController)
+            }
+        case .syncPromo(let promoType):
+            currentHeaderHostingController = headerViewFactory.makeHeaderView(for: .syncPromo(promoType))
+            if let hostingController = currentHeaderHostingController as? UIHostingController<SyncPromoView> {
+                setupTableHeaderView(with: hostingController)
+            }
+        }
+    }
+
+    private func setupTableHeaderView(with hostingController: UIViewController) {
+        addChild(hostingController)
+
+        let viewWidth = tableView.bounds.width - tableView.layoutMargins.left - tableView.layoutMargins.right
+        let viewHeight = hostingController.view.sizeThatFits(CGSize(width: viewWidth, height: CGFloat.greatestFiniteMagnitude)).height
+
+        hostingController.view.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+        tableView.tableHeaderView = hostingController.view
+
+        hostingController.didMove(toParent: self)
+    }
+
+    private func clearTableHeaderView() {
+        if tableView.tableHeaderView != nil {
             tableView.tableHeaderView = nil
         }
     }
@@ -1112,6 +1147,38 @@ extension AutofillLoginSettingsListViewController {
             (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
             (tableView.frame.height / 2) - searchController.searchBar.frame.height
         )
+    }
+}
+
+// MARK: AutofillHeaderViewDelegate
+
+extension AutofillLoginSettingsListViewController: AutofillHeaderViewDelegate {
+
+    func handlePrimaryAction(for headerType: AutofillHeaderViewFactory.ViewType) {
+        switch headerType {
+        case .survey(let survey):
+            if let surveyURL = viewModel.surveyUrl(survey: survey.url) {
+                LaunchTabNotification.postLaunchTabNotification(urlString: surveyURL.absoluteString)
+                self.dismiss(animated: true)
+            }
+            viewModel.dismissSurvey(id: survey.id)
+        case .syncPromo(let touchpoint):
+            segueToSync(source: "promotion_passwords")
+            Pixel.fire(.syncPromoConfirmed, withAdditionalParameters: ["source": touchpoint.rawValue])
+        }
+    }
+
+    func handleDismissAction(for headerType: AutofillHeaderViewFactory.ViewType) {
+        defer {
+            updateTableHeaderView()
+        }
+
+        switch headerType {
+        case .survey(let survey):
+            viewModel.dismissSurvey(id: survey.id)
+        case .syncPromo:
+            viewModel.dismissSyncPromo()
+        }
     }
 }
 

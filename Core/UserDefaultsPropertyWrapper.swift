@@ -93,6 +93,9 @@ public struct UserDefaultsWrapper<T> {
         case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
         case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
 
+        case syncPromoBookmarksDismissed = "com.duckduckgo.app.sync.PromoBookmarksDismissed"
+        case syncPromoPasswordsDismissed = "com.duckduckgo.app.sync.PromoPasswordsDismissed"
+
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
 
@@ -168,6 +171,8 @@ public struct UserDefaultsWrapper<T> {
         // Debug keys
 
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
+
+        case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
     }
 
     private let key: Key

@@ -107,6 +107,7 @@ final class DuckPlayer: DuckPlayerProtocol {
         static let translationFileExtension = "json"
         static let defaultLocale = "en"
         static let translationPath = "pages/duckplayer/locales/"
+        static let featureNameKey = "featureName"
     }
     
     private(set) var settings: DuckPlayerSettingsProtocol
@@ -197,13 +198,20 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
     
     @MainActor
-    public func presentDuckPlayerInfo() {
+    public func presentDuckPlayerInfo(context: DuckPlayerModalPresenter.PresentationContext) {
         guard let hostView else { return }
-        DuckPlayerModalPresenter().presentDuckPlayerFeatureModal(on: hostView)
+        DuckPlayerModalPresenter(context: context).presentDuckPlayerFeatureModal(on: hostView)
     }
     
+    @MainActor
     public func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable? {
-        await presentDuckPlayerInfo()
+        guard let body = message.body as? [String: Any],
+              let featureNameString = body[Constants.featureNameKey] as? String,
+              let featureName = FeatureName(rawValue: featureNameString) else {
+            return nil
+        }
+        let context: DuckPlayerModalPresenter.PresentationContext = featureName == .page ? .youtube : .SERP
+        presentDuckPlayerInfo(context: context)
         return nil
     }
 

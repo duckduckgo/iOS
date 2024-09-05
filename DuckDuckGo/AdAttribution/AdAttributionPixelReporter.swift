@@ -55,18 +55,18 @@ final actor AdAttributionPixelReporter {
             isSendingAttribution = false
         }
 
-        if let attributionData = await self.attributionFetcher.fetch() {
-            if attributionData.attribution {
-                let parameters = self.pixelParametersForAttribution(attributionData)
-                do {
-                    try await pixelFiring.fire(
-                        pixel: .appleAdAttribution,
-                        withAdditionalParameters: parameters,
-                        includedParameters: [.appVersion, .atb]
-                    )
-                } catch {
-                    return false
-                }
+        if let (token, attributionData) = await self.attributionFetcher.fetch() {
+            let event: Pixel.Event = attributionData.attribution ? .appleAdAttribution : .appleAdAttributionNotAttributed
+            let parameters = attributionData.attribution ? self.pixelParametersForAttribution(attributionData, attributionToken: token) : [:]
+
+            do {
+                try await pixelFiring.fire(
+                    pixel: event,
+                    withAdditionalParameters: parameters,
+                    includedParameters: [.appVersion, .atb]
+                )
+            } catch {
+                return false
             }
 
             await fetcherStorage.markAttributionReportSuccessful()
@@ -77,7 +77,7 @@ final actor AdAttributionPixelReporter {
         return false
     }
 
-    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse) -> [String: String] {
+    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String) -> [String: String] {
         var params: [String: String] = [:]
 
         params[PixelParameters.adAttributionAdGroupID] = attribution.adGroupId.map(String.init)
@@ -88,6 +88,7 @@ final actor AdAttributionPixelReporter {
         params[PixelParameters.adAttributionCountryOrRegion] = attribution.countryOrRegion
         params[PixelParameters.adAttributionKeywordID] = attribution.keywordId.map(String.init)
         params[PixelParameters.adAttributionAdID] = attribution.adId.map(String.init)
+        params[PixelParameters.adAttributionToken] = attributionToken
 
         return params
     }

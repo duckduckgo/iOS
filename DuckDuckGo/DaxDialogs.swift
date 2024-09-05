@@ -54,7 +54,7 @@ protocol ContextualOnboardingLogic {
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
-        currentMainRules?.trackerData.findEntity(forHost: host)
+        currentMainRules?.trackerData.findParentEntityOrFallback(forHost: host)
     }
     
 }
@@ -316,6 +316,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     func dismiss() {
         settings.isDismissed = true
+        // Reset last shown dialog as we don't have to show it anymore.
+        removeLastShownDaxDialog()
+        removeLastVisitedOnboardingWebsite()
     }
     
     func primeForUse() {
@@ -375,6 +378,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private func removeLastShownDaxDialog() {
+        guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = nil
     }
 
@@ -499,11 +503,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
 
-        if let lastVisitedOnboardingWebsiteURLPath,
-            compareUrls(url1: URL(string: lastVisitedOnboardingWebsiteURLPath), url2: privacyInfo.url) {
-            return lastShownDaxDialog(privacyInfo: privacyInfo)
-        }
-
         func hasTrackers(host: String) -> Bool {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
@@ -512,6 +511,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         currentHomeSpec = nil
 
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
+
+        if let lastVisitedOnboardingWebsiteURLPath,
+            compareUrls(url1: URL(string: lastVisitedOnboardingWebsiteURLPath), url2: privacyInfo.url) {
+            return lastShownDaxDialog(privacyInfo: privacyInfo)
+        }
 
         guard let host = privacyInfo.domain else { return nil }
 

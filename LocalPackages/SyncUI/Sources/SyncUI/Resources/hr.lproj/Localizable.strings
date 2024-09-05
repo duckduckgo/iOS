@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sinkroniziraj i izradi sigurnosnu kopiju ovog uređaja";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopiraj";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Dev okruženje";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Nabavi DuckDuckGo na drugim uređajima";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Tvoji su podaci sinkronizirani!";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sinkroniziraj i izradi sigurnosnu kopiju ovog uređaja";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Nabavi DuckDuckGo na drugim uređajima";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Podijeli poveznicu za preuzimanje";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Za preuzimanje DuckDuckGoa na stolno računalo ili neki drugi mobilni uređaj, posjetite:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Nabavi DuckDuckGo na drugim uređajima za sinkronizaciju s ovim";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Nabavi DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Instaliraj preglednik DuckDuckGo na svoje uređaje i možeš započeli sigurnu sinkronizaciju oznaka i lozinki:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Postavke > Sinkronizacija i sigurnosno kopiranje kopija > Sinkronizacija s drugim uređajem";

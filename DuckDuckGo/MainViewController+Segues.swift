@@ -285,11 +285,15 @@ extension MainViewController {
         }
     }
 
-    func segueToSettingsSync() {
+    func segueToSettingsSync(with source: String? = nil) {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.presentLegacyView(.sync)
+            if let source = source {
+                $0.shouldPresentSyncViewWithSource(source)
+            } else {
+                $0.presentLegacyView(.sync)
+            }
         }
     }
     

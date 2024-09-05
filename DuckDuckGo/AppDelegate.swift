@@ -241,7 +241,7 @@ import os.log
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
-        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)        
+        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
 
         // MARK: Sync initialisation
 #if DEBUG

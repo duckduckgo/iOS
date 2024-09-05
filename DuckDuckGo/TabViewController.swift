@@ -749,7 +749,7 @@ class TabViewController: UIViewController {
             // URL Changes
             
             if let url,
-               url.isYoutubeVideo {               
+               url.isYoutubeVideo {
                 
                 duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                          url: url,
@@ -1870,7 +1870,7 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited, 
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                      url: url,
                                                      navigationAction: navigationAction)
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)

@@ -229,8 +229,10 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     private func encodeUserValues() -> UserValues {
-        UserValues(
-            duckPlayerMode: settings.mode,
+        let experiment = DuckPlayerLaunchExperiment()
+        let isExperiment = experiment.isEnrolled && experiment.isExperimentCohort
+        return UserValues(
+            duckPlayerMode: isExperiment ? settings.mode : .disabled,
             askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }

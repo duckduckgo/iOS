@@ -747,7 +747,7 @@ class TabViewController: UIViewController {
             // URL Changes
             
             if let url,
-               url.isYoutubeVideo {
+               url.isYoutubeVideo {               
                 
                 duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                          url: url,

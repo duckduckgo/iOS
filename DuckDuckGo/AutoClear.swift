@@ -52,6 +52,8 @@ class AutoClear {
     func clearDataIfEnabled(launching: Bool = false, applicationState: DataStoreWarmup.ApplicationState = .unknown) async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
 
+        DebugDataCollector.current.startingAutoclear()
+
         worker.willStartClearing(self)
 
         if settings.action.contains(.clearTabs) {
@@ -61,6 +63,8 @@ class AutoClear {
         if settings.action.contains(.clearData) {
             await worker.forgetData(applicationState: applicationState)
         }
+
+        DebugDataCollector.current.finishedAutoclear()
 
         worker.autoClearDidFinishClearing(self, isLaunching: launching)
     }

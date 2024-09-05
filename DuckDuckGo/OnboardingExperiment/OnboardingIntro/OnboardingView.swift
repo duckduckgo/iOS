@@ -145,7 +145,7 @@ struct OnboardingView: View {
             Text(verbatim: "Choose App Icon")
 
             Button(action: model.appIconPickerContinueAction) {
-                Text(verbatim: "Continue")
+                Text(verbatim: "Next")
             }
             .buttonStyle(PrimaryButtonStyle())
         }
@@ -158,7 +158,7 @@ struct OnboardingView: View {
             Text(verbatim: "Choose Address Bar Position")
 
             Button(action: model.selectAddressBarPositionAction) {
-                Text(verbatim: "Continue")
+                Text(verbatim: "Next")
             }
             .buttonStyle(PrimaryButtonStyle())
         }

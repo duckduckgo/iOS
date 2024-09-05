@@ -26,8 +26,9 @@ public final class DebugDataCollector {
 
     private var application: UIApplication?
     private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    private var isRunningBGFetch: Bool = false
-    private var didRunBGFetch: Bool = false
+    private var isRunningBGFetch = false
+    private var didRunBGFetch = false
+    private var isRunningAutoclear = false
     private var instanceUUID = UUID()
 
     public var debugParameters: [String: String] {
@@ -42,8 +43,9 @@ public final class DebugDataCollector {
 
             params[PixelParameters.didRunBGFetch] = "\(self.didRunBGFetch)"
             params[PixelParameters.isRunningBGFetch] = "\(self.isRunningBGFetch)"
+            params[PixelParameters.isRunningAutoclear] = "\(self.isRunningAutoclear)"
+
             params[PixelParameters.launchOptions] = self.launchOptions?.description
-            
             params[PixelParameters.instanceUUID] = self.instanceUUID.uuidString
 
             return params
@@ -83,6 +85,10 @@ public final class DebugDataCollector {
         firePixel(PixelName.startedLoadingHistory)
     }
 
+    public func loadingHistoryData() {
+        firePixel(PixelName.loadingHistoryDataStarted)
+    }
+
     public func finishedLoadingHistoryDB(_ error: Error?) {
         var params = [String: String]()
         if let error {
@@ -92,11 +98,22 @@ public final class DebugDataCollector {
         firePixel(PixelName.finishedLoadingHistory, params: params)
     }
 
+    public func historyDataCleaningFinished(error: Error? = nil) {
+        var params = [String: String]()
+        if let error {
+            let errorInfo = CoreDataErrorsParser.parse(error: error as NSError)
+            params["cd_error"] = errorInfo.debugDescription
+        }
+        firePixel(PixelName.historyDataCleaningFinished)
+    }
+
     public func startingAutoclear() {
+        isRunningAutoclear = true
         firePixel(PixelName.staredAutoclear)
     }
 
     public func finishedAutoclear() {
+        isRunningAutoclear = false
         firePixel(PixelName.finishedAutoclear)
     }
 
@@ -116,6 +133,9 @@ public final class DebugDataCollector {
 
         static let startedLoadingHistory = "debug_loading_history_db_start"
         static let finishedLoadingHistory = "debug_loading_history_db_finish"
+
+        static let loadingHistoryDataStarted = "debug_loading_history_data_start"
+        static let historyDataCleaningFinished = "debug_history_data_cleaning_finished"
     }
 
     private struct PixelParameters {
@@ -126,6 +146,7 @@ public final class DebugDataCollector {
         static let instanceUUID = "instance_uuid"
         static let didRunBGFetch = "did_run_bg_fetch"
         static let isRunningBGFetch = "is_running_bg_fetch"
+        static let isRunningAutoclear = "is_running_autoclear"
     }
 }
 

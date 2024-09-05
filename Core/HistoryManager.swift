@@ -236,7 +236,7 @@ extension HistoryManager {
         }
 
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        let dbCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()))
+        let dbCoordinator = HistoryCoordinator(historyStoring: HistoryStore(context: context, eventMapper: HistoryStoreEventMapper()), eventMapper: HistoryCoordinatorEventMapper())
 
         let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
                                             dbCoordinator: dbCoordinator,
@@ -271,4 +271,18 @@ public struct NullHistoryManager: HistoryManaging {
     public init() { }
     
     public func deleteHistoryForURL(_ url: URL) async { }
+}
+
+class HistoryCoordinatorEventMapper: EventMapping<HistoryCoordinator.Event> {
+    public init() {
+        super.init { event, error, _, _ in
+            switch event {
+            case .dataCleaningFailed(let error):
+                DebugDataCollector.current.historyDataCleaningFinished(error: error)
+
+            case .dataCleaningFinished:
+                DebugDataCollector.current.historyDataCleaningFinished()
+            }
+        }
+    }
 }

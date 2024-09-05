@@ -53,6 +53,7 @@ struct ToggleExpandButtonStyle: ButtonStyle {
                 ExpandButtonDivider()
             }
         }
+        .padding(.vertical, 0.5) // Adjust for padding for drawing group, otherwise the circle stroke is clipped
         .drawingGroup()
     }
 }

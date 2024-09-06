@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Favoriler";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "KISAYOLLAR";
+"new.tab.page.settings.section.name.shortcuts" = "Kısayollar";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Yeni sekme sayfasında bölümleri göster, gizle ve yeniden sırala";

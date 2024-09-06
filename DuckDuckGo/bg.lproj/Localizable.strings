@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Любими";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "БЪРЗИ ВРЪЗКИ";
+"new.tab.page.settings.section.name.shortcuts" = "Бързи Връзки";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";

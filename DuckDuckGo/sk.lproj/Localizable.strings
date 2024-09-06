@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Obľúbené položky";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "SKRATKY";
+"new.tab.page.settings.section.name.shortcuts" = "Skratky";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Zobrazenie, skrytie a zmena poradia častí na novej stránke karty";

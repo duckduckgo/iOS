@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Omiljeno";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "PREČACI";
+"new.tab.page.settings.section.name.shortcuts" = "Prečaci";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Prikaži, sakrij i promijeni redoslijed odjeljaka na stranici nove kartice";

@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Suosikit";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "PIKAVALINNAT";
+"new.tab.page.settings.section.name.shortcuts" = "Pikavalinnat";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Näytä, piilota ja järjestä uuden välilehden osiot uudelleen";

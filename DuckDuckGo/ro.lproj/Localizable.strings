@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Preferințe";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "SCURTĂTURI";
+"new.tab.page.settings.section.name.shortcuts" = "Scurtături";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Afișează, ascunde și reordonează secțiunile din pagina noii file";

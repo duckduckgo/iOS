@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Αγαπημένα";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "ΣΥΝΤΟΜΕΥΣΕΙΣ";
+"new.tab.page.settings.section.name.shortcuts" = "Συντομευσεις";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Εμφάνιση, απόκρυψη και αναδιάταξη ενοτήτων στη σελίδα της νέας καρτέλας";

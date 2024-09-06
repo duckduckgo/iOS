@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Priljubljeni";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "BLIŽNJICE";
+"new.tab.page.settings.section.name.shortcuts" = "Bližnjice";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Prikaz, skrivanje in razvrščanje razdelkov na strani novega zavihka";

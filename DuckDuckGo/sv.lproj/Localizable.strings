@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Favoriter";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "GENVÄGAR";
+"new.tab.page.settings.section.name.shortcuts" = "Genvägar";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Visa, dölja och ändra ordning på avsnitt på den nya fliksidan";

@@ -1716,7 +1716,7 @@
 "new.tab.page.settings.section.name.favorites" = "Lemmikud";
 
 /* Name of shortcuts section setting */
-"new.tab.page.settings.section.name.shortcuts" = "OTSETEED";
+"new.tab.page.settings.section.name.shortcuts" = "Otseteed";
 
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Jaotiste kuvamine, peitmine ja järjestamine uuel vahelehel";

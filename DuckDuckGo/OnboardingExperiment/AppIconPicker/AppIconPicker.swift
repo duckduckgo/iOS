@@ -53,11 +53,11 @@ struct AppIconPicker: View {
 
 }
 
-
+@MainActor
 final class AppIconPickerViewModel: ObservableObject {
     let items = AppIcon.allCases
 
-    @Published var selectedAppIcon: AppIcon
+    @Published private(set) var selectedAppIcon: AppIcon
 
     private let appIconManager: AppIconManaging
 
@@ -68,12 +68,9 @@ final class AppIconPickerViewModel: ObservableObject {
 
     func changeApp(icon: AppIcon) {
         appIconManager.changeAppIcon(icon) { [weak self] error in
-            guard error == nil else { return }
+            guard let self, error == nil else { return }
 
-            DispatchQueue.main.async {
-                guard let self else { return }
-                self.selectedAppIcon = self.appIconManager.appIcon
-            }
+            self.selectedAppIcon = self.appIconManager.appIcon
         }
     }
 }

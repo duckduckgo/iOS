@@ -180,7 +180,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         authService.storeLoginResult = .success(StoreLoginResponse(authToken: newAuthToken,
                                                                    email: Constants.email,
                                                                    externalID: Constants.externalID,
-                                                                   id: 1, status: "ok"))
+                                                                   id: 1, status: "authenticated"))
 
         let result = await feature.getSubscription(params: Constants.mockParams, original: Constants.mockScriptMessage)
 
@@ -297,7 +297,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         authService.createAccountResult = .success(CreateAccountResponse(authToken: Constants.authToken,
                                                                          externalID: Constants.externalID,
-                                                                         status: ""))
+                                                                         status: "created"))
         authService.getAccessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
         authService.validateTokenResult = .success(Constants.validateTokenResponse)
         storePurchaseManager.purchaseSubscriptionResult = .success(Constants.mostRecentTransactionJWS)
@@ -330,7 +330,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                                    email: Constants.email,
                                                                    externalID: Constants.externalID,
                                                                    id: 1,
-                                                                   status: "ok"))
+                                                                   status: "authenticated"))
         authService.getAccessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
         authService.validateTokenResult = .success(Constants.validateTokenResponse)
         storePurchaseManager.purchaseSubscriptionResult = .success(Constants.mostRecentTransactionJWS)
@@ -755,7 +755,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         authService.storeLoginResult = .success(StoreLoginResponse(authToken: Constants.authToken,
                                                                    email: Constants.email,
                                                                    externalID: Constants.externalID,
-                                                                   id: 1, status: "ok"))
+                                                                   id: 1, status: "authenticated"))
         authService.getAccessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
         authService.validateTokenResult = .success(Constants.validateTokenResponse)
         subscriptionService.getSubscriptionResult = .success(SubscriptionMockFactory.subscription)
@@ -779,7 +779,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         authService.storeLoginResult = .success(StoreLoginResponse(authToken: Constants.authToken,
                                                                    email: Constants.email,
                                                                    externalID: Constants.externalID,
-                                                                   id: 1, status: "ok"))
+                                                                   id: 1, status: "authenticated"))
         authService.getAccessTokenResult = .success(AccessTokenResponse(accessToken: Constants.accessToken))
         authService.validateTokenResult = .success(Constants.validateTokenResponse)
         subscriptionService.getSubscriptionResult = .success(SubscriptionMockFactory.expiredSubscription)

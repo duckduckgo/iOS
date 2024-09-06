@@ -47,7 +47,7 @@ final class AppIconPickerViewModelTests: XCTestCase {
         let result = sut.items
 
         // THEN
-        XCTAssertEqual(result, expectedIcons)
+        XCTAssertEqual(result.map(\.icon), expectedIcons)
     }
 
     @MainActor
@@ -57,10 +57,11 @@ final class AppIconPickerViewModelTests: XCTestCase {
         sut = AppIconPickerViewModel(appIconManager: appIconManagerMock)
 
         // WHEN
-        let result = sut.selectedAppIcon
+        let result = sut.items
 
         // THEN
-        XCTAssertEqual(result, .purple)
+        XCTAssertEqual(result.count, AppIcon.allCases.count)
+        assertSelected(.purple, items: result)
     }
 
     @MainActor
@@ -68,13 +69,13 @@ final class AppIconPickerViewModelTests: XCTestCase {
         // GIVEN
         appIconManagerMock.appIcon = .red
         appIconManagerMock.changeAppIconError = NSError(domain: #function, code: 0)
-        XCTAssertEqual(sut.selectedAppIcon, .red)
+        assertSelected(.red, items: sut.items)
 
         // WHEN
         sut.changeApp(icon: .purple)
 
         // THEN
-        XCTAssertEqual(sut.selectedAppIcon, .red)
+        assertSelected(.red, items: sut.items)
     }
 
     @MainActor
@@ -89,6 +90,16 @@ final class AppIconPickerViewModelTests: XCTestCase {
         // THEN
         XCTAssertTrue(appIconManagerMock.didCallChangeAppIcon)
         XCTAssertEqual(appIconManagerMock.capturedAppIcon, .purple)
+    }
+
+    private func assertSelected(_ appIcon: AppIcon, items: [AppIconPickerViewModel.DisplayModel]) {
+        items.forEach { model in
+            if model.icon == appIcon {
+                XCTAssertTrue(model.isSelected)
+            } else {
+                XCTAssertFalse(model.isSelected)
+            }
+        }
     }
 }
 

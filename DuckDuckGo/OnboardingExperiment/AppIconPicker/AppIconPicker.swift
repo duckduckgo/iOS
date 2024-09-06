@@ -38,24 +38,24 @@ struct AppIconPicker: View {
     
     var body: some View {
         LazyVGrid(columns: layout, spacing: Metrics.spacing) {
-            ForEach(viewModel.items, id: \.self) { item in
-                Image(uiImage: item.mediumImage ?? UIImage())
+            ForEach(viewModel.items, id: \.icon) { item in
+                Image(uiImage: item.icon.mediumImage ?? UIImage())
                     .resizable()
                     .frame(width: Metrics.iconSize, height: Metrics.iconSize)
                     .cornerRadius(Metrics.cornerRadius)
                     .overlay {
-                        strokeOverlay(for: item)
+                        strokeOverlay(isSelected: item.isSelected)
                     }
                     .onTapGesture {
-                        viewModel.changeApp(icon: item)
+                        viewModel.changeApp(icon: item.icon)
                     }
             }
         }
     }
 
     @ViewBuilder
-    private func strokeOverlay(for item: AppIcon) -> some View {
-        if viewModel.selectedAppIcon == item {
+    private func strokeOverlay(isSelected: Bool) -> some View {
+        if isSelected {
             RoundedRectangle(cornerRadius: Metrics.cornerRadius)
                 .foregroundColor(.clear)
                 .frame(width: Metrics.strokeFrameSize, height: Metrics.strokeFrameSize)
@@ -71,22 +71,31 @@ struct AppIconPicker: View {
 
 @MainActor
 final class AppIconPickerViewModel: ObservableObject {
-    let items = AppIcon.allCases
+    
+    struct DisplayModel {
+        let icon: AppIcon
+        let isSelected: Bool
+    }
 
-    @Published private(set) var selectedAppIcon: AppIcon
+    @Published private(set) var items: [DisplayModel] = []
 
     private let appIconManager: AppIconManaging
 
     init(appIconManager: AppIconManaging = AppIconManager.shared) {
         self.appIconManager = appIconManager
-        selectedAppIcon = appIconManager.appIcon
+        items = makeDisplayModels()
     }
 
     func changeApp(icon: AppIcon) {
         appIconManager.changeAppIcon(icon) { [weak self] error in
             guard let self, error == nil else { return }
+            items = makeDisplayModels()
+        }
+    }
 
-            self.selectedAppIcon = self.appIconManager.appIcon
+    private func makeDisplayModels() -> [DisplayModel] {
+        AppIcon.allCases.map { appIcon in
+            DisplayModel(icon: appIcon, isSelected: appIconManager.appIcon == appIcon)
         }
     }
 }

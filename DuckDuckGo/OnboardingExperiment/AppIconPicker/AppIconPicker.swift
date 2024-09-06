@@ -18,20 +18,24 @@
 //
 
 import SwiftUI
+import DuckUI
 
 private enum Metrics {
     static let cornerRadius: CGFloat = 13.0
     static let iconSize: CGFloat = 56.0
     static let spacing: CGFloat = 16.0
-    static let strokeWidth: CGFloat = 2.5
-    static let strokeInset: CGFloat = 4.0
+    static let strokeFrameSize: CGFloat = 60
+    static let strokeWidth: CGFloat = 3
+    static let strokeInset: CGFloat = 1.5
 }
 
 struct AppIconPicker: View {
+    @Environment(\.colorScheme) private var color
 
     @StateObject private var viewModel = AppIconPickerViewModel()
 
     let layout = [GridItem(.adaptive(minimum: Metrics.iconSize, maximum: Metrics.iconSize), spacing: Metrics.spacing)]
+    
     var body: some View {
         LazyVGrid(columns: layout, spacing: Metrics.spacing) {
             ForEach(viewModel.items, id: \.self) { item in
@@ -39,15 +43,27 @@ struct AppIconPicker: View {
                     .resizable()
                     .frame(width: Metrics.iconSize, height: Metrics.iconSize)
                     .cornerRadius(Metrics.cornerRadius)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Metrics.cornerRadius).inset(by: -Metrics.strokeInset)
-                            .stroke(.blue, lineWidth: Metrics.strokeWidth)
-                            .visibility(viewModel.selectedAppIcon == item ? .visible : .invisible)
-                    )
+                    .overlay {
+                        strokeOverlay(for: item)
+                    }
                     .onTapGesture {
                         viewModel.changeApp(icon: item)
                     }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func strokeOverlay(for item: AppIcon) -> some View {
+        if viewModel.selectedAppIcon == item {
+            RoundedRectangle(cornerRadius: Metrics.cornerRadius)
+                .foregroundColor(.clear)
+                .frame(width: Metrics.strokeFrameSize, height: Metrics.strokeFrameSize)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Metrics.cornerRadius)
+                        .inset(by: -Metrics.strokeInset)
+                        .stroke(.blue, lineWidth: Metrics.strokeWidth)
+                )
         }
     }
 

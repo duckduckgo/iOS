@@ -64,7 +64,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-protocol DuckPlayerSettingsProtocol: AnyObject {
+protocol DuckPlayerSettings: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
@@ -78,7 +78,7 @@ protocol DuckPlayerSettingsProtocol: AnyObject {
     func triggerNotification()
 }
 
-final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging
@@ -119,7 +119,8 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     var mode: DuckPlayerMode {
-        if isFeatureEnabled {
+        let experiment = DuckPlayerLaunchExperiment()
+        if isFeatureEnabled && experiment.isEnrolled && experiment.isExperimentCohort {
             return appSettings.duckPlayerMode
         } else {
             return .disabled
@@ -127,7 +128,8 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     var askModeOverlayHidden: Bool {
-        if isFeatureEnabled {
+        let experiment = DuckPlayerLaunchExperiment()
+        if isFeatureEnabled  && experiment.isEnrolled && experiment.isExperimentCohort {
             return appSettings.duckPlayerAskModeOverlayHidden
         } else {
             return false

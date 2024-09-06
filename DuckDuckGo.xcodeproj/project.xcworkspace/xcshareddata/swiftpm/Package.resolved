@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "2d20fafba4430f49249521735b951f21e20ec0c3",
-        "version" : "191.2.0"
+        "branch" : "graeme/promote-password-import-in-autofill-menu",
+        "revision" : "7e25810a6cc230b352f564c4a9f3a31146693adc"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "1164f9579d226cf16c0c1c79c0928f28a4f3c421",
-        "version" : "6.14.0"
+        "revision" : "b8c858a33cfe665ddfe177df4dbd63d12f6777a6",
+        "version" : "6.14.1"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "1f12b78d9bac4a1d9b6bad18dc2ef0593bed34a3",
-        "version" : "13.0.0"
+        "branch" : "dbajpeyi/remove-response-param",
+        "revision" : "38bcdc82f8580d15d61dec1fe4b778aa223658a4"
       }
     },
     {

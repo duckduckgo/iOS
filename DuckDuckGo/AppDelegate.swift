@@ -243,8 +243,6 @@ import os.log
         // has already been called on the HomeViewController so won't show the home row CTA
         cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
 
-        PixelExperiment.install()
-
         // MARK: Sync initialisation
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development

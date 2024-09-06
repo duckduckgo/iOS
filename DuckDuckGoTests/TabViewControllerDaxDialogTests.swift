@@ -258,7 +258,7 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     
 }
 
-private extension WKNavigation {
+extension WKNavigation {
     private static var isSwizzled = false
     private static let originalDealloc = { class_getInstanceMethod(WKNavigation.self, NSSelectorFromString("dealloc"))! }()
     private static let swizzledDealloc = { class_getInstanceMethod(WKNavigation.self, #selector(swizzled_dealloc))! }()

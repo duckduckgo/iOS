@@ -72,6 +72,8 @@ public struct SyncSettingsView: View {
 
                     devices()
 
+                    otherPlatformsLinks(source: .activated)
+
                     options()
 
                     saveRecoveryPDF()
@@ -85,6 +87,8 @@ public struct SyncSettingsView: View {
                     syncWithAnotherDeviceView()
 
                     otherOptions()
+
+                    otherPlatformsLinks(source: .notActivated)
                 }
             }
             .navigationTitle(UserText.syncTitle)
@@ -95,9 +99,7 @@ public struct SyncSettingsView: View {
                     title: Text("Secure Your Device to Use Sync & Backup"),
                     message: Text("A device password is required to use Sync & Backup."),
                     dismissButton: .default(Text("Go to Settings"), action: {
-                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
-                                                  options: [:],
-                                                  completionHandler: nil)
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                         model.shouldShowPasscodeRequiredAlert = false
                     })
                 )

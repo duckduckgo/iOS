@@ -55,25 +55,6 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             .store(in: &cancellables)
     }
     
-    enum MessageOrigin {
-        case duckPlayer, serpOverlay, youtubeOverlay
-
-        init?(url: URL) {
-            switch url.host {
-            case DuckPlayerSettings.OriginDomains.duckduckgo:
-                self = .serpOverlay
-            case DuckPlayerSettings.OriginDomains.youtubeMobile:
-                self = .youtubeOverlay
-            case DuckPlayerSettings.OriginDomains.youtube:
-                self = .youtubeOverlay
-            case DuckPlayerSettings.OriginDomains.youtubeWWW:
-                self = .youtubeOverlay
-            default:
-                return nil
-            }
-        }
-    }
-    
     struct Handlers {
         static let setUserValues = "setUserValues"
         static let getUserValues = "getUserValues"
@@ -89,9 +70,10 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
     let messageOriginPolicy: MessageOriginPolicy = .only(rules: [
         .exact(hostname: "sosbourne.duckduckgo.com"),
         .exact(hostname: "use-devtesting18.duckduckgo.com"),
-        .exact(hostname: DuckPlayerSettings.OriginDomains.duckduckgo),
-        .exact(hostname: DuckPlayerSettings.OriginDomains.youtube),
-        .exact(hostname: DuckPlayerSettings.OriginDomains.youtubeMobile)
+        .exact(hostname: DuckPlayerSettingsDefault.OriginDomains.duckduckgo),
+        .exact(hostname: DuckPlayerSettingsDefault.OriginDomains.youtube),
+        .exact(hostname: DuckPlayerSettingsDefault.OriginDomains.youtubeMobile),
+        .exact(hostname: DuckPlayerSettingsDefault.OriginDomains.youtubeWWW)
     ])
     public var featureName: String = Constants.featureName
 

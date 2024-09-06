@@ -39,6 +39,9 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func updateOptions()
     func launchBookmarksViewController()
     func launchAutofillViewController()
+    func showOtherPlatformLinks()
+    func fireOtherPlatformLinksPixel(event: SyncSettingsViewModel.PlatformLinksPixelEvent, with source: SyncSettingsViewModel.PlatformLinksPixelSource)
+    func shareLink(for url: URL, with message: String, from rect: CGRect)
 
     var syncBookmarksPausedTitle: String? { get }
     var syncCredentialsPausedTitle: String? { get }
@@ -80,6 +83,18 @@ public class SyncSettingsViewModel: ObservableObject {
     enum ScannedCodeValidity {
         case invalid
         case valid
+    }
+
+    public enum PlatformLinksPixelEvent {
+        case appear
+        case copy
+        case share
+    }
+
+    public enum PlatformLinksPixelSource: String {
+        case notActivated = "not_activated"
+        case activating
+        case activated
     }
 
     @Published public var isSyncEnabled = false {
@@ -229,6 +244,18 @@ public class SyncSettingsViewModel: ObservableObject {
 
     public func manageLogins() {
         delegate?.launchAutofillViewController()
+    }
+
+    public func shareLinkPressed(for url: URL, with message: String, from rect: CGRect) {
+        delegate?.shareLink(for: url, with: message, from: rect)
+    }
+
+    public func showOtherPlatformsPressed() {
+        delegate?.showOtherPlatformLinks()
+    }
+
+    public func fireOtherPlatformLinksPixel(for event: PlatformLinksPixelEvent, source: PlatformLinksPixelSource) {
+        delegate?.fireOtherPlatformLinksPixel(event: event, with: source)
     }
 
     public func recoverSyncDataPressed() {

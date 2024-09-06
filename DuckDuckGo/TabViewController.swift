@@ -36,7 +36,9 @@ import Networking
 import SecureStorage
 import History
 import ContentScopeScripts
+import SpecialErrorPages
 import NetworkProtection
+import Onboarding
 import os.log
 
 class TabViewController: UIViewController {
@@ -88,7 +90,7 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
 
-    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    var featureFlagger: FeatureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
     private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
@@ -173,6 +175,14 @@ class TabViewController: UIViewController {
                                                       favicons: Favicons.shared)
 
     private let refreshControl = UIRefreshControl()
+
+    private let certificateTrustEvaluator: CertificateTrustEvaluating
+    private let urlCredentialCreator: URLCredentialCreating
+    private var shouldBypassSSLError = false
+    var errorData: SpecialErrorData?
+    var failedURL: URL?
+    var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
+    var isSpecialErrorPageVisible: Bool = false
 
     let syncService: DDGSyncing
 
@@ -303,7 +313,9 @@ class TabViewController: UIViewController {
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) -> TabViewController {
+                                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+                                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
+                                   featureFlagger: FeatureFlagger) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -316,7 +328,9 @@ class TabViewController: UIViewController {
                               privacyProDataReporter: privacyProDataReporter,
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                               contextualOnboardingLogic: contextualOnboardingLogic,
-                              onboardingPixelReporter: onboardingPixelReporter
+                              onboardingPixelReporter: onboardingPixelReporter,
+                              urlCredentialCreator: urlCredentialCreator,
+                              featureFlagger: featureFlagger
             )
         })
         return controller
@@ -326,10 +340,11 @@ class TabViewController: UIViewController {
         (webView.configuration.userContentController as? UserContentController)!
     }
 
+
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
     weak var duckPlayer: DuckPlayerProtocol?
-    var duckPlayerNavigationHandler: DuckNavigationHandling?
+    var duckPlayerNavigationHandler: DuckPlayerNavigationHandling?
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
@@ -341,17 +356,21 @@ class TabViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
+                   certificateTrustEvaluator: CertificateTrustEvaluating = CertificateTrustEvaluator(),
                    duckPlayer: DuckPlayerProtocol?,
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
-                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting) {
+                   onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
+                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
+                   featureFlagger: FeatureFlagger) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.historyCapture = HistoryCapture(historyManager: historyManager)
         self.syncService = syncService
+        self.certificateTrustEvaluator = certificateTrustEvaluator
         self.duckPlayer = duckPlayer
         if let duckPlayer {
             self.duckPlayerNavigationHandler = DuckPlayerNavigationHandler(duckPlayer: duckPlayer,
@@ -361,6 +380,8 @@ class TabViewController: UIViewController {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.urlCredentialCreator = urlCredentialCreator
+        self.featureFlagger = featureFlagger
         super.init(coder: aDecoder)
     }
 
@@ -484,14 +505,20 @@ class TabViewController: UIViewController {
     func attachWebView(configuration: WKWebViewConfiguration,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
-                       loadingInitiatedByParentTab: Bool = false) {
+                       loadingInitiatedByParentTab: Bool = false,
+                       customWebView: ((WKWebViewConfiguration) -> WKWebView)? = nil) {
         instrumentation.willPrepareWebView()
 
         let userContentController = UserContentController()
         configuration.userContentController = userContentController
         userContentController.delegate = self
 
-        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        if let customWebView {
+            webView = customWebView(configuration)
+            view.layoutIfNeeded()
+        } else {
+            webView = WKWebView(frame: view.bounds, configuration: configuration)
+        }
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -722,10 +749,17 @@ class TabViewController: UIViewController {
             // URL Changes
             
             if let url,
-                url.isYoutubeVideo,
-               duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
+               url.isYoutubeVideo {
+                
+                duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                         url: url,
+                                                         navigationAction: nil)
+                
+                if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+                 duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
+                }
             }
+               
              
         }
         if let url {
@@ -964,21 +998,23 @@ class TabViewController: UIViewController {
         } else {
             privacyInfo = nil
         }
-        
         onPrivacyInfoChanged()
     }
     
     public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
-        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
-        
-        
+        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findParentEntityOrFallback(forHost: host)
+
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host))
-        privacyInfo.serverTrust = webView.serverTrust
-        
+        let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
+        if let isValid {
+            privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
+        }
+        privacyInfo.isSpecialErrorPageVisible = isSpecialErrorPageVisible
+
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
@@ -1015,7 +1051,7 @@ class TabViewController: UIViewController {
     private func openExternally(url: URL) {
         self.url = webView.url
         delegate?.tabLoadingStateDidChange(tab: self)
-        UIApplication.shared.open(url, options: [:]) { opened in
+        UIApplication.shared.open(url) { opened in
             if !opened {
                 let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
                 ActionMessageView.present(message: UserText.failedToOpenExternally,
@@ -1177,17 +1213,19 @@ extension TabViewController: LoginFormDetectionDelegate {
 
 // MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
-    
+
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
+        } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            handleServerTrustChallenge(challenge, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
         }
     }
-    
+
     func performBasicHTTPAuthentication(protectionSpace: URLProtectionSpace,
                                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if let urlProvidedBasicAuthCredential,
@@ -1198,6 +1236,9 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
+        // Update the address bar instantly when page presents a dialog to prevent spoofing attacks
+        // https://app.asana.com/0/414709148257752/1208060693227754/f
+        self.url = webView.url
         let isHttps = protectionSpace.protocol == "https"
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,
@@ -1206,10 +1247,21 @@ extension TabViewController: WKNavigationDelegate {
         }, cancelCompletion: {
             completionHandler(.rejectProtectionSpace, nil)
         })
-        
+
         delegate?.tab(self, didRequestPresentingAlert: alert)
     }
-    
+
+    private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
+                                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        guard shouldBypassSSLError,
+        let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
+            completionHandler(.performDefaultHandling, nil)
+            return
+        }
+        shouldBypassSSLError = false
+        completionHandler(.useCredential, credential)
+    }
+
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
 
         if let url = webView.url {
@@ -1223,7 +1275,7 @@ extension TabViewController: WKNavigationDelegate {
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
-    
+
     private func onWebpageDidStartLoading(httpsForced: Bool) {
         Logger.general.debug("webpageLoading started")
 
@@ -1234,12 +1286,12 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.showBars()
 
         resetDashboardInfo()
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-        
+
         appRatingPrompt.registerUsage()
-     
+
         if let scene = self.view.window?.windowScene,
            webView.url?.isDuckDuckGoSearch == true,
            appRatingPrompt.shouldPrompt() {
@@ -1251,7 +1303,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        
+
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1309,7 +1361,7 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
-    
+
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
         lastRenderedURL = webView.url
@@ -1322,7 +1374,7 @@ extension TabViewController: WKNavigationDelegate {
         referrerTrimming.onBeginNavigation(to: webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentlyLoadedURL = webView.url
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
@@ -1343,8 +1395,22 @@ extension TabViewController: WKNavigationDelegate {
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
         }
+
+        specialErrorPageUserScript?.isEnabled = webView.url == failedURL
+        if webView.url != failedURL {
+            isSpecialErrorPageVisible = false
+        }
     }
-    
+
+    var specialErrorPageUserScript: SpecialErrorPageUserScript? {
+        get {
+            return storedSpecialErrorPageUserScript ?? userScripts?.specialErrorPageUserScript
+        }
+        set {
+            storedSpecialErrorPageUserScript = newValue
+        }
+    }
+
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.main.async { [weak self] in
             guard let webView = self?.webView,
@@ -1534,6 +1600,32 @@ extension TabViewController: WKNavigationDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showErrorNow()
         }
+
+        loadSpecialErrorPageIfNeeded(error: error)
+    }
+
+    private func loadSpecialErrorPageIfNeeded(error: NSError) {
+        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
+              error.code == NSURLErrorServerCertificateUntrusted,
+              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
+              let failedURL = error.failedUrl else {
+            return
+        }
+        let tld = storageCache.tld
+        let errorType = SSLErrorType.forErrorCode(Int(errorCode))
+        self.failedURL = failedURL
+        errorData = SpecialErrorData(kind: .ssl,
+                                     errorType: errorType.rawValue,
+                                     domain: failedURL.host,
+                                     eTldPlus1: tld.eTLDplus1(failedURL.host))
+        loadSpecialErrorPage(url: failedURL)
+        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.rawParameter))
+    }
+
+    private func loadSpecialErrorPage(url: URL) {
+        let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
+        webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
+        isSpecialErrorPageVisible = true
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -1686,6 +1778,9 @@ extension TabViewController: WKNavigationDelegate {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                     privacyProDataReporter.saveSearchCount()
+                    
+                    // Duck Player Search Experiment
+                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)
@@ -1742,12 +1837,20 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if navigationAction.isTargetingMainFrame(),
-            url.isYoutubeVideo,
-           duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
-                                                              completion: completion,
-                                                              webView: webView)
-            return
+           url.isYoutubeVideo {
+            
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                     url: url,
+                                                     navigationAction: navigationAction)
+            
+            // Handle decidePolicy For
+            if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+                duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
+                                                                  completion: completion,
+                                                                  webView: webView)
+                return
+            }
+           
         }
         
         let schemeType = SchemeHandler.schemeType(for: url)
@@ -1767,6 +1870,9 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                     url: url,
+                                                     navigationAction: navigationAction)
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
@@ -2117,6 +2223,7 @@ extension TabViewController {
         }
     }
 
+
     private func registerForDownloadsNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(downloadDidStart),
@@ -2346,7 +2453,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 // MARK: - UserContentControllerDelegate
 extension TabViewController: UserContentControllerDelegate {
 
-    private var userScripts: UserScripts? {
+    var userScripts: UserScripts? {
         userContentController.contentBlockingAssets?.userScripts as? UserScripts
     }
     private var findInPageScript: FindInPageUserScript? {
@@ -2375,7 +2482,8 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-        
+        userScripts.specialErrorPageUserScript?.delegate = self
+
         // Setup DuckPlayer
         userScripts.duckPlayer = duckPlayerNavigationHandler?.duckPlayer
         userScripts.youtubeOverlayScript?.webView = webView
@@ -2926,6 +3034,30 @@ extension UserContentController {
     public convenience init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.init(assetsPublisher: ContentBlocking.shared.contentBlockingUpdating.userContentBlockingAssets,
                   privacyConfigurationManager: privacyConfigurationManager)
+    }
+
+}
+
+extension TabViewController: SpecialErrorPageUserScriptDelegate {
+
+    func leaveSite() {
+        Pixel.fire(pixel: .certificateWarningLeaveClicked)
+        guard webView?.canGoBack == true else {
+            delegate?.tabDidRequestClose(self)
+            return
+        }
+        _ = webView?.goBack()
+    }
+
+    func visitSite() {
+        Pixel.fire(pixel: .certificateWarningProceedClicked)
+        isSpecialErrorPageVisible = false
+        shouldBypassSSLError = true
+        _ = webView.reload()
+    }
+
+    func advancedInfoPresented() {
+        Pixel.fire(pixel: .certificateWarningAdvancedClicked)
     }
 
 }

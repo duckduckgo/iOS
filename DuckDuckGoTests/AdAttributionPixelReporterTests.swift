@@ -40,7 +40,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testReportsAttribution() async {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
 
         let result = await sut.reportAttributionIfNeeded()
 
@@ -50,7 +50,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testReportsOnce() async {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
 
         await fetcherStorage.markAttributionReportSuccessful()
         let result = await sut.reportAttributionIfNeeded()
@@ -61,7 +61,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testPixelname() async {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
 
         let result = await sut.reportAttributionIfNeeded()
 
@@ -71,7 +71,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testPixelAttributesNaming() async throws {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
 
         await sut.reportAttributionIfNeeded()
 
@@ -84,11 +84,12 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertEqual(pixelAttributes["country_or_region"], "countryOrRegion")
         XCTAssertEqual(pixelAttributes["keyword_id"], "4")
         XCTAssertEqual(pixelAttributes["ad_id"], "5")
+        XCTAssertEqual(pixelAttributes["attribution_token"], "example")
     }
 
     func testPixelAdditionalParameters() async throws {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
 
         await sut.reportAttributionIfNeeded()
 
@@ -99,7 +100,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testPixelAttributes_WhenPartialAttributionData() async throws {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(
             attribution: true,
             orgId: 1,
             campaignId: 2,
@@ -108,7 +109,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
             countryOrRegion: nil,
             keywordId: nil,
             adId: nil
-        )
+        ))
 
         await sut.reportAttributionIfNeeded()
 
@@ -123,13 +124,16 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertNil(pixelAttributes["ad_id"])
     }
 
-    func testPixelNotFiredAndMarksReport_WhenAttributionFalse() async {
+    func testNotAttributedPixelFiredAndMarkedReported_WhenAttributionFalse() async throws {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: false)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: false))
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertNil(PixelFiringMock.lastPixel)
+        let pixelAttributes = try XCTUnwrap(PixelFiringMock.lastParams)
+
+        XCTAssertEqual(pixelAttributes, [:])
+        XCTAssertEqual(PixelFiringMock.lastPixel?.name, "m_apple-ad-attribution_not-attributed")
         XCTAssertTrue(fetcherStorage.wasAttributionReportSuccessful)
         XCTAssertTrue(result)
     }
@@ -147,7 +151,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
     func testDoesNotMarkSuccessful_WhenPixelFiringFailed() async {
         let sut = createSUT()
-        attributionFetcher.fetchResponse = AdServicesAttributionResponse(attribution: true)
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
         PixelFiringMock.expectedFireError = NSError(domain: "PixelFailure", code: 1)
 
         let result = await sut.reportAttributionIfNeeded()
@@ -172,8 +176,8 @@ class AdAttributionReporterStorageMock: AdAttributionReporterStorage {
 }
 
 class AdAttributionFetcherMock: AdAttributionFetcher {
-    var fetchResponse: AdServicesAttributionResponse?
-    func fetch() async -> AdServicesAttributionResponse? {
+    var fetchResponse: (String, AdServicesAttributionResponse)?
+    func fetch() async -> (String, AdServicesAttributionResponse)? {
         fetchResponse
     }
 }

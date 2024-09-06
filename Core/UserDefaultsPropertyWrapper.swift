@@ -93,6 +93,9 @@ public struct UserDefaultsWrapper<T> {
         case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
         case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
 
+        case syncPromoBookmarksDismissed = "com.duckduckgo.app.sync.PromoBookmarksDismissed"
+        case syncPromoPasswordsDismissed = "com.duckduckgo.app.sync.PromoPasswordsDismissed"
+
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
 
@@ -166,8 +169,18 @@ public struct UserDefaultsWrapper<T> {
         case newTabPageIntroMessageSeenCount = "com.duckduckgo.ios.newTabPage.introMessageSeenCount"
 
         // Debug keys
-
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
+        case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
+        
+        // Duck Player Pixel Experiment
+        case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed"
+        case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort"
+        case duckPlayerPixelExperimentEnrollmentDate = "com.duckduckgo.ios.duckplayer.pixel.experiment.enrollment.date"
+        case duckPlayerPixelExperimentLastWeekPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.week.pixel.fired"
+        case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired"
+        case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered"
+        case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override"
+        
     }
 
     private let key: Key

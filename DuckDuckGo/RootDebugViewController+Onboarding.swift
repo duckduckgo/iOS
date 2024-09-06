@@ -25,7 +25,7 @@ extension RootDebugViewController {
         let controller = OnboardingIntroViewController(onboardingPixelReporter: OnboardingPixelReporter())
         controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen
-        present(controller: controller, fromView: self.view)
+        parent?.present(controller: controller, fromView: self.view)
     }
     
 }

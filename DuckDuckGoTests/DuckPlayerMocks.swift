@@ -86,7 +86,7 @@ class MockNavigationAction: WKNavigationAction {
     }
 }
 
-final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class MockDuckPlayerSettings: DuckPlayerSettings {
     
     private let duckPlayerSettingsSubject = PassthroughSubject<Void, Never>()
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> {
@@ -111,6 +111,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
 }
 
 final class MockDuckPlayer: DuckPlayerProtocol {
+    
     var hostView: UIViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
@@ -131,10 +132,12 @@ final class MockDuckPlayer: DuckPlayerProtocol {
         nil
     }
     
-    var settings: any DuckPlayerSettingsProtocol
+    var settings: any DuckPlayerSettings
+    private var featureFlagger: FeatureFlagger
     
-    init(settings: DuckPlayerSettingsProtocol) {
+    init(settings: any DuckDuckGo.DuckPlayerSettings, featureFlagger: any BrowserServicesKit.FeatureFlagger) {
         self.settings = settings
+        self.featureFlagger = featureFlagger
     }
     
     func setUserValues(params: Any, message: WKScriptMessage) -> (any Encodable)? {

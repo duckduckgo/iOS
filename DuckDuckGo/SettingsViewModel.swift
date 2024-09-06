@@ -408,6 +408,7 @@ extension SettingsViewModel {
             networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
+            syncSource: nil,
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode
         )
@@ -516,35 +517,30 @@ extension SettingsViewModel {
         state.activeWebsiteAccount = accountDetails
         presentLegacyView(.logins)
     }
-    
+
+    @MainActor func shouldPresentSyncViewWithSource(_ source: String? = nil) {
+        state.syncSource = source
+        presentLegacyView(.sync)
+    }
+
     func openEmailProtection() {
-        UIApplication.shared.open(URL.emailProtectionQuickLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionQuickLink)
     }
 
     func openEmailAccountManagement() {
-        UIApplication.shared.open(URL.emailProtectionAccountLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionAccountLink)
     }
 
     func openEmailSupport() {
-        UIApplication.shared.open(URL.emailProtectionSupportLink,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionSupportLink)
     }
 
     func openOtherPlatforms() {
-        UIApplication.shared.open(URL.apps,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.apps)
     }
 
     func openMoreSearchSettings() {
-        UIApplication.shared.open(URL.searchSettings,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(URL.searchSettings)
     }
 
     var shouldDisplayDuckPlayerContingencyMessage: Bool {
@@ -554,9 +550,7 @@ extension SettingsViewModel {
     func openDuckPlayerContingencyMessageSite() {
         guard let url = duckPlayerContingencyHandler.learnMoreURL else { return }
         Pixel.fire(pixel: .duckPlayerContingencyLearnMoreClicked)
-        UIApplication.shared.open(url,
-                                  options: [:],
-                                  completionHandler: nil)
+        UIApplication.shared.open(url)
     }
 
     @MainActor func openCookiePopupManagement() {
@@ -582,7 +576,7 @@ extension SettingsViewModel {
         case .addToDock:
             presentViewController(legacyViewProvider.addToDock, modal: true)
         case .sync:
-            pushViewController(legacyViewProvider.syncSettings)
+            pushViewController(legacyViewProvider.syncSettings(source: state.syncSource))
         case .appIcon: pushViewController(legacyViewProvider.appIcon)
         case .unprotectedSites: pushViewController(legacyViewProvider.unprotectedSites)
         case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)

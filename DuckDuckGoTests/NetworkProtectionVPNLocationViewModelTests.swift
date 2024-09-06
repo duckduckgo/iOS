@@ -655,12 +655,31 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 }
 
 final class MockNetworkProtectionLocationListRepository: NetworkProtectionLocationListRepository {
+
     var stubLocationList: [NetworkProtectionLocation] = []
     var stubError: Error?
     var didCallFetchLocationList: Bool = false
+    var didCallFetchLocationListIgnoringCache: Bool = false
 
     func fetchLocationList() async throws -> [NetworkProtectionLocation] {
         didCallFetchLocationList = true
+        if let stubError {
+            throw stubError
+        }
+        return stubLocationList
+    }
+
+    func fetchLocationList(cachePolicy: NetworkProtectionLocationListCachePolicy) async throws -> [NetworkProtectionLocation] {
+        switch cachePolicy {
+        case .returnCacheElseLoad:
+            return try await fetchLocationList()
+        case .ignoreCache:
+            return try await fetchLocationListIgnoringCache()
+        }
+    }
+
+    func fetchLocationListIgnoringCache() async throws -> [NetworkProtection.NetworkProtectionLocation] {
+        didCallFetchLocationListIgnoringCache = true
         if let stubError {
             throw stubError
         }

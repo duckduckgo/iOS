@@ -43,7 +43,7 @@ struct CriticalAlerts {
 
         let openSettingsButton = UIAlertAction(title: UserText.insufficientDiskSpaceAction, style: .default) { _ in
             let url = URL(string: UIApplication.openSettingsURLString)!
-            UIApplication.shared.open(url, options: [:]) { _ in
+            UIApplication.shared.open(url) { _ in
                 fatalError("App is in unrecoverable state")
             }
         }
@@ -59,7 +59,7 @@ struct CriticalAlerts {
 
         let closeButton = UIAlertAction(title: UserText.keyCommandClose, style: .cancel)
         let signInButton = UIAlertAction(title: UserText.emailProtectionSignInAction, style: .default) { _ in
-            UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL.emailProtectionQuickLink)
         }
 
         alertController.addAction(closeButton)

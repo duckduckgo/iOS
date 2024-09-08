@@ -59,6 +59,7 @@ import os.log
     private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
+    @MainActor
     private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
         return VPNRedditSessionWorkaround(
             accountManager: AppDependencyProvider.shared.accountManager,
@@ -576,7 +577,7 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        Task {
+        Task { @MainActor in
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
         }

@@ -1820,13 +1820,13 @@ https://duckduckgo.com/mac";
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Block creepy ads";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Swiftly erase browsing data";
 
 /* Message to highlight browser capability of private searches */
@@ -1865,13 +1865,13 @@ https://duckduckgo.com/mac";
 /* The title of the onboarding dialog popup to select the preferred App icon. */
 "onboarding.highlights.appIconSelection.title" = "Which color looks best on me?";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.highlights.browsers.features.cookiePopups.title" = "Block cookie requests & popups";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.highlights.browsers.features.creepyAds.title" = "Block targeted ads";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Erase browsing data swiftly";
 
 /* The title of the fire button CTA to skip erasing the data. */

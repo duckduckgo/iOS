@@ -104,8 +104,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
         .padding(0)
         .sheet(isPresented: $isAddingFavorite, content: {
             NavigationView {
-                AddFavoriteView(searchViewModel: .ddg,
-                                favoritesCreating: bookmarksInteracting,
+                AddFavoriteView(viewModel: .init(favoritesCreating: bookmarksInteracting),
                                 faviconLoader: favoritesModel.faviconLoader)
             }
         })

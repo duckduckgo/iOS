@@ -21,13 +21,13 @@ import Foundation
 import Suggestions
 import Networking
 
-final class DDGAutocompleteWebsiteSearch: WebsiteSearch {
+final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
 
     private var loader: SuggestionLoading?
     private var task: URLSessionDataTask?
     private static let session = URLSession(configuration: .ephemeral)
 
-    func search(term: String) async throws -> [WebPageSearchResultValue] {
+    func search(term: String) async throws -> [URL] {
         loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
@@ -39,17 +39,17 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearch {
             return url
         })
 
-        let results: [WebPageSearchResultValue] = await withCheckedContinuation { continuation in
+        let results: [URL] = await withCheckedContinuation { continuation in
             loader?.getSuggestions(query: term) { result, error in
                 guard let result, error == nil else {
                     continuation.resume(returning: [])
                     return
                 }
 
-                let results: [WebPageSearchResultValue] = result.all.compactMap({ suggestion in
+                let results: [URL] = result.all.compactMap({ suggestion in
                     switch suggestion {
                     case .website(url: let url):
-                        return WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
+                        return url
                     default:
                         return nil
                     }

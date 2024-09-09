@@ -1,5 +1,5 @@
 //
-//  FavoriteSearchViewModel.swift
+//  AddFavoriteViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,26 +18,24 @@
 //
 
 import Foundation
+import UIKit
 import Bookmarks
 import Combine
 
 class AddFavoriteViewModel: ObservableObject {
     @Published var errorMessage: String?
-    @Published var results: [WebPageSearchResultValue] = []
-    @Published var manualEntry: WebPageSearchResultValue?
-    @Published var isManualEntryValid: Bool = false
+    @Published var results: [FavoriteSearchResult] = []
     @Published var searchTerm: String = ""
-
-    static var ddg: AddFavoriteViewModel { AddFavoriteViewModel(websiteSearch: DDGAutocompleteWebsiteSearch()) }
 
     private var cancellables = Set<AnyCancellable>()
 
     private var searchTask: Task<Void, Error>?
-    private var manualEntryTask: Task<Void, Error>?
-    private let websiteSearch: any WebsiteSearch
+    private let websiteSearch: any WebsiteSearching
+    private let favoritesCreating: MenuBookmarksInteracting
 
-    init(websiteSearch: WebsiteSearch) {
-        self.websiteSearch = websiteSearch
+    init(websiteSearching: WebsiteSearching = DDGAutocompleteWebsiteSearch(), favoritesCreating: MenuBookmarksInteracting) {
+        self.websiteSearch = websiteSearching
+        self.favoritesCreating = favoritesCreating
 
         $searchTerm
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
@@ -48,19 +46,25 @@ class AddFavoriteViewModel: ObservableObject {
     }
 
     func clear() {
-        manualEntryTask?.cancel()
-        manualEntryTask = nil
         searchTask?.cancel()
         searchTask = nil
         searchTerm = ""
         clearResults()
     }
 
+    func addFavorite(for result: FavoriteSearchResult) -> Bool {
+        guard favoritesCreating.bookmark(for: result.url) == nil else { return false }
+
+        favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
+
+        // TODO: Cache favicon
+
+        return true
+    }
+
     private func clearResults() {
         errorMessage = nil
         results = []
-        manualEntry = nil
-        isManualEntryValid = false
     }
 
     private func runSearch() {
@@ -72,7 +76,14 @@ class AddFavoriteViewModel: ObservableObject {
         searchTask?.cancel()
         searchTask = Task {
             do {
-                let results = try await websiteSearch.search(term: searchTerm)
+                let urls = try await websiteSearch.search(term: searchTerm)
+                let results: [FavoriteSearchResult]
+                if urls.isEmpty, let manualEntry = await createManualEntry(searchTerm: searchTerm) {
+                    results = [manualEntry]
+                } else {
+                    results = urls.map(FavoriteSearchResult.init(url:))
+                }
+
                 await publishResults(results)
 
                 try Task.checkCancellation()
@@ -87,34 +98,16 @@ class AddFavoriteViewModel: ObservableObject {
                 await publishResults([])
             }
         }
+    }
 
-        manualEntryTask?.cancel()
-        manualEntryTask = Task {
-            if let url = convertToURL(searchTerm) {
-                let entry = WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
-                await publishManualEntry(entry)
-
-                try Task.checkCancellation()
-                let decorator = FavoriteSearchResultDecorator()
-                let decoratedResults = await decorator.decorate(results: [entry])
-
-                try Task.checkCancellation()
-                await publishManualEntry(decoratedResults.first)
-            } else {
-                manualEntry = nil
-                isManualEntryValid = false
-            }
-        }
+    private func createManualEntry(searchTerm: String) async -> FavoriteSearchResult? {
+        guard let url = convertToURL(searchTerm) else { return nil }
+        
+        return FavoriteSearchResult(url: url)
     }
 
     @MainActor
-    private func publishManualEntry(_ entry: WebPageSearchResultValue?) {
-        manualEntry = entry
-        isManualEntryValid = entry?.url.isValid ?? false
-    }
-
-    @MainActor
-    private func publishResults(_ results: [WebPageSearchResultValue]) {
+    private func publishResults(_ results: [FavoriteSearchResult]) {
         self.results = results
     }
 
@@ -130,5 +123,36 @@ class AddFavoriteViewModel: ObservableObject {
         }
 
         return url
+    }
+}
+
+struct FavoriteSearchResult: Identifiable, Hashable {
+    let id: String
+    let name: String
+    let url: URL
+    let icon: UIImage?
+
+    init(id: String, name: String, url: URL, icon: UIImage? = nil) {
+        self.id = id
+        self.name = name
+        self.url = url
+        self.icon = icon
+    }
+}
+
+extension FavoriteSearchResult {
+    init(url: URL) {
+        self.id = url.absoluteString
+        self.name = url.absoluteString
+        self.url = url
+        self.icon = nil
+    }
+
+    var isValid: Bool {
+        return url.isValid
+    }
+
+    var displayURL: String {
+        url.absoluteString
     }
 }

@@ -1,5 +1,5 @@
 //
-//  WebsiteSearch.swift
+//  WebsiteSearching.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,22 +20,6 @@
 import Foundation
 import UIKit
 
-struct WebPageSearchResultValue: Identifiable, Hashable {
-    let id: String
-    let name: String
-    let displayUrl: String
-    let url: URL
-    let icon: UIImage?
-
-    init(id: String, name: String, displayUrl: String, url: URL, icon: UIImage? = nil) {
-        self.id = id
-        self.name = name
-        self.displayUrl = displayUrl
-        self.url = url
-        self.icon = icon
-    }
-}
-
-protocol WebsiteSearch {
-    func search(term: String) async throws -> [WebPageSearchResultValue]
+protocol WebsiteSearching {
+    func search(term: String) async throws -> [URL]
 }

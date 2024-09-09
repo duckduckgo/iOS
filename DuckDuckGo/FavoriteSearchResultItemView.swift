@@ -22,7 +22,7 @@ import DuckUI
 import LinkPresentation
 
 struct FavoriteSearchResultItemView: View {
-    let result: WebPageSearchResultValue
+    let result: FavoriteSearchResult
     let faviconLoader: FavoritesFaviconLoading?
 
     var body: some View {
@@ -40,7 +40,7 @@ struct FavoriteSearchResultItemView: View {
                     .daxBodyRegular()
                     .multilineTextAlignment(.leading)
                     .lineLimit(1)
-                Text(verbatim: result.displayUrl)
+                Text(verbatim: result.displayURL)
                     .daxFootnoteSemibold()
                     .multilineTextAlignment(.leading)
             }
@@ -50,7 +50,7 @@ struct FavoriteSearchResultItemView: View {
 
 #Preview {
     List {
-        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
-        FavoriteSearchResultItemView(result: WebPageSearchResultValue(id: "foo", name: "bar", displayUrl: "foobar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
+        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
+        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
     }
 }

@@ -22,8 +22,9 @@ import LinkPresentation
 import UniformTypeIdentifiers
 
 struct FavoriteSearchResultDecorator {
-    func decorate(results: [WebPageSearchResultValue]) async -> [WebPageSearchResultValue] {
-        return await withTaskGroup(of: WebPageSearchResultValue.self, returning: [WebPageSearchResultValue].self) { group in
+
+    func decorate(results: [FavoriteSearchResult]) async -> [FavoriteSearchResult] {
+        return await withTaskGroup(of: FavoriteSearchResult.self, returning: [FavoriteSearchResult].self) { group in
             for result in results {
                 let isAdded = group.addTaskUnlessCancelled {
                     let provider = LPMetadataProvider()
@@ -40,7 +41,7 @@ struct FavoriteSearchResultDecorator {
                     }
                     let url = metadata.url ?? result.url
 
-                    return WebPageSearchResultValue(id: result.id, name: name, displayUrl: result.displayUrl, url: url, icon: icon)
+                    return FavoriteSearchResult(id: result.id, name: name, url: url, icon: icon)
                 }
 
                 if !isAdded {
@@ -48,7 +49,7 @@ struct FavoriteSearchResultDecorator {
                 }
             }
 
-            var decoratedResults: [WebPageSearchResultValue] = []
+            var decoratedResults: [FavoriteSearchResult] = []
             for await taskResult in group {
                 decoratedResults.append(taskResult)
             }

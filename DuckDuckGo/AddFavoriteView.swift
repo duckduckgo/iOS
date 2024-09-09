@@ -25,7 +25,6 @@ struct AddFavoriteView: View {
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject private(set) var viewModel: AddFavoriteViewModel
-    let favoritesCreating: MenuBookmarksInteracting
     let faviconLoader: FavoritesFaviconLoading?
 
     @FocusState private var isFocused: Bool
@@ -57,31 +56,17 @@ struct AddFavoriteView: View {
                 Text(verbatim: "You can also favorite any site through the ••• menu while on that page.")
             }
 
-            if let manualEntry = viewModel.manualEntry {
-                Section {
-                    Button {
-
-                        if favoritesCreating.bookmark(for: manualEntry.url) == nil {
-
-                            favoritesCreating.createOrToggleFavorite(title: manualEntry.name, url: manualEntry.url)
-                        }
-
-                        dismiss()
-                    } label: {
-                        FavoriteSearchResultItemView(result: manualEntry, faviconLoader: faviconLoader)
-                    }.disabled(!viewModel.isManualEntryValid)
-                }
-            }
-
             if !viewModel.results.isEmpty {
                 Section {
                     ForEach(viewModel.results) { result in
                         Button {
-                            favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
-                            dismiss()
+                            if viewModel.addFavorite(for: result) {
+                                dismiss()
+                            }
                         } label: {
                             FavoriteSearchResultItemView(result: result, faviconLoader: faviconLoader)
                         }
+                        .disabled(!result.isValid)
                     }
                 }
             }
@@ -105,5 +90,5 @@ struct AddFavoriteView: View {
 }
 
 #Preview {
-    AddFavoriteView(viewModel: .ddg, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
+    AddFavoriteView(viewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()), faviconLoader: nil)
 }

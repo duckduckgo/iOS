@@ -119,15 +119,15 @@ class AddFavoriteViewModel: ObservableObject {
     }
 
     private func convertToURL(_ searchTerm: String) -> URL? {
-        guard !searchTerm.isEmpty else { return nil }
+        let sanitizedTerm = searchTerm.trimmingWhitespace()
+        guard !sanitizedTerm.isEmpty,
+              var url = URL(string: sanitizedTerm) else { return nil }
 
-        var components = URLComponents(string: searchTerm.trimmingWhitespace())
-        if components?.scheme == nil {
-            components?.scheme = "https"
+        if url.scheme == nil,
+           url.navigationalScheme == nil,
+           let urlWithScheme = URL(string: "https://\(sanitizedTerm)") {
+            url = urlWithScheme
         }
-
-        guard let url = components?.url,
-              url.isValid else { return nil }
 
         return url
     }

@@ -160,7 +160,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenSetDefaultBrowserActionIsCalledAndIsHighlightsFlowThenViewStateChangesToChooseAppIconDialogAndProgressIs2Of3() {
         // GIVEN
         onboardingManager.isOnboardingHighlightsEnabled = true
-        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager)
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
         XCTAssertEqual(sut.state, .landing)
 
         // WHEN
@@ -173,7 +173,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
     func testWhenCancelSetDefaultBrowserActionIsCalledAndIsHighlightsFlowThenViewStateChangesToChooseAppIconDialogAndProgressIs2Of3() {
         // GIVEN
         onboardingManager.isOnboardingHighlightsEnabled = true
-        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager)
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
         XCTAssertEqual(sut.state, .landing)
 
         // WHEN

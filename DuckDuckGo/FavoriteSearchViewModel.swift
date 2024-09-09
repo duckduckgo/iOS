@@ -119,15 +119,16 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     private func convertToURL(_ searchTerm: String) -> URL? {
-        guard !searchTerm.isEmpty,
-              let url = URL(string: searchTerm.trimmingWhitespace()) else { return nil }
+        guard !searchTerm.isEmpty else { return nil }
 
-        if url.isValid || url.isCustomURLScheme() {
-            return url
-        } else if url.scheme == nil {
-            return URL(string: "https://\(url.absoluteString)")
+        var components = URLComponents(string: searchTerm.trimmingWhitespace())
+        if components?.scheme == nil {
+            components?.scheme = "https"
         }
 
-        return nil
+        guard let url = components?.url,
+              url.isValid else { return nil }
+
+        return url
     }
 }

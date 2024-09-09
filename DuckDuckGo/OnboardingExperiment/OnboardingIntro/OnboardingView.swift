@@ -40,6 +40,7 @@ struct OnboardingView: View {
     @State private var animateComparisonText = false
 
     @State private var appIconPickerContentState = AppIconPickerContentState()
+    @State private var addressBarPositionContentState = AddressBarPositionContentState()
 
     init(model: OnboardingIntroViewModel) {
         self.model = model
@@ -156,15 +157,11 @@ struct OnboardingView: View {
     }
 
     private var addressBarPreferenceSelectionView: some View {
-        // TODO: Implement View
-        VStack(spacing: 30) {
-            Text(verbatim: "Choose Address Bar Position")
-
-            Button(action: model.selectAddressBarPositionAction) {
-                Text(verbatim: "Next")
-            }
-            .buttonStyle(PrimaryButtonStyle())
-        }
+        AddressBarPositionContent(
+            animateTitle: $addressBarPositionContentState.animateTitle,
+            showContent: $addressBarPositionContentState.showContent,
+            action: model.selectAddressBarPositionAction
+        )
         .onboardingDaxDialogStyle()
     }
 

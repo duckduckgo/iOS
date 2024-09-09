@@ -182,6 +182,7 @@ class TabViewController: UIViewController {
     var errorData: SpecialErrorData?
     var failedURL: URL?
     var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
+    var isSpecialErrorPageVisible: Bool = false
 
     let syncService: DDGSyncing
 
@@ -339,10 +340,11 @@ class TabViewController: UIViewController {
         (webView.configuration.userContentController as? UserContentController)!
     }
 
+
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
     weak var duckPlayer: DuckPlayerProtocol?
-    var duckPlayerNavigationHandler: DuckNavigationHandling?
+    var duckPlayerNavigationHandler: DuckPlayerNavigationHandling?
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
@@ -747,10 +749,17 @@ class TabViewController: UIViewController {
             // URL Changes
             
             if let url,
-                url.isYoutubeVideo,
-               duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
+               url.isYoutubeVideo {
+                
+                duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                         url: url,
+                                                         navigationAction: nil)
+                
+                if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+                 duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
+                }
             }
+               
              
         }
         if let url {
@@ -1004,7 +1013,7 @@ class TabViewController: UIViewController {
         if let isValid {
             privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
         }
-        privacyInfo.isSpecialErrorPageVisible = (isValid == nil)
+        privacyInfo.isSpecialErrorPageVisible = isSpecialErrorPageVisible
 
         previousPrivacyInfosByURL[url] = privacyInfo
         
@@ -1388,6 +1397,9 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         specialErrorPageUserScript?.isEnabled = webView.url == failedURL
+        if webView.url != failedURL {
+            isSpecialErrorPageVisible = false
+        }
     }
 
     var specialErrorPageUserScript: SpecialErrorPageUserScript? {
@@ -1613,6 +1625,7 @@ extension TabViewController: WKNavigationDelegate {
     private func loadSpecialErrorPage(url: URL) {
         let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
         webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
+        isSpecialErrorPageVisible = true
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -1765,6 +1778,9 @@ extension TabViewController: WKNavigationDelegate {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                     privacyProDataReporter.saveSearchCount()
+                    
+                    // Duck Player Search Experiment
+                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)
@@ -1821,12 +1837,20 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if navigationAction.isTargetingMainFrame(),
-            url.isYoutubeVideo,
-           duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-            duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
-                                                              completion: completion,
-                                                              webView: webView)
-            return
+           url.isYoutubeVideo {
+            
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                     url: url,
+                                                     navigationAction: navigationAction)
+            
+            // Handle decidePolicy For
+            if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
+                duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
+                                                                  completion: completion,
+                                                                  webView: webView)
+                return
+            }
+           
         }
         
         let schemeType = SchemeHandler.schemeType(for: url)
@@ -1846,6 +1870,9 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
+            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
+                                                     url: url,
+                                                     navigationAction: navigationAction)
             duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
@@ -3024,6 +3051,7 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
 
     func visitSite() {
         Pixel.fire(pixel: .certificateWarningProceedClicked)
+        isSpecialErrorPageVisible = false
         shouldBypassSSLError = true
         _ = webView.reload()
     }

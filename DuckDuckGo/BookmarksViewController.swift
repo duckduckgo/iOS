@@ -897,8 +897,17 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
 
             syncPromoViewHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-            addChild(syncPromoViewHostingController)
+
+            // This is needed to ensure the toolbar displays correctly on iOS 15
+            if #available(iOS 16.0, *) {
+                addChild(syncPromoViewHostingController)
+            }
+
             headerView.addSubview(syncPromoViewHostingController.view)
+
+            if #available(iOS 16.0, *) {
+                syncPromoViewHostingController.didMove(toParent: self)
+            }
 
             NSLayoutConstraint.deactivate([
                 searchBarBottomConstraint
@@ -920,9 +929,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             headerView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: totalHeight)
 
             tableView.tableHeaderView = headerView
-            syncPromoViewHostingController.didMove(toParent: self)
-
-            tableView.layoutIfNeeded()
         } else if !headerView.subviews.contains(searchBar) || headerView.subviews.count != 1 {
 
             if syncPromoViewHostingController.view != nil {

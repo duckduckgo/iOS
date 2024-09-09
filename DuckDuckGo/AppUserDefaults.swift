@@ -429,6 +429,9 @@ public class AppUserDefaults: AppSettings {
 
     @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
     var newTabPageIntroMessageSeenCount: Int
+
+    @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
+    var onboardingHighlightsEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

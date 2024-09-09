@@ -76,15 +76,28 @@ public struct UIValues: Codable {
 }
 
 public enum DuckPlayerReferrer {
-    case youtube, other
+    case youtube, other, serp
+    
+    // Computed property to get string values
+        var stringValue: String {
+            switch self {
+            case .youtube:
+                return "youtube"
+            case .serp:
+                return "serp"
+            default:
+                return "other"
+                
+            }
+        }
 }
 
 protocol DuckPlayerProtocol: AnyObject {
     
-    var settings: DuckPlayerSettingsProtocol { get }
+    var settings: DuckPlayerSettings { get }
     var hostView: UIViewController? { get }
     
-    init(settings: DuckPlayerSettingsProtocol)
+    init(settings: DuckPlayerSettings, featureFlagger: FeatureFlagger)
 
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
@@ -110,8 +123,9 @@ final class DuckPlayer: DuckPlayerProtocol {
         static let featureNameKey = "featureName"
     }
     
-    private(set) var settings: DuckPlayerSettingsProtocol
+    private(set) var settings: DuckPlayerSettings
     private(set) weak var hostView: UIViewController?
+    private var featureFlagger: FeatureFlagger
     
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
@@ -134,8 +148,10 @@ final class DuckPlayer: DuckPlayerProtocol {
         case overlay = "duckPlayer"
     }
     
-    init(settings: DuckPlayerSettingsProtocol = DuckPlayerSettings()) {
+    init(settings: DuckPlayerSettings = DuckPlayerSettingsDefault(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.settings = settings
+        self.featureFlagger = featureFlagger
     }
     
     // Sets a presenting VC, so DuckPlayer can present the
@@ -216,8 +232,8 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
 
     private func encodeUserValues() -> UserValues {
-        UserValues(
-            duckPlayerMode: settings.mode,
+        return UserValues(
+            duckPlayerMode: featureFlagger.isFeatureOn(.duckPlayer) ? settings.mode : .disabled,
             askModeOverlayHidden: settings.askModeOverlayHidden
         )
     }

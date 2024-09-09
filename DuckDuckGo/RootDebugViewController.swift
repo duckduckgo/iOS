@@ -45,8 +45,10 @@ class RootDebugViewController: UITableViewController {
         case resetSendCrashLogs = 671
         case refreshConfig = 672
         case newTabPageSections = 674
-        case showNewOnboardingIntro = 676
+        case onboarding = 676
         case resetSyncPromoPrompts = 677
+        case resetDuckPlayerExperiment = 678
+        case overrideDuckPlayerExperiment = 679
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -169,13 +171,24 @@ class RootDebugViewController: UITableViewController {
             case .newTabPageSections:
                 let controller = UIHostingController(rootView: NewTabPageSectionsDebugView())
                 show(controller, sender: nil)
-            case .showNewOnboardingIntro:
-                showOnboardingIntro()
+            case .onboarding:
+                let action = { [weak self] in
+                    guard let self else { return }
+                    self.showOnboardingIntro()
+                }
+                let controller = UIHostingController(rootView: OnboardingDebugView(onNewOnboardingIntroStartAction: action))
+                show(controller, sender: nil)
             case .resetSyncPromoPrompts:
                 guard let sync = sync else { return }
                 let syncPromoPresenter = SyncPromoManager(syncService: sync)
                 syncPromoPresenter.resetPromos()
                 ActionMessageView.present(message: "Sync Promos reset")
+            case .resetDuckPlayerExperiment:
+                DuckPlayerLaunchExperiment().cleanup()
+                ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
+            case .overrideDuckPlayerExperiment:
+                DuckPlayerLaunchExperiment().experimentOverride = true
+                ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
             }
         }
     }

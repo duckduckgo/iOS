@@ -317,7 +317,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     @MainActor
     private func openURL(_ url: URL) {
         if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url)
         }
     }
     

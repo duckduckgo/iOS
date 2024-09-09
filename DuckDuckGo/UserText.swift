@@ -1327,9 +1327,9 @@ But if you *do* want a peek under the hood, you can find more information about 
             enum Features {
                 public static let privateSearch = NSLocalizedString("onboarding.browsers.features.privateSearch.title", value: "Search privately by default", comment: "Message to highlight browser capability of private searches")
                 public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd-party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
-                public static let cookiePopups = NSLocalizedString("onboarding.browsers.features.cookiePopups.title", value: "Block cookie pop-ups", comment: "Message to highlight browser capability of blocking cookie pop-ups")
+                public static let cookiePopups = NSLocalizedString("onboarding.browsers.features.cookiePopups.title", value: "Block cookie pop-ups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.browsers.features.creepyAds.title", value: "Block creepy ads", comment: "Message to highlight browser capability of blocking creepy ads")
-                public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability ofswiftly erase browsing data")
+                public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability of swiftly erase browsing data")
             }
         }
 
@@ -1369,9 +1369,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
             enum Features {
                 public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
-                public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight browser capability of blocking cookie pop-ups")
+                public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight how the browser allows you to block cookie pop-ups"")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
-                public static let eraseBrowsingData = NSLocalizedString("onboarding.highlights.browsers.features.eraseBrowsingData.title", value: "Erase browsing data swiftly", comment: "Message to highlight browser capability ofswiftly erase browsing data")
+                public static let eraseBrowsingData = NSLocalizedString("onboarding.highlights.browsers.features.eraseBrowsingData.title", value: "Erase browsing data swiftly", comment: "Message to highlight browser capability of swiftly erase browsing data")
             }
         }
 

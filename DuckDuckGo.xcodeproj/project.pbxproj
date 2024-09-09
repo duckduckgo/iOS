@@ -3942,13 +3942,6 @@
 				6FE0183F2C25CB3F001F680D /* FavoritesSectionHeader.swift */,
 				6FB2A6792C2C5BAE004D20C8 /* FavoriteEmptyStateItem.swift */,
 				6FB2A67B2C2D9DF0004D20C8 /* FavoritesEmptyStateView.swift */,
-				6F689ED72C75EBA800A3B705 /* AddFavoriteView.swift */,
-				6F2F7B602C760EC200987FB4 /* FavoriteSearchViewModel.swift */,
-				6F9517EF2C7CA4CA00ACBA73 /* FavoriteSearchResultDecorator.swift */,
-				6F7E5DD42C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift */,
-				6FD41AAC2C8EEC210061857F /* WebsiteSearch.swift */,
-				6F2F7B642C76119200987FB4 /* MockWebsiteSearch.swift */,
-				6F2F7B5E2C75FD1C00987FB4 /* FavoriteSearchResultItemView.swift */,
 			);
 			name = EmptyState;
 			sourceTree = "<group>";
@@ -3961,6 +3954,20 @@
 				6FD1BAE22B87A107000C475C /* AdAttributionReporterStorage.swift */,
 			);
 			name = AdAttribution;
+			sourceTree = "<group>";
+		};
+		6FD41AAE2C8EF3B70061857F /* AddFavorite */ = {
+			isa = PBXGroup;
+			children = (
+				6F689ED72C75EBA800A3B705 /* AddFavoriteView.swift */,
+				6F2F7B602C760EC200987FB4 /* FavoriteSearchViewModel.swift */,
+				6F9517EF2C7CA4CA00ACBA73 /* FavoriteSearchResultDecorator.swift */,
+				6F7E5DD42C78ECAB0026DCE5 /* DDGAutocompleteWebsiteSearch.swift */,
+				6FD41AAC2C8EEC210061857F /* WebsiteSearch.swift */,
+				6F2F7B642C76119200987FB4 /* MockWebsiteSearch.swift */,
+				6F2F7B5E2C75FD1C00987FB4 /* FavoriteSearchResultItemView.swift */,
+			);
+			name = AddFavorite;
 			sourceTree = "<group>";
 		};
 		6FD8E51C2C5B84CA00345670 /* IntroMessage */ = {
@@ -4007,6 +4014,7 @@
 		6FE127412C204DE900EB5724 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				6FD41AAE2C8EF3B70061857F /* AddFavorite */,
 				6F691CC82C4979DD002E9553 /* Tooltip */,
 				6FA343902C3D3C2500470677 /* Item */,
 				6FA3438D2C3D3BB800470677 /* Model */,

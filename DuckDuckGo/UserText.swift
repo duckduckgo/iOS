@@ -1365,7 +1365,10 @@ But if you *do* want a peek under the hood, you can find more information about 
         }
         
         enum BrowsersComparison {
+            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+
             enum Features {
+                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
                 public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight browser capability of blocking cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
                 public static let eraseBrowsingData = NSLocalizedString("onboarding.highlights.browsers.features.eraseBrowsingData.title", value: "Erase browsing data swiftly", comment: "Message to highlight browser capability ofswiftly erase browsing data")

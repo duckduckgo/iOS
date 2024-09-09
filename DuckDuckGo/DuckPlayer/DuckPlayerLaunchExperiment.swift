@@ -221,7 +221,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     
     func override() {
         enrollmentDate = Date()
-        experimentCohort = "experiment"        
+        experimentCohort = "experiment"
         lastDayPixelFired = nil
         lastWeekPixelFired = nil
         lastVideoIDReported = nil

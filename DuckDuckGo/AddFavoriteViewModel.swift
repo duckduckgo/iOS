@@ -21,14 +21,14 @@ import Foundation
 import Bookmarks
 import Combine
 
-class FavoriteSearchViewModel: ObservableObject {
+class AddFavoriteViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var results: [WebPageSearchResultValue] = []
     @Published var manualEntry: WebPageSearchResultValue?
     @Published var isManualEntryValid: Bool = false
     @Published var searchTerm: String = ""
 
-    static var ddg: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: DDGAutocompleteWebsiteSearch()) }
+    static var ddg: AddFavoriteViewModel { AddFavoriteViewModel(websiteSearch: DDGAutocompleteWebsiteSearch()) }
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -92,14 +92,14 @@ class FavoriteSearchViewModel: ObservableObject {
         manualEntryTask = Task {
             if let url = convertToURL(searchTerm) {
                 let entry = WebPageSearchResultValue(id: url.absoluteString, name: url.absoluteString, displayUrl: url.absoluteString, url: url)
-                await publisManualEntry(entry)
+                await publishManualEntry(entry)
 
                 try Task.checkCancellation()
                 let decorator = FavoriteSearchResultDecorator()
                 let decoratedResults = await decorator.decorate(results: [entry])
 
                 try Task.checkCancellation()
-                await publisManualEntry(decoratedResults.first)
+                await publishManualEntry(decoratedResults.first)
             } else {
                 manualEntry = nil
                 isManualEntryValid = false
@@ -108,7 +108,7 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     @MainActor
-    private func publisManualEntry(_ entry: WebPageSearchResultValue?) {
+    private func publishManualEntry(_ entry: WebPageSearchResultValue?) {
         manualEntry = entry
         isManualEntryValid = entry?.url.isValid ?? false
     }

@@ -24,7 +24,7 @@ import Combine
 struct AddFavoriteView: View {
     @Environment(\.dismiss) var dismiss
 
-    @ObservedObject private(set) var searchViewModel: FavoriteSearchViewModel
+    @ObservedObject private(set) var viewModel: AddFavoriteViewModel
     let favoritesCreating: MenuBookmarksInteracting
     let faviconLoader: FavoritesFaviconLoading?
 
@@ -33,14 +33,14 @@ struct AddFavoriteView: View {
     var body: some View {
         List {
             Section {
-                TextField(text: $searchViewModel.searchTerm) {
+                TextField(text: $viewModel.searchTerm) {
                     Text(verbatim: "Website URL")
                 }
                 .focused($isFocused)
                 .overlay(alignment: .trailing, content: {
-                    if !searchViewModel.searchTerm.isEmpty {
+                    if !viewModel.searchTerm.isEmpty {
                         Button {
-                            searchViewModel.clear()
+                            viewModel.clear()
                         } label: {
                             Image(.clear16)
                                 .resizable()
@@ -57,7 +57,7 @@ struct AddFavoriteView: View {
                 Text(verbatim: "You can also favorite any site through the ••• menu while on that page.")
             }
 
-            if let manualEntry = searchViewModel.manualEntry {
+            if let manualEntry = viewModel.manualEntry {
                 Section {
                     Button {
 
@@ -69,13 +69,13 @@ struct AddFavoriteView: View {
                         dismiss()
                     } label: {
                         FavoriteSearchResultItemView(result: manualEntry, faviconLoader: faviconLoader)
-                    }.disabled(!searchViewModel.isManualEntryValid)
+                    }.disabled(!viewModel.isManualEntryValid)
                 }
             }
 
-            if !searchViewModel.results.isEmpty {
+            if !viewModel.results.isEmpty {
                 Section {
-                    ForEach(searchViewModel.results) { result in
+                    ForEach(viewModel.results) { result in
                         Button {
                             favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
                             dismiss()
@@ -105,5 +105,5 @@ struct AddFavoriteView: View {
 }
 
 #Preview {
-    AddFavoriteView(searchViewModel: .ddg, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
+    AddFavoriteView(viewModel: .ddg, favoritesCreating: NullMenuBookmarksInteracting(), faviconLoader: nil)
 }

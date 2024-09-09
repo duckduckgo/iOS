@@ -117,7 +117,7 @@ public final class DebugDataCollector {
         static let launchingReturn = "m_debug_app_launching_return"
 
         static let startedBGFetch = "m_debug_bg_fetch_start"
-        static let finishedBGFetch = "m_debug_bg_fetch_start"
+        static let finishedBGFetch = "m_debug_bg_fetch_finish"
 
         static let staredAutoclear = "m_debug_ac_start"
         static let finishedAutoclear = "m_debug_ac_finish"

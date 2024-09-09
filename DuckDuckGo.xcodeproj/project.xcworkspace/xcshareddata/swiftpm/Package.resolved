@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "660971f355c2288ebd3041e92d9674abd9e3a3e0",
-        "version" : "191.2.2"
+        "branch" : "tespach/phishing-detection-feature",
+        "revision" : "083ea1c39773b24a548c85e51db1a58a537e1044"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "665b23dc656c9f787494620494f8e56098a900b2",
-        "version" : "5.1.1"
+        "branch" : "mgurgel/phishing-warning",
+        "revision" : "24ef446823cc116d06a650df0002803f9915b10f"
       }
     },
     {
@@ -138,7 +138,7 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
         "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
         "version" : "1.4.0"

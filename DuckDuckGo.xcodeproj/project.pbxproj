@@ -10712,7 +10712,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "tespach/phishing-detection-integration";
+				branch = "tespach/phishing-detection-feature";
 				kind = branch;
 			};
 		};

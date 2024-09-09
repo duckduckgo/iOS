@@ -30,11 +30,27 @@ extension OnboardingStyles {
         func body(content: Content) -> some View {
             let view = content
                 .font(.system(size: fontSize, weight: .bold))
-                .foregroundColor(.primary)
+                .foregroundStyle(Color.primary)
                 .multilineTextAlignment(.center)
 
             if #available(iOS 16, *) {
                 return view.kerning(0.38)
+            } else {
+                return view
+            }
+        }
+
+    }
+
+    struct ProgressBarTitleStyle: ViewModifier {
+
+        func body(content: Content) -> some View {
+            let view = content
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(Color.secondary)
+
+            if #available(iOS 16, *) {
+                return view.kerning(0.06)
             } else {
                 return view
             }
@@ -49,5 +65,9 @@ extension View {
     func onboardingTitleStyle(fontSize: CGFloat) -> some View {
         modifier(OnboardingStyles.TitleStyle(fontSize: fontSize))
     }
-    
+
+    func onboardingProgressTitleStyle() -> some View {
+        modifier(OnboardingStyles.ProgressBarTitleStyle())
+    }
+
 }

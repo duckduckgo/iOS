@@ -50,13 +50,13 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                AnimatableTypingText("Which color looks best on me?", startAnimating: animateTitle) {
+                AnimatableTypingText(UserText.HighlightsOnboardingExperiment.AppIconSelection.title, startAnimating: animateTitle) {
                     animateMessage.wrappedValue = true
                 }
                 .foregroundColor(.primary)
                 .font(Metrics.titleFont)
 
-                AnimatableTypingText("Pick your app icon:", startAnimating: animateMessage) {
+                AnimatableTypingText(UserText.HighlightsOnboardingExperiment.AppIconSelection.message, startAnimating: animateMessage) {
                     withAnimation {
                         showContent.wrappedValue = true
                     }
@@ -69,7 +69,7 @@ extension OnboardingView {
                         .offset(x: Metrics.pickerLeadingOffset) // Remove left padding for the first item
 
                     Button(action: action) {
-                        Text(verbatim: "Next")
+                        Text(UserText.HighlightsOnboardingExperiment.AppIconSelection.cta)
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }

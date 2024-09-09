@@ -28,7 +28,6 @@ struct AddFavoriteView: View {
     let favoritesCreating: MenuBookmarksInteracting
     let faviconLoader: FavoritesFaviconLoading?
 
-    @State private var isShowingDebugSettings = false
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -74,21 +73,7 @@ struct AddFavoriteView: View {
                 }
             }
 
-            if let errorMessage = searchViewModel.errorMessage {
-                Section {
-                    Text(verbatim: errorMessage)
-                        .daxFootnoteSemibold()
-                        .foregroundColor(.red)
-
-                    if errorMessage.contains("subscription") {
-                        Button {
-                            isShowingDebugSettings = true
-                        } label: {
-                            Text(verbatim: "Open NTP debug settings")
-                        }
-                    }
-                }
-            } else if !searchViewModel.results.isEmpty {
+            if !searchViewModel.results.isEmpty {
                 Section {
                     ForEach(searchViewModel.results) { result in
                         Button {
@@ -113,12 +98,6 @@ struct AddFavoriteView: View {
             }
         }
         .tintIfAvailable(.black)
-        .sheet(isPresented: $isShowingDebugSettings, content: {
-            NavigationView {
-                NewTabPageSectionsDebugView()
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-        })
         .onAppear {
             isFocused = true
         }

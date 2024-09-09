@@ -187,7 +187,7 @@ class RootDebugViewController: UITableViewController {
                 DuckPlayerLaunchExperiment().cleanup()
                 ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
             case .overrideDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().experimentOverride = true
+                DuckPlayerLaunchExperiment().override()
                 ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
             }
         }

@@ -88,7 +88,7 @@ class RootDebugViewController: UITableViewController {
         super.init(coder: coder)
     }
 
-    @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ImageCacheDebugViewController {
+    @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder) -> ImageCacheDebugViewController? {
         guard let controller = ImageCacheDebugViewController(coder: coder,
                                                              bookmarksDatabase: self.bookmarksDatabase!) else {
             fatalError("Failed to create controller")

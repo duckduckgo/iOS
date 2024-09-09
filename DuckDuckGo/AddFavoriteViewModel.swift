@@ -23,7 +23,6 @@ import Bookmarks
 import Combine
 
 class AddFavoriteViewModel: ObservableObject {
-    @Published var errorMessage: String?
     @Published var results: [FavoriteSearchResult] = []
     @Published var searchTerm: String = ""
 
@@ -63,7 +62,6 @@ class AddFavoriteViewModel: ObservableObject {
     }
 
     private func clearResults() {
-        errorMessage = nil
         results = []
     }
 

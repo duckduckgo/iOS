@@ -31,7 +31,8 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
-    private let bookmarksInteracting: MenuBookmarksInteracting
+    
+    private let addFavoriteViewModel: AddFavoriteViewModel
 
     @State private var customizeButtonShowedInline = false
     @State private var isAddingFavorite: Bool = false
@@ -39,7 +40,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
     init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
          favoritesModel: FavoritesModelType,
-         bookmarksInteracting: MenuBookmarksInteracting,
+         addFavoriteViewModel: AddFavoriteViewModel,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
@@ -49,7 +50,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
         self.shortcutsModel = shortcutsModel
         self.shortcutsSettingsModel = shortcutsSettingsModel
         self.sectionsSettingsModel = sectionsSettingsModel
-        self.bookmarksInteracting = bookmarksInteracting
+        self.addFavoriteViewModel = addFavoriteViewModel
 
         self.messagesModel.load()
     }
@@ -104,7 +105,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
         .padding(0)
         .sheet(isPresented: $isAddingFavorite, content: {
             NavigationView {
-                AddFavoriteView(viewModel: .init(favoritesCreating: bookmarksInteracting),
+                AddFavoriteView(viewModel: addFavoriteViewModel,
                                 faviconLoader: favoritesModel.faviconLoader)
             }
         })
@@ -297,7 +298,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
-        bookmarksInteracting: NullMenuBookmarksInteracting(),
+        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -323,7 +324,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(),
-        bookmarksInteracting: NullMenuBookmarksInteracting(),
+        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -339,10 +340,10 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(favorites: []),
-        bookmarksInteracting: NullMenuBookmarksInteracting(),
+        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
-        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel(),
     )
 }
 
@@ -355,7 +356,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesModel: FavoritesPreviewModel(favorites: []),
-        bookmarksInteracting: NullMenuBookmarksInteracting(),
+        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel(storage: .emptyStorage())

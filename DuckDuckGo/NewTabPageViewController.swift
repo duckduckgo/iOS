@@ -39,6 +39,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let addFavoriteViewModel: AddFavoriteViewModel
     private let associatedTab: Tab
 
     private var hostingController: UIHostingController<AnyView>?
@@ -68,11 +69,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         favoritesModel = FavoritesDefaultViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
+        addFavoriteViewModel = AddFavoriteViewModel(favoritesCreating: bookmarksInteracting)
 
         let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
                                             messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
-                                            bookmarksInteracting: bookmarksInteracting,
+                                            addFavoriteViewModel: addFavoriteViewModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,
                                             sectionsSettingsModel: sectionsSettingsModel)

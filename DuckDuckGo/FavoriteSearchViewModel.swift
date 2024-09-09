@@ -28,8 +28,7 @@ class FavoriteSearchViewModel: ObservableObject {
     @Published var isManualEntryValid: Bool = false
     @Published var searchTerm: String = ""
 
-    static var fake: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch()) }
-    static var ddg: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: DDGAutocompleteWebsiteSearch())}
+    static var ddg: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: DDGAutocompleteWebsiteSearch()) }
 
     private var cancellables = Set<AnyCancellable>()
 

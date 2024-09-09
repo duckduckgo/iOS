@@ -29,17 +29,24 @@ final class OnboardingIntroViewModel: ObservableObject {
 
     private let pixelReporter: OnboardingIntroPixelReporting
     private let onboardingManager: OnboardingHighlightsManaging
+    private let isIpad: Bool
     private let urlOpener: URLOpener
 
     init(
         pixelReporter: OnboardingIntroPixelReporting,
         onboardingManager: OnboardingHighlightsManaging = OnboardingManager(),
+        isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
         urlOpener: URLOpener = UIApplication.shared
     ) {
         self.pixelReporter = pixelReporter
         self.onboardingManager = onboardingManager
+        self.isIpad = isIpad
         self.urlOpener = urlOpener
-        introSteps = onboardingManager.isOnboardingHighlightsEnabled ? OnboardingIntroStep.highlightsFlow : OnboardingIntroStep.defaultFlow
+        introSteps = if onboardingManager.isOnboardingHighlightsEnabled {
+            isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
+        } else {
+            OnboardingIntroStep.defaultFlow
+        }
     }
 
     func onAppear() {
@@ -66,7 +73,11 @@ final class OnboardingIntroViewModel: ObservableObject {
     }
 
     func appIconPickerContinueAction() {
-        state = makeViewState(for: .addressBarPositionSelection)
+        if isIpad {
+            onCompletingOnboardingIntro?()
+        } else {
+            state = makeViewState(for: .addressBarPositionSelection)
+        }
     }
 
     func selectAddressBarPositionAction() {
@@ -126,5 +137,6 @@ private enum OnboardingIntroStep {
     case addressBarPositionSelection
 
     static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
-    static let highlightsFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
 }

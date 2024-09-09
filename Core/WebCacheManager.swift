@@ -24,8 +24,8 @@ import os.log
 
 extension WKWebsiteDataStore {
 
-    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WKWebsiteDataStore {
-        if #available(iOS 17, *), let id = dataStoreIdManager.id {
+    public static func current(dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebsiteDataStore {
+        if #available(iOS 17, *), let id = dataStoreIdManager.currentId {
             return WKWebsiteDataStore(forIdentifier: id)
         } else {
             return WKWebsiteDataStore.default()
@@ -82,16 +82,12 @@ public class WebCacheManager {
                       dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
-        if #available(iOS 17, *), dataStoreIdManager.hasId {
+        if #available(iOS 17, *) {
             cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
 
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
-
-        if #available(iOS 17, *) {
-            dataStoreIdManager.allocateNewContainerId()
-        }
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
@@ -118,7 +114,12 @@ extension WebCacheManager {
 
     @available(iOS 17, *)
     private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
-        guard let containerId = storeIdManager.id else { return [] }
+        guard let containerId = storeIdManager.currentId else {
+            storeIdManager.invalidateCurrentIdAndAllocateNew()
+            return []
+        }
+        storeIdManager.invalidateCurrentIdAndAllocateNew()
+
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil

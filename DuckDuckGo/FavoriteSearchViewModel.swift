@@ -29,7 +29,6 @@ class FavoriteSearchViewModel: ObservableObject {
     @Published var searchTerm: String = ""
 
     static var fake: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: MockWebsiteSearch()) }
-    static var bing: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: BingWebsiteSearch()) }
     static var ddg: FavoriteSearchViewModel { FavoriteSearchViewModel(websiteSearch: DDGAutocompleteWebsiteSearch())}
 
     private var cancellables = Set<AnyCancellable>()
@@ -85,8 +84,6 @@ class FavoriteSearchViewModel: ObservableObject {
                 try Task.checkCancellation()
 
                 await publishResults(decoratedResults)
-            } catch let error as BingError {
-                await publishResults([], error: error)
             } catch {
                 await publishResults([])
             }
@@ -118,9 +115,8 @@ class FavoriteSearchViewModel: ObservableObject {
     }
 
     @MainActor
-    private func publishResults(_ results: [WebPageSearchResultValue], error: BingError? = nil) {
+    private func publishResults(_ results: [WebPageSearchResultValue]) {
         self.results = results
-        self.errorMessage = error?.message
     }
 
     private func convertToURL(_ searchTerm: String) -> URL? {

@@ -23,12 +23,10 @@ struct NewTabPageSectionsDebugView: View {
     
     private var newTabPageDebugging: NewTabPageDebugging
     private let introDataStorage: NewTabPageIntroDataStoring
-    private var subscriptionIDStorage = FavoritesBingSubscriptionStorage()
 
     @State private var isFeatureEnabled: Bool
     @State private var introMessageCount: Int
     @State private var isIntroMessageInitialized: Bool
-    @State private var bingSubscriptionID: String
 
     private var localFlagEnabled: Binding<Bool> {
         Binding {
@@ -62,11 +60,10 @@ struct NewTabPageSectionsDebugView: View {
         let manager = NewTabPageManager()
         newTabPageDebugging = manager
         isFeatureEnabled = manager.isNewTabPageSectionsEnabled
-        bingSubscriptionID = subscriptionIDStorage.subscriptionID
 
         introDataStorage = NewTabPageIntroDataUserDefaultsStorage()
-        introMessageCount = appSettings.newTabPageIntroMessageSeenCount
-        isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
+        introMessageCount = introDataStorage.newTabPageIntroMessageSeenCount
+        isIntroMessageInitialized = introDataStorage.newTabPageIntroMessageEnabled != nil
     }
     
     var body: some View {
@@ -144,20 +141,9 @@ struct NewTabPageSectionsDebugView: View {
             } header: {
                 Text(verbatim: "Intro message")
             }
-
-            Section {
-                TextField(text: $bingSubscriptionID, prompt: Text(verbatim: "Paste Bing subscription ID")) {
-                    Text(verbatim: "Bing subscription ID for Favorites website search")
-                }
-            } header: {
-                Text(verbatim: "Favorites search")
-            }
         }
         .applyInsetGroupedListStyle()
         .navigationTitle("New Tab Page Improvements")
-        .onDisappear(perform: {
-            subscriptionIDStorage.subscriptionID = bingSubscriptionID
-        })
     }
 }
 

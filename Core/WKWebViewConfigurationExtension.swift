@@ -75,7 +75,7 @@ public class DataStoreIdManager: DataStoreIdManaging {
 
     public static let shared = DataStoreIdManager()
 
-    private let lock = NSLock()
+    private let lock = NSRecursiveLock()
 
     private let store: KeyValueStoring
     init(store: KeyValueStoring = UserDefaults.app) {

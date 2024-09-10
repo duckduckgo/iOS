@@ -72,7 +72,6 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
                 .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle(gradientType: gradientType)
-        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTrySearchUnique)
         }
@@ -85,7 +84,6 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
                 .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle(gradientType: gradientType)
-        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
         }
@@ -110,7 +108,6 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle(gradientType: gradientType)
-        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)

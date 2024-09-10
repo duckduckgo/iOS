@@ -25,6 +25,8 @@ final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
     var onCompletingOnboardingIntro: (() -> Void)?
+    private var introSteps: [OnboardingIntroStep]
+
     private let pixelReporter: OnboardingIntroPixelReporting
     private let onboardingManager: OnboardingHighlightsManaging
     private let urlOpener: URLOpener
@@ -37,15 +39,16 @@ final class OnboardingIntroViewModel: ObservableObject {
         self.pixelReporter = pixelReporter
         self.onboardingManager = onboardingManager
         self.urlOpener = urlOpener
+        introSteps = onboardingManager.isOnboardingHighlightsEnabled ? OnboardingIntroStep.highlightsFlow : OnboardingIntroStep.defaultFlow
     }
 
     func onAppear() {
-        state = .onboarding(.startOnboardingDialog)
+        state = makeViewState(for: .introDialog)
         pixelReporter.trackOnboardingIntroImpression()
     }
 
     func startOnboardingAction() {
-        state = .onboarding(.browsersComparisonDialog)
+        state = makeViewState(for: .browserComparison)
         pixelReporter.trackBrowserComparisonImpression()
     }
 
@@ -63,7 +66,10 @@ final class OnboardingIntroViewModel: ObservableObject {
     }
 
     func appIconPickerContinueAction() {
-       // TODO: Remove below and implement proper logic
+        state = makeViewState(for: .addressBarPositionSelection)
+    }
+
+    func selectAddressBarPositionAction() {
         onCompletingOnboardingIntro?()
     }
 
@@ -73,12 +79,52 @@ final class OnboardingIntroViewModel: ObservableObject {
 
 private extension OnboardingIntroViewModel {
 
+    func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
+        
+        func stepInfo() -> OnboardingView.ViewState.Intro.StepInfo {
+            guard
+                let currentStepIndex = introSteps.firstIndex(of: introStep),
+                    onboardingManager.isOnboardingHighlightsEnabled
+            else {
+                return .hidden
+            }
+
+            // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
+            return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
+        }
+
+        let viewState = switch introStep {
+        case .introDialog:
+            OnboardingView.ViewState.onboarding(.init(type: .startOnboardingDialog, step: .hidden))
+        case .browserComparison:
+            OnboardingView.ViewState.onboarding(.init(type: .browsersComparisonDialog, step: stepInfo()))
+        case .appIconSelection:
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAppIconDialog, step: stepInfo()))
+        case .addressBarPositionSelection:
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAddressBarPositionDialog, step: stepInfo()))
+        }
+
+        return viewState
+    }
+
     func handleSetDefaultBrowserAction() {
         if onboardingManager.isOnboardingHighlightsEnabled {
-            state = .onboarding(.chooseAppIconDialog)
+            state = makeViewState(for: .appIconSelection)
         } else {
             onCompletingOnboardingIntro?()
         }
     }
 
+}
+
+// MARK: - OnboardingIntroStep
+
+private enum OnboardingIntroStep {
+    case introDialog
+    case browserComparison
+    case appIconSelection
+    case addressBarPositionSelection
+
+    static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
+    static let highlightsFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
 }

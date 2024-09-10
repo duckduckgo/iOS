@@ -61,21 +61,16 @@ public protocol DataStoreIdManaging {
 
     var currentId: UUID? { get }
 
-    var invalidatedIds: [UUID] { get }
     func invalidateCurrentIdAndAllocateNew()
-
 }
 
 public class DataStoreIdManager: DataStoreIdManaging {
 
     enum Constants: String {
         case currentWebContainerId = "com.duckduckgo.ios.webcontainer.id"
-        case invalidatedWebContainerIdList = "com.duckduckgo.ios.webcontainer.invalidated.ids"
     }
 
     public static let shared = DataStoreIdManager()
-
-    private let lock = NSRecursiveLock()
 
     private let store: KeyValueStoring
     init(store: KeyValueStoring = UserDefaults.app) {
@@ -83,31 +78,14 @@ public class DataStoreIdManager: DataStoreIdManaging {
     }
 
     public var currentId: UUID? {
-        lock.lock()
-        defer { lock.unlock() }
-        return store.object(forKey: Constants.currentWebContainerId.rawValue) as? UUID
-    }
-
-    public var invalidatedIds: [UUID] {
-        lock.lock()
-        defer { lock.unlock() }
-        return (store.object(forKey: Constants.invalidatedWebContainerIdList.rawValue) as? [UUID]) ?? []
+        guard let uuidString = store.object(forKey: Constants.currentWebContainerId.rawValue) as? String else {
+            return nil
+        }
+        return UUID(uuidString: uuidString)
     }
 
     public func invalidateCurrentIdAndAllocateNew() {
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard let currentID = currentId else {
-            store.set(UUID(), forKey: Constants.currentWebContainerId.rawValue)
-            return
-        }
-
-        var invalidatedIds = invalidatedIds
-        invalidatedIds.append(currentID)
-
-        store.set(UUID(), forKey: Constants.currentWebContainerId.rawValue)
-        store.set(invalidatedIds, forKey: Constants.invalidatedWebContainerIdList.rawValue)
+        store.set(UUID().uuidString, forKey: Constants.currentWebContainerId.rawValue)
     }
 
 }

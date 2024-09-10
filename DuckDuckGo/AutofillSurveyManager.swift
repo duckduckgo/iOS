@@ -56,14 +56,17 @@ final class AutofillSurveyManager: AutofillSurveyManaging {
     }
 
     func surveyToPresent(settings: PrivacyConfigurationData.PrivacyFeature.FeatureSettings) -> AutofillSurvey? {
-        if let surveys = settings[Constants.surveysSettingsKey] as? [[String: Any]] {
-            for survey in surveys {
-                if let id = survey[Constants.surveysIdSettingsKey] as? String,
-                   let url = survey[Constants.surveysUrlSettingsKey] as? String,
-                   !hasCompletedSurvey(id: id) {
-                    return AutofillSurvey(id: id, url: url)
-                }
+        guard let surveys = settings[Constants.surveysSettingsKey] as? [[String: Any]] else {
+            return nil
+        }
+
+        for survey in surveys {
+            guard let id = survey[Constants.surveysIdSettingsKey] as? String,
+                  let url = survey[Constants.surveysUrlSettingsKey] as? String,
+                  !hasCompletedSurvey(id: id) else {
+                continue
             }
+            return AutofillSurvey(id: id, url: url)
         }
 
         return nil
@@ -90,7 +93,7 @@ final class AutofillSurveyManager: AutofillSurveyManaging {
     }
 
     private func hasCompletedSurvey(id: String) -> Bool {
-        return autofillSurveysCompleted.contains(id)
+        autofillSurveysCompleted.contains(id)
     }
 
     private func addPasswordsCountSurveyParameter(to surveyURL: URL, accountsCount: Int) -> URL {

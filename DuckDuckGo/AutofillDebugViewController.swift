@@ -120,7 +120,7 @@ class AutofillDebugViewController: UITableViewController {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
 
         for i in 1...count {
-            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "https://fill.dev", notes: "")
+            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "fill.dev", notes: "")
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password".data(using: .utf8))
             do {
                 _ = try secureVault?.storeWebsiteCredentials(credentials)

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1725043256685,
+    "version": 1725898107484,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -336,6 +336,12 @@
                     "domain": "dkb.de"
                 },
                 {
+                    "domain": "headphonecheck.com"
+                },
+                {
+                    "domain": "lehmannaudio.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -382,7 +388,7 @@
                     }
                 }
             },
-            "hash": "5a81046c452177af48157543487a38d5"
+            "hash": "a235f7ab6a5a3632380570bbc5113d51"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -449,12 +455,15 @@
                             },
                             {
                                 "percent": 25
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
                     }
                 }
             },
-            "hash": "471e5069536f5b7824c5e4b60e5be274"
+            "hash": "28d4af98382248e184c4315bd49f4222"
         },
         "breakageReporting": {
             "state": "disabled",
@@ -6004,6 +6013,16 @@
                             }
                         ]
                     },
+                    "adsrvr.org": {
+                        "rules": [
+                            {
+                                "rule": "js.adsrvr.org/up_loader.1.1.0.js",
+                                "domains": [
+                                    "codot.gov"
+                                ]
+                            }
+                        ]
+                    },
                     "adswizz.com": {
                         "rules": [
                             {
@@ -8576,16 +8595,6 @@
                             }
                         ]
                     },
-                    "siteimproveanalytics.com": {
-                        "rules": [
-                            {
-                                "rule": "siteimproveanalytics.com",
-                                "domains": [
-                                    "codot.gov"
-                                ]
-                            }
-                        ]
-                    },
                     "skimresources.com": {
                         "rules": [
                             {
@@ -9173,7 +9182,7 @@
                     "domain": "capitalone.com"
                 }
             ],
-            "hash": "70bdfe11b5235b40019495340bd91154"
+            "hash": "96d026a445971b650f4a6e899e339ff8"
         },
         "trackingCookies1p": {
             "settings": {

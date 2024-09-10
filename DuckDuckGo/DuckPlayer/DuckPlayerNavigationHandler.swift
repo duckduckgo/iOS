@@ -33,6 +33,7 @@ final class DuckPlayerNavigationHandler {
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
+    var experiment: DuckPlayerLaunchExperimentHandling
     
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
@@ -54,10 +55,12 @@ final class DuckPlayerNavigationHandler {
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         appSettings: AppSettings) {
+         appSettings: AppSettings,
+         experiment: DuckPlayerLaunchExperimentHandling = DuckPlayerLaunchExperiment()) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
+        self.experiment = experiment
     }
     
     static var htmlTemplatePath: String {
@@ -103,6 +106,11 @@ final class DuckPlayerNavigationHandler {
         performNavigation(duckPlayerRequest, responseHTML: html, webView: webView)
     }
     
+    private var duckPlayerMode: DuckPlayerMode {
+        let isEnabled = experiment.isEnrolled && experiment.isExperimentCohort && featureFlagger.isFeatureOn(.duckPlayer)
+        return isEnabled ? duckPlayer.settings.mode : .disabled
+    }
+    
     // Handle URL changes not triggered via Omnibar
     // such as changes triggered via JS
     @MainActor
@@ -134,7 +142,7 @@ final class DuckPlayerNavigationHandler {
         if url.isYoutubeVideo,
             !url.isDuckPlayer,
             let (videoID, timestamp) = url.youtubeVideoParams,
-            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             
             Logger.duckPlayer.debug("Handling URL change: \(url.absoluteString)")
             webView.load(URLRequest(url: URL.duckPlayer(videoID, timestamp: timestamp)))
@@ -147,7 +155,7 @@ final class DuckPlayerNavigationHandler {
         guard let (youtubeVideoID, timestamp) = url.youtubeVideoParams,
                 url.isDuckPlayer,
                 !url.isDuckURLScheme,
-                duckPlayer.settings.mode != .disabled
+                duckPlayerMode != .disabled
         else {
             return url
         }
@@ -171,15 +179,75 @@ final class DuckPlayerNavigationHandler {
         return false
     }
     
+    private func isOpenInYoutubeURL(url: URL) -> Bool {
+        return isWatchInYouTubeURL(url: url)
+    }
+
+    private func getYoutubeURLFromOpenInYoutubeLink(url: URL) -> URL? {
+        guard isWatchInYouTubeURL(url: url),
+              let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
+              let id = videoParameterItem.value,
+              let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() else {
+            return nil
+        }
+        return newURL
+    }
+
+    private func isWatchInYouTubeURL(url: URL) -> Bool {
+        guard url.scheme == Constants.duckPlayerScheme,
+              let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              urlComponents.path == "/\(Constants.watchInYoutubePath)" else {
+            return false
+        }
+        return true
+    }
+    
+    // DuckPlayer Experiment Handling
+    private func handleYouTubePageVisited(url: URL?, navigationAction: WKNavigationAction?) {
+        guard let url else { return }
+        
+        // Parse openInYoutubeURL if present
+        let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
+        
+        guard let (videoID, _) = newURL.youtubeVideoParams else { return }
+        
+        // If this is a SERP link, set the referrer accordingly
+        if let navigationAction, isSERPLink(navigationAction: navigationAction) {
+            referrer = .serp
+        }
+        
+        
+        // DuckPlayer Experiment run
+        let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
+        
+        // Enroll user if not enrolled
+        if !experiment.isEnrolled {
+            experiment.assignUserToCohort()
+        }
+        
+        // DuckPlayer is disabled before user enrolls,
+        // So trigger a settings change notification
+        // to let the FE know about the 'actual' setting
+        // and update Experiment value
+        if experiment.isExperimentCohort {
+            duckPlayer.settings.triggerNotification()
+            experiment.duckPlayerMode = duckPlayer.settings.mode
+        }
+        
+        experiment.fireYoutubePixel(videoID: videoID)
+
+    }
+    
 }
 
-extension DuckPlayerNavigationHandler: DuckNavigationHandling {
+extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
 
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
-        
+                
         Logger.duckPlayer.debug("Handling DuckPlayer Player Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
 
         // This is passed to the FE overlay at init to disable the overlay for one video
@@ -187,10 +255,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         guard let url = navigationAction.request.url else { return }
         
-        guard featureFlagger.isFeatureOn(.duckPlayer) else {
-            return
-        }
-        
+        guard featureFlagger.isFeatureOn(.duckPlayer) else { return }
+                                
         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
         // These should not be handled by DuckPlayer
         if url.isYoutubeVideo,
@@ -200,13 +266,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Handle Open in Youtube Links
         // duck://player/openInYoutube?v=12345
-        if url.scheme == Constants.duckPlayerScheme,
-           let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-           urlComponents.path == "/\(Constants.watchInYoutubePath)",
-           let videoParameterItem = urlComponents.queryItems?.first(where: { $0.name == Constants.watchInYoutubeVideoParameter }),
-           let id = videoParameterItem.value,
-           let newURL = URL.youtube(id, timestamp: nil).addingWatchInYoutubeQueryParameter() {
-
+        if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
+                        
             Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
 
             // These links should always skip the overlay
@@ -215,7 +276,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             // Attempt to open in YouTube app (if installed) or load in webView
             if appSettings.allowUniversalLinks,
                isYouTubeAppInstalled,
-                let url = URL(string: "\(Constants.youtubeScheme)\(id)") {
+                let (videoID, _) =  newURL.youtubeVideoParams,
+                let url = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
                 UIApplication.shared.open(url)
             } else {
                 webView.load(URLRequest(url: newURL))
@@ -226,23 +288,21 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         // Daily Unique View Pixel
         if url.isDuckPlayer,
-           duckPlayer.settings.mode != .disabled {
-            let setting = duckPlayer.settings.mode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
+           duckPlayerMode != .disabled {
+            let setting = duckPlayerMode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
             DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
-            
         }
         
         // Pixel for Views From Youtube
         if referrer == .youtube,
-            duckPlayer.settings.mode == .enabled {
+           duckPlayerMode == .enabled {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
         }
-        
-        
+                
         if url.isDuckURLScheme {
            
             // If DuckPlayer is Enabled or in ask mode, render the video
-            if duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk,
+            if duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk,
                !url.hasWatchInYoutubeQueryParameter {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
                 
@@ -272,6 +332,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                                completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView) {
         
+        Logger.duckPlayer.debug("Handling DecidePolicyFor for \(navigationAction.request.url?.absoluteString ?? "")")
+                
         guard let url = navigationAction.request.url else {
             completion(.cancel)
             return
@@ -302,10 +364,15 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
                 return
          }
 
-        // Pixel for Views From SERP
-        if isSERPLink(navigationAction: navigationAction),
-           duckPlayer.settings.mode == .enabled, !url.isDuckPlayer {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
+        // SERP referals
+        if isSERPLink(navigationAction: navigationAction) {
+            // Set the referer
+            referrer = .serp
+            
+            if duckPlayerMode == .enabled, !url.isDuckPlayer {
+                Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
+            }
+            
         } else {
             Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
         }
@@ -313,7 +380,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         
         if url.isYoutubeVideo,
            !url.isDuckPlayer,
-            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
                 Logger.duckPlayer.debug("DP: Handling decidePolicy for Duck Player with \(url.absoluteString)")
                 completion(.cancel)
                 handleURLChange(url: url, webView: webView)
@@ -326,6 +393,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleJSNavigation(url: URL?, webView: WKWebView) {
         
+        Logger.duckPlayer.debug("Handling JS Navigation for \(url?.absoluteString ?? "")")
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
@@ -337,6 +406,9 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     func handleGoBack(webView: WKWebView) {
         
         Logger.duckPlayer.debug("DP: Handling Back Navigation")
+        
+        let experiment = DuckPlayerLaunchExperiment()
+        let duckPlayerMode = experiment.isExperimentCohort ? duckPlayerMode : .disabled
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.goBack()
@@ -362,7 +434,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
             break
         }
         
-        if let nonYoutubeItem = nonYoutubeItem, duckPlayer.settings.mode == .enabled {
+        if let nonYoutubeItem = nonYoutubeItem, duckPlayerMode == .enabled {
             Logger.duckPlayer.debug("DP: Navigating back to \(nonYoutubeItem.url.absoluteString)")
             webView.go(to: nonYoutubeItem)
         } else {
@@ -375,6 +447,8 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleReload(webView: WKWebView) {
         
+        Logger.duckPlayer.debug("DP: Handling Reload")
+                
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.reload()
             return
@@ -385,7 +459,7 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,
-            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             Logger.duckPlayer.debug("DP: Handling DuckPlayer Reload for \(url.absoluteString)")
             webView.load(URLRequest(url: .duckPlayer(videoID, timestamp: timestamp)))
         } else {
@@ -396,17 +470,28 @@ extension DuckPlayerNavigationHandler: DuckNavigationHandling {
     @MainActor
     func handleAttach(webView: WKWebView) {
         
+        Logger.duckPlayer.debug("DP: Attach WebView")
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
         
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
-            duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk {
+            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             Logger.duckPlayer.debug("DP: Handling Initial Load of a video for \(url.absoluteString)")
             handleReload(webView: webView)
         }
         
     }
-
+    
+    // Handle custom events
+    func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction?) {
+        
+        switch event {
+        case .youtubeVideoPageVisited:
+            handleYouTubePageVisited(url: url, navigationAction: navigationAction)
+        }
+    }
+    
 }

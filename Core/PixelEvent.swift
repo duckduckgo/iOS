@@ -725,6 +725,7 @@ extension Pixel {
 
         // MARK: Apple Ad Attribution
         case appleAdAttribution
+        case appleAdAttributionNotAttributed
 
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
@@ -808,6 +809,13 @@ extension Pixel {
         case pproFeedbackSubcategoryScreenShow(source: String, reportType: String, category: String)
         case pproFeedbackSubmitScreenShow(source: String, reportType: String, category: String, subcategory: String)
         case pproFeedbackSubmitScreenFAQClick(source: String, reportType: String, category: String, subcategory: String)
+        
+        // MARK: DuckPlayer Pixel Experiment
+        case duckplayerExperimentCohortAssign
+        case duckplayerExperimentSearch
+        case duckplayerExperimentDailySearch
+        case duckplayerExperimentWeeklySearch
+        case duckplayerExperimentYoutubePageView
     }
 
 }
@@ -1438,6 +1446,7 @@ extension Pixel.Event {
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
+        case .appleAdAttributionNotAttributed: return "m_apple-ad-attribution_not-attributed"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
@@ -1610,6 +1619,14 @@ extension Pixel.Event {
         case .pproFeedbackSubcategoryScreenShow: return "m_ppro_feedback_subcategory-screen_show"
         case .pproFeedbackSubmitScreenShow: return "m_ppro_feedback_submit-screen_show"
         case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
+            
+        // MARK: Duckplayer experiment
+        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign"
+        case .duckplayerExperimentSearch: return "duckplayer_experiment_search"
+        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search"
+        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search"
+        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view"
+            
         }
     }
 }

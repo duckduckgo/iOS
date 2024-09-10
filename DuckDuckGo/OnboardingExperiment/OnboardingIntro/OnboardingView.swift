@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Onboarding
+import struct DuckUI.PrimaryButtonStyle
 
 // MARK: - OnboardingView
 
@@ -64,11 +65,11 @@ struct OnboardingView: View {
                     showDialogBox: $showDaxDialogBox,
                     onTapGesture: {
                         withAnimation {
-                            switch model.state {
-                            case .onboarding(.startOnboardingDialog):
+                            switch model.state.intro?.type {
+                            case .startOnboardingDialog:
                                 showIntroButton = true
                                 animateIntroText = false
-                            case .onboarding(.browsersComparisonDialog):
+                            case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
                             default: break
@@ -77,15 +78,20 @@ struct OnboardingView: View {
                     },
                     content: {
                         VStack {
-                            switch state {
+                            switch state.type {
                             case .startOnboardingDialog:
                                 introView
                             case .browsersComparisonDialog:
                                 browsersComparisonView
+                            case .chooseAppIconDialog:
+                                appIconPickerView
+                            case .chooseAddressBarPositionDialog:
+                                addressBarPreferenceSelectionView
                             }
                         }
                     }
                 )
+                .onboardingProgressIndicator(currentStep: state.step.currentStep, totalSteps: state.step.totalSteps)
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
@@ -133,6 +139,32 @@ struct OnboardingView: View {
         .onboardingDaxDialogStyle()
     }
 
+    private var appIconPickerView: some View {
+        // TODO: Implement View
+        VStack(spacing: 30) {
+            Text(verbatim: "Choose App Icon")
+
+            Button(action: model.appIconPickerContinueAction) {
+                Text(verbatim: "Next")
+            }
+            .buttonStyle(PrimaryButtonStyle())
+        }
+        .onboardingDaxDialogStyle()
+    }
+
+    private var addressBarPreferenceSelectionView: some View {
+        // TODO: Implement View
+        VStack(spacing: 30) {
+            Text(verbatim: "Choose Address Bar Position")
+
+            Button(action: model.selectAddressBarPositionAction) {
+                Text(verbatim: "Next")
+            }
+            .buttonStyle(PrimaryButtonStyle())
+        }
+        .onboardingDaxDialogStyle()
+    }
+
     private func animateBrowserComparisonViewState() {
         // Hide content of Intro dialog before animating
         showIntroViewContent = false
@@ -167,17 +199,44 @@ extension OnboardingView {
     enum ViewState: Equatable {
         case landing
         case onboarding(Intro)
+
+        var intro: Intro? {
+            switch self {
+            case .landing:
+                return nil
+            case let .onboarding(intro):
+                return intro
+            }
+        }
     }
     
 }
 
 extension OnboardingView.ViewState {
+    
+    struct Intro: Equatable {
+        let type: IntroType
+        let step: StepInfo
+    }
 
-    enum Intro: Equatable {
+}
+
+extension OnboardingView.ViewState.Intro {
+
+    enum IntroType: Equatable {
         case startOnboardingDialog
         case browsersComparisonDialog
+        case chooseAppIconDialog
+        case chooseAddressBarPositionDialog
     }
-    
+
+    struct StepInfo: Equatable {
+        let currentStep: Int
+        let totalSteps: Int
+
+        static let hidden = StepInfo(currentStep: 0, totalSteps: 0)
+    }
+
 }
 
 // MARK: - Metrics
@@ -187,6 +246,24 @@ private enum Metrics {
     static let daxDialogVisibilityDelay: TimeInterval = 0.5
     static let comparisonChartAnimationDuration = 0.25
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(value: 0.1).smallIphone(0.01)
+    static let progressBarTrailingPadding: CGFloat = 16.0
+    static let progressBarTopPadding: CGFloat = 12.0
+}
+
+// MARK: - Helpers
+
+private extension View {
+
+    func onboardingProgressIndicator(currentStep: Int, totalSteps: Int) -> some View {
+        overlay(alignment: .topTrailing) {
+            OnboardingProgressIndicator(stepInfo: .init(currentStep: currentStep, totalSteps: totalSteps))
+                .padding(.trailing, Metrics.progressBarTrailingPadding)
+                .padding(.top, Metrics.progressBarTopPadding)
+                .transition(.identity)
+                .visibility(totalSteps == 0 ? .invisible : .visible)
+        }
+    }
+
 }
 
 // MARK: - Preview

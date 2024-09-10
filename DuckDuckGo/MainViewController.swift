@@ -136,8 +136,8 @@ class MainViewController: UIViewController {
     }()
     
     weak var tabSwitcherController: TabSwitcherViewController?
-    let tabSwitcherButton = TabSwitcherButton()
-    
+    var tabSwitcherButton: TabSwitcherButton!
+
     /// Do not reference directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
@@ -639,6 +639,7 @@ class MainViewController: UIViewController {
     }
 
     private func initTabButton() {
+        tabSwitcherButton = TabSwitcherButton()
         tabSwitcherButton.delegate = self
         viewCoordinator.toolbarTabSwitcherButton.customView = tabSwitcherButton
         viewCoordinator.toolbarTabSwitcherButton.isAccessibilityElement = true

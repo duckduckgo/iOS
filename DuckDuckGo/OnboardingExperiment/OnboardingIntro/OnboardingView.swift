@@ -126,7 +126,11 @@ struct OnboardingView: View {
     }
 
     private var introView: some View {
-        IntroDialogContent(animateText: $animateIntroText, showCTA: $showIntroButton) {
+        IntroDialogContent(
+            title: model.copy.introTitle,
+            animateText: $animateIntroText,
+            showCTA: $showIntroButton
+        ) {
             animateBrowserComparisonViewState()
         }
         .onboardingDaxDialogStyle()
@@ -135,6 +139,7 @@ struct OnboardingView: View {
 
     private var browsersComparisonView: some View {
         BrowsersComparisonContent(
+            title: model.copy.browserComparisonTitle,
             animateText: $animateComparisonText,
             showContent: $showComparisonButton,
             setAsDefaultBrowserAction: {

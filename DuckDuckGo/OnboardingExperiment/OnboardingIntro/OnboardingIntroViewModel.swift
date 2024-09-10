@@ -24,6 +24,7 @@ import class UIKit.UIApplication
 final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
+    let copy: Copy
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
@@ -47,6 +48,8 @@ final class OnboardingIntroViewModel: ObservableObject {
         } else {
             OnboardingIntroStep.defaultFlow
         }
+
+        copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
     }
 
     func onAppear() {
@@ -139,4 +142,38 @@ private enum OnboardingIntroStep {
     static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
     static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
     static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
+}
+
+// MARK: OnboardingIntroViewModel + Copy
+
+extension OnboardingIntroViewModel {
+    struct Copy {
+        let introTitle: String
+        let browserComparisonTitle: String
+        let trackerBlockers: String
+        let cookiePopups: String
+        let creepyAds: String
+        let eraseBrowsingData: String
+    }
+}
+
+extension OnboardingIntroViewModel.Copy {
+    
+    static let `default` = OnboardingIntroViewModel.Copy(
+        introTitle: UserText.DaxOnboardingExperiment.Intro.title,
+        browserComparisonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.title,
+        trackerBlockers: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.trackerBlockers,
+        cookiePopups: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.cookiePopups,
+        creepyAds: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.creepyAds,
+        eraseBrowsingData: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData
+    )
+
+    static let highlights = OnboardingIntroViewModel.Copy(
+        introTitle: UserText.HighlightsOnboardingExperiment.Intro.title,
+        browserComparisonTitle: UserText.HighlightsOnboardingExperiment.BrowsersComparison.title,
+        trackerBlockers: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.trackerBlockers,
+        cookiePopups: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.cookiePopups,
+        creepyAds: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.creepyAds,
+        eraseBrowsingData: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData
+    )
 }

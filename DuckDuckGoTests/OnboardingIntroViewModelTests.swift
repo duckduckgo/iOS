@@ -339,6 +339,56 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertTrue(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
     }
 
+    // MARK: - Copy
+
+    func testWhenIsNotHighlightsThenIntroTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = false
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.introTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.Intro.title)
+    }
+
+    func testWhenIsHighlightsThenIntroTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.introTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.Intro.title)
+    }
+
+    func testWhenIsNotHighlightsThenBrowserComparisonTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = false
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.browserComparisonTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.title)
+    }
+
+    func testWhenIsHighlightsThenBrowserComparisonTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.browserComparisonTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.title)
+    }
+
 }
 
 private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReporting {

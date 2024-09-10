@@ -986,6 +986,7 @@
 		EE01EB402AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */; };
 		EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */; };
 		EE0798C52B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0798C42B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift */; };
+		EE0D1B9C2C8B41DB00AC0987 /* StubAutofillLoginImportStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D1B9B2C8B41DB00AC0987 /* StubAutofillLoginImportStateProvider.swift */; };
 		EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
 		EE3B226C29DE0FD30082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
@@ -2774,6 +2775,7 @@
 		EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationView.swift; sourceTree = "<group>"; };
 		EE0798C42B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNCountryLabelsModel.swift; sourceTree = "<group>"; };
+		EE0D1B9B2C8B41DB00AC0987 /* StubAutofillLoginImportStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubAutofillLoginImportStateProvider.swift; sourceTree = "<group>"; };
 		EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionUNNotificationPresenter.swift; sourceTree = "<group>"; };
 		EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInternalUserStoring.swift; sourceTree = "<group>"; };
 		EE3B98EA2A9634CC002F63A0 /* DuckDuckGoAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGoAlpha.entitlements; sourceTree = "<group>"; };
@@ -6244,6 +6246,7 @@
 				31951E9328230D8900CAF535 /* Shared */,
 				F407605428131923006B1E0B /* SaveLogin */,
 				EE5929612C5A8AF40029380B /* AutofillUsageMonitor.swift */,
+				EE0D1B9B2C8B41DB00AC0987 /* StubAutofillLoginImportStateProvider.swift */,
 			);
 			name = Autofill;
 			sourceTree = "<group>";
@@ -7609,6 +7612,7 @@
 				0283A2012C6E46E300508FBD /* BrokenSitePromptLimiter.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				851672D32BED23FE00592F24 /* AutocompleteViewModel.swift in Sources */,
+				EE0D1B9C2C8B41DB00AC0987 /* StubAutofillLoginImportStateProvider.swift in Sources */,
 				8562CE152B9B645C00E1D399 /* CachedBookmarkSuggestions.swift in Sources */,
 				C13F3F682B7F88100083BE40 /* AuthConfirmationPromptView.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
@@ -10773,7 +10777,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 192.0.0;
+				version = 193.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

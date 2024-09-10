@@ -28,14 +28,14 @@ final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageI
     private(set) var itemsOrder: [Item]
     private var enabledItems: Set<Item>
 
-    private var appSettings: AppSettings
-    private let keyPath: WritableKeyPath<AppSettings, Data?>
+    private var persistence: NewTabPageSettingsDataStoring
+    private let keyPath: WritableKeyPath<NewTabPageSettingsDataStoring, Data?>
 
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-         keyPath: WritableKeyPath<AppSettings, Data?>,
+    init(persistence: NewTabPageSettingsDataStoring,
+         keyPath: WritableKeyPath<NewTabPageSettingsDataStoring, Data?>,
          defaultOrder: [Item],
          defaultEnabledItems: [Item]) {
-        self.appSettings = appSettings
+        self.persistence = persistence
         self.keyPath = keyPath
         self.itemsOrder = defaultOrder
         self.enabledItems = Set(defaultEnabledItems)
@@ -62,12 +62,12 @@ final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageI
     func save() {
         let newSettings = NewTabPageItemSettings(itemsOrder: itemsOrder, enabledItems: enabledItems)
         if let data = try? JSONEncoder().encode(newSettings) {
-            appSettings[keyPath: keyPath] = data
+            persistence[keyPath: keyPath] = data
         }
     }
 
     private func load() {
-        if let settingsData = appSettings[keyPath: keyPath],
+        if let settingsData = persistence[keyPath: keyPath],
            let settings = try? JSONDecoder().decode(NewTabPageItemSettings<Item>.self, from: settingsData) {
             itemsOrder = settings.itemsOrder
             enabledItems = settings.enabledItems

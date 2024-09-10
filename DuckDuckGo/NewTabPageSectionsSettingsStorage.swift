@@ -28,7 +28,8 @@ typealias NewTabPageSectionsSettingsStorage = NewTabPageSettingsPersistentStorag
 
 extension NewTabPageSettingsPersistentStorage<NewTabPageSection> {
     convenience init() {
-        self.init(keyPath: \.newTabPageSectionsSettings,
+        self.init(persistence: NewTabPageSettingsDataUserDefaultsStorage(),
+                  keyPath: \.newTabPageSectionsSettings,
                   defaultOrder: NewTabPageSection.allCases,
                   defaultEnabledItems: NewTabPageSection.allCases)
     }

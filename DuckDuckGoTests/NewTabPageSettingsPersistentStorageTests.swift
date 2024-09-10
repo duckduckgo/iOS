@@ -23,7 +23,7 @@ import XCTest
 
 final class NewTabPageSettingsPersistentStorageTests: XCTestCase {
 
-    private var appSettings = AppSettingsMock()
+    private var settingsDataStorage = NewTabPageSettingsDataStoringMock()
 
     func testLoadsInitialStateFromDefaults() {
         let sut = createSUT()
@@ -35,7 +35,7 @@ final class NewTabPageSettingsPersistentStorageTests: XCTestCase {
     func testUsesDefaultsIfDataCorrupted() {
         let sut = createSUT()
 
-        appSettings[keyPath: Constant.keyPath] = "Random data".data(using: .utf8)
+        settingsDataStorage[keyPath: Constant.keyPath] = "Random data".data(using: .utf8)
 
         XCTAssertEqual(sut.itemsOrder, Constant.defaultItems)
         XCTAssertEqual(sut.enabledItems, Constant.defaultItems)
@@ -90,7 +90,7 @@ final class NewTabPageSettingsPersistentStorageTests: XCTestCase {
     }
 
     private func createSUT(defaultOrder: [StorageItem] = Constant.defaultItems, defaultEnabledItems: [StorageItem] = Constant.defaultItems) -> NewTabPageSettingsPersistentStorage<StorageItem> {
-        NewTabPageSettingsPersistentStorage<StorageItem>(appSettings: appSettings,
+        NewTabPageSettingsPersistentStorage<StorageItem>(persistence: settingsDataStorage,
                                                          keyPath: Constant.keyPath,
                                                          defaultOrder: defaultOrder,
                                                          defaultEnabledItems: defaultEnabledItems)
@@ -98,7 +98,7 @@ final class NewTabPageSettingsPersistentStorageTests: XCTestCase {
 
     private enum Constant {
         static let defaultItems = [StorageItem.one, .two, .three]
-        static let keyPath = \AppSettings.newTabPageSectionsSettings
+        static let keyPath = \NewTabPageSettingsDataStoring.newTabPageSectionsSettings
     }
 }
 

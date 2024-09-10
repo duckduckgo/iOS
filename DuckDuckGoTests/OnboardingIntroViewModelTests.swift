@@ -21,11 +21,11 @@ import XCTest
 @testable import DuckDuckGo
 
 final class OnboardingIntroViewModelTests: XCTestCase {
-    private var onboardingManager: OnboardingHighlightsManagerMock!
+    private var onboardingManager: OnboardingsManagerMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        onboardingManager = OnboardingHighlightsManagerMock()
+        onboardingManager = OnboardingsManagerMock()
     }
 
     override func tearDownWithError() throws {
@@ -357,8 +357,4 @@ private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReport
     func trackChooseBrowserCTAAction() {
         didCallTrackChooseBrowserCTAAction = true
     }
-}
-
-private class OnboardingHighlightsManagerMock: OnboardingHighlightsManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
 }

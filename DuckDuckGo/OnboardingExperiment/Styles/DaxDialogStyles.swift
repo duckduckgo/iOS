@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Onboarding
 
 extension OnboardingStyles {
 
@@ -33,10 +34,12 @@ extension OnboardingStyles {
     }
 
     struct BackgroundStyle: ViewModifier {
+        let gradientType: OnboardingGradientType
 
         func body(content: Content) -> some View {
             ZStack {
                 OnboardingBackground()
+                    .onboardingGradient(gradientType)
                     .ignoresSafeArea(.keyboard)
 
                 content
@@ -57,8 +60,27 @@ extension View {
         modifier(OnboardingStyles.DaxDialogStyle())
     }
 
-    func onboardingContextualBackgroundStyle() -> some View {
-        modifier(OnboardingStyles.BackgroundStyle())
+    func onboardingContextualBackgroundStyle(gradientType: OnboardingGradientType) -> some View {
+        modifier(OnboardingStyles.BackgroundStyle(gradientType: gradientType))
     }
     
+}
+
+enum OnboardingGradientTypeKey: EnvironmentKey {
+    static var defaultValue: OnboardingGradientType = .default
+}
+
+extension EnvironmentValues {
+    var onboardingGradientType: OnboardingGradientType {
+        get { self[OnboardingGradientTypeKey.self] }
+        set { self[OnboardingGradientTypeKey.self] = newValue }
+    }
+}
+
+extension View {
+
+    func onboardingGradient(_ type: OnboardingGradientType) -> some View {
+        environment(\.onboardingGradientType, type)
+    }
+
 }

@@ -32,6 +32,10 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     private let onboardingPixelReporter: OnboardingPixelReporting
     private let onboardingManager: OnboardingHighlightsManaging
 
+    private var gradientType: OnboardingGradientType {
+        onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+    }
+
     init(
         delegate: OnboardingNavigationDelegate?,
         contextualOnboardingLogic: ContextualOnboardingLogic,
@@ -57,7 +61,6 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             createFinalDialog(onDismiss: onDismiss)
         default:
             EmptyView()
-
         }
     }
 
@@ -68,7 +71,8 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             OnboardingTrySearchDialog(message: message, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(gradientType: gradientType)
+        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTrySearchUnique)
         }
@@ -80,7 +84,8 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(gradientType: gradientType)
+        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
         }
@@ -104,7 +109,8 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             })
             .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(gradientType: gradientType)
+        .onboardingGradient(gradientType)
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)

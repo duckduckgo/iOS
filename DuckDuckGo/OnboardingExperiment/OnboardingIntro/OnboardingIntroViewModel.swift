@@ -19,12 +19,14 @@
 
 import Foundation
 import Core
+import Onboarding
 import class UIKit.UIApplication
 
 final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
     let copy: Copy
+    let gradientType: OnboardingGradientType
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
@@ -50,6 +52,7 @@ final class OnboardingIntroViewModel: ObservableObject {
         }
 
         copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+        gradientType = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
     }
 
     func onAppear() {

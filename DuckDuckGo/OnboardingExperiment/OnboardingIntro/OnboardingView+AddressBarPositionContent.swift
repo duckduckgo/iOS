@@ -76,7 +76,7 @@ extension OnboardingView {
                 ForEach(viewModel.items, id: \.type) { item in
                     AddressBarPositionButton(
                         icon: item.icon,
-                        title: item.title,
+                        title: AttributedString(item.title),
                         message: item.message,
                         isSelected: item.isSelected,
                         action: {
@@ -97,7 +97,7 @@ final class AddressBarPositionContentViewModel: ObservableObject {
     struct AddressBarPositionDisplayModel {
         let type: AddressBarPosition
         let icon: ImageResource
-        let title: AttributedString
+        let title: NSAttributedString
         let message: String
         let isSelected: Bool
     }
@@ -141,16 +141,16 @@ extension AppUserDefaults: AddressBarPositionManaging {}
 
 private extension AddressBarPosition {
 
-    var titleAndMessage: (title: AttributedString, message: String) {
+    var titleAndMessage: (title: NSAttributedString, message: String) {
         switch self {
         case .top:
             (
-                AttributedString(UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle),
+                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle),
                 UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage
             )
         case .bottom:
             (
-                AttributedString(UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle),
+                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle),
                 UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomMessage
             )
         }

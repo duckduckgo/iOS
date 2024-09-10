@@ -23,4 +23,13 @@ import BrowserServicesKit
 struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
     public var isNewDDGUser: Bool = false
     public var hasImportedLogins: Bool = false
+    var credentialsImportPromptPresentationCount: Int = 0
+
+    var isAutofillEnabled: Bool {
+        AppDependencyProvider().appSettings.autofillCredentialsEnabled
+    }
+
+    func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
+        AppDependencyProvider().autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
+    }
 }

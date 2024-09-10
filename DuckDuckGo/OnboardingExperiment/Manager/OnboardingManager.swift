@@ -42,7 +42,7 @@ final class OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlight
     }
 
     var isOnboardingHighlightsEnabled: Bool {
-        isLocalFlagEnabled && isFeatureFlagEnabled
+        isLocalFlagEnabled //&& isFeatureFlagEnabled
     }
 
     var isLocalFlagEnabled: Bool {

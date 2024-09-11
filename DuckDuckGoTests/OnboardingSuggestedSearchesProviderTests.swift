@@ -22,13 +22,13 @@ import Onboarding
 @testable import DuckDuckGo
 
 class OnboardingSuggestedSearchesProviderTests: XCTestCase {
-    private var onboardingManagerMock: OnboardingsManagerMock!
+    private var onboardingManagerMock: OnboardingManagerMock!
     let userText = UserText.DaxOnboardingExperiment.ContextualOnboarding.self
     let highlightsUserText = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.self
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        onboardingManagerMock = OnboardingsManagerMock()
+        onboardingManagerMock = OnboardingManagerMock()
     }
 
     override func tearDownWithError() throws {

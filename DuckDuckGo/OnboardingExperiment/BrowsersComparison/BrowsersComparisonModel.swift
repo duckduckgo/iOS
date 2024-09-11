@@ -163,4 +163,3 @@ extension BrowsersComparisonModel.PrivacyFeature {
     }
 
 }
-

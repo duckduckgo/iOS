@@ -1,5 +1,5 @@
 //
-//  OnboardingsManagerMock.swift
+//  OnboardingManagerMock.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,6 +20,6 @@
 import Foundation
 @testable import DuckDuckGo
 
-final class OnboardingsManagerMock: OnboardingHighlightsManaging {
+final class OnboardingManagerMock: OnboardingHighlightsManaging {
     var isOnboardingHighlightsEnabled: Bool = false
 }

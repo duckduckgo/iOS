@@ -21,11 +21,11 @@ import XCTest
 @testable import DuckDuckGo
 
 final class OnboardingIntroViewModelTests: XCTestCase {
-    private var onboardingManager: OnboardingsManagerMock!
+    private var onboardingManager: OnboardingManagerMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        onboardingManager = OnboardingsManagerMock()
+        onboardingManager = OnboardingManagerMock()
     }
 
     override func tearDownWithError() throws {

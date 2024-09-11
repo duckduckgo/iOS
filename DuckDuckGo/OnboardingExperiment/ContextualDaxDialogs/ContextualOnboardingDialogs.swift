@@ -253,7 +253,7 @@ struct OnboardingCTAButton: View {
 }
 
 #Preview("Final Dialog") {
-    OnboardingFinalDialog(message:  UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, highFiveAction: {})
+    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, highFiveAction: {})
         .padding()
 }
 

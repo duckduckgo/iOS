@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import Onboarding
 
 struct OnboardingBackground: View {
     @Environment(\.onboardingGradientType) private var gradientType
@@ -36,7 +35,7 @@ struct OnboardingBackground: View {
                 .opacity(colorScheme == .light ? 0.5 : 0.3)
                 .frame(width: proxy.size.width, height: proxy.size.height, alignment: alignment)
                 .background(
-                    OnboardingGradient(type: gradientType)
+                    OnboardingGradientView(type: gradientType)
                         .ignoresSafeArea()
                 )
         }

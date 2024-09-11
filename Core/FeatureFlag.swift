@@ -41,6 +41,7 @@ public enum FeatureFlag: String {
     case syncPromotionBookmarks
     case syncPromotionPasswords
     case onboardingHighlights
+    case autofillSurveys
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -79,13 +80,15 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
         case .sslCertificatesBypass:
-            return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
+            return .remoteReleasable(.subfeature(SslCertificatesSubfeature.allowBypass))
         case .syncPromotionBookmarks:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
             return .internalOnly
+        case .autofillSurveys:
+            return .remoteReleasable(.feature(.autofillSurveys))
         }
     }
 }

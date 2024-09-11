@@ -91,7 +91,7 @@ class RootDebugViewController: UITableViewController {
         super.init(coder: coder)
     }
 
-    @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ImageCacheDebugViewController {
+    @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder) -> ImageCacheDebugViewController? {
         guard let controller = ImageCacheDebugViewController(coder: coder,
                                                              bookmarksDatabase: self.bookmarksDatabase!) else {
             fatalError("Failed to create controller")
@@ -187,7 +187,7 @@ class RootDebugViewController: UITableViewController {
                 DuckPlayerLaunchExperiment().cleanup()
                 ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
             case .overrideDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().experimentOverride = true
+                DuckPlayerLaunchExperiment().override()
                 ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
             }
         }

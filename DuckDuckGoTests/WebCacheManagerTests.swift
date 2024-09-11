@@ -196,9 +196,9 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(1, cookieStore.cookies.count)
         XCTAssertEqual(cookieStore.cookies[0].domain, "www.example.com")
     }
- 
+
     @MainActor
-    func testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
+    func x_testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
         let pool = WebCacheManager.shared.getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }

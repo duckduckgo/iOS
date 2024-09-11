@@ -91,15 +91,6 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
     var experimentCohort: String?
     
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentOverride, defaultValue: false)
-    var experimentOverride: Bool {
-        didSet {
-            if experimentOverride {
-                enrollmentDate = Date()
-            }
-        }
-    }
-    
     enum Cohort: String {
         case control
         case experiment
@@ -144,7 +135,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     }
     
     var isExperimentCohort: Bool {
-        return experimentCohort == "experiment" || experimentOverride
+        return experimentCohort == "experiment"
     }
     
     func assignUserToCohort() {
@@ -226,12 +217,14 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
         lastDayPixelFired = nil
         lastWeekPixelFired = nil
         lastVideoIDReported = nil
-        experimentOverride = false
     }
     
     func override() {
         enrollmentDate = Date()
         experimentCohort = "experiment"
+        lastDayPixelFired = nil
+        lastWeekPixelFired = nil
+        lastVideoIDReported = nil
         
     }
         

@@ -993,7 +993,7 @@ class TabViewController: UIViewController {
                 self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                privacyInfo = makePrivacyInfo(url: url)
+                privacyInfo = makePrivacyInfo(url: url, shouldCheckServerTrust: true)
             }
         } else {
             privacyInfo = nil
@@ -1001,14 +1001,15 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    public func makePrivacyInfo(url: URL, shouldCheckServerTrust: Bool = false) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findParentEntityOrFallback(forHost: host)
 
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
-                                      protectionStatus: makeProtectionStatus(for: host))
+                                      protectionStatus: makeProtectionStatus(for: host),
+                                      shouldCheckServerTrust: shouldCheckServerTrust)
         let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
         if let isValid {
             privacyInfo.serverTrust = isValid ? webView.serverTrust : nil

@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Onboarding
-import struct DuckUI.PrimaryButtonStyle
 
 // MARK: - OnboardingView
 

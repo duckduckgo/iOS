@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "dc04bd2707bd64e743961d88675606c0ea4539b1",
-        "version" : "193.0.1"
+        "branch" : "alessandro/onboarding-new-gradient",
+        "revision" : "cc9a6cc6aa4ebd47b2f56e837f95452e9ec6f194"
       }
     },
     {

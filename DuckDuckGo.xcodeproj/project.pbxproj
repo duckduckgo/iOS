@@ -703,6 +703,8 @@
 		9F7CFF7F2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF7E2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift */; };
 		9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
+		9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9F96F73A2C9144D5009E45D5 /* Onboarding */; };
+		9F96F73F2C914C57009E45D5 /* OnboardingGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */; };
 		9F9A922E2C86A56B001D036D /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A922D2C86A56B001D036D /* OnboardingManager.swift */; };
 		9F9A92312C86AAE9001D036D /* OnboardingDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A92302C86AAE9001D036D /* OnboardingDebugView.swift */; };
 		9F9A92342C86B42B001D036D /* AppIconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A92332C86B42B001D036D /* AppIconPicker.swift */; };
@@ -714,7 +716,6 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
-		9FB893F82C784A1700332E5E /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB893F72C784A1700332E5E /* Onboarding */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */; };
@@ -2494,6 +2495,7 @@
 		9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPickerViewModelTests.swift; sourceTree = "<group>"; };
 		9F7CFF7E2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AddressBarPositionContent.swift"; sourceTree = "<group>"; };
 		9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyDataReporter.swift; sourceTree = "<group>"; };
+		9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGradient.swift; sourceTree = "<group>"; };
 		9F9A922D2C86A56B001D036D /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
 		9F9A92302C86AAE9001D036D /* OnboardingDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDebugView.swift; sourceTree = "<group>"; };
 		9F9A92332C86B42B001D036D /* AppIconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPicker.swift; sourceTree = "<group>"; };
@@ -3017,7 +3019,7 @@
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
-				9FB893F82C784A1700332E5E /* Onboarding in Frameworks */,
+				9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
 			);
@@ -4729,6 +4731,15 @@
 			path = ContextualOnboarding;
 			sourceTree = "<group>";
 		};
+		9F96F73D2C914C3D009E45D5 /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				9F23B8002C2BC94400950875 /* OnboardingBackground.swift */,
+				9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */,
+			);
+			path = Background;
+			sourceTree = "<group>";
+		};
 		9F9A922C2C86A560001D036D /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -4812,6 +4823,7 @@
 		9FF7E9802C22A19800902BE5 /* OnboardingExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				9F96F73D2C914C3D009E45D5 /* Background */,
 				9FDEC7BD2C9125EC00C7A692 /* AddressBarPositionPicker */,
 				9F9A92322C86B419001D036D /* AppIconPicker */,
 				9F9A922C2C86A560001D036D /* Manager */,
@@ -4822,7 +4834,6 @@
 				9FB027172C26BC0F009EA190 /* BrowsersComparison */,
 				9F23B7FF2C2BABE000950875 /* OnboardingIntro */,
 				9F5E5AAA2C3D0FAA00165F54 /* ContextualOnboarding */,
-				9F23B8002C2BC94400950875 /* OnboardingBackground.swift */,
 				9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */,
 			);
 			path = OnboardingExperiment;
@@ -6444,7 +6455,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
-				9FB893F72C784A1700332E5E /* Onboarding */,
+				9F96F73A2C9144D5009E45D5 /* Onboarding */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -7218,6 +7229,7 @@
 				BDE91CDE2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift in Sources */,
 				D65625A12C232F5E006EF297 /* SettingsDuckPlayerView.swift in Sources */,
 				D6FEB8B52B74994000C3615F /* HeadlessWebViewCoordinator.swift in Sources */,
+				9F96F73F2C914C57009E45D5 /* OnboardingGradient.swift in Sources */,
 				6FE1273D2C204C2500EB5724 /* FavoritesView.swift in Sources */,
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
 				1E24295E293F57FA00584836 /* LottieView.swift in Sources */,
@@ -10840,8 +10852,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 193.0.1;
+				branch = "alessandro/onboarding-new-gradient";
+				kind = branch;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -11046,8 +11058,9 @@
 			package = 9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
-		9FB893F72C784A1700332E5E /* Onboarding */ = {
+		9F96F73A2C9144D5009E45D5 /* Onboarding */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Onboarding;
 		};
 		B6DFE6D52BC7E47F00A9CE59 /* SwiftLintTool */ = {

@@ -68,6 +68,8 @@ final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
         sut.setAddressBar(position: .bottom)
 
         // THEN
+        XCTAssertEqual(addressBarPositionManagerMock.currentAddressBarPosition, .bottom)
+        
         let items = sut.items
         let firstItem = try XCTUnwrap(items.first)
         XCTAssertEqual(firstItem.type, .top)

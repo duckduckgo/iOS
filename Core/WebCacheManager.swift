@@ -124,8 +124,14 @@ extension WebCacheManager {
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
 
-        let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because there should be a current store
+        var uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        if let newContainerID = storeIdManager.currentId,
+            let newIdIndex = uuids.firstIndex(of: newContainerID) {
+            assertionFailure("Attempted to cleanup current Data Store")
+            uuids.remove(at: newIdIndex)
+        }
+
+        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because one store is expected to be cleared
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }

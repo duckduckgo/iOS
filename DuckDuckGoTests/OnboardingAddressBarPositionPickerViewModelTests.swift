@@ -20,7 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 
-final class AddressBarPositionContentViewModelTests: XCTestCase {
+final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
     private var addressBarPositionManagerMock: AddressBarPositionManagerMock!
 
     override func setUpWithError() throws {
@@ -36,7 +36,7 @@ final class AddressBarPositionContentViewModelTests: XCTestCase {
     func testWhenInitThenDisplayModelsAreCorrect() throws {
         // GIVEN
         addressBarPositionManagerMock.currentAddressBarPosition = .top
-        let sut = AddressBarPositionContentViewModel(addressBarPositionManager: addressBarPositionManagerMock)
+        let sut = OnboardingAddressBarPositionPickerViewModel(addressBarPositionManager: addressBarPositionManagerMock)
 
         // WHEN
         let items = sut.items
@@ -60,7 +60,7 @@ final class AddressBarPositionContentViewModelTests: XCTestCase {
     func testWhenUpdateAddressBarThenDisplayModelsAreUpdated() throws {
         // GIVEN
         addressBarPositionManagerMock.currentAddressBarPosition = .top
-        let sut = AddressBarPositionContentViewModel(addressBarPositionManager: addressBarPositionManagerMock)
+        let sut = OnboardingAddressBarPositionPickerViewModel(addressBarPositionManager: addressBarPositionManagerMock)
         XCTAssertEqual(sut.items.first?.type, .top)
         XCTAssertTrue(sut.items.first?.isSelected ?? false)
 

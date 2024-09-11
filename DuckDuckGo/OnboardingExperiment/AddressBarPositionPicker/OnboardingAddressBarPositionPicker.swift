@@ -43,7 +43,6 @@ struct OnboardingAddressBarPositionPicker: View {
 
 private enum Metrics {
     enum Button {
-        static let titleFont = Font.system(size: 16, weight: .semibold)
         static let messageFont = Font.system(size: 15)
         static let overlayRadius: CGFloat = 13.0
         static let overlayStroke: CGFloat = 1
@@ -75,8 +74,6 @@ extension OnboardingAddressBarPositionPicker {
                     
                     VStack(alignment: .leading) {
                         Text(title)
-                            .font(Metrics.Button.titleFont)
-                            .foregroundStyle(Color.primary)
                         Text(message)
                             .font(Metrics.Button.messageFont)
                             .foregroundStyle(Color.secondary)

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 final class OnboardingAddressBarPositionPickerViewModel: ObservableObject {
 
@@ -73,13 +74,21 @@ private extension AddressBarPosition {
     var titleAndMessage: (title: NSAttributedString, message: String) {
         switch self {
         case .top:
-            (
-                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle),
+            let firstPart = NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle)
+                .withFont(UIFont.daxBodyBold())
+                .withTextColor(UIColor.label)
+            let secondPart = NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
+                .withFont(UIFont.daxBodyRegular())
+                .withTextColor(UIColor.secondaryLabel)
+
+            return (
+                firstPart + " " + secondPart,
                 UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage
             )
         case .bottom:
-            (
-                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle),
+            return (
+                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle)
+                    .withFont(UIFont.daxBodyBold()),
                 UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomMessage
             )
         }

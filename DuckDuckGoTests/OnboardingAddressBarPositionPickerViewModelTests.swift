@@ -44,7 +44,7 @@ final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
         // THEN
         let firstItem = try XCTUnwrap(items.first)
         XCTAssertEqual(firstItem.type, .top)
-        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle)
+        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle + " " + UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
         XCTAssertEqual(firstItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage)
         XCTAssertEqual(firstItem.icon, .addressBarTop)
         XCTAssertTrue(firstItem.isSelected)
@@ -71,7 +71,7 @@ final class OnboardingAddressBarPositionPickerViewModelTests: XCTestCase {
         let items = sut.items
         let firstItem = try XCTUnwrap(items.first)
         XCTAssertEqual(firstItem.type, .top)
-        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle)
+        XCTAssertEqual(firstItem.title.string, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle + " " + UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
         XCTAssertEqual(firstItem.message, UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage)
         XCTAssertEqual(firstItem.icon, .addressBarTop)
         XCTAssertFalse(firstItem.isSelected)

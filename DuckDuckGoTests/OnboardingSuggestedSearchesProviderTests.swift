@@ -24,6 +24,7 @@ import Onboarding
 class OnboardingSuggestedSearchesProviderTests: XCTestCase {
     private var onboardingManagerMock: OnboardingsManagerMock!
     let userText = UserText.DaxOnboardingExperiment.ContextualOnboarding.self
+    let highlightsUserText = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.self
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -87,7 +88,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1English),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -101,7 +102,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2International),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeInternational, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -115,11 +116,12 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
-            ContextualOnboardingListItem.surprise(title: userText.tryASearchOptionSurpriseMeEnglish, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
     }
+
 }
 
 class MockOnboardingRegionAndLanguageProvider: OnboardingRegionAndLanguageProvider {

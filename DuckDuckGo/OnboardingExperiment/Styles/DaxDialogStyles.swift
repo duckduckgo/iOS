@@ -33,18 +33,23 @@ extension OnboardingStyles {
     }
 
     struct BackgroundStyle: ViewModifier {
-        let gradientType: OnboardingGradientType
+        let backgroundType: OnboardingBackgroundType
 
         func body(content: Content) -> some View {
             ZStack {
-                OnboardingBackground()
-                    .onboardingGradient(gradientType)
-                    .ignoresSafeArea(.keyboard)
+                switch backgroundType {
+                case let .illustratedGradient(gradientType):
+                    OnboardingBackground()
+                        .onboardingGradient(gradientType)
+                        .ignoresSafeArea(.keyboard)
+                case let .gradientOnly(gradientType):
+                    OnboardingGradientView(type: gradientType)
+                        .ignoresSafeArea(.keyboard)
+                }
 
                 content
             }
         }
-        
     }
 
 }
@@ -59,10 +64,15 @@ extension View {
         modifier(OnboardingStyles.DaxDialogStyle())
     }
 
-    func onboardingContextualBackgroundStyle(gradientType: OnboardingGradientType) -> some View {
-        modifier(OnboardingStyles.BackgroundStyle(gradientType: gradientType))
+    func onboardingContextualBackgroundStyle(background: OnboardingBackgroundType) -> some View {
+        modifier(OnboardingStyles.BackgroundStyle(backgroundType: background))
     }
     
+}
+
+enum OnboardingBackgroundType {
+    case illustratedGradient(OnboardingGradientType)
+    case gradientOnly(OnboardingGradientType)
 }
 
 enum OnboardingGradientTypeKey: EnvironmentKey {

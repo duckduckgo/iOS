@@ -99,7 +99,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
         let viewWithBackground = rootView
             .onboardingDaxDialogStyle()
-            .onboardingContextualBackgroundStyle(gradientType: gradientType)
+            .onboardingContextualBackgroundStyle(background: .gradientOnly(gradientType))
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]

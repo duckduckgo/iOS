@@ -66,52 +66,7 @@ struct AppIconPicker: View {
                 )
         }
     }
-
 }
-
-@MainActor
-final class AppIconPickerViewModel: ObservableObject {
-    
-    struct DisplayModel {
-        let icon: AppIcon
-        let isSelected: Bool
-    }
-
-    @Published private(set) var items: [DisplayModel] = []
-
-    private let appIconManager: AppIconManaging
-
-    init(appIconManager: AppIconManaging = AppIconManager.shared) {
-        self.appIconManager = appIconManager
-        items = makeDisplayModels()
-    }
-
-    func changeApp(icon: AppIcon) {
-        appIconManager.changeAppIcon(icon) { [weak self] error in
-            guard let self, error == nil else { return }
-            items = makeDisplayModels()
-        }
-    }
-
-    private func makeDisplayModels() -> [DisplayModel] {
-        AppIcon.allCases.map { appIcon in
-            DisplayModel(icon: appIcon, isSelected: appIconManager.appIcon == appIcon)
-        }
-    }
-}
-
-protocol AppIconManaging {
-    var appIcon: AppIcon { get }
-    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)?)
-}
-
-extension AppIconManaging {
-    func changeAppIcon(_ appIcon: AppIcon) {
-        changeAppIcon(appIcon, completionHandler: nil)
-    }
-}
-
-extension AppIconManager: AppIconManaging {}
 
 #Preview {
     AppIconPicker()

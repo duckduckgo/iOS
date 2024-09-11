@@ -713,6 +713,7 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
+		9FB893F82C784A1700332E5E /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB893F72C784A1700332E5E /* Onboarding */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */; };
@@ -3002,6 +3003,7 @@
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
+				9FB893F82C784A1700332E5E /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
 			);
@@ -6413,6 +6415,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
+				9FB893F72C784A1700332E5E /* Onboarding */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -10802,7 +10805,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 606aa425f0795ec168d96dfbce660c10dd508310;
+				revision = 84d55d12a70e3e2e1b7c8e539eba5c870a80aa07;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -11006,6 +11009,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		9FB893F72C784A1700332E5E /* Onboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Onboarding;
 		};
 		B6DFE6D52BC7E47F00A9CE59 /* SwiftLintTool */ = {
 			isa = XCSwiftPackageProductDependency;

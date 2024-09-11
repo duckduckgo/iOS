@@ -39,6 +39,8 @@ struct OnboardingView: View {
     @State private var showComparisonButton = false
     @State private var animateComparisonText = false
 
+    @State private var appIconPickerContentState = AppIconPickerContentState()
+
     init(model: OnboardingIntroViewModel) {
         self.model = model
     }
@@ -72,6 +74,10 @@ struct OnboardingView: View {
                             case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
+                            case .chooseAppIconDialog:
+                                appIconPickerContentState.animateTitle = false
+                                appIconPickerContentState.animateMessage = false
+                                appIconPickerContentState.showContent = true
                             default: break
                             }
                         }
@@ -140,15 +146,12 @@ struct OnboardingView: View {
     }
 
     private var appIconPickerView: some View {
-        // TODO: Implement View
-        VStack(spacing: 30) {
-            Text(verbatim: "Choose App Icon")
-
-            Button(action: model.appIconPickerContinueAction) {
-                Text(verbatim: "Next")
-            }
-            .buttonStyle(PrimaryButtonStyle())
-        }
+        AppIconPickerContent(
+            animateTitle: $appIconPickerContentState.animateTitle,
+            animateMessage: $appIconPickerContentState.animateMessage,
+            showContent: $appIconPickerContentState.showContent,
+            action: model.appIconPickerContinueAction
+        )
         .onboardingDaxDialogStyle()
     }
 

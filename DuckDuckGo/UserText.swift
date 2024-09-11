@@ -1365,10 +1365,10 @@ But if you *do* want a peek under the hood, you can find more information about 
         }
         
         enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
 
             enum Features {
-                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
+                public static let trackerBlockers = NSLocalizedString("onboarding.highlights.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
                 public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
                 public static let eraseBrowsingData = NSLocalizedString("onboarding.highlights.browsers.features.eraseBrowsingData.title", value: "Erase browsing data swiftly", comment: "Message to highlight browser capability of swiftly erase browsing data")
@@ -1383,7 +1383,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 
         enum AddressBarPosition {
             public static let title = NSLocalizedString("onboarding.highlights.addressBarPosition.title", value: "Where should I put your address bar?", comment: "The title of the onboarding dialog popup to select the preferred address bar position.")
-            public static let topTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.top.title", value: "Top (Default)", comment: "The title of the option to set the address bar to the top.")
+            public static let topTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.top.title", value: "Top", comment: "The title of the option to set the address bar to the top.")
+            public static let defaultOption = NSLocalizedString("onboarding.highlights.addressBarPosition.default", value: "(Default)", comment: "Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default)")
             public static let topMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.top.message", value: "Easy to see", comment: "The message of the option to set the address bar to the top.")
             public static let bottomTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.title", value: "Bottom", comment: "The title of the option to set the address bar to the bottom.")
             public static let bottomMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.message", value: "Easy to reach", comment: "The message of the option to set the address bar to the bottom.")
@@ -1394,6 +1395,7 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.highlights.try-a-search.message", value: "Your DuckDuckGo searches are always private.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are private")
             static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.highlights.first-search-done.message", value: "That’s DuckDuckGo Search! Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
             static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.highlights.final-screen.message", value: "Remember: every time you browse with me a creepy ad loses its wings.", comment: "Message of the last screen of the onboarding to the browser app.")
+            static let tryASearchOptionSurpriseMe = NSLocalizedString("contextual.onboarding.highlights.try-search.surprise-me", value: "baby ducklings", comment: "Browser Search query for baby ducklings")
         }
 
         enum FireDialog {

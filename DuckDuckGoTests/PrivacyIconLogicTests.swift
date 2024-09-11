@@ -96,13 +96,26 @@ class PrivacyIconLogicTests: XCTestCase {
         let url = PrivacyIconLogicTests.pageURL
         let entity = Entity(displayName: "E", domains: [], prevalence: 100.0)
         let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
-        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus, shouldCheckServerTrust: true)
 
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
 
         XCTAssertTrue(url.isHttps)
         XCTAssertTrue(privacyInfo.https)
         XCTAssertEqual(icon, .shieldWithDot)
+    }
+
+    func testPrivacyIconIsShieldWithoutDotForNoSecTrustAndShouldCheckServerTrustIsFalse() {
+        let url = PrivacyIconLogicTests.pageURL
+        let entity = Entity(displayName: "E", domains: [], prevalence: 100.0)
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus)
+
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
+
+        XCTAssertTrue(url.isHttps)
+        XCTAssertTrue(privacyInfo.https)
+        XCTAssertEqual(icon, .shield)
     }
 
 }

@@ -80,7 +80,7 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .duckPlayer:
             return .remoteReleasable(.feature(.duckPlayer))
         case .sslCertificatesBypass:
-            return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
+            return .remoteReleasable(.subfeature(SslCertificatesSubfeature.allowBypass))
         case .syncPromotionBookmarks:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
         case .syncPromotionPasswords:

@@ -19,11 +19,15 @@
 
 import XCTest
 @testable import DuckDuckGo
+@testable import Core
 @testable import Subscription
 import SubscriptionTestingUtilities
 import Common
 import WebKit
 import BrowserServicesKit
+import OHHTTPStubs
+import OHHTTPStubsSwift
+import os.log
 
 final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
@@ -86,7 +90,27 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     var feature: SubscriptionPagesUseSubscriptionFeature!
 
+    var pixelsFired: [String] = []
+
     override func setUpWithError() throws {
+        // Pixels
+        Pixel.isDryRun = false
+        stub(condition: isHost("improving.duckduckgo.com")) { request -> HTTPStubsResponse in
+            if let path = request.url?.path {
+                let pixelName = path.dropping(prefix: "/t/")
+                    .dropping(suffix: "_ios_phone")
+                    .dropping(suffix: "_ios_tablet")
+                self.pixelsFired.append(pixelName)
+            }
+
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        // Reset all daily pixel storage
+        [Pixel.storage, DailyPixel.storage, UniquePixel.storage].forEach { storage in
+            storage.dictionaryRepresentation().keys.forEach(storage.removeObject(forKey:))
+        }
+
         // Mocks
         subscriptionService = SubscriptionEndpointServiceMock()
         authService = AuthEndpointServiceMock()
@@ -141,6 +165,19 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        Pixel.isDryRun = true
+        if !pixelsFired.isEmpty {
+            Logger.general.log("= pixels =")
+
+            pixelsFired.forEach { pixel in
+                Logger.general.log("\(String(describing: pixel))")
+            }
+
+            Logger.general.log("==========")
+        }
+        pixelsFired.removeAll()
+        HTTPStubs.removeAllStubs()
+
         AppDependencyProvider.shared = AppDependencyProvider()
 
         subscriptionService = nil
@@ -194,6 +231,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testGetSubscriptionSuccessWithoutRefreshingAuthToken() async throws {
@@ -213,6 +252,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testGetSubscriptionSuccessErrorWhenUnauthenticated() async throws {
@@ -233,6 +274,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for getSubscriptionOptions
@@ -251,6 +294,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testGetSubscriptionOptionsReturnsEmptyOptionsWhenNoSubscriptionOptions() async throws {
@@ -266,6 +311,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .failedToGetSubscriptionOptions)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testGetSubscriptionOptionsReturnsEmptyOptionsWhenPurchaseNotAllowed() async throws {
@@ -287,6 +334,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for subscriptionSelected
@@ -315,14 +364,17 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
         // Then
-        // TODO: Check pixel fired: DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
-            // DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
-            // UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-            // Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
         XCTAssertNil(result)
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_d",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_c",
+                                     Pixel.Event.privacyProSubscriptionActivated.name,
+                                     Pixel.Event.privacyProSuccessfulSubscriptionAttribution.name])
     }
 
     func testSubscriptionSelectedSuccessWhenRepurchasingForExpiredAppleSubscription() async throws {
@@ -352,11 +404,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
         // Then
-        // TODO: Check pixel fired: DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
-            // DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
-            // UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-            // Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
-
         XCTAssertFalse(authService.createAccountCalled)
         XCTAssertTrue(storePurchaseManager.purchaseSubscriptionCalled)
 
@@ -364,6 +411,13 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_d",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_c",
+                                     Pixel.Event.privacyProSubscriptionActivated.name,
+                                     Pixel.Event.privacyProSuccessfulSubscriptionAttribution.name])
     }
 
     func testSubscriptionSelectedSuccessWhenRepurchasingForExpiredStripeSubscription() async throws {
@@ -384,11 +438,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
         // Then
-        // TODO: Check pixel fired: DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
-            // DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
-            // UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
-            // Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
-
         XCTAssertFalse(authService.createAccountCalled)
         XCTAssertTrue(storePurchaseManager.purchaseSubscriptionCalled)
 
@@ -396,6 +445,12 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_d",
+                                     Pixel.Event.privacyProPurchaseSuccess.name + "_c",
+                                     Pixel.Event.privacyProSubscriptionActivated.name,
+                                     Pixel.Event.privacyProSuccessfulSubscriptionAttribution.name])
     }
 
     func testSubscriptionSelectedErrorWhenPurchasingWhenHavingActiveSubscription() async throws {
@@ -415,6 +470,10 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .hasActiveSubscription)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c",
+                                     Pixel.Event.privacyProRestoreAfterPurchaseAttempt.name])
     }
 
     func testSubscriptionSelectedErrorWhenPurchasingWhenUnauthenticatedAndHavingActiveSubscriptionOnAppleID() async throws {
@@ -434,6 +493,10 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .hasActiveSubscription)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c",
+                                     Pixel.Event.privacyProRestoreAfterPurchaseAttempt.name])
     }
 
     func testSubscriptionSelectedErrorWhenUnauthenticatedAndAccountCreationFails() async throws {
@@ -450,14 +513,15 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
         // Then
-        // TODO: Check pixel fired: DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
-
         XCTAssertFalse(storePurchaseManager.purchaseSubscriptionCalled)
 
         XCTAssertNil(result)
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .accountCreationFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenPurchaseCancelledByUser() async throws {
@@ -479,6 +543,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .cancelledByUser)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenProductNotFound() async throws {
@@ -500,6 +567,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenExternalIDIsNotValidUUID() async throws {
@@ -521,6 +591,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenPurchaseFailed() async throws {
@@ -542,6 +615,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenTransactionCannotBeVerified() async throws {
@@ -563,6 +639,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorWhenTransactionPendingAuthentication() async throws {
@@ -584,6 +663,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
     }
 
     func testSubscriptionSelectedErrorDueToUnknownPurchaseError() async throws {
@@ -605,8 +687,10 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .purchaseFailed)
-    }
 
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProPurchaseAttempt.name + "_d",
+                                     Pixel.Event.privacyProPurchaseAttempt.name + "_c"])
+    }
 
     // MARK: - Tests for setSubscription
 
@@ -637,6 +721,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testSetSubscriptionErrorWhenFailedToExchangeToken() async throws {
@@ -664,6 +750,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .failedToSetSubscription)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testSetSubscriptionErrorWhenFailedToFetchAccountDetails() async throws {
@@ -692,6 +780,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, .failedToSetSubscription)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for activateSubscription
@@ -709,9 +799,10 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let result = await feature.activateSubscription(params: Constants.mockParams, original: Constants.mockScriptMessage)
 
         // Then
-        // TODO: Check pixel fired: Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry, debounce: 2)
         await fulfillment(of: [onActivateSubscriptionCalled], timeout: 0.5)
         XCTAssertNil(result)
+
+        XCTAssertPrivacyPixelsFired([Pixel.Event.privacyProRestorePurchaseOfferPageEntry.name])
     }
 
     // MARK: - Tests for featureSelected
@@ -733,6 +824,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         // Then
         await fulfillment(of: [onFeatureSelectedCalled], timeout: 0.5)
         XCTAssertNil(result)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for backToSettings
@@ -760,6 +853,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(accountManager.email, Constants.email)
         XCTAssertNil(result)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testBackToSettingsErrorOnFetchingAccountDetails() async throws {
@@ -782,6 +877,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionError, .generalError)
         XCTAssertNil(result)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for getAccessToken
@@ -798,6 +895,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testGetAccessTokenEmptyOnMissingToken() async throws {
@@ -811,6 +910,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         // Then
         let resultDictionary = try XCTUnwrap(result as? [String: String])
         XCTAssertEqual(resultDictionary, [String: String]())
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     // MARK: - Tests for restoreAccountFromAppStorePurchase
@@ -836,6 +937,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.transactionStatus, .idle)
         XCTAssertEqual(feature.transactionError, nil)
+
+        XCTAssertPrivacyPixelsFired([])
     }
 
     func testRestoreAccountFromAppStorePurchaseErrorDueToExpiredSubscription() async throws {
@@ -868,6 +971,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
             XCTAssertEqual(feature.transactionStatus, .idle)
             XCTAssertEqual(feature.transactionError, nil)
+
+            XCTAssertPrivacyPixelsFired([])
         }
     }
 
@@ -893,6 +998,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
             XCTAssertEqual(feature.transactionStatus, .idle)
             XCTAssertEqual(feature.transactionError, nil)
+
+            XCTAssertPrivacyPixelsFired([])
         }
     }
 
@@ -919,6 +1026,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
             XCTAssertEqual(feature.transactionStatus, .idle)
             XCTAssertEqual(feature.transactionError, nil)
+
+            XCTAssertPrivacyPixelsFired([])
         }
     }
 }
@@ -935,5 +1044,25 @@ extension SubscriptionPagesUseSubscriptionFeatureTests {
     func ensureUserUnauthenticatedState() {
         try? accessTokenStorage.removeAccessToken()
         try? accountStorage.clearAuthenticationState()
+    }
+
+    public func XCTAssertPrivacyPixelsFired(_ pixels: [String], file: StaticString = #file, line: UInt = #line) {
+        let pixelsFired = Set(pixelsFired)
+        let expectedPixels = Set(pixels)
+
+        // Assert expected pixels were fired
+        XCTAssertTrue(expectedPixels.isSubset(of: pixelsFired),
+                      "Expected Privacy Pro pixels were not fired: \(expectedPixels.subtracting(pixelsFired))",
+                      file: file,
+                      line: line)
+
+        // Assert no other Privacy Pro pixels were fired except the expected
+        let privacyProPixelPrefix = "m_privacy-pro"
+        let otherPixels = pixelsFired.subtracting(expectedPixels)
+        let otherPrivacyProPixels = otherPixels.filter { $0.hasPrefix(privacyProPixelPrefix) }
+        XCTAssertTrue(otherPrivacyProPixels.isEmpty,
+                      "Unexpected Privacy Pro pixels fired: \(otherPrivacyProPixels)",
+                      file: file,
+                      line: line)
     }
 }

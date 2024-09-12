@@ -419,7 +419,10 @@
 "autofill.logins.empty-view.button.title" = "Import Passwords";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "You can import saved passwords from another browser into DuckDuckGo. Passwords are encrypted. Nobody but you can see them, not even us.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "You can import saved passwords from another browser into DuckDuckGo.";
+
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.second.paragraph" = "Passwords are encrypted. Nobody but you can see them, not even us.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "No passwords saved yet";

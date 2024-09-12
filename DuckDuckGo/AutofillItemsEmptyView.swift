@@ -39,7 +39,7 @@ struct AutofillItemsEmptyView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
 
-            Text("\(Image(.lockSolid16)) \(UserText.autofillEmptyViewSubtitle)")
+            Text("\(UserText.autofillEmptyViewSubtitleFirstParagraph) \n\(Image(.lockSolid16)) \(UserText.autofillEmptyViewSubtitleSecondParagraph)")
                 .daxBodyRegular()
                 .foregroundColor(Color.init(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

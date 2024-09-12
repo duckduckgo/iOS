@@ -657,7 +657,8 @@ public struct UserText {
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"You can import saved passwords from another browser into DuckDuckGo. Passwords are encrypted. Nobody but you can see them, not even us.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewSubtitleFirstParagraph = NSLocalizedString("autofill.logins.empty-view.subtitle.first.paragraph", value:"You can import saved passwords from another browser into DuckDuckGo.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewSubtitleSecondParagraph = NSLocalizedString("autofill.logins.empty-view.subtitle.second.paragraph", value:"Passwords are encrypted. Nobody but you can see them, not even us.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
     public static let autofillEmptyViewButtonTitle = NSLocalizedString("autofill.logins.empty-view.button.title", value:"Import Passwords", comment: "Title for button to Import Passwords when autofill has no items")
 
     public static let autofillLearnMoreLinkTitle = NSLocalizedString("autofill.learn.more.link.title", value: "Learn More", comment: "A link that takes the user to the DuckDuckGo help pages explaining password managers")

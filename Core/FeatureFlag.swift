@@ -78,7 +78,7 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .newTabPageSections:
             return .remoteDevelopment(.feature(.newTabPageImprovements))
         case .duckPlayer:
-            return .remoteReleasable(.feature(.duckPlayer))
+            return .remoteReleasable(.subfeature(DuckPlayerSubfeature.enableDuckPlayer))
         case .sslCertificatesBypass:
             return .remoteReleasable(.subfeature(SslCertificatesSubfeature.allowBypass))
         case .syncPromotionBookmarks:

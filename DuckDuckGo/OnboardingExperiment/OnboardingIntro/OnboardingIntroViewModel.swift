@@ -19,27 +19,40 @@
 
 import Foundation
 import Core
+import Onboarding
 import class UIKit.UIApplication
 
 final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
+    let copy: Copy
+    let gradientType: OnboardingGradientType
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
     private let pixelReporter: OnboardingIntroPixelReporting
     private let onboardingManager: OnboardingHighlightsManaging
+    private let isIpad: Bool
     private let urlOpener: URLOpener
 
     init(
         pixelReporter: OnboardingIntroPixelReporting,
         onboardingManager: OnboardingHighlightsManaging = OnboardingManager(),
+        isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
         urlOpener: URLOpener = UIApplication.shared
     ) {
         self.pixelReporter = pixelReporter
         self.onboardingManager = onboardingManager
+        self.isIpad = isIpad
         self.urlOpener = urlOpener
-        introSteps = onboardingManager.isOnboardingHighlightsEnabled ? OnboardingIntroStep.highlightsFlow : OnboardingIntroStep.defaultFlow
+        introSteps = if onboardingManager.isOnboardingHighlightsEnabled {
+            isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
+        } else {
+            OnboardingIntroStep.defaultFlow
+        }
+
+        copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+        gradientType = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
     }
 
     func onAppear() {
@@ -66,7 +79,11 @@ final class OnboardingIntroViewModel: ObservableObject {
     }
 
     func appIconPickerContinueAction() {
-        state = makeViewState(for: .addressBarPositionSelection)
+        if isIpad {
+            onCompletingOnboardingIntro?()
+        } else {
+            state = makeViewState(for: .addressBarPositionSelection)
+        }
     }
 
     func selectAddressBarPositionAction() {
@@ -126,5 +143,6 @@ private enum OnboardingIntroStep {
     case addressBarPositionSelection
 
     static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
-    static let highlightsFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
 }

@@ -20,12 +20,12 @@
 import Foundation
 @testable import BrowserServicesKit
 
-class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
-    var isFeatureAvailable: Bool
-    var isSubscriptionPurchaseAllowed: Bool
-    var usesUnifiedFeedbackForm: Bool
+public final class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
+    public var isFeatureAvailable: Bool
+    public var isSubscriptionPurchaseAllowed: Bool
+    public var usesUnifiedFeedbackForm: Bool
 
-    init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool, usesUnifiedFeedbackForm: Bool) {
+    public init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool, usesUnifiedFeedbackForm: Bool) {
         self.isFeatureAvailable = isFeatureAvailable
         self.isSubscriptionPurchaseAllowed = isSubscriptionPurchaseAllowed
         self.usesUnifiedFeedbackForm = usesUnifiedFeedbackForm

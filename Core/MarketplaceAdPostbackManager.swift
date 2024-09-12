@@ -49,9 +49,9 @@ public struct MarketplaceAdPostbackManager: MarketplaceAdPostbackManaging {
 
     public func sendAppLaunchPostback() {
         if returningUserMeasurement.isReturningUser {
-            updater.updatePostback(.appLaunchReturningUser, lockPostback: true)
+            updater.updatePostback(.installReturningUser, lockPostback: true)
         } else {
-            updater.updatePostback(.appLaunchNewUser, lockPostback: true)
+            updater.updatePostback(.installNewUser, lockPostback: true)
         }
     }
 }

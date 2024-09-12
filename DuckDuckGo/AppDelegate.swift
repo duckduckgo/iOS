@@ -118,9 +118,6 @@ import os.log
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // Attribution support
-        marketplaceAdPostbackManager.sendAppLaunchPostback()
-
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -387,7 +384,18 @@ import os.log
             didCrashDuringCrashHandlersSetUp = false
         }
 
+        sendAppLaunchPostback()
+
         return true
+    }
+
+    private func sendAppLaunchPostback () {
+        // Attribution support
+        // WIP: Needs BSK change
+        //        let featureFlagger = AppDependencyProvider.shared.featureFlagger
+        //        if featureFlagger.isFeatureOn(.marketplaceAdPostback) {
+        //            marketplaceAdPostbackManager.sendAppLaunchPostback()
+        //        }
     }
 
     private func makeHistoryManager() -> HistoryManaging {

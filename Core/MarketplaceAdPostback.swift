@@ -22,14 +22,30 @@ import StoreKit
 import AdAttributionKit
 
 enum MarketplaceAdPostback {
-    case appLaunchNewUser
-    case appLaunchReturningUser
+    case installNewUser
+    case installReturningUser
 
+    /// An enumeration representing coarse conversion values for both SKAdNetwork and AdAttributionKit.
+    ///
+    /// This enum provides a unified interface to handle coarse conversion values, which are used in both SKAdNetwork and AdAttributionKit.
+    /// Despite having the same value names (`low`, `medium`, `high`), the types for these values differ between the two frameworks.
+    /// This wrapper simplifies the usage by providing a common interface.
+    ///
+    /// - Cases:
+    ///    - `low`: Represents a low conversion value.
+    ///    - `medium`: Represents a medium conversion value.
+    ///    - `high`: Represents a high conversion value.
+    ///
+    /// - Properties:
+    ///    - `coarseConversionValue`: Available on iOS 17.4 and later, this property returns the corresponding `CoarseConversionValue` from AdAttributionKit.
+    ///    - `skAdCoarseConversionValue`: Available on iOS 16.1 and later, this property returns the corresponding `SKAdNetwork.CoarseConversionValue`.
+    ///
     enum CoarseConversion {
         case low
         case medium
         case high
 
+        /// Returns the corresponding `CoarseConversionValue` from AdAttributionKit.
         @available(iOS 17.4, *)
         var coarseConversionValue: CoarseConversionValue {
             switch self {
@@ -39,6 +55,7 @@ enum MarketplaceAdPostback {
             }
         }
 
+        /// Returns the corresponding `SKAdNetwork.CoarseConversionValue`.
         @available(iOS 16.1, *)
         var skAdCoarseConversionValue: SKAdNetwork.CoarseConversionValue {
             switch self {
@@ -49,18 +66,18 @@ enum MarketplaceAdPostback {
         }
     }
 
-    // https://app.asana.com/0/0/1208126219488943/1208264463120726/f
+    // https://app.asana.com/0/0/1208126219488943/f
     var fineValue: Int {
         switch self {
-        case .appLaunchNewUser: return 0
-        case .appLaunchReturningUser: return 1
+        case .installNewUser: return 0
+        case .installReturningUser: return 1
         }
     }
 
     var coarseValue: CoarseConversion {
         switch self {
-        case .appLaunchNewUser: return .high
-        case .appLaunchReturningUser: return .low
+        case .installNewUser: return .high
+        case .installReturningUser: return .low
         }
     }
 

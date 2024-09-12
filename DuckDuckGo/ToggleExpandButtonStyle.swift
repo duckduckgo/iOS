@@ -1,5 +1,5 @@
 //
-//  ToggleExpandButtonView.swift
+//  ToggleExpandButtonStyle.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -53,7 +53,7 @@ struct ToggleExpandButtonStyle: ButtonStyle {
                 ExpandButtonDivider()
             }
         }
-        .padding(.vertical, 0.5) // Adjust for padding for drawing group, otherwise the circle stroke is clipped
+        .padding(.vertical, 0.5) // Adjust padding for drawing group, otherwise the circle stroke is clipped
         .drawingGroup()
     }
 }

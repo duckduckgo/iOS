@@ -31,7 +31,7 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     @Published private(set) var isShowingTooltip: Bool = false
 
     private(set) lazy var faviconLoader: FavoritesFaviconLoading? = {
-        LocalFaviconLoader(onFaviconMissing: { [weak self] in
+        MissingFaviconWrapper(onFaviconMissing: { [weak self] in
             guard let self else { return }
 
             await MainActor.run {
@@ -204,7 +204,7 @@ private extension BookmarkEntity {
 
 }
 
-private final class LocalFaviconLoader: FavoritesFaviconLoading {
+private final class MissingFaviconWrapper: FavoritesFaviconLoading {
     let loader: FavoritesFaviconLoading
 
     private(set) var onFaviconMissing: (() async -> Void)

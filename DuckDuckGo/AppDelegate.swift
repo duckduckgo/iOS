@@ -104,6 +104,7 @@ import os.log
     private let launchOptionsHandler = LaunchOptionsHandler()
     private let onboardingPixelReporter = OnboardingPixelReporter()
 
+    private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     override init() {
         super.init()
 
@@ -118,7 +119,7 @@ import os.log
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Attribution support
-        MarketplaceAdPostbackManager().sendAppLaunchPostback()
+        marketplaceAdPostbackManager.sendAppLaunchPostback()
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {

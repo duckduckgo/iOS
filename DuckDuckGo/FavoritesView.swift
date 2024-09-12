@@ -80,11 +80,11 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .resizable()
                 })
                 .buttonStyle(ToggleExpandButtonStyle())
-                // Masks the content, which will otherwise shop up underneath while chagning grid contents
+                // Masks the content, which will otherwise shop up underneath while collapsing
                 .background(Color(designSystemColor: .background))
             }
         }
-        // Prevent the content to leak out of bounds while changing grid contents
+        // Prevent the content to leak out of bounds while collapsing
         .clipped()
         .padding(0)
     }

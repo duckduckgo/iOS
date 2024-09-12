@@ -27,8 +27,8 @@ public protocol MarketplaceAdPostbackManaging {
     /// - If the user is returning, it sends the `appLaunchReturningUser` postback value.
     /// - If the user is new, it sends the `appLaunchNewUser` postback value.
     ///
-    ///>For the time being, we're also sending `lockPostback` to `true`.
-    ///>More information can be found [here](https://app.asana.com/0/0/1208126219488943/1208289369964239/f).
+    /// > For the time being, we're also sending `lockPostback` to `true`.
+    /// > More information can be found [here](https://app.asana.com/0/0/1208126219488943/1208289369964239/f).
     func sendAppLaunchPostback()
 }
 

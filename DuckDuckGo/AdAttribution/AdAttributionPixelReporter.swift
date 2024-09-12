@@ -56,17 +56,17 @@ final actor AdAttributionPixelReporter {
         }
 
         if let (token, attributionData) = await self.attributionFetcher.fetch() {
-            let event: Pixel.Event = attributionData.attribution ? .appleAdAttribution : .appleAdAttributionNotAttributed
-            let parameters = attributionData.attribution ? self.pixelParametersForAttribution(attributionData, attributionToken: token) : [:]
-
-            do {
-                try await pixelFiring.fire(
-                    pixel: event,
-                    withAdditionalParameters: parameters,
-                    includedParameters: [.appVersion, .atb]
-                )
-            } catch {
-                return false
+            if attributionData.attribution {
+                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: token)
+                do {
+                    try await pixelFiring.fire(
+                        pixel: .appleAdAttribution,
+                        withAdditionalParameters: parameters,
+                        includedParameters: [.appVersion, .atb]
+                    )
+                } catch {
+                    return false
+                }
             }
 
             await fetcherStorage.markAttributionReportSuccessful()

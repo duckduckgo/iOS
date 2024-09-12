@@ -24,19 +24,20 @@ private struct NewTabPageItemSettings<Item: NewTabPageSettingsStorageItem>: Coda
     let enabledItems: Set<Item>
 }
 
+protocol NewTabPageSettingsPersistentStore: AnyObject {
+    var data: Data? { get set }
+}
+
 final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageItem>: NewTabPageSettingsStorage {
     private(set) var itemsOrder: [Item]
     private var enabledItems: Set<Item>
 
-    private var persistence: NewTabPageSettingsDataStoring
-    private let keyPath: WritableKeyPath<NewTabPageSettingsDataStoring, Data?>
+    private var persistentStore: any NewTabPageSettingsPersistentStore
 
-    init(persistence: NewTabPageSettingsDataStoring,
-         keyPath: WritableKeyPath<NewTabPageSettingsDataStoring, Data?>,
+    init(persistentStore: NewTabPageSettingsPersistentStore,
          defaultOrder: [Item],
          defaultEnabledItems: [Item]) {
-        self.persistence = persistence
-        self.keyPath = keyPath
+        self.persistentStore = persistentStore
         self.itemsOrder = defaultOrder
         self.enabledItems = Set(defaultEnabledItems)
 
@@ -62,12 +63,12 @@ final class NewTabPageSettingsPersistentStorage<Item: NewTabPageSettingsStorageI
     func save() {
         let newSettings = NewTabPageItemSettings(itemsOrder: itemsOrder, enabledItems: enabledItems)
         if let data = try? JSONEncoder().encode(newSettings) {
-            persistence[keyPath: keyPath] = data
+            persistentStore.data = data
         }
     }
 
     private func load() {
-        if let settingsData = persistence[keyPath: keyPath],
+        if let settingsData = persistentStore.data,
            let settings = try? JSONDecoder().decode(NewTabPageItemSettings<Item>.self, from: settingsData) {
             itemsOrder = settings.itemsOrder
             enabledItems = settings.enabledItems

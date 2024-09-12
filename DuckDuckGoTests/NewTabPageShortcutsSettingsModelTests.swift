@@ -54,8 +54,7 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 
     private func createSUT() -> NewTabPageShortcutsSettingsModel {
         let storage = NewTabPageShortcutsSettingsStorage(
-            persistence: NewTabPageSettingsDataStoringMock(),
-            keyPath: \.newTabPageShortcutsSettings,
+            persistentStore: NewTabPageSettingsPersistentStoreMock(),
             defaultOrder: NewTabPageShortcut.allCases,
             defaultEnabledItems: NewTabPageShortcut.allCases
         )

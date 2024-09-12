@@ -1,5 +1,5 @@
 //
-//  NewTabPageStorage.swift
+//  NewTabPageIntroDataStoring.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -25,23 +25,10 @@ protocol NewTabPageIntroDataStoring: AnyObject {
     var newTabPageIntroMessageSeenCount: Int { get set }
 }
 
-protocol NewTabPageSettingsDataStoring: AnyObject {
-    var newTabPageShortcutsSettings: Data? { get set }
-    var newTabPageSectionsSettings: Data? { get set }
-}
-
 final class NewTabPageIntroDataUserDefaultsStorage: NewTabPageIntroDataStoring {
     @UserDefaultsWrapper(key: .newTabPageIntroMessageEnabled, defaultValue: nil)
     var newTabPageIntroMessageEnabled: Bool?
 
     @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
     var newTabPageIntroMessageSeenCount: Int
-}
-
-final class NewTabPageSettingsDataUserDefaultsStorage: NewTabPageSettingsDataStoring {
-    @UserDefaultsWrapper(key: .newTabPageShortcutsSettings, defaultValue: nil)
-    var newTabPageShortcutsSettings: Data?
-
-    @UserDefaultsWrapper(key: .newTabPageSectionsSettings, defaultValue: nil)
-    var newTabPageSectionsSettings: Data?
 }

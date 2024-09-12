@@ -23,8 +23,7 @@ typealias NewTabPageShortcutsSettingsStorage = NewTabPageSettingsPersistentStora
 
 extension NewTabPageSettingsPersistentStorage<NewTabPageShortcut> {
     convenience init() {
-        self.init(persistence: NewTabPageSettingsDataUserDefaultsStorage(),
-                  keyPath: \.newTabPageShortcutsSettings,
+        self.init(persistentStore: NewTabPageShorctutsSettingsStore(),
                   defaultOrder: NewTabPageShortcut.allCases,
                   defaultEnabledItems: NewTabPageShortcut.allCases)
     }

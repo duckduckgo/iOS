@@ -333,7 +333,8 @@
 		6FD8E5202C5BA23200345670 /* NewTabPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD8E51F2C5BA23200345670 /* NewTabPageModel.swift */; };
 		6FD8E5222C5BA5C400345670 /* NewTabPageIntroMessageSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD8E5212C5BA5C400345670 /* NewTabPageIntroMessageSetup.swift */; };
 		6FDA1FB32B59584400AC962A /* AddressDisplayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDA1FB22B59584400AC962A /* AddressDisplayHelper.swift */; };
-		6FDC63FF2C906DD300DB71B3 /* NewTabPageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDC63FE2C906DD300DB71B3 /* NewTabPageStorage.swift */; };
+		6FDC64012C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDC64002C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift */; };
+		6FDC64032C92F4D600DB71B3 /* NewTabPageSettingsPersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDC64022C92F4D600DB71B3 /* NewTabPageSettingsPersistentStore.swift */; };
 		6FE018402C25CB3F001F680D /* FavoritesSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE0183F2C25CB3F001F680D /* FavoritesSectionHeader.swift */; };
 		6FE095D82BD90AFB00490FF8 /* UniversalOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE095D72BD90AFB00490FF8 /* UniversalOmniBarState.swift */; };
 		6FE127382C20492500EB5724 /* NewTabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE127372C20492500EB5724 /* NewTabPage.swift */; };
@@ -1591,7 +1592,8 @@
 		6FD8E51F2C5BA23200345670 /* NewTabPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageModel.swift; sourceTree = "<group>"; };
 		6FD8E5212C5BA5C400345670 /* NewTabPageIntroMessageSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageIntroMessageSetup.swift; sourceTree = "<group>"; };
 		6FDA1FB22B59584400AC962A /* AddressDisplayHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDisplayHelper.swift; sourceTree = "<group>"; };
-		6FDC63FE2C906DD300DB71B3 /* NewTabPageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageStorage.swift; sourceTree = "<group>"; };
+		6FDC64002C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageIntroDataStoring.swift; sourceTree = "<group>"; };
+		6FDC64022C92F4D600DB71B3 /* NewTabPageSettingsPersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageSettingsPersistentStore.swift; sourceTree = "<group>"; };
 		6FE0183F2C25CB3F001F680D /* FavoritesSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesSectionHeader.swift; sourceTree = "<group>"; };
 		6FE095D72BD90AFB00490FF8 /* UniversalOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalOmniBarState.swift; sourceTree = "<group>"; };
 		6FE127372C20492500EB5724 /* NewTabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPage.swift; sourceTree = "<group>"; };
@@ -3803,6 +3805,7 @@
 				6F5345AE2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift */,
 				6F9FFE252C579BCD00A238BE /* NewTabPageShortcutsSettingsStorage.swift */,
 				6F9FFE272C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift */,
+				6FDC64022C92F4D600DB71B3 /* NewTabPageSettingsPersistentStore.swift */,
 			);
 			name = Storage;
 			sourceTree = "<group>";
@@ -3871,22 +3874,14 @@
 			children = (
 				6FD8E51D2C5B84DE00345670 /* NewTabPageIntroMessageView.swift */,
 				6FD8E5212C5BA5C400345670 /* NewTabPageIntroMessageSetup.swift */,
+				6FDC64002C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift */,
 			);
 			name = IntroMessage;
-			sourceTree = "<group>";
-		};
-		6FDC63FD2C906DBB00DB71B3 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				6FDC63FE2C906DD300DB71B3 /* NewTabPageStorage.swift */,
-			);
-			name = Storage;
 			sourceTree = "<group>";
 		};
 		6FE127362C20436A00EB5724 /* HomeRedesign */ = {
 			isa = PBXGroup;
 			children = (
-				6FDC63FD2C906DBB00DB71B3 /* Storage */,
 				6FE1273B2C204C0D00EB5724 /* Subviews */,
 				6F03CAF82C32C3AA004179A8 /* Messages */,
 				6FE127372C20492500EB5724 /* NewTabPage.swift */,
@@ -7241,6 +7236,7 @@
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				6FB2A67C2C2D9DF0004D20C8 /* FavoritesEmptyStateView.swift in Sources */,
 				1E162605296840D80004127F /* Triangle.swift in Sources */,
+				6FDC64012C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift in Sources */,
 				B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */,
 				BDFF03222BA3D8E200F324C9 /* NetworkProtectionFeatureVisibility.swift in Sources */,
 				B652DEFD287BE67400C12A9C /* UserScripts.swift in Sources */,
@@ -7322,6 +7318,7 @@
 				6FB2A67A2C2C5BAE004D20C8 /* FavoriteEmptyStateItem.swift in Sources */,
 				6FBF0F8B2BD7C0A900136CF0 /* AllProtectedCell.swift in Sources */,
 				9F4CC5242C4A4F0D006A96EB /* SwiftUITestUtilities.swift in Sources */,
+				6FDC64032C92F4D600DB71B3 /* NewTabPageSettingsPersistentStore.swift in Sources */,
 				1E4F4A5A297193DE00625985 /* MainViewController+CookiesManaged.swift in Sources */,
 				C12324C32C4697C900FBB26B /* AutofillBreakageReportTableViewCell.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
@@ -7422,7 +7419,6 @@
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
-				6FDC63FF2C906DD300DB71B3 /* NewTabPageStorage.swift in Sources */,
 				BDE91CDC2C62AA3A0005CB74 /* DefaultMetadataCollector.swift in Sources */,
 				D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */,
 				EE458D142ABB652900FC651A /* NetworkProtectionDebugUtilities.swift in Sources */,

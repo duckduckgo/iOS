@@ -35,29 +35,32 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
 
     var appDefaults: AppDebugSettings
     let featureFlagger: FeatureFlagger
+    let internalUserDecider: InternalUserDecider
 
     init(appDefaults: AppDebugSettings = AppDependencyProvider.shared.appSettings,
-         featureFlager: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
-        
+         featureFlager: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
+
         self.appDefaults = appDefaults
         self.featureFlagger = featureFlager
+        self.internalUserDecider = internalUserDecider
     }
 
     // MARK: - HomeTabManaging
 
     var isNewTabPageSectionsEnabled: Bool {
-        true
-//        isLocalFlagEnabled && isFeatureFlagEnabled
+        let isLocalFlagInEffect = isLocalFlagEnabled && internalUserDecider.isInternalUser
+        
+        return isLocalFlagInEffect || isFeatureFlagEnabled
     }
 
     var isAvailableInPublicRelease: Bool {
-        true
-//        switch FeatureFlag.newTabPageSections.source {
-//        case .disabled, .internalOnly, .remoteDevelopment:
-//            return false
-//        case .remoteReleasable:
-//            return true
-//        }
+        switch FeatureFlag.newTabPageSections.source {
+        case .disabled, .internalOnly, .remoteDevelopment:
+            return false
+        case .remoteReleasable:
+            return true
+        }
     }
 
     // MARK: - NewTabPageDebugging

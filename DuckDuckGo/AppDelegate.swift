@@ -118,7 +118,7 @@ import os.log
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Attribution support
-        updateAttribution(conversionValue: 1)
+        MarketplaceAdPostbackManager().sendAppLaunchPostback()
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {

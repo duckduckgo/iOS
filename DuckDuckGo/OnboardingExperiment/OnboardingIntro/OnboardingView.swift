@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Onboarding
-import struct DuckUI.PrimaryButtonStyle
 
 // MARK: - OnboardingView
 
@@ -40,6 +39,7 @@ struct OnboardingView: View {
     @State private var animateComparisonText = false
 
     @State private var appIconPickerContentState = AppIconPickerContentState()
+    @State private var addressBarPositionContentState = AddressBarPositionContentState()
 
     init(model: OnboardingIntroViewModel) {
         self.model = model
@@ -56,6 +56,7 @@ struct OnboardingView: View {
                 onboardingDialogView(state: viewState)
             }
         }
+        .onboardingGradient(model.gradientType)
     }
 
     private func onboardingDialogView(state: ViewState.Intro) -> some View {
@@ -125,7 +126,11 @@ struct OnboardingView: View {
     }
 
     private var introView: some View {
-        IntroDialogContent(animateText: $animateIntroText, showCTA: $showIntroButton) {
+        IntroDialogContent(
+            title: model.copy.introTitle,
+            animateText: $animateIntroText,
+            showCTA: $showIntroButton
+        ) {
             animateBrowserComparisonViewState()
         }
         .onboardingDaxDialogStyle()
@@ -134,6 +139,7 @@ struct OnboardingView: View {
 
     private var browsersComparisonView: some View {
         BrowsersComparisonContent(
+            title: model.copy.browserComparisonTitle,
             animateText: $animateComparisonText,
             showContent: $showComparisonButton,
             setAsDefaultBrowserAction: {
@@ -156,15 +162,11 @@ struct OnboardingView: View {
     }
 
     private var addressBarPreferenceSelectionView: some View {
-        // TODO: Implement View
-        VStack(spacing: 30) {
-            Text(verbatim: "Choose Address Bar Position")
-
-            Button(action: model.selectAddressBarPositionAction) {
-                Text(verbatim: "Next")
-            }
-            .buttonStyle(PrimaryButtonStyle())
-        }
+        AddressBarPositionContent(
+            animateTitle: $addressBarPositionContentState.animateTitle,
+            showContent: $addressBarPositionContentState.showContent,
+            action: model.selectAddressBarPositionAction
+        )
         .onboardingDaxDialogStyle()
     }
 

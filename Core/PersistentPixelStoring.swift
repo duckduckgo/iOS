@@ -18,10 +18,28 @@
 //
 
 import Foundation
+import Networking
 
 struct PersistentPixelMetadata: Codable, Equatable {
-    let pixelName: String
-    let parameters: [String: String]
+    enum PixelType: Codable {
+        case daily
+        case count
+        case regular
+    }
+
+    let event: Pixel.Event
+    let originalFireDate: Date
+    let pixelType: PixelType
+    let additionalParameters: [String: String]
+    let includedParameters: [Pixel.QueryParameters]
+
+    var pixelName: String {
+        switch pixelType {
+        case .daily: return event.name + "_d"
+        case .count: return event.name + "_c"
+        case .regular: return event.name
+        }
+    }
 }
 
 protocol PersistentPixelStoring {

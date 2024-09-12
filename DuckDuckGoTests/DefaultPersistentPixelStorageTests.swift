@@ -39,7 +39,7 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
     }
 
     func testWhenStoringPixel_ThenPixelCanBeSuccessfullyRead() throws {
-        let metadata = PersistentPixelMetadata(pixelName: "test", parameters: ["param": "value"])
+        let metadata = PersistentPixelMetadata(event: .appLaunch, pixelType: .regular, parameters: ["param": "value"])
         try persistentStorage.append(pixel: metadata)
         let readPixelMetadata = try persistentStorage.storedPixels()
 
@@ -47,9 +47,9 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
     }
 
     func testWhenStoringMultiplePixels_ThenPixelsCanBeSuccessfullyRead() throws {
-        let metadata1 = PersistentPixelMetadata(pixelName: "test1", parameters: ["param1": "value1"])
-        let metadata2 = PersistentPixelMetadata(pixelName: "test2", parameters: ["param2": "value2"])
-        let metadata3 = PersistentPixelMetadata(pixelName: "test3", parameters: ["param3": "value3"])
+        let metadata1 = PersistentPixelMetadata(event: .appLaunch, pixelType: .regular, parameters: ["param1": "value1"])
+        let metadata2 = PersistentPixelMetadata(event: .appLaunch, pixelType: .regular, parameters: ["param2": "value2"])
+        let metadata3 = PersistentPixelMetadata(event: .appLaunch, pixelType: .regular, parameters: ["param3": "value3"])
 
         try persistentStorage.append(pixel: metadata1)
         try persistentStorage.append(pixel: metadata2)
@@ -61,7 +61,7 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
     }
 
     func testWhenReplacingPixels_AndNoPixelsAreStored_ThenNewPixelsAreStored() throws {
-        let metadata = PersistentPixelMetadata(pixelName: "test", parameters: ["param": "value"])
+        let metadata = PersistentPixelMetadata(event: .appLaunch, pixelType: .regular, parameters: ["param": "value"])
         try persistentStorage.replaceStoredPixels(with: [metadata])
         let readPixelMetadata = try persistentStorage.storedPixels()
 
@@ -69,10 +69,10 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
     }
 
     func testWhenReplacingPixels_AndExistingPixelsAreStored_ThenOldPixelsAreReplacedWithNewOnes() throws {
-        let initialMetadata = PersistentPixelMetadata(pixelName: "old", parameters: ["param1": "value1"])
+        let initialMetadata = PersistentPixelMetadata(event: .appLaunch, pixelType: .daily, parameters: ["param1": "value1"])
         try persistentStorage.replaceStoredPixels(with: [initialMetadata])
 
-        let newMetadata = PersistentPixelMetadata(pixelName: "new", parameters: ["param2": "value2"])
+        let newMetadata = PersistentPixelMetadata(event: .appLaunch, pixelType: .count, parameters: ["param2": "value2"])
         try persistentStorage.replaceStoredPixels(with: [newMetadata])
 
         let readPixelMetadata = try persistentStorage.storedPixels()

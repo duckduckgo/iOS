@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Networking
 import Persistence
 
 protocol PersistentPixelFiring {
@@ -30,6 +31,7 @@ protocol PersistentPixelFiring {
 
 public final class PersistentPixel: PersistentPixelFiring {
 
+    private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
     private let persistentPixelStorage: PersistentPixelStoring
     private let lastSentTimestampStorage: KeyValueStoring
@@ -38,9 +40,11 @@ public final class PersistentPixel: PersistentPixelFiring {
     private let queue = DispatchQueue(label: "Persistent Pixel File Access Queue", qos: .utility)
     private var failedPixelsPendingStorage: [URL] = []
 
-    init(dailyPixelFiring: DailyPixelFiring.Type,
+    init(pixelFiring: PixelFiring.Type,
+         dailyPixelFiring: DailyPixelFiring.Type,
          persistentPixelStorage: PersistentPixelStoring,
          lastSentTimestampStorage: KeyValueStoring) {
+        self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.persistentPixelStorage = persistentPixelStorage
         self.lastSentTimestampStorage = lastSentTimestampStorage
@@ -48,7 +52,7 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     func fireDailyAndCount(pixel: Pixel.Event,
                            error: Swift.Error? = nil,
-                           withAdditionalParameters params: [String: String],
+                           withAdditionalParameters additionalParameters: [String: String],
                            includedParameters: [Pixel.QueryParameters],
                            completion: @escaping (Error?) -> Void) {
         let dispatchGroup = DispatchGroup()
@@ -58,16 +62,23 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         var dailyPixelStorageError: Error?
         var countPixelStorageError: Error?
+        let originalFireDate = Date()
 
         dailyPixelFiring.fireDailyAndCount(
             pixel: pixel,
             error: error,
-            withAdditionalParameters: params,
+            withAdditionalParameters: additionalParameters,
             includedParameters: includedParameters,
             onDailyComplete: { dailyError in
                 if dailyError != nil {
                     do {
-                        let pixel = PersistentPixelMetadata(pixelName: pixel.name, parameters: params)
+                        let pixel = PersistentPixelMetadata(
+                            event: pixel,
+                            originalFireDate: originalFireDate,
+                            pixelType: .daily,
+                            additionalParameters: additionalParameters,
+                            includedParameters: includedParameters
+                        )
                         try self.persistentPixelStorage.append(pixel: pixel)
                     } catch {
                         dailyPixelStorageError = error
@@ -78,7 +89,13 @@ public final class PersistentPixel: PersistentPixelFiring {
             }, onCountComplete: { countError in
                 if countError != nil {
                     do {
-                        let pixel = PersistentPixelMetadata(pixelName: pixel.name, parameters: params)
+                        let pixel = PersistentPixelMetadata(
+                            event: pixel,
+                            originalFireDate: originalFireDate,
+                            pixelType: .count,
+                            additionalParameters: additionalParameters,
+                            includedParameters: includedParameters
+                        )
                         try self.persistentPixelStorage.append(pixel: pixel)
                     } catch {
                         countPixelStorageError = error
@@ -89,7 +106,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             }
         )
 
-        dispatchGroup.notify(queue: .main) {
+        dispatchGroup.notify(queue: .global()) {
             if let dailyPixelStorageError {
                 completion(dailyPixelStorageError)
             } else if let countPixelStorageError {
@@ -101,7 +118,52 @@ public final class PersistentPixel: PersistentPixelFiring {
     }
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
+        do {
+            let queuedPixels = try persistentPixelStorage.storedPixels()
 
+            if queuedPixels.isEmpty {
+                completion(nil)
+                return
+            }
+
+            let dispatchGroup = DispatchGroup()
+
+            let failedPixelsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
+            var failedPixels: [PersistentPixelMetadata] = []
+
+            for pixelMetadata in queuedPixels {
+                // TODO: Update parameters from pixelMetadata correctly, adding timestamp and retry flag
+                dispatchGroup.enter()
+                pixelFiring.fire(
+                    pixelNamed: pixelMetadata.pixelName,
+                    forDeviceType: UIDevice.current.userInterfaceIdiom,
+                    withAdditionalParameters: pixelMetadata.additionalParameters,
+                    allowedQueryReservedCharacters: nil,
+                    withHeaders: APIRequest.Headers(),
+                    includedParameters: pixelMetadata.includedParameters,
+                    onComplete: { error in
+                        if error != nil {
+                            failedPixelsAccessQueue.sync {
+                                failedPixels.append(pixelMetadata)
+                            }
+                        }
+
+                        dispatchGroup.leave()
+                    }
+                )
+            }
+
+            dispatchGroup.notify(queue: .global()) {
+                do {
+                    try self.persistentPixelStorage.replaceStoredPixels(with: failedPixels)
+                    completion(nil)
+                } catch {
+                    completion(nil) // TODO: Use correct error
+                }
+            }
+        } catch {
+            completion(nil) // TODO: Use correct error
+        }
     }
 
 }

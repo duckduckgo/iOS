@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import Networking
 
 struct PixelInfo {
     let pixel: Pixel.Event?
@@ -27,8 +28,12 @@ struct PixelInfo {
 }
 
 final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
-    static var expectedFireError: Error?
 
+    static var expectedFireError: Error?
+    static var expectedDailyPixelFireError: Error?
+    static var expectedCountPixelFireError: Error?
+
+    static var lastPixelName: String?
     static var lastPixelInfo: PixelInfo?
     static var lastDailyPixelInfo: PixelInfo?
 
@@ -70,8 +75,35 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         lastDailyPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
     }
 
+    static func fireDailyAndCount(pixel: Pixel.Event,
+                                  error: (any Error)?,
+                                  withAdditionalParameters params: [String: String],
+                                  includedParameters: [Core.Pixel.QueryParameters],
+                                  onDailyComplete: @escaping ((any Error)?) -> Void,
+                                  onCountComplete: @escaping ((any Error)?) -> Void) {
+        lastDailyPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
+
+        onDailyComplete(expectedDailyPixelFireError)
+        onCountComplete(expectedCountPixelFireError)
+    }
+
+    static func fire(pixelNamed pixelName: String,
+                     forDeviceType deviceType: UIUserInterfaceIdiom?,
+                     withAdditionalParameters params: [String: String],
+                     allowedQueryReservedCharacters: CharacterSet?,
+                     withHeaders headers: APIRequest.Headers,
+                     includedParameters: [Pixel.QueryParameters],
+                     onComplete: @escaping (Error?) -> Void) {
+        lastPixelName = pixelName
+        lastDailyPixelInfo = PixelInfo(pixel: nil, params: params, includedParams: includedParameters)
+        
+        onComplete(nil)
+    }
+
     static func tearDown() {
         lastPixelInfo = nil
+        lastDailyPixelInfo = nil
+        lastPixelName = nil
         lastDailyPixelInfo = nil
         expectedFireError = nil
     }

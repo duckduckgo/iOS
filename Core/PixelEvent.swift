@@ -725,7 +725,6 @@ extension Pixel {
 
         // MARK: Apple Ad Attribution
         case appleAdAttribution
-        case appleAdAttributionNotAttributed
 
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
@@ -1446,7 +1445,6 @@ extension Pixel.Event {
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
-        case .appleAdAttributionNotAttributed: return "m_apple-ad-attribution_not-attributed"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"

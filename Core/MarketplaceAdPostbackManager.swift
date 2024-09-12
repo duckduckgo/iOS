@@ -20,6 +20,15 @@
 import Foundation
 
 public protocol MarketplaceAdPostbackManaging {
+
+    /// Updates the install postback based on the user's status.
+    ///
+    /// This method determines whether the user is a returning user or a new user and sends the appropriate postback value:
+    /// - If the user is returning, it sends the `appLaunchReturningUser` postback value.
+    /// - If the user is new, it sends the `appLaunchNewUser` postback value.
+    ///
+    ///>For the time being, we're also sending `lockPostback` to `true`.
+    ///>More information can be found [here](https://app.asana.com/0/0/1208126219488943/1208289369964239/f).
     func sendAppLaunchPostback()
 }
 
@@ -36,8 +45,8 @@ public struct MarketplaceAdPostbackManager: MarketplaceAdPostbackManaging {
     public init() {
         self.returningUserMeasurement = KeychainReturnUserMeasurement()
         self.updater = MarketplaceAdPostbackUpdater()
-
     }
+
     public func sendAppLaunchPostback() {
         if returningUserMeasurement.isReturningUser {
             updater.updatePostback(.appLaunchReturningUser, lockPostback: true)

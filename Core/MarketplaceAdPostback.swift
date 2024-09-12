@@ -1,5 +1,5 @@
 //
-//  MarketplaceAdAttributionPostback.swift
+//  MarketplaceAdPostback.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -49,11 +49,11 @@ enum MarketplaceAdPostback {
         }
     }
 
+    // https://app.asana.com/0/0/1208126219488943/1208264463120726/f
     var fineValue: Int {
         switch self {
         case .appLaunchNewUser: return 0
         case .appLaunchReturningUser: return 1
-
         }
     }
 

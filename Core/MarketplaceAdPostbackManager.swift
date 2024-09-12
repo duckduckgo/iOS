@@ -21,7 +21,7 @@ import Foundation
 
 public protocol MarketplaceAdPostbackManaging {
 
-    /// Updates the install postback based on the user's status.
+    /// Updates the install postback based on the return user measurement
     ///
     /// This method determines whether the user is a returning user or a new user and sends the appropriate postback value:
     /// - If the user is returning, it sends the `appLaunchReturningUser` postback value.

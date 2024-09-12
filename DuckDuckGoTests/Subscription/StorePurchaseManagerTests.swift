@@ -50,20 +50,25 @@ final class StorePurchaseManagerTests: XCTestCase {
     }
 
     func testSubscriptionOptionsWhenNoCachedProducts() async throws {
+        // When
         let subscriptionOptions = await storePurchaseManager.subscriptionOptions()
 
+        // Then
         XCTAssertNil(subscriptionOptions)
         XCTAssertFalse(storePurchaseManager.areProductsAvailable)
     }
 
     func testSubscriptionOptionsWhenAvailableProductsWereUpdated() async throws {
+        // Given
         await storePurchaseManager.updateAvailableProducts()
 
+        // When
         guard let subscriptionOptions = await storePurchaseManager.subscriptionOptions() else {
             XCTFail("Expected subscription options")
             return
         }
 
+        // Then
         XCTAssertEqual(subscriptionOptions.options.count, 2)
         XCTAssertEqual(subscriptionOptions.features.count, SubscriptionFeatureName.allCases.count)
         XCTAssertTrue(storePurchaseManager.areProductsAvailable)
@@ -74,17 +79,23 @@ final class StorePurchaseManagerTests: XCTestCase {
     }
 
     func testHasActiveSubscriptionIsFalseWithoutPurchase() async throws {
+        // When
         let hasActiveSubscription = await storePurchaseManager.hasActiveSubscription()
+        
+        // Then
         XCTAssertFalse(hasActiveSubscription)
     }
 
     func testPurchaseSubscription() async throws {
+        // Given
         await storePurchaseManager.updateAvailableProducts()
 
         XCTAssertEqual(storePurchaseManager.purchasedProductIDs, [])
 
+        // When
         let result = await storePurchaseManager.purchaseSubscription(with: Constants.yearlySubscriptionID, externalID: Constants.externalID)
 
+        // Then
         switch result {
         case .success:
             XCTAssertTrue(storePurchaseManager.purchaseQueue.isEmpty)
@@ -102,10 +113,13 @@ final class StorePurchaseManagerTests: XCTestCase {
     }
 
     func testPurchaseSubscriptionFailureWithoutValidProductID() async throws {
+        // Given
         await storePurchaseManager.updateAvailableProducts()
 
+        // When
         let result = await storePurchaseManager.purchaseSubscription(with: "", externalID: Constants.externalID)
 
+        // Then
         switch result {
         case .success:
             XCTFail("Unexpected success")
@@ -115,13 +129,16 @@ final class StorePurchaseManagerTests: XCTestCase {
     }
 
     func testPurchaseSubscriptionFailureWithoutValidUUID() async throws {
+        // Given
         await storePurchaseManager.updateAvailableProducts()
 
         let invalidUUID = "a"
         XCTAssertNil(UUID(uuidString: invalidUUID))
 
+        // When
         let result = await storePurchaseManager.purchaseSubscription(with: Constants.yearlySubscriptionID, externalID: invalidUUID)
 
+        // Then
         switch result {
         case .success:
             XCTFail("Unexpected success")
@@ -132,13 +149,16 @@ final class StorePurchaseManagerTests: XCTestCase {
 
     @available(iOS 17.0, *)
     func testPurchaseSubscriptionFailure() async throws {
+        // Given
         try? await session.setSimulatedError(SKTestFailures.Purchase.purchase(.productUnavailable),
                                              forAPI: StoreKitPurchaseAPI.purchase)
 
         await storePurchaseManager.updateAvailableProducts()
 
+        // When
         let result = await storePurchaseManager.purchaseSubscription(with: Constants.yearlySubscriptionID, externalID: Constants.externalID)
 
+        // Then
         switch result {
         case .success:
             XCTFail("Unexpected success")
@@ -167,5 +187,4 @@ private final class StoreKitHelpers {
             return safe
         }
     }
-
 }

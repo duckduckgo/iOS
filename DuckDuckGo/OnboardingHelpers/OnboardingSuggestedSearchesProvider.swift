@@ -22,18 +22,31 @@ import Onboarding
 
 struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding {
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
+    private let onboardingManager: OnboardingHighlightsManaging
 
-    init(countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current) {
+    init(
+        countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
+    ) {
         self.countryAndLanguageProvider = countryAndLanguageProvider
+        self.onboardingManager = onboardingManager
     }
 
     var list: [ContextualOnboardingListItem] {
-        return [
-            option1,
-            option2,
-            option3,
-            surpriseMe
-        ]
+        if onboardingManager.isOnboardingHighlightsEnabled {
+            [
+               option1,
+               option2,
+               surpriseMe
+           ]
+        } else {
+            [
+               option1,
+               option2,
+               option3,
+               surpriseMe
+           ]
+        }
     }
 
     private var country: String? {
@@ -69,12 +82,14 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
     }
 
     private var surpriseMe: ContextualOnboardingListItem {
-        var search: String
-        if country == "us" {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish
+        let search = if onboardingManager.isOnboardingHighlightsEnabled {
+            UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
         } else {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
+            country == "us" ?
+            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish :
+            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
         }
+
         return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
     }
 

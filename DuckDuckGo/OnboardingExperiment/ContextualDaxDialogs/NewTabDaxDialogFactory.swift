@@ -30,15 +30,22 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     private var delegate: OnboardingNavigationDelegate?
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
+    private let onboardingManager: OnboardingHighlightsManaging
+
+    private var gradientType: OnboardingGradientType {
+        onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+    }
 
     init(
         delegate: OnboardingNavigationDelegate?,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        onboardingPixelReporter: OnboardingPixelReporting
+        onboardingPixelReporter: OnboardingPixelReporting,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
     ) {
         self.delegate = delegate
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.onboardingManager = onboardingManager
     }
 
     @ViewBuilder
@@ -54,17 +61,17 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             createFinalDialog(onDismiss: onDismiss)
         default:
             EmptyView()
-
         }
     }
 
     private func createInitialDialog() -> some View {
         let viewModel = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), delegate: delegate, pixelReporter: onboardingPixelReporter)
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage
         return FadeInView {
-            OnboardingTrySearchDialog(viewModel: viewModel)
+            OnboardingTrySearchDialog(message: message, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTrySearchUnique)
         }
@@ -76,7 +83,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in
             self?.onboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
         }
@@ -92,13 +99,15 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        FadeInView {
-            OnboardingFinalDialog(highFiveAction: {
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+
+        return FadeInView {
+            OnboardingFinalDialog(message: message, highFiveAction: {
                 onDismiss()
             })
             .onboardingDaxDialogStyle()
         }
-        .onboardingContextualBackgroundStyle()
+        .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)

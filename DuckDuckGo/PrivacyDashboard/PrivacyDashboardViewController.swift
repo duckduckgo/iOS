@@ -171,14 +171,14 @@ extension PrivacyDashboardViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
-        privacyDashboardController.theme = .init(theme)
+        privacyDashboardController.theme = .init(traitCollection)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            privacyDashboardController.theme = .init()
+            privacyDashboardController.theme = .init(traitCollection)
         }
     }
 }
@@ -378,20 +378,12 @@ extension PrivacyDashboardViewController {
 }
 
 private extension PrivacyDashboardTheme {
-    init(_ userInterfaceStyle: UIUserInterfaceStyle = ThemeManager.shared.currentInterfaceStyle) {
-        switch userInterfaceStyle {
+    init(_ traitCollection: UITraitCollection) {
+        switch traitCollection.userInterfaceStyle {
         case .light: self = .light
         case .dark: self = .dark
         case .unspecified: self = .light
         @unknown default: self = .light
-        }
-    }
-
-    init(_ theme: Theme) {
-        switch theme.name {
-        case .light: self = .light
-        case .dark: self = .dark
-        case .systemDefault: self.init(ThemeManager.shared.currentInterfaceStyle)
         }
     }
 }

@@ -79,6 +79,8 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
         XCTAssertEqual([newMetadata], readPixelMetadata)
     }
 
+    // MARK: - Test Utilities
+
     private func createPersistentStorage() -> (URL, DefaultPersistentPixelStorage) {
         let storageDirectory = FileManager.default.temporaryDirectory
         let fileName = UUID().uuidString.appendingPathExtension("json")

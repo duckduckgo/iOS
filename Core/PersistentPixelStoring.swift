@@ -30,6 +30,13 @@ protocol PersistentPixelStoring {
     func storedPixels() throws -> [PersistentPixelMetadata]
 }
 
+enum PersistentPixelStorageError: Error {
+    case readError(Error)
+    case writeError(Error)
+    case encodingError(Error)
+    case decodingError(Error)
+}
+
 final class DefaultPersistentPixelStorage: PersistentPixelStoring {
 
     private enum Constants {

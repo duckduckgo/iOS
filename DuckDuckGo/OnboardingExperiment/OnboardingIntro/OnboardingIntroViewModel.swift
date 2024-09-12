@@ -24,6 +24,7 @@ import class UIKit.UIApplication
 final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
+    let copy: Copy
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
@@ -47,6 +48,8 @@ final class OnboardingIntroViewModel: ObservableObject {
         } else {
             OnboardingIntroStep.defaultFlow
         }
+
+        copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
     }
 
     func onAppear() {

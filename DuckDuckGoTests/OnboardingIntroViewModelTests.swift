@@ -21,11 +21,11 @@ import XCTest
 @testable import DuckDuckGo
 
 final class OnboardingIntroViewModelTests: XCTestCase {
-    private var onboardingManager: OnboardingHighlightsManagerMock!
+    private var onboardingManager: OnboardingManagerMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        onboardingManager = OnboardingHighlightsManagerMock()
+        onboardingManager = OnboardingManagerMock()
     }
 
     override func tearDownWithError() throws {
@@ -339,6 +339,56 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertTrue(pixelReporterMock.didCallTrackChooseBrowserCTAAction)
     }
 
+    // MARK: - Copy
+
+    func testWhenIsNotHighlightsThenIntroTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = false
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.introTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.Intro.title)
+    }
+
+    func testWhenIsHighlightsThenIntroTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.introTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.Intro.title)
+    }
+
+    func testWhenIsNotHighlightsThenBrowserComparisonTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = false
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.browserComparisonTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.title)
+    }
+
+    func testWhenIsHighlightsThenBrowserComparisonTitleIsCorrect() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingIntroPixelReporterMock(), onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+
+        // WHEN
+        let result = sut.copy.browserComparisonTitle
+
+        // THEN
+        XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.title)
+    }
+
 }
 
 private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReporting {
@@ -357,8 +407,4 @@ private final class OnboardingIntroPixelReporterMock: OnboardingIntroPixelReport
     func trackChooseBrowserCTAAction() {
         didCallTrackChooseBrowserCTAAction = true
     }
-}
-
-private class OnboardingHighlightsManagerMock: OnboardingHighlightsManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
 }

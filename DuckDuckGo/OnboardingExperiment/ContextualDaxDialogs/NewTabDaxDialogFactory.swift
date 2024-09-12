@@ -30,15 +30,18 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     private var delegate: OnboardingNavigationDelegate?
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
+    private let onboardingManager: OnboardingHighlightsManaging
 
     init(
         delegate: OnboardingNavigationDelegate?,
         contextualOnboardingLogic: ContextualOnboardingLogic,
-        onboardingPixelReporter: OnboardingPixelReporting
+        onboardingPixelReporter: OnboardingPixelReporting,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
     ) {
         self.delegate = delegate
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.onboardingManager = onboardingManager
     }
 
     @ViewBuilder
@@ -60,8 +63,9 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createInitialDialog() -> some View {
         let viewModel = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), delegate: delegate, pixelReporter: onboardingPixelReporter)
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage
         return FadeInView {
-            OnboardingTrySearchDialog(viewModel: viewModel)
+            OnboardingTrySearchDialog(message: message, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
         }
         .onboardingContextualBackgroundStyle()
@@ -92,8 +96,10 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        FadeInView {
-            OnboardingFinalDialog(highFiveAction: {
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+
+        return FadeInView {
+            OnboardingFinalDialog(message: message, highFiveAction: {
                 onDismiss()
             })
             .onboardingDaxDialogStyle()

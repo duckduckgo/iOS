@@ -48,17 +48,20 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
     private let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
+    private let onboardingManager: OnboardingHighlightsManaging
 
     init(
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
-        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
+        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
         self.contextualOnboardingSiteSuggestionsProvider = contextualOnboardingSiteSuggestionsProvider
+        self.onboardingManager = onboardingManager
     }
 
     func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView> {
@@ -122,7 +125,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             }
         }
 
-        return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage
+
+        return OnboardingFirstSearchDoneDialog(message: message, shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
             .onFirstAppear { [weak self] in
                 self?.contextualOnboardingPixelReporter.trackScreenImpression(event: afterSearchPixelEvent)
             }
@@ -164,7 +169,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        OnboardingFinalDialog(highFiveAction: { [weak delegate] in
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+
+        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate] in
             delegate?.didTapDismissContextualOnboardingAction()
         })
         .onFirstAppear { [weak self] in

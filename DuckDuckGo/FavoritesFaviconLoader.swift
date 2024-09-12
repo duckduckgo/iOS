@@ -20,8 +20,6 @@
 import UIKit
 
 actor FavoritesFaviconLoader: FavoritesFaviconLoading {
-
-    static let shared = FavoritesFaviconLoader()
     
     private var tasks: [String: Task<Favicon?, Never>] = [:]
 

@@ -30,15 +30,7 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     @Published private(set) var isCollapsed: Bool = true
     @Published private(set) var isShowingTooltip: Bool = false
 
-    private(set) lazy var faviconLoader: FavoritesFaviconLoading? = {
-        MissingFaviconWrapper(onFaviconMissing: { [weak self] in
-            guard let self else { return }
-
-            await MainActor.run {
-                self.faviconMissing()
-            }
-        })
-    }()
+    private(set) var faviconLoader: FavoritesFaviconLoading?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -51,11 +43,20 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     }
 
     init(interactionModel: FavoritesListInteracting,
+         faviconLoader: FavoritesFaviconLoading,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
         self.interactionModel = interactionModel
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
+        self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
+            guard let self else { return }
+
+            await MainActor.run {
+                self.faviconMissing()
+            }
+        })
+
 
         interactionModel.externalUpdates.sink { [weak self] _ in
             try? self?.updateData()
@@ -209,7 +210,7 @@ private final class MissingFaviconWrapper: FavoritesFaviconLoading {
 
     private(set) var onFaviconMissing: (() async -> Void)
 
-    init(loader: FavoritesFaviconLoading = FavoritesFaviconLoader.shared, onFaviconMissing: @escaping (() async -> Void)) {
+    init(loader: FavoritesFaviconLoading, onFaviconMissing: @escaping (() async -> Void)) {
         self.onFaviconMissing = onFaviconMissing
         self.loader = loader
     }

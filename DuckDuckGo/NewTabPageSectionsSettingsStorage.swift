@@ -26,8 +26,6 @@ enum NewTabPageSection: String, Codable, CaseIterable {
 
 typealias NewTabPageSectionsSettingsStorage = NewTabPageSettingsPersistentStorage<NewTabPageSection>
 
-
-
 extension NewTabPageSettingsPersistentStorage<NewTabPageSection> {
     convenience init() {
         self.init(persistentStore: NewTabPageSectionsSettingsStore(),

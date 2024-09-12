@@ -389,15 +389,6 @@ import os.log
         return true
     }
 
-    private func sendAppLaunchPostback () {
-        // Attribution support
-        // WIP: Needs BSK change
-        //        let featureFlagger = AppDependencyProvider.shared.featureFlagger
-        //        if featureFlagger.isFeatureOn(.marketplaceAdPostback) {
-        //            marketplaceAdPostbackManager.sendAppLaunchPostback()
-        //        }
-    }
-
     private func makeHistoryManager() -> HistoryManaging {
 
         let provider = AppDependencyProvider.shared
@@ -766,6 +757,14 @@ import os.log
 
     // MARK: private
 
+    private func sendAppLaunchPostback() {
+        // Attribution support
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .marketplaceAdPostback) {
+            marketplaceAdPostbackManager.sendAppLaunchPostback()
+        }
+    }
+
     private func cleanUpATBAndAssignVariant(variantManager: VariantManager, daxDialogs: DaxDialogs) {
         let historyMessageManager = HistoryMessageManager()
 
@@ -977,7 +976,6 @@ import os.log
             UIApplication.shared.shortcutItems = nil
         }
     }
-
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {

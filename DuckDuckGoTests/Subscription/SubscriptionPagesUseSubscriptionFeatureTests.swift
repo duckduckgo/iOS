@@ -166,15 +166,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     override func tearDownWithError() throws {
         Pixel.isDryRun = true
-        if !pixelsFired.isEmpty {
-            Logger.general.log("= pixels =")
-
-            pixelsFired.forEach { pixel in
-                Logger.general.log("\(String(describing: pixel))")
-            }
-
-            Logger.general.log("==========")
-        }
         pixelsFired.removeAll()
         HTTPStubs.removeAllStubs()
 

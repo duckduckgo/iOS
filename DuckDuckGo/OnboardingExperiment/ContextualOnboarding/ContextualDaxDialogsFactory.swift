@@ -50,6 +50,10 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
     private let onboardingManager: OnboardingHighlightsManaging
 
+    private var gradientType: OnboardingGradientType {
+        onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+    }
+
     init(
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
@@ -95,7 +99,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
         let viewWithBackground = rootView
             .onboardingDaxDialogStyle()
-            .onboardingContextualBackgroundStyle()
+            .onboardingContextualBackgroundStyle(background: .gradientOnly(gradientType))
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]

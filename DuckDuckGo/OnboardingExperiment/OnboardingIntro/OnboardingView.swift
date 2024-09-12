@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Onboarding
-import struct DuckUI.PrimaryButtonStyle
 
 // MARK: - OnboardingView
 
@@ -57,6 +56,7 @@ struct OnboardingView: View {
                 onboardingDialogView(state: viewState)
             }
         }
+        .onboardingGradient(model.gradientType)
     }
 
     private func onboardingDialogView(state: ViewState.Intro) -> some View {

@@ -72,7 +72,7 @@ final class ConfigurationManager: DefaultConfigurationManager {
     }
 
     override init(fetcher: ConfigurationFetching = ConfigurationFetcher(store: ConfigurationStore(), eventMapping: configurationDebugEvents),
-                  store: ConfigurationStoring = ConfigurationStore(),
+                  store: ConfigurationStoring = AppDependencyProvider.shared.configurationStore,
                   defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
         super.init(fetcher: fetcher, store: store, defaults: defaults)
         addPresenter()
@@ -207,12 +207,12 @@ extension ConfigurationManager {
     }
 
     func subscribeToLifecycleNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(addPresenter), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(addPresenter), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(removePresenter), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     func removeLifecycleNotifications() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 

@@ -70,7 +70,10 @@ public final class VPNPrivacyConfigurationManager: PrivacyConfigurationManaging 
         return embeddedConfigData
     }
 
-    public var updatesPublisher: AnyPublisher<Void, Never> = .init(Just(()))
+    private let updatesSubject = PassthroughSubject<Void, Never>()
+    public var updatesPublisher: AnyPublisher<Void, Never> {
+        updatesSubject.eraseToAnyPublisher()
+    }
 
     public var privacyConfig: BrowserServicesKit.PrivacyConfiguration {
         guard let privacyConfigurationData = try? PrivacyConfigurationData(data: currentConfig) else {
@@ -93,6 +96,7 @@ public final class VPNPrivacyConfigurationManager: PrivacyConfigurationManaging 
             do {
                 let configData = try PrivacyConfigurationData(data: data)
                 fetchedConfigData = (data, configData, etag)
+                updatesSubject.send(())
             } catch {
                 Pixel.fire(pixel: .trackerDataParseFailed, error: error, withAdditionalParameters: ["target": "vpn"])
                 fetchedConfigData = nil

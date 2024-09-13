@@ -37,7 +37,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
 
-    private let configuratioManager: ConfigurationManager
+    private let configurationStore = ConfigurationStore()
+    private let configurationManager: ConfigurationManager
+    private var configuationSubscription: AnyCancellable?
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -327,18 +329,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
         Configuration.setURLProvider(VPNAgentConfigurationURLProvider())
-        configuratioManager = ConfigurationManager()
-        configuratioManager.start()
+        configurationManager = ConfigurationManager(store: configurationStore)
+        configurationManager.start()
         let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
         // Load cached config (if any)
-        let configStore = ConfigurationStore()
-        privacyConfigurationManager.reload(etag: configStore.loadEtag(for: .privacyConfiguration), data: configStore.loadData(for: .privacyConfiguration))
+        privacyConfigurationManager.reload(etag: configurationStore.loadEtag(for: .privacyConfiguration), data: configurationStore.loadData(for: .privacyConfiguration))
 
-        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest)
-            && !UserDefaults.configurationGroupDefaults.bool(forKey: BackgroundAgentPixelTestSubfeature.pixelTest.rawValue) {
-            Pixel.fire(pixel: .networkProtectionConfigurationPixelTest)
-            UserDefaults.configurationGroupDefaults.set(true, forKey: BackgroundAgentPixelTestSubfeature.pixelTest.rawValue)
-        }
+        configuationSubscription = privacyConfigurationManager.updatesPublisher
+            .sink {
+                if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest) {
+                    DailyPixel.fire(pixel: .networkProtectionConfigurationPixelTest)
+                }
+            }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default

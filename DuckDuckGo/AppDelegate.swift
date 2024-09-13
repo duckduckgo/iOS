@@ -294,7 +294,7 @@ import os.log
             bookmarksDatabase: bookmarksDatabase,
             appSettings: AppDependencyProvider.shared.appSettings,
             internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-            configurationStore: ConfigurationStore(),
+            configurationStore: AppDependencyProvider.shared.configurationStore,
             database: Database.shared,
             errorEvents: RemoteMessagingStoreErrorHandling(),
             remoteMessagingAvailabilityProvider: PrivacyConfigurationRemoteMessagingAvailabilityProvider(

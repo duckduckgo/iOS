@@ -113,7 +113,7 @@ struct ConfigurationStore: ConfigurationStoring {
     }
     
     func fileUrl(for configuration: Configuration) -> URL {
-        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Bundle.main.appGroup(bundle: .subs))
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "\(Global.groupIdPrefix).app-configuration")
         return path!.appendingPathComponent(configuration.storeKey)
     }
 }

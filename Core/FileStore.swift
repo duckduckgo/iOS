@@ -44,7 +44,7 @@ public class FileStore {
             throw writeError
         }
         if let coordinatorError {
-            Pixel.fire(pixel: .fileStoreWriteFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
+            Pixel.fire(pixel: .fileStoreCoordinatorFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
             throw coordinatorError
         }
     }
@@ -85,7 +85,7 @@ public class FileStore {
         }
 
         if let coordinatorError {
-            Pixel.fire(pixel: .fileStoreWriteFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
+            Pixel.fire(pixel: .fileStoreCoordinatorFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
         }
 
         return data

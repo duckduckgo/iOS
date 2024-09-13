@@ -369,5 +369,12 @@ private class DelayedPixelFiringMock: PixelFiring {
         lastCompletionHandler = onComplete
     }
     
+    static func fire(pixel: Pixel.Event,
+                     error: Error?,
+                     includedParameters: [Pixel.QueryParameters],
+                     withAdditionalParameters params: [String: String],
+                     onComplete: @escaping (Error?) -> Void) {
+        lastCompletionHandler = onComplete
+    }
 
 }

@@ -38,6 +38,12 @@ public protocol PixelFiring {
                      includedParameters: [Pixel.QueryParameters],
                      onComplete: @escaping (Error?) -> Void)
 
+    static func fire(pixel: Pixel.Event,
+                     error: Error?,
+                     includedParameters: [Pixel.QueryParameters],
+                     withAdditionalParameters params: [String: String],
+                     onComplete: @escaping (Error?) -> Void)
+
 }
 
 extension Pixel: PixelFiring {

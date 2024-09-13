@@ -80,7 +80,8 @@ class MockDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: MockPersistentPixel())
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
 

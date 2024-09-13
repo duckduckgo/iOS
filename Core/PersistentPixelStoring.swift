@@ -20,7 +20,7 @@
 import Foundation
 import Networking
 
-struct PersistentPixelMetadata: Codable, Equatable {
+public struct PersistentPixelMetadata: Codable, Equatable {
     enum PixelType: Codable {
         case daily
         case count
@@ -74,10 +74,10 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
         return storageDirectory.appendingPathComponent(fileName)
     }
 
-    public init(fileManager: FileManager = .default,
-                fileName: String = Constants.queuedPixelsFileName,
-                storageDirectory: URL? = nil,
-                pixelCountLimit: Int = Constants.pixelCountLimit) {
+    init(fileManager: FileManager = .default,
+         fileName: String = Constants.queuedPixelsFileName,
+         storageDirectory: URL? = nil,
+         pixelCountLimit: Int = Constants.pixelCountLimit) {
         self.fileManager = fileManager
         self.fileName = fileName
         self.pixelCountLimit = pixelCountLimit

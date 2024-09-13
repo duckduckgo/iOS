@@ -22,12 +22,18 @@ import os.log
 import Networking
 import Persistence
 
-protocol PersistentPixelFiring {
+public protocol PersistentPixelFiring {
+    func fire(pixel: Pixel.Event,
+              error: Swift.Error?,
+              includedParameters: [Pixel.QueryParameters],
+              withAdditionalParameters params: [String: String],
+              onComplete: @escaping (Error?) -> Void)
+
     func fireDailyAndCount(pixel: Pixel.Event,
                            error: Swift.Error?,
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Pixel.QueryParameters],
-                           completion: @escaping (Error?) -> Void)
+                           completion: @escaping ([Error]) -> Void)
 }
 
 public final class PersistentPixel: PersistentPixelFiring {
@@ -48,6 +54,13 @@ public final class PersistentPixel: PersistentPixelFiring {
         return formatter
     }()
 
+    public convenience init() {
+        self.init(pixelFiring: Pixel.self,
+                  dailyPixelFiring: DailyPixel.self,
+                  persistentPixelStorage: DefaultPersistentPixelStorage(),
+                  lastSentTimestampStorage: UserDefaults.standard)
+    }
+
     init(pixelFiring: PixelFiring.Type,
          dailyPixelFiring: DailyPixelFiring.Type,
          persistentPixelStorage: PersistentPixelStoring,
@@ -60,11 +73,48 @@ public final class PersistentPixel: PersistentPixelFiring {
         self.dateGenerator = dateGenerator
     }
 
-    func fireDailyAndCount(pixel: Pixel.Event,
-                           error: Swift.Error? = nil,
-                           withAdditionalParameters additionalParameters: [String: String],
-                           includedParameters: [Pixel.QueryParameters],
-                           completion: @escaping (Error?) -> Void) {
+    // MARK: - Pixel Firing
+
+    public func fire(pixel: Pixel.Event,
+                     error: Swift.Error? = nil,
+                     includedParameters: [Pixel.QueryParameters] = [.appVersion],
+                     withAdditionalParameters additionalParameters: [String: String] = [:],
+                     onComplete: @escaping (Error?) -> Void = { _ in }) {
+        let fireDate = dateGenerator()
+        let dateString = dateFormatter.string(from: fireDate)
+        var additionalParameters = additionalParameters
+        additionalParameters[PixelParameters.originalPixelTimestamp] = dateString
+
+        pixelFiring.fire(pixel: pixel,
+                         error: error,
+                         includedParameters: includedParameters,
+                         withAdditionalParameters: additionalParameters) { error in
+            if error != nil {
+                do {
+                    if let error {
+                        additionalParameters.appendErrorPixelParams(error: error)
+                    }
+
+                    try self.save(PersistentPixelMetadata(
+                        eventName: pixel.name,
+                        pixelType: .daily,
+                        additionalParameters: additionalParameters,
+                        includedParameters: includedParameters
+                    ))
+                } catch {
+                    onComplete(error)
+                }
+            }
+        }
+
+        onComplete(nil)
+    }
+
+    public func fireDailyAndCount(pixel: Pixel.Event,
+                                  error: Swift.Error? = nil,
+                                  withAdditionalParameters additionalParameters: [String: String],
+                                  includedParameters: [Pixel.QueryParameters] = [.appVersion],
+                                  completion: @escaping ([Error]) -> Void = { _ in }) {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter() // onDailyComplete
@@ -86,6 +136,10 @@ public final class PersistentPixel: PersistentPixelFiring {
             onDailyComplete: { dailyError in
                 if dailyError != nil {
                     do {
+                        if let error {
+                            additionalParameters.appendErrorPixelParams(error: error)
+                        }
+
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .daily,
@@ -101,6 +155,10 @@ public final class PersistentPixel: PersistentPixelFiring {
             }, onCountComplete: { countError in
                 if countError != nil {
                     do {
+                        if let error {
+                            additionalParameters.appendErrorPixelParams(error: error)
+                        }
+
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .count,
@@ -117,15 +175,12 @@ public final class PersistentPixel: PersistentPixelFiring {
         )
 
         dispatchGroup.notify(queue: .global()) {
-            if let dailyPixelStorageError {
-                completion(dailyPixelStorageError)
-            } else if let countPixelStorageError {
-                completion(countPixelStorageError)
-            } else {
-                completion(nil)
-            }
+            let errors = [dailyPixelStorageError, countPixelStorageError].compactMap { $0 }
+            completion(errors)
         }
     }
+
+    // MARK: - Queue Processing
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
         pixelProcessingQueue.sync {

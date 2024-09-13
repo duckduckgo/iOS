@@ -216,6 +216,7 @@
 		4B27FBB12C9252F4007E21A7 /* DefaultPersistentPixelStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B27FBAF2C9251B2007E21A7 /* DefaultPersistentPixelStorageTests.swift */; };
 		4B27FBB32C926E51007E21A7 /* PersistentPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B27FBB22C926E51007E21A7 /* PersistentPixel.swift */; };
 		4B27FBB52C927435007E21A7 /* PersistentPixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B27FBB42C927435007E21A7 /* PersistentPixelTests.swift */; };
+		4B27FBB82C93F53B007E21A7 /* MockPersistentPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B27FBB72C93F53B007E21A7 /* MockPersistentPixel.swift */; };
 		4B2C79612C5B27AC00A240CC /* VPNSnoozeActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD96E082C4DCDD2003BC32C /* VPNSnoozeActivityAttributes.swift */; };
 		4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */; };
 		4B412ACC2BBB3D0900A39F5E /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B412ACB2BBB3D0900A39F5E /* LazyView.swift */; };
@@ -1497,6 +1498,7 @@
 		4B27FBAF2C9251B2007E21A7 /* DefaultPersistentPixelStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPersistentPixelStorageTests.swift; sourceTree = "<group>"; };
 		4B27FBB22C926E51007E21A7 /* PersistentPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentPixel.swift; sourceTree = "<group>"; };
 		4B27FBB42C927435007E21A7 /* PersistentPixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentPixelTests.swift; sourceTree = "<group>"; };
+		4B27FBB72C93F53B007E21A7 /* MockPersistentPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistentPixel.swift; sourceTree = "<group>"; };
 		4B37E04F2B928CA6009E81CA /* vpn-light-mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "vpn-light-mode.json"; sourceTree = "<group>"; };
 		4B412ACB2BBB3D0900A39F5E /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
@@ -5931,6 +5933,7 @@
 				9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */,
 				9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */,
 				852409302C78030D00CB28FC /* MockUsageSegmentation.swift */,
+				4B27FBB72C93F53B007E21A7 /* MockPersistentPixel.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -8016,6 +8019,7 @@
 				B6AD9E3728D4510A0019CDE9 /* ContentBlockingUpdatingTests.swift in Sources */,
 				C14882E427F20D9A00D59F0C /* BookmarksImporterTests.swift in Sources */,
 				8588026A24E424EE00C24AB6 /* AppWidthObserverTests.swift in Sources */,
+				4B27FBB82C93F53B007E21A7 /* MockPersistentPixel.swift in Sources */,
 				857229882BBEE74100E2E802 /* AppRatingPromptDatabaseMigrationTests.swift in Sources */,
 				8588026624E420BD00C24AB6 /* LargeOmniBarStateTests.swift in Sources */,
 				5694372E2BE3F5B300C0881B /* CapturingAlertPresenter.swift in Sources */,

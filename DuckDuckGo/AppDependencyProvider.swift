@@ -92,6 +92,8 @@ class AppDependencyProvider: DependencyProvider {
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
+    let persistentPixel = PersistentPixel()
+
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
@@ -149,7 +151,8 @@ class AppDependencyProvider: DependencyProvider {
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 #endif
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: persistentPixel)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }

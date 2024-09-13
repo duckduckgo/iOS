@@ -28,6 +28,7 @@ final class PersistentPixelTests: XCTestCase {
     
     var currentStorageURL: URL!
     var persistentStorage: DefaultPersistentPixelStorage!
+    var timestampStorage: KeyValueStoring!
     let testDateString = "2024-01-01T12:00:00Z"
 
     override func setUp() {
@@ -35,6 +36,7 @@ final class PersistentPixelTests: XCTestCase {
         let (url, storage) = createPersistentStorage()
         self.currentStorageURL = url
         self.persistentStorage = storage
+        self.timestampStorage = MockKeyValueStore()
 
         PixelFiringMock.tearDown()
         DelayedPixelFiringMock.tearDown()
@@ -306,17 +308,45 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(expectedPixel))
     }
 
+    func testWhenPixelQueueHasRecentlyProcessed_ThenPixelsAreNotProcessed() throws {
+        let currentDate = Date()
+        let persistentPixel = createPersistentPixel(dateGenerator: { currentDate })
+        let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
+
+        let pixel = PersistentPixelMetadata(
+            eventName: "unfired_pixel",
+            pixelType: .count,
+            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
+            includedParameters: [.appVersion]
+        )
+
+        try persistentStorage.replaceStoredPixels(with: [pixel])
+
+        // Set a last processing date of 1 minute ago:
+        timestampStorage.set(currentDate.addingTimeInterval(-60), forKey: PersistentPixel.Constants.lastProcessingDateKey)
+
+        persistentPixel.sendQueuedPixels { _ in
+            sendQueuedPixelsExpectation.fulfill()
+        }
+
+        wait(for: [sendQueuedPixelsExpectation], timeout: 3.0)
+
+        let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixelsAfterSendingQueuedPixels, [pixel])
+        XCTAssertNil(PixelFiringMock.lastPixelName)
+    }
+
     // MARK: - Test Utilities
 
     private func createPersistentPixel(pixelFiring: PixelFiring.Type = PixelFiringMock.self,
-                                       dailyPixelFiring: DailyPixelFiring.Type = PixelFiringMock.self) -> PersistentPixel {
-        let timestampStorage = MockKeyValueStore()
+                                       dailyPixelFiring: DailyPixelFiring.Type = PixelFiringMock.self,
+                                       dateGenerator: (() -> Date)? = nil) -> PersistentPixel {
         return PersistentPixel(
             pixelFiring: pixelFiring,
             dailyPixelFiring: dailyPixelFiring,
             persistentPixelStorage: persistentStorage,
-            lastSentTimestampStorage: timestampStorage,
-            dateGenerator: self.dateGenerator
+            lastProcessingDateStorage: timestampStorage,
+            dateGenerator: dateGenerator ?? self.dateGenerator
         )
     }
 

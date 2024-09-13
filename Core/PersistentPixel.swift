@@ -38,10 +38,15 @@ public protocol PersistentPixelFiring {
 
 public final class PersistentPixel: PersistentPixelFiring {
 
+    enum Constants {
+        static let lastProcessingDateKey = "com.duckduckgo.ios.persistent-pixel.last-processing-timestamp"
+        static let minimumProcessingInterval: TimeInterval = .hours(1)
+    }
+
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
     private let persistentPixelStorage: PersistentPixelStoring
-    private let lastSentTimestampStorage: KeyValueStoring
+    private let lastProcessingDateStorage: KeyValueStoring
     private let dateGenerator: () -> Date
 
     private var isSendingQueuedPixels: Bool = false
@@ -58,18 +63,18 @@ public final class PersistentPixel: PersistentPixelFiring {
         self.init(pixelFiring: Pixel.self,
                   dailyPixelFiring: DailyPixel.self,
                   persistentPixelStorage: DefaultPersistentPixelStorage(),
-                  lastSentTimestampStorage: UserDefaults.standard)
+                  lastProcessingDateStorage: UserDefaults.standard)
     }
 
     init(pixelFiring: PixelFiring.Type,
          dailyPixelFiring: DailyPixelFiring.Type,
          persistentPixelStorage: PersistentPixelStoring,
-         lastSentTimestampStorage: KeyValueStoring,
+         lastProcessingDateStorage: KeyValueStoring,
          dateGenerator: @escaping () -> Date = { Date() }) {
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.persistentPixelStorage = persistentPixelStorage
-        self.lastSentTimestampStorage = lastSentTimestampStorage
+        self.lastProcessingDateStorage = lastProcessingDateStorage
         self.dateGenerator = dateGenerator
     }
 
@@ -183,10 +188,20 @@ public final class PersistentPixel: PersistentPixelFiring {
     // MARK: - Queue Processing
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
+        dispatchPrecondition(condition: .notOnQueue(self.pixelProcessingQueue))
+
         pixelProcessingQueue.sync {
             guard !self.isSendingQueuedPixels else {
                 completion(nil)
                 return
+            }
+
+            if let lastProcessingDate = lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
+                let threshold = dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
+                if threshold < lastProcessingDate {
+                    completion(nil)
+                    return
+                }
             }
 
             self.isSendingQueuedPixels = true
@@ -273,8 +288,13 @@ public final class PersistentPixel: PersistentPixelFiring {
             }
 
             self.failedPixelsPendingStorage = []
+            self.updateLastProcessingTimestamp()
             self.isSendingQueuedPixels = false
         }
+    }
+
+    private func updateLastProcessingTimestamp() {
+        lastProcessingDateStorage.set(dateGenerator(), forKey: Constants.lastProcessingDateKey)
     }
 
 }

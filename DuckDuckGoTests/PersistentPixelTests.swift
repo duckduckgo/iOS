@@ -19,6 +19,7 @@
 
 import Foundation
 import XCTest
+import Networking
 import Persistence
 import TestUtils
 @testable import Core
@@ -257,6 +258,102 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
     }
 
+    func testWhenPixelQueueIsProcessing_AndProcessingSucceeds_AndNewFailedPixelIsReceived_ThenPixelIsNotStoredUntilProcessingIsComplete() throws {
+        PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 1)
+
+        let timestampStorage = MockKeyValueStore()
+        let persistentPixel = PersistentPixel(
+            pixelFiring: DelayedPixelMock.self,
+            dailyPixelFiring: PixelFiringMock.self,
+            persistentPixelStorage: persistentStorage,
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
+
+        let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
+
+        // Set up initial pixel queue:
+        let initialPixel = PersistentPixelMetadata(eventName: "test", pixelType: .count, additionalParameters: [:], includedParameters: [.appVersion])
+        try persistentStorage.replaceStoredPixels(with: [initialPixel])
+
+        // Initiate pixel queue processing:
+        persistentPixel.sendQueuedPixels { _ in
+            sendQueuedPixelsExpectation.fulfill()
+        }
+
+        // Trigger a failed pixel call while processing:
+        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
+
+        // Check that the failed pixel call didn't cause a pixel to get stored:
+        let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels, [initialPixel])
+
+        // Complete pixel processing callback:
+        DelayedPixelMock.callCompletionHandler()
+
+        wait(for: [sendQueuedPixelsExpectation], timeout: 3.0)
+
+        // Check that the incoming failed pixel call is now stored and ready to retry for next time:
+        let expectedPixel = PersistentPixelMetadata(
+            eventName: Pixel.Event.appLaunch.name,
+            pixelType: .count,
+            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
+            includedParameters: [.appVersion]
+        )
+
+        let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixelsAfterSendingQueuedPixels, [expectedPixel])
+    }
+
+    func testWhenPixelQueueIsProcessing_AndProcessingFails_AndNewFailedPixelIsReceived_ThenExistingAndNewPixelsAreStored() throws {
+        PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 1)
+        DelayedPixelMock.completionError = NSError(domain: "PixelFailure", code: 1)
+
+        let timestampStorage = MockKeyValueStore()
+        let persistentPixel = PersistentPixel(
+            pixelFiring: DelayedPixelMock.self,
+            dailyPixelFiring: PixelFiringMock.self,
+            persistentPixelStorage: persistentStorage,
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
+
+        let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
+
+        // Set up initial pixel queue:
+        let initialPixel = PersistentPixelMetadata(eventName: "test", pixelType: .count, additionalParameters: [:], includedParameters: [.appVersion])
+        try persistentStorage.replaceStoredPixels(with: [initialPixel])
+
+        // Initiate pixel queue processing:
+        persistentPixel.sendQueuedPixels { _ in
+            sendQueuedPixelsExpectation.fulfill()
+        }
+
+        // Trigger a failed pixel call while processing:
+        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
+
+        // Check that the failed pixel call didn't cause a pixel to get stored:
+        let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels, [initialPixel])
+
+        // Complete pixel processing callback:
+        DelayedPixelMock.callCompletionHandler()
+
+        wait(for: [sendQueuedPixelsExpectation], timeout: 3.0)
+
+        // Check that the incoming failed pixel call is now stored and ready to retry for next time:
+        let expectedPixel = PersistentPixelMetadata(
+            eventName: Pixel.Event.appLaunch.name,
+            pixelType: .count,
+            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
+            includedParameters: [.appVersion]
+        )
+
+        let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(initialPixel))
+        XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(expectedPixel))
+    }
+
     // MARK: - Test Utilities
 
     private func createPersistentStorage() -> (URL, DefaultPersistentPixelStorage) {
@@ -274,5 +371,41 @@ final class PersistentPixelTests: XCTestCase {
         formatter.formatOptions = [.withInternetDateTime]
         return formatter.date(from: testDateString)!
     }
+
+}
+
+// MARK: - Mocks
+
+/// Provides a way to receive a pixel call and let the caller control when it completes.
+private class DelayedPixelMock: PixelFiring {
+
+    static var completionError: Error?
+    static var lastCompletionHandler: ((Error?) -> Void)?
+
+    static func callCompletionHandler() {
+        lastCompletionHandler?(completionError)
+    }
+
+    static func fire(_ pixel: Core.Pixel.Event,
+                     withAdditionalParameters params: [String: String],
+                     includedParameters: [Core.Pixel.QueryParameters],
+                     onComplete: @escaping ((any Error)?) -> Void) {
+        lastCompletionHandler = onComplete
+    }
+    
+    static func fire(_ pixel: Core.Pixel.Event, withAdditionalParameters params: [String: String]) {
+        // no-op
+    }
+    
+    static func fire(pixelNamed pixelName: String,
+                     forDeviceType deviceType: UIUserInterfaceIdiom?,
+                     withAdditionalParameters params: [String: String],
+                     allowedQueryReservedCharacters: CharacterSet?,
+                     withHeaders headers: Networking.APIRequest.Headers,
+                     includedParameters: [Core.Pixel.QueryParameters],
+                     onComplete: @escaping ((any Error)?) -> Void) {
+        lastCompletionHandler = onComplete
+    }
+    
 
 }

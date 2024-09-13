@@ -37,9 +37,9 @@ public final class PersistentPixel: PersistentPixelFiring {
     private let lastSentTimestampStorage: KeyValueStoring
     private let dateGenerator: () -> Date
 
-    private let isSendingQueuedPixels: Bool = false
-    private let queue = DispatchQueue(label: "Persistent Pixel File Access Queue", qos: .utility)
-    private var failedPixelsPendingStorage: [URL] = []
+    private var isSendingQueuedPixels: Bool = false
+    private let pixelProcessingQueue = DispatchQueue(label: "Persistent Pixel Processing Queue", qos: .utility)
+    private var failedPixelsPendingStorage: [PersistentPixelMetadata] = []
 
     private let dateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
@@ -85,13 +85,14 @@ public final class PersistentPixel: PersistentPixelFiring {
             onDailyComplete: { dailyError in
                 if dailyError != nil {
                     do {
-                        let pixel = PersistentPixelMetadata(
+                        let pixelMetadata = PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .daily,
                             additionalParameters: additionalParameters,
                             includedParameters: includedParameters
                         )
-                        try self.persistentPixelStorage.append(pixel: pixel)
+
+                        try self.save(pixelMetadata)
                     } catch {
                         dailyPixelStorageError = error
                     }
@@ -101,13 +102,14 @@ public final class PersistentPixel: PersistentPixelFiring {
             }, onCountComplete: { countError in
                 if countError != nil {
                     do {
-                        let pixel = PersistentPixelMetadata(
+                        let pixelMetadata = PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .count,
                             additionalParameters: additionalParameters,
                             includedParameters: includedParameters
                         )
-                        try self.persistentPixelStorage.append(pixel: pixel)
+
+                        try self.save(pixelMetadata)
                     } catch {
                         countPixelStorageError = error
                     }
@@ -129,10 +131,15 @@ public final class PersistentPixel: PersistentPixelFiring {
     }
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
+        pixelProcessingQueue.sync {
+            self.isSendingQueuedPixels = true
+        }
+
         do {
             let queuedPixels = try persistentPixelStorage.storedPixels()
 
             if queuedPixels.isEmpty {
+                self.stopProcessingQueueAndPersistPendingPixels()
                 completion(nil)
                 return
             }
@@ -169,13 +176,38 @@ public final class PersistentPixel: PersistentPixelFiring {
             dispatchGroup.notify(queue: .global()) {
                 do {
                     try self.persistentPixelStorage.replaceStoredPixels(with: failedPixels)
+                    self.stopProcessingQueueAndPersistPendingPixels()
                     completion(nil)
                 } catch {
-                    completion(nil) // TODO: Use correct error
+                    self.stopProcessingQueueAndPersistPendingPixels()
+                    completion(PersistentPixelStorageError.writeError(error))
                 }
             }
         } catch {
-            completion(nil) // TODO: Use correct error
+            self.stopProcessingQueueAndPersistPendingPixels()
+            completion(PersistentPixelStorageError.readError(error))
+        }
+    }
+
+    // MARK: - Private
+
+    private func save(_ pixelMetadata: PersistentPixelMetadata) throws {
+        try self.pixelProcessingQueue.sync {
+            if self.isSendingQueuedPixels {
+                self.failedPixelsPendingStorage.append(pixelMetadata)
+            } else {
+                try self.persistentPixelStorage.append(pixel: pixelMetadata)
+            }
+        }
+    }
+
+    private func stopProcessingQueueAndPersistPendingPixels() {
+        self.pixelProcessingQueue.sync {
+            for pixel in self.failedPixelsPendingStorage {
+                try? self.persistentPixelStorage.append(pixel: pixel)
+            }
+
+            self.isSendingQueuedPixels = false
         }
     }
 

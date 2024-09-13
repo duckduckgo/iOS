@@ -93,8 +93,8 @@ public final class PersistentPixel: PersistentPixelFiring {
         pixelFiring.fire(pixel: pixel,
                          error: error,
                          includedParameters: includedParameters,
-                         withAdditionalParameters: additionalParameters) { error in
-            if error != nil {
+                         withAdditionalParameters: additionalParameters) { pixelFireError in
+            if pixelFireError != nil {
                 do {
                     if let error {
                         additionalParameters.appendErrorPixelParams(error: error)

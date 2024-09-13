@@ -123,13 +123,31 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
             return []
         }
 
-        let pixelFileData = try Data(contentsOf: fileURL)
-        return try decoder.decode([PersistentPixelMetadata].self, from: pixelFileData)
+        do {
+            let pixelFileData = try Data(contentsOf: fileURL)
+
+            do {
+                return try decoder.decode([PersistentPixelMetadata].self, from: pixelFileData)
+            } catch {
+                throw PersistentPixelStorageError.decodingError(error)
+            }
+        } catch {
+            throw PersistentPixelStorageError.readError(error)
+        }
     }
 
     private func writePixelDataToFileSystem(pixels: [PersistentPixelMetadata]) throws {
-        let encodedPixelData = try encoder.encode(pixels)
-        try encodedPixelData.write(to: fileURL)
+        do {
+            let encodedPixelData = try encoder.encode(pixels)
+
+            do {
+                try encodedPixelData.write(to: fileURL)
+            } catch {
+                throw PersistentPixelStorageError.writeError(error)
+            }
+        } catch {
+            throw PersistentPixelStorageError.encodingError(error)
+        }
     }
 
 }

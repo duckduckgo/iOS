@@ -106,6 +106,8 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         lastPixelName = nil
         lastDailyPixelInfo = nil
         expectedFireError = nil
+        expectedDailyPixelFireError = nil
+        expectedCountPixelFireError = nil
     }
 
     private init() {}

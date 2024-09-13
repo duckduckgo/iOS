@@ -153,6 +153,10 @@ public struct PixelParameters {
     // Subscription
     public static let privacyProKeychainAccessType = "access_type"
     public static let privacyProKeychainError = "error"
+
+    // Persistent pixel
+    public static let originalPixelTimestamp = "originalPixelTimestamp"
+    public static let retriedPixel = "retriedPixel"
 }
 
 public struct PixelValues {

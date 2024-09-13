@@ -27,17 +27,16 @@ struct PersistentPixelMetadata: Codable, Equatable {
         case regular
     }
 
-    let event: Pixel.Event
-    let originalFireDate: Date
+    let eventName: String
     let pixelType: PixelType
     let additionalParameters: [String: String]
     let includedParameters: [Pixel.QueryParameters]
 
     var pixelName: String {
         switch pixelType {
-        case .daily: return event.name + "_d"
-        case .count: return event.name + "_c"
-        case .regular: return event.name
+        case .daily: return eventName + "_d"
+        case .count: return eventName + "_c"
+        case .regular: return eventName
         }
     }
 }

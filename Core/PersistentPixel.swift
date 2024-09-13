@@ -35,19 +35,28 @@ public final class PersistentPixel: PersistentPixelFiring {
     private let dailyPixelFiring: DailyPixelFiring.Type
     private let persistentPixelStorage: PersistentPixelStoring
     private let lastSentTimestampStorage: KeyValueStoring
+    private let dateGenerator: () -> Date
 
     private let isSendingQueuedPixels: Bool = false
     private let queue = DispatchQueue(label: "Persistent Pixel File Access Queue", qos: .utility)
     private var failedPixelsPendingStorage: [URL] = []
 
+    private let dateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter
+    }()
+
     init(pixelFiring: PixelFiring.Type,
          dailyPixelFiring: DailyPixelFiring.Type,
          persistentPixelStorage: PersistentPixelStoring,
-         lastSentTimestampStorage: KeyValueStoring) {
+         lastSentTimestampStorage: KeyValueStoring,
+         dateGenerator: @escaping () -> Date = { Date() }) {
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.persistentPixelStorage = persistentPixelStorage
         self.lastSentTimestampStorage = lastSentTimestampStorage
+        self.dateGenerator = dateGenerator
     }
 
     func fireDailyAndCount(pixel: Pixel.Event,
@@ -62,7 +71,11 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         var dailyPixelStorageError: Error?
         var countPixelStorageError: Error?
-        let originalFireDate = Date()
+
+        let fireDate = dateGenerator()
+        let dateString = dateFormatter.string(from: fireDate)
+        var additionalParameters = additionalParameters
+        additionalParameters[PixelParameters.originalPixelTimestamp] = dateString
 
         dailyPixelFiring.fireDailyAndCount(
             pixel: pixel,
@@ -73,8 +86,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                 if dailyError != nil {
                     do {
                         let pixel = PersistentPixelMetadata(
-                            event: pixel,
-                            originalFireDate: originalFireDate,
+                            eventName: pixel.name,
                             pixelType: .daily,
                             additionalParameters: additionalParameters,
                             includedParameters: includedParameters
@@ -90,8 +102,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                 if countError != nil {
                     do {
                         let pixel = PersistentPixelMetadata(
-                            event: pixel,
-                            originalFireDate: originalFireDate,
+                            eventName: pixel.name,
                             pixelType: .count,
                             additionalParameters: additionalParameters,
                             includedParameters: includedParameters
@@ -132,12 +143,14 @@ public final class PersistentPixel: PersistentPixelFiring {
             var failedPixels: [PersistentPixelMetadata] = []
 
             for pixelMetadata in queuedPixels {
-                // TODO: Update parameters from pixelMetadata correctly, adding timestamp and retry flag
+                var pixelParameters = pixelMetadata.additionalParameters
+                pixelParameters[PixelParameters.retriedPixel] = "1"
+
                 dispatchGroup.enter()
                 pixelFiring.fire(
                     pixelNamed: pixelMetadata.pixelName,
                     forDeviceType: UIDevice.current.userInterfaceIdiom,
-                    withAdditionalParameters: pixelMetadata.additionalParameters,
+                    withAdditionalParameters: pixelParameters,
                     allowedQueryReservedCharacters: nil,
                     withHeaders: APIRequest.Headers(),
                     includedParameters: pixelMetadata.includedParameters,

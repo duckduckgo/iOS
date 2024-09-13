@@ -26,7 +26,7 @@ import NetworkProtection
 
 extension Pixel {
     
-    public enum Event: Codable {
+    public enum Event {
 
         case appLaunch
         case refreshPressed

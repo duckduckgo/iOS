@@ -27,12 +27,14 @@ final class PersistentPixelTests: XCTestCase {
     
     var currentStorageURL: URL!
     var persistentStorage: DefaultPersistentPixelStorage!
+    let testDateString = "2024-01-01T12:00:00Z"
 
     override func setUp() {
         super.setUp()
         let (url, storage) = createPersistentStorage()
         self.currentStorageURL = url
         self.persistentStorage = storage
+        PixelFiringMock.tearDown()
     }
 
     override func tearDown() {
@@ -47,14 +49,16 @@ final class PersistentPixelTests: XCTestCase {
             pixelFiring: PixelFiringMock.self,
             dailyPixelFiring: PixelFiringMock.self,
             persistentPixelStorage: persistentStorage,
-            lastSentTimestampStorage: timestampStorage)
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
 
-        let expectation = expectation(description: "completion")
+        let expectation = expectation(description: "fireDailyAndCount")
 
         persistentPixel.fireDailyAndCount(
             pixel: .appLaunch,
-            withAdditionalParameters: ["param": "value"],
-            includedParameters: [.appVersion],
+            withAdditionalParameters: ["key": "value"],
+            includedParameters: [.appVersion, .atb],
             completion: { error in
                 expectation.fulfill()
                 XCTAssertNil(error)
@@ -64,10 +68,10 @@ final class PersistentPixelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
 
         let storedPixels = try persistentStorage.storedPixels()
-        XCTAssert(storedPixels.isEmpty)
+        XCTAssertEqual(storedPixels, [])
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixel, Pixel.Event.appLaunch)
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["param": "value"])
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.originalPixelTimestamp: testDateString])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion, .atb])
     }
 
     func testWhenDailyAndCountPixelsFail_ThenPixelsAreStored() throws {
@@ -79,9 +83,11 @@ final class PersistentPixelTests: XCTestCase {
             pixelFiring: PixelFiringMock.self,
             dailyPixelFiring: PixelFiringMock.self,
             persistentPixelStorage: persistentStorage,
-            lastSentTimestampStorage: timestampStorage)
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
 
-        let expectation = expectation(description: "completion")
+        let expectation = expectation(description: "fireDailyAndCount")
 
         persistentPixel.fireDailyAndCount(
             pixel: .appLaunch,
@@ -97,11 +103,59 @@ final class PersistentPixelTests: XCTestCase {
 
         let storedPixels = try persistentStorage.storedPixels()
         XCTAssertEqual(storedPixels.count, 2)
-        XCTAssert(storedPixels.contains { $0.event == .appLaunch && $0.pixelType == .daily })
-        XCTAssert(storedPixels.contains { $0.event == .appLaunch && $0.pixelType == .count })
+        XCTAssert(storedPixels.contains {
+            $0.eventName == Pixel.Event.appLaunch.name &&
+            $0.pixelType == .daily &&
+            $0.additionalParameters == ["param": "value", PixelParameters.originalPixelTimestamp: testDateString]
+        })
+
+        XCTAssert(storedPixels.contains {
+            $0.eventName == Pixel.Event.appLaunch.name &&
+            $0.pixelType == .count &&
+            $0.additionalParameters == ["param": "value", PixelParameters.originalPixelTimestamp: testDateString]
+        })
 
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixel, Pixel.Event.appLaunch)
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["param": "value"])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["param": "value", PixelParameters.originalPixelTimestamp: testDateString])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+    }
+
+    func testWhenOnlyCountPixelFails_ThenCountPixelIsStored() throws {
+        PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 1)
+
+        let timestampStorage = MockKeyValueStore()
+        let persistentPixel = PersistentPixel(
+            pixelFiring: PixelFiringMock.self,
+            dailyPixelFiring: PixelFiringMock.self,
+            persistentPixelStorage: persistentStorage,
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
+
+        let expectation = expectation(description: "fireDailyAndCount")
+
+        persistentPixel.fireDailyAndCount(
+            pixel: .appLaunch,
+            withAdditionalParameters: ["param": "value"],
+            includedParameters: [.appVersion],
+            completion: { error in
+                expectation.fulfill()
+                XCTAssertNil(error)
+            }
+        )
+
+        wait(for: [expectation], timeout: 1.0)
+
+        let storedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixels.count, 1)
+        XCTAssert(storedPixels.contains {
+            $0.eventName == Pixel.Event.appLaunch.name &&
+            $0.pixelType == .count &&
+            $0.additionalParameters == ["param": "value", PixelParameters.originalPixelTimestamp: testDateString]
+        })
+
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixel, Pixel.Event.appLaunch)
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["param": "value", PixelParameters.originalPixelTimestamp: testDateString])
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
     }
 
@@ -111,15 +165,16 @@ final class PersistentPixelTests: XCTestCase {
             pixelFiring: PixelFiringMock.self,
             dailyPixelFiring: PixelFiringMock.self,
             persistentPixelStorage: persistentStorage,
-            lastSentTimestampStorage: timestampStorage
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
         )
 
-        let expectation = expectation(description: "completion")
+        let expectation = expectation(description: "sendQueuedPixels")
 
-        let pixel = PersistentPixelMetadata(event: .appLaunch, pixelType: .count, parameters: ["key": "value"])
-        let pixel2 = PersistentPixelMetadata(event: .networkProtectionTunnelStartAttempt, pixelType: .count, parameters: ["key": "value"])
-        let pixel3 = PersistentPixelMetadata(event: .networkProtectionTunnelStopAttempt, pixelType: .count, parameters: ["key": "value"])
-        let pixel4 = PersistentPixelMetadata(event: .networkProtectionTunnelUpdateAttempt, pixelType: .count, parameters: ["key": "value"])
+        let pixel = PersistentPixelMetadata(eventName: "test1", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
+        let pixel2 = PersistentPixelMetadata(eventName: "test2", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
+        let pixel3 = PersistentPixelMetadata(eventName: "test3", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
+        let pixel4 = PersistentPixelMetadata(eventName: "test4", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
 
         try persistentStorage.replaceStoredPixels(with: [pixel, pixel2, pixel3, pixel4])
         persistentPixel.sendQueuedPixels { _ in
@@ -134,6 +189,74 @@ final class PersistentPixelTests: XCTestCase {
         // TODO: Test that the pixels successfully fired
     }
 
+    func testWhenDailyPixelIsStored_AndSendQueuedPixelsIsCalled_ThenDailyPixelIsSent() throws {
+        let timestampStorage = MockKeyValueStore()
+        let persistentPixel = PersistentPixel(
+            pixelFiring: PixelFiringMock.self,
+            dailyPixelFiring: PixelFiringMock.self,
+            persistentPixelStorage: persistentStorage,
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
+
+        let expectation = expectation(description: "sendQueuedPixels")
+
+        let pixel = PersistentPixelMetadata(
+            eventName: "test",
+            pixelType: .daily,
+            additionalParameters: ["key": "value"],
+            includedParameters: [.appVersion]
+        )
+
+        try persistentStorage.replaceStoredPixels(with: [pixel])
+        persistentPixel.sendQueuedPixels { _ in
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+
+        let storedPixels = try persistentStorage.storedPixels()
+        XCTAssert(storedPixels.isEmpty)
+
+        XCTAssertEqual(PixelFiringMock.lastPixelName, "test_d")
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.retriedPixel: "1"])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+    }
+
+    func testWhenCountPixelIsStored_AndSendQueuedPixelsIsCalled_ThenCountPixelIsSent() throws {
+        let timestampStorage = MockKeyValueStore()
+        let persistentPixel = PersistentPixel(
+            pixelFiring: PixelFiringMock.self,
+            dailyPixelFiring: PixelFiringMock.self,
+            persistentPixelStorage: persistentStorage,
+            lastSentTimestampStorage: timestampStorage,
+            dateGenerator: self.dateGenerator
+        )
+
+        let expectation = expectation(description: "sendQueuedPixels")
+
+        let pixel = PersistentPixelMetadata(
+            eventName: "test",
+            pixelType: .count,
+            additionalParameters: ["key": "value"],
+            includedParameters: [.appVersion]
+        )
+
+        try persistentStorage.replaceStoredPixels(with: [pixel])
+        persistentPixel.sendQueuedPixels { _ in
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+
+        let storedPixels = try persistentStorage.storedPixels()
+        XCTAssert(storedPixels.isEmpty)
+
+        XCTAssertEqual(PixelFiringMock.lastPixelName, "test_c")
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.retriedPixel: "1"])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+    }
+
     // MARK: - Test Utilities
 
     private func createPersistentStorage() -> (URL, DefaultPersistentPixelStorage) {
@@ -144,6 +267,12 @@ final class PersistentPixelTests: XCTestCase {
             storageDirectory.appendingPathComponent(fileName),
             DefaultPersistentPixelStorage(fileName: fileName, storageDirectory: storageDirectory)
         )
+    }
+
+    private func dateGenerator() -> Date {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter.date(from: testDateString)!
     }
 
 }

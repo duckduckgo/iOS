@@ -72,15 +72,13 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
         return storageDirectory.appendingPathComponent(fileName)
     }
 
-    public init(fileManager: FileManager = .default,
-                fileName: String = Constants.queuedPixelsFileName,
-                storageDirectory: URL? = nil) {
+    public init(fileManager: FileManager = .default, fileName: String = Constants.queuedPixelsFileName, storageDirectory: URL? = nil) {
         self.fileManager = fileManager
         self.fileName = fileName
 
         if let storageDirectory = storageDirectory {
             self.storageDirectory = storageDirectory
-        } else if let appSupportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+        } else if let appSupportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             self.storageDirectory = appSupportDirectory
         } else {
             fatalError("Unable to locate application support directory")

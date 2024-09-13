@@ -21,6 +21,7 @@ import Foundation
 @testable import Core
 
 final class MockPersistentPixel: PersistentPixelFiring {
+
     static var lastPixelInfo: PixelInfo?
     static var lastDailyPixelInfo: PixelInfo?
 
@@ -44,6 +45,10 @@ final class MockPersistentPixel: PersistentPixelFiring {
                            completion: @escaping ([any Error]) -> Void) {
         MockPersistentPixel.lastDailyPixelInfo = .init(pixel: pixel, error: error, params: params, includedParams: includedParameters)
         completion([])
+    }
+
+    func sendQueuedPixels(completion: @escaping (Core.PersistentPixelStorageError?) -> Void) {
+        completion(nil)
     }
 
 }

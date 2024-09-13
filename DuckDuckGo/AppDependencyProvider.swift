@@ -49,6 +49,8 @@ protocol DependencyProvider {
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
+    var persistentPixel: PersistentPixelFiring { get }
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -92,7 +94,7 @@ class AppDependencyProvider: DependencyProvider {
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
-    let persistentPixel = PersistentPixel()
+    let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,

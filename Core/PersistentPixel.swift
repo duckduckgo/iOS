@@ -34,6 +34,8 @@ public protocol PersistentPixelFiring {
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Pixel.QueryParameters],
                            completion: @escaping ([Error]) -> Void)
+
+    func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void)
 }
 
 public final class PersistentPixel: PersistentPixelFiring {
@@ -182,7 +184,7 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     // MARK: - Queue Processing
 
-    func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
+    public func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
         pixelProcessingLock.lock()
         guard !self.isSendingQueuedPixels else {
             pixelProcessingLock.unlock()

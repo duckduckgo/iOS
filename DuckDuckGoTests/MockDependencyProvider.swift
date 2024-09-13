@@ -48,6 +48,7 @@ class MockDependencyProvider: DependencyProvider {
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
+    var persistentPixel: PersistentPixelFiring
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -88,5 +89,6 @@ class MockDependencyProvider: DependencyProvider {
         connectionObserver = ConnectionStatusObserverThroughSession()
         serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        persistentPixel = MockPersistentPixel()
     }
 }

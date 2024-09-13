@@ -47,7 +47,7 @@ protocol PersistentPixelStoring {
     func storedPixels() throws -> [PersistentPixelMetadata]
 }
 
-enum PersistentPixelStorageError: Error {
+public enum PersistentPixelStorageError: Error {
     case readError(Error)
     case writeError(Error)
     case encodingError(Error)

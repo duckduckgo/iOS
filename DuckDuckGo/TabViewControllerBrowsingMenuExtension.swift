@@ -372,7 +372,7 @@ extension TabViewController {
 
     private func shareLinkWithTemporaryDownload(_ temporaryDownload: Download?,
                                                 originalLink: Link,
-                                                completion: @escaping(Link) -> Void) {
+                                                completion: @escaping (Link) -> Void) {
         guard let download = temporaryDownload else {
             completion(originalLink)
             return

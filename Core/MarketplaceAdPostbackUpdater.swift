@@ -55,7 +55,7 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
                                                                       lockPostback: lockPostback)
             Logger.general.debug("Attribution: AdAttributionKit postback succeeded")
         } catch {
-            Logger.general.error("Attribution: AdAttributionKit postback failed \(error.localizedDescription, privacy: .public)")
+            Logger.general.error("Attribution: AdAttributionKit postback failed \(String(describing: error), privacy: .public)")
         }
     }
 
@@ -68,7 +68,7 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
         SKAdNetwork.updatePostbackConversionValue(postback.fineValue,
                                                   coarseValue: postback.SKAdCoarseValue) { error in
             if let error = error {
-                Logger.general.error("Attribution: SKAN 4 postback failed \(error.localizedDescription, privacy: .public)")
+                Logger.general.error("Attribution: SKAN 4 postback failed \(String(describing: error), privacy: .public)")
             } else {
                 Logger.general.debug("Attribution: SKAN 4 postback succeeded")
             }

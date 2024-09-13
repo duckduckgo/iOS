@@ -229,7 +229,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         authenticator.logOut()
     }
     
-    func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
+    func authenticate(completion: @escaping (AutofillLoginListAuthenticator.AuthError?) -> Void) {
         guard !isAuthenticating else {
             return
         }

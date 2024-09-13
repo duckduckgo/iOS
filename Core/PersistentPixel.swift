@@ -207,6 +207,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                 try? self.persistentPixelStorage.append(pixel: pixel)
             }
 
+            self.failedPixelsPendingStorage = []
             self.isSendingQueuedPixels = false
         }
     }

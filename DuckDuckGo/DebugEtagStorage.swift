@@ -20,6 +20,7 @@
 import Common
 import Core
 import Configuration
+import os.log
 
 /// Only intended for use via Debug screens.
 class DebugEtagStorage {
@@ -28,7 +29,7 @@ class DebugEtagStorage {
 
     func loadEtag(for storeKey: String) -> String? {
         let etag = defaults?.string(forKey: storeKey)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, storeKey, etag ?? "nil")
+        Logger.general.debug("stored etag for \(storeKey) \(etag ?? "nil")")
         return etag
     }
 

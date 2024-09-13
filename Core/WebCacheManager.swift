@@ -20,11 +20,12 @@
 import Common
 import WebKit
 import GRDB
+import os.log
 
 extension WKWebsiteDataStore {
 
-    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WKWebsiteDataStore {
-        if #available(iOS 17, *), let id = dataStoreIdManager.id {
+    public static func current(dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebsiteDataStore {
+        if #available(iOS 17, *), let id = dataStoreIdManager.currentId {
             return WKWebsiteDataStore(forIdentifier: id)
         } else {
             return WKWebsiteDataStore.default()
@@ -81,16 +82,12 @@ public class WebCacheManager {
                       dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
-        if #available(iOS 17, *), dataStoreIdManager.hasId {
+        if #available(iOS 17, *) {
             cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
 
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
-
-        if #available(iOS 17, *) {
-            dataStoreIdManager.allocateNewContainerId()
-        }
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
     }
@@ -117,13 +114,24 @@ extension WebCacheManager {
 
     @available(iOS 17, *)
     private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
-        guard let containerId = storeIdManager.id else { return [] }
+        guard let containerId = storeIdManager.currentId else {
+            storeIdManager.invalidateCurrentIdAndAllocateNew()
+            return []
+        }
+        storeIdManager.invalidateCurrentIdAndAllocateNew()
+
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
 
-        let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because there should be a current store
+        var uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        if let newContainerID = storeIdManager.currentId,
+            let newIdIndex = uuids.firstIndex(of: newContainerID) {
+            assertionFailure("Attempted to cleanup current Data Store")
+            uuids.remove(at: newIdIndex)
+        }
+
+        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because one store is expected to be cleared
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
@@ -161,7 +169,7 @@ extension WebCacheManager {
         if let pool = getValidDatabasePool() {
             removeObservationsData(from: pool)
         } else {
-            os_log("Could not find valid pool to clear observations data", log: .generalLog, type: .debug)
+            Logger.general.debug("Could not find valid pool to clear observations data")
         }
     }
 

@@ -397,6 +397,8 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.set(newValue.stringValue, forKey: Keys.duckPlayerMode)
+            // Reset Hidden overlay setting when changing Mode
+            userDefaults?.set(false, forKey: Keys.duckPlayerAskModeOverlayHidden)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.duckPlayerSettingsUpdated,
                                             object: duckPlayerMode)
         }
@@ -427,6 +429,9 @@ public class AppUserDefaults: AppSettings {
 
     @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
     var newTabPageIntroMessageSeenCount: Int
+
+    @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
+    var onboardingHighlightsEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

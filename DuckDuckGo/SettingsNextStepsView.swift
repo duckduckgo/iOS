@@ -39,7 +39,7 @@ struct SettingsNextStepsView: View {
             }
 
             // Set Your Address Bar Position
-            if viewModel.state.addressbar.enabled {
+            if viewModel.state.addressBar.enabled {
                 NavigationLink(destination: SettingsAppearanceView().environmentObject(viewModel)) {
                     SettingsCellView(label: UserText.setYourAddressBarPosition,
                                      image: Image("SettingsAddressBarPosition"))

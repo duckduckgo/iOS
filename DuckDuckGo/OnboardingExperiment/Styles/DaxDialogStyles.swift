@@ -33,58 +33,21 @@ extension OnboardingStyles {
     }
 
     struct BackgroundStyle: ViewModifier {
+        let backgroundType: OnboardingBackgroundType
 
         func body(content: Content) -> some View {
             ZStack {
-                OnboardingBackground()
-                    .ignoresSafeArea(.keyboard)
+                switch backgroundType {
+                case let .illustratedGradient(gradientType):
+                    OnboardingBackground()
+                        .onboardingGradient(gradientType)
+                        .ignoresSafeArea(.keyboard)
+                case let .gradientOnly(gradientType):
+                    OnboardingGradientView(type: gradientType)
+                        .ignoresSafeArea(.keyboard)
+                }
 
                 content
-            }
-        }
-        
-    }
-
-    struct ListButtonStyle: ButtonStyle {
-        @Environment(\.colorScheme) private var colorScheme
-
-        public init() {}
-
-        public func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .font(Font(UIFont.boldAppFont(ofSize: 15)))
-                .fixedSize(horizontal: false, vertical: true)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .foregroundColor(foregroundColor(configuration.isPressed))
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 40)
-                .background(backgroundColor(configuration.isPressed))
-                .cornerRadius(8)
-                .contentShape(Rectangle()) // Makes whole button area tappable, when there's no background
-        }
-
-        private func foregroundColor(_ isPressed: Bool) -> Color {
-            switch (colorScheme, isPressed) {
-            case (.dark, false):
-                return .blue30
-            case (.dark, true):
-                return .blue20
-            case (_, false):
-                return .blueBase
-            case (_, true):
-                return .blue70
-            }
-        }
-
-        private func backgroundColor(_ isPressed: Bool) -> Color {
-            switch (colorScheme, isPressed) {
-            case (.light, true):
-                return .blueBase.opacity(0.2)
-            case (.dark, true):
-                return .blue30.opacity(0.2)
-            default:
-                return .clear
             }
         }
     }
@@ -101,8 +64,32 @@ extension View {
         modifier(OnboardingStyles.DaxDialogStyle())
     }
 
-    func onboardingContextualBackgroundStyle() -> some View {
-        modifier(OnboardingStyles.BackgroundStyle())
+    func onboardingContextualBackgroundStyle(background: OnboardingBackgroundType) -> some View {
+        modifier(OnboardingStyles.BackgroundStyle(backgroundType: background))
     }
     
+}
+
+enum OnboardingBackgroundType {
+    case illustratedGradient(OnboardingGradientType)
+    case gradientOnly(OnboardingGradientType)
+}
+
+enum OnboardingGradientTypeKey: EnvironmentKey {
+    static var defaultValue: OnboardingGradientType = .default
+}
+
+extension EnvironmentValues {
+    var onboardingGradientType: OnboardingGradientType {
+        get { self[OnboardingGradientTypeKey.self] }
+        set { self[OnboardingGradientTypeKey.self] = newValue }
+    }
+}
+
+extension View {
+
+    func onboardingGradient(_ type: OnboardingGradientType) -> some View {
+        environment(\.onboardingGradientType, type)
+    }
+
 }

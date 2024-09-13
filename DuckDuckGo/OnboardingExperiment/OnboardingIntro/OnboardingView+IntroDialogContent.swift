@@ -19,16 +19,19 @@
 
 import SwiftUI
 import DuckUI
+import Onboarding
 
 extension OnboardingView {
 
     struct IntroDialogContent: View {
 
+        private let title: String
         private var animateText: Binding<Bool>
         private var showCTA: Binding<Bool>
         private let action: () -> Void
 
-        init(animateText: Binding<Bool> = .constant(true), showCTA: Binding<Bool> = .constant(false), action: @escaping () -> Void) {
+        init(title: String, animateText: Binding<Bool> = .constant(true), showCTA: Binding<Bool> = .constant(false), action: @escaping () -> Void) {
+            self.title = title
             self.animateText = animateText
             self.showCTA = showCTA
             self.action = action
@@ -36,7 +39,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 24.0) {
-                AnimatableTypingText(UserText.DaxOnboardingExperiment.Intro.title, startAnimating: animateText) {
+                AnimatableTypingText(title) {
                     withAnimation {
                         showCTA.wrappedValue = true
                     }

@@ -19,27 +19,49 @@
 
 import Foundation
 import Core
+import Onboarding
 import class UIKit.UIApplication
 
 final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
+    let copy: Copy
+    let gradientType: OnboardingGradientType
     var onCompletingOnboardingIntro: (() -> Void)?
+    private var introSteps: [OnboardingIntroStep]
+
     private let pixelReporter: OnboardingIntroPixelReporting
+    private let onboardingManager: OnboardingHighlightsManaging
+    private let isIpad: Bool
     private let urlOpener: URLOpener
 
-    init(pixelReporter: OnboardingIntroPixelReporting = OnboardingPixelReporter(), urlOpener: URLOpener = UIApplication.shared) {
+    init(
+        pixelReporter: OnboardingIntroPixelReporting,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager(),
+        isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
+        urlOpener: URLOpener = UIApplication.shared
+    ) {
         self.pixelReporter = pixelReporter
+        self.onboardingManager = onboardingManager
+        self.isIpad = isIpad
         self.urlOpener = urlOpener
+        introSteps = if onboardingManager.isOnboardingHighlightsEnabled {
+            isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
+        } else {
+            OnboardingIntroStep.defaultFlow
+        }
+
+        copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+        gradientType = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
     }
 
     func onAppear() {
-        state = .onboarding(.startOnboardingDialog)
+        state = makeViewState(for: .introDialog)
         pixelReporter.trackOnboardingIntroImpression()
     }
 
     func startOnboardingAction() {
-        state = .onboarding(.browsersComparisonDialog)
+        state = makeViewState(for: .browserComparison)
         pixelReporter.trackBrowserComparisonImpression()
     }
 
@@ -48,10 +70,79 @@ final class OnboardingIntroViewModel: ObservableObject {
             urlOpener.open(url)
         }
         pixelReporter.trackChooseBrowserCTAAction()
-        onCompletingOnboardingIntro?()
+
+        handleSetDefaultBrowserAction()
     }
 
     func cancelSetDefaultBrowserAction() {
+        handleSetDefaultBrowserAction()
+    }
+
+    func appIconPickerContinueAction() {
+        if isIpad {
+            onCompletingOnboardingIntro?()
+        } else {
+            state = makeViewState(for: .addressBarPositionSelection)
+        }
+    }
+
+    func selectAddressBarPositionAction() {
         onCompletingOnboardingIntro?()
     }
+
+}
+
+// MARK: - Private
+
+private extension OnboardingIntroViewModel {
+
+    func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
+        
+        func stepInfo() -> OnboardingView.ViewState.Intro.StepInfo {
+            guard
+                let currentStepIndex = introSteps.firstIndex(of: introStep),
+                    onboardingManager.isOnboardingHighlightsEnabled
+            else {
+                return .hidden
+            }
+
+            // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
+            return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
+        }
+
+        let viewState = switch introStep {
+        case .introDialog:
+            OnboardingView.ViewState.onboarding(.init(type: .startOnboardingDialog, step: .hidden))
+        case .browserComparison:
+            OnboardingView.ViewState.onboarding(.init(type: .browsersComparisonDialog, step: stepInfo()))
+        case .appIconSelection:
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAppIconDialog, step: stepInfo()))
+        case .addressBarPositionSelection:
+            OnboardingView.ViewState.onboarding(.init(type: .chooseAddressBarPositionDialog, step: stepInfo()))
+        }
+
+        return viewState
+    }
+
+    func handleSetDefaultBrowserAction() {
+        if onboardingManager.isOnboardingHighlightsEnabled {
+            state = makeViewState(for: .appIconSelection)
+        } else {
+            onCompletingOnboardingIntro?()
+        }
+    }
+
+}
+
+// MARK: - OnboardingIntroStep
+
+private enum OnboardingIntroStep {
+    case introDialog
+    case browserComparison
+    case appIconSelection
+    case addressBarPositionSelection
+
+    static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
+    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
 }

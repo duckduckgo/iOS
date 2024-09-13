@@ -54,7 +54,7 @@ protocol ContextualOnboardingLogic {
 extension ContentBlockerRulesManager: EntityProviding {
     
     func entity(forHost host: String) -> Entity? {
-        currentMainRules?.trackerData.findEntity(forHost: host)
+        currentMainRules?.trackerData.findParentEntityOrFallback(forHost: host)
     }
     
 }
@@ -300,7 +300,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     var shouldShowPrivacyButtonPulse: Bool {
         guard isNewOnboarding else { return false }
-        return settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && isEnabled
+        return settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && fireButtonPulseTimer == nil && isEnabled
     }
 
     func isStillOnboarding() -> Bool {
@@ -316,6 +316,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     func dismiss() {
         settings.isDismissed = true
+        // Reset last shown dialog as we don't have to show it anymore.
+        removeLastShownDaxDialog()
+        removeLastVisitedOnboardingWebsite()
     }
     
     func primeForUse() {
@@ -365,12 +368,17 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         return settings.lastShownContextualOnboardingDialogType
     }
 
+    private var shouldShowNetworkTrackerDialog: Bool {
+        !settings.browsingMajorTrackingSiteShown && !settings.browsingWithTrackersShown
+    }
+
     private func saveLastShownDaxDialog(specType: BrowsingSpec.SpecType) {
         guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = specType.rawValue
     }
 
     private func removeLastShownDaxDialog() {
+        guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = nil
     }
 
@@ -495,11 +503,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
 
-        if let lastVisitedOnboardingWebsiteURLPath,
-            compareUrls(url1: URL(string: lastVisitedOnboardingWebsiteURLPath), url2: privacyInfo.url) {
-            return lastShownDaxDialog(privacyInfo: privacyInfo)
-        }
-
         func hasTrackers(host: String) -> Bool {
             isFacebookOrGoogle(privacyInfo.url) || isOwnedByFacebookOrGoogle(host) != nil || blockedEntityNames(privacyInfo.trackerInfo) != nil
         }
@@ -509,16 +512,21 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
 
+        if let lastVisitedOnboardingWebsiteURLPath,
+            compareUrls(url1: URL(string: lastVisitedOnboardingWebsiteURLPath), url2: privacyInfo.url) {
+            return lastShownDaxDialog(privacyInfo: privacyInfo)
+        }
+
         guard let host = privacyInfo.domain else { return nil }
 
         var spec: BrowsingSpec?
 
         if privacyInfo.url.isDuckDuckGoSearch && !settings.browsingAfterSearchShown {
             spec = searchMessage()
-        } else if isFacebookOrGoogle(privacyInfo.url) && !settings.browsingMajorTrackingSiteShown {
+        } else if isFacebookOrGoogle(privacyInfo.url) && shouldShowNetworkTrackerDialog {
             // won't be shown if owned by major tracker message has already been shown
             spec = majorTrackerMessage(host)
-        } else if let owner = isOwnedByFacebookOrGoogle(host), !settings.browsingMajorTrackingSiteShown {
+        } else if let owner = isOwnedByFacebookOrGoogle(host), shouldShowNetworkTrackerDialog {
             // won't be shown if major tracker message has already been shown
             spec = majorTrackerOwnerMessage(host, owner)
         } else if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {

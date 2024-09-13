@@ -22,7 +22,7 @@ import Core
 
 final actor AdAttributionPixelReporter {
 
-    static let isAdAttributionReportingEnabled = true
+    static let isAdAttributionReportingEnabled = false
 
     static var shared = AdAttributionPixelReporter()
 
@@ -55,9 +55,9 @@ final actor AdAttributionPixelReporter {
             isSendingAttribution = false
         }
 
-        if let attributionData = await self.attributionFetcher.fetch() {
+        if let (token, attributionData) = await self.attributionFetcher.fetch() {
             if attributionData.attribution {
-                let parameters = self.pixelParametersForAttribution(attributionData)
+                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: token)
                 do {
                     try await pixelFiring.fire(
                         pixel: .appleAdAttribution,
@@ -77,7 +77,7 @@ final actor AdAttributionPixelReporter {
         return false
     }
 
-    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse) -> [String: String] {
+    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String) -> [String: String] {
         var params: [String: String] = [:]
 
         params[PixelParameters.adAttributionAdGroupID] = attribution.adGroupId.map(String.init)
@@ -88,6 +88,7 @@ final actor AdAttributionPixelReporter {
         params[PixelParameters.adAttributionCountryOrRegion] = attribution.countryOrRegion
         params[PixelParameters.adAttributionKeywordID] = attribution.keywordId.map(String.init)
         params[PixelParameters.adAttributionAdID] = attribution.adId.map(String.init)
+        params[PixelParameters.adAttributionToken] = attributionToken
 
         return params
     }

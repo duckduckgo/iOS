@@ -26,6 +26,7 @@ import Persistence
 import BrowserServicesKit
 import Common
 import Kingfisher
+import os.log
 
 class ImageCacheDebugViewController: UITableViewController {
 
@@ -135,7 +136,7 @@ class ImageCacheDebugViewController: UITableViewController {
                 }
             }
         } catch {
-            os_log("Failed to fetch accounts")
+            Logger.general.error("Failed to fetch accounts: \(error.localizedDescription)")
         }
     }
 

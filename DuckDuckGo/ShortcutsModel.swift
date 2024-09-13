@@ -18,12 +18,19 @@
 //
 
 import Foundation
+import Core
 
 final class ShortcutsModel: ObservableObject {
 
     var onShortcutOpened: ((NewTabPageShortcut) -> Void)?
+    let pixelFiring: PixelFiring.Type
+
+    init(pixelFiring: PixelFiring.Type = Pixel.self) {
+        self.pixelFiring = pixelFiring
+    }
 
     func openShortcut(_ shortcut: NewTabPageShortcut) {
+        pixelFiring.fire(.newTabPageShortcutClicked(shortcut.nameForPixel), withAdditionalParameters: [:])
         onShortcutOpened?(shortcut)
     }
 }

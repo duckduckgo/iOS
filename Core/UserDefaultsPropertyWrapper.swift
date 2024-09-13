@@ -92,6 +92,10 @@ public struct UserDefaultsWrapper<T> {
         case autofillSearchDauDate = "com.duckduckgo.app.autofill.SearchDauDate"
         case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
         case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
+        case autofillSurveysCompleted = "com.duckduckgo.app.autofill.SurveysCompleted"
+
+        case syncPromoBookmarksDismissed = "com.duckduckgo.app.sync.PromoBookmarksDismissed"
+        case syncPromoPasswordsDismissed = "com.duckduckgo.app.sync.PromoPasswordsDismissed"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
@@ -130,8 +134,6 @@ public struct UserDefaultsWrapper<T> {
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullURLAddress = "com.duckduckgo.ios.showfullurladdress"
 
-        case webContainerId = "com.duckduckgo.ios.webcontainer.id"
-
         case bookmarksLastGoodVersion = "com.duckduckgo.ios.bookmarksLastGoodVersion"
         case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
 
@@ -144,7 +146,8 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
         case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
-        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
+        case lastBrokenSiteToastShownDate = "com.duckduckgo.ios.userBehavior.lastBrokenSiteToastShownDate"
+        case toastDismissStreakCounter = "com.duckduckgo.ios.userBehavior.toastDismissStreakCounter"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
@@ -165,8 +168,18 @@ public struct UserDefaultsWrapper<T> {
         case newTabPageIntroMessageSeenCount = "com.duckduckgo.ios.newTabPage.introMessageSeenCount"
 
         // Debug keys
-
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
+        case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
+        
+        // Duck Player Pixel Experiment
+        case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed"
+        case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort"
+        case duckPlayerPixelExperimentEnrollmentDate = "com.duckduckgo.ios.duckplayer.pixel.experiment.enrollment.date"
+        case duckPlayerPixelExperimentLastWeekPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.week.pixel.fired"
+        case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired"
+        case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered"
+        case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override"
+        
     }
 
     private let key: Key

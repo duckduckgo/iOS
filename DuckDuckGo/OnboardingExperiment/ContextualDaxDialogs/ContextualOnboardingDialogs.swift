@@ -19,10 +19,12 @@
 
 import Foundation
 import SwiftUI
+import Onboarding
+import DuckUI
 
 struct OnboardingTrySearchDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage)
+    let message: String
     let viewModel: OnboardingSearchSuggestionsViewModel
 
     var body: some View {
@@ -30,7 +32,8 @@ struct OnboardingTrySearchDialog: View {
             DaxDialogView(logoPosition: .top) {
                 ContextualDaxDialogContent(
                     title: title,
-                    message: message,
+                    titleFont: Font(UIFont.daxTitle3()),
+                    message: NSAttributedString(string: message),
                     list: viewModel.itemsList,
                     listAction: viewModel.listItemPressed
                 )
@@ -62,6 +65,7 @@ struct OnboardingTryVisitingSiteDialogContent: View {
     var body: some View {
         ContextualDaxDialogContent(
             title: viewModel.title,
+            titleFont: Font(UIFont.daxTitle3()),
             message: message,
             list: viewModel.itemsList,
             listAction: viewModel.listItemPressed)
@@ -91,8 +95,8 @@ struct OnboardingFireButtonDialogContent: View {
 }
 
 struct OnboardingFirstSearchDoneDialog: View {
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+    let message: String
 
     @State private var showNextScreen: Bool = false
 
@@ -107,14 +111,19 @@ struct OnboardingFirstSearchDoneDialog: View {
                     if showNextScreen {
                         OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
                     } else {
-                        ContextualDaxDialogContent(message: message, cta: cta) {
-                            gotItAction()
-                            withAnimation {
-                                if shouldFollowUp {
-                                    showNextScreen = true
+                        ContextualDaxDialogContent(
+                            message: NSAttributedString(string: message),
+                            customActionView: AnyView(
+                                OnboardingCTAButton(title: cta) {
+                                    gotItAction()
+                                    withAnimation {
+                                        if shouldFollowUp {
+                                            showNextScreen = true
+                                        }
+                                    }
                                 }
-                            }
-                        }
+                            )
+                        )
                     }
                 }
             }
@@ -153,14 +162,19 @@ struct OnboardingTrackersDoneDialog: View {
                     if showNextScreen {
                         OnboardingFireButtonDialogContent()
                     } else {
-                        ContextualDaxDialogContent(message: message, cta: cta) {
-                            blockedTrackersCTAAction()
-                            if shouldFollowUp {
-                                withAnimation {
-                                    showNextScreen = true
+                        ContextualDaxDialogContent(
+                            message: message,
+                            customActionView: AnyView(
+                                OnboardingCTAButton(title: cta) {
+                                    blockedTrackersCTAAction()
+                                    if shouldFollowUp {
+                                        withAnimation {
+                                            showNextScreen = true
+                                        }
+                                    }
                                 }
-                            }
-                        }
+                            )
+                        )
                     }
                 }
             }
@@ -171,7 +185,7 @@ struct OnboardingTrackersDoneDialog: View {
 
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
+    let message: String
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     
     let highFiveAction: () -> Void
@@ -181,9 +195,14 @@ struct OnboardingFinalDialog: View {
             DaxDialogView(logoPosition: .left) {
                 ContextualDaxDialogContent(
                     title: title,
-                    message: message,
-                    cta: cta,
-                    action: highFiveAction
+                    titleFont: Font(UIFont.daxTitle3()),
+                    message: NSAttributedString(string: message),
+                    customActionView: AnyView(
+                        OnboardingCTAButton(
+                            title: cta,
+                            action: highFiveAction
+                        )
+                    )
                 )
             }
             .padding()
@@ -191,20 +210,33 @@ struct OnboardingFinalDialog: View {
     }
 }
 
+struct OnboardingCTAButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+        }
+        .buttonStyle(PrimaryButtonStyle(compact: true))
+    }
+
+}
+
 // MARK: - Preview
 
 #Preview("Try Search") {
-    OnboardingTrySearchDialog(viewModel: OnboardingSearchSuggestionsViewModel())
+    OnboardingTrySearchDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
 #Preview("Try Site Top") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle))
+    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
 #Preview("Try Site Left") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle))
+    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
@@ -216,12 +248,12 @@ struct OnboardingFinalDialog: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage, shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
         .padding()
 }
 
 #Preview("Final Dialog") {
-    OnboardingFinalDialog(highFiveAction: {})
+    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, highFiveAction: {})
         .padding()
 }
 

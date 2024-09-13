@@ -689,6 +689,9 @@
 /* More options button text */
 "bookmark.moreButton" = "More";
 
+/* Placeholder in the bookmarks search bar */
+"bookmark.searchbar.placeholder" = "Search";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Website title";
 
@@ -775,6 +778,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Got it!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Remember: every time you browse with me a creepy ad loses its wings.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "That’s DuckDuckGo Search! Private. Fast. Fewer ads.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "Your DuckDuckGo searches are always private.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "baby ducklings";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Try visiting a site!";
@@ -1011,7 +1026,7 @@
 "duckPlayer.never.label" = "Never";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player lets you watch YouTube without targeted ads in a theater-like experience in DuckDuckGo and what you watch won’t influence your recommendations.";
+"duckplayer.presentation.modal.body" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Got it!";
@@ -1019,11 +1034,14 @@
 /* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Drowning in ads on YouTube? Try Duck Player!";
 
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "Drowning in ads on YouTube? Not with Duck Player!";
+
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Duck Player provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.";
+"duckplayer.settings.info-text" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Learn More";
@@ -1250,6 +1268,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Submit";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Help Improve Privacy Pro";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Personal Info Removal";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Subscription and Payments";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "Select a category";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Issue with access code";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Unable to contact advisor";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "Select a category";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Something else";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Call to Advisor was unhelpful";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
 
@@ -1289,6 +1340,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Web pages or search results load slowly";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "The scan found records which aren't me";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "The scan didn't find my info on a specific site";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Something else";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "The removal process is stuck";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "The scan for records is stuck";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "Select a category";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Share Details";
 
@@ -1306,6 +1375,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Share Details";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Something else";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Issue with one-time password";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "Select a category";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Your anonymous feedback is important to us.";
@@ -1511,17 +1589,8 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
 /* String indicating NetP is snoozing when viewed from the settings screen */
 "netP.cell.snoozing" = "Snoozing";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
@@ -1763,13 +1832,13 @@ https://duckduckgo.com/mac";
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Block creepy ads";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Swiftly erase browsing data";
 
 /* Message to highlight browser capability of private searches */
@@ -1780,6 +1849,57 @@ https://duckduckgo.com/mac";
 
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Privacy protections activated!";
+
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Easy to reach";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "Bottom";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Next";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(Default)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Where should I put your address bar?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Easy to see";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Top";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Next";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Pick your app icon:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Which color looks best on me?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Block cookie requests & popups";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Block targeted ads";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Erase browsing data swiftly";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Block 3rd party trackers";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Protections activated!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Skip";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Hi there.\n\nReady for a faster browser that keeps you protected?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Let’s do it!";
@@ -1828,6 +1948,60 @@ https://duckduckgo.com/mac";
 
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
+
+/* Placeholder for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
+
+/* Title for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.title" = "General Feedback";
+
+/* Title for the ITR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
+
+/* Title for the PIR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
+
+/* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-ppro-problem.title" = "Subscriptions and Payments";
+
+/* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.placeholder" = "Tell us what's going on…";
+
+/* Title for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.title" = "Report a Problem";
+
+/* Title for the VPN category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-vpn-problem.title" = "VPN";
+
+/* Placeholder for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.placeholder" = "What feature would you like to see?";
+
+/* Title for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.title" = "Feature Request";
+
+/* Title for the category selection section in the Privacy Pro feedback form */
+"ppro.feedback-form.select-category.title" = "Select a category";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-1" = "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-3" = "• Whether some browser features are active";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-4" = "• Aggregate app diagnostics (e.g., error codes)";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-5" = "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.";
+
+/* Title for the text box in the Privacy Pro feedback form */
+"ppro.feedback-form.text-box.title" = "Feedback";
+
+/* Title for the Privacy Pro feedback form */
+"ppro.feedback-form.title" = "Send Feedback";
 
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Manage Bookmarks";
@@ -1915,6 +2089,18 @@ https://duckduckgo.com/mac";
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorites";
 
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "General feedback";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Report a problem";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Request a feature";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "Select a category";
+
 /* Settings cell for About DDG */
 "settings.about.ddg" = "About DuckDuckGo";
 
@@ -1975,6 +2161,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Section footer Autolock description */
 "settings.autolock.description" = "If Touch ID, Face ID, or a system passcode is enabled, you'll be asked to unlock the app when opening it.";
+
+/* Settings cell for Browser Feedback */
+"settings.browser.feedback" = "Browser Feedback";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatically Clear Data";
@@ -2100,11 +2289,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Set Your Address Bar Position";
 
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Activating";
+
 /* Subscription activation pending description */
 "settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
-
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Your Subscription is being activated";
 
 /* Data Broker protection cell subtitle for privacy pro */
 "settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
@@ -2112,8 +2301,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "More seamless privacy with three new protections:";
+/* Privacy pro description subtitle in settings */
+"settings.subscription.description" = "Includes our VPN, Personal Information Removal, and Identity Theft Restoration.";
 
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
@@ -2123,11 +2312,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Your Privacy Pro subscription expired";
-
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN
- • Personal Information Removal
- • Identity Theft Restoration";
 
 /* Identity theft restoration cell subtitle for privacy pro */
 "settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
@@ -2141,8 +2325,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2176,6 +2360,21 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo automatically blocks hidden trackers as you browse the web.\n[Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
+
+/* Description on a report broken site page. */
+"site.not.working.description" = "Select the option that best describes the problem you experienced.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Dismiss";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "This helps us improve the browser.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Site not working? Let DuckDuckGo know.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Website Is Broken";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
@@ -2286,7 +2485,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "subscription.devices.header" = "Activate on Other Devices";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Add an optional email to your subscription to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
 "subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
@@ -2305,6 +2504,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* FAQ Description */
 "subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
+
+/* Send Feedback Button */
+"subscription.feedback" = "Send Feedback";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Cancel";
@@ -2402,6 +2604,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Alert title for restored purchase */
 "subscription.restore.success.alert.title" = "You’re all set.";
 
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Subscribed";
+
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Your subscription expired on %@";
 
@@ -2425,6 +2630,24 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title of the dialog to confirm deleting Sync server data */
 "sync.delete.all.confirm.title" = "Delete Server Data?";
+
+/* Message for the Sync Promotion banner when user has bookmarks that can be synced */
+"sync.promo.bookmarks.message" = "No account needed. End-to-end encryption means nobody but you can see your bookmarks, not even us.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.bookmarks.title" = "Sync & Back Up Your Bookmarks";
+
+/* Title for a button in the Sync Promotion banner to set up Sync */
+"sync.promo.confirm.action" = "Set Up Sync";
+
+/* Title for a button in the Sync Promotion banner to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "No Thanks";
+
+/* Message for the Sync Promotion banner when user has passwords that can be synced */
+"sync.promo.passwords.message" = "No account needed. End-to-end encryption means nobody but you can see your passwords, not even us.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.passwords.title" = "Sync & Back Up Your Passwords";
 
 /* Caption for a button to remove device from Sync */
 "sync.remove-device.action" = "Remove";

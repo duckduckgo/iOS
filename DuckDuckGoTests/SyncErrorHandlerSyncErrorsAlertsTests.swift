@@ -25,12 +25,12 @@ import Combine
 final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     var handler: SyncErrorHandler!
     var alertPresenter: CapturingAlertPresenter!
-    var dateProvider: MockDateProveder!
+    var dateProvider: MockDateProvider!
 
     override func setUp() {
         super.setUp()
         UserDefaultsWrapper<Any>.clearAll()
-        dateProvider = MockDateProveder()
+        dateProvider = MockDateProvider()
         alertPresenter = CapturingAlertPresenter()
         handler = SyncErrorHandler(dateProvider: dateProvider)
         handler.alertPresenter = alertPresenter
@@ -195,6 +195,6 @@ final class SyncErrorHandlerSyncErrorsAlertsTests: XCTestCase {
     }
 }
 
-class MockDateProveder: CurrentDateProviding {
+class MockDateProvider: CurrentDateProviding {
     var currentDate: Date = Date()
 }

@@ -683,6 +683,9 @@
 /* More options button text */
 "bookmark.moreButton" = "Meer";
 
+/* Placeholder in the bookmarks search bar */
+"bookmark.searchbar.placeholder" = "Zoeken";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Websitetitel";
 
@@ -2170,6 +2173,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokkeert automatisch verborgen trackers terwijl je op het web surft.\n[Meer informatie](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Selecteer de optie die het beste je probleem beschrijft.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Negeren";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "Hiermee kunnen we de browser verbeteren.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Werkt de site niet? Laat het DuckDuckGo weten.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "De website werkt niet";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
 
@@ -2418,6 +2436,24 @@
 
 /* Title of the dialog to confirm deleting Sync server data */
 "sync.delete.all.confirm.title" = "Wil je de servergegevens verwijderen?";
+
+/* Message for the Sync Promotion banner when user has bookmarks that can be synced */
+"sync.promo.bookmarks.message" = "Geen account nodig. End-to-end versleuteling betekent dat niemand anders dan jij je bladwijzers kan zien, zelfs wij niet.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.bookmarks.title" = "Synchroniseer en back-up je bladwijzers";
+
+/* Title for a button in the Sync Promotion banner to set up Sync */
+"sync.promo.confirm.action" = "Synchronisatie instellen";
+
+/* Title for a button in the Sync Promotion banner to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "Nee, bedankt";
+
+/* Message for the Sync Promotion banner when user has passwords that can be synced */
+"sync.promo.passwords.message" = "Geen account nodig. Dankzij end-to-end versleuteling kan niemand behalve jij je wachtwoorden zien, zelfs wij niet.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.passwords.title" = "Synchroniseer en maak een back-up van je wachtwoorden";
 
 /* Caption for a button to remove device from Sync */
 "sync.remove-device.action" = "Verwijderen";

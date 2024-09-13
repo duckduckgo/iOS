@@ -76,11 +76,11 @@ struct AboutViewVersion: View {
     var body: some View {
         Section(header: Text("DuckDuckGo for iOS"), footer: Text(UserText.settingsSendCrashReportsDescription)) {
             SettingsCellView(label: UserText.settingsVersion,
-                             accesory: .rightDetail(viewModel.state.version))
+                             accessory: .rightDetail(viewModel.state.version))
 
             // Send Crash Reports
             SettingsCellView(label: UserText.settingsSendCrashReports,
-                             accesory: .toggle(isOn: viewModel.crashCollectionOptInStatusBinding))
+                             accessory: .toggle(isOn: viewModel.crashCollectionOptInStatusBinding))
         }
     }
 }

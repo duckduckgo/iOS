@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Common
 import Networking
+import os.log
 
 public struct PixelParameters {
     public static let url = "url"
@@ -83,6 +84,7 @@ public struct PixelParameters {
     public static let tabControllerCacheCount = "tab_controller_cache_count"
 
     public static let count = "count"
+    public static let source = "source"
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"
@@ -139,6 +141,7 @@ public struct PixelParameters {
     public static let adAttributionCountryOrRegion = "country_or_region"
     public static let adAttributionKeywordID = "keyword_id"
     public static let adAttributionAdID = "ad_id"
+    public static let adAttributionToken = "attribution_token"
 
     // Autofill
     public static let countBucket = "count_bucket"
@@ -146,6 +149,10 @@ public struct PixelParameters {
     // Privacy Dashboard
     public static let daysSinceInstall = "daysSinceInstall"
     public static let fromOnboarding = "from_onboarding"
+
+    // Subscription
+    public static let privacyProKeychainAccessType = "access_type"
+    public static let privacyProKeychainError = "error"
 }
 
 public struct PixelValues {
@@ -223,9 +230,7 @@ public class Pixel {
         }
 
         guard !isDryRun else {
-            os_log(.debug, log: .generalLog, "Pixel fired %{public}@ %{public}@",
-                   pixelName.replacingOccurrences(of: "_", with: "."),
-                   params.count > 0 ? "\(params)" : "")
+            Logger.general.debug("Pixel fired \(pixelName.replacingOccurrences(of: "_", with: "."), privacy: .public) \(params.count > 0 ? "\(params)" : "", privacy: .public)")
             // simulate server response time for Dry Run mode
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 onComplete(nil)
@@ -256,7 +261,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, pixelName, "\(params)")
+            Logger.general.debug("Pixel fired \(pixelName, privacy: .public) \(params, privacy: .public)")
             onComplete(error)
         }
     }

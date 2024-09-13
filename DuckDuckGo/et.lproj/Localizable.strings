@@ -683,6 +683,9 @@
 /* More options button text */
 "bookmark.moreButton" = "Rohkem";
 
+/* Placeholder in the bookmarks search bar */
+"bookmark.searchbar.placeholder" = "Otsi";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Veebisaidi pealkiri";
 
@@ -2170,6 +2173,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo blokeerib automaatselt peidetud jälgijaid, kui sa veebis sirvid.\n[Lisateave](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Vali suvand, mis kirjeldab sinu probleemi kõige paremini.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Loobu";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "See aitab meil brauserit täiustada.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Kas sait ei tööta? Anna DuckDuckGole teada.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Veebisait ei toimi";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
 
@@ -2418,6 +2436,24 @@
 
 /* Title of the dialog to confirm deleting Sync server data */
 "sync.delete.all.confirm.title" = "Kas kustutada serveri andmed?";
+
+/* Message for the Sync Promotion banner when user has bookmarks that can be synced */
+"sync.promo.bookmarks.message" = "Kontot pole vaja. Otsast lõpuni krüptimine tähendab, et keegi peale sinu ei näe sinu järjehoidjaid, isegi mitte meie.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.bookmarks.title" = "Oma järjehoidjate sünkroonimine ja varundamine";
+
+/* Title for a button in the Sync Promotion banner to set up Sync */
+"sync.promo.confirm.action" = "Sünkroonimise seadistamine";
+
+/* Title for a button in the Sync Promotion banner to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "Ei aitäh";
+
+/* Message for the Sync Promotion banner when user has passwords that can be synced */
+"sync.promo.passwords.message" = "Kontot pole vaja. Otsast lõpuni krüptimine tähendab, et keegi peale sinu ei näe sinu paroole, isegi mitte meie.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.passwords.title" = "Oma paroolide sünkroonimine ja varundamine";
 
 /* Caption for a button to remove device from Sync */
 "sync.remove-device.action" = "Eemaldage";

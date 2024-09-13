@@ -683,6 +683,9 @@
 /* More options button text */
 "bookmark.moreButton" = "Več";
 
+/* Placeholder in the bookmarks search bar */
+"bookmark.searchbar.placeholder" = "Iskanje";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Naslov spletnega mesta";
 
@@ -2170,6 +2173,21 @@
 /* Explanation in Settings how the web tracking protection feature works */
 "settings.web.tracking.protection.explanation" = "DuckDuckGo samodejno blokira skrite sledilnike med brskanjem po spletu.\n[Več o tem](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/)";
 
+/* Description on a report broken site page. */
+"site.not.working.description" = "Izberite možnost, ki najbolje opisuje težavo, na katero ste naleteli.";
+
+/* Dismiss button */
+"site.not.working.dismiss" = "Opusti";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.subtitle" = "To nam pomaga izboljšati brskalnik.";
+
+/* Prompt asking user to send report to us if we suspect site may be broken */
+"site.not.working.title" = "Stran ne deluje? Sporočite DuckDuckGo.";
+
+/* Button that triggers flow to report broken site */
+"site.not.working.website.is.broken" = "Spletna stran je nedelujoča";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošlji poročilo";
 
@@ -2418,6 +2436,24 @@
 
 /* Title of the dialog to confirm deleting Sync server data */
 "sync.delete.all.confirm.title" = "Želite izbrisati podatke strežnika?";
+
+/* Message for the Sync Promotion banner when user has bookmarks that can be synced */
+"sync.promo.bookmarks.message" = "Račun ni potreben. Celovito šifriranje pomeni, da nihče (niti mi) razen vas ne more videti vaših zaznamkov.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.bookmarks.title" = "Sinhronizirajte in varnostno kopirajte svoje zaznamke";
+
+/* Title for a button in the Sync Promotion banner to set up Sync */
+"sync.promo.confirm.action" = "Nastavitev sinhronizacije";
+
+/* Title for a button in the Sync Promotion banner to dismiss Sync promotion banner */
+"sync.promo.dismiss.action" = "Ne, hvala";
+
+/* Message for the Sync Promotion banner when user has passwords that can be synced */
+"sync.promo.passwords.message" = "Račun ni potreben. Celovito šifriranje pomeni, da nihče (niti mi) razen vas ne more videti vaših gesel.";
+
+/* Title for the Sync Promotion banner */
+"sync.promo.passwords.title" = "Sinhronizirajte in varnostno kopirajte svoja gesla";
 
 /* Caption for a button to remove device from Sync */
 "sync.remove-device.action" = "Odstrani";

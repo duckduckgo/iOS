@@ -21,6 +21,7 @@ import XCTest
 import os.log
 import WebKit
 @testable import Core
+import TestUtils
 
 final class FireButtonReferenceTests: XCTestCase {
 
@@ -52,7 +53,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         
@@ -74,7 +75,7 @@ final class FireButtonReferenceTests: XCTestCase {
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
             
-            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: NullDataStoreIdManager())
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 
@@ -96,7 +97,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         
@@ -156,12 +157,4 @@ private struct Test: Codable {
     let name, cookieDomain, cookieName: String
     let expectCookieRemoved: Bool
     let exceptPlatforms: [String]
-}
-
-private struct NullDataStoreIdManager: DataStoreIdManaging {
-
-    var id: UUID? { return nil }
-    var hasId: Bool { return false }
-    func allocateNewContainerId() { }
-
 }

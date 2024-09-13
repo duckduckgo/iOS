@@ -39,7 +39,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
-    private let tab: Tab
+    private let associatedTab: Tab
 
     private var hostingController: UIHostingController<AnyView>?
 
@@ -53,7 +53,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
          newTabDialogFactory: any NewTabDaxDialogProvider,
          newTabDialogTypeProvider: NewTabDialogSpecProvider) {
 
-        self.tab = tab
+        self.associatedTab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
         self.variantManager = variantManager
@@ -82,9 +82,12 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        tab.viewed = true
+        associatedTab.viewed = true
 
         presentNextDaxDialog()
+
+        Pixel.fire(pixel: .homeScreenShown)
+        sendDailyDisplayPixel()
     }
 
     // MARK: - Private
@@ -177,6 +180,20 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         if variantManager.isSupported(feature: .newOnboardingIntro) {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         }
+    }
+
+    // MARK: - Private
+
+    private func sendDailyDisplayPixel() {
+
+        let favoritesCount = favoritesModel.allFavorites.count
+        let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)
+
+        DailyPixel.fire(pixel: .newTabPageDisplayedDaily, withAdditionalParameters: [
+            "FavoriteCount": bucket.value,
+            "Shortcuts": sectionsSettingsModel.enabledItems.contains(.shortcuts) ? "1" : "0",
+            "Favorites": sectionsSettingsModel.enabledItems.contains(.favorites) ? "1" : "0"
+        ])
     }
 
     // MARK: -

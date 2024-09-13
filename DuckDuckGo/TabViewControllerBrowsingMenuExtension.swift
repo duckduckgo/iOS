@@ -84,7 +84,7 @@ extension TabViewController {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 
-        let name = PixelExperiment.privacyDashboardVariant == .control ? UserText.actionReportBrokenSite : UserText.brokenSiteReportMenuTitle
+        let name = UserText.actionReportBrokenSite
         entries.append(BrowsingMenuEntry.regular(name: name,
                                                  image: UIImage(named: "Feedback-16")!,
                                                  action: { [weak self] in
@@ -372,7 +372,7 @@ extension TabViewController {
 
     private func shareLinkWithTemporaryDownload(_ temporaryDownload: Download?,
                                                 originalLink: Link,
-                                                completion: @escaping(Link) -> Void) {
+                                                completion: @escaping (Link) -> Void) {
         guard let download = temporaryDownload else {
             completion(originalLink)
             return

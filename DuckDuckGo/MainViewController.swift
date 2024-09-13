@@ -1381,14 +1381,18 @@ class MainViewController: UIViewController {
 
     private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
-            self?.hideNotification()
-            self?.brokenSitePromptLimiter.didDismissToast()
-            self?.brokenSitePromptViewHostingController = nil
+            Task { @MainActor in
+                self?.hideNotification()
+                self?.brokenSitePromptLimiter.didDismissToast()
+                self?.brokenSitePromptViewHostingController = nil
+            }
         }, onDidSubmit: { [weak self] in
-            self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
-            self?.hideNotification()
-            self?.brokenSitePromptLimiter.didOpenReport()
-            self?.brokenSitePromptViewHostingController = nil
+            Task { @MainActor in
+                self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+                self?.hideNotification()
+                self?.brokenSitePromptLimiter.didOpenReport()
+                self?.brokenSitePromptViewHostingController = nil
+            }
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
     }

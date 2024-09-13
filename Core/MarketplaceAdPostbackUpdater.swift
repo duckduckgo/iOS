@@ -36,14 +36,14 @@ protocol MarketplaceAdPostbackUpdating {
 
 struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
     func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
-        Task {
-            if #available(iOS 17.4, *) {
-                // https://developer.apple.com/documentation/adattributionkit/adattributionkit-skadnetwork-interoperability
+        if #available(iOS 17.4, *) {
+            // https://developer.apple.com/documentation/adattributionkit/adattributionkit-skadnetwork-interoperability
+            Task {
                 await updateAdAttributionKitPostback(postback, lockPostback: lockPostback)
-                await updateSKANPostback(postback, lockPostback: lockPostback)
-            } else if #available(iOS 16.1, *) {
-                await updateSKANPostback(postback, lockPostback: lockPostback)
             }
+            updateSKANPostback(postback, lockPostback: lockPostback)
+        } else if #available(iOS 16.1, *) {
+            updateSKANPostback(postback, lockPostback: lockPostback)
         }
     }
 
@@ -60,14 +60,18 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
     }
 
     @available(iOS 16.1, *)
-    private func updateSKANPostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) async {
-        do {
-            try await SKAdNetwork.updatePostbackConversionValue(postback.fineValue,
-                                                                coarseValue: postback.SKAdCoarseValue,
-                                                                lockWindow: lockPostback)
-            Logger.general.debug("Attribution: SKAN 4 postback succeeded")
-        } catch {
-            Logger.general.error("Attribution: SKAN 4 postback failed \(error.localizedDescription, privacy: .public)")
+    private func updateSKANPostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
+        /// Switched to using the completion handler API instead of async due to an encountered error.
+        /// Error report:
+        /// https://errors.duckduckgo.com/organizations/ddg/issues/104096/events/ab29c80e711f11efbf32499bdc26619c/
+
+        SKAdNetwork.updatePostbackConversionValue(postback.fineValue,
+                                                  coarseValue: postback.SKAdCoarseValue) { error in
+            if let error = error {
+                Logger.general.error("Attribution: SKAN 4 postback failed \(error.localizedDescription, privacy: .public)")
+            } else {
+                Logger.general.debug("Attribution: SKAN 4 postback succeeded")
+            }
         }
     }
 }

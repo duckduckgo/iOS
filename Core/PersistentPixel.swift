@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os.log
 import Networking
 import Persistence
 
@@ -128,6 +129,11 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
         pixelProcessingQueue.sync {
+            guard !self.isSendingQueuedPixels else {
+                completion(nil)
+                return
+            }
+
             self.isSendingQueuedPixels = true
         }
 
@@ -139,6 +145,8 @@ public final class PersistentPixel: PersistentPixelFiring {
                 completion(nil)
                 return
             }
+
+            Logger.general.debug("Persistent pixel processing \(queuedPixels.count, privacy: .public) pixels")
 
             let dispatchGroup = DispatchGroup()
 
@@ -189,6 +197,8 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     private func save(_ pixelMetadata: PersistentPixelMetadata) throws {
         dispatchPrecondition(condition: .notOnQueue(self.pixelProcessingQueue))
+
+        Logger.general.debug("Saving persistent pixel named \(pixelMetadata.pixelName)")
 
         try self.pixelProcessingQueue.sync {
             if self.isSendingQueuedPixels {

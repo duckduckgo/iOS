@@ -36,6 +36,9 @@ protocol MarketplaceAdPostbackUpdating {
 
 struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
     func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
+#if targetEnvironment(simulator)
+        Logger.general.debug("Attribution: Postback doesn't work on simulators, returning early...")
+#else
         if #available(iOS 17.4, *) {
             // https://developer.apple.com/documentation/adattributionkit/adattributionkit-skadnetwork-interoperability
             Task {
@@ -45,6 +48,7 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
         } else if #available(iOS 16.1, *) {
             updateSKANPostback(postback, lockPostback: lockPostback)
         }
+#endif
     }
 
     @available(iOS 17.4, *)

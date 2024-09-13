@@ -25,7 +25,8 @@ class MarketplaceAdPostbackManagerTests: XCTestCase {
     func testSendAppLaunchPostback_NewUser() {
         let mockReturnUserMeasurement = MockReturnUserMeasurement(isReturningUser: false)
         let mockUpdater = MockMarketplaceAdPostbackUpdater()
-        let manager = MarketplaceAdPostbackManager(returningUserMeasurement: mockReturnUserMeasurement, updater: mockUpdater)
+        let mockStorage = MockMarketplaceAdPostbackStorage(isReturningUser: false)
+        let manager = MarketplaceAdPostbackManager(storage: mockStorage, updater: mockUpdater, returningUserMeasurement: mockReturnUserMeasurement)
 
         manager.sendAppLaunchPostback()
 
@@ -37,12 +38,28 @@ class MarketplaceAdPostbackManagerTests: XCTestCase {
     func testSendAppLaunchPostback_ReturningUser() {
         let mockReturnUserMeasurement = MockReturnUserMeasurement(isReturningUser: true)
         let mockUpdater = MockMarketplaceAdPostbackUpdater()
-        let manager = MarketplaceAdPostbackManager(returningUserMeasurement: mockReturnUserMeasurement, updater: mockUpdater)
+        let mockStorage = MockMarketplaceAdPostbackStorage(isReturningUser: true)
+        let manager = MarketplaceAdPostbackManager(storage: mockStorage, updater: mockUpdater, returningUserMeasurement: mockReturnUserMeasurement)
 
         manager.sendAppLaunchPostback()
 
         XCTAssertEqual(mockUpdater.postbackSent, .installReturningUser)
         XCTAssertEqual(mockUpdater.postbackSent?.coarseValue, .low)
+        XCTAssertEqual(mockUpdater.lockPostbackSent, true)
+    }
+
+    func testSendAppLaunchPostback_AfterMeasurementChangesState() {
+        /// Sets return user to true to mock the situation where the user is opening the app again
+        /// If the storage is set to false, it should still be set as new user
+        let mockReturnUserMeasurement = MockReturnUserMeasurement(isReturningUser: true)
+        let mockUpdater = MockMarketplaceAdPostbackUpdater()
+        let mockStorage = MockMarketplaceAdPostbackStorage(isReturningUser: false)
+        let manager = MarketplaceAdPostbackManager(storage: mockStorage, updater: mockUpdater, returningUserMeasurement: mockReturnUserMeasurement)
+
+        manager.sendAppLaunchPostback()
+
+        XCTAssertEqual(mockUpdater.postbackSent, .installNewUser)
+        XCTAssertEqual(mockUpdater.postbackSent?.coarseValue, .high)
         XCTAssertEqual(mockUpdater.lockPostbackSent, true)
     }
 }
@@ -66,5 +83,17 @@ private final class MockMarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdat
     func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
         postbackSent = postback
         lockPostbackSent = lockPostback
+    }
+}
+
+private final class MockMarketplaceAdPostbackStorage: MarketplaceAdPostbackStorage {
+    var isReturningUser: Bool?
+
+    init(isReturningUser: Bool?) {
+        self.isReturningUser = isReturningUser
+    }
+
+    func updateReturningUserValue(_ value: Bool) {
+        isReturningUser = value
     }
 }

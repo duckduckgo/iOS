@@ -159,6 +159,7 @@
 		316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316931D827BD22A80095F5ED /* DownloadActionMessageViewHelper.swift */; };
 		3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170048127A9504F00C03F35 /* DownloadMocks.swift */; };
 		317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */; };
+		317F5F982C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */; };
 		31860A5B2C57ED2D005561F5 /* DuckPlayerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
 		319A371028299A850079FBCE /* PasswordHider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A370F28299A850079FBCE /* PasswordHider.swift */; };
@@ -1442,6 +1443,7 @@
 		3170048127A9504F00C03F35 /* DownloadMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMocks.swift; sourceTree = "<group>"; };
 		317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncatorTests.swift; sourceTree = "<group>"; };
 		31794BFF2821DFB600F18633 /* DuckUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DuckUI; sourceTree = "<group>"; };
+		317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackStorage.swift; sourceTree = "<group>"; };
 		31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckPlayerStorage.swift; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
 		319A370F28299A850079FBCE /* PasswordHider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordHider.swift; sourceTree = "<group>"; };
@@ -3584,6 +3586,7 @@
 				31B2F10E2C92FECC00CD30E3 /* MarketplaceAdPostbackManager.swift */,
 				31B2F1122C92FEF500CD30E3 /* MarketplaceAdPostbackUpdater.swift */,
 				31B2F1102C92FEE000CD30E3 /* MarketplaceAdPostback.swift */,
+				317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */,
 			);
 			name = MarketplaceAdPostback;
 			sourceTree = "<group>";
@@ -8212,6 +8215,7 @@
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
 				9FEA22322C3270BD006B03BF /* TimerInterface.swift in Sources */,
 				1E4DCF4C27B6A4CB00961E25 /* URLFileExtension.swift in Sources */,
+				317F5F982C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift in Sources */,
 				EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,
 				983C52E42C2C050B007B5747 /* BookmarksStateRepair.swift in Sources */,

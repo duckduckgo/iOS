@@ -384,8 +384,6 @@ import os.log
             didCrashDuringCrashHandlersSetUp = false
         }
 
-        sendAppLaunchPostback()
-
         return true
     }
 
@@ -523,6 +521,7 @@ import os.log
         }
 
         AppConfigurationFetch().start { result in
+            self.sendAppLaunchPostback()
             if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
@@ -780,6 +779,9 @@ import os.log
 
             // New users don't see the message
             historyMessageManager.dismiss()
+
+            // Setup storage for marketplace postback
+            marketplaceAdPostbackManager.updateReturningUserValue()
         }
     }
 

@@ -30,28 +30,45 @@ public protocol MarketplaceAdPostbackManaging {
     /// > For the time being, we're also sending `lockPostback` to `true`.
     /// > More information can be found [here](https://app.asana.com/0/0/1208126219488943/1208289369964239/f).
     func sendAppLaunchPostback()
+
+    /// Updates the stored value for the returning user state.
+    ///
+    /// This method updates the storage with the current state of the user (returning or new).
+    /// Since `ReturnUserMeasurement` will always return `isReturningUser` as `false` after the first run,
+    /// `MarketplaceAdPostbackManaging` maintains its own storage of the user's state across app launches.
+    func updateReturningUserValue()
 }
 
 public struct MarketplaceAdPostbackManager: MarketplaceAdPostbackManaging {
-    private let returningUserMeasurement: ReturnUserMeasurement
+    private let storage: MarketplaceAdPostbackStorage
     private let updater: MarketplaceAdPostbackUpdating
+    private let returningUserMeasurement: ReturnUserMeasurement
 
-    internal init(returningUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-                  updater: MarketplaceAdPostbackUpdating = MarketplaceAdPostbackUpdater()) {
-        self.returningUserMeasurement = returningUserMeasurement
+    internal init(storage: MarketplaceAdPostbackStorage = UserDefaultsMarketplaceAdPostbackStorage(),
+                  updater: MarketplaceAdPostbackUpdating = MarketplaceAdPostbackUpdater(),
+                  returningUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement()) {
+        self.storage = storage
         self.updater = updater
+        self.returningUserMeasurement = returningUserMeasurement
     }
 
     public init() {
-        self.returningUserMeasurement = KeychainReturnUserMeasurement()
+        self.storage = UserDefaultsMarketplaceAdPostbackStorage()
         self.updater = MarketplaceAdPostbackUpdater()
+        self.returningUserMeasurement = KeychainReturnUserMeasurement()
     }
 
     public func sendAppLaunchPostback() {
-        if returningUserMeasurement.isReturningUser {
+        guard let isReturningUser = storage.isReturningUser else { return }
+
+        if isReturningUser {
             updater.updatePostback(.installReturningUser, lockPostback: true)
         } else {
             updater.updatePostback(.installNewUser, lockPostback: true)
         }
+    }
+
+    public func updateReturningUserValue() {
+        storage.updateReturningUserValue(returningUserMeasurement.isReturningUser)
     }
 }

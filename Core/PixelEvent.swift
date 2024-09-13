@@ -27,7 +27,7 @@ import NetworkProtection
 extension Pixel {
     
     public enum Event {
-
+        
         case appLaunch
         case refreshPressed
         case pullToRefresh
@@ -1631,7 +1631,7 @@ extension Pixel.Event {
 
 extension Pixel.Event {
     
-    public enum BucketAggregation: String, CustomStringConvertible, Codable {
+    public enum BucketAggregation: String, CustomStringConvertible {
 
         public var description: String { rawValue }
         
@@ -1670,8 +1670,8 @@ extension Pixel.Event {
         
     }
     
-    public enum CompileRulesResult: String, CustomStringConvertible, Codable {
-
+    public enum CompileRulesResult: String, CustomStringConvertible {
+        
         public var description: String { rawValue }
         
         case tabClosed = "tab_closed"
@@ -1680,7 +1680,7 @@ extension Pixel.Event {
         
     }
     
-    public enum AppState: String, CustomStringConvertible, Codable {
+    public enum AppState: String, CustomStringConvertible {
         
         public var description: String { rawValue }
         
@@ -1689,8 +1689,8 @@ extension Pixel.Event {
         
     }
     
-    public enum CompileRulesListType: String, CustomStringConvertible, Codable {
-
+    public enum CompileRulesListType: String, CustomStringConvertible {
+        
         public var description: String { rawValue }
         
         case tds

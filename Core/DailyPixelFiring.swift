@@ -20,7 +20,8 @@
 import Foundation
 
 public protocol DailyPixelFiring {
-    static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String])
+    static func fireDaily(_ pixel: Pixel.Event,
+                              withAdditionalParameters params: [String: String])
 
     static func fireDailyAndCount(pixel: Pixel.Event,
                                   error: Swift.Error?,

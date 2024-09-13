@@ -43,7 +43,7 @@ extension AppDelegate {
             try await AdAttributionKit.Postback.updateConversionValue(conversionValue, coarseConversionValue: .high, lockPostback: true)
             Logger.general.debug("Attribution: AdAttributionKit postback succeeded")
         } catch {
-            Logger.general.error("Attribution: AdAttributionKit postback failed \(error.localizedDescription, privacy: .public)")
+            Logger.general.error("Attribution: AdAttributionKit postback failed \(String(describing: error), privacy: .public)")
         }
     }
 
@@ -52,8 +52,8 @@ extension AppDelegate {
         do {
             try await SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: .high, lockWindow: true)
             Logger.general.debug("Attribution: SKAN 4 postback succeeded")
-        } catch {
-            Logger.general.error("Attribution: SKAN 4 postback failed \(error.localizedDescription, privacy: .public)")
+        } catch let error {
+            Logger.general.error("Attribution: SKAN 4 postback failed \(String(describing: error), privacy: .public)")
         }
     }
 

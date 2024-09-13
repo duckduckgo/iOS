@@ -49,8 +49,8 @@ public final class PersistentPixel: PersistentPixelFiring {
     private let lastProcessingDateStorage: KeyValueStoring
     private let dateGenerator: () -> Date
 
+    private let pixelProcessingLock = NSLock()
     private var isSendingQueuedPixels: Bool = false
-    private let pixelProcessingQueue = DispatchQueue(label: "Persistent Pixel Processing Queue", qos: .utility)
     private var failedPixelsPendingStorage: [PersistentPixelMetadata] = []
 
     private let dateFormatter: ISO8601DateFormatter = {
@@ -141,10 +141,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             onDailyComplete: { dailyError in
                 if dailyError != nil {
                     do {
-                        if let error {
-                            additionalParameters.appendErrorPixelParams(error: error)
-                        }
-
+                        if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .daily,
@@ -160,9 +157,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             }, onCountComplete: { countError in
                 if countError != nil {
                     do {
-                        if let error {
-                            additionalParameters.appendErrorPixelParams(error: error)
-                        }
+                        if let error { additionalParameters.appendErrorPixelParams(error: error) }
 
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
@@ -188,24 +183,24 @@ public final class PersistentPixel: PersistentPixelFiring {
     // MARK: - Queue Processing
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
-        dispatchPrecondition(condition: .notOnQueue(self.pixelProcessingQueue))
+        pixelProcessingLock.lock()
+        guard !self.isSendingQueuedPixels else {
+            pixelProcessingLock.unlock()
+            completion(nil)
+            return
+        }
 
-        pixelProcessingQueue.sync {
-            guard !self.isSendingQueuedPixels else {
+        if let lastProcessingDate = lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
+            let threshold = dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
+            if threshold < lastProcessingDate {
+                pixelProcessingLock.unlock()
                 completion(nil)
                 return
             }
-
-            if let lastProcessingDate = lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
-                let threshold = dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
-                if threshold < lastProcessingDate {
-                    completion(nil)
-                    return
-                }
-            }
-
-            self.isSendingQueuedPixels = true
         }
+
+        self.isSendingQueuedPixels = true
+        pixelProcessingLock.unlock()
 
         do {
             let queuedPixels = try persistentPixelStorage.storedPixels()
@@ -217,37 +212,8 @@ public final class PersistentPixel: PersistentPixelFiring {
             }
 
             Logger.general.debug("Persistent pixel processing \(queuedPixels.count, privacy: .public) pixels")
-
-            let dispatchGroup = DispatchGroup()
-
-            let failedPixelsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
-            var failedPixels: [PersistentPixelMetadata] = []
-
-            for pixelMetadata in queuedPixels {
-                var pixelParameters = pixelMetadata.additionalParameters
-                pixelParameters[PixelParameters.retriedPixel] = "1"
-
-                dispatchGroup.enter()
-                pixelFiring.fire(
-                    pixelNamed: pixelMetadata.pixelName,
-                    forDeviceType: UIDevice.current.userInterfaceIdiom,
-                    withAdditionalParameters: pixelParameters,
-                    allowedQueryReservedCharacters: nil,
-                    withHeaders: APIRequest.Headers(),
-                    includedParameters: pixelMetadata.includedParameters,
-                    onComplete: { error in
-                        if error != nil {
-                            failedPixelsAccessQueue.sync {
-                                failedPixels.append(pixelMetadata)
-                            }
-                        }
-
-                        dispatchGroup.leave()
-                    }
-                )
-            }
-
-            dispatchGroup.notify(queue: .global()) {
+            
+            fire(queuedPixels: queuedPixels) { failedPixels in
                 do {
                     try self.persistentPixelStorage.replaceStoredPixels(with: failedPixels)
                     self.stopProcessingQueueAndPersistPendingPixels()
@@ -265,32 +231,66 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     // MARK: - Private
 
+    /// Sends queued pixels and calls the completion handler with any that failed.
+    private func fire(queuedPixels: [PersistentPixelMetadata], completion: @escaping ([PersistentPixelMetadata]) -> Void) {
+        let dispatchGroup = DispatchGroup()
+
+        let failedPixelsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
+        var failedPixels: [PersistentPixelMetadata] = []
+
+        for pixelMetadata in queuedPixels {
+            var pixelParameters = pixelMetadata.additionalParameters
+            pixelParameters[PixelParameters.retriedPixel] = "1"
+
+            dispatchGroup.enter()
+            pixelFiring.fire(
+                pixelNamed: pixelMetadata.pixelName,
+                forDeviceType: UIDevice.current.userInterfaceIdiom,
+                withAdditionalParameters: pixelParameters,
+                allowedQueryReservedCharacters: nil,
+                withHeaders: APIRequest.Headers(),
+                includedParameters: pixelMetadata.includedParameters,
+                onComplete: { error in
+                    if error != nil {
+                        failedPixelsAccessQueue.sync {
+                            failedPixels.append(pixelMetadata)
+                        }
+                    }
+
+                    dispatchGroup.leave()
+                }
+            )
+        }
+
+        dispatchGroup.notify(queue: .global()) {
+            completion(failedPixels)
+        }
+    }
+
     private func save(_ pixelMetadata: PersistentPixelMetadata) throws {
-        dispatchPrecondition(condition: .notOnQueue(self.pixelProcessingQueue))
+        pixelProcessingLock.lock()
+        defer { pixelProcessingLock.unlock() }
 
         Logger.general.debug("Saving persistent pixel named \(pixelMetadata.pixelName)")
 
-        try self.pixelProcessingQueue.sync {
-            if self.isSendingQueuedPixels {
-                self.failedPixelsPendingStorage.append(pixelMetadata)
-            } else {
-                try self.persistentPixelStorage.append(pixel: pixelMetadata)
-            }
+        if self.isSendingQueuedPixels {
+            self.failedPixelsPendingStorage.append(pixelMetadata)
+        } else {
+            try self.persistentPixelStorage.append(pixel: pixelMetadata)
         }
     }
 
     private func stopProcessingQueueAndPersistPendingPixels() {
-        dispatchPrecondition(condition: .notOnQueue(self.pixelProcessingQueue))
+        pixelProcessingLock.lock()
+        defer { pixelProcessingLock.unlock() }
 
-        self.pixelProcessingQueue.sync {
-            for pixel in self.failedPixelsPendingStorage {
-                try? self.persistentPixelStorage.append(pixel: pixel)
-            }
-
-            self.failedPixelsPendingStorage = []
-            self.updateLastProcessingTimestamp()
-            self.isSendingQueuedPixels = false
+        for pixel in self.failedPixelsPendingStorage {
+            try? self.persistentPixelStorage.append(pixel: pixel)
         }
+
+        self.failedPixelsPendingStorage = []
+        self.updateLastProcessingTimestamp()
+        self.isSendingQueuedPixels = false
     }
 
     private func updateLastProcessingTimestamp() {

@@ -85,9 +85,9 @@ final class PersistentPixelTests: XCTestCase {
             error: error,
             withAdditionalParameters: ["param": "value"],
             includedParameters: [.appVersion],
-            completion: { error in
+            completion: { errors in
                 expectation.fulfill()
-                XCTAssertNil(error)
+                XCTAssert(errors.isEmpty)
             }
         )
 

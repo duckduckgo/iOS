@@ -56,7 +56,7 @@ final class UserScripts: UserScriptsProvider {
     init(with sourceProvider: ScriptSourceProviding) {
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
-        autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
+        autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider, loginImportStateProvider: StubAutofillLoginImportStateProvider())
         autofillUserScript.sessionKey = sourceProvider.contentScopeProperties.sessionKey
         
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil

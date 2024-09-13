@@ -56,13 +56,15 @@ enum PersistentPixelStorageError: Error {
 
 final class DefaultPersistentPixelStorage: PersistentPixelStoring {
 
-    private enum Constants {
+    enum Constants {
         static let queuedPixelsFileName = "queued-pixels.json"
+        static let pixelCountLimit = 100
     }
 
-    let fileManager: FileManager
-    let fileName: String
-    let storageDirectory: URL
+    private let fileManager: FileManager
+    private let fileName: String
+    private let storageDirectory: URL
+    private let pixelCountLimit: Int
 
     private let fileAccessQueue = DispatchQueue(label: "Persistent Pixel File Access Queue", qos: .utility)
     private let encoder = JSONEncoder()
@@ -72,9 +74,13 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
         return storageDirectory.appendingPathComponent(fileName)
     }
 
-    public init(fileManager: FileManager = .default, fileName: String = Constants.queuedPixelsFileName, storageDirectory: URL? = nil) {
+    public init(fileManager: FileManager = .default,
+                fileName: String = Constants.queuedPixelsFileName,
+                storageDirectory: URL? = nil,
+                pixelCountLimit: Int = Constants.pixelCountLimit) {
         self.fileManager = fileManager
         self.fileName = fileName
+        self.pixelCountLimit = pixelCountLimit
 
         if let storageDirectory = storageDirectory {
             self.storageDirectory = storageDirectory
@@ -89,6 +95,11 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
         try fileAccessQueue.sync {
             var pixels = try self.readStoredPixelDataFromFileSystem()
             pixels.append(pixel)
+
+            if pixels.count > pixelCountLimit {
+                pixels.removeFirst()
+            }
+
             try writePixelDataToFileSystem(pixels: pixels)
         }
     }

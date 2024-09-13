@@ -176,7 +176,7 @@ public class Pixel {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
-    public enum QueryParameters {
+    public enum QueryParameters: Codable {
         case atb
         case appVersion
     }

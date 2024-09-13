@@ -39,21 +39,21 @@ public enum AsyncErrorType: String {
 
 public class SyncErrorHandler: EventMapping<SyncError> {
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
-    private (set) public var isSyncBookmarksPaused: Bool {
+    private(set) public var isSyncBookmarksPaused: Bool {
         didSet {
             isSyncPausedChangedPublisher.send()
         }
     }
 
     @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
-    private (set) public var isSyncCredentialsPaused: Bool {
+    private(set) public var isSyncCredentialsPaused: Bool {
         didSet {
             isSyncPausedChangedPublisher.send()
         }
     }
 
     @UserDefaultsWrapper(key: .syncIsPaused, defaultValue: false)
-    private (set) public var isSyncPaused: Bool {
+    private(set) public var isSyncPaused: Bool {
         didSet {
             isSyncPausedChangedPublisher.send()
         }

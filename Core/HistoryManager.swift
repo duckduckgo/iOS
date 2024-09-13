@@ -88,7 +88,7 @@ public class HistoryManager: HistoryManaging {
             let baseDomain = tld.eTLDplus1(domain) else { return }
 
         await withCheckedContinuation { continuation in
-            historyCoordinator.burnDomains([baseDomain], tld: tld) {
+            historyCoordinator.burnDomains([baseDomain], tld: tld) { _ in
                 continuation.resume()
             }
         }
@@ -137,8 +137,8 @@ class NullHistoryCoordinator: HistoryCoordinating {
         completion()
     }
 
-    func burnDomains(_ baseDomains: Set<String>, tld: Common.TLD, completion: @escaping () -> Void) {
-        completion()
+    func burnDomains(_ baseDomains: Set<String>, tld: Common.TLD, completion: @escaping (Set<URL>) -> Void) {
+        completion([])
     }
 
     func burnVisits(_ visits: [History.Visit], completion: @escaping () -> Void) {

@@ -704,8 +704,11 @@
 		9F7CFF762C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF752C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift */; };
 		9F7CFF782C86E3E10012833E /* OnboardingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */; };
 		9F7CFF7D2C89B69A0012833E /* AppIconPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */; };
+		9F7CFF7F2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF7E2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift */; };
 		9F8007262C5261AF003EDAF4 /* MockPrivacyDataReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
+		9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9F96F73A2C9144D5009E45D5 /* Onboarding */; };
+		9F96F73F2C914C57009E45D5 /* OnboardingGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */; };
 		9F9A922E2C86A56B001D036D /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A922D2C86A56B001D036D /* OnboardingManager.swift */; };
 		9F9A92312C86AAE9001D036D /* OnboardingDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A92302C86AAE9001D036D /* OnboardingDebugView.swift */; };
 		9F9A92342C86B42B001D036D /* AppIconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9A92332C86B42B001D036D /* AppIconPicker.swift */; };
@@ -717,11 +720,16 @@
 		9FB027192C26BC29009EA190 /* BrowsersComparisonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */; };
 		9FB0271B2C2927D0009EA190 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271A2C2927D0009EA190 /* OnboardingView.swift */; };
 		9FB0271D2C293619009EA190 /* OnboardingIntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */; };
-		9FB893F82C784A1700332E5E /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB893F72C784A1700332E5E /* Onboarding */; };
 		9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */; };
 		9FCFCD812C6B020D006EB7A0 /* LaunchOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */; };
 		9FCFCD852C75C91A006EB7A0 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */; };
+		9FDEC7B42C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7B32C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift */; };
+		9FDEC7B62C8FDFD600C7A692 /* OnboardingManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7B52C8FDFD600C7A692 /* OnboardingManagerMock.swift */; };
+		9FDEC7B82C9004D600C7A692 /* OnboardingIntroViewModel+Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7B72C9004D600C7A692 /* OnboardingIntroViewModel+Copy.swift */; };
+		9FDEC7BA2C9006E000C7A692 /* BrowserComparisonModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7B92C9006E000C7A692 /* BrowserComparisonModelTests.swift */; };
 		9FDEC7BC2C91204900C7A692 /* AppIconPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7BB2C91204900C7A692 /* AppIconPickerViewModel.swift */; };
+		9FDEC7BF2C91264C00C7A692 /* OnboardingAddressBarPositionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7BE2C91264C00C7A692 /* OnboardingAddressBarPositionPicker.swift */; };
+		9FDEC7C12C9127F100C7A692 /* OnboardingAddressBarPositionPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDEC7C02C9127F100C7A692 /* OnboardingAddressBarPositionPickerViewModel.swift */; };
 		9FE05CEE2C36424E00D9046B /* OnboardingPixelReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE05CED2C36424E00D9046B /* OnboardingPixelReporter.swift */; };
 		9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE05CEF2C3642F900D9046B /* OnboardingPixelReporterTests.swift */; };
 		9FE08BD32C2A5B88001D5EBC /* OnboardingTextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE08BD22C2A5B88001D5EBC /* OnboardingTextStyles.swift */; };
@@ -2493,7 +2501,9 @@
 		9F7CFF752C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AppIconPickerContent.swift"; sourceTree = "<group>"; };
 		9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerTests.swift; sourceTree = "<group>"; };
 		9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPickerViewModelTests.swift; sourceTree = "<group>"; };
+		9F7CFF7E2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AddressBarPositionContent.swift"; sourceTree = "<group>"; };
 		9F8007252C5261AF003EDAF4 /* MockPrivacyDataReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyDataReporter.swift; sourceTree = "<group>"; };
+		9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGradient.swift; sourceTree = "<group>"; };
 		9F9A922D2C86A56B001D036D /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
 		9F9A92302C86AAE9001D036D /* OnboardingDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDebugView.swift; sourceTree = "<group>"; };
 		9F9A92332C86B42B001D036D /* AppIconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPicker.swift; sourceTree = "<group>"; };
@@ -2508,7 +2518,13 @@
 		9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchOptionsHandler.swift; path = ../DuckDuckGo/LaunchOptionsHandler.swift; sourceTree = "<group>"; };
 		9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOptionsHandlerTests.swift; sourceTree = "<group>"; };
 		9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		9FDEC7B32C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAddressBarPositionPickerViewModelTests.swift; sourceTree = "<group>"; };
+		9FDEC7B52C8FDFD600C7A692 /* OnboardingManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerMock.swift; sourceTree = "<group>"; };
+		9FDEC7B72C9004D600C7A692 /* OnboardingIntroViewModel+Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingIntroViewModel+Copy.swift"; sourceTree = "<group>"; };
+		9FDEC7B92C9006E000C7A692 /* BrowserComparisonModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserComparisonModelTests.swift; sourceTree = "<group>"; };
 		9FDEC7BB2C91204900C7A692 /* AppIconPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPickerViewModel.swift; sourceTree = "<group>"; };
+		9FDEC7BE2C91264C00C7A692 /* OnboardingAddressBarPositionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAddressBarPositionPicker.swift; sourceTree = "<group>"; };
+		9FDEC7C02C9127F100C7A692 /* OnboardingAddressBarPositionPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAddressBarPositionPickerViewModel.swift; sourceTree = "<group>"; };
 		9FE05CED2C36424E00D9046B /* OnboardingPixelReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporter.swift; sourceTree = "<group>"; };
 		9FE05CEF2C3642F900D9046B /* OnboardingPixelReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPixelReporterTests.swift; sourceTree = "<group>"; };
 		9FE08BD22C2A5B88001D5EBC /* OnboardingTextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextStyles.swift; sourceTree = "<group>"; };
@@ -3011,7 +3027,7 @@
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
-				9FB893F82C784A1700332E5E /* Onboarding in Frameworks */,
+				9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */,
 				85D598872927F84C00FA3B1B /* Crashes in Frameworks */,
 				D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */,
 			);
@@ -4674,11 +4690,13 @@
 			children = (
 				9FE08BDB2C2A88FA001D5EBC /* OnboardingIntroViewController.swift */,
 				9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */,
+				9FDEC7B72C9004D600C7A692 /* OnboardingIntroViewModel+Copy.swift */,
 				9FB0271A2C2927D0009EA190 /* OnboardingView.swift */,
 				9F9EE4D32C37BB1300D4118E /* OnboardingView+Landing.swift */,
 				9FB027112C2526DD009EA190 /* OnboardingView+IntroDialogContent.swift */,
 				9FB027132C252E0C009EA190 /* OnboardingView+BrowsersComparisonContent.swift */,
 				9F7CFF752C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift */,
+				9F7CFF7E2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift */,
 			);
 			path = OnboardingIntro;
 			sourceTree = "<group>";
@@ -4698,6 +4716,8 @@
 				9F69331A2C5A16E200CD6A5D /* OnboardingDaxFavouritesTests.swift */,
 				9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */,
 				9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */,
+				9FDEC7B32C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift */,
+				9FDEC7B92C9006E000C7A692 /* BrowserComparisonModelTests.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -4717,6 +4737,15 @@
 				9F5E5AAF2C3E4C6000165F54 /* ContextualOnboardingPresenter.swift */,
 			);
 			path = ContextualOnboarding;
+			sourceTree = "<group>";
+		};
+		9F96F73D2C914C3D009E45D5 /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				9F23B8002C2BC94400950875 /* OnboardingBackground.swift */,
+				9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */,
+			);
+			path = Background;
 			sourceTree = "<group>";
 		};
 		9F9A922C2C86A560001D036D /* Manager */ = {
@@ -4751,6 +4780,7 @@
 				9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */,
 				9F6933182C59BB0300CD6A5D /* OnboardingPixelReporterMock.swift */,
 				9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */,
+				9FDEC7B52C8FDFD600C7A692 /* OnboardingManagerMock.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -4762,6 +4792,15 @@
 				9FF7E9852C23D10300902BE5 /* BrowsersComparisonChart.swift */,
 			);
 			path = BrowsersComparison;
+			sourceTree = "<group>";
+		};
+		9FDEC7BD2C9125EC00C7A692 /* AddressBarPositionPicker */ = {
+			isa = PBXGroup;
+			children = (
+				9FDEC7BE2C91264C00C7A692 /* OnboardingAddressBarPositionPicker.swift */,
+				9FDEC7C02C9127F100C7A692 /* OnboardingAddressBarPositionPickerViewModel.swift */,
+			);
+			path = AddressBarPositionPicker;
 			sourceTree = "<group>";
 		};
 		9FE05CEC2C36423C00D9046B /* Pixels */ = {
@@ -4792,6 +4831,8 @@
 		9FF7E9802C22A19800902BE5 /* OnboardingExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				9F96F73D2C914C3D009E45D5 /* Background */,
+				9FDEC7BD2C9125EC00C7A692 /* AddressBarPositionPicker */,
 				9F9A92322C86B419001D036D /* AppIconPicker */,
 				9F9A922C2C86A560001D036D /* Manager */,
 				9FE05CEC2C36423C00D9046B /* Pixels */,
@@ -4801,7 +4842,6 @@
 				9FB027172C26BC0F009EA190 /* BrowsersComparison */,
 				9F23B7FF2C2BABE000950875 /* OnboardingIntro */,
 				9F5E5AAA2C3D0FAA00165F54 /* ContextualOnboarding */,
-				9F23B8002C2BC94400950875 /* OnboardingBackground.swift */,
 				9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */,
 			);
 			path = OnboardingExperiment;
@@ -6427,7 +6467,7 @@
 				CB941A6D2B96AB08000F9E7A /* PrivacyDashboard */,
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
-				9FB893F72C784A1700332E5E /* Onboarding */,
+				9F96F73A2C9144D5009E45D5 /* Onboarding */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -7205,6 +7245,7 @@
 				BDE91CDE2C62B90F0005CB74 /* UnifiedFeedbackRootView.swift in Sources */,
 				D65625A12C232F5E006EF297 /* SettingsDuckPlayerView.swift in Sources */,
 				D6FEB8B52B74994000C3615F /* HeadlessWebViewCoordinator.swift in Sources */,
+				9F96F73F2C914C57009E45D5 /* OnboardingGradient.swift in Sources */,
 				6FE1273D2C204C2500EB5724 /* FavoritesView.swift in Sources */,
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
 				1E24295E293F57FA00584836 /* LottieView.swift in Sources */,
@@ -7366,6 +7407,7 @@
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				C1641EB32BC2F53C0012607A /* ImportPasswordsViewModel.swift in Sources */,
+				9FDEC7BF2C91264C00C7A692 /* OnboardingAddressBarPositionPicker.swift in Sources */,
 				8536A1FD2ACF114B003AC5BA /* Theme+DesignSystem.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */,
@@ -7482,6 +7524,7 @@
 				9F9A92312C86AAE9001D036D /* OnboardingDebugView.swift in Sources */,
 				1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */,
 				C1836CE12C359EC90016D057 /* AutofillBreakageReportCellContentView.swift in Sources */,
+				9FDEC7C12C9127F100C7A692 /* OnboardingAddressBarPositionPickerViewModel.swift in Sources */,
 				6F9FFE282C579DEA00A238BE /* NewTabPageSectionsSettingsStorage.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
 				85DFEDF124C7EEA400973FE7 /* LargeOmniBarState.swift in Sources */,
@@ -7660,6 +7703,7 @@
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				4B5C462A2AF2A6E6002A4432 /* VPNIntents.swift in Sources */,
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
+				9FDEC7B82C9004D600C7A692 /* OnboardingIntroViewModel+Copy.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				D6E0C1832B7A2B1E00D5E1E9 /* DesktopDownloadView.swift in Sources */,
 				1E7A71172934EB6400B7EA19 /* OmniBarNotificationAnimator.swift in Sources */,
@@ -7725,6 +7769,7 @@
 				8590CB67268A2E520089F6BF /* RootDebugViewController.swift in Sources */,
 				1DEAADEA2BA4539800E25A97 /* SettingsAppearanceView.swift in Sources */,
 				B623C1C22862CA9E0043013E /* DownloadSession.swift in Sources */,
+				9F7CFF7F2C8A94F70012833E /* OnboardingView+AddressBarPositionContent.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
 				985892522260B1B200EEB31B /* ProgressView.swift in Sources */,
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
@@ -7798,6 +7843,7 @@
 				C14882E327F20D9A00D59F0C /* BookmarksExporterTests.swift in Sources */,
 				85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */,
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
+				9FDEC7B42C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
 				9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */,
@@ -7841,7 +7887,9 @@
 				1E1D8B5D2994FFE100C96994 /* AutoconsentMessageProtocolTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* ExternalUrlSchemeTests.swift in Sources */,
+				9FDEC7B62C8FDFD600C7A692 /* OnboardingManagerMock.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
+				9FDEC7BA2C9006E000C7A692 /* BrowserComparisonModelTests.swift in Sources */,
 				31B1FA87286EFC5C00CA3C1C /* XCTestCaseExtension.swift in Sources */,
 				D62EC3BC2C2470E000FC9D04 /* DuckPlayerTests.swift in Sources */,
 				1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */,
@@ -10821,7 +10869,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 5d950d6920ca78707874f2e8f1883efb6d7a797f;
+				revision = 657a961c94c9c45f04ecd7c0937caf84cbedc731;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -11026,8 +11074,9 @@
 			package = 9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
-		9FB893F72C784A1700332E5E /* Onboarding */ = {
+		9F96F73A2C9144D5009E45D5 /* Onboarding */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Onboarding;
 		};
 		B6DFE6D52BC7E47F00A9CE59 /* SwiftLintTool */ = {

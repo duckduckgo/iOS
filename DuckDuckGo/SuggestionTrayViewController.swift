@@ -50,6 +50,7 @@ class SuggestionTrayViewController: UIViewController {
     private let bookmarksDatabase: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
     private let historyManager: HistoryManaging
+    private let tabsModel: TabsModel
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -79,10 +80,11 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManaging) {
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManaging, tabsModel: TabsModel) {
         self.favoritesModel = favoritesViewModel
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
+        self.tabsModel = tabsModel
         super.init(coder: coder)
     }
     
@@ -236,7 +238,8 @@ class SuggestionTrayViewController: UIViewController {
     private func installAutocompleteSuggestions() {
         let controller = AutocompleteViewController(historyManager: historyManager,
                                                     bookmarksDatabase: bookmarksDatabase,
-                                                    appSettings: appSettings)
+                                                    appSettings: appSettings,
+                                                    tabsModel: tabsModel)
 
         install(controller: controller)
         controller.delegate = autocompleteDelegate

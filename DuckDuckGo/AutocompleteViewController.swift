@@ -58,15 +58,24 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         CachedBookmarks(bookmarksDatabase)
     }()
 
+    private lazy var openTabs: [BrowserTab] = {
+        tabsModel.tabs.compactMap {
+            guard let url = $0.link?.url else { return nil }
+            return OpenTab(title: $0.link?.displayTitle ?? "", url: url)
+        }
+    }()
+
     private var lastResults: SuggestionResult?
     private var loader: SuggestionLoader?
-
     private var historyMessageManager: HistoryMessageManager
+    private var tabsModel: TabsModel
 
     init(historyManager: HistoryManaging,
          bookmarksDatabase: CoreDataDatabase,
          appSettings: AppSettings,
-         historyMessageManager: HistoryMessageManager = HistoryMessageManager()) {
+         historyMessageManager: HistoryMessageManager = HistoryMessageManager(),
+         tabsModel: TabsModel) {
+        self.tabsModel = tabsModel
         self.historyManager = historyManager
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
@@ -271,6 +280,10 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
         return []
     }
 
+    func openTabs(for suggestionLoading: any SuggestionLoading) -> [BrowserTab] {
+        return openTabs
+    }
+
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
         var queryURL = url
         parameters.forEach {
@@ -296,5 +309,12 @@ extension HistoryEntry: HistorySuggestion {
     public var numberOfVisits: Int {
         return numberOfTotalVisits
     }
+
+}
+
+struct OpenTab: BrowserTab {
+
+    let title: String
+    let url: URL
 
 }

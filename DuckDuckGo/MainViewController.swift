@@ -397,7 +397,8 @@ class MainViewController: UIViewController {
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
                                          bookmarksDatabase: self.bookmarksDatabase,
-                                         historyManager: self.historyManager)
+                                         historyManager: self.historyManager,
+                                         tabsModel: self.tabManager.model)
         }) else {
             assertionFailure()
             return
@@ -2095,6 +2096,8 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             loadUrl(url)
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
+        case .openTab(title: _, url: let url):
+            loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: .noAttribution)
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
@@ -2116,6 +2119,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             viewCoordinator.omniBar.textField.text = title
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
+        case .openTab: break // no-op
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
@@ -2133,7 +2137,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             }
         case .website(url: let url):
             viewCoordinator.omniBar.textField.text = url.absoluteString
-        case .bookmark(title: let title, _, _, _):
+        case .bookmark(title: let title, _, _, _), .openTab(title: let title, url: _):
             viewCoordinator.omniBar.textField.text = title
             if title.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
@@ -2146,6 +2150,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }

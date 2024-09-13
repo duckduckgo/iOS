@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/remove-feature-flag-vpn-check",
-        "revision" : "8da6071a523f14bece02332ba9f84c2aaf9d107d"
+        "revision" : "3c2c4300e6149f7f22cf7d08838e7674ad73f141"
       }
     },
     {

@@ -854,7 +854,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch viewModel.viewState {
-        case .showItems:
+        case .showItems, .empty:
             return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
         default:
             return nil
@@ -863,12 +863,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch viewModel.viewState {
-        case .empty:
-            if viewModel.sections[section] == .enableAutofill {
-                return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            }
-            return 0
-        case .showItems:
+        case .showItems, .empty:
             if viewModel.sections[section] == .enableAutofill {
                 return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             }

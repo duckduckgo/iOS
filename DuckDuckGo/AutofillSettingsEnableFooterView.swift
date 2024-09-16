@@ -43,7 +43,7 @@ class AutofillSettingsEnableFooterView: UIView {
         textView.textAlignment = .left
 
         var attributedText = NSMutableAttributedString()
-        let attributedTextDescription = (try? NSMutableAttributedString(markdown: UserText.autofillLoginListSettingsFooterMarkdown)) ?? NSMutableAttributedString(string: UserText.autofillEmptyViewSubtitleFirstParagraph)
+        let attributedTextDescription = (try? NSMutableAttributedString(markdown: UserText.autofillLoginListSettingsFooterMarkdown)) ?? NSMutableAttributedString(string: UserText.autofillLoginListSettingsFooterFallback)
         let attachment = NSTextAttachment()
         attachment.image = UIImage(resource: .lockSolid16).withTintColor(UIColor(designSystemColor: .textSecondary))
         attachment.bounds = CGRect(x: 0, y: -1, width: 12, height: 12)

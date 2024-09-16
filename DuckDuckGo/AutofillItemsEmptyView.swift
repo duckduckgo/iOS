@@ -39,16 +39,12 @@ struct AutofillItemsEmptyView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
 
-            Text("\(UserText.autofillEmptyViewSubtitleFirstParagraph) \n\(Image(.lockSolid16)) \(UserText.autofillEmptyViewSubtitleSecondParagraph)")
+            Text(UserText.autofillEmptyViewSubtitle)
                 .daxBodyRegular()
                 .foregroundColor(Color.init(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)
                 .lineLimit(nil)
-            Link(destination: .autofillHelpPageLink) {
-                Text(UserText.autofillLearnMoreLinkTitle)
-                    .daxBodyRegular()
-            }.tint(Color.init(designSystemColor: .accent))
 
             Button {
                 importButtonAction?()

@@ -55,21 +55,6 @@ extension ConnectionServerInfoObserverThroughSession {
     }
 }
 
-extension NetworkProtectionCodeRedemptionCoordinator {
-    
-    convenience init(isManualCodeRedemptionFlow: Bool = false, accountManager: AccountManager) {
-        let settings = AppDependencyProvider.shared.vpnSettings
-        let networkProtectionVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
-        self.init(
-            environment: settings.selectedEnvironment,
-            tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
-            isManualCodeRedemptionFlow: isManualCodeRedemptionFlow,
-            errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: networkProtectionVisibility.isPrivacyProLaunched()
-        )
-    }
-}
-
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
         self.init(
@@ -86,8 +71,7 @@ extension NetworkProtectionLocationListCompositeRepository {
         self.init(
             environment: settings.selectedEnvironment,
             tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
-            errorEvents: .networkProtectionAppDebugEvents,
-            isSubscriptionEnabled: AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched()
+            errorEvents: .networkProtectionAppDebugEvents
         )
     }
 }

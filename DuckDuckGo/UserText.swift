@@ -1289,6 +1289,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: - New Tab Page
 
+    public static let newTabPageFavoritesSectionHeaderTitle = NSLocalizedString("new.tab.page.favorites.setion.header.title", value: "Favorites", comment: "Header title of Favorites section")
+
     // MARK: Shortcuts
     public static let newTabPageShortcutBookmarks = NSLocalizedString("new.tab.page.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
     public static let newTabPageShortcutAIChat = NSLocalizedString("new.tab.page.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")
@@ -1302,10 +1304,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: Settings
 
-    public static let newTabPageSettingsTitle = NSLocalizedString("new.tab.page.settings.title", value: "Customize New Tab", comment: "Title of New Tab Page preferences page.")
+    public static let newTabPageSettingsTitle = NSLocalizedString("new.tab.page.settings.title", value: "Customize New Tab Page", comment: "Title of New Tab Page preferences page.")
     public static let newTabPageSettingsSectionsHeaderTitle = NSLocalizedString("new.tab.page.settings.sections.header.title", value: "SECTIONS", comment: "Header title of the group allowing for setting up new tab page sections")
     public static let newTabPageSettingsSectionsDescription = NSLocalizedString("new.tab.page.settings.sections.description", value: "Show, hide, and reorder sections on the new tab page", comment: "Footer of the group allowing for setting up new tab page sections")
     public static let newTabPageSettingsShortcutsHeaderTitle = NSLocalizedString("new.tab.page.settings.shortcuts.header.title", value: "SHORTCUTS", comment: "Header title of the shortcuts in New Tab Page preferences.")
+    public static let newTabPageSettingsSectionNameFavorites = NSLocalizedString("new.tab.page.settings.section.name.favorites", value: "Favorites", comment: "Name of favorites section setting")
+    public static let newTabPageSettingsSectionNameShortcuts = NSLocalizedString("new.tab.page.settings.section.name.shortcuts", value: "Shortcuts", comment: "Name of shortcuts section setting")
 
     // MARK: Intro message
 

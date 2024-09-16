@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Fjern";
 
-/* No comment provided by engineer. */
-"Favorites" = "Favoritter";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Alle favoritter på enheden";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Kun favoritter på mobil";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokering af annoncer og pop op-vinduer";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-indstillinger";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Favoritter";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tilpas dine favoritter og go-to-funktioner. Flyt rundt på ting, eller skjul dem for at holde det enkelt.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Vis, skjul og omarranger sektioner på den nye faneside";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Din nye faneside er... Ny!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favoritter";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Genveje";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Vis, skjul og omarranger sektioner på den nye faneside";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SEKTIONER";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "GENVEJE";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Tilpas ny fane";
+"new.tab.page.settings.title" = "Tilpas siden Ny fane";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI-chat";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Åbn i en anden app?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søg eller indtast adresse";

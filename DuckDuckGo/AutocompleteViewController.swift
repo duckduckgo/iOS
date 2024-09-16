@@ -167,7 +167,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     private func requestSuggestions(query: String) {
         model.selection = nil
 
-        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+        loader = SuggestionLoader(urlFactory: { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
                   scheme.description.hasPrefix("http"),
@@ -178,7 +178,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
             return url
         })
 
-        loader?.getSuggestions(query: query) { [weak self] result, error in
+        loader?.getSuggestions(query: query, usingDataSource: self) { [weak self] result, error in
             guard let self, error == nil else { return }
             let updatedResults = result ?? .empty
             self.lastResults = updatedResults
@@ -267,6 +267,10 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
 }
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
+
+    var platform: Platform {
+        .mobile
+    }
 
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
         return historyCoordinator.history ?? []

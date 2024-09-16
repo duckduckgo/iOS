@@ -18,28 +18,40 @@
 //
 
 import SwiftUI
+import DuckUI
 
 struct ShortcutAccessoryView: View {
 
+    @Environment(\.colorScheme) private var colorScheme
+
     let accessoryType: ShortcutAccessoryType
-    let expectedSize: CGSize
 
     var body: some View {
         Circle()
-            .foregroundStyle(accessoryType.backgroundColor)
+            .foregroundStyle(bgColorForAccessoryType(accessoryType))
             .overlay {
                 Image(accessoryType.iconResource)
+                    .resizable()
                     .foregroundColor(accessoryType.foregroundColor)
                     .aspectRatio(contentMode: .fit)
+                    .scaleEffect(x: Constant.imageScaleRatio, y: Constant.imageScaleRatio)
             }
             .shadow(color: .shade(0.15), radius: 1, y: 1)
-            .frame(width: expectedSize.width, height: expectedSize.height)
     }
-}
 
-extension ShortcutAccessoryView {
-    init(accessoryType: ShortcutAccessoryType) {
-        self.init(accessoryType: accessoryType, expectedSize: CGSize(width: 24, height: 24))
+    func bgColorForAccessoryType(_ accessoryType: ShortcutAccessoryType) -> Color {
+        switch accessoryType {
+        case .selected:
+            return Color(designSystemColor: .accent)
+        case .add:
+            // One-off exception for this particular case.
+            // See https://app.asana.com/0/72649045549333/1207988345460434/f
+            return colorScheme == .dark ? .gray85 : Color(designSystemColor: .surface)
+        }
+    }
+
+    private enum Constant {
+        static let imageScaleRatio: CGFloat = 2.0/3.0
     }
 }
 
@@ -55,15 +67,6 @@ private extension ShortcutAccessoryType {
             return .check16Alt
         case .add:
             return .add16
-        }
-    }
-
-    var backgroundColor: Color {
-        switch self {
-        case .selected:
-            Color(designSystemColor: .accent)
-        case .add:
-            Color(designSystemColor: .surface)
         }
     }
 

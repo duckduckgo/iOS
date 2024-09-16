@@ -27,7 +27,7 @@ struct FavoritesSectionHeader: View {
 
     var body: some View {
         HStack(spacing: 16, content: {
-            Text("Favorites")
+            Text(UserText.newTabPageFavoritesSectionHeaderTitle)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(alignment: .leading)

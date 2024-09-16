@@ -362,6 +362,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                                       manufacturer: "",
                                       upgradedHttps: false,
                                       tdsETag: nil,
+                                      configVersion: nil,
                                       blockedTrackerDomains: nil,
                                       installedSurrogates: nil,
                                       isGPCEnabled: true,

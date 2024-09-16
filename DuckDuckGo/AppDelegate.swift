@@ -104,6 +104,7 @@ import os.log
     private let launchOptionsHandler = LaunchOptionsHandler()
     private let onboardingPixelReporter = OnboardingPixelReporter()
 
+    private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     override init() {
         super.init()
 
@@ -116,9 +117,6 @@ import os.log
 
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        // Attribution support
-        updateAttribution(conversionValue: 1)
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -523,6 +521,7 @@ import os.log
         }
 
         AppConfigurationFetch().start { result in
+            self.sendAppLaunchPostback()
             if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
@@ -757,6 +756,14 @@ import os.log
 
     // MARK: private
 
+    private func sendAppLaunchPostback() {
+        // Attribution support
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+        if privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .marketplaceAdPostback) {
+            marketplaceAdPostbackManager.sendAppLaunchPostback()
+        }
+    }
+
     private func cleanUpATBAndAssignVariant(variantManager: VariantManager, daxDialogs: DaxDialogs) {
         let historyMessageManager = HistoryMessageManager()
 
@@ -772,6 +779,9 @@ import os.log
 
             // New users don't see the message
             historyMessageManager.dismiss()
+
+            // Setup storage for marketplace postback
+            marketplaceAdPostbackManager.updateReturningUserValue()
         }
     }
 
@@ -968,7 +978,6 @@ import os.log
             UIApplication.shared.shortcutItems = nil
         }
     }
-
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {

@@ -34,33 +34,10 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     }
 
     var token: String? {
-        if shouldMonitorEntitlement() {
-            return accountManager.accessToken
-        }
-        return nil
-    }
-
-    func isPrivacyProLaunched() -> Bool {
-        if let subscriptionOverrideEnabled = userDefaults.subscriptionOverrideEnabled {
-#if ALPHA || DEBUG
-            return subscriptionOverrideEnabled
-#else
-            return false
-#endif
-        }
-
-        return AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
-    }
-    
-    func shouldMonitorEntitlement() -> Bool {
-        isPrivacyProLaunched()
+        return accountManager.accessToken
     }
 
     func shouldShowVPNShortcut() -> Bool {
-        if isPrivacyProLaunched() {
-            return accountManager.isUserAuthenticated
-        } else {
-            return false
-        }
+        return accountManager.isUserAuthenticated
     }
 }

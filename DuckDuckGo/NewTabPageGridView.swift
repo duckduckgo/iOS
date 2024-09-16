@@ -22,21 +22,52 @@ import SwiftUI
 struct NewTabPageGridView<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
-    
+
+    let geometry: GeometryProxy?
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
+
+    @State private var width: CGFloat = .zero
 
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
 
-        LazyVGrid(columns: flexibleColumns(columnsCount), spacing: 24, content: {
+        LazyVGrid(columns: flexibleColumns(columnsCount, width: width), spacing: 24, content: {
             content(columnsCount)
         })
+        .frame(maxWidth: .infinity)
+        .anchorPreference(key: FramePreferenceKey.self, value: .bounds, transform: { anchor in
+            guard let geometry else { return FramePreferenceKey.defaultValue }
+
+            return geometry[anchor].width
+        })
+        .onPreferenceChange(FramePreferenceKey.self, perform: { value in
+            width = value
+        })
         .padding(0)
-        .offset(.zero)
     }
 
-    private func flexibleColumns(_ count: Int) -> [GridItem] {
-        Array(repeating: GridItem(.flexible(minimum: NewTabPageGrid.Item.edgeSize), alignment: .top), count: count)
+    private func flexibleColumns(_ count: Int, width: CGFloat) -> [GridItem] {
+        let spacing: CGFloat?
+        if width != .zero {
+            let columnsWidth = NewTabPageGrid.Item.edgeSize * Double(count)
+            let spacingsCount = count - 1
+            // Calculate exact spacing so that there's no leading and trailing padding.
+            spacing = max((width - columnsWidth) / Double(spacingsCount), 0)
+        } else {
+            spacing = nil
+        }
+
+        return Array(repeating: GridItem(.flexible(),
+                                         spacing: spacing,
+                                         alignment: .top),
+                     count: count)
+    }
+}
+
+private struct FramePreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value = nextValue()
     }
 }
 

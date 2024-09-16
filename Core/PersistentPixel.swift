@@ -100,19 +100,18 @@ public final class PersistentPixel: PersistentPixelFiring {
         var additionalParameters = additionalParameters
         additionalParameters[PixelParameters.originalPixelTimestamp] = dateString
 
+        Logger.general.debug("Firing persistent pixel named \(pixel.name)")
+
         pixelFiring.fire(pixel: pixel,
                          error: error,
                          includedParameters: includedParameters,
                          withAdditionalParameters: additionalParameters) { pixelFireError in
             if pixelFireError != nil {
                 do {
-                    if let error {
-                        additionalParameters.appendErrorPixelParams(error: error)
-                    }
-
+                    if let error { additionalParameters.appendErrorPixelParams(error: error) }
                     try self.save(PersistentPixelMetadata(
                         eventName: pixel.name,
-                        pixelType: .daily,
+                        pixelType: .regular,
                         additionalParameters: additionalParameters,
                         includedParameters: includedParameters
                     ))
@@ -143,6 +142,8 @@ public final class PersistentPixel: PersistentPixelFiring {
         var additionalParameters = additionalParameters
         additionalParameters[PixelParameters.originalPixelTimestamp] = dateString
 
+        Logger.general.debug("Firing persistent daily/count pixel named \(pixel.name)")
+
         dailyPixelFiring.fireDailyAndCount(
             pixel: pixel,
             error: error,
@@ -152,6 +153,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                 if dailyError != nil {
                     do {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
+                        Logger.general.debug("Saving persistent daily pixel named \(pixel.name)")
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .daily,
@@ -168,7 +170,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                 if countError != nil {
                     do {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
-
+                        Logger.general.debug("Saving persistent count pixel named \(pixel.name)")
                         try self.save(PersistentPixelMetadata(
                             eventName: pixel.name,
                             pixelType: .count,
@@ -221,9 +223,11 @@ public final class PersistentPixel: PersistentPixelFiring {
                 return
             }
 
-            Logger.general.debug("Persistent pixel processing \(queuedPixels.count, privacy: .public) pixels")
-            
+            Logger.general.debug("Persistent pixel retrying \(queuedPixels.count, privacy: .public) pixels")
+
             fire(queuedPixels: queuedPixels) { failedPixels in
+                Logger.general.debug("Persistent pixel retrying done, \(queuedPixels.count, privacy: .public) pixels failed and will retry later")
+
                 do {
                     try self.persistentPixelStorage.replaceStoredPixels(with: failedPixels)
                     self.stopProcessingQueueAndPersistPendingPixels()

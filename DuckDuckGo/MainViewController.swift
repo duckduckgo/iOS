@@ -128,7 +128,8 @@ class MainViewController: UIViewController {
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-    
+    private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
+
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
@@ -634,6 +635,7 @@ class MainViewController: UIViewController {
 
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
+                self.newTabPageViewController?.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: max(52, keyboardHeight), right: 0)
             }
         }
 
@@ -795,7 +797,8 @@ class MainViewController: UIViewController {
                                                       privacyProDataReporting: privacyProDataReporter,
                                                       variantManager: variantManager,
                                                       newTabDialogFactory: newTabDaxDialogFactory,
-                                                      newTabDialogTypeProvider: DaxDialogs.shared)
+                                                      newTabDialogTypeProvider: DaxDialogs.shared,
+                                                      faviconLoader: faviconLoader)
 
             controller.delegate = self
             controller.shortcutsDelegate = self

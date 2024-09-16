@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Entfernen";
 
-/* No comment provided by engineer. */
-"Favorites" = "Favoriten";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Alle Gerätefavoriten";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Nur mobile Favoriten";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blockieren von Werbungen und Pop-ups";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Willkommen bei\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-Einstellungen";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Favoriten";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Passe deine Favoriten und häufig genutzten Funktionen an. Ordne die Dinge neu an oder blende sie aus, um die Übersichtlichkeit zu wahren.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Deine „Neuer Tab“-Seite ist ... neu!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favoriten";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Shortcuts";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "ABSCHNITTE";
 
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "In einer anderen App öffnen?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adresse suchen oder eingeben";

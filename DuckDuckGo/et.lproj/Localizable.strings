@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Eemaldage";
 
-/* No comment provided by engineer. */
-"Favorites" = "Lemmikud";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Kõik seadme lemmikud";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Ainult mobiililemmikud";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklaami ja hüpikakende blokeerimine";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Lemmikud";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Kohanda oma lemmikuid ja enim kasutatavaid funktsioone. Järjesta valikud ümber või peida need, et kõik oleks lihtsasti leitav.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Jaotiste kuvamine, peitmine ja järjestamine uuel vahelehel";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Sinu uue vahelehe leht on... Uus!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Lemmikud";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Otseteed";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Jaotiste kuvamine, peitmine ja järjestamine uuel vahelehel";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "JAOTISED";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "OTSETEED";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Uue vahekaardi kohandamine";
+"new.tab.page.settings.title" = "Uue vahekaardilehe kohandamine";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI vestlus";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Avada teises rakenduses?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Otsi või sisesta aadress";

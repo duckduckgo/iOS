@@ -101,7 +101,7 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
     func startRecording(resultHandler: @escaping (_ text: String?,
                                                   _ error: Error?,
                                                   _ speechDidFinish: Bool) -> Void,
-                        volumeCallback: @escaping(_ volume: Float) -> Void) {
+                        volumeCallback: @escaping (_ volume: Float) -> Void) {
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         audioEngine = AVAudioEngine()

@@ -129,25 +129,12 @@ class AppDependencyProvider: DependencyProvider {
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
-            func isSubscriptionEnabled() -> Bool {
-#if ALPHA || DEBUG
-                if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {
-                    return subscriptionOverrideEnabled
-                }
-#endif
-                return subscriptionFeatureAvailability.isFeatureAvailable
-            }
-
-            if isSubscriptionEnabled() {
-                return { accountManager.accessToken }
-            }
-            return { nil }
+            return { accountManager.accessToken }
         }()
 #if os(macOS)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: true,
                                                                                   accessTokenProvider: accessTokenProvider)
 #else
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)

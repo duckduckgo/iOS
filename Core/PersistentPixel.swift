@@ -42,13 +42,19 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     enum Constants {
         static let lastProcessingDateKey = "com.duckduckgo.ios.persistent-pixel.last-processing-timestamp"
+
+#if DEBUG
+        static let minimumProcessingInterval: TimeInterval = .minutes(1)
+#else
         static let minimumProcessingInterval: TimeInterval = .hours(1)
+#endif
     }
 
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
     private let persistentPixelStorage: PersistentPixelStoring
     private let lastProcessingDateStorage: KeyValueStoring
+    private let calendar: Calendar
     private let dateGenerator: () -> Date
 
     private let pixelProcessingLock = NSLock()
@@ -72,11 +78,13 @@ public final class PersistentPixel: PersistentPixelFiring {
          dailyPixelFiring: DailyPixelFiring.Type,
          persistentPixelStorage: PersistentPixelStoring,
          lastProcessingDateStorage: KeyValueStoring,
+         calendar: Calendar = .current,
          dateGenerator: @escaping () -> Date = { Date() }) {
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.persistentPixelStorage = persistentPixelStorage
         self.lastProcessingDateStorage = lastProcessingDateStorage
+        self.calendar = calendar
         self.dateGenerator = dateGenerator
     }
 
@@ -194,7 +202,7 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         if let lastProcessingDate = lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
             let threshold = dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
-            if threshold < lastProcessingDate {
+            if threshold <= lastProcessingDate {
                 pixelProcessingLock.unlock()
                 completion(nil)
                 return
@@ -239,8 +247,20 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         let failedPixelsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
         var failedPixels: [PersistentPixelMetadata] = []
+        let currentDate = dateGenerator()
 
         for pixelMetadata in queuedPixels {
+            if let originalSendDateString = pixelMetadata.timestamp,
+               let originalSendDate = dateFormatter.date(from: originalSendDateString),
+               let date28DaysAgo = calendar.date(byAdding: .day, value: -28, to: currentDate) {
+                if originalSendDate < date28DaysAgo {
+                    continue
+                }
+            } else {
+                // If we don't have a timestamp for some reason, ignore the retry - retries are only useful if they have a timestamp attached
+                continue
+            }
+
             var pixelParameters = pixelMetadata.additionalParameters
             pixelParameters[PixelParameters.retriedPixel] = "1"
 

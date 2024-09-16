@@ -29,7 +29,9 @@ final class PersistentPixelTests: XCTestCase {
     var currentStorageURL: URL!
     var persistentStorage: DefaultPersistentPixelStorage!
     var timestampStorage: KeyValueStoring!
-    let testDateString = "2024-01-01T12:00:00Z"
+
+    var testDateString: String!
+    var oldDateString: String!
 
     override func setUp() {
         super.setUp()
@@ -40,6 +42,11 @@ final class PersistentPixelTests: XCTestCase {
 
         PixelFiringMock.tearDown()
         DelayedPixelFiringMock.tearDown()
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        testDateString = formatter.string(from: Date())
+        oldDateString = formatter.string(from: Date().addingTimeInterval(-.days(30)))
     }
 
     override func tearDown() {
@@ -179,7 +186,7 @@ final class PersistentPixelTests: XCTestCase {
         let pixel = PersistentPixelMetadata(
             eventName: "test",
             pixelType: .daily,
-            additionalParameters: ["key": "value"],
+            additionalParameters: ["key": "value", PixelParameters.originalPixelTimestamp: testDateString],
             includedParameters: [.appVersion]
         )
 
@@ -194,7 +201,11 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssert(storedPixels.isEmpty)
 
         XCTAssertEqual(PixelFiringMock.lastPixelName, "test_d")
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.retriedPixel: "1"])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, [
+            "key": "value",
+            PixelParameters.retriedPixel: "1",
+            PixelParameters.originalPixelTimestamp: testDateString
+        ])
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
     }
 
@@ -205,7 +216,7 @@ final class PersistentPixelTests: XCTestCase {
         let pixel = PersistentPixelMetadata(
             eventName: "test",
             pixelType: .count,
-            additionalParameters: ["key": "value"],
+            additionalParameters: ["key": "value", PixelParameters.originalPixelTimestamp: testDateString],
             includedParameters: [.appVersion]
         )
 
@@ -220,8 +231,37 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssert(storedPixels.isEmpty)
 
         XCTAssertEqual(PixelFiringMock.lastPixelName, "test_c")
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.retriedPixel: "1"])
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, [
+            "key": "value",
+            PixelParameters.retriedPixel: "1",
+            PixelParameters.originalPixelTimestamp: testDateString
+        ])
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+    }
+
+    func testWhenPixelIsStored_AndSendQueuedPixelsIsCalled_AndPixelIsOlderThan28Days_ThenPixelIsNotSent_AndPixelIsNoLongerStored() throws {
+        let persistentPixel = createPersistentPixel()
+        let expectation = expectation(description: "sendQueuedPixels")
+
+        let pixel = PersistentPixelMetadata(
+            eventName: "test",
+            pixelType: .daily,
+            additionalParameters: ["key": "value", PixelParameters.originalPixelTimestamp: oldDateString],
+            includedParameters: [.appVersion]
+        )
+
+        try persistentStorage.replaceStoredPixels(with: [pixel])
+        persistentPixel.sendQueuedPixels { _ in
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+
+        let storedPixels = try persistentStorage.storedPixels()
+        XCTAssert(storedPixels.isEmpty)
+
+        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastDailyPixelInfo)
     }
 
     func testWhenPixelQueueIsProcessing_AndProcessingSucceeds_AndNewFailedPixelIsReceived_ThenPixelIsNotStoredUntilProcessingIsComplete() throws {
@@ -273,7 +313,13 @@ final class PersistentPixelTests: XCTestCase {
         DelayedPixelFiringMock.completionError = NSError(domain: "PixelFailure", code: 1)
 
         let persistentPixel = createPersistentPixel(pixelFiring: DelayedPixelFiringMock.self)
-        let initialPixel = PersistentPixelMetadata(eventName: "test", pixelType: .count, additionalParameters: [:], includedParameters: [.appVersion])
+        let initialPixel = PersistentPixelMetadata(
+            eventName: "test",
+            pixelType: .count,
+            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
+            includedParameters: [.appVersion]
+        )
+
         try persistentStorage.replaceStoredPixels(with: [initialPixel])
 
         let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")

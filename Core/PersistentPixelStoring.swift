@@ -39,6 +39,10 @@ public struct PersistentPixelMetadata: Codable, Equatable {
         case .regular: return eventName
         }
     }
+
+    var timestamp: String? {
+        return additionalParameters[PixelParameters.originalPixelTimestamp]
+    }
 }
 
 protocol PersistentPixelStoring {

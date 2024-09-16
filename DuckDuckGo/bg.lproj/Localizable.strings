@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Премахване";
 
-/* No comment provided by engineer. */
-"Favorites" = "Любими";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Всички любими, запазени на устройството";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Само любими на мобилни устройства";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Блокиране на реклами и изскачащи прозорци";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Добре дошли в\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Настройки на VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Любими";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Персонализирайте раздела Любими и функциите за достъп. Пренаредете елементите или скрийте някои от тях за по голяма яснота.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Страницата с нов раздел е... Нова!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Любими";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Бързи Връзки";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Показване, скриване и пренареждане на секции на страницата с нов раздел";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "СЕКЦИИ";
 
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Отваряне в друго приложение?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Търсене или въвеждане на адрес";

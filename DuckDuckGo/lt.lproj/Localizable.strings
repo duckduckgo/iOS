@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Pašalinti";
 
-/* No comment provided by engineer. */
-"Favorites" = "Mėgstami";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Visi įrenginio mėgstamiausi";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Tik mobiliojo mėgstamiausi";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN nustatymai";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Mėgstami";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Rodyti, slėpti ir pertvarkyti skiltis naujame skirtuko puslapyje";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Jūsų naujo skirtuko puslapis yra... Atnaujintas!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Mėgstami";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Šaukiniai";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Rodyti, slėpti ir pertvarkyti skiltis naujame skirtuko puslapyje";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SKILTYS";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "ŠAUKINIAI";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Tinkinti naują skirtuką";
+"new.tab.page.settings.title" = "Tinkinti naujo skirtuko puslapį";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "DI pokalbis";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Atidaryti kitoje programoje?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Ieškoti arba įvesti adresą";

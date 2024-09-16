@@ -51,7 +51,8 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
          privacyProDataReporting: PrivacyProDataReporting? = nil,
          variantManager: VariantManager,
          newTabDialogFactory: any NewTabDaxDialogProvider,
-         newTabDialogTypeProvider: NewTabDialogSpecProvider) {
+         newTabDialogTypeProvider: NewTabDialogSpecProvider,
+         faviconLoader: FavoritesFaviconLoading) {
 
         self.associatedTab = tab
         self.syncService = syncService
@@ -63,7 +64,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         newTabPageModel = NewTabPageModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
+        favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel, faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
         let newTabPageView = NewTabPageView(newTabPageModel: newTabPageModel,

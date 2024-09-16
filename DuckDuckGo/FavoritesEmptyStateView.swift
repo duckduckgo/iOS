@@ -25,15 +25,14 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
 
     @ObservedObject var model: Model
 
-    @State private var headerPadding: CGFloat = 10
+    let geometry: GeometryProxy?
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
                 FavoritesSectionHeader(model: model)
-                    .padding(.horizontal, headerPadding)
 
-                NewTabPageGridView { placeholdersCount in
+                NewTabPageGridView(geometry: geometry) { placeholdersCount in
                     let placeholders = Array(0..<placeholdersCount)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
@@ -43,23 +42,12 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
                                 model.placeholderTapped()
                             }
                     }
-                }.overlay(
-                    GeometryReader(content: { geometry in
-                        Color.clear.preference(key: WidthKey.self, value: geometry.frame(in: .local).width)
-                    })
-                )
-                .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape))
-                    let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
-                    let leftoverWidth = fullWidth - allColumnsWidth
-                    let spacingSize = leftoverWidth / (columnsCount)
-                    self.headerPadding = spacingSize / 2
-                })
+                }
             }
 
             if model.isShowingTooltip {
                 FavoritesTooltip()
-                    .offset(x: -headerPadding + 18, y: 24)
+                    .offset(x: 18, y: 24)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }
         }
@@ -67,22 +55,5 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
 }
 
 #Preview {
-    return FavoritesEmptyStateView(model: FavoritesPreviewModel())
-}
-
-private struct WidthKey: PreferenceKey {
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-    static var defaultValue: CGFloat = .zero
-}
-
-private final class PreviewEmptyStateModel: FavoritesEmptyStateModel {
-    @Published var isShowingTooltip: Bool = true
-
-    func toggleTooltip() {
-    }
-
-    func placeholderTapped() {
-    }
+    return FavoritesEmptyStateView(model: FavoritesPreviewModel(), geometry: nil)
 }

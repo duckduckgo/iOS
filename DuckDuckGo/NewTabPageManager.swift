@@ -44,18 +44,23 @@ final class NewTabPageManager: NewTabPageManaging, NewTabPageDebugging {
 
     let localFlagStorage: NewTabPageLocalFlagStoring
     let featureFlagger: FeatureFlagger
+    let internalUserDecider: InternalUserDecider
 
     init(localFlagStorage: NewTabPageLocalFlagStoring = NewTabPageLocalFlagUserDefaultsStorage(),
-         featureFlager: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
-        
+         featureFlager: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider) {
+
         self.localFlagStorage = localFlagStorage
         self.featureFlagger = featureFlager
+        self.internalUserDecider = internalUserDecider
     }
 
     // MARK: - HomeTabManaging
 
     var isNewTabPageSectionsEnabled: Bool {
-        isLocalFlagEnabled && isFeatureFlagEnabled
+        let isLocalFlagInEffect = isLocalFlagEnabled && internalUserDecider.isInternalUser
+        
+        return isLocalFlagInEffect || isFeatureFlagEnabled
     }
 
     var isAvailableInPublicRelease: Bool {

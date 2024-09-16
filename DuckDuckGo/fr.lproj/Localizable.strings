@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Supprimer";
 
-/* No comment provided by engineer. */
-"Favorites" = "Favoris";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Tous les favoris de l'appareil";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Favoris sur mobile uniquement";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Bloquer les publicités et les fenêtres contextuelles";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Bienvenue sur\nDuckDuckGo !";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Paramètres VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Favoris";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personnalisez vos favoris et vos fonctionnalités préférées. Réorganisez les différents éléments ou masquez-les pour que tout reste en ordre.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Afficher, masquer et réorganiser les sections sur la nouvelle page d'onglet";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Votre nouvelle page d'onglet est… toute nouvelle !";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favoris";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Raccourcis";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Afficher, masquer et réorganiser les sections sur la nouvelle page d'onglet";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SECTIONS";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "Raccourcis";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Personnaliser le nouvel onglet";
+"new.tab.page.settings.title" = "Personnaliser la nouvelle page d'onglet";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Chat IA";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Ouvrir dans une autre application ?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Rechercher ou saisir une adresse";

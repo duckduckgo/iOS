@@ -26,8 +26,10 @@ struct FavoritesView<Model: FavoritesModel>: View {
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     @ObservedObject var model: Model
+    let geometry: GeometryProxy?
 
     private let selectionFeedback = UISelectionFeedbackGenerator()
+    private let haptics = UIImpactFeedbackGenerator()
 
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
@@ -35,7 +37,7 @@ struct FavoritesView<Model: FavoritesModel>: View {
             let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
             let result = model.prefixedFavorites(for: columns)
 
-            NewTabPageGridView { _ in
+            NewTabPageGridView(geometry: geometry) { _ in
                 ReorderableForEach(result.items) { item in
                     Button(action: {
                         model.favoriteSelected(item)
@@ -54,11 +56,14 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                     })
                     .previewShape()
+                    .transition(.opacity)
                 } preview: { favorite in
                     FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                         .previewShape()
+                        .transition(.opacity)
                 } onMove: { from, to in
+                    haptics.impactOccurred()
                     withAnimation {
                         model.moveFavorites(from: from, to: to)
                     }
@@ -75,8 +80,13 @@ struct FavoritesView<Model: FavoritesModel>: View {
                         .resizable()
                 })
                 .buttonStyle(ToggleExpandButtonStyle())
+                // Masks the content, which will otherwise shop up underneath while collapsing
+                .background(Color(designSystemColor: .background))
             }
         }
+        // Prevent the content to leak out of bounds while collapsing
+        .clipped()
+        .padding(0)
     }
 }
 
@@ -97,5 +107,5 @@ extension Favorite: Reorderable {
 }
 
 #Preview {
-    FavoritesView(model: FavoritesPreviewModel())
+    FavoritesView(model: FavoritesPreviewModel(), geometry: nil)
 }

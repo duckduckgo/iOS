@@ -94,7 +94,7 @@ struct NewTabPageSectionsDebugView: View {
 
                 HStack {
                     VStack {
-                        Text(verbatim: "Feature flag enabled")
+                        Text(verbatim: "Remote feature flag enabled")
                     }
                     Spacer()
                     if newTabPageDebugging.isFeatureFlagEnabled {

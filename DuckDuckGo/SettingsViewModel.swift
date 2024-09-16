@@ -464,14 +464,10 @@ extension SettingsViewModel {
     }
 
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
-        if AppDependencyProvider.shared.vpnFeatureVisibility.isPrivacyProLaunched() {
-            switch connectionStatus {
-            case .connected:
-                self.state.networkProtectionConnected = true
-            default:
-                self.state.networkProtectionConnected = false
-            }
-        } else {
+        switch connectionStatus {
+        case .connected:
+            self.state.networkProtectionConnected = true
+        default:
             self.state.networkProtectionConnected = false
         }
     }

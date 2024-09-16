@@ -35,7 +35,8 @@ extension View {
 }
 
 extension View {
-    /// Disables scroll if allowed by system version
+    /// Disables scroll if available for current system version
+    @available(iOS, deprecated: 16.0, renamed: "scrollDisabled")
     @ViewBuilder
     func withoutScroll(_ isScrollDisabled: Bool = true) -> some View {
         if #available(iOS 16, *) {

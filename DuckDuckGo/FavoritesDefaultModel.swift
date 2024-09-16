@@ -30,15 +30,7 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     @Published private(set) var isCollapsed: Bool = true
     @Published private(set) var isShowingTooltip: Bool = false
 
-    private(set) lazy var faviconLoader: FavoritesFaviconLoading? = {
-        FavoritesFaviconLoader(onFaviconMissing: { [weak self] in
-            guard let self else { return }
-
-            await MainActor.run {
-                self.faviconMissing()
-            }
-        })
-    }()
+    private(set) var faviconLoader: FavoritesFaviconLoading?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -51,11 +43,20 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
     }
 
     init(interactionModel: FavoritesListInteracting,
+         faviconLoader: FavoritesFaviconLoading,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
         self.interactionModel = interactionModel
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
+        self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
+            guard let self else { return }
+
+            await MainActor.run {
+                self.faviconMissing()
+            }
+        })
+
 
         interactionModel.externalUpdates.sink { [weak self] _ in
             try? self?.updateData()
@@ -202,4 +203,33 @@ private extension BookmarkEntity {
         return urlObject?.host ?? ""
     }
 
+}
+
+private final class MissingFaviconWrapper: FavoritesFaviconLoading {
+    let loader: FavoritesFaviconLoading
+
+    private(set) var onFaviconMissing: (() async -> Void)
+
+    init(loader: FavoritesFaviconLoading, onFaviconMissing: @escaping (() async -> Void)) {
+        self.onFaviconMissing = onFaviconMissing
+        self.loader = loader
+    }
+
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+        let favicon = await loader.loadFavicon(for: favorite, size: size)
+
+        if favicon == nil {
+            await onFaviconMissing()
+        }
+
+        return favicon
+    }
+
+    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+        loader.fakeFavicon(for: favorite, size: size)
+    }
+
+    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+        loader.existingFavicon(for: favorite, size: size)
+    }
 }

@@ -23,9 +23,10 @@ import UniformTypeIdentifiers
 struct ShortcutsView: View {
     private(set) var model: ShortcutsModel
     let shortcuts: [NewTabPageShortcut]
+    let proxy: GeometryProxy?
 
     var body: some View {
-        NewTabPageGridView { _ in
+        NewTabPageGridView(geometry: proxy) { _ in
             ForEach(shortcuts) { shortcut in
                 Button {
                     model.openShortcut(shortcut)
@@ -39,7 +40,7 @@ struct ShortcutsView: View {
 
 #Preview {
     ScrollView {
-        ShortcutsView(model: ShortcutsModel(), shortcuts: NewTabPageShortcut.allCases)
+        ShortcutsView(model: ShortcutsModel(), shortcuts: NewTabPageShortcut.allCases, proxy: nil)
     }
     .background(Color(designSystemColor: .background))
 }

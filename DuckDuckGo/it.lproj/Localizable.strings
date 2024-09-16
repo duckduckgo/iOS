@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Rimuovi";
 
-/* No comment provided by engineer. */
-"Favorites" = "Preferiti";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Tutti i preferiti sul dispositivo";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Solo preferiti sul dispositivo mobile";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blocco di annunci e popup";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "DuckDuckGo\nti dà il benvenuto!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Impostazioni VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Preferiti";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizza i tuoi Preferiti e le funzionalità principali. Riorganizza gli elementi o nascondili per mantenere tutto in ordine.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Mostra, nascondi e riordina le sezioni nella nuova scheda";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "La tua pagina Nuova scheda è... Nuova!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Preferiti";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Scorciatoie";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Mostra, nascondi e riordina le sezioni nella nuova scheda";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "SEZIONI";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "Scorciatoie";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Personalizza la pagina Nuova scheda";
+"new.tab.page.settings.title" = "Personalizza pagina Nuova scheda";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Chat IA";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Aprire in un'altra app?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Cerca o digita l'indirizzo";

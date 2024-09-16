@@ -25,6 +25,6 @@ extension NewTabPageSettingsPersistentStorage<NewTabPageShortcut> {
     convenience init() {
         self.init(keyPath: \.newTabPageShortcutsSettings,
                   defaultOrder: NewTabPageShortcut.allCases,
-                  defaultEnabledItems: NewTabPageShortcut.allCases)
+                  defaultEnabledItems: NewTabPageShortcut.enabledByDefault)
     }
 }

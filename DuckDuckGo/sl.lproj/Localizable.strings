@@ -1154,9 +1154,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Odstrani";
 
-/* No comment provided by engineer. */
-"Favorites" = "Priljubljeni";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Priljubljene iz vseh naprav";
 
@@ -1168,9 +1165,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Priljubljene samo iz mobilne naprave";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokiranje oglasov in pojavnih oken";
@@ -1476,9 +1470,6 @@
 "launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1712,13 +1703,24 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavitve VPN";
 
+/* Header title of Favorites section */
+"new.tab.page.favorites.setion.header.title" = "Priljubljeni";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodite zavihek Priljubljene in izbrane funkcije. Preuredite stvari ali jih skrijte, da boste imeli vse urejeno.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Prikaz, skrivanje in razvrščanje razdelkov na strani novega zavihka";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Vaša stran za nov zavihek je ... nova!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Priljubljeni";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Bližnjice";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Prikaz, skrivanje in razvrščanje razdelkov na strani novega zavihka";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "RAZDELKI";
 
@@ -1726,7 +1728,7 @@
 "new.tab.page.settings.shortcuts.header.title" = "BLIŽNJICE";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Prilagoditev strani novega zavihka";
+"new.tab.page.settings.title" = "Prilagoditev strani z novim zavihkom";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "Klepet z umetno inteligenco";
@@ -1906,9 +1908,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Odpri v drugi aplikaciji?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Poišči ali vnesi naslov";

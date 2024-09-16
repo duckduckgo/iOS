@@ -22,6 +22,7 @@ import XCTest
 import Foundation
 
 class MarketplaceAdPostbackManagerTests: XCTestCase {
+
     func testSendAppLaunchPostback_NewUser() {
         let mockReturnUserMeasurement = MockReturnUserMeasurement(isReturningUser: false)
         let mockUpdater = MockMarketplaceAdPostbackUpdater()
@@ -64,7 +65,7 @@ class MarketplaceAdPostbackManagerTests: XCTestCase {
     }
 }
 
-private final class MockReturnUserMeasurement: ReturnUserMeasurement {
+final class MockReturnUserMeasurement: ReturnUserMeasurement {
     func installCompletedWithATB(_ atb: Core.Atb) { }
 
     func updateStoredATB(_ atb: Core.Atb) { }
@@ -76,17 +77,17 @@ private final class MockReturnUserMeasurement: ReturnUserMeasurement {
     }
 }
 
-private final class MockMarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
+final class MockMarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
     var postbackSent: MarketplaceAdPostback?
     var lockPostbackSent: Bool?
 
-    func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
+    func  updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool, completion: (() -> Void)? = nil) {
         postbackSent = postback
         lockPostbackSent = lockPostback
     }
 }
 
-private final class MockMarketplaceAdPostbackStorage: MarketplaceAdPostbackStorage {
+final class MockMarketplaceAdPostbackStorage: MarketplaceAdPostbackStorage {
     var isReturningUser: Bool?
 
     init(isReturningUser: Bool?) {

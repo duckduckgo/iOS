@@ -29,7 +29,7 @@ public protocol MarketplaceAdPostbackManaging {
     ///
     /// > For the time being, we're also sending `lockPostback` to `true`.
     /// > More information can be found [here](https://app.asana.com/0/0/1208126219488943/1208289369964239/f).
-    func sendAppLaunchPostback()
+    func sendAppLaunchPostback(completion: (() -> Void)?)
 
     /// Updates the stored value for the returning user state.
     ///
@@ -37,6 +37,12 @@ public protocol MarketplaceAdPostbackManaging {
     /// Since `ReturnUserMeasurement` will always return `isReturningUser` as `false` after the first run,
     /// `MarketplaceAdPostbackManaging` maintains its own storage of the user's state across app launches.
     func updateReturningUserValue()
+}
+
+extension MarketplaceAdPostbackManaging {
+    func sendAppLaunchPostback() {
+        sendAppLaunchPostback(completion: nil)
+    }
 }
 
 public struct MarketplaceAdPostbackManager: MarketplaceAdPostbackManaging {
@@ -58,13 +64,13 @@ public struct MarketplaceAdPostbackManager: MarketplaceAdPostbackManaging {
         self.returningUserMeasurement = KeychainReturnUserMeasurement()
     }
 
-    public func sendAppLaunchPostback() {
+    public func sendAppLaunchPostback(completion: (() -> Void)? = nil) {
         guard let isReturningUser = storage.isReturningUser else { return }
 
         if isReturningUser {
-            updater.updatePostback(.installReturningUser, lockPostback: true)
+            updater.updatePostback(.installReturningUser, lockPostback: true, completion: completion)
         } else {
-            updater.updatePostback(.installNewUser, lockPostback: true)
+            updater.updatePostback(.installNewUser, lockPostback: true, completion: completion)
         }
     }
 

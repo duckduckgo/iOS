@@ -31,24 +31,24 @@ import StoreKit
 ///
 
 protocol MarketplaceAdPostbackUpdating {
-    func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool)
+    func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool, completion: (() -> Void)?)
 }
 
 struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
-    func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
-#if targetEnvironment(simulator)
-        Logger.general.debug("Attribution: Postback doesn't work on simulators, returning early...")
-#else
+    func updatePostback(_ postback: MarketplaceAdPostback, lockPostback: Bool, completion: (() -> Void)? = nil) {
+//#if targetEnvironment(simulator)
+//        Logger.general.debug("Attribution: Postback doesn't work on simulators, returning early...")
+//#else
         if #available(iOS 17.4, *) {
             // https://developer.apple.com/documentation/adattributionkit/adattributionkit-skadnetwork-interoperability
             Task {
                 await updateAdAttributionKitPostback(postback, lockPostback: lockPostback)
+                updateSKANPostback(postback, lockPostback: lockPostback, completion: completion)
             }
-            updateSKANPostback(postback, lockPostback: lockPostback)
         } else if #available(iOS 16.1, *) {
-            updateSKANPostback(postback, lockPostback: lockPostback)
+            updateSKANPostback(postback, lockPostback: lockPostback, completion: completion)
         }
-#endif
+//#endif
     }
 
     @available(iOS 17.4, *)
@@ -64,7 +64,7 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
     }
 
     @available(iOS 16.1, *)
-    private func updateSKANPostback(_ postback: MarketplaceAdPostback, lockPostback: Bool) {
+    private func updateSKANPostback(_ postback: MarketplaceAdPostback, lockPostback: Bool, completion: (() -> Void)?) {
         /// Switched to using the completion handler API instead of async due to an encountered error.
         /// Error report:
         /// https://errors.duckduckgo.com/organizations/ddg/issues/104096/events/ab29c80e711f11efbf32499bdc26619c/
@@ -76,6 +76,7 @@ struct MarketplaceAdPostbackUpdater: MarketplaceAdPostbackUpdating {
             } else {
                 Logger.general.debug("Attribution: SKAN 4 postback succeeded")
             }
+            completion?()
         }
     }
 }

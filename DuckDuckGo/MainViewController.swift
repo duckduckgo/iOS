@@ -2089,18 +2089,26 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 Logger.lifecycle.error("Couldn‘t form URL for suggestion: \(phrase, privacy: .public)")
             }
+
         case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
+
         case .bookmark(_, url: let url, _, _):
             loadUrl(url)
+
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
+
         case .openTab(title: _, url: let url):
+            if homeViewController != nil, let tab = tabManager.model.currentTab {
+                self.closeTab(tab)
+            }
             loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: .noAttribution)
+
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }

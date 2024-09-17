@@ -60,12 +60,15 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
     private func createSUT() -> NewTabPageSectionsSettingsModel {
         let storage = NewTabPageSectionsSettingsStorage(
-            appSettings: AppSettingsMock(),
-            keyPath: \.newTabPageSectionsSettings,
+            persistentStore: NewTabPageSettingsPersistentStoreMock(),
             defaultOrder: NewTabPageSection.allCases,
             defaultEnabledItems: NewTabPageSection.allCases
         )
 
         return NewTabPageSectionsSettingsModel(storage: storage, pixelFiring: PixelFiringMock.self)
     }
+}
+
+final class NewTabPageSettingsPersistentStoreMock: NewTabPageSettingsPersistentStore {
+    var data: Data?
 }

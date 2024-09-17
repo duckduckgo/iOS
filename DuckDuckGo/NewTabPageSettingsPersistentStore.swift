@@ -1,5 +1,5 @@
 //
-//  NewTabPageSectionsSettingsStorage.swift
+//  NewTabPageSettingsPersistentStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,18 +18,14 @@
 //
 
 import Foundation
+import Core
 
-enum NewTabPageSection: String, Codable, CaseIterable {
-    case favorites
-    case shortcuts
+final class NewTabPageShorctutsSettingsStore: NewTabPageSettingsPersistentStore {
+    @UserDefaultsWrapper(key: .newTabPageShortcutsSettings, defaultValue: nil)
+    var data: Data?
 }
 
-typealias NewTabPageSectionsSettingsStorage = NewTabPageSettingsPersistentStorage<NewTabPageSection>
-
-extension NewTabPageSettingsPersistentStorage<NewTabPageSection> {
-    convenience init() {
-        self.init(persistentStore: NewTabPageSectionsSettingsStore(),
-                  defaultOrder: NewTabPageSection.allCases,
-                  defaultEnabledItems: NewTabPageSection.allCases)
-    }
+final class NewTabPageSectionsSettingsStore: NewTabPageSettingsPersistentStore {
+    @UserDefaultsWrapper(key: .newTabPageSectionsSettings, defaultValue: nil)
+    var data: Data?
 }

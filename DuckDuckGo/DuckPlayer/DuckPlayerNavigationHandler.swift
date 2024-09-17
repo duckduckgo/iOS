@@ -34,6 +34,7 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var experiment: DuckPlayerLaunchExperimentHandling
+    private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
@@ -217,7 +218,7 @@ final class DuckPlayerNavigationHandler {
             referrer = .serp
         }
                 
-        if featureFlagger.isFeatureOn(.duckPlayer) {
+        if featureFlagger.isFeatureOn(.duckPlayer) || internalUserDecider.isInternalUser {
             // DuckPlayer Experiment run
             let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
             

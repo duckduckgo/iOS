@@ -29,7 +29,7 @@ public extension UserDefaults {
     }
 
     static var configurationGroupDefaults: UserDefaults {
-        let suiteName = "\(Global.groupIdPrefix).app-configuration"
+        let suiteName = ContentBlockerStoreConstants.configurationGroupName
         guard let defaults = UserDefaults(suiteName: suiteName) else {
             fatalError("Failed to create configuration UserDefaults")
         }

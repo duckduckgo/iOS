@@ -219,8 +219,11 @@ final class DuckPlayerNavigationHandler {
         }
                 
         if featureFlagger.isFeatureOn(.duckPlayer) || internalUserDecider.isInternalUser {
+            
             // DuckPlayer Experiment run
-            let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
+            let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode,
+                                                        referrer: referrer,
+                                                        isInternalUser: internalUserDecider.isInternalUser)
             
             // Enroll user if not enrolled
             if !experiment.isEnrolled {

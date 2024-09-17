@@ -68,7 +68,9 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
 
     private var option2: ContextualOnboardingListItem {
         var search: String
-        if country == "us" {
+        // ISO 3166-1 Region capitalized.
+        // https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
+        if isUSCountry {
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2English
         } else {
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2International
@@ -85,12 +87,18 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
         let search = if onboardingManager.isOnboardingHighlightsEnabled {
             UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
         } else {
-            country == "us" ?
+            isUSCountry ?
             UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish :
             UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
         }
 
         return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
+    }
+
+    private var isUSCountry: Bool {
+        // ISO 3166-1 Region capitalized.
+        // https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
+        country == "US"
     }
 
 }

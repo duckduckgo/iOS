@@ -106,6 +106,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
     private func createSUT() -> FavoritesDefaultModel {
         FavoritesDefaultModel(interactionModel: favoritesListInteracting,
+                              faviconLoader: FavoritesFaviconLoader(),
                               pixelFiring: PixelFiringMock.self,
                               dailyPixelFiring: PixelFiringMock.self)
     }

@@ -38,8 +38,9 @@ struct Favorite: Identifiable, Equatable, Hashable {
 struct Favicon: Equatable, Hashable {
     let image: UIImage
     let isUsingBorder: Bool
+    let isFake: Bool
 
-    static let empty = Self.init(image: UIImage(), isUsingBorder: false)
+    static let empty = Self.init(image: UIImage(), isUsingBorder: false, isFake: true)
 }
 
 extension Favorite {

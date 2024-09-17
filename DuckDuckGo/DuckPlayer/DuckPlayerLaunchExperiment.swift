@@ -91,14 +91,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
     var experimentCohort: String?
     
-    @UserDefaultsWrapper(key: .duckPlayerPixelExperimentOverride, defaultValue: false)
-    var experimentOverride: Bool {
-        didSet {
-            if experimentOverride {
-                enrollmentDate = Date()
-            }
-        }
-    }
+    private var isInternalUser: Bool
     
     enum Cohort: String {
         case control
@@ -109,11 +102,13 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
          referrer: DuckPlayerReferrer? = nil,
          userDefaults: UserDefaults = UserDefaults.standard,
          pixel: DuckPlayerExperimentPixelFiring.Type = Pixel.self,
-         dateProvider: DuckPlayerExperimentDateProvider = DefaultDuckPlayerExperimentDateProvider()) {
+         dateProvider: DuckPlayerExperimentDateProvider = DefaultDuckPlayerExperimentDateProvider(),
+         isInternalUser: Bool = false) {
         self.referrer = referrer
         self.duckPlayerMode = duckPlayerMode
         self.pixel = pixel
         self.dateProvider = dateProvider
+        self.isInternalUser = isInternalUser
     }
     
     private var dates: (day: Int, week: Int)? {
@@ -144,12 +139,16 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     }
     
     var isExperimentCohort: Bool {
-        return experimentCohort == "experiment" || experimentOverride
+        return experimentCohort == "experiment"
     }
     
     func assignUserToCohort() {
         if !isEnrolled {
-            let cohort: Cohort = Bool.random() ? .experiment : .control
+            var cohort: Cohort = Bool.random() ? .experiment : .control
+            
+            if isInternalUser {
+                cohort = .experiment
+            }
             experimentCohort = cohort.rawValue
             enrollmentDate = dateProvider.currentDate
             fireEnrollmentPixel()
@@ -226,12 +225,14 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
         lastDayPixelFired = nil
         lastWeekPixelFired = nil
         lastVideoIDReported = nil
-        experimentOverride = false
     }
     
     func override() {
         enrollmentDate = Date()
         experimentCohort = "experiment"
+        lastDayPixelFired = nil
+        lastWeekPixelFired = nil
+        lastVideoIDReported = nil
         
     }
         

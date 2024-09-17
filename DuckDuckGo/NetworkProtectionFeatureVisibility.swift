@@ -21,13 +21,8 @@ import Foundation
 import Subscription
 
 public protocol NetworkProtectionFeatureVisibility {
-    func isPrivacyProLaunched() -> Bool
-
-    /// Whether to enforce entitlement check and show entitlement-related messaging
-    /// This should always happen after 100% roll out
-    /// N.B. Backend will independently check for valid entitlement regardless of this value
-    func shouldMonitorEntitlement() -> Bool
 
     /// Whether to show VPN shortcut on the home screen
     func shouldShowVPNShortcut() -> Bool
+
 }

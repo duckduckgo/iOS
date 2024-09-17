@@ -22,8 +22,8 @@ import SwiftUI
 struct NewTabPageSectionsDebugView: View {
     
     private var newTabPageDebugging: NewTabPageDebugging
-    private var appSettings: AppSettings
-    
+    private let introDataStorage: NewTabPageIntroDataStoring
+
     @State private var isFeatureEnabled: Bool
     @State private var introMessageCount: Int
     @State private var isIntroMessageInitialized: Bool
@@ -34,24 +34,24 @@ struct NewTabPageSectionsDebugView: View {
         } set: {
             newTabPageDebugging.isLocalFlagEnabled = $0
             isFeatureEnabled = newTabPageDebugging.isNewTabPageSectionsEnabled
-            isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
+            isIntroMessageInitialized = introDataStorage.newTabPageIntroMessageEnabled != nil
         }
     }
     
     private var introMessageEnabled: Binding<Bool> {
         Binding {
-            appSettings.newTabPageIntroMessageEnabled ?? false
+            introDataStorage.newTabPageIntroMessageEnabled ?? false
         } set: {
-            appSettings.newTabPageIntroMessageEnabled = $0
-            isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
+            introDataStorage.newTabPageIntroMessageEnabled = $0
+            isIntroMessageInitialized = introDataStorage.newTabPageIntroMessageEnabled != nil
         }
     }
     
     private var introMessageCountBinding: Binding<Int> {
         Binding {
-            appSettings.newTabPageIntroMessageSeenCount
+            introDataStorage.newTabPageIntroMessageSeenCount
         } set: {
-            appSettings.newTabPageIntroMessageSeenCount = $0
+            introDataStorage.newTabPageIntroMessageSeenCount = $0
             introMessageCount = $0
         }
     }
@@ -60,10 +60,10 @@ struct NewTabPageSectionsDebugView: View {
         let manager = NewTabPageManager()
         newTabPageDebugging = manager
         isFeatureEnabled = manager.isNewTabPageSectionsEnabled
-        
-        appSettings = AppDependencyProvider.shared.appSettings
-        introMessageCount = appSettings.newTabPageIntroMessageSeenCount
-        isIntroMessageInitialized = appSettings.newTabPageIntroMessageEnabled != nil
+
+        introDataStorage = NewTabPageIntroDataUserDefaultsStorage()
+        introMessageCount = introDataStorage.newTabPageIntroMessageSeenCount
+        isIntroMessageInitialized = introDataStorage.newTabPageIntroMessageEnabled != nil
     }
     
     var body: some View {
@@ -94,7 +94,7 @@ struct NewTabPageSectionsDebugView: View {
 
                 HStack {
                     VStack {
-                        Text(verbatim: "Feature flag enabled")
+                        Text(verbatim: "Remote feature flag enabled")
                     }
                     Spacer()
                     if newTabPageDebugging.isFeatureFlagEnabled {
@@ -134,7 +134,7 @@ struct NewTabPageSectionsDebugView: View {
                 })
 
                 Button("Reset intro message", action: {
-                    appSettings.newTabPageIntroMessageEnabled = nil
+                    introDataStorage.newTabPageIntroMessageEnabled = nil
                     introMessageCountBinding.wrappedValue = 0
                     isIntroMessageInitialized = false
                 })

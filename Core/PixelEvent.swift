@@ -298,6 +298,8 @@ extension Pixel {
         case autofillLoginsReportConfirmationPromptConfirmed
         case autofillLoginsReportConfirmationPromptDismissed
 
+        case autofillManagementScreenVisitSurveyAvailable
+
         case getDesktopCopy
         case getDesktopShare
         
@@ -723,7 +725,6 @@ extension Pixel {
 
         // MARK: Apple Ad Attribution
         case appleAdAttribution
-        case appleAdAttributionNotAttributed
 
         // MARK: Secure Vault
         case secureVaultL1KeyMigration
@@ -1105,9 +1106,11 @@ extension Pixel.Event {
 
         case .autofillLoginsReportFailure: return "autofill_logins_report_failure"
         case .autofillLoginsReportAvailable: return "autofill_logins_report_available"
-        case .autofillLoginsReportConfirmationPromptDisplayed: return "autofill_logins_report_confirmation_prompt_displayed"
-        case .autofillLoginsReportConfirmationPromptConfirmed: return "autofill_logins_report_confirmation_prompt_confirmed"
-        case .autofillLoginsReportConfirmationPromptDismissed: return "autofill_logins_report_confirmation_prompt_dismissed"
+        case .autofillLoginsReportConfirmationPromptDisplayed: return "autofill_logins_report_confirmation_displayed"
+        case .autofillLoginsReportConfirmationPromptConfirmed: return "autofill_logins_report_confirmation_confirmed"
+        case .autofillLoginsReportConfirmationPromptDismissed: return "autofill_logins_report_confirmation_dismissed"
+
+        case .autofillManagementScreenVisitSurveyAvailable: return "m_autofill_management_screen_visit_survey_available"
 
         case .getDesktopCopy: return "m_get_desktop_copy"
         case .getDesktopShare: return "m_get_desktop_share"
@@ -1442,7 +1445,6 @@ extension Pixel.Event {
             
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
-        case .appleAdAttributionNotAttributed: return "m_apple-ad-attribution_not-attributed"
 
         // MARK: - User behavior
         case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"

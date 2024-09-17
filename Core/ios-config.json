@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1725043256685,
+    "version": 1726491752161,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -336,6 +336,12 @@
                     "domain": "dkb.de"
                 },
                 {
+                    "domain": "headphonecheck.com"
+                },
+                {
+                    "domain": "lehmannaudio.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -382,7 +388,7 @@
                     }
                 }
             },
-            "hash": "5a81046c452177af48157543487a38d5"
+            "hash": "a235f7ab6a5a3632380570bbc5113d51"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -391,6 +397,19 @@
             },
             "exceptions": [],
             "hash": "9ae27f0fb5a6f7db96b239b4def3b5b6"
+        },
+        "autofillSurveys": {
+            "state": "enabled",
+            "settings": {
+                "surveys": [
+                    {
+                        "id": "2024-09-10",
+                        "url": "https://selfserve.decipherinc.com/survey/selfserve/32ab/240900"
+                    }
+                ]
+            },
+            "exceptions": [],
+            "hash": "fa60baa3935e8ab70e77dafa347a6a71"
         },
         "autofill": {
             "exceptions": [
@@ -449,12 +468,20 @@
                             },
                             {
                                 "percent": 25
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
                     }
                 }
             },
-            "hash": "471e5069536f5b7824c5e4b60e5be274"
+            "hash": "28d4af98382248e184c4315bd49f4222"
+        },
+        "bookmarks": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
         },
         "breakageReporting": {
             "state": "disabled",
@@ -1423,6 +1450,9 @@
                 },
                 "openInNewTab": {
                     "state": "disabled"
+                },
+                "enableDuckPlayer": {
+                    "state": "internal"
                 }
             },
             "settings": {
@@ -1496,11 +1526,21 @@
                                 "value": "enabled"
                             }
                         ]
+                    },
+                    {
+                        "domain": "m.youtube.com",
+                        "patchSettings": [
+                            {
+                                "op": "replace",
+                                "path": "/overlays/youtube/state",
+                                "value": "enabled"
+                            }
+                        ]
                     }
                 ]
             },
-            "state": "disabled",
-            "hash": "9ae5b4d92ce6ba8a8c233a5c9aab93a6"
+            "state": "internal",
+            "hash": "887a8548cb01c9568e4d1b4d195af88b"
         },
         "elementHiding": {
             "exceptions": [
@@ -5228,6 +5268,9 @@
                     "domain": "norton.com"
                 },
                 {
+                    "domain": "jcrew.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5258,7 +5301,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "d84eb509cdbdc25d46085688260ac6fa"
+            "hash": "91efce5371a70d32b647ef748376666e"
         },
         "harmfulApis": {
             "settings": {
@@ -5463,6 +5506,11 @@
             },
             "exceptions": [],
             "hash": "429cea8d27316dc62af04159ec7c42b5"
+        },
+        "marketplaceAdPostback": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
         },
         "mediaPlaybackRequiresUserGesture": {
             "exceptions": [],
@@ -5990,6 +6038,12 @@
                                 ]
                             },
                             {
+                                "rule": "static.adsafeprotected.com/skeleton.gif",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
                                 "rule": "static.adsafeprotected.com/iasPET.1.js",
                                 "domains": [
                                     "corriere.it",
@@ -6000,6 +6054,16 @@
                                 "rule": "static.adsafeprotected.com/vans-adapter-google-ima.js",
                                 "domains": [
                                     "nhl.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "adsrvr.org": {
+                        "rules": [
+                            {
+                                "rule": "js.adsrvr.org/up_loader.1.1.0.js",
+                                "domains": [
+                                    "codot.gov"
                                 ]
                             }
                         ]
@@ -8576,16 +8640,6 @@
                             }
                         ]
                     },
-                    "siteimproveanalytics.com": {
-                        "rules": [
-                            {
-                                "rule": "siteimproveanalytics.com",
-                                "domains": [
-                                    "codot.gov"
-                                ]
-                            }
-                        ]
-                    },
                     "skimresources.com": {
                         "rules": [
                             {
@@ -9173,7 +9227,7 @@
                     "domain": "capitalone.com"
                 }
             ],
-            "hash": "70bdfe11b5235b40019495340bd91154"
+            "hash": "7c26c9953069fedb8fe6532c86cf5572"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9399,6 +9453,11 @@
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
+        "windowsDownloadLink": {
+            "exceptions": [],
+            "state": "enabled",
+            "hash": "52857469413a66e8b0c7b00de5589162"
+        },
         "windowsExternalPreviewReleases": {
             "exceptions": [],
             "state": "disabled",
@@ -9433,11 +9492,6 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
-        },
-        "windowsDownloadLink": {
-            "exceptions": [],
-            "state": "enabled",
-            "hash": "52857469413a66e8b0c7b00de5589162"
         }
     },
     "unprotectedTemporary": []

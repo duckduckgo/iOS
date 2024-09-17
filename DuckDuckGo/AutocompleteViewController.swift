@@ -69,17 +69,22 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     private var loader: SuggestionLoader?
     private var historyMessageManager: HistoryMessageManager
     private var tabsModel: TabsModel
+    private var featureFlagger: FeatureFlagger
 
     init(historyManager: HistoryManaging,
          bookmarksDatabase: CoreDataDatabase,
          appSettings: AppSettings,
          historyMessageManager: HistoryMessageManager = HistoryMessageManager(),
-         tabsModel: TabsModel) {
+         tabsModel: TabsModel,
+         featureFlagger: FeatureFlagger) {
+
         self.tabsModel = tabsModel
         self.historyManager = historyManager
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
         self.historyMessageManager = historyMessageManager
+        self.featureFlagger = featureFlagger
+
         self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom,
                                            showMessage: historyManager.isHistoryFeatureEnabled() && historyMessageManager.shouldShow())
         super.init(rootView: AutocompleteView(model: model))
@@ -296,7 +301,10 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
     }
 
     func openTabs(for suggestionLoading: any SuggestionLoading) -> [BrowserTab] {
-        return openTabs
+        if featureFlagger.isFeatureOn(.autcompleteTabs) {
+            return openTabs
+        }
+        return []
     }
 
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {

@@ -34,6 +34,7 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var experiment: DuckPlayerLaunchExperimentHandling
+    private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
     private struct Constants {
         static let SERPURL =  "duckduckgo.com/"
@@ -216,26 +217,30 @@ final class DuckPlayerNavigationHandler {
         if let navigationAction, isSERPLink(navigationAction: navigationAction) {
             referrer = .serp
         }
-        
-        
-        // DuckPlayer Experiment run
-        let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode, referrer: referrer)
-        
-        // Enroll user if not enrolled
-        if !experiment.isEnrolled {
-            experiment.assignUserToCohort()
+                
+        if featureFlagger.isFeatureOn(.duckPlayer) || internalUserDecider.isInternalUser {
+            
+            // DuckPlayer Experiment run
+            let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode,
+                                                        referrer: referrer,
+                                                        isInternalUser: internalUserDecider.isInternalUser)
+            
+            // Enroll user if not enrolled
+            if !experiment.isEnrolled {
+                experiment.assignUserToCohort()
+            }
+            
+            // DuckPlayer is disabled before user enrolls,
+            // So trigger a settings change notification
+            // to let the FE know about the 'actual' setting
+            // and update Experiment value
+            if experiment.isExperimentCohort {
+                duckPlayer.settings.triggerNotification()
+                experiment.duckPlayerMode = duckPlayer.settings.mode
+            }
+            
+            experiment.fireYoutubePixel(videoID: videoID)
         }
-        
-        // DuckPlayer is disabled before user enrolls,
-        // So trigger a settings change notification
-        // to let the FE know about the 'actual' setting
-        // and update Experiment value
-        if experiment.isExperimentCohort {
-            duckPlayer.settings.triggerNotification()
-            experiment.duckPlayerMode = duckPlayer.settings.mode
-        }
-        
-        experiment.fireYoutubePixel(videoID: videoID)
 
     }
     

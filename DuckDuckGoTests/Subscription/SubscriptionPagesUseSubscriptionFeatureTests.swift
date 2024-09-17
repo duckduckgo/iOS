@@ -354,6 +354,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let subscriptionSelectedParams = ["id": "some-subscription-id"]
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
+        try? await Task.sleep(seconds: 1)
+
         // Then
         XCTAssertNil(result)
 
@@ -393,6 +395,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         // When
         let subscriptionSelectedParams = ["id": "some-subscription-id"]
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
+        
+        try? await Task.sleep(seconds: 1)
 
         // Then
         XCTAssertFalse(authService.createAccountCalled)
@@ -428,6 +432,8 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let subscriptionSelectedParams = ["id": "some-subscription-id"]
         let result = await feature.subscriptionSelected(params: subscriptionSelectedParams, original: Constants.mockScriptMessage)
 
+        try? await Task.sleep(seconds: 1)
+        
         // Then
         XCTAssertFalse(authService.createAccountCalled)
         XCTAssertTrue(storePurchaseManager.purchaseSubscriptionCalled)

@@ -1627,11 +1627,11 @@ extension Pixel.Event {
         case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
             
         // MARK: Duckplayer experiment
-        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign"
-        case .duckplayerExperimentSearch: return "duckplayer_experiment_search"
-        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search"
-        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search"
-        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view"
+        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign_v2"
+        case .duckplayerExperimentSearch: return "duckplayer_experiment_search_v2"
+        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search_v2"
+        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search_v2"
+        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view_v2"
             
         }
     }

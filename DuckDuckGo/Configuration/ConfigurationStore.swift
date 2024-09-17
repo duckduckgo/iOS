@@ -22,8 +22,6 @@ import Configuration
 import Core
 
 struct ConfigurationStore: ConfigurationStoring {
-
-    static let shared = ConfigurationStore()
     
     private let etagStorage: BlockerListETagStorage
     private let fileStore: FileStore
@@ -56,5 +54,9 @@ struct ConfigurationStore: ConfigurationStoring {
     mutating func saveEtag(_ etag: String, for configuration: Configuration) throws {
         etagStorage.saveEtag(etag, for: configuration)
     }
-    
+
+    func fileUrl(for configuration: Configuration) -> URL {
+        return fileStore.persistenceLocation(for: configuration)
+    }
+
 }

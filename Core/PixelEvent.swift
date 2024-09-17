@@ -449,6 +449,9 @@ extension Pixel {
         case networkProtectionVPNConfigurationRemoved
         case networkProtectionVPNConfigurationRemovalFailed
 
+        case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
+        case networkProtectionConfigurationPixelTest
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -482,6 +485,7 @@ extension Pixel {
         case trackerDataReloadFailed
         case trackerDataCouldNotBeLoaded
         case fileStoreWriteFailed
+        case fileStoreCoordinatorFailed
         case privacyConfigurationReloadFailed
         case privacyConfigurationParseFailed
         case privacyConfigurationCouldNotBeLoaded
@@ -1234,6 +1238,9 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
+        case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
+        case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1269,6 +1276,7 @@ extension Pixel.Event {
         case .trackerDataReloadFailed: return "m_d_tds_r"
         case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
         case .fileStoreWriteFailed: return "m_d_fswf"
+        case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
         case .privacyConfigurationParseFailed: return "m_d_pc_p"
         case .privacyConfigurationCouldNotBeLoaded: return "m_d_pc_l"

@@ -335,6 +335,10 @@ private final class PreviewMessagesConfiguration: HomePageMessagesConfiguration 
 
 private extension NewTabPageSectionsSettingsStorage {
     static func emptyStorage() -> Self {
-        Self.init(keyPath: \.newTabPageSectionsSettings, defaultOrder: [], defaultEnabledItems: [])
+        Self.init(persistentStore: EmptyStore(), defaultOrder: [], defaultEnabledItems: [])
+    }
+
+    private final class EmptyStore: NewTabPageSettingsPersistentStore {
+        var data: Data?
     }
 }

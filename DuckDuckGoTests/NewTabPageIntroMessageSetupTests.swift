@@ -22,7 +22,7 @@ import XCTest
 
 final class NewTabPageIntroMessageSetupTests: XCTestCase {
 
-    private let appSettings = AppSettingsMock()
+    private let storage = NewTabPageIntroDataStoringMock()
     private let statistics = MockStatisticsStore()
     private let ntpManagerMock = NewTabPageManagerMock()
 
@@ -32,7 +32,7 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
 
         sut.perform()
 
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, true)
+        XCTAssertEqual(storage.newTabPageIntroMessageEnabled, true)
     }
 
     func testDisablesFeatureForNewUser() {
@@ -41,36 +41,41 @@ final class NewTabPageIntroMessageSetupTests: XCTestCase {
 
         sut.perform()
 
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+        XCTAssertEqual(storage.newTabPageIntroMessageEnabled, false)
     }
 
     func testDoesNothingIfSetAlready() {
         let sut = createSUT()
         statistics.installDate = nil
-        appSettings.newTabPageIntroMessageEnabled = true
+        storage.newTabPageIntroMessageEnabled = true
 
         sut.perform()
 
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, true)
+        XCTAssertEqual(storage.newTabPageIntroMessageEnabled, true)
     }
 
     func testDoesNothingIfNotPubliclyReleased() {
         let sut = createSUT()
         statistics.installDate = nil
         ntpManagerMock.isAvailableInPublicRelease = false
-        appSettings.newTabPageIntroMessageEnabled = nil
+        storage.newTabPageIntroMessageEnabled = nil
 
         sut.perform()
 
-        XCTAssertNil(appSettings.newTabPageIntroMessageEnabled)
+        XCTAssertNil(storage.newTabPageIntroMessageEnabled)
     }
 
     private func createSUT() -> NewTabPageIntroMessageSetup {
-        NewTabPageIntroMessageSetup(appSettings: appSettings, statistics: statistics, newTabPageManager: ntpManagerMock)
+        NewTabPageIntroMessageSetup(storage: storage, statistics: statistics, newTabPageManager: ntpManagerMock)
     }
 }
 
 private final class NewTabPageManagerMock: NewTabPageManaging {
     var isNewTabPageSectionsEnabled: Bool = true
     var isAvailableInPublicRelease: Bool = true
+}
+
+final class NewTabPageIntroDataStoringMock: NewTabPageIntroDataStoring {
+    var newTabPageIntroMessageEnabled: Bool?
+    var newTabPageIntroMessageSeenCount: Int = 0
 }

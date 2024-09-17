@@ -1,5 +1,5 @@
 //
-//  NewTabPageSectionsSettingsStorage.swift
+//  NewTabPageIntroDataStoring.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,18 +18,17 @@
 //
 
 import Foundation
+import Core
 
-enum NewTabPageSection: String, Codable, CaseIterable {
-    case favorites
-    case shortcuts
+protocol NewTabPageIntroDataStoring: AnyObject {
+    var newTabPageIntroMessageEnabled: Bool? { get set }
+    var newTabPageIntroMessageSeenCount: Int { get set }
 }
 
-typealias NewTabPageSectionsSettingsStorage = NewTabPageSettingsPersistentStorage<NewTabPageSection>
+final class NewTabPageIntroDataUserDefaultsStorage: NewTabPageIntroDataStoring {
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageEnabled, defaultValue: nil)
+    var newTabPageIntroMessageEnabled: Bool?
 
-extension NewTabPageSettingsPersistentStorage<NewTabPageSection> {
-    convenience init() {
-        self.init(persistentStore: NewTabPageSectionsSettingsStore(),
-                  defaultOrder: NewTabPageSection.allCases,
-                  defaultEnabledItems: NewTabPageSection.allCases)
-    }
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
+    var newTabPageIntroMessageSeenCount: Int
 }

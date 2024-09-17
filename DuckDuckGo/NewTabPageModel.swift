@@ -26,15 +26,15 @@ final class NewTabPageModel: ObservableObject {
     @Published private(set) var isOnboarding: Bool
     @Published var isShowingSettings: Bool
 
-    private let appSettings: AppSettings
+    private var introDataStorage: NewTabPageIntroDataStoring
     private let pixelFiring: PixelFiring.Type
 
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+    init(introDataStorage: NewTabPageIntroDataStoring = NewTabPageIntroDataUserDefaultsStorage(),
          pixelFiring: PixelFiring.Type = Pixel.self) {
-        self.appSettings = appSettings
+        self.introDataStorage = introDataStorage
         self.pixelFiring = pixelFiring
 
-        isIntroMessageVisible = appSettings.newTabPageIntroMessageEnabled ?? false
+        isIntroMessageVisible = introDataStorage.newTabPageIntroMessageEnabled ?? false
         isOnboarding = false
         isShowingSettings = false
     }
@@ -42,16 +42,16 @@ final class NewTabPageModel: ObservableObject {
     func introMessageDisplayed() {
         pixelFiring.fire(.newTabPageMessageDisplayed, withAdditionalParameters: [:])
 
-        appSettings.newTabPageIntroMessageSeenCount += 1
-        if appSettings.newTabPageIntroMessageSeenCount >= 3 {
-            appSettings.newTabPageIntroMessageEnabled = false
+        introDataStorage.newTabPageIntroMessageSeenCount += 1
+        if introDataStorage.newTabPageIntroMessageSeenCount >= 3 {
+            introDataStorage.newTabPageIntroMessageEnabled = false
         }
     }
 
     func dismissIntroMessage() {
         pixelFiring.fire(.newTabPageMessageDismissed, withAdditionalParameters: [:])
 
-        appSettings.newTabPageIntroMessageEnabled = false
+        introDataStorage.newTabPageIntroMessageEnabled = false
         isIntroMessageVisible = false
     }
 

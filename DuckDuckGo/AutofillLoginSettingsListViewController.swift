@@ -58,7 +58,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
 
         let hostingController = UIHostingController(rootView: emptyView)
-        hostingController.view.frame = CGRect(origin: .zero, size: hostingController.sizeThatFits(in: UIScreen.main.bounds.size))
+        var size = hostingController.sizeThatFits(in: UIScreen.main.bounds.size)
+        size.height += 50
+        hostingController.view.frame = CGRect(origin: .zero, size: size)
         hostingController.view.layoutIfNeeded()
         hostingController.view.backgroundColor = .clear
 
@@ -66,6 +68,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         return hostingController.view
     }()
+
     private let lockedView = AutofillItemsLockedView()
     private let enableAutofillFooterView = AutofillSettingsEnableFooterView()
     private let emptySearchView = AutofillEmptySearchView()
@@ -863,7 +866,12 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch viewModel.viewState {
-        case .showItems, .empty:
+        case .empty:
+            if viewModel.sections[section] == .enableAutofill {
+                return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            }
+            return 0
+        case .showItems:
             if viewModel.sections[section] == .enableAutofill {
                 return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             }

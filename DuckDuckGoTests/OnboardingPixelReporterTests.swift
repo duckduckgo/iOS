@@ -269,7 +269,7 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams["daysSinceInstall"], "3")
     }
 
-    // MARK: - Screen Impressions
+    // MARK: - Dax Dialogs
 
     func testWhenTrackScreenImpressionIsCalledThenPixelFires() {
         // GIVEN
@@ -286,6 +286,23 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
         XCTAssertEqual(expectedPixel.name, expectedPixel.name)
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhentrackEndOfJourneyDialogCTAActionIsCalledThenDaxDialogsEndOfJourneyDismissedPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.daxDialogsEndOfJourneyDismissed
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackEndOfJourneyDialogCTAAction()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
     // Enqueuing / Dequeuing Pixels
@@ -353,4 +370,75 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEventHistory[0], .onboardingIntroShownUnique)
         XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEventHistory[1], .onboardingIntroComparisonChartShownUnique)
     }
+
+    // MARK: - Onboarding Intro Highglights Experiment
+
+    func testWhenTrackChooseAppIconImpressionIsCalledThenOnboardingIntroChooseIconImpressionUniquePixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingIntroChooseAppIconImpressionUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackChooseAppIconImpression()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion])
+    }
+
+    func testWhenTrackChooseNonDefaultAppIconIsCalledThenOnboardingIntroChooseCustomIconColorPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingIntroChooseCustomAppIconColorCTAPressed
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackChooseCustomAppIconColor()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion])
+    }
+
+    func testWhenTrackAddressBarPositionSelectionImpressionIsCalledThenOnboardingIntroChooseAddressBarImpressionUniquePixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingIntroChooseAddressBarImpressionUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackAddressBarPositionSelectionImpression()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion])
+    }
+
+    func testWhenTrackChooseBottomAddressBarPositionIsCalledThenOnboardingIntroBottomAddressBarSelectedFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingIntroBottomAddressBarSelected
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackChooseBottomAddressBarPosition()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion])
+    }
+
 }

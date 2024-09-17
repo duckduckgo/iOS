@@ -102,7 +102,8 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
 
         return FadeInView {
-            OnboardingFinalDialog(message: message, highFiveAction: {
+            OnboardingFinalDialog(message: message, highFiveAction: { [weak self] in
+                self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
                 onDismiss()
             })
             .onboardingDaxDialogStyle()

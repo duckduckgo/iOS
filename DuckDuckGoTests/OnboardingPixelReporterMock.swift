@@ -22,11 +22,15 @@ import Core
 import Onboarding
 @testable import DuckDuckGo
 
-final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingScreenImpressionReporting {
+final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingDaxDialogsReporting {
     
     private(set) var didCallTrackOnboardingIntroImpression = false
     private(set) var didCallTrackBrowserComparisonImpression = false
-    private(set) var didCallChooseBrowserCTAAction = false
+    private(set) var didCallTrackChooseBrowserCTAAction = false
+    private(set) var didCallTrackChooseAppIconImpression = false
+    private(set) var didCallTrackChooseCustomAppIconColor = false
+    private(set) var didCallTrackAddressBarPositionSelectionImpression = false
+    private(set) var didCallTrackChooseBottomAddressBarPosition = false
     private(set) var didCallTrackSearchOptionTapped = false
     private(set) var didCallTrackSiteOptionTapped = false
     private(set) var didCallTrackCustomSearch = false
@@ -40,6 +44,7 @@ final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, Onboardi
     private(set) var didCallTrackScreenImpressionCalled = false
     private(set) var capturedScreenImpression: Pixel.Event?
     private(set) var didCallTrackPrivacyDashboardOpenedForFirstTime = false
+    private(set) var didCallTrackEndOfJourneyDialogDismiss = false
 
     func trackOnboardingIntroImpression() {
         didCallTrackOnboardingIntroImpression = true
@@ -50,7 +55,27 @@ final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, Onboardi
     }
 
     func trackChooseBrowserCTAAction() {
-        didCallChooseBrowserCTAAction = true
+        didCallTrackChooseBrowserCTAAction = true
+    }
+
+    func trackChooseAppIconImpression() {
+        didCallTrackChooseAppIconImpression = true
+    }
+
+    func trackChooseCustomAppIconColor() {
+        didCallTrackChooseCustomAppIconColor = true
+    }
+
+    func trackAddressBarPositionSelectionImpression() {
+        didCallTrackAddressBarPositionSelectionImpression = true
+    }
+
+    func trackChooseBottomAddressBarPosition() {
+        didCallTrackChooseBottomAddressBarPosition = true
+    }
+
+    func trackEndOfJourneyDialogCTAAction() {
+        didCallTrackEndOfJourneyDialogDismiss = true
     }
 
     func trackSiteSuggetionOptionTapped() {

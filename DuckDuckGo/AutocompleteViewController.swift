@@ -128,6 +128,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         var bookmark = false
         var favorite = false
         var history = false
+        var openTab = false
 
         lastResults?.all.forEach {
             switch $0 {
@@ -140,6 +141,9 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
             case .historyEntry:
                 history = true
+
+            case .openTab:
+                openTab = true
 
             default: break
             }
@@ -155,6 +159,10 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
         if history {
             Pixel.fire(pixel: .autocompleteDisplayedLocalHistory)
+        }
+
+        if openTab {
+            Pixel.fire(pixel: .autocompleteDisplayedOpenedTab)
         }
 
     }
@@ -236,6 +244,9 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
         case .website:
             Pixel.fire(pixel: .autocompleteClickWebsite)
+
+        case .openTab:
+            Pixel.fire(pixel: .autocompleteClickOpenTab)
 
         default:
             // NO-OP

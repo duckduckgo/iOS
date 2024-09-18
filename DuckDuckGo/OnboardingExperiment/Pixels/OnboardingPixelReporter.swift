@@ -174,7 +174,7 @@ extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
     
     func trackSearchSuggetionOptionTapped() {
-        fire(event: .onboardingContextualSearchOptionTappedUnique, unique: true)
+        // Left empty on purpose. These were temporary pixels in iOS. macOS will still use them.
     }
 
 }
@@ -182,7 +182,7 @@ extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
 extension OnboardingPixelReporter: OnboardingSiteSuggestionsPixelReporting {
     
     func trackSiteSuggetionOptionTapped() {
-        fire(event: .onboardingContextualSiteOptionTappedUnique, unique: true)
+        // Left empty on purpose. These were temporary pixels in iOS. macOS will still use them.
     }
 
 }

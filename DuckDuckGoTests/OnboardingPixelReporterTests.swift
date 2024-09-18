@@ -107,46 +107,6 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
     }
 
-    // MARK: - List
-
-    func testWhenTrackSearchSuggestionOptionTappedThenSearchOptionTappedFires() {
-        // GIVEN
-        let expectedPixel = Pixel.Event.onboardingContextualSearchOptionTappedUnique
-        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
-
-        // WHEN
-        sut.trackSearchSuggetionOptionTapped()
-
-        // THEN
-        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
-        XCTAssertEqual(expectedPixel.name, "m_onboarding_search_option_tapped_unique")
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
-    }
-
-    func testWhenTrackSiteSuggestionThenSiteOptionsTappedFires() {
-        // GIVEN
-        let expectedPixel = Pixel.Event.onboardingContextualSiteOptionTappedUnique
-        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
-        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
-
-        // WHEN
-        sut.trackSiteSuggetionOptionTapped()
-
-        // THEN
-        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
-        XCTAssertEqual(expectedPixel.name, "m_onboarding_visit_site_option_tapped_unique")
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedParams, [:])
-        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
-    }
-
     // MARK: - Custom Interactions
 
     func testWhenTrackCustomSearchIsCalledThenSearchCustomFires() {

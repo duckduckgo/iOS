@@ -1447,7 +1447,10 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
-        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        // Present the Dax dialog with a delay to mitigate issue where user script detec trackers after the dialog is show to the user
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        }
 
         Task { @MainActor in
             if await webView.isCurrentSiteReferredFromDuckDuckGo {

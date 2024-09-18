@@ -204,7 +204,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             let title = entry.title.lowercased()
 
             // Exact matches - full query
-            if title.starts(with: query) { // High score for exact match from the beginning of the title
+            if title.trimmingCharacters(in: .alphanumerics.inverted).starts(with: query) { // High score for exact match from the beginning of the title
                 input[index].score += 200
             } else if title.contains(" \(query)") { // Exact match from the beginning of the word within string.
                 input[index].score += 100
@@ -218,7 +218,9 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
                 var matchesAllTokens = true
                 for token in tokens {
                     // Match only from the beginning of the word to avoid unintuitive matches.
-                    if !title.starts(with: token) && !title.contains(" \(token)") && !domain.starts(with: token) {
+                    if !title.trimmingCharacters(in: .alphanumerics.inverted).starts(with: token) &&
+                        !title.contains(" \(token)")
+                        && !domain.starts(with: token) {
                         matchesAllTokens = false
                         break
                     }
@@ -232,7 +234,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
                     if let firstToken = tokens.first { // domain - high score boost
                         if domain.starts(with: firstToken) {
                             input[index].score += 300
-                        } else if title.starts(with: firstToken) { // beginning of the title - moderate score boost
+                        } else if title.trimmingCharacters(in: .alphanumerics.inverted).starts(with: firstToken) { // beginning of the title - moderate score boost
                             input[index].score += 50
                         }
                     }

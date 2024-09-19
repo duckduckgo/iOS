@@ -72,7 +72,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
         .padding(0)
     }
 
-@ViewBuilder
+    @ViewBuilder
     private func previewFor(_ item: FavoriteItem) -> some View {
         switch item {
         case .favorite(let favorite):
@@ -80,7 +80,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
                 .frame(width: NewTabPageGrid.Item.edgeSize)
                 .previewShape()
                 .transition(.opacity)
-        case .itemPlaceholder:
+        case .addFavorite:
             EmptyView()
         }
     }
@@ -105,7 +105,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
                 .background(.clear)
                 .frame(width: NewTabPageGrid.Item.edgeSize)
             })
-        case .itemPlaceholder:
+        case .addFavorite:
             Button(action: {
                 // add favorite
             }, label: {

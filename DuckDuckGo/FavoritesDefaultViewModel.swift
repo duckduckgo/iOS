@@ -52,7 +52,7 @@ class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
     private let dailyPixelFiring: DailyPixelFiring.Type
 
     var isEmpty: Bool {
-        allFavorites.isEmpty
+        allFavorites.filter(\.isFavorite).isEmpty
     }
 
     init(favoriteDataSource: NewTabPageFavoriteDataSource,
@@ -167,7 +167,7 @@ class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
         var allFavorites = favoriteDataSource.favorites.map {
             FavoriteItem.favorite($0)
         }
-        allFavorites.append(.itemPlaceholder)
+        allFavorites.append(.addFavorite)
         
         self.allFavorites = allFavorites
     }
@@ -203,5 +203,16 @@ private final class MissingFaviconWrapper: FavoritesFaviconLoading {
 
     func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
         loader.existingFavicon(for: favorite, size: size)
+    }
+}
+
+private extension FavoriteItem {
+    var isFavorite: Bool {
+        switch self {
+        case .favorite:
+            return true
+        case .addFavorite:
+            return false
+        }
     }
 }

@@ -84,6 +84,26 @@ extension NSAttributedString {
     }
 }
 
+// MARK: - AttributedString Helper Extensions
+
+public extension String {
+
+    var attributed: NSAttributedString {
+        NSAttributedString(string: self)
+    }
+
+    var nsRange: NSRange {
+        NSRange(startIndex..., in: self)
+    }
+
+    func range(of string: String) -> NSRange {
+        (self as NSString).range(of: string)
+    }
+
+}
+
+// MARK: Helper Operators
+
 /// Concatenates two `NSAttributedString` instances, returning a new `NSAttributedString`.
 ///
 /// - Parameters:
@@ -114,12 +134,4 @@ public func + (lhs: NSAttributedString, rhs: String) -> NSAttributedString {
 /// - Returns: A new `NSAttributedString` which is the result of concatenating `lhs` with `rhs`.
 public func + (lhs: String, rhs: NSAttributedString) -> NSAttributedString {
     NSAttributedString(string: lhs) + rhs
-}
-
-private extension String {
-
-    var nsRange: NSRange {
-        NSRange(startIndex..., in: self)
-    }
-
 }

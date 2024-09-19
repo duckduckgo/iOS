@@ -32,6 +32,7 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
     @State private var customizeButtonShowedInline = false
+    @State private var isAddingFavorite: Bool = false
 
     init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
@@ -143,6 +144,9 @@ private extension NewTabPageView {
                         .padding([.trailing, .bottom], Metrics.largePadding)
                 }
             }
+            .sheet(isPresented: $isAddingFavorite) {
+                EmptyView()
+            }
         }
     }
 
@@ -179,10 +183,14 @@ private extension NewTabPageView {
     private func favoritesSectionView(proxy: GeometryProxy) -> some View {
         Group {
             if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(model: favoritesModel, geometry: proxy)
+                FavoritesEmptyStateView(model: favoritesModel,
+                                        isAddingFavorite: $isAddingFavorite,
+                                        geometry: proxy)
                     .padding(.top, Metrics.nonGridSectionTopPadding)
             } else {
-                FavoritesView(model: favoritesModel, geometry: proxy)
+                FavoritesView(model: favoritesModel,
+                              isAddingFavorite: $isAddingFavorite,
+                              geometry: proxy)
             }
         }
     }

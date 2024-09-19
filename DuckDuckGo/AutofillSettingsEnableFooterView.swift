@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import DesignResourcesKit
 
 class AutofillSettingsEnableFooterView: UIView {
 
@@ -36,16 +37,33 @@ class AutofillSettingsEnableFooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var title: UILabel = {
-        let label = UILabel(frame: CGRect.zero)
-        label.font = .preferredFont(forTextStyle: .footnote)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = UIColor(designSystemColor: .textSecondary)
-        label.text = UserText.autofillSettingsFooter
+    private lazy var title: UITextView = {
+        let textView = UITextView(frame: CGRect.zero)
+        textView.delegate = self
+        textView.textAlignment = .left
 
-        return label
+        var attributedText = NSMutableAttributedString()
+        let attributedTextDescription = (try? NSMutableAttributedString(markdown: UserText.autofillLoginListSettingsFooterMarkdown)) ?? NSMutableAttributedString(string: UserText.autofillLoginListSettingsFooterFallback)
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(resource: .lockSolid16).withTintColor(UIColor(designSystemColor: .textSecondary))
+        attachment.bounds = CGRect(x: 0, y: -1, width: 12, height: 12)
+        let attributedTextImage = NSMutableAttributedString(attachment: attachment)
+        attributedText.append(attributedTextImage)
+        attributedText.append(.init(string: " "))
+        attributedText.append(attributedTextDescription)
+        let wholeRange = NSRange(location: 0, length: attributedText.length)
+        attributedText.addAttribute(.foregroundColor, value: UIColor(designSystemColor: .textSecondary), range: wholeRange)
+        attributedText.addAttribute(.font, value: UIFont.daxFootnoteRegular(), range: wholeRange)
+
+        textView.attributedText = attributedText
+        textView.linkTextAttributes = [.foregroundColor: UIColor(designSystemColor: .accent)]
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.backgroundColor = .clear
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+
+        return textView
     }()
 
     private func installSubviews() {
@@ -65,5 +83,11 @@ class AutofillSettingsEnableFooterView: UIView {
             title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.defaultPadding),
             title.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -Constants.defaultPadding)
         ])
+    }
+}
+
+extension AutofillSettingsEnableFooterView: UITextViewDelegate {
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        textView.selectedTextRange = nil
     }
 }

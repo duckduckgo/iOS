@@ -794,6 +794,9 @@
 /* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
 "contextual.onboarding.highlights.try-a-search.message" = "Deine Suchen über DuckDuckGo sind immer privat.";
 
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "Entenküken";
+
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Versuche, eine Website zu besuchen!";
 
@@ -1808,11 +1811,17 @@
 /* The title of the CTA to progress to the next onboarding screen. */
 "onboarding.highlights.addressBarPosition.cta" = "Weiter";
 
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(standard)";
+
 /* The title of the onboarding dialog popup to select the preferred address bar position. */
 "onboarding.highlights.addressBarPosition.title" = "Wo soll deine Adressleiste platziert werden?";
 
 /* The message of the option to set the address bar to the top. */
 "onboarding.highlights.addressBarPosition.top.message" = "Leicht erkennbar";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Nach oben";
 
 /* The title of the CTA to progress to the next onboarding screen. */
 "onboarding.highlights.appIconSelection.cta" = "Weiter";
@@ -1831,6 +1840,12 @@
 
 /* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Browserdaten schnell löschen";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blockiert Tracker von Drittanbietern";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Schutz aktiviert!";
 
 /* The title of the fire button CTA to skip erasing the data. */
 "onboarding.highlights.fireDialog.cta.skip" = "Überspringen";

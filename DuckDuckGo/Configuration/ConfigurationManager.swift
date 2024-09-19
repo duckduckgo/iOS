@@ -80,7 +80,6 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
     deinit {
         removeLifecycleNotifications()
-        removePresenter()
     }
 
     @discardableResult
@@ -213,5 +212,15 @@ extension ConfigurationManager {
     func removeLifecycleNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    @objc
+    func addPresenter() {
+        NSFileCoordinator.addFilePresenter(self)
+    }
+
+    @objc
+    func removePresenter() {
+        NSFileCoordinator.removeFilePresenter(self)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FavoritesDefaultModel.swift
+//  FavoritesDefaultViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -24,9 +24,22 @@ import SwiftUI
 import Core
 import WidgetKit
 
-final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
+protocol NewTabPageFavoriteDataSource {
+    var externalUpdates: AnyPublisher<Void, Never> { get }
+    var favorites: [Favorite] { get }
 
-    @Published private(set) var allFavorites: [Favorite] = []
+    func moveFavorite(_ favorite: Favorite,
+                      fromIndex: Int,
+                      toIndex: Int)
+
+    func bookmarkEntity(for favorite: Favorite) -> BookmarkEntity?
+    func favorite(at index: Int) throws -> Favorite?
+    func removeFavorite(_ favorite: Favorite)
+}
+
+class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
+
+    @Published private(set) var allFavorites: [FavoriteItem] = []
     @Published private(set) var isCollapsed: Bool = true
     @Published private(set) var isShowingTooltip: Bool = false
 
@@ -34,7 +47,7 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
 
     private var cancellables = Set<AnyCancellable>()
 
-    private let interactionModel: FavoritesListInteracting
+    private let favoriteDataSource: NewTabPageFavoriteDataSource
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
 
@@ -42,11 +55,11 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
         allFavorites.isEmpty
     }
 
-    init(interactionModel: FavoritesListInteracting,
+    init(favoriteDataSource: NewTabPageFavoriteDataSource,
          faviconLoader: FavoritesFaviconLoading,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
-        self.interactionModel = interactionModel
+        self.favoriteDataSource = favoriteDataSource
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
@@ -58,15 +71,11 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
         })
 
 
-        interactionModel.externalUpdates.sink { [weak self] _ in
-            try? self?.updateData()
+        favoriteDataSource.externalUpdates.sink { [weak self] _ in
+            self?.updateData()
         }.store(in: &cancellables)
 
-        do {
-            try updateData()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        updateData()
     }
 
     func toggleCollapse() {
@@ -107,21 +116,21 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
 
     var onFavoriteDeleted: ((BookmarkEntity) -> Void)?
     func deleteFavorite(_ favorite: Favorite) {
-        guard let entity = lookupEntity(for: favorite) else { return }
+        guard let entity = favoriteDataSource.bookmarkEntity(for: favorite) else { return }
 
         pixelFiring.fire(.homeScreenDeleteFavorite, withAdditionalParameters: [:])
 
-        interactionModel.removeFavorite(entity)
+        favoriteDataSource.removeFavorite(favorite)
 
         WidgetCenter.shared.reloadAllTimelines()
-        try? updateData()
+        updateData()
 
         onFavoriteDeleted?(entity)
     }
 
     var onFavoriteEdit: ((BookmarkEntity) -> Void)?
     func editFavorite(_ favorite: Favorite) {
-        guard let entity = lookupEntity(for: favorite) else { return }
+        guard let entity = favoriteDataSource.bookmarkEntity(for: favorite) else { return }
 
         pixelFiring.fire(.homeScreenEditFavorite, withAdditionalParameters: [:])
 
@@ -132,12 +141,10 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
         guard indexSet.count == 1,
               let fromIndex = indexSet.first else { return }
 
-        let favorite = allFavorites[fromIndex]
-        guard let entity = lookupEntity(for: favorite) else { return }
+        let favoriteItem = allFavorites[fromIndex]
+        guard case let .favorite(favorite) = favoriteItem else { return }
 
-        // adjust for different target index handling
-        let toIndex = index > fromIndex ? index - 1 : index
-        interactionModel.moveFavorite(entity, fromIndex: fromIndex, toIndex: toIndex)
+        favoriteDataSource.moveFavorite(favorite, fromIndex: fromIndex, toIndex: index)
         allFavorites.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: index)
     }
 
@@ -156,53 +163,18 @@ final class FavoritesDefaultModel: FavoritesModel, FavoritesEmptyStateModel {
 
     // MARK: -
 
-    private func lookupEntity(for favorite: Favorite) -> BookmarkEntity? {
-        interactionModel.favorites.first {
-            $0.uuid == favorite.id
+    private func updateData() {
+        var allFavorites = favoriteDataSource.favorites.map {
+            FavoriteItem.favorite($0)
         }
-    }
-
-    private func updateData() throws {
-        self.allFavorites = try interactionModel.favorites.map(Favorite.init)
+        allFavorites.append(.itemPlaceholder)
+        
+        self.allFavorites = allFavorites
     }
 }
 
 enum FavoriteMappingError: Error {
     case missingUUID
-}
-
-private extension Favorite {
-    init(_ bookmark: BookmarkEntity) throws {
-        guard let uuid = bookmark.uuid else {
-            throw FavoriteMappingError.missingUUID
-        }
-
-        self.id = uuid
-        self.title = bookmark.displayTitle
-        self.domain = bookmark.host
-        self.urlObject = bookmark.urlObject
-    }
-}
-
-private extension BookmarkEntity {
-
-    var displayTitle: String {
-        if let title = title?.trimmingWhitespace(), !title.isEmpty {
-            return title
-        }
-
-        if let host = urlObject?.host?.droppingWwwPrefix() {
-            return host
-        }
-
-        assertionFailure("Unable to create display title")
-        return ""
-    }
-
-    var host: String {
-        return urlObject?.host ?? ""
-    }
-
 }
 
 private final class MissingFaviconWrapper: FavoritesFaviconLoading {

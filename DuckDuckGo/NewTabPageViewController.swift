@@ -23,7 +23,7 @@ import Bookmarks
 import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultViewModel>>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
@@ -35,7 +35,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
-    private let favoritesModel: FavoritesDefaultModel
+    private let favoritesModel: FavoritesDefaultViewModel
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
@@ -64,7 +64,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel, faviconLoader: faviconLoader)
+        favoritesModel = FavoritesDefaultViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
 

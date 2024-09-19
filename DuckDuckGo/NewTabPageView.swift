@@ -21,7 +21,7 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateModel>: View {
+struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptyStateModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @ObservedObject private var viewModel: NewTabPageViewModel
@@ -306,7 +306,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(allFavorites: []),
+        favoritesModel: FavoritesPreviewModel(favorites: []),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()

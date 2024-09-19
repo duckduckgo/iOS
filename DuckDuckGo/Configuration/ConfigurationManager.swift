@@ -75,12 +75,10 @@ final class ConfigurationManager: DefaultConfigurationManager {
                   store: ConfigurationStoring = AppDependencyProvider.shared.configurationStore,
                   defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
         super.init(fetcher: fetcher, store: store, defaults: defaults)
-        addPresenter()
         subscribeToLifecycleNotifications()
     }
 
     deinit {
-        removePresenter()
         removeLifecycleNotifications()
     }
 
@@ -135,7 +133,7 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
         return didFetchAnyTrackerBlockingDependencies
     }
-    
+
     private func updateTrackerBlockingDependencies() {
         ContentBlocking.shared.privacyConfigurationManager.reload(etag: store.loadEtag(for: .privacyConfiguration),
                                                                   data: store.loadData(for: .privacyConfiguration))

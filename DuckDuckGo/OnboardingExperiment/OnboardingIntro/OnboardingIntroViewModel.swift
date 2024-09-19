@@ -34,17 +34,24 @@ final class OnboardingIntroViewModel: ObservableObject {
     private let onboardingManager: OnboardingHighlightsManaging
     private let isIpad: Bool
     private let urlOpener: URLOpener
+    private let appIconProvider: () -> AppIcon
+    private let addressBarPositionProvider: () -> AddressBarPosition
 
     init(
         pixelReporter: OnboardingIntroPixelReporting,
         onboardingManager: OnboardingHighlightsManaging = OnboardingManager(),
         isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
-        urlOpener: URLOpener = UIApplication.shared
+        urlOpener: URLOpener = UIApplication.shared,
+        appIconProvider: @escaping () -> AppIcon = { AppIconManager.shared.appIcon },
+        addressBarPositionProvider: @escaping () -> AddressBarPosition = { AppUserDefaults().currentAddressBarPosition }
     ) {
         self.pixelReporter = pixelReporter
         self.onboardingManager = onboardingManager
         self.isIpad = isIpad
         self.urlOpener = urlOpener
+        self.appIconProvider = appIconProvider
+        self.addressBarPositionProvider = addressBarPositionProvider
+
         introSteps = if onboardingManager.isOnboardingHighlightsEnabled {
             isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
         } else {
@@ -79,14 +86,22 @@ final class OnboardingIntroViewModel: ObservableObject {
     }
 
     func appIconPickerContinueAction() {
+        if appIconProvider() != .defaultAppIcon {
+            pixelReporter.trackChooseCustomAppIconColor()
+        }
+
         if isIpad {
             onCompletingOnboardingIntro?()
         } else {
             state = makeViewState(for: .addressBarPositionSelection)
+            pixelReporter.trackAddressBarPositionSelectionImpression()
         }
     }
 
     func selectAddressBarPositionAction() {
+        if addressBarPositionProvider() == .bottom {
+            pixelReporter.trackChooseBottomAddressBarPosition()
+        }
         onCompletingOnboardingIntro?()
     }
 
@@ -127,6 +142,7 @@ private extension OnboardingIntroViewModel {
     func handleSetDefaultBrowserAction() {
         if onboardingManager.isOnboardingHighlightsEnabled {
             state = makeViewState(for: .appIconSelection)
+            pixelReporter.trackChooseAppIconImpression()
         } else {
             onCompletingOnboardingIntro?()
         }

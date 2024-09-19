@@ -22,45 +22,45 @@ import XCTest
 
 final class NewTabPageModelTests: XCTestCase {
 
-    let appSettings = AppSettingsMock()
+    let introDataStorage = NewTabPageIntroDataStoringMock()
 
     override func tearDown() {
         PixelFiringMock.tearDown()
     }
 
     func testDoesNotShowIntroIfSettingUndefined() {
-        let sut = NewTabPageModel(appSettings: appSettings)
+        let sut = NewTabPageModel(introDataStorage: introDataStorage)
 
         XCTAssertFalse(sut.isIntroMessageVisible)
     }
 
     func testShowsIntroMessage() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageModel(introDataStorage: introDataStorage)
 
         XCTAssertTrue(sut.isIntroMessageVisible)
     }
 
     func testDisablesIntroMessageWhenDismissed() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageModel(introDataStorage: introDataStorage)
 
         sut.dismissIntroMessage()
 
         XCTAssertFalse(sut.isIntroMessageVisible)
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+        XCTAssertEqual(introDataStorage.newTabPageIntroMessageEnabled, false)
     }
 
     func testDisablesIntroMessageAfterMultipleImpressions() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageModel(introDataStorage: introDataStorage)
 
         for _ in 1...3 {
             sut.introMessageDisplayed()
         }
 
         XCTAssertTrue(sut.isIntroMessageVisible) // We want to keep the message visible on last occurence
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+        XCTAssertEqual(introDataStorage.newTabPageIntroMessageEnabled, false)
     }
 
     func testFiresPixelWhenIntroMessageDismissed() {

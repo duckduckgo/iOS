@@ -1,5 +1,5 @@
 //
-//  StubAutofillLoginImportStateProvider.swift
+//  SubscriptionFeatureAvailabilityMock.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,18 +18,17 @@
 //
 
 import Foundation
-import BrowserServicesKit
+@testable import BrowserServicesKit
 
-struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
-    public var isNewDDGUser: Bool = false
-    public var hasImportedLogins: Bool = false
-    var credentialsImportPromptPresentationCount: Int = 0
+public final class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
+    public var isFeatureAvailable: Bool
+    public var isSubscriptionPurchaseAllowed: Bool
+    public var usesUnifiedFeedbackForm: Bool
 
-    var isAutofillEnabled: Bool {
-        AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled
+    public init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool, usesUnifiedFeedbackForm: Bool) {
+        self.isFeatureAvailable = isFeatureAvailable
+        self.isSubscriptionPurchaseAllowed = isSubscriptionPurchaseAllowed
+        self.usesUnifiedFeedbackForm = usesUnifiedFeedbackForm
     }
 
-    func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
-        AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
-    }
 }

@@ -383,9 +383,6 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
         }
     }
-
-    @UserDefaultsWrapper(key: .debugNewTabPageSectionsEnabledKey, defaultValue: false)
-    var newTabPageSectionsEnabled: Bool
     
     var duckPlayerMode: DuckPlayerMode {
         get {
@@ -417,18 +414,6 @@ public class AppUserDefaults: AppSettings {
                                             object: duckPlayerMode)
         }
     }
-
-    @UserDefaultsWrapper(key: .newTabPageShortcutsSettings, defaultValue: nil)
-    var newTabPageShortcutsSettings: Data?
-
-    @UserDefaultsWrapper(key: .newTabPageSectionsSettings, defaultValue: nil)
-    var newTabPageSectionsSettings: Data?
-
-    @UserDefaultsWrapper(key: .newTabPageIntroMessageEnabled, defaultValue: nil)
-    var newTabPageIntroMessageEnabled: Bool?
-
-    @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
-    var newTabPageIntroMessageSeenCount: Int
 
     @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
     var onboardingHighlightsEnabled: Bool

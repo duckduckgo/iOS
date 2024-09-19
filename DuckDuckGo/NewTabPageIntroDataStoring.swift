@@ -1,8 +1,8 @@
 //
-//  ContentBlockerStoreConstants.swift
+//  NewTabPageIntroDataStoring.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,10 +18,17 @@
 //
 
 import Foundation
+import Core
 
-public struct ContentBlockerStoreConstants {
+protocol NewTabPageIntroDataStoring: AnyObject {
+    var newTabPageIntroMessageEnabled: Bool? { get set }
+    var newTabPageIntroMessageSeenCount: Int { get set }
+}
 
-    public static let groupName = "\(Global.groupIdPrefix).contentblocker"
-    public static let configurationGroupName = "\(Global.groupIdPrefix).app-configuration"
+final class NewTabPageIntroDataUserDefaultsStorage: NewTabPageIntroDataStoring {
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageEnabled, defaultValue: nil)
+    var newTabPageIntroMessageEnabled: Bool?
 
+    @UserDefaultsWrapper(key: .newTabPageIntroMessageSeenCount, defaultValue: 0)
+    var newTabPageIntroMessageSeenCount: Int
 }

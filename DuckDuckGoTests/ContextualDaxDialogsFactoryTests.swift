@@ -321,6 +321,20 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
         XCTAssertEqual(pixelReporterMock.capturedScreenImpression, .onboardingContextualTryVisitSiteUnique)
     }
+
+    func testWhenEndOfJourneyDialogCTAIsTappedThenExpectedPixelFires() throws {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.final
+        let result = sut.makeView(for: spec, delegate: delegate, onSizeUpdate: {})
+        let view = try XCTUnwrap(find(OnboardingFinalDialog.self, in: result))
+        XCTAssertFalse(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)
+
+        // WHEN
+        view.highFiveAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)
+    }
 }
 
 extension ContextualDaxDialogsFactoryTests {

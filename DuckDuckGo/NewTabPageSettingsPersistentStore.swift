@@ -1,8 +1,8 @@
 //
-//  ContentBlockerStoreConstants.swift
+//  NewTabPageSettingsPersistentStore.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,10 +18,14 @@
 //
 
 import Foundation
+import Core
 
-public struct ContentBlockerStoreConstants {
+final class NewTabPageShorctutsSettingsStore: NewTabPageSettingsPersistentStore {
+    @UserDefaultsWrapper(key: .newTabPageShortcutsSettings, defaultValue: nil)
+    var data: Data?
+}
 
-    public static let groupName = "\(Global.groupIdPrefix).contentblocker"
-    public static let configurationGroupName = "\(Global.groupIdPrefix).app-configuration"
-
+final class NewTabPageSectionsSettingsStore: NewTabPageSettingsPersistentStore {
+    @UserDefaultsWrapper(key: .newTabPageSectionsSettings, defaultValue: nil)
+    var data: Data?
 }

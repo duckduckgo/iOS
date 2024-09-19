@@ -38,6 +38,7 @@ class MockDependencyProvider: DependencyProvider {
     var autofillLoginSession: AutofillLoginSession
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
+    var configurationStore: ConfigurationStore
     var userBehaviorMonitor: UserBehaviorMonitor
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     var subscriptionManager: SubscriptionManager
@@ -60,6 +61,7 @@ class MockDependencyProvider: DependencyProvider {
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
+        configurationStore = defaultProvider.configurationStore
         configurationManager = defaultProvider.configurationManager
         userBehaviorMonitor = defaultProvider.userBehaviorMonitor
         subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability

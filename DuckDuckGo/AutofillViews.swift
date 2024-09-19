@@ -82,11 +82,28 @@ struct AutofillViews {
 
         var body: some View {
             Text(text)
-                .daxFootnoteRegular()
-                .foregroundColor(Color(designSystemColor: .textSecondary))
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: Const.Size.maxWidth)
+            .daxFootnoteRegular()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: Const.Size.maxWidth)
+        }
+    }
+
+    struct SecureDescription: View {
+        let text: String
+
+        var body: some View {
+            (
+                Text("\(Image(.lockSolid16)) ").baselineOffset(-1.0)
+                +
+                Text(text)
+            )
+            .daxFootnoteRegular()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: Const.Size.maxWidth)
         }
     }
 

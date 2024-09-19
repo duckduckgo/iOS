@@ -39,6 +39,7 @@ protocol DependencyProvider {
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
+    var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
@@ -69,7 +70,8 @@ class AppDependencyProvider: DependencyProvider {
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
-    let configurationManager = ConfigurationManager()
+    let configurationManager: ConfigurationManager
+    let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
 
@@ -95,6 +97,8 @@ class AppDependencyProvider: DependencyProvider {
     init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+
+        configurationManager = ConfigurationManager(store: configurationStore)
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!

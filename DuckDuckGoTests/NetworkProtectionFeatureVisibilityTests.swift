@@ -64,7 +64,7 @@ struct NetworkProtectionFeatureVisibilityMocks: NetworkProtectionFeatureVisibili
     init(with options: Options) {
         self.options = options
         
-        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let subscriptionAppGroup = "NetworkProtectionFeatureVisibilityTests"
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
         let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,

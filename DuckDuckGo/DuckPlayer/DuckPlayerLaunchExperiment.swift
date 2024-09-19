@@ -77,19 +77,19 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     private let dateProvider: DuckPlayerExperimentDateProvider
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastWeekPixelFired, defaultValue: nil)
-    private var lastWeekPixelFired: Int?
+    private var lastWeekPixelFiredV2: Int?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastDayPixelFired, defaultValue: nil)
-    private var lastDayPixelFired: Int?
+    private var lastDayPixelFiredV2: Int?
        
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentLastVideoIDRendered, defaultValue: nil)
-    private var lastVideoIDReported: String?
+    private var lastVideoIDReportedV2: String?
     
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentEnrollmentDate, defaultValue: nil)
-    var enrollmentDate: Date?
+    var enrollmentDateV2: Date?
 
     @UserDefaultsWrapper(key: .duckPlayerPixelExperimentCohort, defaultValue: nil)
-    var experimentCohort: String?
+    var experimentCohortV2: String?
     
     private var isInternalUser: Bool
     
@@ -113,7 +113,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     
     private var dates: (day: Int, week: Int)? {
         guard isEnrolled,
-              let enrollmentDate = enrollmentDate else { return nil }
+              let enrollmentDate = enrollmentDateV2 else { return nil }
         let currentDate = dateProvider.currentDate
         let calendar = Calendar.current
         let dayDifference = calendar.dateComponents([.day], from: enrollmentDate, to: currentDate).day ?? 0
@@ -123,7 +123,7 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     
     private var formattedEnrollmentDate: String? {
         guard isEnrolled,
-              let enrollmentDate = enrollmentDate else { return nil }
+              let enrollmentDate = enrollmentDateV2 else { return nil }
         return Self.formattedDate(enrollmentDate)
     }
     
@@ -135,11 +135,11 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
     }
     
     var isEnrolled: Bool {
-        return enrollmentDate != nil && experimentCohort != nil
+        return enrollmentDateV2 != nil && experimentCohortV2 != nil
     }
     
     var isExperimentCohort: Bool {
-        return experimentCohort == "experiment"
+        return experimentCohortV2 == "experiment"
     }
     
     func assignUserToCohort() {
@@ -149,32 +149,32 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
             if isInternalUser {
                 cohort = .experiment
             }
-            experimentCohort = cohort.rawValue
-            enrollmentDate = dateProvider.currentDate
+            experimentCohortV2 = cohort.rawValue
+            enrollmentDateV2 = dateProvider.currentDate
             fireEnrollmentPixel()
         }
     }
 
     private func fireEnrollmentPixel() {
         guard isEnrolled,
-                let experimentCohort = experimentCohort,
+                let experimentCohortV2 = experimentCohortV2,
                 let formattedEnrollmentDate else { return }
                 
-        let params = [Constants.variantKey: experimentCohort, Constants.enrollmentKey: formattedEnrollmentDate]
+        let params = [Constants.variantKey: experimentCohortV2, Constants.enrollmentKey: formattedEnrollmentDate]
         pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentCohortAssign, withAdditionalParameters: params)
     }
     
     func fireSearchPixels() {
         if isEnrolled {
             guard isEnrolled,
-                    let experimentCohort = experimentCohort,
+                    let experimentCohortV2 = experimentCohortV2,
                     let dates,
                     let formattedEnrollmentDate else {
                 return
             }
             
             var params = [
-                Constants.variantKey: experimentCohort,
+                Constants.variantKey: experimentCohortV2,
                 Constants.dayKey: "\(dates.day)",
                 Constants.enrollmentKey: formattedEnrollmentDate
             ]
@@ -183,56 +183,56 @@ final class DuckPlayerLaunchExperiment: DuckPlayerLaunchExperimentHandling {
             pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentSearch, withAdditionalParameters: params)
             
             // Fire a daily pixel
-            if dates.day != lastDayPixelFired {
+            if dates.day != lastDayPixelFiredV2 {
                 pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentDailySearch, withAdditionalParameters: params)
-                lastDayPixelFired = dates.day
+                lastDayPixelFiredV2 = dates.day
             }
             
             // Fire a weekly pixel
-            if dates.week != lastWeekPixelFired && dates.day > 0 {
+            if dates.week != lastWeekPixelFiredV2 && dates.day > 0 {
                 params.removeValue(forKey: Constants.dayKey)
                 params[Constants.weekKey] = "\(dates.week)"
                 pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentWeeklySearch, withAdditionalParameters: params)
-                lastWeekPixelFired = dates.week
+                lastWeekPixelFiredV2 = dates.week
             }
         }
     }
     
     func fireYoutubePixel(videoID: String) {
         guard isEnrolled,
-              let experimentCohort = experimentCohort,
+              let experimentCohortV2 = experimentCohortV2,
               let dates,
               let formattedEnrollmentDate else {
             return
         }
         
         let params = [
-            Constants.variantKey: experimentCohort,
+            Constants.variantKey: experimentCohortV2,
             Constants.dayKey: "\(dates.day)",
             Constants.stateKey: duckPlayerMode?.stringValue ?? "",
             Constants.referrerKey: referrer?.stringValue ?? "",
             Constants.enrollmentKey: formattedEnrollmentDate
         ]
-        if lastVideoIDReported != videoID {
+        if lastVideoIDReportedV2 != videoID {
             pixel.fireDuckPlayerExperimentPixel(pixel: .duckplayerExperimentYoutubePageView, withAdditionalParameters: params)
-            lastVideoIDReported = videoID
+            lastVideoIDReportedV2 = videoID
         }
     }
     
     func cleanup() {
-        enrollmentDate =  nil
-        experimentCohort = nil
-        lastDayPixelFired = nil
-        lastWeekPixelFired = nil
-        lastVideoIDReported = nil
+        enrollmentDateV2 =  nil
+        experimentCohortV2 = nil
+        lastDayPixelFiredV2 = nil
+        lastWeekPixelFiredV2 = nil
+        lastVideoIDReportedV2 = nil
     }
     
     func override() {
-        enrollmentDate = Date()
-        experimentCohort = "experiment"
-        lastDayPixelFired = nil
-        lastWeekPixelFired = nil
-        lastVideoIDReported = nil
+        enrollmentDateV2 = Date()
+        experimentCohortV2 = "experiment"
+        lastDayPixelFiredV2 = nil
+        lastWeekPixelFiredV2 = nil
+        lastVideoIDReportedV2 = nil
         
     }
         

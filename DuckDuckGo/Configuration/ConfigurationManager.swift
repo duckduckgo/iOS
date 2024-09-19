@@ -75,13 +75,12 @@ final class ConfigurationManager: DefaultConfigurationManager {
                   store: ConfigurationStoring = AppDependencyProvider.shared.configurationStore,
                   defaults: KeyValueStoring = UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()) {
         super.init(fetcher: fetcher, store: store, defaults: defaults)
-        addPresenter()
         subscribeToLifecycleNotifications()
     }
 
     deinit {
-        removePresenter()
         removeLifecycleNotifications()
+        removePresenter()
     }
 
     @discardableResult
@@ -135,7 +134,7 @@ final class ConfigurationManager: DefaultConfigurationManager {
 
         return didFetchAnyTrackerBlockingDependencies
     }
-    
+
     private func updateTrackerBlockingDependencies() {
         ContentBlocking.shared.privacyConfigurationManager.reload(etag: store.loadEtag(for: .privacyConfiguration),
                                                                   data: store.loadData(for: .privacyConfiguration))
@@ -214,15 +213,5 @@ extension ConfigurationManager {
     func removeLifecycleNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-
-    @objc
-    func addPresenter() {
-        NSFileCoordinator.addFilePresenter(self)
-    }
-
-    @objc
-    func removePresenter() {
-        NSFileCoordinator.removeFilePresenter(self)
     }
 }

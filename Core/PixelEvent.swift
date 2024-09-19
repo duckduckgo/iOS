@@ -144,6 +144,11 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingIntroChooseAppIconImpressionUnique
+        case onboardingIntroChooseCustomAppIconColorCTAPressed
+        case onboardingIntroChooseAddressBarImpressionUnique
+        case onboardingIntroBottomAddressBarSelected
+
         case onboardingContextualSearchOptionTappedUnique
         case onboardingContextualSearchCustomUnique
         case onboardingContextualSiteOptionTappedUnique
@@ -164,6 +169,7 @@ extension Pixel {
         case daxDialogsFireEducationCancelledUnique
         case daxDialogsEndOfJourneyTabUnique
         case daxDialogsEndOfJourneyNewTabUnique
+        case daxDialogsEndOfJourneyDismissed
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -953,6 +959,11 @@ extension Pixel.Event {
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+        case .onboardingIntroChooseAppIconImpressionUnique: return "m_preonboarding_choose_icon_impressions_unique"
+        case .onboardingIntroChooseCustomAppIconColorCTAPressed: return "m_preonboarding_icon_color_chosen"
+        case .onboardingIntroChooseAddressBarImpressionUnique: return "m_preonboarding_choose_address_bar_impressions_unique"
+        case .onboardingIntroBottomAddressBarSelected: return "m_preonboarding_bottom_address_bar_selected"
+
         case .onboardingContextualSearchOptionTappedUnique: return "m_onboarding_search_option_tapped_unique"
         case .onboardingContextualSiteOptionTappedUnique: return "m_onboarding_visit_site_option_tapped_unique"
         case .onboardingContextualSecondSiteVisitUnique: return "m_second_sitevisit_unique"
@@ -973,6 +984,7 @@ extension Pixel.Event {
         case .daxDialogsFireEducationCancelledUnique: return "m_dx_fe_ca_unique"
         case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
         case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
+        case .daxDialogsEndOfJourneyDismissed: return "m_dx_end_dialog_dismissed"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"

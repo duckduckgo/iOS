@@ -175,8 +175,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
         let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
 
-        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate] in
+        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in
             delegate?.didTapDismissContextualOnboardingAction()
+            self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
         })
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

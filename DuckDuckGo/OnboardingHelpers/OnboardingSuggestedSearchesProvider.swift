@@ -21,6 +21,8 @@ import Foundation
 import Onboarding
 
 struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding {
+    private static let imageSearch = "!image "
+
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
     private let onboardingManager: OnboardingHighlightsManaging
 
@@ -85,7 +87,7 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
 
     private var surpriseMe: ContextualOnboardingListItem {
         let search = if onboardingManager.isOnboardingHighlightsEnabled {
-            UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
+            Self.imageSearch + UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
         } else {
             isUSCountry ?
             UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish :

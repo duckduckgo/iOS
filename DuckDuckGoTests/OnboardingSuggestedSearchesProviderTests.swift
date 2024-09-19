@@ -25,6 +25,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
     private var onboardingManagerMock: OnboardingManagerMock!
     let userText = UserText.DaxOnboardingExperiment.ContextualOnboarding.self
     let highlightsUserText = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.self
+    static let imageSearch = "!image "
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -88,7 +89,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1English),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
-            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title: Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -102,7 +103,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2International),
-            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title:  Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)
@@ -116,7 +117,7 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
             ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
-            ContextualOnboardingListItem.surprise(title: highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+            ContextualOnboardingListItem.surprise(title:  Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
         ]
 
         XCTAssertEqual(provider.list, expectedSearches)

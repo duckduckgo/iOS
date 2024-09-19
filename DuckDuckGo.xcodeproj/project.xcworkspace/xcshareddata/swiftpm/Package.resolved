@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "32a2ec64385543ccfbaaafbfe9545543a2c06aac",
-        "version" : "196.2.0"
+        "branch" : "dominik/punycode-3.0.0",
+        "revision" : "cafe60012879a42fb3e4ac50af4c698eecf88fd9"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gumob/PunycodeSwift.git",
       "state" : {
-        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-        "version" : "2.1.0"
+        "revision" : "30a462bdb4398ea835a3585472229e0d74b36ba5",
+        "version" : "3.0.0"
       }
     },
     {

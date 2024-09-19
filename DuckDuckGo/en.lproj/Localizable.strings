@@ -1872,7 +1872,7 @@ https://duckduckgo.com/mac";
 "onboarding.highlights.addressBarPosition.cta" = "Next";
 
 /* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
-"onboarding.highlights.addressBarPosition.default" = "(Default)";
+"onboarding.highlights.addressBarPosition.default" = "(default)";
 
 /* The title of the onboarding dialog popup to select the preferred address bar position. */
 "onboarding.highlights.addressBarPosition.title" = "Where should I put your address bar?";

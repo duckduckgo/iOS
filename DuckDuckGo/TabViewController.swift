@@ -186,6 +186,8 @@ class TabViewController: UIViewController {
 
     let syncService: DDGSyncing
 
+    private let daxDialogsDebouncer = Debouncer()
+
     public var url: URL? {
         willSet {
             if newValue != url {
@@ -1448,7 +1450,8 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
 
         // Present the Dax dialog with a delay to mitigate issue where user script detec trackers after the dialog is show to the user
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        // Debounce to avoid showing multiple animations on redirects. e.g. !image baby ducklings
+        daxDialogsDebouncer.debounce(for: 0.8) { [weak self] in
             self?.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
         }
 

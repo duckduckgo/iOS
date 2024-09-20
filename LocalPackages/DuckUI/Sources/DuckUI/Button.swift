@@ -124,24 +124,14 @@ public struct SecondaryFillButtonStyle: ButtonStyle {
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? defaultForegroundColor : foregroundColor)
-            .modify {
-                if !isFreeform {
-                    $0
-                        .padding(.vertical)
-                        .padding(.horizontal, fullWidth ? nil : 24)
-                        .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
-                } else {
-                    $0
-                }
+            .if(!isFreeform) { view in
+                view
+                    .padding(.vertical)
+                    .padding(.horizontal, fullWidth ? nil : 24)
+                    .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
             }
             .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
-    }
-}
-
-extension View {
-    func modify(@ViewBuilder _ modifierClosure: (Self) -> some View) -> some View {
-        modifierClosure(self)
     }
 }
 

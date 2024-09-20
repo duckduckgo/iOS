@@ -7,8 +7,8 @@ source $(dirname $0)/common.sh
 ## Constants
 
 # The simulator command requires the hyphens
-target_device="iPhone-15"
-target_os="iOS-17-0"
+target_device="iPhone-16"
+target_os="iOS-18-0"
 
 ## Functions
 
@@ -50,7 +50,7 @@ build_app() {
     echo "⏲️ Building the app"
     set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo.xcodeproj \
                                   -scheme "DuckDuckGo" \
-                                  -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+                                  -destination "platform=iOS Simulator,name=iPhone 16,OS=18.0" \
                                   -derivedDataPath "$derived_data_path" \
                                   -skipPackagePluginValidation \
                                   -skipMacroValidation \

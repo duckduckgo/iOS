@@ -42,7 +42,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15" \
+          -destination "platform=iOS Simulator,name=iPhone 16" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           -skipMacroValidation \
@@ -72,7 +72,7 @@ jobs:
     timeout-minutes: 90
     strategy:
       matrix:
-        os-version: [15, 16, 17]
+        os-version: [15, 16, 17, 18]
       max-parallel: 1 # Uncomment this line to run tests sequentially. 
       fail-fast: false
     

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/remove-deduplication-feature-flag",
-        "revision" : "8583cd125c91bf11227b2c026188455b3d8a83d5"
+        "revision" : "40f2fcc23944e028e16798a784ceff7e24ba6683",
+        "version" : "197.0.0"
       }
     },
     {

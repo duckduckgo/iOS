@@ -111,6 +111,15 @@ class BookmarksCachingSearchTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenSearchingForCharactersThenCharactersAtTheStartAreMatched() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: quotedTitleStore)
+        var bookmarks = engine.search(query: "\"")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "«")
+        XCTAssertEqual(bookmarks.count, 1)
+    }
+
     func testWhenSearchingForWordsAtStartWithQuotesThenWordsAreMatched() async throws {
 
         let engine = BookmarksCachingSearch(bookmarksStore: quotedTitleStore)

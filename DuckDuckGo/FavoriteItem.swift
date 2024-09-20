@@ -31,7 +31,7 @@ extension FavoriteItem: Identifiable {
         case .favorite(let favorite):
             return favorite.id
         case .addFavorite:
-            return "placeholder"
+            return "addFavorite"
         }
     }
 }

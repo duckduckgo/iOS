@@ -2418,10 +2418,6 @@ extension MainViewController: TabDelegate {
         }
     }
     
-    func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation(showNextDaxDialog: true)
-    }
-    
     func tabDidRequestFireButtonPulse(tab: TabViewController) {
         showFireButtonPulse()
     }

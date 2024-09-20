@@ -83,15 +83,6 @@ class AddFavoriteViewModel: ObservableObject {
                 }
 
                 await publishResults(results)
-
-                try Task.checkCancellation()
-
-                let decorator = FavoriteSearchResultDecorator()
-                let decoratedResults = await decorator.decorate(results: results)
-
-                try Task.checkCancellation()
-
-                await publishResults(decoratedResults)
             } catch {
                 await publishResults([])
             }

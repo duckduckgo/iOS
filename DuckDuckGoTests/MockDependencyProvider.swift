@@ -51,7 +51,7 @@ class MockDependencyProvider: DependencyProvider {
     var vpnSettings: NetworkProtection.VPNSettings
 
     init() {
-        let defaultProvider = AppDependencyProvider()
+        let defaultProvider = AppDependencyProvider.makeTestingInstance()
         appSettings = defaultProvider.appSettings
         variantManager = defaultProvider.variantManager
         featureFlagger = defaultProvider.featureFlagger

@@ -54,7 +54,7 @@ protocol DependencyProvider {
 
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call (e.g. ViewControllers created from Storyboards).
-class AppDependencyProvider: DependencyProvider {
+final class AppDependencyProvider: DependencyProvider {
 
     static var shared: DependencyProvider = AppDependencyProvider()
     
@@ -89,12 +89,12 @@ class AppDependencyProvider: DependencyProvider {
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-    
+
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
-    init() {
+    private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
 
@@ -143,5 +143,11 @@ class AppDependencyProvider: DependencyProvider {
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
+    }
+
+    /// Only meant to be used for testing.
+    ///
+    static func makeTestingInstance() -> Self {
+        Self.init()
     }
 }

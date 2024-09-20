@@ -169,7 +169,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         pixelsFired.removeAll()
         HTTPStubs.removeAllStubs()
 
-        AppDependencyProvider.shared = AppDependencyProvider()
+        AppDependencyProvider.shared = AppDependencyProvider.makeTestingInstance()
 
         subscriptionService = nil
         authService = nil

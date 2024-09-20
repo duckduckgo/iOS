@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Dezactivează";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
@@ -418,9 +424,6 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importă parolele";
 
-/* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Parolele din alte browsere sau aplicații pot fi importate folosind versiunea pentru desktop a browserului DuckDuckGo.";
-
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nici o parolă nu a fost salvată încă";
 
@@ -462,6 +465,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Caută parole";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Parolele sunt criptate. Nimeni în afară de tine nu le poate vedea, nici măcar noi. [Află mai multe](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerat";
@@ -581,11 +587,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nu solicita niciodată pentru acest site";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Parole și completare automată de la DuckDuckGo stochează parolele în siguranță pe dispozitivul tău.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești să salvezi această parolă?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Stochează în siguranță parola pe dispozitiv, cu Parole și completare automată DuckDuckGo.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Salvezi parola?";

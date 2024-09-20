@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Letilt";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Megtekintés";
 
@@ -418,9 +424,6 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Jelszavak importálása";
 
-/* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Más böngészőkből vagy alkalmazásokból származó jelszavak a DuckDuckGo böngésző asztali verziójával importálhatók.";
-
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Még nincsenek mentett jelszavak";
 
@@ -462,6 +465,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Jelszavak keresése";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "A jelszavak titkosítva vannak. Rajtad kívül senki sem láthatja őket, még mi sem. [További információk](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Javasolt";
@@ -581,11 +587,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Soha ne kérdezzen rá ennél a webhelynél";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "A DuckDuckGóban elérhető Jelszavak és automatikus kitöltés funkció biztonságosan tárolja a jelszavakat az eszközön.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Mented a jelszót?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Tárold biztonságosan a jelszavaidat az eszközödön a DuckDuckGo Jelszavak és automatikus kitöltés funkciójával.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Mented a jelszót?";

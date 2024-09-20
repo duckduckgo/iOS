@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigera";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Inaktivera";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visa";
 
@@ -418,9 +424,6 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importera lösenord";
 
-/* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Lösenord från andra webbläsare eller appar kan importeras med hjälp av datorversionen av DuckDuckGo-webbläsaren.";
-
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Inga lösenord sparade ännu";
 
@@ -462,6 +465,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Sök lösenord";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Lösenorden är krypterade. Ingen annan än du kan se dem, inte ens vi. [Läs mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Förslag";
@@ -581,11 +587,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Fråga aldrig för den här webbplatsen";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo Lösenord och autofyll lagrar lösenord på ett säkert sätt på din enhet.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Spara det här lösenordet?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Förvara ditt lösenord säkert på enheten med DuckDuckGo Lösenord och autofyll.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Spara lösenord?";

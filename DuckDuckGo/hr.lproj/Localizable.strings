@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Onemogući";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Pregled";
 
@@ -418,9 +424,6 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Uvezi lozinke";
 
-/* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Lozinke iz drugih preglednika ili aplikacija mogu se uvesti pomoću desktop verzije preglednika DuckDuckGo.";
-
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Još nema spremljenih lozinki";
 
@@ -462,6 +465,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje lozinki";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi. [Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predloženo";
@@ -581,11 +587,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nikada ne traži za ovu web lokaciju";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo funkcija Passwords & Autofill sigurno pohranjuje lozinke na tvom uređaju.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li spremiti ovu lozinku?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Sigurno pohrani svoju lozinku na uređaj pomoću usluge automatskog popunjavanja DuckDuckGo Passwords & Autofill.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Želiš li spremiti lozinku?";

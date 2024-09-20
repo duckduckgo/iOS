@@ -1251,7 +1251,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autocompleteHistoryWarningTitle = NSLocalizedString("autocomplete.history.warning.title", value: "Same privacy.\nBetter search suggestions!", comment: "Title for message show in suggestions")
     public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Search suggestions now include your recently visited sites. Turn off in Settings, or clear anytime with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
     public static let autocompleteSearchDuckDuckGo = NSLocalizedString("autocomplete.history.search.duckduckgo", value: "Search DuckDuckGo", comment: "Subtitle for search history items")
-    public static let autocompleteSwitchToTab = NSLocalizedString("autocomplete.switch.to.tab", value: "Switch To Tab", comment: "Switch to tab hint")
+    public static let autocompleteSwitchToTab = NSLocalizedString("autocomplete.switch.to.tab", value: "Switch to Tab", comment: "Switch to tab hint")
 
     // Site not working
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")

@@ -1087,6 +1087,32 @@ final class DaxDialog: XCTestCase {
         XCTAssertNil(result)
     }
 
+    func testWhenIsEnabledIsCalled_AndShouldShowDaxDialogsIsTrue_ThenReturnTrue() {
+        // GIVEN
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.currentVariant = MockVariant(features: [.newOnboardingIntro, .contextualDaxDialogs])
+        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+
+        // WHEN
+        let result = sut.isEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsEnabledIsCalled_AndShouldShowDaxDialogsIsFalse_ThenReturnFalse() {
+        // GIVEN
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.currentVariant = MockVariant(features: [.newOnboardingIntro])
+        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+
+        // WHEN
+        let result = sut.isEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,
@@ -1111,7 +1137,10 @@ final class DaxDialog: XCTestCase {
     }
 
     private func makeExperimentSUT(settings: DaxDialogsSettings) -> DaxDialogs {
-        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.isSupportedBlock = { feature in
+            feature == .contextualDaxDialogs
+        }
         return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
     }
 }

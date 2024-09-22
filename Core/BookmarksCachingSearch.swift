@@ -133,12 +133,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             self.title = title
             self.url = url
             self.isFavorite = isFavorite
-
-            if isFavorite {
-                score = 0
-            } else {
-                score = -1
-            }
+            self.score = 0
         }
 
         init?(bookmark: [String: Any]) {
@@ -191,7 +186,6 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         return cachedBookmarksAndFavorites
     }
 
-    // swiftlint:disable cyclomatic_complexity
     private func score(query: String, input: [ScoredBookmark]) -> [ScoredBookmark] {
         let query = query.lowercased()
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
@@ -201,55 +195,63 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
 
         for index in 0..<input.count {
             let entry = input[index]
-            let title = entry.title.lowercased()
-
-            // Exact matches - full query
-            if title.starts(with: query) { // High score for exact match from the beginning of the title
-                input[index].score += 200
-            } else if title.contains(" \(query)") { // Exact match from the beginning of the word within string.
-                input[index].score += 100
-            }
-
-            let domain = entry.url.host?.droppingWwwPrefix() ?? ""
-
-            // Tokenized matches
-
-            if tokens.count > 1 {
-                var matchesAllTokens = true
-                for token in tokens {
-                    // Match only from the beginning of the word to avoid unintuitive matches.
-                    if !title.starts(with: token) && !title.contains(" \(token)") && !domain.starts(with: token) {
-                        matchesAllTokens = false
-                        break
-                    }
-                }
-
-                if matchesAllTokens {
-                    // Score tokenized matches
-                    input[index].score += 10
-
-                    // Boost score if first token matches:
-                    if let firstToken = tokens.first { // domain - high score boost
-                        if domain.starts(with: firstToken) {
-                            input[index].score += 300
-                        } else if title.starts(with: firstToken) { // beginning of the title - moderate score boost
-                            input[index].score += 50
-                        }
-                    }
-                }
-            } else {
-                // High score for matching domain in the URL
-                if let firstToken = tokens.first, domain.starts(with: firstToken) {
-                    input[index].score += 300
-                }
-            }
+            // Add the new score to the existing score defined by them being a favorite
+            input[index].score = score(query, entry, tokens)
             if input[index].score > 0 {
                 result.append(input[index])
             }
         }
         return result
     }
-    // swiftlint:enable cyclomatic_complexity
+
+    private func score(_ query: String, _ bookmark: ScoredBookmark, _ tokens: [String]) -> Int {
+        let title = bookmark.title.lowercased()
+        let domain = bookmark.url.host?.droppingWwwPrefix() ?? ""
+        var score = bookmark.isFavorite ? 0 : -1
+
+        // Exact matches - full query
+        if title.leadingBoundaryStartsWith(query) { // High score for exact match from the beginning of the title
+            score += 200
+        } else if title.contains(" \(query)") { // Exact match from the beginning of the word within string.
+            score += 100
+        }
+
+        // Tokenized matches
+
+        if tokens.count > 1 {
+            var matchesAllTokens = true
+            for token in tokens {
+                // Match only from the beginning of the word to avoid unintuitive matches.
+                if !title.leadingBoundaryStartsWith(token) &&
+                    !title.contains(" \(token)")
+                    && !domain.starts(with: token) {
+                    matchesAllTokens = false
+                    break
+                }
+            }
+
+            if matchesAllTokens {
+                // Score tokenized matches
+                score += 10
+
+                // Boost score if first token matches:
+                if let firstToken = tokens.first { // domain - high score boost
+                    if domain.starts(with: firstToken) {
+                        score += 300
+                    } else if title.leadingBoundaryStartsWith(firstToken) { // beginning of the title - moderate score boost
+                        score += 50
+                    }
+                }
+            }
+        } else {
+            // High score for matching domain in the URL
+            if let firstToken = tokens.first, domain.starts(with: firstToken) {
+                score += 300
+            }
+        }
+
+        return score
+    }
 
     public func search(query: String) -> [BookmarksStringSearchResult] {
         guard hasData else {
@@ -264,4 +266,13 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
 
         return finalResult
     }
+}
+
+private extension String {
+
+    /// e.g. "Cats and Dogs" would match `Cats` or `"Cats`
+    func leadingBoundaryStartsWith(_ s: String) -> Bool {
+        return starts(with: s) || trimmingCharacters(in: .alphanumerics.inverted).starts(with: s)
+    }
+
 }

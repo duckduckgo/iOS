@@ -131,9 +131,11 @@ extension Pixel {
         case autocompleteClickFavorite
         case autocompleteClickSearchHistory
         case autocompleteClickSiteHistory
+        case autocompleteClickOpenTab
         case autocompleteDisplayedLocalBookmark
         case autocompleteDisplayedLocalFavorite
         case autocompleteDisplayedLocalHistory
+        case autocompleteDisplayedOpenedTab
         case autocompleteSwipeToDelete
 
         case feedbackPositive
@@ -946,9 +948,11 @@ extension Pixel.Event {
         case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
         case .autocompleteClickSearchHistory: return "m_autocomplete_click_history_search"
         case .autocompleteClickSiteHistory: return "m_autocomplete_click_history_site"
+        case .autocompleteClickOpenTab: return "m_autocomplete_click_switch_to_tab"
         case .autocompleteDisplayedLocalBookmark: return "m_autocomplete_display_local_bookmark"
         case .autocompleteDisplayedLocalFavorite: return "m_autocomplete_display_local_favorite"
         case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
+        case .autocompleteDisplayedOpenedTab: return "m_autocomplete_display_switch_to_tab"
         case .autocompleteSwipeToDelete: return "m_autocomplete_result_deleted"
 
         case .feedbackPositive: return "mfbs_positive_submit"

@@ -250,6 +250,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Same privacy.\nBetter search suggestions!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Switch to Tab";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Disabled";
 

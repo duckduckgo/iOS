@@ -35,7 +35,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        AppDependencyProvider.shared = AppDependencyProvider()
+        AppDependencyProvider.shared = AppDependencyProvider.makeTestingInstance()
     }
     
     func testWhenOpeningSettingsThenClearDataToggleIsSetBasedOnAppSettings() {

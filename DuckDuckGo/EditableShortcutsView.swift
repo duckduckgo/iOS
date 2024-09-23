@@ -61,11 +61,11 @@ private extension View {
 
 extension NewTabPageSettingsModel.NTPSetting<NewTabPageShortcut>: Reorderable, Hashable, Equatable {
 
-    var dropItemProvider: NSItemProvider {
-        NSItemProvider(object: item.id as NSString)
+    var trait: ReorderableTrait {
+        let itemProvider = NSItemProvider(object: item.id as NSString)
+        let metadata = MoveMetadata(itemProvider: itemProvider, type: .text)
+        return .movable(metadata)
     }
-
-    var dropType: UTType { .text }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.item == rhs.item

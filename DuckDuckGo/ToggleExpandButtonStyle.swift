@@ -18,13 +18,12 @@
 //
 
 import SwiftUI
-import DuckUI
+import DesignResourcesKit
 
 struct ToggleExpandButtonStyle: ButtonStyle {
-    @Environment(\.colorScheme) private var colorScheme
-
+    
     func makeBody(configuration: Configuration) -> some View {
-        let isDark = colorScheme == .dark
+        let backgroundColor = configuration.isPressed ? Color(designSystemColor: .buttonsSecondaryFillPressed) : Color(designSystemColor: .buttonsSecondaryFillDefault)
 
         HStack(spacing: 0) {
             VStack {
@@ -34,17 +33,13 @@ struct ToggleExpandButtonStyle: ButtonStyle {
             Circle()
                 .stroke(Color(designSystemColor: .lines), lineWidth: 1)
                 .frame(width: 32, height: 32)
-                .if(configuration.isPressed) {
-                    $0.background(isDark ? Color.tint(0.12) : Color.shade(0.06))
-                        .clipShape(Circle())
-                }
                 .background(
                     Circle()
-                        .fill(Color(designSystemColor: .background))
+                        .fill(backgroundColor)
                 )
                 .overlay {
                     configuration.label
-                        .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
+                        .foregroundColor(Color(designSystemColor: .iconsSecondary))
                         .frame(width: 16, height: 16)
                         
                 }

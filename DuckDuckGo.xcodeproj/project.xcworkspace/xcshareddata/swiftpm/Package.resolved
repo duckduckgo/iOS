@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "6e1520bd83bbcc269b0d561c51fc92b81fe6d93b",
-        "version" : "198.0.0"
+        "revision" : "cc3629fa16880e410e588a27a6b2426dcc140009",
+        "version" : "198.0.1"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "9f3717b3913a12956f1386fe7b657f68545fba83",
-        "version" : "6.15.0"
+        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
+        "version" : "6.16.0"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gumob/PunycodeSwift.git",
       "state" : {
-        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-        "version" : "2.1.0"
+        "revision" : "30a462bdb4398ea835a3585472229e0d74b36ba5",
+        "version" : "3.0.0"
       }
     },
     {

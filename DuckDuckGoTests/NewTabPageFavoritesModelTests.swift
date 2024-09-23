@@ -88,6 +88,43 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
     }
 
+    func testPrefixFavoritesCreatesRemainingPlaceholders() {
+        let sut = createSUT()
+
+        let slice = sut.prefixedFavorites(for: 3)
+
+        XCTAssertEqual(slice.items.count(where: \.isPlaceholder), 2)
+        XCTAssertEqual(slice.items.count, 3)
+        XCTAssertFalse(slice.isCollapsible)
+    }
+
+    func testPrefixFavoritesLimitsToTwoRows() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT()
+
+        let slice = sut.prefixedFavorites(for: 4)
+
+        XCTAssertEqual(slice.items.count, 8)
+        XCTAssertTrue(slice.isCollapsible)
+    }
+
+    func testAddItemIsLastWhenFavoritesPresent() throws {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT()
+        
+        let lastItem = try XCTUnwrap(sut.allFavorites.last)
+
+        XCTAssertTrue(lastItem == .addFavorite)
+    }
+
+    func testAddItemIsFirstWhenFavoritesEmpty() throws {
+        let sut = createSUT()
+        
+        let firstItem = try XCTUnwrap(sut.allFavorites.first)
+        
+        XCTAssertTrue(firstItem == .addFavorite)
+    }
+
     private func createSUT() -> FavoritesViewModel {
         FavoritesViewModel(favoriteDataSource: favoriteDataSource,
                            faviconLoader: FavoritesFaviconLoader(),
@@ -118,5 +155,14 @@ private final class MockNewTabPageFavoriteDataSource: NewTabPageFavoriteDataSour
 private extension Favorite {
     static func stub() -> Favorite {
         Favorite(id: UUID().uuidString, title: "foo", domain: "bar")
+    }
+}
+
+private extension FavoriteItem {
+    var isPlaceholder: Bool {
+        switch self {
+        case .placeholder: return true
+        case .favorite, .addFavorite: return false
+        }
     }
 }

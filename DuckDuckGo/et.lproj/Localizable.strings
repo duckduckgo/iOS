@@ -1712,9 +1712,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Lemmikud";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Kohanda oma lemmikuid ja enim kasutatavaid funktsioone. Järjesta valikud ümber või peida need, et kõik oleks lihtsasti leitav.";
 

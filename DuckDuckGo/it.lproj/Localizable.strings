@@ -1712,9 +1712,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Impostazioni VPN";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Preferiti";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Personalizza i tuoi Preferiti e le funzionalità principali. Riorganizza gli elementi o nascondili per mantenere tutto in ordine.";
 

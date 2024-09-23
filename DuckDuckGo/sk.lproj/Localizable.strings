@@ -1712,9 +1712,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavenia siete VPN";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Obľúbené položky";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prispôsobenie obľúbených položiek a funkcií. Pre prehľadnosť zmeňte usporiadanie vecí alebo ich skryte.";
 

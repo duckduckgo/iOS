@@ -88,20 +88,11 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
     }
 
-    func testFiresPixelOnShowingTooltip() {
-        let sut = createSUT()
-
-        XCTAssertFalse(sut.isShowingTooltip)
-        sut.toggleTooltip()
-
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesInfoTooltip)
-    }
-
-    private func createSUT() -> FavoritesDefaultViewModel {
-        FavoritesDefaultViewModel(favoriteDataSource: favoriteDataSource,
-                                  faviconLoader: FavoritesFaviconLoader(),
-                                  pixelFiring: PixelFiringMock.self,
-                                  dailyPixelFiring: PixelFiringMock.self)
+    private func createSUT() -> FavoritesViewModel {
+        FavoritesViewModel(favoriteDataSource: favoriteDataSource,
+                           faviconLoader: FavoritesFaviconLoader(),
+                           pixelFiring: PixelFiringMock.self,
+                           dailyPixelFiring: PixelFiringMock.self)
     }
 }
 

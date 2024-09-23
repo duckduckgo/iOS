@@ -93,7 +93,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         let slice = sut.prefixedFavorites(for: 3)
 
-        XCTAssertEqual(slice.items.count(where: \.isPlaceholder), 2)
+        XCTAssertEqual(slice.items.filter(\.isPlaceholder).count, 2)
         XCTAssertEqual(slice.items.count, 3)
         XCTAssertFalse(slice.isCollapsible)
     }

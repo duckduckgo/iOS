@@ -38,13 +38,14 @@ protocol FavoritesViewModel: AnyObject, ObservableObject {
     func editFavorite(_ favorite: Favorite)
     func deleteFavorite(_ favorite: Favorite)
     func moveFavorites(from indexSet: IndexSet, to index: Int)
+
+    func placeholderTapped()
 }
 
 protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
 
     var isShowingTooltip: Bool { get }
 
-    func placeholderTapped()
     func toggleTooltip()
 }
 

@@ -181,18 +181,9 @@ private extension NewTabPageView {
     }
 
     private func favoritesSectionView(proxy: GeometryProxy) -> some View {
-        Group {
-            if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(model: favoritesModel,
-                                        isAddingFavorite: $isAddingFavorite,
-                                        geometry: proxy)
-                    .padding(.top, Metrics.nonGridSectionTopPadding)
-            } else {
                 FavoritesView(model: favoritesModel,
                               isAddingFavorite: $isAddingFavorite,
                               geometry: proxy)
-            }
-        }
     }
 
     @ViewBuilder

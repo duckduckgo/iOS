@@ -89,9 +89,17 @@ class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
     }
 
     func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {
-        let maxCollapsedItemsCount = columnsCount * 2
-        let favorites = isCollapsed ? Array(allFavorites.prefix(maxCollapsedItemsCount)) : allFavorites
+        let hasFavorites = allFavorites.contains(where: \.isFavorite)
+        let maxCollapsedItemsCount = hasFavorites ? columnsCount * 2 : columnsCount
         let isCollapsible = allFavorites.count > maxCollapsedItemsCount
+
+        var favorites = isCollapsed ? Array(allFavorites.prefix(maxCollapsedItemsCount)) : allFavorites
+
+        if !hasFavorites {
+            for _ in favorites.count ..< maxCollapsedItemsCount {
+                favorites.append(.placeholder(UUID().uuidString))
+            }
+        }
 
         return .init(items: favorites, isCollapsible: isCollapsible)
     }
@@ -148,11 +156,11 @@ class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
         allFavorites.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: index)
     }
 
-    // MARK: - Empty state model
-
     func placeholderTapped() {
         pixelFiring.fire(.newTabPageFavoritesPlaceholderTapped, withAdditionalParameters: [:])
     }
+
+    // MARK: - Empty state model
 
     func toggleTooltip() {
         isShowingTooltip.toggle()
@@ -164,11 +172,12 @@ class FavoritesDefaultViewModel: FavoritesViewModel, FavoritesEmptyStateModel {
     // MARK: -
 
     private func updateData() {
-        var allFavorites = favoriteDataSource.favorites.map {
+        let favorites = favoriteDataSource.favorites
+        var allFavorites = favorites.map {
             FavoriteItem.favorite($0)
         }
         allFavorites.append(.addFavorite)
-        
+
         self.allFavorites = allFavorites
     }
 }
@@ -211,7 +220,7 @@ private extension FavoriteItem {
         switch self {
         case .favorite:
             return true
-        case .addFavorite:
+        case .addFavorite, .placeholder:
             return false
         }
     }

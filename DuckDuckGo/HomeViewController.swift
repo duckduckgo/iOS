@@ -268,7 +268,7 @@ class HomeViewController: UIViewController, NewTabPage {
     }
 
     func showNextDaxDialog() {
-        showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
+        presentNextDaxDialog()
     }
 
     func reloadFavorites() {

@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importuoti slaptažodžius";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Galite importuoti išsaugotus slaptažodžius iš kitos naršyklės į „DuckDuckGo“.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Dar nėra išsaugotų slaptažodžių";
 

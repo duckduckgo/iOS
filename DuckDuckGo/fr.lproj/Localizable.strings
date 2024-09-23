@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importer les mots de passe";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Vous pouvez importer les mots de passe enregistrés d&apos;un autre navigateur dans DuckDuckGo.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Aucun mot de passe n'a été enregistré";
 

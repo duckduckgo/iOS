@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importă parolele";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Poți importa parolele salvate dintr-un alt browser în DuckDuckGo.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nici o parolă nu a fost salvată încă";
 

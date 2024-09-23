@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Импорт паролей";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "В DuckDuckGo можно импортировать сохраненные пароли из другого браузера.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Сохраненных паролей пока нет";
 

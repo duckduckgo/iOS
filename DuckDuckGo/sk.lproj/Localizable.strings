@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importovať heslá";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Uložené heslá môžete importovať z iného prehliadača do DuckDuckGo.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne heslá";
 

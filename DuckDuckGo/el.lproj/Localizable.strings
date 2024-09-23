@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Εισαγωγή κωδικών πρόσβασης";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Μπορείτε να εισαγάγετε αποθηκευμένους κωδικούς πρόσβασης από άλλο πρόγραμμα περιήγησης στο DuckDuckGo.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Δεν έχουν αποθηκευτεί ακόμα κωδικοί πρόσβασης";
 

@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importer passord";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Du kan importere lagrede passord fra en annen nettleser til DuckDuckGo.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen passord er lagret ennå";
 

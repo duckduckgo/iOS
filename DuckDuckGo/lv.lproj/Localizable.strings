@@ -424,6 +424,9 @@
 /* Title for button to Import Passwords when autofill has no items */
 "autofill.logins.empty-view.button.title" = "Importēt paroles";
 
+/* Subtitle for view displayed when no autofill passwords have been saved */
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Tu vari DuckDuckGo importēt saglabātās paroles no citas pārlūkprogrammas.";
+
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Vēl nav saglabāta neviena parole";
 

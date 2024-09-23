@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/punycode-3.0.0",
-        "revision" : "cafe60012879a42fb3e4ac50af4c698eecf88fd9"
+        "revision" : "cc3629fa16880e410e588a27a6b2426dcc140009",
+        "version" : "198.0.1"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "9f3717b3913a12956f1386fe7b657f68545fba83",
-        "version" : "6.15.0"
+        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
+        "version" : "6.16.0"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/DesignResourcesKit",
       "state" : {
-        "revision" : "fe3c383b5e21e0a419e0f979f7f2cd4e67385b15",
-        "version" : "3.2.0"
+        "revision" : "ad133f76501edcb2bfa841e33aebc0da5f92bb5c",
+        "version" : "3.3.0"
       }
     },
     {

@@ -131,9 +131,11 @@ extension Pixel {
         case autocompleteClickFavorite
         case autocompleteClickSearchHistory
         case autocompleteClickSiteHistory
+        case autocompleteClickOpenTab
         case autocompleteDisplayedLocalBookmark
         case autocompleteDisplayedLocalFavorite
         case autocompleteDisplayedLocalHistory
+        case autocompleteDisplayedOpenedTab
         case autocompleteSwipeToDelete
 
         case feedbackPositive
@@ -144,6 +146,11 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingIntroChooseAppIconImpressionUnique
+        case onboardingIntroChooseCustomAppIconColorCTAPressed
+        case onboardingIntroChooseAddressBarImpressionUnique
+        case onboardingIntroBottomAddressBarSelected
+
         case onboardingContextualSearchOptionTappedUnique
         case onboardingContextualSearchCustomUnique
         case onboardingContextualSiteOptionTappedUnique
@@ -164,6 +171,7 @@ extension Pixel {
         case daxDialogsFireEducationCancelledUnique
         case daxDialogsEndOfJourneyTabUnique
         case daxDialogsEndOfJourneyNewTabUnique
+        case daxDialogsEndOfJourneyDismissed
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -940,9 +948,11 @@ extension Pixel.Event {
         case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
         case .autocompleteClickSearchHistory: return "m_autocomplete_click_history_search"
         case .autocompleteClickSiteHistory: return "m_autocomplete_click_history_site"
+        case .autocompleteClickOpenTab: return "m_autocomplete_click_switch_to_tab"
         case .autocompleteDisplayedLocalBookmark: return "m_autocomplete_display_local_bookmark"
         case .autocompleteDisplayedLocalFavorite: return "m_autocomplete_display_local_favorite"
         case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
+        case .autocompleteDisplayedOpenedTab: return "m_autocomplete_display_switch_to_tab"
         case .autocompleteSwipeToDelete: return "m_autocomplete_result_deleted"
 
         case .feedbackPositive: return "mfbs_positive_submit"
@@ -953,6 +963,11 @@ extension Pixel.Event {
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+        case .onboardingIntroChooseAppIconImpressionUnique: return "m_preonboarding_choose_icon_impressions_unique"
+        case .onboardingIntroChooseCustomAppIconColorCTAPressed: return "m_preonboarding_icon_color_chosen"
+        case .onboardingIntroChooseAddressBarImpressionUnique: return "m_preonboarding_choose_address_bar_impressions_unique"
+        case .onboardingIntroBottomAddressBarSelected: return "m_preonboarding_bottom_address_bar_selected"
+
         case .onboardingContextualSearchOptionTappedUnique: return "m_onboarding_search_option_tapped_unique"
         case .onboardingContextualSiteOptionTappedUnique: return "m_onboarding_visit_site_option_tapped_unique"
         case .onboardingContextualSecondSiteVisitUnique: return "m_second_sitevisit_unique"
@@ -973,6 +988,7 @@ extension Pixel.Event {
         case .daxDialogsFireEducationCancelledUnique: return "m_dx_fe_ca_unique"
         case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
         case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
+        case .daxDialogsEndOfJourneyDismissed: return "m_dx_end_dialog_dismissed"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"

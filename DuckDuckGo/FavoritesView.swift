@@ -20,12 +20,14 @@
 import Bookmarks
 import SwiftUI
 import UniformTypeIdentifiers
+import DuckUI
 
-struct FavoritesView<Model: FavoritesModel>: View {
+struct FavoritesView<Model: FavoritesViewModel>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     @ObservedObject var model: Model
+    @Binding var isAddingFavorite: Bool
     let geometry: GeometryProxy?
 
     private let selectionFeedback = UISelectionFeedbackGenerator()
@@ -39,29 +41,11 @@ struct FavoritesView<Model: FavoritesModel>: View {
 
             NewTabPageGridView(geometry: geometry) { _ in
                 ReorderableForEach(result.items) { item in
-                    Button(action: {
-                        model.favoriteSelected(item)
-                        selectionFeedback.selectionChanged()
-                    }, label: {
-                        FavoriteItemView(
-                            favorite: item,
-                            faviconLoading: model.faviconLoader,
-                            onMenuAction: { action in
-                                switch action {
-                                case .delete: model.deleteFavorite(item)
-                                case .edit: model.editFavorite(item)
-                                }
-                            })
-                        .background(.clear)
-                        .frame(width: NewTabPageGrid.Item.edgeSize)
-                    })
-                    .previewShape()
-                    .transition(.opacity)
-                } preview: { favorite in
-                    FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
-                        .frame(width: NewTabPageGrid.Item.edgeSize)
+                    viewFor(item)
                         .previewShape()
                         .transition(.opacity)
+                } preview: { item in
+                    previewFor(item)
                 } onMove: { from, to in
                     haptics.impactOccurred()
                     withAnimation {
@@ -88,6 +72,50 @@ struct FavoritesView<Model: FavoritesModel>: View {
         .clipped()
         .padding(0)
     }
+
+    @ViewBuilder
+    private func previewFor(_ item: FavoriteItem) -> some View {
+        switch item {
+        case .favorite(let favorite):
+            FavoriteIconView(favorite: favorite, faviconLoading: model.faviconLoader)
+                .frame(width: NewTabPageGrid.Item.edgeSize)
+                .previewShape()
+                .transition(.opacity)
+        case .addFavorite:
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private func viewFor(_ item: FavoriteItem) -> some View {
+        switch item {
+        case .favorite(let favorite):
+            Button(action: {
+                model.favoriteSelected(favorite)
+                selectionFeedback.selectionChanged()
+            }, label: {
+                FavoriteItemView(
+                    favorite: favorite,
+                    faviconLoading: model.faviconLoader,
+                    onMenuAction: { action in
+                        switch action {
+                        case .delete: model.deleteFavorite(favorite)
+                        case .edit: model.editFavorite(favorite)
+                        }
+                    })
+                .background(.clear)
+                .frame(width: NewTabPageGrid.Item.edgeSize)
+            })
+        case .addFavorite:
+            Button(action: {
+                isAddingFavorite = true
+            }, label: {
+                AddFavoritePlaceholderItemView()
+            })
+            .buttonStyle(SecondaryFillButtonStyle(isFreeform: true))
+            .frame(width: NewTabPageGrid.Item.edgeSize)
+        }
+    }
 }
 
 private extension View {
@@ -96,16 +124,13 @@ private extension View {
     }
 }
 
-extension Favorite: Reorderable {
-    var dropItemProvider: NSItemProvider {
-        NSItemProvider(object: (urlObject?.absoluteString ?? "") as NSString)
-    }
-
-    var dropType: UTType {
-        .plainText
-    }
+#Preview {
+    PreviewWrapperView()
 }
 
-#Preview {
-    FavoritesView(model: FavoritesPreviewModel(), geometry: nil)
+private struct PreviewWrapperView: View {
+    @State var isAddingFavorite = false
+    var body: some View {
+        FavoritesView(model: FavoritesPreviewModel(), isAddingFavorite: $isAddingFavorite, geometry: nil)
+    }
 }

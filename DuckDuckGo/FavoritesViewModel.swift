@@ -1,5 +1,5 @@
 //
-//  FavoritesModel.swift
+//  FavoritesViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,8 +19,8 @@
 
 import Foundation
 
-protocol FavoritesModel: AnyObject, ObservableObject {
-    var allFavorites: [Favorite] { get }
+protocol FavoritesViewModel: AnyObject, ObservableObject {
+    var allFavorites: [FavoriteItem] { get }
     var faviconLoader: FavoritesFaviconLoading? { get }
 
     var isEmpty: Bool { get }
@@ -49,6 +49,6 @@ protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
 }
 
 struct FavoritesSlice {
-    let items: [Favorite]
+    let items: [FavoriteItem]
     let isCollapsible: Bool
 }

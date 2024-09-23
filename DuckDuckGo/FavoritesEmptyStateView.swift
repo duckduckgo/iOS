@@ -18,12 +18,11 @@
 //
 
 import SwiftUI
+import DuckUI
 
 struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.isLandscapeOrientation) var isLandscape
-
     @ObservedObject var model: Model
+    @Binding var isAddingFavorite: Bool
 
     let geometry: GeometryProxy?
 
@@ -33,7 +32,15 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
                 FavoritesSectionHeader(model: model)
 
                 NewTabPageGridView(geometry: geometry) { placeholdersCount in
-                    let placeholders = Array(0..<placeholdersCount)
+                    Button(action: {
+                        isAddingFavorite = true
+                    }, label: {
+                        AddFavoritePlaceholderItemView()
+                    })
+                    .buttonStyle(SecondaryFillButtonStyle(isFreeform: true))
+                    .frame(width: NewTabPageGrid.Item.edgeSize)
+
+                    let placeholders = Array(0..<placeholdersCount - 1)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
@@ -55,5 +62,17 @@ struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
 }
 
 #Preview {
-    return FavoritesEmptyStateView(model: FavoritesPreviewModel(), geometry: nil)
+    PreviewViewWrapper()
+}
+
+private struct PreviewViewWrapper: View {
+    @State var isAddingFavorite = false
+
+    var body: some View {
+        FavoritesEmptyStateView(
+            model: FavoritesPreviewModel(),
+            isAddingFavorite: $isAddingFavorite,
+            geometry: nil
+        )
+    }
 }

@@ -42,6 +42,7 @@ public enum FeatureFlag: String {
     case syncPromotionPasswords
     case onboardingHighlights
     case autofillSurveys
+    case autcompleteTabs
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -89,6 +90,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
+        case .autcompleteTabs:
+            return .remoteReleasable(.feature(.autocompleteTabs))
         }
     }
 }

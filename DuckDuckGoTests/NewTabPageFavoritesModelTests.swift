@@ -18,13 +18,13 @@
 //
 
 import XCTest
+import Combine
 import Bookmarks
-import BrowserServicesKit
 @testable import DuckDuckGo
 
 final class NewTabPageFavoritesModelTests: XCTestCase {
-    private let favoritesListInteracting = MockFavoritesListInteracting()
-    
+    private let favoriteDataSource = MockNewTabPageFavoriteDataSource()
+
     override func tearDown() {
         PixelFiringMock.tearDown()
     }
@@ -59,23 +59,23 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
     }
 
     func testFiresPixelOnFavoriteDeleted() {
-        let bookmark = createStubBookmark()
-        favoritesListInteracting.favorites = [bookmark]
+        let favorite = Favorite.stub()
+        favoriteDataSource.favorites = [favorite]
 
         let sut = createSUT()
 
-        sut.deleteFavorite(Favorite(id: bookmark.uuid!, title: "", domain: ""))
+        sut.deleteFavorite(favorite)
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenDeleteFavorite)
     }
 
     func testFiresPixelOnFavoriteEdited() {
-        let bookmark = createStubBookmark()
-        favoritesListInteracting.favorites = [bookmark]
+        let favorite = Favorite.stub()
+        favoriteDataSource.favorites = [favorite]
 
         let sut = createSUT()
 
-        sut.editFavorite(Favorite(id: bookmark.uuid!, title: "", domain: ""))
+        sut.editFavorite(favorite)
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenEditFavorite)
     }
@@ -97,17 +97,35 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesInfoTooltip)
     }
 
+    private func createSUT() -> FavoritesDefaultViewModel {
+        FavoritesDefaultViewModel(favoriteDataSource: favoriteDataSource,
+                                  faviconLoader: FavoritesFaviconLoader(),
+                                  pixelFiring: PixelFiringMock.self,
+                                  dailyPixelFiring: PixelFiringMock.self)
+    }
+}
+
+private final class MockNewTabPageFavoriteDataSource: NewTabPageFavoriteDataSource {
+    var externalUpdates: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()
+    var favorites: [DuckDuckGo.Favorite] = []
+
+    func moveFavorite(_ favorite: DuckDuckGo.Favorite, fromIndex: Int, toIndex: Int) { }
+    func favorite(at index: Int) throws -> DuckDuckGo.Favorite? { nil }
+    func removeFavorite(_ favorite: DuckDuckGo.Favorite) { }
+    func bookmarkEntity(for favorite: DuckDuckGo.Favorite) -> Bookmarks.BookmarkEntity? {
+        createStubBookmark()
+    }
+
     private func createStubBookmark() -> BookmarkEntity {
         let bookmarksDB = MockBookmarksDatabase.make()
         let context = bookmarksDB.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let root = BookmarkUtils.fetchRootFolder(context)!
         return BookmarkEntity.makeBookmark(title: "foo", url: "", parent: root, context: context)
     }
+}
 
-    private func createSUT() -> FavoritesDefaultModel {
-        FavoritesDefaultModel(interactionModel: favoritesListInteracting,
-                              faviconLoader: FavoritesFaviconLoader(),
-                              pixelFiring: PixelFiringMock.self,
-                              dailyPixelFiring: PixelFiringMock.self)
+private extension Favorite {
+    static func stub() -> Favorite {
+        Favorite(id: UUID().uuidString, title: "foo", domain: "bar")
     }
 }

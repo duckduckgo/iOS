@@ -27,13 +27,18 @@ struct ShortcutItemView: View {
     var body: some View {
         VStack(spacing: 6) {
             ShortcutIconView(shortcut: shortcut)
-            .overlay(alignment: .topTrailing) {
-                if let accessoryType {
-                    ShortcutAccessoryView(accessoryType: accessoryType)
-                        .frame(width: Constant.accessorySize)
-                        .offset(Constant.accessoryOffset)
+                .overlay(alignment: .topTrailing) {
+                    if let accessoryType {
+                        Group {
+                            let offset = Constant.accessorySize/4.0
+                            ShortcutAccessoryView(accessoryType: accessoryType)
+                                .frame(width: Constant.accessorySize, height: Constant.accessorySize)
+                                .offset(x: offset, y: -offset)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                    }
                 }
-            }
+
             Text(shortcut.name)
                 .font(Font.system(size: 12))
                 .lineLimit(2)
@@ -45,7 +50,6 @@ struct ShortcutItemView: View {
 
     private enum Constant {
         static let accessorySize = 24.0
-        static let accessoryOffset = CGSize(width: 6, height: -6)
     }
 }
 
@@ -53,17 +57,16 @@ struct ShortcutIconView: View {
     let shortcut: NewTabPageShortcut
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color(designSystemColor: .surface))
-                .shadow(color: .shade(0.12), radius: 0.5, y: 1)
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: NewTabPageGrid.Item.edgeSize)
-            Image(shortcut.imageResource)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: NewTabPageGrid.Item.edgeSize * 0.5)
-        }
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color(designSystemColor: .surface))
+            .shadow(color: .shade(0.12), radius: 0.5, y: 1)
+            .aspectRatio(1, contentMode: .fit)
+            .overlay {
+                Image(shortcut.imageResource)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .scaleEffect(x: 0.5, y: 0.5)
+            }
     }
 }
 
@@ -101,13 +104,14 @@ private extension NewTabPageShortcut {
 
 #Preview {
     ScrollView {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 86))], content: {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 68), spacing: 8, alignment: .top)], content: {
             let accessoryTypes: [ShortcutAccessoryType?] = [.none, .add, .selected]
             
             ForEach(accessoryTypes, id: \.?.hashValue) { type in
                 Section {
                     ForEach(NewTabPageShortcut.allCases) { shortcut in
                         ShortcutItemView(shortcut: shortcut, accessoryType: type)
+                            .frame(width: 64)
                     }
                     
                 } footer: {

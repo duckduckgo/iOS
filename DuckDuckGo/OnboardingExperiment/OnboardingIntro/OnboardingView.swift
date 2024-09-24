@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Onboarding
 
 // MARK: - OnboardingView
 
@@ -37,6 +38,9 @@ struct OnboardingView: View {
     @State private var showComparisonButton = false
     @State private var animateComparisonText = false
 
+    @State private var appIconPickerContentState = AppIconPickerContentState()
+    @State private var addressBarPositionContentState = AddressBarPositionContentState()
+
     init(model: OnboardingIntroViewModel) {
         self.model = model
     }
@@ -52,6 +56,7 @@ struct OnboardingView: View {
                 onboardingDialogView(state: viewState)
             }
         }
+        .onboardingGradient(model.gradientType)
     }
 
     private func onboardingDialogView(state: ViewState.Intro) -> some View {
@@ -63,28 +68,37 @@ struct OnboardingView: View {
                     showDialogBox: $showDaxDialogBox,
                     onTapGesture: {
                         withAnimation {
-                            switch model.state {
-                            case .onboarding(.startOnboardingDialog):
+                            switch model.state.intro?.type {
+                            case .startOnboardingDialog:
                                 showIntroButton = true
                                 animateIntroText = false
-                            case .onboarding(.browsersComparisonDialog):
+                            case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
+                            case .chooseAppIconDialog:
+                                appIconPickerContentState.animateTitle = false
+                                appIconPickerContentState.animateMessage = false
+                                appIconPickerContentState.showContent = true
                             default: break
                             }
                         }
                     },
                     content: {
                         VStack {
-                            switch state {
+                            switch state.type {
                             case .startOnboardingDialog:
                                 introView
                             case .browsersComparisonDialog:
                                 browsersComparisonView
+                            case .chooseAppIconDialog:
+                                appIconPickerView
+                            case .chooseAddressBarPositionDialog:
+                                addressBarPreferenceSelectionView
                             }
                         }
                     }
                 )
+                .onboardingProgressIndicator(currentStep: state.step.currentStep, totalSteps: state.step.totalSteps)
             }
             .frame(width: geometry.size.width, alignment: .center)
             .offset(y: geometry.size.height * Metrics.dialogVerticalOffsetPercentage.build(v: verticalSizeClass, h: horizontalSizeClass))
@@ -112,7 +126,11 @@ struct OnboardingView: View {
     }
 
     private var introView: some View {
-        IntroDialogContent(animateText: $animateIntroText, showCTA: $showIntroButton) {
+        IntroDialogContent(
+            title: model.copy.introTitle,
+            animateText: $animateIntroText,
+            showCTA: $showIntroButton
+        ) {
             animateBrowserComparisonViewState()
         }
         .onboardingDaxDialogStyle()
@@ -121,6 +139,7 @@ struct OnboardingView: View {
 
     private var browsersComparisonView: some View {
         BrowsersComparisonContent(
+            title: model.copy.browserComparisonTitle,
             animateText: $animateComparisonText,
             showContent: $showComparisonButton,
             setAsDefaultBrowserAction: {
@@ -128,6 +147,25 @@ struct OnboardingView: View {
             }, cancelAction: {
                 model.cancelSetDefaultBrowserAction()
             }
+        )
+        .onboardingDaxDialogStyle()
+    }
+
+    private var appIconPickerView: some View {
+        AppIconPickerContent(
+            animateTitle: $appIconPickerContentState.animateTitle,
+            animateMessage: $appIconPickerContentState.animateMessage,
+            showContent: $appIconPickerContentState.showContent,
+            action: model.appIconPickerContinueAction
+        )
+        .onboardingDaxDialogStyle()
+    }
+
+    private var addressBarPreferenceSelectionView: some View {
+        AddressBarPositionContent(
+            animateTitle: $addressBarPositionContentState.animateTitle,
+            showContent: $addressBarPositionContentState.showContent,
+            action: model.selectAddressBarPositionAction
         )
         .onboardingDaxDialogStyle()
     }
@@ -166,17 +204,44 @@ extension OnboardingView {
     enum ViewState: Equatable {
         case landing
         case onboarding(Intro)
+
+        var intro: Intro? {
+            switch self {
+            case .landing:
+                return nil
+            case let .onboarding(intro):
+                return intro
+            }
+        }
     }
     
 }
 
 extension OnboardingView.ViewState {
+    
+    struct Intro: Equatable {
+        let type: IntroType
+        let step: StepInfo
+    }
 
-    enum Intro: Equatable {
+}
+
+extension OnboardingView.ViewState.Intro {
+
+    enum IntroType: Equatable {
         case startOnboardingDialog
         case browsersComparisonDialog
+        case chooseAppIconDialog
+        case chooseAddressBarPositionDialog
     }
-    
+
+    struct StepInfo: Equatable {
+        let currentStep: Int
+        let totalSteps: Int
+
+        static let hidden = StepInfo(currentStep: 0, totalSteps: 0)
+    }
+
 }
 
 // MARK: - Metrics
@@ -186,16 +251,34 @@ private enum Metrics {
     static let daxDialogVisibilityDelay: TimeInterval = 0.5
     static let comparisonChartAnimationDuration = 0.25
     static let dialogVerticalOffsetPercentage = MetricBuilder<CGFloat>(value: 0.1).smallIphone(0.01)
+    static let progressBarTrailingPadding: CGFloat = 16.0
+    static let progressBarTopPadding: CGFloat = 12.0
+}
+
+// MARK: - Helpers
+
+private extension View {
+
+    func onboardingProgressIndicator(currentStep: Int, totalSteps: Int) -> some View {
+        overlay(alignment: .topTrailing) {
+            OnboardingProgressIndicator(stepInfo: .init(currentStep: currentStep, totalSteps: totalSteps))
+                .padding(.trailing, Metrics.progressBarTrailingPadding)
+                .padding(.top, Metrics.progressBarTopPadding)
+                .transition(.identity)
+                .visibility(totalSteps == 0 ? .invisible : .visible)
+        }
+    }
+
 }
 
 // MARK: - Preview
 
 #Preview("Onboarding - Light") {
-    OnboardingView(model: .init())
+    OnboardingView(model: .init(pixelReporter: OnboardingPixelReporter()))
         .preferredColorScheme(.light)
 }
 
 #Preview("Onboarding - Dark") {
-    OnboardingView(model: .init())
+    OnboardingView(model: .init(pixelReporter: OnboardingPixelReporter()))
         .preferredColorScheme(.dark)
 }

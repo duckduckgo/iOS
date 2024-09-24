@@ -49,7 +49,12 @@ public struct UserDefaultsWrapper<T> {
         case daxBrowsingMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingMajorTrackingSiteShown"
         case daxBrowsingOwnedByMajorTrackingSiteShown = "com.duckduckgo.ios.daxOnboardingBrowsingOwnedByMajorTrackingSiteShown"
         case daxFireButtonEducationShownOrExpired = "com.duckduckgo.ios.daxfireButtonEducationShownOrExpired"
+        case daxFireMessageExperimentShown = "com.duckduckgo.ios.fireMessageShown"
         case fireButtonPulseDateShown = "com.duckduckgo.ios.fireButtonPulseDateShown"
+        case privacyButtonPulseShown = "com.duckduckgo.ios.privacyButtonPulseShown"
+        case daxBrowsingFinalDialogShown = "com.duckduckgo.ios.daxOnboardingFinalDialogSeen"
+        case daxLastVisitedOnboardingWebsite = "com.duckduckgo.ios.daxOnboardingLastVisitedWebsite"
+        case daxLastShownContextualOnboardingDialogType = "com.duckduckgo.ios.daxLastShownContextualOnboardingDialogType"
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
         case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"
@@ -87,6 +92,10 @@ public struct UserDefaultsWrapper<T> {
         case autofillSearchDauDate = "com.duckduckgo.app.autofill.SearchDauDate"
         case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
         case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
+        case autofillSurveysCompleted = "com.duckduckgo.app.autofill.SurveysCompleted"
+
+        case syncPromoBookmarksDismissed = "com.duckduckgo.app.sync.PromoBookmarksDismissed"
+        case syncPromoPasswordsDismissed = "com.duckduckgo.app.sync.PromoPasswordsDismissed"
 
         // .v2 suffix added to fix https://app.asana.com/0/547792610048271/1206524375402369/f
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser.v2"
@@ -125,8 +134,6 @@ public struct UserDefaultsWrapper<T> {
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullURLAddress = "com.duckduckgo.ios.showfullurladdress"
 
-        case webContainerId = "com.duckduckgo.ios.webcontainer.id"
-
         case bookmarksLastGoodVersion = "com.duckduckgo.ios.bookmarksLastGoodVersion"
         case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
 
@@ -139,7 +146,8 @@ public struct UserDefaultsWrapper<T> {
         case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
         case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
         case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
-        case userDidInteractWithBrokenSitePrompt = "com.duckduckgo.ios.userBehavior.userDidInteractWithBrokenSitePrompt"
+        case lastBrokenSiteToastShownDate = "com.duckduckgo.ios.userBehavior.lastBrokenSiteToastShownDate"
+        case toastDismissStreakCounter = "com.duckduckgo.ios.userBehavior.toastDismissStreakCounter"
 
         case pixelExperimentInstalled = "com.duckduckgo.ios.pixel.experiment.installed"
         case pixelExperimentCohort = "com.duckduckgo.ios.pixel.experiment.cohort"
@@ -156,10 +164,22 @@ public struct UserDefaultsWrapper<T> {
 
         case newTabPageSectionsSettings = "com.duckduckgo.ios.newTabPage.sections.settings"
         case newTabPageShortcutsSettings = "com.duckduckgo.ios.newTabPage.shortcuts.settings"
+        case newTabPageIntroMessageEnabled = "com.duckduckgo.ios.newTabPage.introMessageEnabled"
+        case newTabPageIntroMessageSeenCount = "com.duckduckgo.ios.newTabPage.introMessageSeenCount"
 
         // Debug keys
-
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
+        case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
+        
+        // Duck Player Pixel Experiment
+        case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed.v2"
+        case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort.v2"
+        case duckPlayerPixelExperimentEnrollmentDate = "com.duckduckgo.ios.duckplayer.pixel.experiment.enrollment.date.v2"
+        case duckPlayerPixelExperimentLastWeekPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.week.pixel.fired.v2"
+        case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired.v2"
+        case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered.v2"
+        case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override.v2"
+        
     }
 
     private let key: Key

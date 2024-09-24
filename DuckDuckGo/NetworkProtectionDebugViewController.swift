@@ -82,6 +82,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case shutDown
         case showEntitlementMessaging
         case resetEntitlementMessaging
+        case startSnooze
     }
 
     enum NetworkPathRows: Int, CaseIterable {
@@ -372,6 +373,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Show Entitlement Messaging"
         case .resetEntitlementMessaging:
             cell.textLabel?.text = "Reset Entitlement Messaging"
+        case .startSnooze:
+            cell.textLabel?.text = "Snooze For 30 Seconds"
         case .none:
             break
         }
@@ -391,6 +394,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             UserDefaults.networkProtectionGroupDefaults.enableEntitlementMessaging()
         case .resetEntitlementMessaging:
             UserDefaults.networkProtectionGroupDefaults.resetEntitlementMessaging()
+        case .startSnooze:
+            Task {
+                await NetworkProtectionDebugUtilities().startSnooze(duration: .seconds(30))
+            }
         case .none:
             break
         }
@@ -627,9 +634,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = """
 Endpoint: \(AppDependencyProvider.shared.vpnSettings.selectedEnvironment.endpointURL.absoluteString)
 
-isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
-
-shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
 shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 """
         case .none:

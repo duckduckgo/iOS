@@ -16,14 +16,6 @@ tags:
 - inputText: "https://www.search-company.site/#ad-id-2"
 - pressKey: Enter
 
-# Manage onboarding
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-        index: 0
-    file: ../shared/onboarding_browsing.yaml
-
 # Test Ad2
 - assertVisible:
     text: "[Ad 2] Shopping Tab Ad (heuristic)"

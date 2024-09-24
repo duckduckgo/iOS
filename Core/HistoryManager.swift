@@ -23,6 +23,7 @@ import BrowserServicesKit
 import History
 import Common
 import Persistence
+import os.log
 
 public protocol HistoryManaging {
     
@@ -30,6 +31,7 @@ public protocol HistoryManaging {
     func isHistoryFeatureEnabled() -> Bool
     var isEnabledByUser: Bool { get }
     func removeAllHistory() async
+    func deleteHistoryForURL(_ url: URL) async
 
 }
 
@@ -37,6 +39,7 @@ public class HistoryManager: HistoryManaging {
 
     let privacyConfigManager: PrivacyConfigurationManaging
     let dbCoordinator: HistoryCoordinator
+    let tld: TLD
 
     public var historyCoordinator: HistoryCoordinating {
         guard isHistoryFeatureEnabled(),
@@ -56,11 +59,13 @@ public class HistoryManager: HistoryManaging {
     /// Use `make()`
     init(privacyConfigManager: PrivacyConfigurationManaging,
          dbCoordinator: HistoryCoordinator,
+         tld: TLD,
          isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
          isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool) {
 
         self.privacyConfigManager = privacyConfigManager
         self.dbCoordinator = dbCoordinator
+        self.tld = tld
         self.isAutocompleteEnabledByUser = isAutocompleteEnabledByUser
         self.isRecentlyVisitedSitesEnabledByUser = isRecentlyVisitedSitesEnabledByUser
     }
@@ -73,6 +78,17 @@ public class HistoryManager: HistoryManaging {
     public func removeAllHistory() async {
         await withCheckedContinuation { continuation in
             dbCoordinator.burnAll {
+                continuation.resume()
+            }
+        }
+    }
+
+    public func deleteHistoryForURL(_ url: URL) async {
+        guard let domain = url.host,
+            let baseDomain = tld.eTLDplus1(domain) else { return }
+
+        await withCheckedContinuation { continuation in
+            historyCoordinator.burnDomains([baseDomain], tld: tld) { _ in
                 continuation.resume()
             }
         }
@@ -121,8 +137,8 @@ class NullHistoryCoordinator: HistoryCoordinating {
         completion()
     }
 
-    func burnDomains(_ baseDomains: Set<String>, tld: Common.TLD, completion: @escaping () -> Void) {
-        completion()
+    func burnDomains(_ baseDomains: Set<String>, tld: Common.TLD, completion: @escaping (Set<URL>) -> Void) {
+        completion([])
     }
 
     func burnVisits(_ visits: [History.Visit], completion: @escaping () -> Void) {
@@ -137,7 +153,7 @@ public class HistoryDatabase {
 
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            os_log("HistoryDatabase.make - OUT, failed to get application support directory")
+            Logger.general.fault("HistoryDatabase.make - OUT, failed to get application support directory")
             fatalError("Failed to get location")
         }
         return url
@@ -148,10 +164,10 @@ public class HistoryDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("HistoryDatabase.make - IN - %s", location.absoluteString)
+        Logger.general.debug("HistoryDatabase.make - IN - \(location.absoluteString)")
         let bundle = History.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BrowsingHistory") else {
-            os_log("HistoryDatabase.make - OUT, failed to loadModel")
+            Logger.general.debug("HistoryDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
@@ -159,7 +175,7 @@ public class HistoryDatabase {
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly)
-        os_log("HistoryDatabase.make - OUT")
+        Logger.general.debug("HistoryDatabase.make - OUT")
         return db
     }
 }
@@ -203,7 +219,8 @@ extension HistoryManager {
     /// Should only be called once in the app
     public static func make(isAutocompleteEnabledByUser: @autoclosure @escaping () -> Bool,
                             isRecentlyVisitedSitesEnabledByUser: @autoclosure @escaping () -> Bool,
-                            privacyConfigManager: PrivacyConfigurationManaging) -> Result<HistoryManager, Error> {
+                            privacyConfigManager: PrivacyConfigurationManaging,
+                            tld: TLD) -> Result<HistoryManager, Error> {
 
         let database = HistoryDatabase.make()
         var loadError: Error?
@@ -220,6 +237,7 @@ extension HistoryManager {
 
         let historyManager = HistoryManager(privacyConfigManager: privacyConfigManager,
                                             dbCoordinator: dbCoordinator,
+                                            tld: tld,
                                             isAutocompleteEnabledByUser: isAutocompleteEnabledByUser(),
                                             isRecentlyVisitedSitesEnabledByUser: isRecentlyVisitedSitesEnabledByUser())
 
@@ -249,4 +267,5 @@ public struct NullHistoryManager: HistoryManaging {
 
     public init() { }
     
+    public func deleteHistoryForURL(_ url: URL) async { }
 }

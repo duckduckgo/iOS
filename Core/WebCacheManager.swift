@@ -20,11 +20,12 @@
 import Common
 import WebKit
 import GRDB
+import os.log
 
 extension WKWebsiteDataStore {
 
-    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WKWebsiteDataStore {
-        if #available(iOS 17, *), let id = dataStoreIdManager.id {
+    public static func current(dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebsiteDataStore {
+        if #available(iOS 17, *), let id = dataStoreIdManager.currentId {
             return WKWebsiteDataStore(forIdentifier: id)
         } else {
             return WKWebsiteDataStore.default()
@@ -78,10 +79,10 @@ public class WebCacheManager {
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
                       logins: PreserveLogins = PreserveLogins.shared,
-                      dataStoreIdManager: DataStoreIdManager = .shared) async {
+                      dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
-        if #available(iOS 17, *), dataStoreIdManager.hasId {
+        if #available(iOS 17, *) {
             cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
 
@@ -96,29 +97,46 @@ public class WebCacheManager {
 extension WebCacheManager {
 
     @available(iOS 17, *)
-    private func checkForLeftBehindDataStores() async {
+    private func checkForLeftBehindDataStores(previousLeftOversCount: Int) async {
+        let params = [
+            "left_overs_count": "\(previousLeftOversCount)"
+        ]
+
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
         if ids.count > 1 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple, withAdditionalParameters: params)
         } else if ids.count > 0 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne, withAdditionalParameters: params)
+        } else if previousLeftOversCount > 0 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresCleared, withAdditionalParameters: params)
         }
     }
 
     @available(iOS 17, *)
-    private func containerBasedClearing(storeIdManager: DataStoreIdManager) async -> [HTTPCookie]? {
-        guard let containerId = storeIdManager.id else { return [] }
+    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
+        guard let containerId = storeIdManager.currentId else {
+            storeIdManager.invalidateCurrentIdAndAllocateNew()
+            return []
+        }
+        storeIdManager.invalidateCurrentIdAndAllocateNew()
+
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
         let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
 
-        let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        var uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        if let newContainerID = storeIdManager.currentId,
+            let newIdIndex = uuids.firstIndex(of: newContainerID) {
+            assertionFailure("Attempted to cleanup current Data Store")
+            uuids.remove(at: newIdIndex)
+        }
+
+        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because one store is expected to be cleared
         for uuid in uuids {
             try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
-        await checkForLeftBehindDataStores()
+        await checkForLeftBehindDataStores(previousLeftOversCount: previousLeftOversCount)
 
-        storeIdManager.allocateNewContainerId()
         return cookies
     }
 
@@ -151,7 +169,7 @@ extension WebCacheManager {
         if let pool = getValidDatabasePool() {
             removeObservationsData(from: pool)
         } else {
-            os_log("Could not find valid pool to clear observations data", log: .generalLog, type: .debug)
+            Logger.general.debug("Could not find valid pool to clear observations data")
         }
     }
 

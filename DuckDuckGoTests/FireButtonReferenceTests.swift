@@ -21,6 +21,7 @@ import XCTest
 import os.log
 import WebKit
 @testable import Core
+import TestUtils
 
 final class FireButtonReferenceTests: XCTestCase {
 
@@ -52,7 +53,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         
@@ -61,12 +62,9 @@ final class FireButtonReferenceTests: XCTestCase {
         }
                     
         let cookieStorage = CookieStorage()
-        
-        let idManager = DataStoreIdManager()
-        
+
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
-            XCTAssertFalse(idManager.hasId)
 
             let warmup = DataStoreWarmup()
             await warmup.ensureReady(applicationState: .unknown)
@@ -77,8 +75,8 @@ final class FireButtonReferenceTests: XCTestCase {
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
             
-            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: idManager)
-            
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 
             if test.expectCookieRemoved {
@@ -99,7 +97,7 @@ final class FireButtonReferenceTests: XCTestCase {
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
-            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            print("Adding %s to fireproofed sites", sanitizedSite)
             preservedLogins.addToAllowed(domain: sanitizedSite)
         }
         

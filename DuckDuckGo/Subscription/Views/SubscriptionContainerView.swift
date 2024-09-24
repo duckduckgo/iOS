@@ -22,37 +22,39 @@ import SwiftUI
 
 struct SubscriptionContainerView: View {
     
-    enum CurrentView {
+    enum CurrentViewType {
         case subscribe, restore, email
     }
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
-    @State private var currentViewState: CurrentView
+    @State private var currentViewType: CurrentViewType
     private let viewModel: SubscriptionContainerViewModel
     private let flowViewModel: SubscriptionFlowViewModel
     private let restoreViewModel: SubscriptionRestoreViewModel
     private let emailViewModel: SubscriptionEmailViewModel
         
-    init(currentView: CurrentView,
+    init(currentView: CurrentViewType,
          viewModel: SubscriptionContainerViewModel) {
-        _currentViewState = State(initialValue: currentView)
+        _currentViewType = State(initialValue: currentView)
         self.viewModel = viewModel
         flowViewModel = viewModel.flow
         restoreViewModel = viewModel.restore
         emailViewModel = viewModel.email
     }
-    
+
     var body: some View {
         VStack {
-            switch currentViewState {
+            switch currentViewType {
             case .subscribe:
                 SubscriptionFlowView(viewModel: flowViewModel,
-                                     currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
+                                     currentView: $currentViewType)
+                .environmentObject(subscriptionNavigationCoordinator)
             case .restore:
                 SubscriptionRestoreView(viewModel: restoreViewModel,
                                         emailViewModel: emailViewModel,
-                                        currentView: $currentViewState).environmentObject(subscriptionNavigationCoordinator)
+                                        currentView: $currentViewType)
+                .environmentObject(subscriptionNavigationCoordinator)
             case .email:
                 SubscriptionEmailView(viewModel: emailViewModel)
             }

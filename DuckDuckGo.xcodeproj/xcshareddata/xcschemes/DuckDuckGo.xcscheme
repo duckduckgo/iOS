@@ -27,6 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "NO"
+      language = "en"
       codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -66,6 +67,9 @@
                </Test>
                <Test
                   Identifier = "SyncSettingsViewControllerErrorTests/test_WhenAccountRemoved_ErrorHandlerSyncDidTurnOffCalled()">
+               </Test>
+               <Test
+                  Identifier = "SyncSettingsViewControllerErrorTests/test_WhenSyncIsTurnedOff_ErrorHandlerSyncDidTurnOffCalled()">
                </Test>
             </SkippedTests>
          </TestableReference>

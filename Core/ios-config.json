@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1721993813540,
+    "version": 1727101913728,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -84,7 +84,13 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -111,7 +117,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "4efd0ce3e46f0b52aa919a6f80edcd00"
+            "hash": "39481c86e0647ab1f235b35986da0fa0"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -122,6 +128,11 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "autocompleteTabs": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
         },
         "autoconsent": {
             "exceptions": [
@@ -142,6 +153,9 @@
                 },
                 {
                     "domain": "eleconomista.es"
+                },
+                {
+                    "domain": "eurostar.com"
                 },
                 {
                     "domain": "ksta.de"
@@ -285,9 +299,6 @@
                     "domain": "bitsofwar.com"
                 },
                 {
-                    "domain": "mitglieder.franzspitzer.de"
-                },
-                {
                     "domain": "disneyplus.com"
                 },
                 {
@@ -315,16 +326,34 @@
                     "domain": "hertz.com"
                 },
                 {
-                    "domain": "www.thrifty.com"
-                },
-                {
-                    "domain": "sports.tipico.de"
-                },
-                {
                     "domain": "lotusbakeries.com"
                 },
                 {
                     "domain": "harley-davidson.com"
+                },
+                {
+                    "domain": "dailymail.co.uk"
+                },
+                {
+                    "domain": "newsforkids.net"
+                },
+                {
+                    "domain": "dkb.de"
+                },
+                {
+                    "domain": "headphonecheck.com"
+                },
+                {
+                    "domain": "lehmannaudio.com"
+                },
+                {
+                    "domain": "rivergrandrapids.com"
+                },
+                {
+                    "domain": "97x.com"
+                },
+                {
+                    "domain": "speedweek.com"
                 },
                 {
                     "domain": "marvel.com"
@@ -336,10 +365,13 @@
                     "domain": "noaprints.com"
                 },
                 {
-                    "domain": "instagram.com"
+                    "domain": "flexmls.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -370,7 +402,7 @@
                     }
                 }
             },
-            "hash": "ed7034e7eae6ab8575375dd938a5e954"
+            "hash": "ee8caeb715c81bf398024ed686bc3f5c"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -379,6 +411,19 @@
             },
             "exceptions": [],
             "hash": "9ae27f0fb5a6f7db96b239b4def3b5b6"
+        },
+        "autofillSurveys": {
+            "state": "enabled",
+            "settings": {
+                "surveys": [
+                    {
+                        "id": "2024-09-10",
+                        "url": "https://selfserve.decipherinc.com/survey/selfserve/32ab/240900"
+                    }
+                ]
+            },
+            "exceptions": [],
+            "hash": "fa60baa3935e8ab70e77dafa347a6a71"
         },
         "autofill": {
             "exceptions": [
@@ -408,6 +453,9 @@
                     "state": "enabled",
                     "minSupportedVersion": "7.75.0"
                 },
+                "unknownUsernameCategorization": {
+                    "state": "enabled"
+                },
                 "onByDefault": {
                     "state": "enabled",
                     "minSupportedVersion": "7.93.0",
@@ -424,14 +472,91 @@
                             }
                         ]
                     }
+                },
+                "onForExistingUsers": {
+                    "state": "enabled",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 10
+                            },
+                            {
+                                "percent": 25
+                            },
+                            {
+                                "percent": 100
+                            }
+                        ]
+                    }
                 }
             },
-            "hash": "bd604dcd1f7bb584185f0c1cb94a5771"
+            "hash": "28d4af98382248e184c4315bd49f4222"
+        },
+        "backgroundAgentPixelTest": {
+            "state": "enabled",
+            "exceptions": [],
+            "features": {
+                "pixelTest": {
+                    "state": "enabled",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 10
+                            }
+                        ]
+                    }
+                }
+            },
+            "hash": "75ff21cf9a4181783c06965edd6fe746"
+        },
+        "bookmarks": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
+        },
+        "breakageReporting": {
+            "state": "disabled",
+            "exceptions": [
+                {
+                    "domain": "marvel.com"
+                },
+                {
+                    "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
+                },
+                {
+                    "domain": "flexmls.com"
+                },
+                {
+                    "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
+                }
+            ],
+            "hash": "28a9e2628d3c372ae3434c9166031693"
+        },
+        "brokenSitePrompt": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "maxDismissStreak": 3,
+                "dismissStreakResetDays": 30,
+                "coolDownDays": 7
+            },
+            "hash": "7ff56afca8279353caaa7da24ab31e28"
         },
         "brokenSiteReportExperiment": {
             "exceptions": [],
             "state": "enabled",
             "hash": "52857469413a66e8b0c7b00de5589162"
+        },
+        "changeOmnibarPosition": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "clickToLoad": {
             "exceptions": [
@@ -1111,7 +1236,13 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1129,7 +1260,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "3bce6ceb48b813d3e3984394bf620b32"
+            "hash": "600351972c8dec803846ad9c596164bd"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1143,7 +1274,13 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1156,7 +1293,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "e1fb68a1bb559c709cf7fff97820654f"
+            "hash": "ab8fd25afb81834139eabf76f3e0db20"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1197,10 +1334,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "42da678c1cc61b0d52986f536e05f416"
+            "hash": "6b730954cd0f48a877191e501bf431fc"
         },
         "cookie": {
             "settings": {
@@ -1261,11 +1404,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "d23565fe73c051c53bff8a40396f705d"
+            "hash": "081af6c291ebfb57c69ccb7dd486c671"
         },
         "customUserAgent": {
             "settings": {
@@ -1318,26 +1467,43 @@
                 },
                 "waitlistBetaActive": {
                     "state": "disabled"
+                },
+                "freemium": {
+                    "state": "disabled"
                 }
             },
             "exceptions": [],
-            "hash": "ba52a36920a4a76343fc3c44d98936f9"
+            "hash": "113933668f41d71c56316e5debf1fb5b"
         },
         "duckPlayer": {
             "exceptions": [],
             "features": {
                 "pip": {
-                    "state": "disabled"
+                    "state": "enabled"
                 },
                 "autoplay": {
                     "state": "disabled"
                 },
                 "openInNewTab": {
                     "state": "disabled"
+                },
+                "enableDuckPlayer": {
+                    "state": "internal"
                 }
             },
             "settings": {
                 "tryDuckPlayerLink": "https://www.youtube.com/watch?v=yKWIA-Pys4c",
+                "duckPlayerDisabledHelpPageLink": null,
+                "youtubePath": "watch",
+                "youtubeEmbedUrl": "youtube-nocookie.com",
+                "youTubeUrl": "youtube.com",
+                "youTubeReferrerHeaders": [
+                    "Referer"
+                ],
+                "youTubeReferrerQueryParams": [
+                    "embeds_referring_euri"
+                ],
+                "youTubeVideoIDQueryParam": "v",
                 "overlays": {
                     "youtube": {
                         "state": "disabled",
@@ -1396,11 +1562,21 @@
                                 "value": "enabled"
                             }
                         ]
+                    },
+                    {
+                        "domain": "m.youtube.com",
+                        "patchSettings": [
+                            {
+                                "op": "replace",
+                                "path": "/overlays/youtube/state",
+                                "value": "enabled"
+                            }
+                        ]
                     }
                 ]
             },
-            "state": "disabled",
-            "hash": "17689d71b3f20a31d01c050bd5cba1ee"
+            "state": "internal",
+            "hash": "887a8548cb01c9568e4d1b4d195af88b"
         },
         "elementHiding": {
             "exceptions": [
@@ -1417,7 +1593,13 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1696,6 +1878,10 @@
                         "type": "hide-empty"
                     },
                     {
+                        "selector": ".inline-ad",
+                        "type": "closest-empty"
+                    },
+                    {
                         "selector": ".ads__inline",
                         "type": "closest-empty"
                     },
@@ -1878,6 +2064,10 @@
                     {
                         "selector": ".m-in-content-ad-row",
                         "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".clsy-c-advsection",
+                        "type": "hide-empty"
                     }
                 ],
                 "styleTagExceptions": [
@@ -1932,6 +2122,7 @@
                     "ad feedback",
                     "annonse",
                     "anzeige",
+                    "close",
                     "close ad",
                     "close this ad",
                     "content continues below",
@@ -1952,7 +2143,8 @@
                     "continue reading the main story",
                     "this advertisement has not loaded yet, but your article continues below.",
                     "story continues below\nthis advertisement has not loaded yet, but your article continues below.",
-                    "upgrade to flickr pro to hide these ads"
+                    "upgrade to flickr pro to hide these ads",
+                    "video of the day"
                 ],
                 "domains": [
                     {
@@ -2097,6 +2289,15 @@
                             {
                                 "selector": ".SovrnAd",
                                 "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "asuracomic.net",
+                        "rules": [
+                            {
+                                "selector": ".h12container",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -2510,7 +2711,15 @@
                                 "type": "hide"
                             },
                             {
+                                "selector": ".display-ad-leaderboard",
+                                "type": "hide-empty"
+                            },
+                            {
                                 "selector": ".display-ad-wrapper",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".display-ad-wrap",
                                 "type": "hide-empty"
                             },
                             {
@@ -2964,6 +3173,22 @@
                             },
                             {
                                 "selector": "div:has(> iframe[src*='prid=19031496'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19043282'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19043280'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "div:has(> iframe[src*='prid=19031780'])",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "[aria-labelledby='promo-header']",
                                 "type": "hide"
                             }
                         ]
@@ -3976,6 +4201,15 @@
                         ]
                     },
                     {
+                        "domain": "signupgenius.com",
+                        "rules": [
+                            {
+                                "selector": ".mktg",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "skysports.com",
                         "rules": [
                             {
@@ -4084,6 +4318,19 @@
                             {
                                 "selector": "[id^='btf-']",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "techwalla.com",
+                        "rules": [
+                            {
+                                "selector": ".component-header-sticky-ad",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".component-article-section-votd-wrapper",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -4642,7 +4889,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "d2c2fb2d96cd435c4baaee4c45d11801"
+            "hash": "0882839182c425cbc9f98b8329036254"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4656,11 +4903,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "139d551fb343ef36567a2d35e7c4457a"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4683,10 +4936,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "a05e98b812061f4362468b51c4951937"
+            "hash": "1699e10a89e3f845b762d979c7784e07"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4703,11 +4962,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "dd063c6747891b8c02fb75ddd7a7311c"
+            "hash": "7d41daff22dc87c5e77130ecfe07a5b2"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -4808,11 +5073,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "5a29a3dee399844c40b4b759b5fc524c"
+            "hash": "2d8237d98a58f72e1722594501e7a10a"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -4871,11 +5142,20 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
+                    "domain": "target.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "2ad6d3cad9d44b1a3c6377f7fcb01311"
+            "hash": "9f2be706bd8afb4ab5b20bcf105f3029"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -4925,11 +5205,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "6b21acb8f85cd519b39aba33b7c79487"
+            "hash": "af086ad86fb05240c6ae07b4f27990cb"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -4952,11 +5238,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "4b23979713e44735003fd2d3bc85d7ca"
+            "hash": "7503c4ad77f4d9a2e679c89f3a6d7758"
         },
         "googleRejected": {
             "exceptions": [
@@ -4970,11 +5262,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "139d551fb343ef36567a2d35e7c4457a"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "gpc": {
             "state": "enabled",
@@ -5025,6 +5323,12 @@
                     "domain": "npr.org"
                 },
                 {
+                    "domain": "norton.com"
+                },
+                {
+                    "domain": "jcrew.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5034,10 +5338,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "oreillyauto.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5049,7 +5359,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "0a12141d483df3bea0e0fca5ccdc0159"
+            "hash": "91efce5371a70d32b647ef748376666e"
         },
         "harmfulApis": {
             "settings": {
@@ -5161,11 +5471,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "d12818afbee58693fc60fd0be7cc90db"
+            "hash": "179ae7bb9c2f25cdca27e9ae3da9f506"
         },
         "history": {
             "state": "enabled",
@@ -5212,10 +5528,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "fd20e89d32343cf42c4b7f5101d5b900"
+            "hash": "3beb9d0dc3e5b08f87862264e6845d22"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5243,6 +5565,16 @@
             "exceptions": [],
             "hash": "429cea8d27316dc62af04159ec7c42b5"
         },
+        "loadingBarExp": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "marketplaceAdPostback": {
+            "state": "enabled",
+            "exceptions": [],
+            "hash": "697382e31649d84b01166f1dc6f790d6"
+        },
         "mediaPlaybackRequiresUserGesture": {
             "exceptions": [],
             "state": "disabled",
@@ -5260,7 +5592,13 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5271,7 +5609,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "68732c967df2ff5beb2d851378395cfd"
+            "hash": "85c8d252b38056bb00cb6846fe2793cc"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5306,11 +5644,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4977063ee77c043c5ad51e3daeb188ca"
+            "hash": "09dadf2e11272ecfd8637c057f9970c3"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5325,10 +5669,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "94113375ad83c83f79c508e5a6b4d204"
+            "hash": "d6d280cf631363943027afc66a36ffff"
         },
         "phishingDetection": {
             "state": "disabled",
@@ -5343,10 +5693,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "6c066c2a4006b44d8cb495402e993588"
+            "hash": "28a9e2628d3c372ae3434c9166031693"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5416,9 +5772,13 @@
                 },
                 "allowPurchase": {
                     "state": "enabled"
+                },
+                "useUnifiedFeedback": {
+                    "state": "enabled",
+                    "minSupportedVersion": "7.136.0"
                 }
             },
-            "hash": "5ba91c7416564247c49dae3e80bd5a3c"
+            "hash": "c2a2ca6f3ae1b8ddb4f3fa011cb3e227"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",
@@ -5455,11 +5815,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "f2d162b61ce76263251dbea36b528cfe"
+            "hash": "10bf3098ef71a9cac101c1fdce462b22"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -5479,13 +5845,19 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "d424b3a064dd4abfccbd145270b121cf"
+            "hash": "72518a0c7421196ec071b1fb9167fde7"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5500,11 +5872,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {},
-            "hash": "7dd7a12bfb6c39e9fe94cc24a81c56fc"
+            "hash": "baf8b326d74f71ed4f63a1ffa3d42794"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -5518,16 +5896,40 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "139d551fb343ef36567a2d35e7c4457a"
+            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
         },
         "sslCertificates": {
-            "state": "disabled",
+            "state": "enabled",
             "exceptions": [],
-            "hash": "c292bb627849854515cebbded288ef5a"
+            "features": {
+                "allowBypass": {
+                    "state": "enabled"
+                }
+            },
+            "hash": "abe9584048f7f8157f71a14e7914cb1c"
+        },
+        "syncPromotion": {
+            "state": "enabled",
+            "features": {
+                "bookmarks": {
+                    "state": "enabled"
+                },
+                "passwords": {
+                    "state": "enabled"
+                }
+            },
+            "exceptions": [],
+            "hash": "8081a0cf08f5bbda622df55361c72cfe"
         },
         "sync": {
             "state": "enabled",
@@ -5703,6 +6105,12 @@
                                 ]
                             },
                             {
+                                "rule": "static.adsafeprotected.com/skeleton",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
                                 "rule": "static.adsafeprotected.com/iasPET.1.js",
                                 "domains": [
                                     "corriere.it",
@@ -5713,6 +6121,16 @@
                                 "rule": "static.adsafeprotected.com/vans-adapter-google-ima.js",
                                 "domains": [
                                     "nhl.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "adsrvr.org": {
+                        "rules": [
+                            {
+                                "rule": "js.adsrvr.org/up_loader.1.1.0.js",
+                                "domains": [
+                                    "codot.gov"
                                 ]
                             }
                         ]
@@ -5750,8 +6168,7 @@
                             {
                                 "rule": "adserver.adtech.advertising.com/pubapi/3.0/1/",
                                 "domains": [
-                                    "collider.com",
-                                    "si.com"
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -5824,16 +6241,6 @@
                                 "rule": "z-na.amazon-adsystem.com/widgets/onejs",
                                 "domains": [
                                     "oceanofcompressed.xyz"
-                                ]
-                            }
-                        ]
-                    },
-                    "amazon.dev": {
-                        "rules": [
-                            {
-                                "rule": "prime.amazon.dev",
-                                "domains": [
-                                    "<all>"
                                 ]
                             }
                         ]
@@ -6498,6 +6905,7 @@
                             {
                                 "rule": "eccmp.com/sts/scripts/conversen-SDK.js",
                                 "domains": [
+                                    "citi.com",
                                     "pch.com"
                                 ]
                             }
@@ -6932,20 +7340,7 @@
                             {
                                 "rule": "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
                                 "domains": [
-                                    "air-journal.fr",
-                                    "arcadepunks.com",
-                                    "daotranslate.com",
-                                    "drakescans.com",
-                                    "duden.de",
-                                    "edealinfo.com",
-                                    "freetubetv.net",
-                                    "hscprojects.com",
-                                    "kits4beats.com",
-                                    "magicgameworld.com",
-                                    "ncaa.com",
-                                    "rocketnews24.com",
-                                    "youmath.it",
-                                    "zefoy.com"
+                                    "<all>"
                                 ]
                             },
                             {
@@ -7107,6 +7502,7 @@
                                     "pointstreaksites.com",
                                     "post-gazette.com",
                                     "raleighcw.com",
+                                    "signupgenius.com",
                                     "siouxlandnews.com",
                                     "southernoregoncw.com",
                                     "star64.tv",
@@ -7229,6 +7625,24 @@
                             },
                             {
                                 "rule": "api.hubspot.com/livechat-public/v1/message/public",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "meetings.hubspot.com",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "app.hubspot.com/hubsettings",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "app.hubspot.com/userpreferences",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -7744,6 +8158,16 @@
                             }
                         ]
                     },
+                    "opecloud.com": {
+                        "rules": [
+                            {
+                                "rule": "opecloud.com/ope-asmi.js",
+                                "domains": [
+                                    "bild.de"
+                                ]
+                            }
+                        ]
+                    },
                     "openx.net": {
                         "rules": [
                             {
@@ -8027,7 +8451,14 @@
                             {
                                 "rule": "a.pub.network/core/prebid-universal-creative.js",
                                 "domains": [
+                                    "signupgenius.com",
                                     "titantv.com"
+                                ]
+                            },
+                            {
+                                "rule": "a.pub.network/virtualpiano-net/pubfig.min.js",
+                                "domains": [
+                                    "virtualpiano.net"
                                 ]
                             }
                         ]
@@ -8263,16 +8694,6 @@
                             }
                         ]
                     },
-                    "siteimproveanalytics.com": {
-                        "rules": [
-                            {
-                                "rule": "siteimproveanalytics.com",
-                                "domains": [
-                                    "codot.gov"
-                                ]
-                            }
-                        ]
-                    },
                     "skimresources.com": {
                         "rules": [
                             {
@@ -8375,7 +8796,8 @@
                                 "rule": "sundaysky.com",
                                 "domains": [
                                     "bankofamerica.com",
-                                    "idnotify.com"
+                                    "idnotify.com",
+                                    "united.com"
                                 ]
                             }
                         ]
@@ -8516,6 +8938,16 @@
                                 "rule": "widget.trustpilot.com/bootstrap/v5/tp.widget.sync.bootstrap.min.js",
                                 "domains": [
                                     "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "tsyndicate.com": {
+                        "rules": [
+                            {
+                                "rule": "vacdn.tsyndicate.com",
+                                "domains": [
+                                    "pornhub.com"
                                 ]
                             }
                         ]
@@ -8782,6 +9214,22 @@
                             }
                         ]
                     },
+                    "scmp.com": {
+                        "rules": [
+                            {
+                                "rule": "profiles.ope.scmp.com/ope-asmi.js",
+                                "domains": [
+                                    "bild.de"
+                                ]
+                            },
+                            {
+                                "rule": "tagger.ope.scmp.com/ope-asmi.js",
+                                "domains": [
+                                    "bild.de"
+                                ]
+                            }
+                        ]
+                    },
                     "canadapost-postescanada.ca": {
                         "rules": [
                             {
@@ -8825,10 +9273,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "b1fbd696fb61a13318c5593562ac8a29"
+            "hash": "d41dab46e3e6b98fa00b3f09d4982a14"
         },
         "trackingCookies1p": {
             "settings": {
@@ -8848,11 +9302,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4e5efbd74ddcc8849735bfe590ed0d78"
+            "hash": "3266e0df13e8d3959de6e9d0bf35c089"
         },
         "trackingCookies3p": {
             "settings": {
@@ -8869,11 +9329,17 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "4977063ee77c043c5ad51e3daeb188ca"
+            "hash": "09dadf2e11272ecfd8637c057f9970c3"
         },
         "trackingParameters": {
             "exceptions": [
@@ -8890,10 +9356,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "theverge.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -8926,7 +9398,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "844dfb71064b07234e16cda96cacf8c5"
+            "hash": "6aa495863362a10fcd54398369d780a4"
         },
         "userAgentRotation": {
             "settings": {
@@ -8943,22 +9415,30 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "8e86f07f09dcca5d1f327c31f8da38a6"
+            "hash": "b1ca9a99352f9a9f1da0bce34d66a2fa"
         },
         "voiceSearch": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
+        "webBrokenSiteForm": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
         "webCompat": {
             "exceptions": [
-                {
-                    "domain": "crocs.com"
-                },
                 {
                     "domain": "marvel.com"
                 },
@@ -8969,10 +9449,16 @@
                     "domain": "noaprints.com"
                 },
                 {
+                    "domain": "flexmls.com"
+                },
+                {
                     "domain": "wsj.com"
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
@@ -9015,12 +9501,17 @@
                     }
                 ]
             },
-            "hash": "d92d107682e3678cfd1cbdd8660404c0"
+            "hash": "efc01837e0f1a6d59fffd8d00f67be41"
         },
         "webViewBlobDownload": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsDownloadLink": {
+            "exceptions": [],
+            "state": "enabled",
+            "hash": "52857469413a66e8b0c7b00de5589162"
         },
         "windowsExternalPreviewReleases": {
             "exceptions": [],
@@ -9052,10 +9543,10 @@
             "state": "enabled",
             "hash": "52857469413a66e8b0c7b00de5589162"
         },
-        "windowsDownloadLink": {
+        "windowsWebviewFailures": {
             "exceptions": [],
-            "state": "enabled",
-            "hash": "52857469413a66e8b0c7b00de5589162"
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         }
     },
     "unprotectedTemporary": []

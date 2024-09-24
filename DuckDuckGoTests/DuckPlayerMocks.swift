@@ -86,7 +86,7 @@ class MockNavigationAction: WKNavigationAction {
     }
 }
 
-final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class MockDuckPlayerSettings: DuckPlayerSettings {
     
     private let duckPlayerSettingsSubject = PassthroughSubject<Void, Never>()
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> {
@@ -95,6 +95,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
     
     var mode: DuckPlayerMode = .disabled
     var askModeOverlayHidden: Bool = false
+    var allowFirstVideo: Bool = false
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}
@@ -103,13 +104,14 @@ final class MockDuckPlayerSettings: DuckPlayerSettingsProtocol {
         self.mode = mode
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
+    func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         self.askModeOverlayHidden = overlayHidden
     }
     
 }
 
 final class MockDuckPlayer: DuckPlayerProtocol {
+    
     var hostView: UIViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
@@ -130,10 +132,12 @@ final class MockDuckPlayer: DuckPlayerProtocol {
         nil
     }
     
-    var settings: any DuckPlayerSettingsProtocol
+    var settings: any DuckPlayerSettings
+    private var featureFlagger: FeatureFlagger
     
-    init(settings: DuckPlayerSettingsProtocol) {
+    init(settings: any DuckDuckGo.DuckPlayerSettings, featureFlagger: any BrowserServicesKit.FeatureFlagger) {
         self.settings = settings
+        self.featureFlagger = featureFlagger
     }
     
     func setUserValues(params: Any, message: WKScriptMessage) -> (any Encodable)? {
@@ -158,4 +162,8 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
         return true
     }
     
+}
+
+final class MockDuckPlayerStorage: DuckPlayerStorage {
+    var userInteractedWithDuckPlayer: Bool = false
 }

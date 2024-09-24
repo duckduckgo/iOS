@@ -20,36 +20,56 @@
 import SwiftUI
 import DDGSync
 import Bookmarks
+import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultModel>>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultViewModel>>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
+    private let variantManager: VariantManager
+    private let newTabDialogFactory: any NewTabDaxDialogProvider
+    private let newTabDialogTypeProvider: NewTabDialogSpecProvider
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
+    private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
-    private let favoritesModel: FavoritesDefaultModel
+    private let favoritesModel: FavoritesDefaultViewModel
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
+    private let associatedTab: Tab
 
-    init(interactionModel: FavoritesListInteracting,
+    private var hostingController: UIHostingController<AnyView>?
+
+    init(tab: Tab,
+         interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
-         privacyProDataReporting: PrivacyProDataReporting? = nil) {
+         privacyProDataReporting: PrivacyProDataReporting? = nil,
+         variantManager: VariantManager,
+         newTabDialogFactory: any NewTabDaxDialogProvider,
+         newTabDialogTypeProvider: NewTabDialogSpecProvider,
+         faviconLoader: FavoritesFaviconLoading) {
 
+        self.associatedTab = tab
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
+        self.variantManager = variantManager
+        self.newTabDialogFactory = newTabDialogFactory
+        self.newTabDialogTypeProvider = newTabDialogTypeProvider
 
+        newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesDefaultModel(interactionModel: interactionModel)
+        favoritesModel = FavoritesDefaultViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
-        let newTabPageView = NewTabPageView(messagesModel: messagesModel,
+
+        let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
+                                            messagesModel: messagesModel,
                                             favoritesModel: favoritesModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,
@@ -59,6 +79,17 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        associatedTab.viewed = true
+
+        presentNextDaxDialog()
+
+        Pixel.fire(pixel: .homeScreenShown)
+        sendDailyDisplayPixel()
     }
 
     // MARK: - Private
@@ -116,15 +147,17 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     weak var shortcutsDelegate: NewTabPageControllerShortcutsDelegate?
 
     func launchNewSearch() {
-
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
+        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
 
-    }
-
-    func omniBarCancelPressed() {
-
+        // The omnibar is inside a collection view so this needs a chance to do its thing
+        // which might also be async. Not great.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.launchNewSearch()
+        }
     }
 
     func dismiss() {
@@ -132,15 +165,37 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     }
 
     func showNextDaxDialog() {
-
+        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
     }
 
     func onboardingCompleted() {
-
+        presentNextDaxDialog()
     }
 
     func reloadFavorites() {
 
+    }
+
+    // MARK: - Onboarding
+
+    private func presentNextDaxDialog() {
+        if variantManager.isSupported(feature: .newOnboardingIntro) {
+            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        }
+    }
+
+    // MARK: - Private
+
+    private func sendDailyDisplayPixel() {
+
+        let favoritesCount = favoritesModel.allFavorites.count
+        let bucket = HomePageDisplayDailyPixelBucket(favoritesCount: favoritesCount)
+
+        DailyPixel.fire(pixel: .newTabPageDisplayedDaily, withAdditionalParameters: [
+            "FavoriteCount": bucket.value,
+            "Shortcuts": sectionsSettingsModel.enabledItems.contains(.shortcuts) ? "1" : "0",
+            "Favorites": sectionsSettingsModel.enabledItems.contains(.favorites) ? "1" : "0"
+        ])
     }
 
     // MARK: -
@@ -148,5 +203,57 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     @available(*, unavailable)
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension NewTabPageViewController: HomeScreenTransitionSource {
+    var snapshotView: UIView {
+        view
+    }
+
+    var rootContainerView: UIView {
+        view
+    }
+}
+
+extension NewTabPageViewController {
+
+    func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
+        dismissHostingController(didFinishNTPOnboarding: false)
+
+        guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
+
+        let onDismiss = {
+            dialogProvider.dismiss()
+            self.dismissHostingController(didFinishNTPOnboarding: true)
+        }
+        let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
+        let hostingController = UIHostingController(rootView: daxDialogView)
+        self.hostingController = hostingController
+
+        hostingController.view.backgroundColor = .clear
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        hostingController.didMove(toParent: self)
+
+        newTabPageViewModel.startOnboarding()
+    }
+
+    private func dismissHostingController(didFinishNTPOnboarding: Bool) {
+        hostingController?.willMove(toParent: nil)
+        hostingController?.view.removeFromSuperview()
+        hostingController?.removeFromParent()
+        if didFinishNTPOnboarding {
+            self.newTabPageViewModel.finishOnboarding()
+        }
     }
 }

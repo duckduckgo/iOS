@@ -52,7 +52,7 @@ class TabsBarViewController: UIViewController {
     weak var delegate: TabsBarDelegate?
     private weak var tabsModel: TabsModel?
 
-    let tabSwitcherButton = TabSwitcherButton()
+    var tabSwitcherButton: TabSwitcherButton!
     private let longPressTabGesture = UILongPressGestureRecognizer()
     
     private weak var pressedCell: TabsBarCell?
@@ -71,6 +71,8 @@ class TabsBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tabSwitcherButton = TabSwitcherButton()
 
         decorate()
 
@@ -94,9 +96,7 @@ class TabsBarViewController: UIViewController {
 
     @IBAction func onFireButtonPressed() {
         
-        if DaxDialogs.shared.shouldShowFireButtonPulse {
-            delegate?.tabsBarDidRequestFireEducationDialog(self)
-        } else {
+        func showClearDataAlert() {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.tabsBarDidRequestForgetAll(self)
@@ -104,6 +104,16 @@ class TabsBarViewController: UIViewController {
             self.present(controller: alert, fromView: fireButton)
         }
 
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            delegate?.tabsBarDidRequestFireEducationDialog(self)
+            showClearDataAlert()
+        } else {
+            if DaxDialogs.shared.shouldShowFireButtonPulse {
+                delegate?.tabsBarDidRequestFireEducationDialog(self)
+            } else {
+                showClearDataAlert()
+            }
+        }
     }
 
     @IBAction func onNewTabPressed() {
@@ -312,8 +322,13 @@ extension MainViewController: TabsBarDelegate {
     }
     
     func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController) {
-        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            segueToActionSheetDaxDialogWithSpec(spec)
+        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+            currentTab?.dismissContextualDaxFireDialog()
+            ViewHighlighter.hideAll()
+        } else {
+            if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+                segueToActionSheetDaxDialogWithSpec(spec)
+            }
         }
     }
     

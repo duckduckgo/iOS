@@ -1,6 +1,3 @@
-/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "1tO-s1-k2W"; */
-"1tO-s1-k2W.placeholder" = "Vyhľadávať";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
 "7VM-DV-W3e.text" = "Označenie";
 
@@ -11,7 +8,7 @@
 "cV4-pj-JNb.text" = "Označenie";
 
 /* Class = "UILabel"; text = "Delete"; ObjectID = "hEJ-T8-Tdl"; */
-"hEJ-T8-Tdl.text" = "Delete";
+"hEJ-T8-Tdl.text" = "Vymazať";
 
 /* Class = "UILabel"; text = "No matches found"; ObjectID = "hqG-b3-Fq3"; */
 "hqG-b3-Fq3.text" = "Nenašli sa žiadne zhody";

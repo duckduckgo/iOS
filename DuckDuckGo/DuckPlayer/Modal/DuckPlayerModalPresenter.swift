@@ -23,6 +23,12 @@ import SwiftUI
 
 struct DuckPlayerModalPresenter {
 
+    enum PresentationContext {
+        case SERP, youtube
+    }
+    
+    var context: PresentationContext = .SERP
+    
     func presentDuckPlayerFeatureModal(on viewController: UIViewController) {
         let hostingController = createHostingController()
         configurePresentationStyle(for: hostingController, on: viewController)
@@ -34,7 +40,7 @@ struct DuckPlayerModalPresenter {
     }
 
     private func createHostingController() -> UIHostingController<DuckPlayerFeaturePresentationView> {
-        let duckPlayerFeaturePresentationView = DuckPlayerFeaturePresentationView()
+        let duckPlayerFeaturePresentationView = DuckPlayerFeaturePresentationView(context: context)
         let hostingController = UIHostingController(rootView: duckPlayerFeaturePresentationView)
         hostingController.modalPresentationStyle = .pageSheet
         hostingController.modalTransitionStyle = .coverVertical
@@ -56,7 +62,7 @@ struct DuckPlayerModalPresenter {
 
     @available(iOS 16.0, *)
     private func getTargetSizeForPresentationView(on viewController: UIViewController) -> CGSize {
-        let duckPlayerFeaturePresentationView = DuckPlayerFeaturePresentationView()
+        let duckPlayerFeaturePresentationView = DuckPlayerFeaturePresentationView(context: context)
         let sizeHostingController = UIHostingController(rootView: duckPlayerFeaturePresentationView)
         sizeHostingController.view.translatesAutoresizingMaskIntoConstraints = false
 

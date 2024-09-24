@@ -23,6 +23,10 @@ enum NewTabPageShortcut: CaseIterable, Equatable, Identifiable, Codable {
     var id: String { storageIdentifier }
 
     case bookmarks, aiChat, passwords, downloads, settings
+
+    static var enabledByDefault: [NewTabPageShortcut] {
+        NewTabPageShortcut.allCases.filter { $0 != .aiChat }
+    }
 }
 
 extension NewTabPageShortcut {
@@ -38,6 +42,16 @@ extension NewTabPageShortcut {
             "shortcut.storage.identifier.downloads"
         case .settings:
             "shortcut.storage.identifier.settings"
+        }
+    }
+
+    var nameForPixel: String {
+        switch self {
+        case .bookmarks: return "bookmarks"
+        case .aiChat: return "chat"
+        case .passwords: return "passwords"
+        case .downloads: return "downloads"
+        case .settings: return "settings"
         }
     }
 }

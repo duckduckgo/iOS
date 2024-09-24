@@ -20,39 +20,33 @@
 import UIKit
 
 actor FavoritesFaviconLoader: FavoritesFaviconLoading {
-    private var tasks: [URL: Task<Favicon?, Never>] = [:]
-    private(set) var onFaviconMissing: (() async -> Void)?
-
-    init(onFaviconMissing: (() async -> Void)? = nil) {
-        self.onFaviconMissing = onFaviconMissing
-    }
+    
+    private var tasks: [String: Task<Favicon?, Never>] = [:]
 
     func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
-        guard let url = favorite.urlObject else { return nil }
+        let domain = favorite.domain
 
-        if let task = tasks[url] {
+        if let task = tasks[domain] {
             if task.isCancelled {
-                tasks.removeValue(forKey: url)
+                tasks.removeValue(forKey: domain)
             } else {
                 return await task.value
             }
         }
 
         let newTask = Task<Favicon?, Never> {
-            let faviconResult = await FaviconsHelper.loadFaviconSync(forDomain: favorite.domain, usingCache: .fireproof, useFakeFavicon: false)
-            if let iconImage = faviconResult.image {
-                let useBorder = URL.isDuckDuckGo(domain: favorite.domain) || iconImage.size.width < size
-
-                return Favicon(image: iconImage, isUsingBorder: useBorder)
-            } else {
-                await onFaviconMissing?()
-                return nil
-            }
+            let faviconResult = FaviconsHelper.loadFaviconSync(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false)
+            return Favicon(domain: domain, expectedSize: size, faviconResult: faviconResult)
         }
 
-        tasks[url] = newTask
+        tasks[domain] = newTask
 
         return await newTask.value
+    }
+
+    nonisolated func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+        let result = FaviconsHelper.loadFaviconSync(forDomain: favorite.domain, usingCache: .fireproof, useFakeFavicon: false)
+        return Favicon(domain: favorite.domain, expectedSize: size, faviconResult: result)
     }
 
     nonisolated func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
@@ -66,9 +60,20 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
         )
 
         if let icon {
-            return Favicon(image: icon, isUsingBorder: false)
+            return Favicon(image: icon, isUsingBorder: false, isFake: true)
         } else {
             return .empty
         }
+    }
+}
+
+private extension Favicon {
+    init?(domain: String, expectedSize: CGFloat, faviconResult: (image: UIImage?, isFake: Bool)) {
+        guard let iconImage = faviconResult.image else {
+            return nil
+        }
+
+        let useBorder = URL.isDuckDuckGo(domain: domain) || iconImage.size.width < expectedSize
+        self.init(image: iconImage, isUsingBorder: useBorder, isFake: faviconResult.isFake)
     }
 }

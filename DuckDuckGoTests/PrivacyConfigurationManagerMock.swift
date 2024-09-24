@@ -24,6 +24,7 @@ import BrowserServicesKit
 class PrivacyConfigurationMock: PrivacyConfiguration {
 
     var identifier: String = "id"
+    var version: String? = "123456789"
 
     var userUnprotectedDomains: [String] = []
 

@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Synkroniser og sikkerhetskopier denne enheten";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopier";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Utviklermiljø";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Få DuckDuckGo på andre enheter";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Dataene dine er synkronisert!";
@@ -194,10 +200,10 @@
 "scan.or.see.code.footer" = "Kan du ikke skanne?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Gå til Innstillinger › Synkroniser og sikkerhetskopier i DuckDuckGo-nettleseren på en annen enhet og velg «Synkroniser med en annen enhet».";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Gå til %@ i DuckDuckGo-nettleseren på en annen enhet og velg «Synkroniser med en annen enhet.»";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Skriv inn koden manuelt";
@@ -209,7 +215,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobil til mobil?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Del tekstkode";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skann QR-kode";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synkroniser og sikkerhetskopier denne enheten";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Få DuckDuckGo på andre enheter";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Del nedlastingslenke";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "For å laste ned DuckDuckGo på skrivebordet eller en annen mobil enhet, besøk:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Få DuckDuckGo på andre enheter for å synkronisere med denne";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Få DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Installer DuckDuckGo-nettleseren på enhetene dine for å synkronisere bokmerker og passord på en sikker måte:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Innstillinger > Synkroniser og sikkerhetskopier > Synkroniser med en annen enhet";
@@ -254,7 +278,7 @@
 "synced.devices.section.header" = "Synkroniserte enheter";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Synkroniser med en annen enhet";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Denne enheten";

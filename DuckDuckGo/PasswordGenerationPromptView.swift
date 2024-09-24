@@ -56,7 +56,7 @@ struct PasswordGenerationPromptView: View {
                     passwordView
                     AutofillViews.LegacySpacerView()
                 }
-                AutofillViews.Description(text: UserText.autofillPasswordGenerationPromptSubtitle)
+                AutofillViews.SecureDescription(text: UserText.autofillSaveLoginSecurityMessage)
                 contentViewSpacer
                 ctaView
                     .padding(.bottom, AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) ? Const.Size.bottomPaddingIPad

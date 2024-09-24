@@ -18,10 +18,10 @@
 //
 
 import AdServices
-import Common
+import os.log
 
 protocol AdAttributionFetcher {
-    func fetch() async -> AdServicesAttributionResponse?
+    func fetch() async -> (String, AdServicesAttributionResponse)?
 }
 
 /// Fetches ad attribution data for from Apple.
@@ -45,7 +45,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
         self.retryInterval = retryInterval
     }
 
-    func fetch() async -> AdServicesAttributionResponse? {
+    func fetch() async -> (String, AdServicesAttributionResponse)? {
         var lastToken: String?
 
         for _ in 0..<Constant.maxRetries {
@@ -56,7 +56,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
                 lastToken = token
                 return try await fetchAttributionData(using: token)
             } catch let error as AdAttributionFetcherError {
-                os_log("AdAttributionFetcher failed to fetch attribution data: %@. Retrying.", log: .adAttributionLog, error.localizedDescription)
+                Logger.adAttribution.error("AdAttributionFetcher failed to fetch attribution data: \(error.localizedDescription, privacy: .public). Retrying.")
 
                 if error == .invalidToken {
                     lastToken = nil
@@ -69,7 +69,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
                     break
                 }
             } catch {
-                os_log("AdAttributionFetcher failed to fetch attribution data: %@", log: .adAttributionLog, error.localizedDescription)
+                Logger.adAttribution.error("AdAttributionFetcher failed to fetch attribution data: \(error.localizedDescription, privacy: .public)")
 
                 // Do not retry
                 break
@@ -79,7 +79,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
         return nil
     }
 
-    private func fetchAttributionData(using token: String) async throws -> AdServicesAttributionResponse {
+    private func fetchAttributionData(using token: String) async throws -> (String, AdServicesAttributionResponse) {
         let request = createAttributionDataRequest(with: token)
         let (data, response) = try await urlSession.data(for: request)
 
@@ -92,7 +92,7 @@ struct DefaultAdAttributionFetcher: AdAttributionFetcher {
             let decoder = JSONDecoder()
             let decoded = try decoder.decode(AdServicesAttributionResponse.self, from: data)
 
-            return decoded
+            return (token, decoded)
         case 400:
             throw AdAttributionFetcherError.invalidToken
         case 404:

@@ -19,17 +19,26 @@
 
 import SwiftUI
 import DuckUI
+import Onboarding
 
 extension OnboardingView {
 
     struct BrowsersComparisonContent: View {
 
+        private let title: String
         private var animateText: Binding<Bool>
         private var showContent: Binding<Bool>
         private let setAsDefaultBrowserAction: () -> Void
         private let cancelAction: () -> Void
 
-        init(animateText: Binding<Bool> = .constant(true), showContent: Binding<Bool> = .constant(false), setAsDefaultBrowserAction: @escaping () -> Void, cancelAction: @escaping () -> Void) {
+        init(
+            title: String,
+            animateText: Binding<Bool> = .constant(true),
+            showContent: Binding<Bool> = .constant(false),
+            setAsDefaultBrowserAction: @escaping () -> Void,
+            cancelAction: @escaping () -> Void
+        ) {
+            self.title = title
             self.animateText = animateText
             self.showContent = showContent
             self.setAsDefaultBrowserAction = setAsDefaultBrowserAction
@@ -38,7 +47,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                AnimatableTypingText(UserText.DaxOnboardingExperiment.BrowsersComparison.title, startAnimating: animateText) {
+                AnimatableTypingText(title, startAnimating: animateText) {
                     withAnimation {
                         showContent.wrappedValue = true
                     }

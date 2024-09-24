@@ -264,9 +264,6 @@ extension LegacyBookmarksCoreDataStorage {
     private func deleteExtraOrphanedFolders(_ orphanedFolders: [BookmarkFolderManagedObject],
                                             onContext context: NSManagedObjectContext,
                                             withFolderType folderType: TopLevelFolderType) {
-        let count = orphanedFolders.count
-        let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
-
         // Sort all orphaned folders by number of children
         let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
 

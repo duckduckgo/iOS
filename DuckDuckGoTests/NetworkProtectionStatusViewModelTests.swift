@@ -44,7 +44,8 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
                                                      settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
                                                      statusObserver: statusObserver,
                                                      serverInfoObserver: serverInfoObserver,
-                                                     locationListRepository: MockNetworkProtectionLocationListRepository())
+                                                     locationListRepository: MockNetworkProtectionLocationListRepository(),
+                                                     usesUnifiedFeedbackForm: false)
     }
 
     override func tearDown() {
@@ -163,9 +164,9 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
     func testStatusUpdate_nilServerLocationAndServerAddress_hidesConnectionDetails() throws {
         let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: nil, serverAddress: nil)
         // Wait for initial value first
-        try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: false)
+        try waitForPublisher(viewModel.$hasServerInfo, toEmit: false)
         serverInfoObserver.subject.send(serverInfo)
-        try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: false)
+        try waitForPublisher(viewModel.$hasServerInfo, toEmit: false)
     }
 
     func testStatusUpdate_anyServerInfoPropertiesNonNil_showsConnectionDetails() throws {
@@ -175,7 +176,7 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
             NetworkProtectionStatusServerInfo(serverLocation: serverAttributes(), serverAddress: "111.222.333.444")
         ] {
             serverInfoObserver.subject.send(serverInfo)
-            try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: true)
+            try waitForPublisher(viewModel.$hasServerInfo, toEmit: true)
         }
     }
 

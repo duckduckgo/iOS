@@ -22,16 +22,30 @@ import Configuration
 
 public class FileStore {
 
-    private let groupIdentifier: String = ContentBlockerStoreConstants.groupName
+    private let groupIdentifier: String = ContentBlockerStoreConstants.configurationGroupName
 
     public init() { }
 
     public func persist(_ data: Data, for configuration: Configuration) throws {
-        do {
-            try data.write(to: persistenceLocation(for: configuration), options: .atomic)
-        } catch {
-            Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": configuration.rawValue])
-            throw error
+        let file = persistenceLocation(for: configuration)
+        var coordinatorError: NSError?
+        var writeError: Error?
+
+        NSFileCoordinator().coordinate(writingItemAt: file, options: .forReplacing, error: &coordinatorError) { fileUrl in
+            do {
+                try data.write(to: fileUrl, options: .atomic)
+            } catch {
+                Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": configuration.rawValue])
+                writeError = error
+            }
+        }
+
+        if let writeError {
+            throw writeError
+        }
+        if let coordinatorError {
+            Pixel.fire(pixel: .fileStoreCoordinatorFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
+            throw coordinatorError
         }
     }
 
@@ -55,22 +69,33 @@ public class FileStore {
     }
 
     public func loadAsData(for configuration: Configuration) -> Data? {
-        do {
-            return try Data(contentsOf: persistenceLocation(for: configuration))
-        } catch {
-            let nserror = error as NSError
-            if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
-                Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error)
+        let file = persistenceLocation(for: configuration)
+        var data: Data?
+        var coordinatorError: NSError?
+
+        NSFileCoordinator().coordinate(readingItemAt: file, error: &coordinatorError) { fileUrl in
+            do {
+                data = try Data(contentsOf: fileUrl)
+            } catch {
+                let nserror = error as NSError
+                if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
+                    Pixel.fire(pixel: .trackerDataCouldNotBeLoaded, error: error)
+                }
             }
-            return nil
         }
+
+        if let coordinatorError {
+            Pixel.fire(pixel: .fileStoreCoordinatorFailed, error: coordinatorError, withAdditionalParameters: ["config": configuration.rawValue])
+        }
+
+        return data
     }
 
     func hasData(for configuration: Configuration) -> Bool {
         FileManager.default.fileExists(atPath: persistenceLocation(for: configuration).path)
     }
 
-    func persistenceLocation(for configuration: Configuration) -> URL {
+    public func persistenceLocation(for configuration: Configuration) -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
         return path!.appendingPathComponent(configuration.storeKey)
     }

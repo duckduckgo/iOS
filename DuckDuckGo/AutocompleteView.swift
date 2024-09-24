@@ -38,15 +38,18 @@ struct AutocompleteView: View {
 
             SuggestionsSection(suggestions: model.topHits,
                                query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
+                               onSuggestionSelected: model.onSuggestionSelected,
+                               onSuggestionDeleted: model.deleteSuggestion)
 
             SuggestionsSection(suggestions: model.ddgSuggestions,
                                query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
+                               onSuggestionSelected: model.onSuggestionSelected,
+                               onSuggestionDeleted: model.deleteSuggestion)
 
             SuggestionsSection(suggestions: model.localResults,
                                query: model.query,
-                               onSuggestionSelected: model.onSuggestionSelected)
+                               onSuggestionSelected: model.onSuggestionSelected,
+                               onSuggestionDeleted: model.deleteSuggestion)
 
         }
         .offset(x: 0, y: -20)
@@ -151,6 +154,7 @@ private struct SuggestionsSection: View {
     let suggestions: [AutocompleteViewModel.SuggestionModel]
     let query: String?
     var onSuggestionSelected: (AutocompleteViewModel.SuggestionModel) -> Void
+    var onSuggestionDeleted: (AutocompleteViewModel.SuggestionModel) -> Void
 
     let selectedColor = Color(designSystemColor: .accent)
     let unselectedColor = Color(designSystemColor: .surface)
@@ -164,8 +168,34 @@ private struct SuggestionsSection: View {
                     SuggestionView(model: suggestions[index], query: query)
                  }
                  .listRowBackground(autocompleteViewModel.selection == suggestions[index] ? selectedColor : unselectedColor)
+                 .modifier(SwipeDeleteHistoryModifier(suggestion: suggestions[index], onSuggestionDeleted: onSuggestionDeleted))
             }
         }
+    }
+
+}
+
+private struct SwipeDeleteHistoryModifier: ViewModifier {
+
+    let suggestion: AutocompleteViewModel.SuggestionModel
+    var onSuggestionDeleted: (AutocompleteViewModel.SuggestionModel) -> Void
+
+    func body(content: Content) -> some View {
+
+        switch suggestion.suggestion {
+        case .historyEntry:
+            content.swipeActions {
+                Button(role: .destructive) {
+                    onSuggestionDeleted(suggestion)
+                } label: {
+                    Label("Delete", image: "Trash-24")
+                }
+            }
+
+        default:
+            content
+        }
+
     }
 
 }
@@ -218,6 +248,11 @@ private struct SuggestionView: View {
                 SuggestionListItem(icon: Image("History-24"),
                                    title: title ?? "",
                                    subtitle: url.formattedForSuggestion())
+
+            case .openTab(title: let title, url: let url):
+                SuggestionListItem(icon: Image("OpenTab-24"),
+                                   title: title,
+                                   subtitle: "\(UserText.autocompleteSwitchToTab) · \(url.formattedForSuggestion())")
 
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")
@@ -306,6 +341,7 @@ private extension URL {
         let string = absoluteString
             .dropping(prefix: "https://")
             .dropping(prefix: "http://")
+            .droppingWwwPrefix()
         return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
     }
 

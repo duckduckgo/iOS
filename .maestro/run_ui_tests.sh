@@ -38,7 +38,7 @@ run_flow() {
 	echo "⏲️ Starting flow $( basename $flow)"
 
 	export MAESTRO_DRIVER_STARTUP_TIMEOUT=60000
-	maestro --udid=$device_uuid test $flow
+	maestro --udid=$device_uuid test -e ONBOARDING_COMPLETED=true $flow
 	if [ $? -ne 0 ]; then
 		log_message $run_log "❌ FAIL: $flow"
 		echo "🚨 Flow failed $flow"

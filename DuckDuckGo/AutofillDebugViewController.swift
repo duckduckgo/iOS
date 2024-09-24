@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import Common
 import PrivacyDashboard
+import os.log
 
 class AutofillDebugViewController: UITableViewController {
 
@@ -32,6 +33,7 @@ class AutofillDebugViewController: UITableViewController {
         case resetAutofillData = 204
         case addAutofillData = 205
         case resetAutofillBrokenReports = 206
+        case resetAutofillSurveys = 207
     }
 
     let defaults = AppUserDefaults()
@@ -41,6 +43,15 @@ class AutofillDebugViewController: UITableViewController {
             cell.accessoryType = defaults.autofillDebugScriptEnabled ? .checkmark : .none
         }
     }
+
+    @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
+    private var autofillSaveModalRejectionCount: Int
+
+    @UserDefaultsWrapper(key: .autofillSaveModalDisablePromptShown, defaultValue: false)
+    private var autofillSaveModalDisablePromptShown: Bool
+
+    @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
+    private var autofillFirstTimeUser: Bool
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -59,6 +70,10 @@ class AutofillDebugViewController: UITableViewController {
                         eventMapping: EventMapping<AutofillPixelEvent> { _, _, _, _ in })
                 autofillPixelReporter.resetStoreDefaults()
                 ActionMessageView.present(message: "Autofill Data reset")
+                autofillSaveModalRejectionCount = 0
+                autofillSaveModalDisablePromptShown = false
+                autofillFirstTimeUser = true
+                _ = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.deleteAllNeverPromptWebsites()
             } else if cell.tag == Row.addAutofillData.rawValue {
                 promptForNumberOfLoginsToAdd()
             } else if cell.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
@@ -73,6 +88,11 @@ class AutofillDebugViewController: UITableViewController {
                 let expiryDate = Calendar.current.date(byAdding: .day, value: 60, to: Date())!
                 _ = reporter.persistencyManager.removeExpiredItems(currentDate: expiryDate)
                 ActionMessageView.present(message: "Autofill Broken Reports reset")
+            } else if cell.tag == Row.resetAutofillSurveys.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let autofillSurveyManager = AutofillSurveyManager()
+                autofillSurveyManager.resetSurveys()
+                ActionMessageView.present(message: "Autofill Surveys reset")
             }
         }
     }
@@ -100,14 +120,13 @@ class AutofillDebugViewController: UITableViewController {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
 
         for i in 1...count {
-            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "https://fill.dev", notes: "")
+            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "fill.dev", notes: "")
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password".data(using: .utf8))
             do {
                 _ = try secureVault?.storeWebsiteCredentials(credentials)
             } catch let error {
-                os_log(.debug, "Error inserting credential \(error.localizedDescription)")
+                Logger.general.error("Error inserting credential \(error.localizedDescription, privacy: .public)")
             }
-
         }
 
         ActionMessageView.present(message: "Autofill Data added")

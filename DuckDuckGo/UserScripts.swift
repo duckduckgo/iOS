@@ -23,6 +23,7 @@ import BrowserServicesKit
 import TrackerRadarKit
 import UserScript
 import WebKit
+import SpecialErrorPages
 
 final class UserScripts: UserScriptsProvider {
 
@@ -42,6 +43,7 @@ final class UserScripts: UserScriptsProvider {
     }
     var youtubeOverlayScript: YoutubeOverlayUserScript?
     var youtubePlayerUserScript: YoutubePlayerUserScript?
+    var specialErrorPageUserScript: SpecialErrorPageUserScript?
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -54,7 +56,7 @@ final class UserScripts: UserScriptsProvider {
     init(with sourceProvider: ScriptSourceProviding) {
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
-        autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
+        autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider, loginImportStateProvider: StubAutofillLoginImportStateProvider())
         autofillUserScript.sessionKey = sourceProvider.contentScopeProperties.sessionKey
         
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
@@ -64,15 +66,16 @@ final class UserScripts: UserScriptsProvider {
                                                                 properties: sourceProvider.contentScopeProperties,
                                                                 isIsolated: true)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
-        
+
         // Special pages - Such as Duck Player
         specialPages = SpecialPagesUserScript()
         if let specialPages {
             userScripts.append(specialPages)
         }
-        
+        specialErrorPageUserScript = SpecialErrorPageUserScript(localeStrings: SpecialErrorPageUserScript.localeStrings(),
+                                                                languageCode: Locale.current.languageCode ?? "en")
+        specialErrorPageUserScript.map { specialPages?.registerSubfeature(delegate: $0) }
     }
-    
 
     lazy var userScripts: [UserScript] = [
         debugScript,

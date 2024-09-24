@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Configuration
 import Combine
 import Core
 import Networking
@@ -26,6 +27,8 @@ import NetworkExtension
 import NetworkProtection
 import Subscription
 import WidgetKit
+import WireGuard
+import BrowserServicesKit
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -33,6 +36,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var vpnLogger = VPNLogger()
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
+
+    private let configurationStore = ConfigurationStore()
+    private let configurationManager: ConfigurationManager
+    private var configuationSubscription: AnyCancellable?
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -203,7 +210,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     // MARK: - Error Reporting
 
-    private static func networkProtectionDebugEvents(controllerErrorStore: NetworkProtectionTunnelErrorStore) -> EventMapping<NetworkProtectionError>? {
+    private static func networkProtectionDebugEvents(controllerErrorStore: NetworkProtectionTunnelErrorStore) -> EventMapping<NetworkProtectionError> {
         return EventMapping { event, _, _, _ in
             let pixelEvent: Pixel.Event
             var pixelError: Error?
@@ -271,9 +278,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .wireGuardSetNetworkSettings(let error):
                 pixelEvent = .networkProtectionWireguardErrorCannotSetNetworkSettings
                 pixelError = error
-            case .startWireGuardBackend(let code):
+            case .startWireGuardBackend(let error):
                 pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
-                params[PixelParameters.wireguardErrorCode] = String(code)
+                pixelError = error
+            case .setWireguardConfig(let error):
+                pixelEvent = .networkProtectionWireguardErrorCannotSetWireguardConfig
+                pixelError = error
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAccessTokenFoundError
             case .vpnAccessRevoked:
@@ -300,15 +310,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 
-    public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        super.startTunnel(options: options) { error in
-            if error != nil {
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
-            }
-            completionHandler(error)
-        }
-    }
-
     public override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         switch reason {
         case .appUpdate, .userInitiated:
@@ -323,8 +324,23 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
+        Configuration.setURLProvider(VPNAgentConfigurationURLProvider())
+        configurationManager = ConfigurationManager(store: configurationStore)
+        configurationManager.start()
+        let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
+        // Load cached config (if any)
+        privacyConfigurationManager.reload(etag: configurationStore.loadEtag(for: .privacyConfiguration), data: configurationStore.loadData(for: .privacyConfiguration))
+
+        configuationSubscription = privacyConfigurationManager.updatesPublisher
+            .sink {
+                if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest) {
+                    DailyPixel.fire(pixel: .networkProtectionConfigurationPixelTest)
+                }
+            }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default
@@ -370,14 +386,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
+                   snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
+                   wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
-                   isSubscriptionEnabled: true,
                    entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
+
+        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -438,5 +457,49 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         case .failure(let error):
             return .failure(error)
         }
+    }
+}
+
+final class DefaultWireGuardInterface: WireGuardInterface {
+    func turnOn(settings: UnsafePointer<CChar>, handle: Int32) -> Int32 {
+        wgTurnOn(settings, handle)
+    }
+    
+    func turnOff(handle: Int32) {
+        wgTurnOff(handle)
+    }
+    
+    func getConfig(handle: Int32) -> UnsafeMutablePointer<CChar>? {
+        return wgGetConfig(handle)
+    }
+    
+    func setConfig(handle: Int32, config: String) -> Int64 {
+        return wgSetConfig(handle, config)
+    }
+    
+    func bumpSockets(handle: Int32) {
+        wgBumpSockets(handle)
+    }
+    
+    func disableSomeRoamingForBrokenMobileSemantics(handle: Int32) {
+        wgDisableSomeRoamingForBrokenMobileSemantics(handle)
+    }
+    
+    func setLogger(context: UnsafeMutableRawPointer?, logFunction: (@convention(c) (UnsafeMutableRawPointer?, Int32, UnsafePointer<CChar>?) -> Void)?) {
+        wgSetLogger(context, logFunction)
+    }
+}
+
+extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
+
+    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+        let parameters = [
+            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+            PixelParameters.privacyProKeychainError: error.errorDescription,
+            PixelParameters.source: "vpn"
+        ]
+
+        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     withAdditionalParameters: parameters)
     }
 }

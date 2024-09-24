@@ -18,44 +18,43 @@
 //
 
 import SwiftUI
+import DuckUI
 
-struct FavoritesEmptyStateView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.isLandscapeOrientation) var isLandscape
+struct FavoritesEmptyStateView<Model: FavoritesEmptyStateModel>: View {
+    @ObservedObject var model: Model
+    @Binding var isAddingFavorite: Bool
 
-    @State private var headerPadding: CGFloat = 10
-
-    @Binding var isShowingTooltip: Bool
+    let geometry: GeometryProxy?
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                FavoritesSectionHeader(isShowingTooltip: $isShowingTooltip)
-                    .padding(.horizontal, headerPadding)
+                FavoritesSectionHeader(model: model)
 
-                NewTabPageGridView { placeholdersCount in
-                    let placeholders = Array(0..<placeholdersCount)
+                NewTabPageGridView(geometry: geometry) { placeholdersCount in
+                    Button(action: {
+                        isAddingFavorite = true
+                    }, label: {
+                        AddFavoritePlaceholderItemView()
+                    })
+                    .buttonStyle(SecondaryFillButtonStyle(isFreeform: true))
+                    .frame(width: NewTabPageGrid.Item.edgeSize)
+
+                    let placeholders = Array(0..<placeholdersCount - 1)
                     ForEach(placeholders, id: \.self) { _ in
                         FavoriteEmptyStateItem()
                             .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                            .contentShape(.capsule)
+                            .onTapGesture {
+                                model.placeholderTapped()
+                            }
                     }
-                }.overlay(
-                    GeometryReader(content: { geometry in
-                        Color.clear.preference(key: WidthKey.self, value: geometry.frame(in: .local).width)
-                    })
-                )
-                .onPreferenceChange(WidthKey.self, perform: { fullWidth in
-                    let columnsCount = Double(NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape))
-                    let allColumnsWidth = columnsCount * NewTabPageGrid.Item.edgeSize
-                    let leftoverWidth = fullWidth - allColumnsWidth
-                    let spacingSize = leftoverWidth / (columnsCount)
-                    self.headerPadding = spacingSize / 2
-                })
+                }
             }
 
-            if isShowingTooltip {
+            if model.isShowingTooltip {
                 FavoritesTooltip()
-                    .offset(x: -headerPadding + 18, y: 24)
+                    .offset(x: 18, y: 24)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }
         }
@@ -63,13 +62,17 @@ struct FavoritesEmptyStateView: View {
 }
 
 #Preview {
-    @State var isShowingTooltip = false
-    return FavoritesEmptyStateView(isShowingTooltip: $isShowingTooltip)
+    PreviewViewWrapper()
 }
 
-private struct WidthKey: PreferenceKey {
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
+private struct PreviewViewWrapper: View {
+    @State var isAddingFavorite = false
+
+    var body: some View {
+        FavoritesEmptyStateView(
+            model: FavoritesPreviewModel(),
+            isAddingFavorite: $isAddingFavorite,
+            geometry: nil
+        )
     }
-    static var defaultValue: CGFloat = .zero
 }

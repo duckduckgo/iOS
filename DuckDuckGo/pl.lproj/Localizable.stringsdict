@@ -58,6 +58,34 @@ Zablokowałem ich!
 ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* i jeszcze *1 mechanizm śledzący* próbowały Cię tutaj śledzić. Zostały przeze mnie zablokowane!
+
+☝️ Stuknij tarczę, aby uzyskać więcej informacji.️</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* i jeszcze *%1$d mechanizmy śledzące* próbowały Cię tutaj śledzić. Zostały przeze mnie zablokowane!
+
+☝️ Stuknij tarczę, aby uzyskać więcej informacji.️</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* i jeszcze *%1$d mechanizmów śledzących* próbowały Cię tutaj śledzić. Zostały przeze mnie zablokowane!
+
+☝️ Stuknij tarczę, aby uzyskać więcej informacji.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* i jeszcze *%1$d mechanizmu śledzącego* próbowały Cię tutaj śledzić. Zostały przeze mnie zablokowane!
+
+☝️ Stuknij tarczę, aby uzyskać więcej informacji.️</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

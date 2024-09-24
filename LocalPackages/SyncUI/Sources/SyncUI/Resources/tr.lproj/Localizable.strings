@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Bu Cihazı Senkronize Et ve Yedekle";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopyala";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Geliştirme ortamı";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "DuckDuckGo'yu Diğer Cihazlarda Edinin";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Verileriniz Senkronize Edildi!";
@@ -194,10 +200,10 @@
 "scan.or.see.code.footer" = "Tarama yapamıyor musunuz?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Başka bir cihazdaki DuckDuckGo Tarayıcısında Ayarlar › Senkronizasyon ve Yedekleme bölümüne gidin ve \"Başka Bir Cihazla Senkronize Et\" seçeneğini seçin.";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Başka bir cihazdaki DuckDuckGo Tarayıcısında %@ bölümüne gidin ve \"Başka Bir Cihazla Senkronize Et\" seçeneğini seçin.";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Kodu Manuel Olarak Yaz";
@@ -209,7 +215,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobilden Mobile mi?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Metin Kodu Paylaşılsın mı?";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "QR Kodunu Tara";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Bu Cihazı Senkronize Et ve Yedekle";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "DuckDuckGo'yu Diğer Cihazlarda Edinin";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "İndirme Bağlantısını Paylaş";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "DuckDuckGo'yu masaüstüne veya başka bir mobil cihaza indirmek için şu adresi ziyaret edin:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Bu cihazla senkronize etmek için DuckDuckGo'yu diğer cihazlara yükleyin";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "DuckDuckGo'yu edinin";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Yer işaretlerinizi ve şifrelerinizi güvenli bir şekilde senkronize etmeye başlamak için DuckDuckGo tarayıcısını cihazlarınıza yükleyin:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Ayarlar > Senkronizasyon ve Yedekleme > Başka Bir Cihazla Senkronize Et";
@@ -254,7 +278,7 @@
 "synced.devices.section.header" = "Senkronize Edilmiş Cihazlar";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Başka Bir Cihazla Senkronize Et";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Bu Cihaz";

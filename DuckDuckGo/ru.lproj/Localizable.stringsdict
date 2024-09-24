@@ -58,6 +58,34 @@
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* и *еще 1 сервис* пытались вести за вами слежку, но мы их заблокировали.
+
+☝️ Нажмите на щит, чтобы узнать подробности.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* и *еще %1$d сервиса* пытались вести за вами слежку, но мы их заблокировали.
+
+☝️ Нажмите на щит, чтобы узнать подробности.</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* и *еще %1$d сервисов* пытались вести за вами слежку, но мы их заблокировали.
+
+☝️ Нажмите на щит, чтобы узнать подробности.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* и другие сервисы *(еще %1$d)* пытались вести за вами слежку, но мы их заблокировали.
+
+☝️ Нажмите на щит, чтобы узнать подробности.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

@@ -1,0 +1,53 @@
+# application-lock.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+- tapOn: "Settings"
+- scrollUntilVisible:
+    element: "General"
+    direction: DOWN
+- tapOn: "General"
+
+- tapOn:
+    text: "0"
+    index: "0"
+
+- stopApp
+
+- launchApp
+
+- assertVisible: "Unlock DuckDuckGo."
+- inputText: "password"
+- pressKey: Enter
+
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.site"
+- pressKey: Enter
+
+- tapOn: "Browsing Menu"
+- tapOn: "Settings"
+- scrollUntilVisible:
+    element: "General"
+    direction: DOWN
+- tapOn: "General"
+
+- tapOn:
+    text: "1"
+    index: "0"
+
+
+- stopApp
+
+- launchApp
+
+- assertVisible: "Privacy Test Pages"

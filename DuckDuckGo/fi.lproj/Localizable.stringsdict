@@ -42,6 +42,26 @@
 ☝️ Voit tarkistaa osoitekentästä, kuka yrittää seurata sinua vieraillessasi uudella sivustolla.</string>
 		</dict>
 	</dict>
+	<key>contextual.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* ja 1 muu yritti seurata sinua täällä. Estin ne!
+
+☝️ Napauta kilpeä saadaksesi lisätietoja.️</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* ja *%1$d muuta* yrittivät seurata sinua täällä. Estin ne!
+
+☝️ Napauta kilpeä saadaksesi lisätietoja.</string>
+		</dict>
+	</dict>
 	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Синхронизация и резервное копирование устройства";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Копировать";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Среда разработки";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Скачать DuckDuckGo на другие устройства";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Данные синхронизированы!";
@@ -194,10 +200,10 @@
 "scan.or.see.code.footer" = "Нет возможности отсканировать код?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Откройте раздел «Настройки» > Синхронизация и резервное копирование» в браузере DuckDuckGo на другом устройстве и выберите опцию «Синхронизировать с другим устройством».";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Откройте раздел «%@» в браузере DuckDuckGo на другом устройстве и выберите вариант «Синхронизировать с другим устройством».";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Ввести код вручную";
@@ -209,7 +215,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Мобильный с мобильным?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Поделиться текстовым кодом";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Сканирование QR-кода";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Синхронизация и резервное копирование устройства";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Загрузить DuckDuckGo на другие устройства";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Поделиться ссылкой для загрузки";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Чтобы скачать DuckDuckGo на компьютер или другое мобильное устройство, посетите:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Для настройки синхронизации скачайте DuckDuckGo на другие устройства";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Скачать DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Чтобы воспользоваться функцией надежной синхронизации закладок и паролей, установите на свои устройства браузер DuckDuckGo:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Настройки > Синхронизация и резервное копирование > Синхронизировать с другим устройством";
@@ -254,7 +278,7 @@
 "synced.devices.section.header" = "Синхронизированные устройства";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Синхронизировать с другим устройством";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Это устройство";

@@ -46,6 +46,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Synkronoi ja varmuuskopioi tämä laite";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Kopioi";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -57,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Dev environment" = "Dev-ympäristö";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Hanki DuckDuckGo toiselle laitteelle";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Tietosi on synkronoitu!";
@@ -194,10 +200,10 @@
 "scan.or.see.code.footer" = "Etkö voi skannata?";
 
 /* Scan or See Code View - Instruction */
-"scan.or.see.code.instruction" = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”";
+"scan.or.see.code.instruction" = "Siirry kohtaan Asetukset › Synkronointi ja varmuuskopiointi DuckDuckGo-selaimessa muulla laitteella ja valitse ”Synkronoi toisen laitteen kanssa.”";
 
 /* Scan or See Code View - Instruction with syncMenuPath */
-"scan.or.see.code.instruction.attributed" = "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync With Another Device.”.";
+"scan.or.see.code.instruction.attributed" = "Siirry kohtaan %@ DuckDuckGo-selaimessa muulla laitteella ja valitse ”Synkronoi toisen laitteen kanssa.”";
 
 /* Scan or See Code View - Manually Enter Code Link */
 "scan.or.see.code.manually.enter.code.link" = "Syötä koodi manuaalisesti";
@@ -209,7 +215,7 @@
 "scan.or.see.code.scan.code.instructions.title" = "Mobile-to-Mobile?";
 
 /* Scan or See Code View - Share Code Link */
-"scan.or.see.code.share.code.link" = "Share Text Code";
+"scan.or.see.code.share.code.link" = "Jaa tekstikoodi";
 
 /* Scan or See Code View - Title */
 "scan.or.see.code.title" = "Skannaa QR-koodi";
@@ -222,6 +228,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Synkronoi ja varmuuskopioi tämä laite";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Hanki DuckDuckGo toiselle laitteelle";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Jaa latauslinkki";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "Lataa DuckDuckGo tietokoneeseen tai toiseen mobiililaitteeseen täältä:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Hanki DuckDuckGo toiseen laitteeseen synkronoitavaksi tämän laitteen kanssa";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Hanki DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Asenna DuckDuckGo-selain laitteisiisi ja synkronoi kirjanmerkkisi ja salasanasi turvallisesti:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Asetukset > Synkronointi ja varmuuskopiointi > Synkronoi toisen laitteen kanssa";
@@ -254,7 +278,7 @@
 "synced.devices.section.header" = "Synkronoidut laitteet";
 
 /* Synced Devices - Sync with Another Device Label */
-"synced.devices.sync.with.another.device.label" = "Sync With Another Device";
+"synced.devices.sync.with.another.device.label" = "Synkronoi toisen laitteen kanssa";
 
 /* Synced Devices - This Device Label */
 "synced.devices.this.device.label" = "Tämä laite";

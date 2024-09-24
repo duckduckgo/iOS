@@ -22,6 +22,8 @@ import UIKit
 import Core
 import PrivacyDashboard
 import DesignResourcesKit
+import DuckPlayer
+import os.log
 
 extension OmniBar: NibLoading {}
 
@@ -71,7 +73,8 @@ class OmniBar: UIView {
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
-    
+    private let privacyIconContextualOnboardingAnimator = PrivacyIconContextualOnboardingAnimator()
+
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
@@ -274,7 +277,7 @@ class OmniBar: UIView {
         }
 
         customIconView.isHidden = true
-        privacyInfoContainer.privacyIcon.isHidden = false
+        privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
     }
@@ -306,6 +309,7 @@ class OmniBar: UIView {
     public func cancelAllAnimations() {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         notificationAnimator.cancelAnimations(in: self)
+        privacyIconContextualOnboardingAnimator.dismissPrivacyIconAnimation(privacyInfoContainer.privacyIcon)
     }
     
     public func completeAnimationForDaxDialog() {
@@ -315,13 +319,28 @@ class OmniBar: UIView {
     func showOrScheduleCookiesManagedNotification(isCosmetic: Bool) {
         let type: OmniBarNotificationType = isCosmetic ? .cookiePopupHidden : .cookiePopupManaged
         
+        enqueueAnimationIfNeeded { [weak self] in
+            guard let self else { return }
+            self.notificationAnimator.showNotification(type, in: self)
+        }
+    }
+
+    func showOrScheduleOnboardingPrivacyIconAnimation() {
+        enqueueAnimationIfNeeded { [weak self] in
+            guard let self else { return }
+            self.privacyIconContextualOnboardingAnimator.showPrivacyIconAnimation(in: self)
+        }
+    }
+
+    func dismissOnboardingPrivacyIconAnimation() {
+        privacyIconContextualOnboardingAnimator.dismissPrivacyIconAnimation(privacyInfoContainer.privacyIcon)
+    }
+
+    private func enqueueAnimationIfNeeded(_ block: @escaping () -> Void) {
         if privacyIconAndTrackersAnimator.state == .completed {
-            notificationAnimator.showNotification(type, in: self)
+            block()
         } else {
-            privacyIconAndTrackersAnimator.onAnimationCompletion = { [weak self] in
-                guard let self = self else { return }
-                self.notificationAnimator.showNotification(type, in: self)
-            }
+            privacyIconAndTrackersAnimator.onAnimationCompletion(block)
         }
     }
 
@@ -332,7 +351,7 @@ class OmniBar: UIView {
 
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
-            os_log("OmniBar entering %s from %s", log: .generalLog, type: .debug, newState.name, state.name)
+            Logger.general.debug("OmniBar entering \(newState.name) from \(self.state.name)")
             if newState.clearTextOnStart {
                 clear()
             }
@@ -449,7 +468,8 @@ class OmniBar: UIView {
     }
 
     @IBAction func onPrivacyIconPressed(_ sender: Any) {
-        omniDelegate?.onPrivacyIconPressed()
+        let isPrivacyIconHighlighted = privacyIconContextualOnboardingAnimator.isPrivacyIconHighlighted(privacyInfoContainer.privacyIcon)
+        omniDelegate?.onPrivacyIconPressed(isHighlighted: isPrivacyIconHighlighted)
     }
 
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {

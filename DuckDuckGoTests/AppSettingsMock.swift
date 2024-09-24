@@ -89,4 +89,9 @@ class AppSettingsMock: AppSettings {
 
     var newTabPageShortcutsSettings: Data?
     var newTabPageSectionsSettings: Data?
+
+    var newTabPageIntroMessageEnabled: Bool?
+    var newTabPageIntroMessageSeenCount: Int = 0
+
+    var onboardingHighlightsEnabled: Bool = false
 }

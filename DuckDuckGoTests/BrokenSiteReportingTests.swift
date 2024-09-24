@@ -88,7 +88,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             return
         }
         
-        os_log("Testing [%s]", type: .info, test.name)
+        print("Testing [%s]", test.name)
 
         var errors: [Error]?
         if let errs = test.errorDescriptions {
@@ -102,6 +102,7 @@ final class BrokenSiteReportingTests: XCTestCase {
                                       manufacturer: test.manufacturer ?? "",
                                       upgradedHttps: test.wasUpgraded,
                                       tdsETag: test.blocklistVersion,
+                                      configVersion: test.remoteConfigVersion,
                                       blockedTrackerDomains: test.blockedTrackers,
                                       installedSurrogates: test.surrogates,
                                       isGPCEnabled: test.gpcEnabled ?? false,
@@ -169,6 +170,7 @@ private struct Test: Codable {
     let providedDescription: String?
     let blockedTrackers, surrogates: [String]
     let atb, blocklistVersion: String
+    let remoteConfigVersion: String?
     let expectReportURLPrefix: String
     let expectReportURLParams: [ExpectReportURLParam]
     let exceptPlatforms: [String]

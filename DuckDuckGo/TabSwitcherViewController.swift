@@ -24,6 +24,7 @@ import DDGSync
 import WebKit
 import Bookmarks
 import Persistence
+import os.log
 
 class TabSwitcherViewController: UIViewController {
     
@@ -223,7 +224,7 @@ class TabSwitcherViewController: UIViewController {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
-            os_log("Failed to save %d tabs", log: .generalLog, type: .debug, failedToSaveCount)
+            Logger.general.debug("Failed to save \(failedToSaveCount) tabs")
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }
@@ -317,11 +318,16 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        
-        if DaxDialogs.shared.shouldShowFireButtonPulse {
+        let isNewOnboarding = DefaultVariantManager().isSupported(feature: .newOnboardingIntro)
+
+        if !isNewOnboarding
+            && DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
+            if isNewOnboarding {
+                ViewHighlighter.hideAll()
+            }
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAll()
             })
@@ -512,9 +518,12 @@ extension TabSwitcherViewController: TabObserver {
             return
         }
 
-        if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
-            collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
-        }
+        collectionView.performBatchUpdates({}, completion: { [weak self] completed in
+            guard completed, let self = self else { return }
+            if let index = self.tabsModel.indexOf(tab: tab), index < self.collectionView.numberOfItems(inSection: 0) {
+                self.collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
+            }
+        })
     }
 }
 

@@ -24,18 +24,7 @@ import Core
 import BrowserServicesKit
 import PrivacyDashboard
 import Common
-
-extension PixelExperiment {
-
-    static var privacyDashboardVariant: PrivacyDashboardVariant {
-        switch Self.cohort {
-        case .breakageSiteReportingFlowA: return .a
-        case .breakageSiteReportingFlowB: return .b
-        default: return .control
-        }
-    }
-
-}
+import os.log
 
 protocol PrivacyDashboardViewControllerDelegate: AnyObject {
 
@@ -101,7 +90,7 @@ final class PrivacyDashboardViewController: UIViewController {
 
         var variant: PrivacyDashboardVariant {
             let isExperimentEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment)
-            return isExperimentEnabled ? PixelExperiment.privacyDashboardVariant : PrivacyDashboardVariant.control
+            return PrivacyDashboardVariant.control
         }
 
         let toggleReportingConfiguration = ToggleReportingConfiguration(privacyConfigurationManager: privacyConfigurationManager)
@@ -182,14 +171,14 @@ extension PrivacyDashboardViewController {
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
         view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
-        privacyDashboardController.theme = .init(theme)
+        privacyDashboardController.theme = .init(traitCollection)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            privacyDashboardController.theme = .init()
+            privacyDashboardController.theme = .init(traitCollection)
         }
     }
 }
@@ -250,7 +239,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
                 let report = try await makeBrokenSiteReport(category: category, description: description, source: privacyDashboardController.source)
                 try brokenSiteReporter.report(report, reportMode: .regular)
             } catch {
-                os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+                Logger.privacyDashboard.error("Failed to generate or send the broken site report: \(error.localizedDescription, privacy: .public)")
             }
             let message = PixelExperiment.cohort == .control ? UserText.feedbackSumbittedConfirmation : UserText.brokenSiteReportSuccessToast
             ActionMessageView.present(message: message)
@@ -280,7 +269,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
                 let report = try await makeBrokenSiteReport(source: source)
                 try toggleProtectionsOffReporter.report(report, reportMode: .toggle)
             } catch {
-                os_log("Failed to generate or send the broken site report: %@", type: .error, error.localizedDescription)
+                Logger.general.error("Failed to generate or send the broken site report: \(error.localizedDescription, privacy: .public)")
             }
 
             privacyDashboardCloseHandler()
@@ -367,6 +356,7 @@ extension PrivacyDashboardViewController {
                                 manufacturer: "Apple",
                                 upgradedHttps: breakageAdditionalInfo.httpsForced,
                                 tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+                                configVersion: privacyConfigurationManager.privacyConfig.version,
                                 blockedTrackerDomains: blockedTrackerDomains,
                                 installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
                                 isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
@@ -389,20 +379,12 @@ extension PrivacyDashboardViewController {
 }
 
 private extension PrivacyDashboardTheme {
-    init(_ userInterfaceStyle: UIUserInterfaceStyle = ThemeManager.shared.currentInterfaceStyle) {
-        switch userInterfaceStyle {
+    init(_ traitCollection: UITraitCollection) {
+        switch traitCollection.userInterfaceStyle {
         case .light: self = .light
         case .dark: self = .dark
         case .unspecified: self = .light
         @unknown default: self = .light
-        }
-    }
-
-    init(_ theme: Theme) {
-        switch theme.name {
-        case .light: self = .light
-        case .dark: self = .dark
-        case .systemDefault: self.init(ThemeManager.shared.currentInterfaceStyle)
         }
     }
 }

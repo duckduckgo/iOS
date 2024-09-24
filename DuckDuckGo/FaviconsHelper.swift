@@ -24,15 +24,14 @@ import Common
 
 struct FaviconsHelper {
     
-    private static  let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    private static let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,
-                                preferredFakeFaviconLetters: String? = nil,
-                                completion: ((UIImage?, Bool) -> Void)? = nil) {
-           
-        func complete(_ image: UIImage?) {
+                                preferredFakeFaviconLetters: String? = nil) -> (image: UIImage?, isFake: Bool) {
+
+        func complete(_ image: UIImage?) -> (UIImage?, Bool) {
             var fake = false
             var resultImage: UIImage?
             
@@ -44,67 +43,60 @@ struct FaviconsHelper {
                                                      backgroundColor: UIColor.forDomain(domain),
                                                      preferredFakeFaviconLetters: preferredFakeFaviconLetters)
             }
-            completion?(resultImage, fake)
+            return (resultImage, fake)
+        }
+        
+        if domain == "player" {
+            return complete(UIImage(named: "DuckPlayer"))
         }
         
         if URL.isDuckDuckGo(domain: domain) {
-            complete(UIImage(named: "Logo"))
-            return
+            return complete(UIImage(named: "Logo"))
         }
         
         guard let cache = Favicons.Constants.caches[cacheType] else {
-            complete(nil)
-            return
+            return complete(nil)
         }
         
         guard let resource = Favicons.shared.defaultResource(forDomain: domain) else {
-            complete(nil)
-            return
+            return complete(nil)
         }
         
         if let image = cache.retrieveImageInMemoryCache(forKey: resource.cacheKey) {
-            complete(image)
+            return complete(image)
         } else {
                         
             // Load manually otherwise Kingfisher won't load it if the file's modification date > current date
             let url = cache.diskStorage.cacheFileURL(forKey: resource.cacheKey)
             guard let data = (try? Data(contentsOf: url)), let image = UIImage(data: data) else {
-                complete(nil)
-                return
+                return complete(nil)
             }
-            
-            complete(image)
 
             // Cache in memory with the original expiry date so that the image will be refreshed on user interaction.
             
-            guard let attributes = (try? FileManager.default.attributesOfItem(atPath: url.path)),
-                let fileModificationDate = attributes[.modificationDate] as? Date else {
-                return
+            if let attributes = (try? FileManager.default.attributesOfItem(atPath: url.path)),
+                let fileModificationDate = attributes[.modificationDate] as? Date {
+                
+                cache.store(image, forKey: resource.cacheKey, options: KingfisherParsedOptionsInfo([
+                    .cacheMemoryOnly,
+                    .diskCacheAccessExtendingExpiration(.none),
+                    .memoryCacheExpiration(.date(fileModificationDate))
+                ]), toDisk: false)
             }
-            
-            cache.store(image, forKey: resource.cacheKey, options: KingfisherParsedOptionsInfo([
-                .cacheMemoryOnly,
-                .diskCacheAccessExtendingExpiration(.none),
-                .memoryCacheExpiration(.date(fileModificationDate))
-            ]), toDisk: false)
-            
+
+            return complete(image)
         }
 
     }
 
-    @MainActor
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,
-                                preferredFakeFaviconLetters: String? = nil) async -> (image: UIImage?, isFake: Bool) {
-        await withCheckedContinuation { continuation in
-            loadFaviconSync(forDomain: domain,
-                            usingCache: cacheType,
-                            useFakeFavicon: useFakeFavicon,
-                            preferredFakeFaviconLetters: preferredFakeFaviconLetters) { image, isFake in
-                continuation.resume(returning: (image, isFake))
-            }
-        }
+                                preferredFakeFaviconLetters: String? = nil,
+                                completion: ((UIImage?, Bool) -> Void)? = nil) {
+        let result = loadFaviconSync(forDomain: domain, usingCache: cacheType, useFakeFavicon: useFakeFavicon, preferredFakeFaviconLetters: preferredFakeFaviconLetters)
+
+        completion?(result.image, result.isFake)
     }
 
     static func createFakeFavicon(forDomain domain: String,

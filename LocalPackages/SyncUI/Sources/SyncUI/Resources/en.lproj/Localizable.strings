@@ -40,6 +40,9 @@
 /* Connect With Server Sheet - Title */
 "connect.with.server.sheet.title" = "Sync and Back Up This Device";
 
+/* Standard Buttons - Copy Button */
+"copy.button" = "Copy";
+
 /* Do not translate - stringsdict entry */
 "credentials.invalid.objects.present.description" = "credentials.invalid.objects.present.description";
 
@@ -48,6 +51,9 @@
 
 /* Delete Server Data - Button */
 "delete.server.data" = "Turn Off and Delete Server Data...";
+
+/* Device SyncedSheet Button to go get DuckDuckGo on other devices */
+"device.synced.sheet.button.get.other.devices" = "Get DuckDuckGo on Other Devices";
 
 /* Device SyncedSheet - Title */
 "device.synced.sheet.title" = "Your data is synced!";
@@ -201,6 +207,24 @@
 
 /* Link label for syncing and backing up the device */
 "sync.and.backup.this.device.link" = "Sync and Back Up This Device";
+
+/* Button to get DuckDuckGo on other devices */
+"sync.get.other.devices" = "Get DuckDuckGo on Other Devices";
+
+/* Button title to share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.button.title" = "Share Download Link";
+
+/* Message before share link for downloading DuckDuckGo on other devices */
+"sync.get.other.devices.card.message" = "To download DuckDuckGo on desktop or another mobile device, visit:";
+
+/* Title of card with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.card.title" = "Get DuckDuckGo on other devices to sync with this one";
+
+/* Title of screen with share links for users to download DuckDuckGo on other devices */
+"sync.get.other.devices.screen.title" = "Get DuckDuckGo";
+
+/* Message included when sharing a url via the system share sheet */
+"sync.get.other.devices.share.link.message" = "Install the DuckDuckGo browser on your devices to start securely syncing your bookmarks and passwords:";
 
 /* Sync Menu Path */
 "sync.menu.path" = "Settings > Sync & Backup > Sync With Another Device";

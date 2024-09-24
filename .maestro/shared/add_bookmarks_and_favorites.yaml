@@ -5,12 +5,6 @@ appId: com.duckduckgo.mobile.ios
     id: searchEntry
 - inputText: www.duckduckgo.com
 - pressKey: Enter
-- runFlow:
-    when:
-      visible:
-        text: "Got It"
-    commands:
-      - tapOn: Got It
 - tapOn: Browsing Menu
 - tapOn: Add Favorite
 - tapOn:

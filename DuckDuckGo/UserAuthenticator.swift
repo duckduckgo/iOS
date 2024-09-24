@@ -21,6 +21,7 @@ import Common
 import Foundation
 import LocalAuthentication
 import Core
+import os.log
 
 class UserAuthenticator {
     enum AuthError: Error, Equatable {
@@ -39,7 +40,6 @@ class UserAuthenticator {
     private var context = LAContext()
     private var reason: String
     @Published private(set) var state = AuthenticationState.loggedOut
-    private var authenticationCallTimestamps: [Date] = []
 
     init(reason: String) {
         self.reason = reason
@@ -75,12 +75,10 @@ class UserAuthenticator {
                         self?.state = .loggedIn
                         completion?(nil)
                     } else {
-                        os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        Logger.general.error("Failed to authenticate: \(error?.localizedDescription ?? "nil", privacy: .public)")
                         completion?(.failedToAuthenticate)
                     }
                 }
-                
-                self?.monitorAuthenticationCalls()
             }
         } else {
             state = .notAvailable
@@ -92,14 +90,4 @@ class UserAuthenticator {
         context.invalidate()
     }
 
-    func monitorAuthenticationCalls() {
-        authenticationCallTimestamps.append(Date())
-
-        // we only care about timestamps from the last 10 seconds
-        authenticationCallTimestamps = authenticationCallTimestamps.filter { Date().timeIntervalSince($0) <= 10 }
-
-        if authenticationCallTimestamps.count > 2 {
-            DailyPixel.fire(pixel: .autofillMultipleAuthCallsTriggered)
-        }
-    }
 }

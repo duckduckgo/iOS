@@ -61,8 +61,8 @@ class SettingsLegacyViewProvider: ObservableObject {
              fireproofSites,
              autoclearData,
              keyboard,
-             netP,
-             feedback, debug
+             feedback,
+             debug
     }
     
     private func instantiate(_ identifier: String, fromStoryboard name: String) -> UIViewController {
@@ -81,15 +81,15 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var netP: UIViewController { NetworkProtectionRootViewController() }
     
     @MainActor
-    var syncSettings: UIViewController {
+    func syncSettings(source: String? = nil) -> SyncSettingsViewController {
         return SyncSettingsViewController(syncService: self.syncService,
                                           syncBookmarksAdapter: self.syncDataProviders.bookmarksAdapter,
                                           syncCredentialsAdapter: self.syncDataProviders.credentialsAdapter,
                                           appSettings: self.appSettings,
-                                          syncPausedStateManager: self.syncPausedStateManager)
+                                          syncPausedStateManager: self.syncPausedStateManager,
+                                          source: source)
     }
     
     func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,

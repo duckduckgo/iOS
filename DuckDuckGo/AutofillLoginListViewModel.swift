@@ -23,7 +23,9 @@ import Common
 import UIKit
 import Combine
 import Core
+import DDGSync
 import PrivacyDashboard
+import os.log
 
 internal enum AutofillLoginListSectionType: Comparable {
     case enableAutofill
@@ -88,10 +90,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let secureVault: (any AutofillSecureVault)?
     private let autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     private let privacyConfig: PrivacyConfiguration
-    private let breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable
+    private let keyValueStore: KeyValueStoringDictionaryRepresentable
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+    private let syncService: DDGSyncing
+    private let locale: Locale
     private var showBreakageReporter: Bool = false
 
     private lazy var reporterDateFormatter = {
@@ -105,15 +109,19 @@ final class AutofillLoginListViewModel: ObservableObject {
         return settings["monitorIntervalDays"] as? Int ?? 42
     }()
 
+    private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
+
+    private lazy var autofillSurveyManager: AutofillSurveyManaging = AutofillSurveyManager()
+
     internal lazy var breakageReporter = BrokenSiteReporter(pixelHandler: { [weak self] _ in
         if let currentTabUid = self?.currentTabUid {
             NotificationCenter.default.post(name: .autofillFailureReport, object: self, userInfo: [UserInfoKeys.tabUid: currentTabUid])
         }
         self?.updateData()
         self?.showBreakageReporter = false
-    }, keyValueStoring: breakageReporterKeyValueStoring, storageConfiguration: .autofillConfig)
+    }, keyValueStoring: keyValueStore, storageConfiguration: .autofillConfig)
 
-    @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
+    @Published private(set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
         didSet {
             updateViewState()
@@ -138,6 +146,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         get { appSettings.autofillCredentialsEnabled }
         set {
             appSettings.autofillCredentialsEnabled = newValue
+            keyValueStore.set(false, forKey: UserDefaultsWrapper<Bool>.Key.autofillFirstTimeUser.rawValue)
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: self)
         }
     }
@@ -149,7 +158,9 @@ final class AutofillLoginListViewModel: ObservableObject {
          currentTabUid: String? = nil,
          autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager,
          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig,
-         breakageReporterKeyValueStoring: KeyValueStoringDictionaryRepresentable = UserDefaults.standard) {
+         keyValueStore: KeyValueStoringDictionaryRepresentable = UserDefaults.standard,
+         syncService: DDGSyncing,
+         locale: Locale = Locale.current) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
@@ -157,7 +168,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.currentTabUid = currentTabUid
         self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
         self.privacyConfig = privacyConfig
-        self.breakageReporterKeyValueStoring = breakageReporterKeyValueStoring
+        self.keyValueStore = keyValueStore
+        self.syncService = syncService
+        self.locale = locale
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0 || AppDependencyProvider.shared.autofillLoginSession.isSessionValid
@@ -216,7 +229,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         authenticator.logOut()
     }
     
-    func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
+    func authenticate(completion: @escaping (AutofillLoginListAuthenticator.AuthError?) -> Void) {
         guard !isAuthenticating else {
             return
         }
@@ -311,6 +324,36 @@ final class AutofillLoginListViewModel: ObservableObject {
         return alert
     }
 
+    func shouldShowSyncPromo() -> Bool {
+        return viewState == .showItems
+               && !isEditing
+               && syncPromoManager.shouldPresentPromoFor(.passwords, count: accountsCount)
+    }
+
+    func dismissSyncPromo() {
+        syncPromoManager.dismissPromoFor(.passwords)
+    }
+
+    func getSurveyToPresent() -> AutofillSurveyManager.AutofillSurvey? {
+        guard locale.isEnglishLanguage,
+              viewState == .showItems || viewState == .empty,
+              !isEditing,
+              privacyConfig.isEnabled(featureKey: .autofillSurveys) else {
+            return nil
+        }
+        return autofillSurveyManager.surveyToPresent(settings: privacyConfig.settings(for: .autofillSurveys))
+    }
+
+    func surveyUrl(survey: String) -> URL? {
+        return autofillSurveyManager.buildSurveyUrl(survey, accountsCount: accountsCount)
+    }
+
+    func dismissSurvey(id: String) {
+        autofillSurveyManager.markSurveyAsCompleted(id: id)
+    }
+
+    // MARK: Private Methods
+
     private func saveReport(for currentTabUrl: URL) {
         let report = BrokenSiteReport(siteUrl: currentTabUrl,
                                       category: "",
@@ -319,6 +362,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                                       manufacturer: "",
                                       upgradedHttps: false,
                                       tdsETag: nil,
+                                      configVersion: nil,
                                       blockedTrackerDomains: nil,
                                       installedSurrogates: nil,
                                       isGPCEnabled: true,
@@ -340,8 +384,6 @@ final class AutofillLoginListViewModel: ObservableObject {
         try? breakageReporter.report(report, reportMode: .regular, daysToExpiry: breakageReportIntervalDays)
     }
 
-    // MARK: Private Methods
-
     private func getAccountsCount() -> Int? {
         guard let secureVault = secureVault else {
             return nil
@@ -361,7 +403,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         do {
             return try secureVault.accounts()
         } catch {
-            os_log("Failed to fetch accounts")
+            Logger.autofill.error("Failed to fetch accounts \(error.localizedDescription, privacy: .public)")
             return []
         }
     }

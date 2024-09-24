@@ -64,20 +64,21 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
-protocol DuckPlayerSettingsProtocol {
+protocol DuckPlayerSettings: AnyObject {
     
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
     var mode: DuckPlayerMode { get }
     var askModeOverlayHidden: Bool { get }
+    var allowFirstVideo: Bool { get set }
     
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
     func setMode(_ mode: DuckPlayerMode)
-    func setOverlayHidden(_ overlayHidden: Bool)
+    func setAskModeOverlayHidden(_ overlayHidden: Bool)
     func triggerNotification()
 }
 
-final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
+final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging
@@ -118,23 +119,24 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
     }
     
     var mode: DuckPlayerMode {
-        if isFeatureEnabled {
+        let experiment = DuckPlayerLaunchExperiment()
+        if isFeatureEnabled && experiment.isEnrolled && experiment.isExperimentCohort {
             return appSettings.duckPlayerMode
         } else {
             return .disabled
         }
     }
     
-    var overlayHidden: Bool {
-        if isFeatureEnabled {
+    var askModeOverlayHidden: Bool {
+        let experiment = DuckPlayerLaunchExperiment()
+        if isFeatureEnabled  && experiment.isEnrolled && experiment.isExperimentCohort {
             return appSettings.duckPlayerAskModeOverlayHidden
         } else {
             return false
         }
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerAskModeOverlayHidden, defaultValue: false)
-    var askModeOverlayHidden: Bool
+    var allowFirstVideo: Bool = false
     
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher
@@ -161,7 +163,7 @@ final class DuckPlayerSettings: DuckPlayerSettingsProtocol {
         }
     }
     
-    func setOverlayHidden(_ overlayHidden: Bool) {
+    func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         if overlayHidden != appSettings.duckPlayerAskModeOverlayHidden {
             appSettings.duckPlayerAskModeOverlayHidden = overlayHidden
             triggerNotification()

@@ -39,6 +39,7 @@ protocol DependencyProvider {
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
+    var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
@@ -53,7 +54,7 @@ protocol DependencyProvider {
 
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call (e.g. ViewControllers created from Storyboards).
-class AppDependencyProvider: DependencyProvider {
+final class AppDependencyProvider: DependencyProvider {
 
     static var shared: DependencyProvider = AppDependencyProvider()
     
@@ -69,7 +70,8 @@ class AppDependencyProvider: DependencyProvider {
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
-    let configurationManager = ConfigurationManager()
+    let configurationManager: ConfigurationManager
+    let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
 
@@ -87,14 +89,16 @@ class AppDependencyProvider: DependencyProvider {
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-    
+
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
 
-    init() {
+    private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+
+        configurationManager = ConfigurationManager(store: configurationStore)
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
@@ -112,35 +116,25 @@ class AppDependencyProvider: DependencyProvider {
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
         
-        subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                         accountManager: accountManager,
-                                                         subscriptionEndpointService: subscriptionService,
-                                                         authEndpointService: authService,
-                                                         subscriptionEnvironment: subscriptionEnvironment)
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+                                                             accountManager: accountManager,
+                                                             subscriptionEndpointService: subscriptionService,
+                                                             authEndpointService: authService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
+        accountManager.delegate = subscriptionManager
+
+        self.subscriptionManager = subscriptionManager
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
-            func isSubscriptionEnabled() -> Bool {
-#if ALPHA || DEBUG
-                if let subscriptionOverrideEnabled = UserDefaults.networkProtectionGroupDefaults.subscriptionOverrideEnabled {
-                    return subscriptionOverrideEnabled
-                }
-#endif
-                return subscriptionFeatureAvailability.isFeatureAvailable
-            }
-
-            if isSubscriptionEnabled() {
-                return { accountManager.accessToken }
-            }
-            return { nil }
+            return { accountManager.accessToken }
         }()
 #if os(macOS)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                                                   serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
                                                                                   errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  isSubscriptionEnabled: true,
                                                                                   accessTokenProvider: accessTokenProvider)
 #else
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
@@ -149,5 +143,11 @@ class AppDependencyProvider: DependencyProvider {
                                                                               tokenStore: networkProtectionKeychainTokenStore)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
+    }
+
+    /// Only meant to be used for testing.
+    ///
+    static func makeTestingInstance() -> Self {
+        Self.init()
     }
 }

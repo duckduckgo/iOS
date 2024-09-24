@@ -82,11 +82,8 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     
     var duckPlayerMode: DuckPlayerMode { get set }
     var duckPlayerAskModeOverlayHidden: Bool { get set }
-
-    var newTabPageShortcutsSettings: Data? { get set }
-    var newTabPageSectionsSettings: Data? { get set }
 }
 
 protocol AppDebugSettings {
-    var newTabPageSectionsEnabled: Bool { get set }
+    var onboardingHighlightsEnabled: Bool { get set }
 }

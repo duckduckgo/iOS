@@ -42,6 +42,34 @@ class StatisticsLoaderTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenAppRefreshHappensButNotInstalledAndReturningUser_ThenRetentionSegmentationNotified() {
+        mockStatisticsStore.variant = "ru"
+        mockStatisticsStore.atb = "v101-1"
+        
+        loadSuccessfulExiStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshAppRetentionAtb {
+            testExpectation.fulfill()
+        }
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertTrue(mockUsageSegmentation.atbs[0].installAtb.isReturningUser)
+    }
+
+    func testWhenReturnUser_ThenSegmentationIncludesCorrectVariant() {
+        mockStatisticsStore.variant = "ru"
+        mockStatisticsStore.atb = "v101-1"
+        mockStatisticsStore.searchRetentionAtb = "v101-2"
+        loadSuccessfulAtbStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshSearchRetentionAtb {
+            testExpectation.fulfill()
+        }
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertTrue(mockUsageSegmentation.atbs[0].installAtb.isReturningUser)
+    }
+
     func testWhenSearchRefreshHappensButNotInstalled_ThenRetentionSegmentationNotified() {
         loadSuccessfulExiStub()
 

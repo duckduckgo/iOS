@@ -605,10 +605,14 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         if nextHomeScreenMessageOverride != nil {
             return nextHomeScreenMessageOverride
         }
+
         guard isEnabled else { return nil }
 
+        // If the user has already seen the end of journey dialog we don't want to show any other NTP Dax dialog.
+        guard !finalDaxDialogSeen else { return nil }
+
         // Check final first as if we skip anonymous searches we don't want to show this.
-        if settings.fireMessageExperimentShown && !finalDaxDialogSeen {
+        if settings.fireMessageExperimentShown {
             return .final
         }
 

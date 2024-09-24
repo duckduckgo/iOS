@@ -28,7 +28,7 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
     private static let session = URLSession(configuration: .ephemeral)
 
     func search(term: String) async throws -> [URL] {
-        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+        loader = SuggestionLoader { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
                   scheme.description.hasPrefix("http"),
@@ -37,10 +37,10 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
             }
 
             return url
-        })
+        }
 
         let results: [URL] = await withCheckedContinuation { continuation in
-            loader?.getSuggestions(query: term) { result, error in
+            loader?.getSuggestions(query: term, usingDataSource: self) { result, error in
                 guard let result, error == nil else {
                     continuation.resume(returning: [])
                     return
@@ -64,16 +64,24 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
 }
 
 extension DDGAutocompleteWebsiteSearch: SuggestionLoadingDataSource {
+    var platform: Suggestions.Platform {
+        .mobile
+    }
+    
+    func openTabs(for suggestionLoading: any Suggestions.SuggestionLoading) -> [any Suggestions.BrowserTab] {
+        []
+    }
+    
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
-        return []
+        []
     }
 
     func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
-        return []
+        []
     }
 
     func internalPages(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.InternalPage] {
-        return []
+        []
     }
 
     func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {

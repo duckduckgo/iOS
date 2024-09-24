@@ -18,42 +18,208 @@
 //
 
 import Foundation
+import Bookmarks
+import Combine
+import SwiftUI
+import Core
+import WidgetKit
 
 protocol FavoritesCreating {
     func createFavorite(name: String, url: URL)
 }
 
-protocol FavoritesViewModel: AnyObject, ObservableObject {
-    var allFavorites: [FavoriteItem] { get }
-    
-    var faviconLoader: FavoritesFaviconLoading? { get }
+protocol NewTabPageFavoriteDataSource {
+    var externalUpdates: AnyPublisher<Void, Never> { get }
+    var favorites: [Favorite] { get }
 
-    var isEmpty: Bool { get }
-    var isCollapsed: Bool { get }
+    func moveFavorite(_ favorite: Favorite,
+                      fromIndex: Int,
+                      toIndex: Int)
 
-    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice
-
-    func faviconMissing()
-
-    // MARK: - Interactions
-
-    func toggleCollapse()
-
-    func favoriteSelected(_ favorite: Favorite)
-    func editFavorite(_ favorite: Favorite)
-    func deleteFavorite(_ favorite: Favorite)
-    func moveFavorites(from indexSet: IndexSet, to index: Int)
-}
-
-protocol FavoritesEmptyStateModel: AnyObject, ObservableObject {
-
-    var isShowingTooltip: Bool { get }
-
-    func placeholderTapped()
-    func toggleTooltip()
+    func bookmarkEntity(for favorite: Favorite) -> BookmarkEntity?
+    func favorite(at index: Int) throws -> Favorite?
+    func removeFavorite(_ favorite: Favorite)
 }
 
 struct FavoritesSlice {
     let items: [FavoriteItem]
     let isCollapsible: Bool
+}
+
+class FavoritesViewModel: ObservableObject {
+
+    @Published private(set) var allFavorites: [FavoriteItem] = []
+    @Published private(set) var isCollapsed: Bool = true
+
+    private(set) var faviconLoader: FavoritesFaviconLoading?
+
+    private var cancellables = Set<AnyCancellable>()
+
+    private let favoriteDataSource: NewTabPageFavoriteDataSource
+    private let pixelFiring: PixelFiring.Type
+    private let dailyPixelFiring: DailyPixelFiring.Type
+
+    var isEmpty: Bool {
+        allFavorites.filter(\.isFavorite).isEmpty
+    }
+
+    init(favoriteDataSource: NewTabPageFavoriteDataSource,
+         faviconLoader: FavoritesFaviconLoading,
+         pixelFiring: PixelFiring.Type = Pixel.self,
+         dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
+        self.favoriteDataSource = favoriteDataSource
+        self.pixelFiring = pixelFiring
+        self.dailyPixelFiring = dailyPixelFiring
+        self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
+            guard let self else { return }
+
+            await MainActor.run {
+                self.faviconMissing()
+            }
+        })
+
+
+        favoriteDataSource.externalUpdates.sink { [weak self] _ in
+            self?.updateData()
+        }.store(in: &cancellables)
+
+        updateData()
+    }
+
+    func toggleCollapse() {
+        isCollapsed.toggle()
+        
+        if isCollapsed {
+            pixelFiring.fire(.newTabPageFavoritesSeeLess, withAdditionalParameters: [:])
+        } else {
+            pixelFiring.fire(.newTabPageFavoritesSeeMore, withAdditionalParameters: [:])
+        }
+    }
+
+    func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {
+        let hasFavorites = allFavorites.contains(where: \.isFavorite)
+        let maxCollapsedItemsCount = hasFavorites ? columnsCount * 2 : columnsCount
+        let isCollapsible = allFavorites.count > maxCollapsedItemsCount
+
+        var favorites = isCollapsed ? Array(allFavorites.prefix(maxCollapsedItemsCount)) : allFavorites
+
+        if !hasFavorites {
+            for _ in favorites.count ..< maxCollapsedItemsCount {
+                favorites.append(.placeholder(UUID().uuidString))
+            }
+        }
+
+        return .init(items: favorites, isCollapsible: isCollapsible)
+    }
+
+    // MARK: - External actions
+
+    var onFaviconMissing: () -> Void = {}
+    func faviconMissing() {
+        onFaviconMissing()
+    }
+
+    var onFavoriteURLSelected: ((URL) -> Void)?
+    func favoriteSelected(_ favorite: Favorite) {
+        guard let url = favorite.urlObject else { return }
+
+        pixelFiring.fire(.favoriteLaunchedNTP, withAdditionalParameters: [:])
+        dailyPixelFiring.fireDaily(.favoriteLaunchedNTPDaily)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
+
+        onFavoriteURLSelected?(url)
+    }
+
+    var onFavoriteDeleted: ((BookmarkEntity) -> Void)?
+    func deleteFavorite(_ favorite: Favorite) {
+        guard let entity = favoriteDataSource.bookmarkEntity(for: favorite) else { return }
+
+        pixelFiring.fire(.homeScreenDeleteFavorite, withAdditionalParameters: [:])
+
+        favoriteDataSource.removeFavorite(favorite)
+
+        WidgetCenter.shared.reloadAllTimelines()
+        updateData()
+
+        onFavoriteDeleted?(entity)
+    }
+
+    var onFavoriteEdit: ((BookmarkEntity) -> Void)?
+    func editFavorite(_ favorite: Favorite) {
+        guard let entity = favoriteDataSource.bookmarkEntity(for: favorite) else { return }
+
+        pixelFiring.fire(.homeScreenEditFavorite, withAdditionalParameters: [:])
+
+        onFavoriteEdit?(entity)
+    }
+
+    func moveFavorites(from indexSet: IndexSet, to index: Int) {
+        guard indexSet.count == 1,
+              let fromIndex = indexSet.first else { return }
+
+        let favoriteItem = allFavorites[fromIndex]
+        guard case let .favorite(favorite) = favoriteItem else { return }
+
+        favoriteDataSource.moveFavorite(favorite, fromIndex: fromIndex, toIndex: index)
+        allFavorites.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: index)
+    }
+
+    func placeholderTapped() {
+        pixelFiring.fire(.newTabPageFavoritesPlaceholderTapped, withAdditionalParameters: [:])
+    }
+
+    // MARK: -
+
+    private func updateData() {
+        var allFavorites = favoriteDataSource.favorites.map {
+            FavoriteItem.favorite($0)
+        }
+        allFavorites.append(.addFavorite)
+
+        self.allFavorites = allFavorites
+    }
+}
+
+enum FavoriteMappingError: Error {
+    case missingUUID
+}
+
+private final class MissingFaviconWrapper: FavoritesFaviconLoading {
+    let loader: FavoritesFaviconLoading
+
+    private(set) var onFaviconMissing: (() async -> Void)
+
+    init(loader: FavoritesFaviconLoading, onFaviconMissing: @escaping (() async -> Void)) {
+        self.onFaviconMissing = onFaviconMissing
+        self.loader = loader
+    }
+
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
+        let favicon = await loader.loadFavicon(for: domain, size: size)
+
+        if favicon == nil {
+            await onFaviconMissing()
+        }
+
+        return favicon
+    }
+
+    func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
+        loader.fakeFavicon(for: domain, size: size)
+    }
+
+    func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
+        loader.existingFavicon(for: domain, size: size)
+    }
+}
+
+private extension FavoriteItem {
+    var isFavorite: Bool {
+        switch self {
+        case .favorite:
+            return true
+        case .addFavorite, .placeholder:
+            return false
+        }
+    }
 }

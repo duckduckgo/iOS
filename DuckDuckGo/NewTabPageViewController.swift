@@ -23,7 +23,7 @@ import Bookmarks
 import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultViewModel>>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
@@ -35,7 +35,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
-    private let favoritesModel: FavoritesDefaultViewModel
+    private let favoritesModel: FavoritesViewModel
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
@@ -66,14 +66,14 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesDefaultViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
+        favoritesModel = FavoritesViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
         addFavoriteViewModel = AddFavoriteViewModel(favoritesCreating: bookmarksInteracting)
 
         let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
                                             messagesModel: messagesModel,
-                                            favoritesModel: favoritesModel,
+                                            favoritesViewModel: favoritesModel,
                                             addFavoriteViewModel: addFavoriteViewModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,

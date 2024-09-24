@@ -21,7 +21,7 @@ import Combine
 import Bookmarks
 import Foundation
 
-final class FavoritesPreviewModel: FavoritesDefaultViewModel {
+final class FavoritesPreviewModel: FavoritesViewModel {
     init(favorites: [Favorite] = randomFavorites) {
         super.init(favoriteDataSource: FavoritesPreviewDataSource(favorites: favorites), faviconLoader: EmptyFaviconLoading())
     }
@@ -63,15 +63,15 @@ final class FavoritesPreviewDataSource: NewTabPageFavoriteDataSource {
 }
 
 struct EmptyFaviconLoading: FavoritesFaviconLoading {
-    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+    func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
         nil
     }
 
-    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+    func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
         .empty
     }
 
-    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
         nil
     }
 }

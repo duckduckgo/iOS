@@ -167,8 +167,7 @@ class FavoritesViewModel: ObservableObject {
     // MARK: -
 
     private func updateData() {
-        let favorites = favoriteDataSource.favorites
-        var allFavorites = favorites.map {
+        var allFavorites = favoriteDataSource.favorites.map {
             FavoriteItem.favorite($0)
         }
         allFavorites.append(.addFavorite)

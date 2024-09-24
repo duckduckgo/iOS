@@ -234,6 +234,7 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     private(set) var didCallCanEnableAddFavoriteFlow = false
     private(set) var didCallEnableAddFavoriteFlow = false
     private(set) var didCallSetDaxDialogDismiss = false
+    private(set) var didCallClearedBrowserData = false
 
     var canStartFavoriteFlow = false
 
@@ -270,6 +271,10 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
 
     func setDaxDialogDismiss() {
         didCallSetDaxDialogDismiss = true
+    }
+
+    func clearedBrowserData() {
+        didCallClearedBrowserData = true
     }
 
 }

@@ -2752,7 +2752,7 @@ extension MainViewController: AutoClearWorker {
             }
 
             if self.variantManager.isSupported(feature: .newOnboardingIntro) {
-                DaxDialogs.shared.setFireEducationMessageSeen()
+                DaxDialogs.shared.clearedBrowserData()
             }
         }
     }

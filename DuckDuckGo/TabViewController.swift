@@ -186,7 +186,7 @@ class TabViewController: UIViewController {
 
     let syncService: DDGSyncing
 
-    private let daxDialogsDebouncer = Debouncer()
+    private let daxDialogsDebouncer = Debouncer(mode: .common)
 
     public var url: URL? {
         willSet {

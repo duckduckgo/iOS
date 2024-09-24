@@ -987,7 +987,13 @@ class TabViewController: UIViewController {
         webView.scrollView.refreshControl = isEnabled ? refreshControl : nil
     }
 
-    private var didGoBackForward: Bool = false
+    private var didGoBackForward: Bool = false {
+        didSet {
+            if didGoBackForward {
+                contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+            }
+        }
+    }
 
     private func resetDashboardInfo() {
         if let url = url {

@@ -46,6 +46,7 @@ protocol ContextualOnboardingLogic {
     func setFireEducationMessageSeen()
     func setFinalOnboardingDialogSeen()
     func setPrivacyButtonPulseSeen()
+    func setDaxDialogDismiss()
 
     func canEnableAddFavoriteFlow() -> Bool // Temporary during Contextual Onboarding Experiment
     func enableAddFavoriteFlow()
@@ -451,6 +452,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     func setPrivacyButtonPulseSeen() {
         guard isNewOnboarding else { return }
         settings.privacyButtonPulseShown = true
+    }
+
+    func setDaxDialogDismiss() {
+        guard isNewOnboarding else { return }
+        removeLastShownDaxDialog()
+        removeLastVisitedOnboardingWebsite()
     }
 
     func setFinalOnboardingDialogSeen() {

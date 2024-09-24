@@ -319,8 +319,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     func dismiss() {
         settings.isDismissed = true
         // Reset last shown dialog as we don't have to show it anymore.
-        removeLastShownDaxDialog()
-        removeLastVisitedOnboardingWebsite()
+        clearOnboardingBrowsingData()
     }
     
     func primeForUse() {
@@ -462,8 +461,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     func setDaxDialogDismiss() {
         guard isNewOnboarding else { return }
-        removeLastShownDaxDialog()
-        removeLastVisitedOnboardingWebsite()
+        clearOnboardingBrowsingData()
     }
 
     func setFinalOnboardingDialogSeen() {
@@ -556,8 +554,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             saveLastShownDaxDialog(specType: spec.type)
             saveLastVisitedOnboardingWebsite(url: privacyInfo.url)
         } else {
-            removeLastVisitedOnboardingWebsite()
-            removeLastShownDaxDialog()
+            clearOnboardingBrowsingData()
         }
 
         return spec
@@ -574,6 +571,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func nextHomeScreenMessageNew() -> HomeScreenSpec? {
+        // Reset the last browsing information when opening a new tab so loading the previous website won't show again the Dax dialog
+        clearedBrowserData()
+
         guard let homeScreenSpec = peekNextHomeScreenMessageExperiment() else {
             currentHomeSpec = nil
             return nil
@@ -728,6 +728,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         }
 
         return url1.isSameDuckDuckGoSearchURL(other: url2)
+    }
+
+    private func clearOnboardingBrowsingData() {
+        removeLastShownDaxDialog()
+        removeLastVisitedOnboardingWebsite()
     }
 }
 

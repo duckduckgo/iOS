@@ -904,6 +904,23 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result, .final)
     }
 
+    func testWhenExperimentGroup_AndNextHomeScreenMessageNewIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        _ = sut.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
     func testWhenExperimentGroup_AndCanEnableAddFavoritesFlowIsCalled_ThenReturnFalse() {
         // GIVEN
         let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())

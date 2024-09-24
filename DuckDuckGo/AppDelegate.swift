@@ -38,6 +38,7 @@ import Subscription
 import NetworkProtection
 import WebKit
 import os.log
+import TipKit
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -382,6 +383,15 @@ import os.log
         if didCrashDuringCrashHandlersSetUp {
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false
+        }
+
+        if #available(iOS 17.0, *) {
+            Task {
+                try Tips.configure([
+                    .displayFrequency(.immediate),
+                    .datastoreLocation(.applicationDefault)
+                ])
+            }
         }
 
         return true

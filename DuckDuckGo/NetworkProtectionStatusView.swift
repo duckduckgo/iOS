@@ -19,11 +19,20 @@
 
 import SwiftUI
 import NetworkProtection
+import TipKit
 
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @StateObject public var statusModel: NetworkProtectionStatusViewModel
+
+    // MARK: - Tips
+
+    private let geoswitchingTip = VPNGeoswitchingTip()
+    private let snoozeTip = VPNSnoozeTip()
+    private let widgetTip = VPNWidgetTip()
+
+    // MARK: - View
 
     var body: some View {
         List {
@@ -35,7 +44,20 @@ struct NetworkProtectionStatusView: View {
             }
 
             toggle()
+
+            if #available(iOS 17.0, *) {
+                //TipView(widgetTip)
+                    //.removeGroupedListStyleInsets()
+                TipView(snoozeTip)
+                    .removeGroupedListStyleInsets()
+            }
+
             locationDetails()
+
+            if #available(iOS 17.0, *) {
+                TipView(geoswitchingTip)
+                    .removeGroupedListStyleInsets()
+            }
 
             if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing {
                 connectionDetails()

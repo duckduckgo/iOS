@@ -57,7 +57,6 @@ import TipKit
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
 
-    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
     @MainActor
@@ -89,6 +88,11 @@ import TipKit
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     var privacyProDataReporter: PrivacyProDataReporting!
+
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
+    private let vpnAppEventsHandler = VPNAppEventsHandler()
 
     // MARK: lifecycle
 
@@ -374,7 +378,7 @@ import TipKit
 
         NewTabPageIntroMessageSetup().perform()
 
-        widgetRefreshModel.beginObservingVPNStatus()
+        vpnAppEventsHandler.appDidFinishLaunching()
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
@@ -385,14 +389,7 @@ import TipKit
             didCrashDuringCrashHandlersSetUp = false
         }
 
-        if #available(iOS 17.0, *) {
-            Task {
-                try Tips.configure([
-                    .displayFrequency(.immediate),
-                    .datastoreLocation(.applicationDefault)
-                ])
-            }
-        }
+        tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
     }
@@ -544,7 +541,7 @@ import TipKit
 
         fireFailedCompilationsPixelIfNeeded()
 
-        widgetRefreshModel.refreshVPNWidget()
+        VPNAppEventsHandler().appDidBecomeActive()
 
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()

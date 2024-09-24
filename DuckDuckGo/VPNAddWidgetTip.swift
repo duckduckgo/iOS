@@ -46,7 +46,7 @@ extension VPNAddWidgetTip: Tip {
 
     var actions: [Action] {
         [Action(title: "Add widget") {
-            //WidgetEducationView()
+            // WidgetEducationView()
         }]
     }
 }

@@ -21,9 +21,22 @@ import Foundation
 
 /// A class that provides a debouncing mechanism.
 public final class Debouncer {
+    private let runLoop: RunLoop
+    private let mode: RunLoop.Mode
     private var timer: Timer?
 
-    public init() {}
+    /// Initializes a new instance of `Debouncer`.
+    ///
+    /// - Parameters:
+    ///   - runLoop: The `RunLoop` on which the debounced actions will be scheduled. Defaults to the current run loop.
+    ///
+    ///   - mode: The `RunLoop.Mode` in which the debounced actions will be scheduled. Defaults to `.default`.
+    ///
+    /// Use `RunLoop.main` for UI-related actions to ensure they run on the main thread.
+    public init(runLoop: RunLoop = .current, mode: RunLoop.Mode = .default) {
+        self.runLoop = runLoop
+        self.mode = mode
+    }
 
     /// Debounces the provided block of code, executing it after a specified time interval elapses.
     /// - Parameters:
@@ -41,7 +54,7 @@ public final class Debouncer {
             block()
         })
 
-        RunLoop.main.add(timer, forMode: .common)
+        runLoop.add(timer, forMode: mode)
         self.timer = timer
     }
 

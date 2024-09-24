@@ -3022,6 +3022,9 @@ extension TabViewController: ContextualOnboardingEventDelegate {
     }
 
     func didTapDismissContextualOnboardingAction() {
+        // Reset last visited onboarding site and last dax dialog shown.
+        contextualOnboardingLogic.setDaxDialogDismiss()
+
         contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
     }
 

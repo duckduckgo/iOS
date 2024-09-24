@@ -121,6 +121,17 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertTrue(onboardingPresenterMock.didCallDismissContextualOnboardingIfNeeded)
     }
 
+    func testWhenDidTapDismissActionIsCalledThenAskDaxDialogsLogicToSetDialogDismiss() {
+        // GIVEN
+        XCTAssertFalse(onboardingLogicMock.didCallSetDaxDialogDismiss)
+
+        // WHEN
+        sut.didTapDismissContextualOnboardingAction()
+
+        // THEN
+        XCTAssertTrue(onboardingLogicMock.didCallSetDaxDialogDismiss)
+    }
+
     func testWhenDidAcknowledgedTrackersDialogIsCalledThenSetFireEducationMessageSeenIsCalledOnLogic() {
         // GIVEN
         XCTAssertFalse(onboardingLogicMock.didCallSetFireEducationMessageSeen)
@@ -222,6 +233,7 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     private(set) var didCallsetsetSearchMessageSeen = false
     private(set) var didCallCanEnableAddFavoriteFlow = false
     private(set) var didCallEnableAddFavoriteFlow = false
+    private(set) var didCallSetDaxDialogDismiss = false
 
     var canStartFavoriteFlow = false
 
@@ -255,7 +267,11 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     func enableAddFavoriteFlow() {
         didCallEnableAddFavoriteFlow = true
     }
-    
+
+    func setDaxDialogDismiss() {
+        didCallSetDaxDialogDismiss = true
+    }
+
 }
 
 extension WKNavigation {

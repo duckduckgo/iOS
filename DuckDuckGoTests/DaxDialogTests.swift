@@ -1019,6 +1019,23 @@ final class DaxDialog: XCTestCase {
         XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
     }
 
+    func testWhenExperimentGroup_AndSetDaxDialogDismiss_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        sut.setDaxDialogDismiss()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
     func testWhenExperimentGroup_AndIsEnabledIsFalse_AndReloadWebsite_ThenReturnNilBrowsingSpec() throws {
         // GIVEN
         let lastVisitedWebsitePath = "https://www.example.com"

@@ -20,21 +20,32 @@
 import UIKit
 import BrowserServicesKit
 import Common
+import OSLog
 
 class AutofillCredentialsDebugViewController: UITableViewController {
 
-    struct DisplayCredentials {
-        private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
-        private let autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
-        
-        let credential: SecureVaultModels.WebsiteCredentials
+    struct DisplayCredentials: Identifiable {
 
-        var displayTitle: String {
-            return credential.account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        let tld: TLD
+        let autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher
+        var credential: SecureVaultModels.WebsiteCredentials
+
+        var id = UUID()
+
+        var accountId: String {
+            credential.account.id ?? ""
         }
 
-        var displayPassword: String {
-            return credential.password.flatMap { String(data: $0, encoding: .utf8) } ?? "FAILED TO DECODE PW"
+        var accountTitle: String {
+            credential.account.title ?? ""
+        }
+
+        var displayTitle: String {
+            credential.account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        }
+
+        var websiteUrl: String {
+            credential.account.domain ?? ""
         }
 
         var domain: String {
@@ -46,42 +57,98 @@ class AutofillCredentialsDebugViewController: UITableViewController {
             return domain
         }
 
+        var username: String {
+            credential.account.username ?? ""
+        }
+
+        var displayPassword: String {
+            return credential.password.flatMap { String(data: $0, encoding: .utf8) } ?? "FAILED TO DECODE PW"
+        }
+
+        var notes: String {
+            credential.account.notes ?? ""
+        }
+
+        var created: String {
+            "\(credential.account.created)"
+        }
+
+        var lastUpdated: String {
+            "\(credential.account.lastUpdated)"
+        }
+
         var lastUsed: String {
-            return credential.account.lastUsed != nil ? "\(credential.account.lastUsed!)" : ""
+            credential.account.lastUsed != nil ? "\(credential.account.lastUsed!)" : ""
+        }
+
+        var signature: String {
+            credential.account.signature ?? ""
         }
     }
 
+    private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    private let autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private var credentials: [DisplayCredentials] = []
     private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillLoginListAuthenticationReason)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        beginAuthentication()
+    }
+
+    private func beginAuthentication() {
         authenticator.authenticate { [weak self] error in
             if error == nil {
-                self?.loadAllCredentials()
+                self?.reloadCredentials()
             }
         }
     }
 
-    private func loadAllCredentials() {
+    private func reloadCredentials() {
+        credentials = loadCredentials()
+        tableView.reloadData()
+    }
+
+    private func loadCredentials() -> [DisplayCredentials] {
         credentials = []
 
         do {
             let secureVault = try AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
             let accounts = try secureVault.accounts()
+            var accountsFailedToLoad: [String?] = []
+
             for account in accounts {
-                if let accountID = account.id,
-                   let accountIdInt = Int64(accountID),
-                   let credential = try secureVault.websiteCredentialsFor(accountId: accountIdInt) {
-                    let displayCredential = DisplayCredentials(credential: credential)
-                    credentials.append(displayCredential)
+                guard let accountId = account.id,
+                      let accountIdInt = Int64(accountId),
+                      let credential = try secureVault.websiteCredentialsFor(accountId: accountIdInt) else {
+                    accountsFailedToLoad.append(account.id)
+                    continue
                 }
+
+                let displayCredential = DisplayCredentials(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher, credential: credential)
+                credentials.append(displayCredential)
             }
-            tableView.reloadData()
+
+            if !accountsFailedToLoad.isEmpty {
+                os_log("Failed to load credentials for accounts: %@", accountsFailedToLoad)
+                showErrorAlertFor(accountsFailedToLoad)
+            }
+
+            return credentials
         } catch {
             os_log("Failed to fetch accounts")
+            return []
         }
+    }
+
+    private func showErrorAlertFor(_ accountIds: [String?]) {
+        let alert = UIAlertController(title: "Failed to load credentials for accounts:",
+                                      message: accountIds.compactMap { $0 }.joined(separator: ", "),
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: UserText.actionOK, style: .default)
+        alert.addAction(action)
+        present(alert, animated: true)
     }
 
     // MARK: - Table view data source
@@ -106,18 +173,18 @@ class AutofillCredentialsDebugViewController: UITableViewController {
         <style>
             body { font-size: 15px; }
         </style>
-            <b>ID:</b> \(credential.credential.account.id ?? ""),<br>
-            <b>Title:</b> \(credential.credential.account.title ?? ""),<br>
+            <b>ID:</b> \(credential.accountId),<br>
+            <b>Title:</b> \(credential.accountTitle),<br>
             <b>Display Title:</b> \(credential.displayTitle),<br>
-            <b>Website URL:</b> \(credential.credential.account.domain ?? ""),<br>
+            <b>Website URL:</b> \(credential.websiteUrl),<br>
             <b>Domain:</b> \(credential.domain),<br>
-            <b>Username:</b> \(credential.credential.account.username ?? ""),<br>
+            <b>Username:</b> \(credential.username),<br>
             <b>Password:</b> \(credential.displayPassword),<br>
-            <b>Notes:</b> \(credential.credential.account.notes ?? ""),<br>
-            <b>Created:</b> \(credential.credential.account.created),<br>
-            <b>LastUpdated:</b> \(credential.credential.account.lastUpdated),<br>
+            <b>Notes:</b> \(credential.notes),<br>
+            <b>Created:</b> \(credential.created),<br>
+            <b>LastUpdated:</b> \(credential.lastUpdated),<br>
             <b>LastUsed:</b> \(credential.lastUsed),<br>
-            <b>Signature:</b> \(credential.credential.account.signature ?? "").<br>
+            <b>Signature:</b> \(credential.signature).<br>
         """
 
         if let data = details.data(using: .utf8) {
@@ -141,11 +208,10 @@ class AutofillCredentialsDebugViewController: UITableViewController {
         let alert = UIAlertController(title: "Sort By...", message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "ID (default)", style: .default, handler: { [weak self] _ in
-            self?.loadAllCredentials()
-            self?.tableView.reloadData()
+            self?.reloadCredentials()
         }))
         alert.addAction(UIAlertAction(title: "URL", style: .default, handler: { [weak self] _ in
-            self?.credentials.sort { $0.credential.account.domain ?? "" < $1.credential.account.domain ?? "" }
+            self?.credentials.sort { $0.websiteUrl < $1.websiteUrl }
             self?.tableView.reloadData()
         }))
         alert.addAction(UIAlertAction(title: "Domain", style: .default, handler: { [weak self] _ in
@@ -157,7 +223,7 @@ class AutofillCredentialsDebugViewController: UITableViewController {
             self?.tableView.reloadData()
         }))
         alert.addAction(UIAlertAction(title: "Last Updated", style: .default, handler: { [weak self] _ in
-            self?.credentials.sort { $0.credential.account.lastUpdated > $1.credential.account.lastUpdated }
+            self?.credentials.sort { $0.lastUpdated > $1.lastUpdated }
             self?.tableView.reloadData()
         }))
         alert.addAction(UIAlertAction(title: "Last Used", style: .default, handler: { [weak self] _ in

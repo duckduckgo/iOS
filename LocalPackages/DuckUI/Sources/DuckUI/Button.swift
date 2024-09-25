@@ -57,7 +57,8 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
-public struct SecondaryButtonStyle: ButtonStyle {
+@available(*, deprecated, message: "This style does not match a component in the Design System. Consider using Ghost to have a similar design.")
+public struct LegacySecondaryButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
 
     let compact: Bool

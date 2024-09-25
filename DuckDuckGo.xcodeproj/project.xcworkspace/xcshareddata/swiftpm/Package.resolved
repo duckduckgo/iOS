@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "daniel/bump.css",
-        "revision" : "09289dbd827cd14559713cd4a2f314d6cfb753c5"
+        "revision" : "4db50292abf1180d66da55cf83f75d37395df1f9",
+        "version" : "198.1.1"
       }
     },
     {

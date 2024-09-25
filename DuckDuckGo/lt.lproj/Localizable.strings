@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Tas pats privatumas.\nGeresni paieškos pasiūlymai!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Perjungti skirtuką";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Išjungta";
 

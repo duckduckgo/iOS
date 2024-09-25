@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Misma privacidad.\n¡Mejores sugerencias de búsqueda!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Cambiar a Pestaña";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Desactivado";
 

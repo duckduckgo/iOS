@@ -131,9 +131,11 @@ extension Pixel {
         case autocompleteClickFavorite
         case autocompleteClickSearchHistory
         case autocompleteClickSiteHistory
+        case autocompleteClickOpenTab
         case autocompleteDisplayedLocalBookmark
         case autocompleteDisplayedLocalFavorite
         case autocompleteDisplayedLocalHistory
+        case autocompleteDisplayedOpenedTab
         case autocompleteSwipeToDelete
 
         case feedbackPositive
@@ -764,7 +766,6 @@ extension Pixel {
         case newTabPageMessageDismissed
 
         case newTabPageFavoritesPlaceholderTapped
-        case newTabPageFavoritesInfoTooltip
 
         case newTabPageFavoritesSeeMore
         case newTabPageFavoritesSeeLess
@@ -946,9 +947,11 @@ extension Pixel.Event {
         case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
         case .autocompleteClickSearchHistory: return "m_autocomplete_click_history_search"
         case .autocompleteClickSiteHistory: return "m_autocomplete_click_history_site"
+        case .autocompleteClickOpenTab: return "m_autocomplete_click_switch_to_tab"
         case .autocompleteDisplayedLocalBookmark: return "m_autocomplete_display_local_bookmark"
         case .autocompleteDisplayedLocalFavorite: return "m_autocomplete_display_local_favorite"
         case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
+        case .autocompleteDisplayedOpenedTab: return "m_autocomplete_display_switch_to_tab"
         case .autocompleteSwipeToDelete: return "m_autocomplete_result_deleted"
 
         case .feedbackPositive: return "mfbs_positive_submit"
@@ -1577,7 +1580,6 @@ extension Pixel.Event {
         case .newTabPageMessageDismissed: return "m_new_tab_page_message_dismissed"
 
         case .newTabPageFavoritesPlaceholderTapped: return "m_new_tab_page_favorites_placeholder_click"
-        case .newTabPageFavoritesInfoTooltip: return "m_new_tab_page_favorites_info_tooltip"
 
         case .newTabPageFavoritesSeeMore: return "m_new_tab_page_favorites_see_more"
         case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"

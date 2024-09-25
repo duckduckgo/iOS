@@ -1,5 +1,5 @@
 //
-//  NewTabPageModelTests.swift
+//  NewTabPageViewModelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 
-final class NewTabPageModelTests: XCTestCase {
+final class NewTabPageViewModelTests: XCTestCase {
 
     let introDataStorage = NewTabPageIntroDataStoringMock()
 
@@ -29,21 +29,21 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testDoesNotShowIntroIfSettingUndefined() {
-        let sut = NewTabPageModel(introDataStorage: introDataStorage)
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         XCTAssertFalse(sut.isIntroMessageVisible)
     }
 
     func testShowsIntroMessage() {
         introDataStorage.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(introDataStorage: introDataStorage)
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         XCTAssertTrue(sut.isIntroMessageVisible)
     }
 
     func testDisablesIntroMessageWhenDismissed() {
         introDataStorage.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(introDataStorage: introDataStorage)
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         sut.dismissIntroMessage()
 
@@ -53,7 +53,7 @@ final class NewTabPageModelTests: XCTestCase {
 
     func testDisablesIntroMessageAfterMultipleImpressions() {
         introDataStorage.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(introDataStorage: introDataStorage)
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         for _ in 1...3 {
             sut.introMessageDisplayed()
@@ -64,7 +64,7 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testFiresPixelWhenIntroMessageDismissed() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.dismissIntroMessage()
 
@@ -72,7 +72,7 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testFiresPixelWhenIntroMessageDisplayed() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.introMessageDisplayed()
 
@@ -80,7 +80,7 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testFiresPixelOnNewTabPageCustomize() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.customizeNewTabPage()
 

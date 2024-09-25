@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Atslēgt";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
 
@@ -419,7 +425,7 @@
 "autofill.logins.empty-view.button.title" = "Importēt paroles";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Paroles no citiem pārlūkiem vai lietotnēm var importēt, izmantojot DuckDuckGo pārlūka galddatora versiju.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Tu vari DuckDuckGo importēt saglabātās paroles no citas pārlūkprogrammas.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Vēl nav saglabāta neviena parole";
@@ -462,6 +468,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Meklēt paroles";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Paroles ir šifrētas. Neviens, izņemot tevi, tās nevar redzēt – pat mēs ne. [Uzzini vairāk](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ieteikts";
@@ -581,11 +590,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo funkcija Paroles un automātiskā aizpildīšana droši glabā paroles tavā ierīcē.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai saglabāt šo paroli?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Droši saglabā paroli ierīcē, izmantojot DuckDuckGo paroles un automātisko aizpildīšanu.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Saglabāt paroli?";
@@ -1702,9 +1711,6 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
-
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Izlase";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";

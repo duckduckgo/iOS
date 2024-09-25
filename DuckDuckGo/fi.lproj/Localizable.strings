@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Poista Käytöstä";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Näytä";
 
@@ -419,7 +425,7 @@
 "autofill.logins.empty-view.button.title" = "Tuo salasanat";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Muiden selainten tai sovellusten salasanat voidaan tuoda DuckDuckGo-selaimen tietokoneversiolla.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Voit tuoda tallennetut salasanat toisesta selaimesta DuckDuckGohon.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Salasanoja ei ole vielä tallennettu";
@@ -462,6 +468,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Etsi salasanoja";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Salasanat salataan. Kukaan muu kuin sinä ei näe niitä, emme edes me. [Lisätietoja](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ehdotettu";
@@ -581,11 +590,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Älä kysy enää tällä sivustolla";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGon salasanat ja automaattinen täyttö tallentaa salasanat turvallisesti laitteellesi.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Tallennetaanko tämä salasana?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Tallenna salasanasi turvallisesti laitteeseen DuckDuckGon salasanojen ja automaattisen täytön avulla.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Tallennetaanko salasana?";
@@ -1702,9 +1711,6 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-asetukset";
-
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Suosikit";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Mukauta suosikkejasi ja muita usein käyttämiäsi ominaisuuksia. Luo uusi järjestys tai piilota kohteita pitääksesi selkeän ilmeen.";

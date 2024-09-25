@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Ta sama prywatność.\nLepsze sugestie podczas wyszukiwania!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Przełącz na kartę";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Wyłączone";
 

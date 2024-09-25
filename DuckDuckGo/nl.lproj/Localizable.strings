@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Dezelfde privacy.\nBetere zoeksuggesties!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Overschakelen naar tabblad";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Uitgeschakeld";
 

@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Samme personvern.\nBedre søkeforslag!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Bytt til fane";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Deaktivert";
 

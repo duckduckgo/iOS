@@ -256,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "La confidentialité reste la même.\nLes suggestions de recherche s'améliorent !";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Passer à l'onglet";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Désactivé";
 

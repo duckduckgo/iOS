@@ -125,7 +125,7 @@ final class OnboardingManagerTests: XCTestCase {
 
     func testWhenIsOnboardingHiglightsEnabledAndVariantManagerSupportOnboardingHighlightsReturnTrue() {
         // GIVEN
-        variantManagerMock.isSupportedBlock = {_ in true }
+        variantManagerMock.isSupportedBlock = { _ in true }
         appSettingsMock.onboardingHighlightsEnabled = false
         featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingHighlights]
         sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)

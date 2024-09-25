@@ -21,27 +21,28 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateModel>: View {
+struct NewTabPageView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    @ObservedObject private var newTabPageModel: NewTabPageModel
+    @ObservedObject private var viewModel: NewTabPageViewModel
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
-    @ObservedObject private var favoritesModel: FavoritesModelType
+    @ObservedObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
 
     @State private var customizeButtonShowedInline = false
+    @State private var isAddingFavorite: Bool = false
 
-    init(newTabPageModel: NewTabPageModel,
+    init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
-         favoritesModel: FavoritesModelType,
+         favoritesViewModel: FavoritesViewModel,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
-        self.newTabPageModel = newTabPageModel
+        self.viewModel = viewModel
         self.messagesModel = messagesModel
-        self.favoritesModel = favoritesModel
+        self.favoritesViewModel = favoritesViewModel
         self.shortcutsModel = shortcutsModel
         self.shortcutsSettingsModel = shortcutsSettingsModel
         self.sectionsSettingsModel = sectionsSettingsModel
@@ -58,15 +59,10 @@ struct NewTabPageView<FavoritesModelType: FavoritesModel & FavoritesEmptyStateMo
     }
 
     var body: some View {
-        if !newTabPageModel.isOnboarding {
+        if !viewModel.isOnboarding {
             mainView
                 .background(Color(designSystemColor: .background))
-                .if(favoritesModel.isShowingTooltip) {
-                    $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
-                        favoritesModel.toggleTooltip()
-                    })
-                }
-                .sheet(isPresented: $newTabPageModel.isShowingSettings, onDismiss: {
+                .sheet(isPresented: $viewModel.isShowingSettings, onDismiss: {
                     shortcutsSettingsModel.save()
                     sectionsSettingsModel.save()
                 }, content: {
@@ -143,6 +139,9 @@ private extension NewTabPageView {
                         .padding([.trailing, .bottom], Metrics.largePadding)
                 }
             }
+            .sheet(isPresented: $isAddingFavorite) {
+                EmptyView()
+            }
         }
     }
 
@@ -177,14 +176,9 @@ private extension NewTabPageView {
     }
 
     private func favoritesSectionView(proxy: GeometryProxy) -> some View {
-        Group {
-            if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(model: favoritesModel, geometry: proxy)
-                    .padding(.top, Metrics.nonGridSectionTopPadding)
-            } else {
-                FavoritesView(model: favoritesModel, geometry: proxy)
-            }
-        }
+                FavoritesView(model: favoritesViewModel,
+                              isAddingFavorite: $isAddingFavorite,
+                              geometry: proxy)
     }
 
     @ViewBuilder
@@ -200,7 +194,7 @@ private extension NewTabPageView {
             Spacer()
 
             Button(action: {
-                newTabPageModel.customizeNewTabPage()
+                viewModel.customizeNewTabPage()
             }, label: {
                 NewTabPageCustomizeButtonView()
                 // Needed to reduce default button margins
@@ -211,14 +205,14 @@ private extension NewTabPageView {
 
     @ViewBuilder
     private var introMessageView: some View {
-        if newTabPageModel.isIntroMessageVisible {
+        if viewModel.isIntroMessageVisible {
             NewTabPageIntroMessageView(onClose: {
                 withAnimation {
-                    newTabPageModel.dismissIntroMessage()
+                    viewModel.dismissIntroMessage()
                 }
             })
             .onFirstAppear {
-                newTabPageModel.introMessageDisplayed()
+                viewModel.introMessageDisplayed()
             }
             .transition(.scale.combined(with: .opacity))
         }
@@ -260,13 +254,13 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
 
 #Preview("Regular") {
     NewTabPageView(
-        newTabPageModel: NewTabPageModel(),
+        viewModel: NewTabPageViewModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -275,7 +269,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
 
 #Preview("With message") {
     NewTabPageView(
-        newTabPageModel: NewTabPageModel(),
+        viewModel: NewTabPageViewModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: [
@@ -291,22 +285,37 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 ]
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
     )
 }
 
-#Preview("Empty state") {
+#Preview("No favorites") {
     NewTabPageView(
-        newTabPageModel: NewTabPageModel(),
+        viewModel: NewTabPageViewModel(),
         messagesModel: NewTabPageMessagesModel(
             homePageMessagesConfiguration: PreviewMessagesConfiguration(
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(favorites: []),
+        shortcutsModel: ShortcutsModel(),
+        shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
+        sectionsSettingsModel: NewTabPageSectionsSettingsModel()
+    )
+}
+
+#Preview("Empty") {
+    NewTabPageView(
+        viewModel: NewTabPageViewModel(),
+        messagesModel: NewTabPageMessagesModel(
+            homePageMessagesConfiguration: PreviewMessagesConfiguration(
+                homeMessages: []
+            )
+        ),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel(storage: .emptyStorage())

@@ -1,5 +1,5 @@
 //
-//  NewTabPageModel.swift
+//  NewTabPageViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-final class NewTabPageModel: ObservableObject {
+final class NewTabPageViewModel: ObservableObject {
 
     @Published private(set) var isIntroMessageVisible: Bool
     @Published private(set) var isOnboarding: Bool

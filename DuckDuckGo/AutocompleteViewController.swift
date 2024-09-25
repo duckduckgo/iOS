@@ -58,19 +58,33 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         CachedBookmarks(bookmarksDatabase)
     }()
 
+    private lazy var openTabs: [BrowserTab] = {
+        tabsModel.tabs.compactMap {
+            guard let url = $0.link?.url else { return nil }
+            return OpenTab(title: $0.link?.displayTitle ?? "", url: url)
+        }
+    }()
+
     private var lastResults: SuggestionResult?
     private var loader: SuggestionLoader?
-
     private var historyMessageManager: HistoryMessageManager
+    private var tabsModel: TabsModel
+    private var featureFlagger: FeatureFlagger
 
     init(historyManager: HistoryManaging,
          bookmarksDatabase: CoreDataDatabase,
          appSettings: AppSettings,
-         historyMessageManager: HistoryMessageManager = HistoryMessageManager()) {
+         historyMessageManager: HistoryMessageManager = HistoryMessageManager(),
+         tabsModel: TabsModel,
+         featureFlagger: FeatureFlagger) {
+
+        self.tabsModel = tabsModel
         self.historyManager = historyManager
         self.bookmarksDatabase = bookmarksDatabase
         self.appSettings = appSettings
         self.historyMessageManager = historyMessageManager
+        self.featureFlagger = featureFlagger
+
         self.model = AutocompleteViewModel(isAddressBarAtBottom: appSettings.currentAddressBarPosition == .bottom,
                                            showMessage: historyManager.isHistoryFeatureEnabled() && historyMessageManager.shouldShow())
         super.init(rootView: AutocompleteView(model: model))
@@ -119,6 +133,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         var bookmark = false
         var favorite = false
         var history = false
+        var openTab = false
 
         lastResults?.all.forEach {
             switch $0 {
@@ -131,6 +146,9 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
             case .historyEntry:
                 history = true
+
+            case .openTab:
+                openTab = true
 
             default: break
             }
@@ -148,6 +166,10 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
             Pixel.fire(pixel: .autocompleteDisplayedLocalHistory)
         }
 
+        if openTab {
+            Pixel.fire(pixel: .autocompleteDisplayedOpenedTab)
+        }
+
     }
 
     private func cancelInFlightRequests() {
@@ -158,7 +180,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     private func requestSuggestions(query: String) {
         model.selection = nil
 
-        loader = SuggestionLoader(dataSource: self, urlFactory: { phrase in
+        loader = SuggestionLoader(urlFactory: { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
                   scheme.description.hasPrefix("http"),
@@ -169,7 +191,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
             return url
         })
 
-        loader?.getSuggestions(query: query) { [weak self] result, error in
+        loader?.getSuggestions(query: query, usingDataSource: self) { [weak self] result, error in
             guard let self, error == nil else { return }
             let updatedResults = result ?? .empty
             self.lastResults = updatedResults
@@ -228,6 +250,9 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
         case .website:
             Pixel.fire(pixel: .autocompleteClickWebsite)
 
+        case .openTab:
+            Pixel.fire(pixel: .autocompleteClickOpenTab)
+
         default:
             // NO-OP
             break
@@ -259,6 +284,10 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
 
 extension AutocompleteViewController: SuggestionLoadingDataSource {
 
+    var platform: Platform {
+        .mobile
+    }
+
     func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
         return historyCoordinator.history ?? []
     }
@@ -268,6 +297,13 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
     }
 
     func internalPages(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.InternalPage] {
+        return []
+    }
+
+    func openTabs(for suggestionLoading: any SuggestionLoading) -> [BrowserTab] {
+        if featureFlagger.isFeatureOn(.autcompleteTabs) {
+            return openTabs
+        }
         return []
     }
 
@@ -296,5 +332,12 @@ extension HistoryEntry: HistorySuggestion {
     public var numberOfVisits: Int {
         return numberOfTotalVisits
     }
+
+}
+
+struct OpenTab: BrowserTab {
+
+    let title: String
+    let url: URL
 
 }

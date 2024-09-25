@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redaguoti";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Išjungti";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Peržiūrėti";
 
@@ -419,7 +425,7 @@
 "autofill.logins.empty-view.button.title" = "Importuoti slaptažodžius";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Slaptažodžius iš kitų naršyklių ar programų galima importuoti naudojant „DuckDuckGo“ naršyklės versiją kompiuteriui.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Galite importuoti išsaugotus slaptažodžius iš kitos naršyklės į „DuckDuckGo“.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Dar nėra išsaugotų slaptažodžių";
@@ -462,6 +468,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Ieškoti slaptažodžių";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Slaptažodžiai yra užšifruoti. Niekas, išskyrus jus, negali jų matyti – net mes. [Sužinoti daugiau](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Siūloma";
@@ -581,11 +590,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Niekada neklauskite šioje svetainėje";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "„DuckDuckGo“ priemonė „Slaptažodžiai ir automatinis užpildymas“ saugiai saugo slaptažodžius jūsų įrenginyje.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Išsaugoti šį slaptažodį?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Saugiai išsaugokite slaptažodį įrenginyje naudodami „DuckDuckGo“ slaptažodžių ir automatinio pildymo parinktį.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Išsaugoti slaptažodį?";
@@ -1702,9 +1711,6 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN nustatymai";
-
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Mėgstami";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";

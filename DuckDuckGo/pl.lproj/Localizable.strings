@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Edytuj";
 
@@ -325,6 +328,9 @@
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Wyłącz";
 
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Wyświetl";
 
@@ -419,7 +425,7 @@
 "autofill.logins.empty-view.button.title" = "Importuj hasła";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Hasła z innych przeglądarek lub aplikacji można zaimportować za pomocą komputerowej wersji przeglądarki DuckDuckGo.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Możesz importować zapisane hasła z innej przeglądarki do DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nie zapisano jeszcze żadnych haseł";
@@ -462,6 +468,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Wyszukaj hasła";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Hasła są szyfrowane. Nikt poza Tobą ich nie widzi, nawet my. [Więcej informacji] (DDGQuickLink: //duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerowane";
@@ -581,11 +590,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nigdy nie pytaj o tę witrynę";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Funkcja Hasła i autouzupełnianie DuckDuckGo bezpiecznie przechowuje hasła na urządzeniu.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Zapisać to hasło?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Bezpiecznie przechowuj swoje hasło na urządzeniu dzięki funkcji Hasła i autouzupełnianie DuckDuckGo.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Zapisać hasło?";
@@ -1702,9 +1711,6 @@
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Ustawienia VPN";
-
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Ulubione";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Dostosuj ulubione elementy i podręczne funkcje. Zmień kolejność opcji lub ukryj je, aby zachować porządek.";

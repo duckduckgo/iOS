@@ -181,12 +181,6 @@ class AddFavoriteViewModel: ObservableObject {
         }
     }
 
-//    private func createManualEntry(searchTerm: String) async -> FavoriteSearchResult? {
-//        guard let url = convertToURL(searchTerm) else { return nil }
-//        
-//        return FavoriteSearchResult(url: url)
-//    }
-
     @MainActor
     private func publishResults(_ results: [FavoriteSearchResult]) {
         self.results = results

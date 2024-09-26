@@ -1787,9 +1787,6 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Favorites";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.";
 
@@ -1872,7 +1869,7 @@ https://duckduckgo.com/mac";
 "onboarding.highlights.addressBarPosition.cta" = "Next";
 
 /* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
-"onboarding.highlights.addressBarPosition.default" = "(Default)";
+"onboarding.highlights.addressBarPosition.default" = "(default)";
 
 /* The title of the onboarding dialog popup to select the preferred address bar position. */
 "onboarding.highlights.addressBarPosition.title" = "Where should I put your address bar?";

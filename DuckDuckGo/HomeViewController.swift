@@ -217,7 +217,7 @@ class HomeViewController: UIViewController, NewTabPage {
     
     func openedAsNewTab(allowingKeyboard: Bool) {
         collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-        if !variantManager.isSupported(feature: .newOnboardingIntro) {
+        if !variantManager.isContextualDaxDialogsEnabled {
             // In the new onboarding this gets called twice (viewDidAppear in Tab) which then reset the spec to nil.
             presentNextDaxDialog()
         }
@@ -258,7 +258,9 @@ class HomeViewController: UIViewController, NewTabPage {
     }
 
     func presentNextDaxDialog() {
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
+        guard variantManager.shouldShowDaxDialogs else { return }
+
+        if variantManager.isContextualDaxDialogsEnabled {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         } else {
             showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
@@ -266,7 +268,7 @@ class HomeViewController: UIViewController, NewTabPage {
     }
 
     func showNextDaxDialog() {
-        showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
+        presentNextDaxDialog()
     }
 
     func reloadFavorites() {

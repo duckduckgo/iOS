@@ -229,7 +229,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private var isNewOnboarding: Bool {
-        variantManager.isSupported(feature: .newOnboardingIntro)
+        variantManager.isContextualDaxDialogsEnabled
     }
 
     private var firstBrowsingMessageSeen: Bool {
@@ -279,6 +279,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     var isEnabled: Bool {
         // skip dax dialogs in integration tests
         guard ProcessInfo.processInfo.environment["DAXDIALOGS"] != "false" else { return false }
+        guard variantManager.shouldShowDaxDialogs else { return false }
         return !settings.isDismissed
     }
 

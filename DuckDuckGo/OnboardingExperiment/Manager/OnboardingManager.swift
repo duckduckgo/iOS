@@ -32,17 +32,20 @@ protocol OnboardingHighlightsDebugging: OnboardingHighlightsManaging {
 final class OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsDebugging {
     private var appDefaults: AppDebugSettings
     private let featureFlagger: FeatureFlagger
+    private let variantManager: VariantManager
 
     init(
         appDefaults: AppDebugSettings = AppDependencyProvider.shared.appSettings,
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
+        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+        variantManager: VariantManager = DefaultVariantManager()
     ) {
         self.appDefaults = appDefaults
         self.featureFlagger = featureFlagger
+        self.variantManager = variantManager
     }
 
     var isOnboardingHighlightsEnabled: Bool {
-        isLocalFlagEnabled && isFeatureFlagEnabled
+        variantManager.isOnboardingHighlightsExperiment || (isLocalFlagEnabled && isFeatureFlagEnabled)
     }
 
     var isLocalFlagEnabled: Bool {

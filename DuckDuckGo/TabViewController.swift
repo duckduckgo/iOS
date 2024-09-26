@@ -1508,7 +1508,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if !DefaultVariantManager().isContextualDaxDialogsEnabled {
             isShowingFullScreenDaxDialog = true
         }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)

@@ -47,7 +47,10 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     }
 
     func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
+        // Extra safety net
+        guard variantManager.shouldShowDaxDialogs else { return }
+
+        if variantManager.isContextualDaxDialogsEnabled {
             presentExperimentContextualOnboarding(for: spec, in: vc)
         } else {
             presentControlContextualOnboarding(for: spec, in: vc)
@@ -55,7 +58,7 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     }
 
     func dismissContextualOnboardingIfNeeded(from vc: TabViewOnboardingDelegate) {
-        guard variantManager.isSupported(feature: .newOnboardingIntro), let daxContextualOnboarding = vc.daxContextualOnboardingController else { return }
+        guard variantManager.isContextualDaxDialogsEnabled, let daxContextualOnboarding = vc.daxContextualOnboardingController else { return }
         remove(daxController: daxContextualOnboarding, fromParent: vc)
     }
 

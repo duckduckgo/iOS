@@ -96,7 +96,7 @@ struct OnboardingFireButtonDialogContent: View {
 
 struct OnboardingFirstSearchDoneDialog: View {
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
-    let message: String
+    let message: NSAttributedString
 
     @State private var showNextScreen: Bool = false
 
@@ -112,7 +112,7 @@ struct OnboardingFirstSearchDoneDialog: View {
                         OnboardingTryVisitingSiteDialogContent(viewModel: viewModel)
                     } else {
                         ContextualDaxDialogContent(
-                            message: NSAttributedString(string: message),
+                            message: message,
                             customActionView: AnyView(
                                 OnboardingCTAButton(title: cta) {
                                     gotItAction()
@@ -248,7 +248,7 @@ struct OnboardingCTAButton: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage, shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(message: NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage), shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
         .padding()
 }
 

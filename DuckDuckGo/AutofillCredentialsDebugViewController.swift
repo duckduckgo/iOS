@@ -24,13 +24,11 @@ import OSLog
 
 class AutofillCredentialsDebugViewController: UITableViewController {
 
-    struct DisplayCredentials: Identifiable {
+    struct DisplayCredentials {
 
         let tld: TLD
         let autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher
         var credential: SecureVaultModels.WebsiteCredentials
-
-        var id = UUID()
 
         var accountId: String {
             credential.account.id ?? ""

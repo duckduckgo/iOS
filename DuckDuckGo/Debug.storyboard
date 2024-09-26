@@ -512,7 +512,7 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="View All Credentials" secondaryText=""/>
                                         <connections>
-                                            <segue destination="7YA-tc-t1f" kind="show" id="J3s-O9-K4m"/>
+                                            <segue destination="7YA-tc-t1f" kind="show" id="U2w-Nn-tX9"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

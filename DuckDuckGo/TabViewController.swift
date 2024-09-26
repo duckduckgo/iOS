@@ -1329,22 +1329,19 @@ extension TabViewController: WKNavigationDelegate {
 
         let shouldTriggerDownloadAction = hasContentDispositionAttachment || hasNavigationActionRequestedDownload
 
-        if shouldTriggerDownloadAction {
-            if urlSchemeType == .blob {
-                Swift.print("==== BLOB that should be downloaded")
-                decisionHandler(.download)
-                return
-            } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-
-                Swift.print("=== request url: \(navigationResponse.response.url?.absoluteString ?? "")")
-
-                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                } cancelHandler: {
-                    decisionHandler(.cancel)
-                }
-                return
+        if urlSchemeType == .blob {
+            // To further handle BLOB we need to trigger download action
+            decisionHandler(.download)
+            return
+        } else if shouldTriggerDownloadAction,
+                  let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+            // We should handle the response as download
+            self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            } cancelHandler: {
+                decisionHandler(.cancel)
             }
+            return
         } else if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {

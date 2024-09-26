@@ -21,20 +21,41 @@ import Foundation
 import UIKit
 import Bookmarks
 import Combine
+import Core
+import Persistence
+import CoreData
+
+protocol FaviconUpdating {
+    func updateFavicon(forDomain domain: String, with image: UIImage)
+}
 
 class AddFavoriteViewModel: ObservableObject {
     @Published var results: [FavoriteSearchResult] = []
     @Published var searchTerm: String = ""
+    @Published var wasSearchCompleted: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
 
     private var searchTask: Task<Void, Error>?
     private let websiteSearch: any WebsiteSearching
     private let favoritesCreating: MenuBookmarksInteracting
+    private let booksmarksSearch: BookmarksStringSearch
+    private let faviconLoading: FavoritesFaviconLoading
+    private let faviconUpdating: FaviconUpdating
 
-    init(websiteSearching: WebsiteSearching = DDGAutocompleteWebsiteSearch(), favoritesCreating: MenuBookmarksInteracting) {
+    var onAddCustomWebsite: ((_ url: String) -> Void)?
+    var onFavoriteAdded: ((_ favorite: BookmarkEntity) -> Void)?
+
+    init(websiteSearching: WebsiteSearching = DDGAutocompleteWebsiteSearch(),
+         favoritesCreating: MenuBookmarksInteracting,
+         booksmarksSearch: BookmarksStringSearch,
+         faviconLoading: FavoritesFaviconLoading,
+         faviconUpdating: FaviconUpdating = Favicons.shared) {
         self.websiteSearch = websiteSearching
         self.favoritesCreating = favoritesCreating
+        self.booksmarksSearch = booksmarksSearch
+        self.faviconLoading = faviconLoading
+        self.faviconUpdating = faviconUpdating
 
         $searchTerm
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
@@ -51,14 +72,62 @@ class AddFavoriteViewModel: ObservableObject {
         clearResults()
     }
 
-    func addFavorite(for result: FavoriteSearchResult) -> Bool {
-        guard favoritesCreating.bookmark(for: result.url) == nil else { return false }
+    func addFavorite(for result: FavoriteSearchResult) {
 
-        favoritesCreating.createOrToggleFavorite(title: result.name, url: result.url)
+        guard result.isActionable else {
+            return
+        }
 
-        // TODO: Cache favicon
+        // We have the same bookmark either without www or with different scheme.
+        // Mark this one as a favorite.
+        if case let .partialBookmark(matchedURL) = result.favoriteMatch {
+            favoritesCreating.createOrToggleFavorite(title: result.name, url: matchedURL)
+            return
+        }
 
-        return true
+        // Decorate results and use metadata to create a new bookmark.
+        // Use icon in metadata as a favicon.
+        Task {
+            let name: String
+            let url: URL
+
+            let decoratedResult = await FavoriteSearchResultDecorator().decorate(results: [result])
+            if let decoratedResult = decoratedResult.first {
+                name = decoratedResult.name
+                url = decoratedResult.url
+
+                if let host = url.host, let icon = decoratedResult.icon {
+                    await MainActor.run {
+                        faviconUpdating.updateFavicon(forDomain: host, with: icon)
+                    }
+                }
+            } else {
+                name = result.name
+                url = result.url
+            }
+
+            await MainActor.run {
+                favoritesCreating.createOrToggleFavorite(title: name, url: url)
+                if let favorite = favoritesCreating.favorite(for: url) {
+                    onFavoriteAdded?(favorite)
+                }
+            }
+        }
+    }
+
+    func addCustomWebsite() {
+        let customWebsiteInput = searchTerm.trimmingWhitespace()
+        guard !customWebsiteInput.isEmpty,
+              let url = URL(string: customWebsiteInput) else {
+            return
+        }
+
+        onAddCustomWebsite?(url.absoluteString)
+    }
+
+    @MainActor
+    private func setSearchCompleted(_ isCompleted: Bool) {
+        wasSearchCompleted = isCompleted
     }
 
     private func clearResults() {
@@ -67,33 +136,56 @@ class AddFavoriteViewModel: ObservableObject {
 
     private func runSearch() {
         guard !searchTerm.isEmpty else {
+            Task { await setSearchCompleted(false) }
             clearResults()
             return
         }
 
         searchTask?.cancel()
         searchTask = Task {
+
             do {
+                let urlMatcher = AddFavoriteURLMatcher(bookmarksSearch: booksmarksSearch)
+
+                try Task.checkCancellation()
+                
                 let urls = try await websiteSearch.search(term: searchTerm)
-                let results: [FavoriteSearchResult]
-                if urls.isEmpty, let manualEntry = await createManualEntry(searchTerm: searchTerm) {
-                    results = [manualEntry]
-                } else {
-                    results = urls.map(FavoriteSearchResult.init(url:))
+                let results = await withTaskGroup(of: FavoriteSearchResult.self, returning: [FavoriteSearchResult].self) { group in
+                    for url in urls {
+                        group.addTask {
+                            let favoriteMatch = await urlMatcher.favoriteMatch(for: url)
+                            let name = url.nakedString ?? url.absoluteString
+                            var image: UIImage?
+
+                            if let host = url.host {
+                                image = await self.faviconLoading.loadFavicon(for: host, size: 64)?.image
+                            }
+
+                            return FavoriteSearchResult(id: url.absoluteString, name: name, url: url, favoriteMatch: favoriteMatch, icon: image)
+                        }
+                    }
+
+                    return await group.reduce(into: [FavoriteSearchResult]()) { partialResult, result in
+                        partialResult.append(result)
+                    }
                 }
+
+                try Task.checkCancellation()
 
                 await publishResults(results)
             } catch {
                 await publishResults([])
             }
+
+            await setSearchCompleted(true)
         }
     }
 
-    private func createManualEntry(searchTerm: String) async -> FavoriteSearchResult? {
-        guard let url = convertToURL(searchTerm) else { return nil }
-        
-        return FavoriteSearchResult(url: url)
-    }
+//    private func createManualEntry(searchTerm: String) async -> FavoriteSearchResult? {
+//        guard let url = convertToURL(searchTerm) else { return nil }
+//        
+//        return FavoriteSearchResult(url: url)
+//    }
 
     @MainActor
     private func publishResults(_ results: [FavoriteSearchResult]) {
@@ -119,29 +211,50 @@ struct FavoriteSearchResult: Identifiable, Hashable {
     let id: String
     let name: String
     let url: URL
+    let favoriteMatch: AddFavoriteURLMatch?
     let icon: UIImage?
 
-    init(id: String, name: String, url: URL, icon: UIImage? = nil) {
+    init(id: String, name: String, url: URL, favoriteMatch: AddFavoriteURLMatch? = nil, icon: UIImage? = nil) {
         self.id = id
         self.name = name
         self.url = url
         self.icon = icon
+        self.favoriteMatch = favoriteMatch
     }
 }
 
 extension FavoriteSearchResult {
-    init(url: URL) {
-        self.id = url.absoluteString
-        self.name = url.absoluteString
-        self.url = url
-        self.icon = nil
-    }
 
-    var isValid: Bool {
-        return url.isValid
+    var isActionable: Bool {
+        switch favoriteMatch {
+        case .none, .exactBookmark, .partialBookmark:
+            return true
+        case .exactFavorite, .partialFavorite:
+            return false
+        }
     }
 
     var displayURL: String {
         url.absoluteString
+    }
+}
+
+extension AddFavoriteViewModel {
+    static var preview: AddFavoriteViewModel {
+        .init(
+            favoritesCreating: NullMenuBookmarksInteracting(),
+            booksmarksSearch: PreviewBookmarksSearch(),
+            faviconLoading: EmptyFaviconLoading()
+        )
+    }
+}
+
+extension Favicons: FaviconUpdating {
+    func updateFavicon(forDomain domain: String, with image: UIImage) {
+        loadFavicon(forDomain: domain, intoCache: .fireproof, completion: { existingImage in
+            if existingImage == nil {
+                self.replaceFireproofFavicon(forDomain: domain, withImage: image)
+            }
+        })
     }
 }

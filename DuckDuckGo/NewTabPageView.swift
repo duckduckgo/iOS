@@ -81,29 +81,11 @@ struct NewTabPageView: View {
 
     @ViewBuilder
     private var mainView: some View {
-        VStack(spacing: 0) {
-            Button(action: {
-                isAddingFavorite = true
-            }, label: {
-                Text(verbatim: "Add Favorite Flow PoC")
-                    .tintIfAvailable(Color(designSystemColor: .accent))
-                    .daxTitle3()
-            })
-            .padding()
-
-            if isAnySectionEnabled {
-                sectionsView
-            } else {
-                emptyStateView
-            }
+        if isAnySectionEnabled {
+            sectionsView
+        } else {
+            emptyStateView
         }
-        .padding(0)
-        .sheet(isPresented: $isAddingFavorite, content: {
-            NavigationView {
-                AddFavoriteView(viewModel: addFavoriteViewModel,
-                                faviconLoader: favoritesViewModel.faviconLoader)
-            }
-        })
     }
 }
 
@@ -162,9 +144,11 @@ private extension NewTabPageView {
                         .padding([.trailing, .bottom], Metrics.largePadding)
                 }
             }
-            .sheet(isPresented: $isAddingFavorite) {
-                EmptyView()
-            }
+            .sheet(isPresented: $isAddingFavorite, content: {
+                NavigationView {
+                    AddFavoriteView(viewModel: addFavoriteViewModel)
+                }
+            })
         }
     }
 
@@ -284,7 +268,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesViewModel: FavoritesPreviewModel(),
-        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
+        addFavoriteViewModel: .preview,
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -310,7 +294,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesViewModel: FavoritesPreviewModel(),
-        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
+        addFavoriteViewModel: .preview,
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -326,7 +310,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesViewModel: FavoritesPreviewModel(favorites: []),
-        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
+        addFavoriteViewModel: .preview,
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -342,7 +326,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
             )
         ),
         favoritesViewModel: FavoritesPreviewModel(),
-        addFavoriteViewModel: .init(favoritesCreating: NullMenuBookmarksInteracting()),
+        addFavoriteViewModel: .preview,
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel(storage: .emptyStorage())

@@ -106,7 +106,6 @@ public struct LegacySecondaryButtonStyle: ButtonStyle {
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .cornerRadius(Consts.cornerRadius)
     }
 }
 

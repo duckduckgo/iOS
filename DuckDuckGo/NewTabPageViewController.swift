@@ -49,6 +49,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
          bookmarksInteracting: MenuBookmarksInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
+         bookmarksStringSearch: BookmarksStringSearch,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil,
          variantManager: VariantManager,
@@ -69,7 +70,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
         favoritesModel = FavoritesViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
-        addFavoriteViewModel = AddFavoriteViewModel(favoritesCreating: bookmarksInteracting)
+        addFavoriteViewModel = AddFavoriteViewModel(favoritesCreating: bookmarksInteracting, booksmarksSearch: bookmarksStringSearch, faviconLoading: faviconLoader)
 
         let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
                                             messagesModel: messagesModel,
@@ -83,6 +84,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+        assignAddFavoriteModelActions()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -138,6 +140,28 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
                 shortcutsDelegate?.newTabPageDidRequestPasswords(self)
             case .settings:
                 shortcutsDelegate?.newTabPageDidRequestSettings(self)
+            }
+        }
+    }
+
+    private func assignAddFavoriteModelActions() {
+        addFavoriteViewModel.onAddCustomWebsite = { [weak self] favoriteURL in
+            guard let self else { return }
+
+            self.dismiss(animated: true) {
+                self.delegate?.newTabPageDidRequestAddFavorite(self, url: favoriteURL)
+            }
+        }
+
+        addFavoriteViewModel.onFavoriteAdded = { [weak self] favorite in
+
+            let message = UserText.newTabPageAddFavoriteMessage
+            ActionMessageView.present(message: message, actionTitle: UserText.actionGenericEdit) { [weak self] in
+                guard let self else { return }
+
+                self.delegate?.newTabPageDidEditFavorite(self, favorite: favorite)
+            } onDidDismiss: {
+                
             }
         }
     }

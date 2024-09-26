@@ -34,6 +34,7 @@ tags:
 - assertVisible: "Privacy Test Pages - Home"
 - assertVisible: "privacy-test-pages.site"
 - tapOn: "Privacy Test Pages - Home"
+- tapOn: "Refresh Page"
 
 # Verify site has been bookmarked
 - assertVisible: "Browsing menu"

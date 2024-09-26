@@ -27,8 +27,8 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
         if let task = tasks[domain] {
             if task.isCancelled {
                 tasks.removeValue(forKey: domain)
-            } else {
-                return await task.value
+            } else if let value = await task.value {
+                return value
             }
         }
 
@@ -39,7 +39,11 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
 
         tasks[domain] = newTask
 
-        return await newTask.value
+        let value = await newTask.value
+        if value == nil {
+            tasks.removeValue(forKey: domain)
+        }
+        return value
     }
 
     nonisolated func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {

@@ -168,6 +168,9 @@ class TabViewController: UIViewController {
     var mostRecentAutoPreviewDownloadID: UUID?
     private var blobDownloadTargetFrame: WKFrameInfo?
 
+    // Recent request's URL if its WKNavigationAction had shouldPerformDownload set to true
+    private var recentNavigationActionShouldPerformDownloadURL: URL?
+
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     
     let bookmarksDatabase: CoreDataDatabase
@@ -1818,6 +1821,8 @@ extension TabViewController: WKNavigationDelegate {
 
         let tld = storageCache.tld
         
+        // If WKNavigationAction requests to shouldPerformDownload prepare for handling it in decidePolicyFor:navigationResponse:
+        recentNavigationActionShouldPerformDownloadURL = navigationAction.shouldPerformDownload ? navigationAction.request.url : nil
 
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {

@@ -200,7 +200,7 @@ public class Favicons {
             Constants.fireproofCache.store(faviconImage, forKey: resource.cacheKey, options: .init(options))
         }
         
-        Constants.fireproofCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache ]) { result in
+        Constants.fireproofCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache]) { result in
             switch result {
                 
             case .success(let cachedImage):

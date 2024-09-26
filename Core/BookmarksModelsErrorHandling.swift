@@ -95,6 +95,20 @@ public extension BookmarkEditorViewModel {
                   favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
+
+    convenience init(addingBookmarkWith url: String,
+                     title: String,
+                     toFolderWithID folderID: NSManagedObjectID?,
+                     bookmarksDatabase: CoreDataDatabase,
+                     favoritesDisplayMode: FavoritesDisplayMode,
+                     syncService: DDGSyncing?) {
+        self.init(addingBookmarkWith: url,
+                  title: title,
+                  toFolderWithID: folderID,
+                  bookmarksDatabase: bookmarksDatabase,
+                  favoritesDisplayMode: favoritesDisplayMode,
+                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
+    }
 }
 
 public extension BookmarkListViewModel {

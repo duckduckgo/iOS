@@ -792,8 +792,10 @@ class MainViewController: UIViewController {
         if homeTabManager.isNewTabPageSectionsEnabled {
             let controller = NewTabPageViewController(tab: tabModel,
                                                       interactionModel: favoritesViewModel,
+                                                      bookmarksInteracting: menuBookmarksViewModel,
                                                       syncService: syncService,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                      bookmarksStringSearch: bookmarksCachingSearch,
                                                       homePageMessagesConfiguration: homePageConfiguration,
                                                       privacyProDataReporting: privacyProDataReporter,
                                                       variantManager: variantManager,
@@ -2240,6 +2242,10 @@ extension MainViewController: NewTabPageControllerDelegate {
 
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
+    }
+
+    func newTabPageDidRequestAddFavorite(_ controller: NewTabPageViewController, url: String) {
+        segueToAddFavorite(url: url)
     }
 }
 

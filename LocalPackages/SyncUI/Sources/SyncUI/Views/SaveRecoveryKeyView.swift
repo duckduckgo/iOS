@@ -62,7 +62,7 @@ public struct SaveRecoveryKeyView: View {
             Button(UserText.saveRecoveryCodeSaveAsPdfButton) {
                 model.showRecoveryPDFAction()
             }
-            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .buttonStyle(LegacySecondaryButtonStyle(compact: isCompact))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                 .inset(by: 0.5)
@@ -76,7 +76,7 @@ public struct SaveRecoveryKeyView: View {
                     isCopied = false
                 }
             }
-            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .buttonStyle(LegacySecondaryButtonStyle(compact: isCompact))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .inset(by: 0.5)

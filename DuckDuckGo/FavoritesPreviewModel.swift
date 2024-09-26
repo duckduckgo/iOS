@@ -20,7 +20,7 @@
 import Bookmarks
 import Foundation
 
-final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel {
+final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel, FavoritesCreating {
 
     @Published var isShowingTooltip: Bool = false
     var isCollapsed: Bool = true
@@ -88,18 +88,22 @@ final class FavoritesPreviewModel: FavoritesModel, FavoritesEmptyStateModel {
     func toggleTooltip() {
     
     }
+
+    func createFavorite(name: String, url: URL) {
+        
+    }
 }
 
 struct EmptyFaviconLoading: FavoritesFaviconLoading {
-    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+    func existingFavicon(for domain: String, size: CGFloat) -> Favicon? {
         nil
     }
-    
-    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+
+    func fakeFavicon(for domain: String, size: CGFloat) -> Favicon {
         .empty
     }
-    
-    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+
+    func loadFavicon(for domain: String, size: CGFloat) async -> Favicon? {
         nil
     }
 }

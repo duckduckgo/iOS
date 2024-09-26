@@ -55,7 +55,7 @@ struct NewTabPageSectionsDebugView: View {
             introMessageCount = $0
         }
     }
-    
+
     init() {
         let manager = NewTabPageManager()
         newTabPageDebugging = manager

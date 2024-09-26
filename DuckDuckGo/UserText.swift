@@ -1319,6 +1319,15 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let newTabPageIntroMessageTitle = NSLocalizedString("new.tab.page.intro.message.title", value: "Your New Tab Page is... New!", comment: "Title of information message about New Tab Page redesign")
     public static let newTabPageIntroMessageBody = NSLocalizedString("new.tab.page.intro.message.body", value: "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.", comment: "Information message about New Tab Page redesign")
 
+    // MARK: Add Favorite
+
+    public static let addFavoriteHeader = NSLocalizedString("add.favorite.header", value: "Add Favorite", comment: "Header of Add favorite flow view")
+    public static let addFavoriteSubheader = NSLocalizedString("add.favorite.subheader", value: "Add a site as a Favorite for easy access from your New Tab page.", comment: "Subheader of Add favorite flow view")
+
+    public static let addFavoriteSearchPlaceholder = NSLocalizedString("add.favorite.search.placeholder", value: "Enter a URL or website", comment: "Placeholder text for search bar in Add favorite flow view")
+    public static let addFavoriteCustomWebsiteButtonTitle = NSLocalizedString("add.favorite.custom.website.button.title", value: "Add a Custom Website", comment: "Title of a button to add a custom website in Add favorite flow view")
+    public static let addFavoriteNoResultsItemText = NSLocalizedString("add.favorite.no.results.item.text", value: "No results found", comment: "Text to show when no results are found for a search query in Add favorite flow view")
+    public static let newTabPageAddFavoriteMessage = NSLocalizedString("new.tab.page.add.favorite.message", value: "Favorite added", comment: "Message to show when a favorite was created.")
 
     // MARK: - Dax Onboarding Experiment
     public enum DaxOnboardingExperiment {

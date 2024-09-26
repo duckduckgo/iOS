@@ -64,7 +64,7 @@ public struct FaviconsFetcherOnboardingView: View {
                 } label: {
                     Text(UserText.notNowButton)
                 }
-                .buttonStyle(SecondaryButtonStyle())
+                .buttonStyle(LegacySecondaryButtonStyle())
                 .frame(maxWidth: 360)
             }
             .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))

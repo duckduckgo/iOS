@@ -24,6 +24,7 @@ protocol NewTabPageControllerDelegate: AnyObject {
     func newTabPageDidOpenFavoriteURL(_ controller: NewTabPageViewController, url: URL)
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
     func newTabPageDidEditFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity)
+    func newTabPageDidRequestAddFavorite(_ controller: NewTabPageViewController, url: String)
 }
 
 protocol NewTabPageControllerShortcutsDelegate: AnyObject {

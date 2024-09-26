@@ -103,6 +103,21 @@
 /* Share action */
 "action.title.share" = "Share";
 
+/* Title of a button to add a custom website in Add favorite flow view */
+"add.favorite.custom.website.button.title" = "Add a Custom Website";
+
+/* Header of Add favorite flow view */
+"add.favorite.header" = "Add Favorite";
+
+/* Text to show when no results are found for a search query in Add favorite flow view */
+"add.favorite.no.results.item.text" = "No results found";
+
+/* Placeholder text for search bar in Add favorite flow view */
+"add.favorite.search.placeholder" = "Enter a URL or website";
+
+/* Subheader of Add favorite flow view */
+"add.favorite.subheader" = "Add a site as a Favorite for easy access from your New Tab page.";
+
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Bottom";
 
@@ -1786,6 +1801,9 @@ https://duckduckgo.com/mac";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
+
+/* Message to show when a favorite was created. */
+"new.tab.page.add.favorite.message" = "Favorite added";
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.";

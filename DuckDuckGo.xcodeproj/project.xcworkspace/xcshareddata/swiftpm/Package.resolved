@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "cc3629fa16880e410e588a27a6b2426dcc140009",
-        "version" : "198.0.1"
+        "branch" : "mariusz/ntp-favorites-autocomplete",
+        "revision" : "ca6a347df613474dbaa73fe5b9f92031bfcbac72"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
-        "version" : "6.16.0"
+        "revision" : "1ed569676555d493c9c5575eaed22aa02569aac9",
+        "version" : "6.19.0"
       }
     },
     {

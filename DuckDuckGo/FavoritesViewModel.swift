@@ -24,10 +24,6 @@ import SwiftUI
 import Core
 import WidgetKit
 
-protocol FavoritesCreating {
-    func createFavorite(name: String, url: URL)
-}
-
 protocol NewTabPageFavoriteDataSource {
     var externalUpdates: AnyPublisher<Void, Never> { get }
     var favorites: [Favorite] { get }

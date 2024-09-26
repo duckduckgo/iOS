@@ -47,6 +47,8 @@ private enum Metrics {
         static let overlayRadius: CGFloat = 13.0
         static let overlayStroke: CGFloat = 1
         static let itemSpacing: CGFloat = 16.0
+        static let borderLightColor = Color.black.opacity(0.18)
+        static let borderDarkColor = Color.white.opacity(0.18)
     }
     enum Checkbox {
         static let size: CGFloat = 24.0
@@ -86,11 +88,19 @@ extension OnboardingAddressBarPositionPicker {
             }
             .overlay {
                 RoundedRectangle(cornerRadius: Metrics.Button.overlayRadius)
-                    .stroke(.blue, lineWidth: Metrics.Button.overlayStroke)
+                    .stroke(strokeColor, lineWidth: Metrics.Button.overlayStroke)
             }
-            .buttonStyle(AddressBarPostionButtonStyle())
+            .buttonStyle(AddressBarPostionButtonStyle(isSelected: isSelected))
         }
-        
+
+        private var strokeColor: Color {
+            if isSelected {
+                Color(designSystemColor: .accent)
+            } else {
+                colorScheme == .light ? Metrics.Button.borderLightColor : Metrics.Button.borderDarkColor
+            }
+        }
+
     }
     
 }
@@ -128,7 +138,7 @@ extension OnboardingAddressBarPositionPicker.AddressBarPositionButton {
         private var foregroundColor: Color {
             switch (colorScheme, isSelected) {
             case (.light, true), (.dark, true):
-                Color.init(designSystemColor: .accent)
+                Color(designSystemColor: .accent)
             case (.light, false):
                     .black.opacity(0.03)
             case (.dark, false):
@@ -148,6 +158,8 @@ private struct AddressBarPostionButtonStyle: ButtonStyle {
 
     private let minHeight = 63.0
 
+    let isSelected: Bool
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .fixedSize(horizontal: false, vertical: true)
@@ -155,26 +167,13 @@ private struct AddressBarPostionButtonStyle: ButtonStyle {
             .lineLimit(nil)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: minHeight)
-            .background(backgroundColor(configuration.isPressed))
+            .background(backgroundColor(configuration.isPressed || isSelected))
             .cornerRadius(8)
             .contentShape(Rectangle()) // Makes whole button area tappable, when there's no background
     }
 
-    private func foregroundColor(_ isPressed: Bool) -> Color {
-        switch (colorScheme, isPressed) {
-        case (.dark, false):
-            return .blue30
-        case (.dark, true):
-            return .blue20
-        case (_, false):
-            return .blueBase
-        case (_, true):
-            return .blue70
-        }
-    }
-
-    private func backgroundColor(_ isPressed: Bool) -> Color {
-        switch (colorScheme, isPressed) {
+    private func backgroundColor(_ isHighlighted: Bool) -> Color {
+        switch (colorScheme, isHighlighted) {
         case (.light, true):
             return .blueBase.opacity(0.2)
         case (.dark, true):

@@ -904,6 +904,23 @@ final class DaxDialog: XCTestCase {
         XCTAssertEqual(result, .final)
     }
 
+    func testWhenExperimentGroup_AndNextHomeScreenMessageNewIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        _ = sut.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
     func testWhenExperimentGroup_AndCanEnableAddFavoritesFlowIsCalled_ThenReturnFalse() {
         // GIVEN
         let sut = makeExperimentSUT(settings: InMemoryDaxDialogsSettings())
@@ -1019,6 +1036,40 @@ final class DaxDialog: XCTestCase {
         XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
     }
 
+    func testWhenExperimentGroup_AndSetDaxDialogDismiss_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        sut.setDaxDialogDismiss()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
+    func testWhenExperimentGroup_AndClearedBrowserDataIsCalled_ThenLastVisitedOnboardingWebsiteAndLastShownDaxDialogAreSetToNil() throws {
+        // GIVEN
+        let settings = InMemoryDaxDialogsSettings()
+        settings.lastShownContextualOnboardingDialogType = DaxDialogs.BrowsingSpec.fire.type.rawValue
+        settings.lastVisitedOnboardingWebsiteURLPath = "https://www.example.com"
+        let sut = makeExperimentSUT(settings: settings)
+        XCTAssertNotNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNotNil(settings.lastVisitedOnboardingWebsiteURLPath)
+
+        // WHEN
+        sut.clearedBrowserData()
+
+        // THEN
+        XCTAssertNil(settings.lastShownContextualOnboardingDialogType)
+        XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
+    }
+
     func testWhenExperimentGroup_AndIsEnabledIsFalse_AndReloadWebsite_ThenReturnNilBrowsingSpec() throws {
         // GIVEN
         let lastVisitedWebsitePath = "https://www.example.com"
@@ -1034,6 +1085,32 @@ final class DaxDialog: XCTestCase {
 
         // THEN
         XCTAssertNil(result)
+    }
+
+    func testWhenIsEnabledIsCalled_AndShouldShowDaxDialogsIsTrue_ThenReturnTrue() {
+        // GIVEN
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.currentVariant = MockVariant(features: [.newOnboardingIntro, .contextualDaxDialogs])
+        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+
+        // WHEN
+        let result = sut.isEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsEnabledIsCalled_AndShouldShowDaxDialogsIsFalse_ThenReturnFalse() {
+        // GIVEN
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.currentVariant = MockVariant(features: [.newOnboardingIntro])
+        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+
+        // WHEN
+        let result = sut.isEnabled
+
+        // THEN
+        XCTAssertFalse(result)
     }
 
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
@@ -1060,7 +1137,10 @@ final class DaxDialog: XCTestCase {
     }
 
     private func makeExperimentSUT(settings: DaxDialogsSettings) -> DaxDialogs {
-        let mockVariantManager = MockVariantManager(isSupportedReturns: true)
+        var mockVariantManager = MockVariantManager()
+        mockVariantManager.isSupportedBlock = { feature in
+            feature == .contextualDaxDialogs
+        }
         return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
     }
 }

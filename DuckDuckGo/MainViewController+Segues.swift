@@ -35,7 +35,7 @@ extension MainViewController {
 
         var controller: (Onboarding & UIViewController)?
 
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if DefaultVariantManager().isNewIntroFlow {
             controller = OnboardingIntroViewController(onboardingPixelReporter: contextualOnboardingPixelReporter)
         } else {
             let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)

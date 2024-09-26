@@ -1400,7 +1400,7 @@ But if you *do* want a peek under the hood, you can find more information about 
         enum AddressBarPosition {
             public static let title = NSLocalizedString("onboarding.highlights.addressBarPosition.title", value: "Where should I put your address bar?", comment: "The title of the onboarding dialog popup to select the preferred address bar position.")
             public static let topTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.top.title", value: "Top", comment: "The title of the option to set the address bar to the top.")
-            public static let defaultOption = NSLocalizedString("onboarding.highlights.addressBarPosition.default", value: "(Default)", comment: "Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default)")
+            public static let defaultOption = NSLocalizedString("onboarding.highlights.addressBarPosition.default", value: "(default)", comment: "Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default)")
             public static let topMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.top.message", value: "Easy to see", comment: "The message of the option to set the address bar to the top.")
             public static let bottomTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.title", value: "Bottom", comment: "The title of the option to set the address bar to the bottom.")
             public static let bottomMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.message", value: "Easy to reach", comment: "The message of the option to set the address bar to the bottom.")

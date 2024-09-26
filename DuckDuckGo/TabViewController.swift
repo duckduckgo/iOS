@@ -1310,6 +1310,7 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
 
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
@@ -1321,11 +1322,36 @@ extension TabViewController: WKNavigationDelegate {
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+        // HTTP response has "Content-Disposition: attachment" header
+        let hasContentDispositionAttachment = httpResponse?.shouldDownload ?? false
+        // If preceding WKNavigationAction requested to start the download
+        let hasNavigationActionRequestedDownload = recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+
+        let shouldTriggerDownloadAction = hasContentDispositionAttachment || hasNavigationActionRequestedDownload
+
+        if shouldTriggerDownloadAction {
+            if urlSchemeType == .blob {
+                Swift.print("==== BLOB that should be downloaded")
+                decisionHandler(.download)
+                return
+            } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+
+                Swift.print("=== request url: \(navigationResponse.response.url?.absoluteString ?? "")")
+
+                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                } cancelHandler: {
+                    decisionHandler(.cancel)
+                }
+                return
+            }
+        } else if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+                // Loading a file in WebView
                 decisionHandler(decision)
             } else {
+                // Loading HTML
                 if navigationResponse.isForMainFrame && isSuccessfulResponse {
                     adClickAttributionDetection.on2XXResponse(url: url)
                 }
@@ -1339,8 +1365,7 @@ extension TabViewController: WKNavigationDelegate {
                 mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-            } else if let url = navigationResponse.response.url,
-                      case .blob = SchemeHandler.schemeType(for: url) {
+            } else if urlSchemeType == .blob {
                 decisionHandler(.download)
 
             } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
@@ -1860,7 +1885,7 @@ extension TabViewController: WKNavigationDelegate {
             }
            
         }
-        
+
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -2147,31 +2172,35 @@ extension TabViewController {
                     return
                 }
 
-                let isTemporary = navigationResponse.canShowMIMEType
-                    || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
-                if isTemporary {
-                    // restart blob request loading for preview that was interrupted by .download callback
+                let hasNavigationActionRequestedDownload = self.recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+                let canShowOrPreview = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
+
+                let shouldTriggerDownloadAction = hasNavigationActionRequestedDownload || !canShowOrPreview
+
+                if shouldTriggerDownloadAction {
+                    // Show alert to start the file download
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        callback(self.transfer(download,
+                                               to: downloadManager,
+                                               with: navigationResponse.response,
+                                               suggestedFilename: suggestedFilename,
+                                               isTemporary: false))
+                    } cancelHandler: {
+                        callback(nil)
+                    }
+
+                    self.temporaryDownloadForPreviewedFile = nil
+                } else {
+                    // Showing file in the webview or in preview view
                     if navigationResponse.canShowMIMEType {
+                        // restart blob request loading for preview that was interrupted by .download callback
                         self.webView.load(navigationResponse.response.url!, in: self.blobDownloadTargetFrame)
                     }
                     callback(self.transfer(download,
                                            to: downloadManager,
                                            with: navigationResponse.response,
                                            suggestedFilename: suggestedFilename,
-                                           isTemporary: isTemporary))
-
-                } else {
-                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                        callback(self.transfer(download,
-                                               to: downloadManager,
-                                               with: navigationResponse.response,
-                                               suggestedFilename: suggestedFilename,
-                                               isTemporary: isTemporary))
-                    } cancelHandler: {
-                        callback(nil)
-                    }
-
-                    self.temporaryDownloadForPreviewedFile = nil
+                                           isTemporary: true))
                 }
 
                 delegate.decideDestinationCallback = nil

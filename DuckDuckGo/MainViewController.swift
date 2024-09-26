@@ -852,7 +852,7 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if variantManager.isContextualDaxDialogsEnabled {
             // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
             currentTab?.dismissContextualDaxFireDialog()
             ViewHighlighter.hideAll()
@@ -2418,10 +2418,6 @@ extension MainViewController: TabDelegate {
         }
     }
     
-    func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation(showNextDaxDialog: true)
-    }
-    
     func tabDidRequestFireButtonPulse(tab: TabViewController) {
         showFireButtonPulse()
     }
@@ -2741,7 +2737,8 @@ extension MainViewController: AutoClearWorker {
             self.privacyProDataReporter.saveFireCount()
 
             // Ideally this should happen once data clearing has finished AND the animation is finished
-            if showNextDaxDialog {
+            // `showNextDaxDialog: true` only set from old onboarding FireDialog ActionSheet
+            if showNextDaxDialog && self.variantManager.shouldShowDaxDialogs {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {
@@ -2751,8 +2748,8 @@ extension MainViewController: AutoClearWorker {
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
 
-            if self.variantManager.isSupported(feature: .newOnboardingIntro) {
-                DaxDialogs.shared.setFireEducationMessageSeen()
+            if self.variantManager.isContextualDaxDialogsEnabled {
+                DaxDialogs.shared.clearedBrowserData()
             }
         }
     }

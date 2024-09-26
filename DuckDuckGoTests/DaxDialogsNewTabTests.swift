@@ -162,6 +162,18 @@ final class DaxDialogsNewTabTests: XCTestCase {
         XCTAssertNil(homeScreenMessage)
     }
 
+    func testIfFinalDialogShown_andBrowsingAfterSearchNotShown_OnNextHomeScreenMessageNew_ReturnsNil() {
+        // GIVEN
+        settings.browsingAfterSearchShown = false
+        settings.browsingFinalDialogShown = true
+
+        // WHEN
+        let homeScreenMessage = daxDialogs.nextHomeScreenMessageNew()
+
+        // THEN
+        XCTAssertNil(homeScreenMessage)
+    }
+
 }
 
 class MockDaxDialogsSettings: DaxDialogsSettings {

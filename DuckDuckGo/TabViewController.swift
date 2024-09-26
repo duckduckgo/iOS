@@ -1256,7 +1256,7 @@ extension TabViewController: WKNavigationDelegate {
     private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
                                             completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard shouldBypassSSLError,
-        let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
+              let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
             completionHandler(.performDefaultHandling, nil)
             return
         }
@@ -2340,7 +2340,7 @@ extension TabViewController: WKUIDelegate {
             return
         }
         
-        let alert = WebJSAlert(domain: frame.request.url?.host
+        let alert = WebJSAlert(domain: frame.safeRequest?.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
                                ?? self.url?.absoluteString
@@ -2360,7 +2360,7 @@ extension TabViewController: WKUIDelegate {
             return
         }
         
-        let alert = WebJSAlert(domain: frame.request.url?.host
+        let alert = WebJSAlert(domain: frame.safeRequest?.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
                                ?? self.url?.absoluteString

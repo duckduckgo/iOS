@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -375,7 +375,7 @@
         <!--Add Folder-->
         <scene sceneID="CJo-jI-HMh">
             <objects>
-                <viewController id="gvC-OM-VDO" customClass="AddOrEditBookmarkViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddOrEditBookmarkViewController" id="gvC-OM-VDO" customClass="AddOrEditBookmarkViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nHt-Cp-jg8"/>
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
@@ -528,55 +528,63 @@
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="88.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gf7-Lt-ftk">
-                                            <rect key="frame" x="16" y="16" width="56" height="56"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="999" constant="56" id="Adn-Wb-LwM"/>
-                                                <constraint firstAttribute="width" constant="56" id="Yfv-hU-94a"/>
-                                            </constraints>
-                                        </imageView>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
-                                            <rect key="frame" x="88" y="44" width="243" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="999" constant="44" id="tZz-vQ-lla"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" textContentType="url"/>
-                                        </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
-                                            <rect key="frame" x="88" y="0.0" width="243" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                        </textField>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVp-1a-TkJ">
-                                            <rect key="frame" x="88" y="44" width="255" height="0.0"/>
-                                            <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="750" constant="0.33000000000000002" id="RDj-dx-Yf1"/>
-                                            </constraints>
-                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RN8-tY-OE1">
+                                            <rect key="frame" x="16" y="0.0" width="315" height="88.5"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZa-k4-hsg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="56" height="88.5"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gf7-Lt-ftk">
+                                                            <rect key="frame" x="0.0" y="16" width="56" height="56.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" priority="999" constant="56" id="Adn-Wb-LwM"/>
+                                                                <constraint firstAttribute="width" constant="56" id="Yfv-hU-94a"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="gf7-Lt-ftk" secondAttribute="bottom" constant="16" id="Im3-CK-KEh"/>
+                                                        <constraint firstItem="gf7-Lt-ftk" firstAttribute="leading" secondItem="aZa-k4-hsg" secondAttribute="leading" id="Ogp-NB-SAo"/>
+                                                        <constraint firstAttribute="trailing" secondItem="gf7-Lt-ftk" secondAttribute="trailing" id="WwA-FX-1c6"/>
+                                                        <constraint firstItem="gf7-Lt-ftk" firstAttribute="top" secondItem="aZa-k4-hsg" secondAttribute="top" constant="16" id="hVT-8J-r4M"/>
+                                                    </constraints>
+                                                </view>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Lxv-Fe-H11">
+                                                    <rect key="frame" x="72" y="0.0" width="243" height="88.5"/>
+                                                    <subviews>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
+                                                            <rect key="frame" x="0.0" y="0.0" width="243" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                        </textField>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
+                                                            <rect key="frame" x="0.0" y="44" width="243" height="44.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" textContentType="url"/>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="rT4-Yr-P8D" firstAttribute="height" secondItem="YqY-sP-hhb" secondAttribute="height" priority="999" id="USG-qN-EQs"/>
+                                                        <constraint firstItem="rT4-Yr-P8D" firstAttribute="width" secondItem="YqY-sP-hhb" secondAttribute="width" id="gux-IC-h5D"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" constant="12" id="9sq-rJ-cZp"/>
-                                        <constraint firstItem="YqY-sP-hhb" firstAttribute="trailing" secondItem="rT4-Yr-P8D" secondAttribute="trailing" id="Gr3-OY-Ppp"/>
-                                        <constraint firstItem="gf7-Lt-ftk" firstAttribute="top" secondItem="8Dz-o3-ykG" secondAttribute="top" constant="16" id="J0p-OS-5wI"/>
-                                        <constraint firstItem="rT4-Yr-P8D" firstAttribute="leading" secondItem="gf7-Lt-ftk" secondAttribute="trailing" constant="16" id="KNr-23-TPT"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gf7-Lt-ftk" secondAttribute="bottom" constant="16" id="NtP-p9-dIW"/>
-                                        <constraint firstItem="YqY-sP-hhb" firstAttribute="top" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="Pr0-l7-Ad6"/>
-                                        <constraint firstItem="fVp-1a-TkJ" firstAttribute="leading" secondItem="rT4-Yr-P8D" secondAttribute="leading" id="TfO-33-gV4"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YqY-sP-hhb" secondAttribute="bottom" id="V1m-LZ-nJ2"/>
-                                        <constraint firstItem="YqY-sP-hhb" firstAttribute="leading" secondItem="rT4-Yr-P8D" secondAttribute="leading" id="fAJ-vM-TtQ"/>
-                                        <constraint firstItem="gf7-Lt-ftk" firstAttribute="leading" secondItem="8Dz-o3-ykG" secondAttribute="leading" constant="16" id="jAr-ZT-JEe"/>
-                                        <constraint firstAttribute="trailing" secondItem="fVp-1a-TkJ" secondAttribute="trailing" id="qS0-R1-t4U"/>
-                                        <constraint firstItem="rT4-Yr-P8D" firstAttribute="top" secondItem="8Dz-o3-ykG" secondAttribute="top" id="ruT-aL-d7u"/>
-                                        <constraint firstItem="fVp-1a-TkJ" firstAttribute="centerY" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="xK7-H0-w8K"/>
+                                        <constraint firstItem="RN8-tY-OE1" firstAttribute="top" secondItem="8Dz-o3-ykG" secondAttribute="top" id="4ax-jz-vFF"/>
+                                        <constraint firstAttribute="bottom" secondItem="RN8-tY-OE1" secondAttribute="bottom" id="TCq-nT-Uup"/>
+                                        <constraint firstAttribute="trailing" secondItem="RN8-tY-OE1" secondAttribute="trailing" constant="12" id="Uog-te-oWd"/>
+                                        <constraint firstItem="RN8-tY-OE1" firstAttribute="leading" secondItem="8Dz-o3-ykG" secondAttribute="leading" constant="16" id="yja-Ju-jEe"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="surface"/>
                                 <connections>
+                                    <outlet property="faviconContainerView" destination="aZa-k4-hsg" id="z9F-2a-1gS"/>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
                                     <outlet property="titleTextField" destination="rT4-Yr-P8D" id="4f9-bl-KM7"/>
                                     <outlet property="urlTextField" destination="YqY-sP-hhb" id="b8Y-vb-Msu"/>
@@ -673,7 +681,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uhm-2I-Xo5"/>
+        <segue reference="lPi-F9-wDg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarksEmpty" width="128" height="96"/>
@@ -714,7 +722,7 @@
             <color red="0.0" green="0.0" blue="0.0" alpha="0.8399999737739563" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="surface">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

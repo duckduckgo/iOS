@@ -79,6 +79,31 @@ class AddOrEditBookmarkViewController: UIViewController {
         super.init(coder: coder)
     }
 
+    init?(coder: NSCoder,
+          url: String,
+          title: String,
+          markAsFavorite: Bool,
+          parentFolderID: NSManagedObjectID?,
+          bookmarksDatabase: CoreDataDatabase,
+          syncService: DDGSyncing,
+          appSettings: AppSettings) {
+
+        self.bookmarksDatabase = bookmarksDatabase
+        self.viewModel = BookmarkEditorViewModel(addingBookmarkWith: url,
+                                                 title: title,
+                                                 toFolderWithID: parentFolderID,
+                                                 bookmarksDatabase: bookmarksDatabase,
+                                                 favoritesDisplayMode: appSettings.favoritesDisplayMode,
+                                                 syncService: syncService)
+        if markAsFavorite {
+            self.viewModel.addToFavorites()
+        }
+        self.syncService = syncService
+        self.appSettings = appSettings
+
+        super.init(coder: coder)
+    }
+
     // If you hit this constructor you probably decided to try and instanciate this VC directly.
     //  However, if it is part of a navigation controller stack this construct gets called.
     //  Check the segue actions defined in the storyboard. 
@@ -102,7 +127,7 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     func updateTitle() {
         if viewModel.isNew {
-            title = UserText.addFolderScreenTitle
+            title = viewModel.bookmark.isFolder ? UserText.addFolderScreenTitle : UserText.addBookmarkScreenTitle
         } else {
             title = viewModel.bookmark.isFolder ? UserText.editFolderScreenTitle : UserText.editBookmarkScreenTitle
         }
@@ -199,4 +224,34 @@ extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelega
         self.delegate?.deleteBookmark(self, entityID: entityID)
     }
 
+}
+
+extension AddOrEditBookmarkViewController {
+    static func loadFromStoryboard(newBookmarkURL url: String,
+                                   title: String,
+                                   markAsFavorite: Bool,
+                                   parentFolderID: NSManagedObjectID?,
+                                   bookmarksDatabase: CoreDataDatabase,
+                                   syncService: DDGSyncing,
+                                   appSettings: AppSettings) -> AddOrEditBookmarkViewController {
+        let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "AddOrEditBookmarkViewController", creator: { coder in
+            let controller = AddOrEditBookmarkViewController(coder: coder,
+                                                             url: url,
+                                                             title: title,
+                                                             markAsFavorite: markAsFavorite,
+                                                             parentFolderID: parentFolderID,
+                                                             bookmarksDatabase: bookmarksDatabase,
+                                                             syncService: syncService,
+                                                             appSettings: appSettings)
+
+            return controller
+        })
+
+        guard let viewController = viewController as? AddOrEditBookmarkViewController else {
+            fatalError("Could not load AddOrEditBookmarkViewController from storyboard")
+        }
+
+        return viewController
+    }
 }

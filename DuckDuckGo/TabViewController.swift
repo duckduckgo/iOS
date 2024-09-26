@@ -1325,27 +1325,37 @@ extension TabViewController: WKNavigationDelegate {
         // HTTP response has "Content-Disposition: attachment" header
         let hasContentDispositionAttachment = httpResponse?.shouldDownload ?? false
         // If preceding WKNavigationAction requested to start the download
-        let hasNavigationActionRequestedDownload = recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+        let hasNavigationActionRequestedDownload = (recentNavigationActionShouldPerformDownloadURL != nil) && recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+        // File can be rendered by web view or in custom preview handled by FilePreviewHelper
+        let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(mimeType)
 
-        let shouldTriggerDownloadAction = hasContentDispositionAttachment || hasNavigationActionRequestedDownload
+        let shouldTriggerDownloadAction = hasContentDispositionAttachment || hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
 
+        // Important: Order of these checks matter!
         if urlSchemeType == .blob {
-            // To further handle BLOB we need to trigger download action
+            // 1. If it is BLOB we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
             decisionHandler(.download)
             return
         } else if shouldTriggerDownloadAction,
                   let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-            // We should handle the response as download
+            // 2. We know the response should trigger the file download prompt
             self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                 self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
             } cancelHandler: {
                 decisionHandler(.cancel)
             }
             return
-        } else if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+            // 3. For this MIME type we are able to provide our custom preview via FilePreviewHelper
+            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            mostRecentAutoPreviewDownloadID = download?.id
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+        } else if navigationResponse.canShowMIMEType {
+            // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
-                // Loading a file in WebView
+                // Loading a file preview in WebView
                 decisionHandler(decision)
             } else {
                 // Loading HTML
@@ -1356,35 +1366,8 @@ extension TabViewController: WKNavigationDelegate {
                     decisionHandler(.allow)
                 }
             }
-        } else if isSuccessfulResponse {
-            if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                mostRecentAutoPreviewDownloadID = download?.id
-                Pixel.fire(pixel: .downloadStarted,
-                           withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-            } else if urlSchemeType == .blob {
-                decisionHandler(.download)
-
-            } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
-                .downloadMetaData(for: navigationResponse.response) {
-                if view.window == nil {
-                    decisionHandler(.cancel)
-                } else {
-                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                    } cancelHandler: {
-                        decisionHandler(.cancel)
-                    }
-                    // Rewrite the current URL to prevent spoofing from download URLs
-                    self.chromeDelegate?.omniBar.textField.text = "about:blank"
-                }
-            } else {
-                Pixel.fire(pixel: .unhandledDownload)
-                decisionHandler(.cancel)
-            }
-
         } else {
-            // MIME type should trigger download but response has no 2xx status code
+            // Fallback
             decisionHandler(.allow)
         }
     }
@@ -1769,6 +1752,7 @@ extension TabViewController: WKNavigationDelegate {
 
         if navigationAction.isTargetingMainFrame(),
            !navigationAction.isSameDocumentNavigation,
+           !navigationAction.shouldDownload,
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {

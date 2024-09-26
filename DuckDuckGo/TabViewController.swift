@@ -40,6 +40,7 @@ import SpecialErrorPages
 import NetworkProtection
 import Onboarding
 import os.log
+import Navigation
 
 class TabViewController: UIViewController {
 
@@ -1742,6 +1743,7 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if navigationAction.isTargetingMainFrame(),
+           !navigationAction.isSameDocumentNavigation,
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {

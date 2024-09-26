@@ -74,6 +74,7 @@
 		1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */; };
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E53508F2C7C9A1F00818DAA /* DefaultSubscriptionManager+AccountManagerKeychainAccessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E53508E2C7C9A1F00818DAA /* DefaultSubscriptionManager+AccountManagerKeychainAccessDelegate.swift */; };
+		1E5918472CA422A7008ED2B3 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 1E5918462CA422A7008ED2B3 /* Navigation */; };
 		1E60989B290009C700A508F9 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 1E7060BD28F88EE200E4CCDB /* Common */; };
 		1E60989D290011E600A508F9 /* ContentBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 1E60989C290011E600A508F9 /* ContentBlocking */; };
 		1E6098A1290011E600A508F9 /* UserScript in Frameworks */ = {isa = PBXBuildFile; productRef = 1E6098A0290011E600A508F9 /* UserScript */; };
@@ -3040,6 +3041,7 @@
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */,
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
+				1E5918472CA422A7008ED2B3 /* Navigation in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
 				9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */,
@@ -6514,6 +6516,7 @@
 				F1D43AF92B99C1D300BAB743 /* BareBonesBrowserKit */,
 				9F8FE9482BAE50E50071E372 /* Lottie */,
 				9F96F73A2C9144D5009E45D5 /* Onboarding */,
+				1E5918462CA422A7008ED2B3 /* Navigation */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -11015,6 +11018,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
+		};
+		1E5918462CA422A7008ED2B3 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Navigation;
 		};
 		1E60989C290011E600A508F9 /* ContentBlocking */ = {
 			isa = XCSwiftPackageProductDependency;

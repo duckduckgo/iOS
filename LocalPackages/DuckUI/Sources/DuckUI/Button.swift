@@ -94,6 +94,57 @@ public struct LegacySecondaryButtonStyle: ButtonStyle {
     }
 }
 
+public struct SecondaryButtonStyle: ButtonStyle {
+    @Environment(\.colorScheme) private var colorScheme
+
+    let compact: Bool
+    let fullWidth: Bool
+
+    public init(compact: Bool = false, fullWidth: Bool = true) {
+        self.compact = compact
+        self.fullWidth = fullWidth
+    }
+
+    private var foregroundColor: Color {
+        colorScheme == .dark ? .blue30 : .blueBase
+    }
+
+    private var selectedBackgroundColor: Color {
+        foregroundColor.opacity(0.2)
+    }
+
+    @ViewBuilder
+    func compactPadding(view: some View) -> some View {
+        if compact {
+            view
+        } else {
+            view.padding()
+        }
+    }
+
+    public func makeBody(configuration: Configuration) -> some View {
+
+        let foregroundColor = configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1)
+
+        compactPadding(view: configuration.label)
+            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
+            .foregroundColor(foregroundColor)
+            .padding()
+            .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .cornerRadius(Consts.cornerRadius, antialiased: true)
+            .background(configuration.isPressed ? selectedBackgroundColor : .clear)
+            .clipShape(buttonShape)
+            .overlay {
+                buttonShape
+                    .stroke(foregroundColor)
+            }
+    }
+
+    private var buttonShape: some Shape {
+        RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous)
+    }
+}
+
 public struct SecondaryFillButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
 

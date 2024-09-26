@@ -165,7 +165,9 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     }
 
     func showNextDaxDialog() {
-        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        if variantManager.shouldShowDaxDialogs {
+            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        }
     }
 
     func onboardingCompleted() {
@@ -179,7 +181,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     // MARK: - Onboarding
 
     private func presentNextDaxDialog() {
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
+        if variantManager.isContextualDaxDialogsEnabled {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         }
     }

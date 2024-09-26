@@ -37,7 +37,7 @@ struct OnboardingProgressIndicator: View {
         VStack(spacing: OnboardingProgressMetrics.verticalSpacing) {
             HStack {
                 Spacer()
-                Text("\(stepInfo.currentStep) / \(stepInfo.totalSteps)")
+                Text(verbatim: "\(stepInfo.currentStep) / \(stepInfo.totalSteps)")
                     .onboardingProgressTitleStyle()
                     .padding(.trailing, OnboardingProgressMetrics.textPadding)
             }
@@ -144,7 +144,7 @@ struct ProgressBarGradient: View {
                     let nextStep = stepInfo.currentStep < stepInfo.totalSteps ? stepInfo.currentStep + 1 : 1
                     stepInfo = OnboardingProgressIndicator.StepInfo(currentStep: nextStep, totalSteps: stepInfo.totalSteps)
                 }, label: {
-                    Text("Update Progress")
+                    Text(verbatim: "Update Progress")
                 })
             }
         }

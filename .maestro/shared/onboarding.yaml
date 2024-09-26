@@ -14,3 +14,13 @@ appId: com.duckduckgo.mobile.ios
 # - assertVisible: "Make DuckDuckGo your default browser."
 - tapOn:
     text: "Skip"
+
+- runFlow:
+    when:
+        visible: "Which color looks best on me?"
+    commands:
+        - assertVisible: "Next"
+        - tapOn: "Next"
+        - assertVisible: "Where should I put your address bar?"
+        - assertVisible: "Next"
+        - tapOn: "Next"

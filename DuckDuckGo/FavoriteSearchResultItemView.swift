@@ -22,35 +22,67 @@ import DuckUI
 import LinkPresentation
 
 struct FavoriteSearchResultItemView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let result: FavoriteSearchResult
-    let faviconLoader: FavoritesFaviconLoading?
+    let isDisabled: Bool
+
+    private var backgroundColor: Color {
+        PrimaryButtonStyle.backgroundColor(colorScheme, isPressed: false, isDisabled: isDisabled)
+    }
+
+    private var foregroundColor: Color {
+        PrimaryButtonStyle.foregroundColor(colorScheme, isPressed: false, isDisabled: isDisabled)
+    }
 
     var body: some View {
-        HStack(spacing: 16) {
-            if let icon = result.icon {
-                FavoriteIconView(favicon: Favicon(image: icon, isUsingBorder: false, isFake: false))
-                    .frame(width: 24)
-            } else if let domain = result.url.host {
-                FavoriteIconView(domain: domain, size: 24, faviconLoading: faviconLoader)
-                    .frame(width: 24)
-            }
+        FavoriteSearchResultBaseView {
+            HStack(spacing: 8) {
+                icon
+                    .frame(width: Metrics.iconSize, height: Metrics.iconSize)
+                    .opacity(isDisabled ? 0.36 : 1.0)
 
-            VStack(alignment: .leading) {
-                Text(verbatim: result.name)
-                    .daxBodyRegular()
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(1)
-                Text(verbatim: result.displayURL)
-                    .daxFootnoteSemibold()
-                    .multilineTextAlignment(.leading)
+                text
+                    .opacity(isDisabled ? 0.36 : 1.0)
+
+                addIcon
             }
         }
+    }
+
+    private var addIcon: some View {
+        Circle()
+            .fill(backgroundColor)
+            .overlay {
+                Image(.add16)
+                    .foregroundStyle(foregroundColor)
+            }
+            .frame(width: 24)
+    }
+
+    private var text: some View {
+        Text(verbatim: result.name)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private var icon: some View {
+        if let icon = result.icon {
+            FavoriteIconView(favicon: Favicon(image: icon, isUsingBorder: false, isFake: false))
+        } else {
+            Image(.globe24)
+        }
+    }
+
+    private struct Metrics {
+        static let iconSize: CGFloat = 24
     }
 }
 
 #Preview {
     List {
-        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
-        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), faviconLoader: nil)
+        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), isDisabled: false)
+        FavoriteSearchResultItemView(result: FavoriteSearchResult(id: "foo", name: "bar", url: URL(string: "https://foobar.url.com")!), isDisabled: true)
     }
 }

@@ -23,12 +23,11 @@ import Networking
 
 final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
 
-    private var loader: SuggestionLoading?
     private var task: URLSessionDataTask?
     private static let session = URLSession(configuration: .ephemeral)
 
     func search(term: String) async throws -> [URL] {
-        loader = SuggestionLoader { phrase in
+        let loader = SuggestionLoader { phrase in
             guard let url = URL(trimmedAddressBarString: phrase),
                   let scheme = url.scheme,
                   scheme.description.hasPrefix("http"),
@@ -40,7 +39,7 @@ final class DDGAutocompleteWebsiteSearch: WebsiteSearching {
         }
 
         let results: [URL] = await withCheckedContinuation { continuation in
-            loader?.getSuggestions(query: term, usingDataSource: self) { result, error in
+            loader.getSuggestions(query: term, usingDataSource: self) { result, error in
                 guard let result, error == nil else {
                     continuation.resume(returning: [])
                     return

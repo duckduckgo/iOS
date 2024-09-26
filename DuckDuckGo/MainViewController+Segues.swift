@@ -43,7 +43,7 @@ extension MainViewController {
                 DaxOnboardingViewController(coder: coder, pixelReporting: self.contextualOnboardingPixelReporter)
             })
         }
-        
+
         controller?.delegate = self
         guard let controller else { return assertionFailure() }
         controller.modalPresentationStyle = .overFullScreen
@@ -86,6 +86,26 @@ extension MainViewController {
         launchBookmarksViewController {
             $0.openEditFormForBookmark(bookmark)
         }
+    }
+
+    func segueToAddFavorite(url: String) {
+        Logger.lifecycle.debug(#function)
+        
+        hideAllHighlightsIfNeeded()
+
+        let addBookmark = AddOrEditBookmarkViewController.loadFromStoryboard(
+            newBookmarkURL: url,
+            title: "",
+            markAsFavorite: true,
+            parentFolderID: nil,
+            bookmarksDatabase: self.bookmarksDatabase,
+            syncService: self.syncService,
+            appSettings: self.appSettings
+        )
+
+        let controller = UINavigationController(rootViewController: addBookmark)
+        controller.modalPresentationStyle = .automatic
+        present(controller, animated: true)
     }
 
     private func launchBookmarksViewController(completion: ((BookmarksViewController) -> Void)? = nil) {
@@ -151,12 +171,12 @@ extension MainViewController {
                                            contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                                            breakageAdditionalInfo: self.currentTab?.makeBreakageAdditionalInfo())
         }
-        
+
         guard let controller = controller else {
             assertionFailure("PrivacyDashboardViewController not initialised")
             return
         }
-        
+
         currentTab?.privacyDashboard = controller
         controller.delegate = currentTab
         currentTab?.breakageCategory = nil
@@ -169,7 +189,7 @@ extension MainViewController {
         } else {
             controller.modalPresentationStyle = .pageSheet
         }
-        
+
         present(controller, animated: true)
     }
 
@@ -295,7 +315,7 @@ extension MainViewController {
             }
         }
     }
-    
+
     func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil,
                         deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
@@ -355,5 +375,5 @@ extension MainViewController {
             ViewHighlighter.hideAll()
         }
     }
-    
+
 }

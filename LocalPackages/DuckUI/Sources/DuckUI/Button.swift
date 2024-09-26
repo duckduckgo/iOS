@@ -33,27 +33,43 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let isDark = colorScheme == .dark
-        let standardBackgroundColor = isDark ? Color.blue30 : Color.blueBase
-        let pressedBackgroundColor = isDark ? Color.blueBase : Color.blue70
-        let disabledBackgroundColor = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
-        let standardForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
-        let pressedForegroundColor = isDark ? Color.black.opacity(0.84) : Color.white
-        let disabledForegroundColor = isDark ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
-        let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
-        let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
+        let backgroundColor = Self.backgroundColor(colorScheme, isPressed: configuration.isPressed, isDisabled: disabled)
+        let foregroundColor = Self.foregroundColor(colorScheme, isPressed: configuration.isPressed, isDisabled: disabled)
 
         configuration.label
             .fixedSize(horizontal: false, vertical: true)
             .multilineTextAlignment(.center)
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
+            .foregroundColor(foregroundColor)
             .padding(.vertical)
             .padding(.horizontal, fullWidth ? nil : 24)
             .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
+            .background(backgroundColor)
             .cornerRadius(Consts.cornerRadius)
+    }
+
+    public static func backgroundColor(_ colorScheme: ColorScheme, isPressed: Bool, isDisabled: Bool) -> Color {
+        let isDarkScheme = colorScheme == .dark
+
+        if isDisabled {
+            return isDarkScheme ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+        } else if isPressed {
+            return isDarkScheme ? Color.blueBase : Color.blue70
+        } else {
+            return isDarkScheme ? Color.blue30 : Color.blueBase
+        }
+    }
+
+    public static func foregroundColor(_ colorScheme: ColorScheme, isPressed: Bool, isDisabled: Bool) -> Color {
+        let isDarkScheme = colorScheme == .dark
+
+        if isDisabled {
+            return isDarkScheme ? Color.white.opacity(0.36) : Color.black.opacity(0.36)
+        } else {
+            // Pressed and regular color is the same
+            return isDarkScheme ? Color.black.opacity(0.84) : Color.white
+        }
     }
 }
 
@@ -66,7 +82,7 @@ public struct LegacySecondaryButtonStyle: ButtonStyle {
     public init(compact: Bool = false) {
         self.compact = compact
     }
-    
+
     private var backgoundColor: Color {
         colorScheme == .light ? Color.white : .gray70
     }

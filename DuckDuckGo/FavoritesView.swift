@@ -27,7 +27,6 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     @ObservedObject var model: Model
-    @Binding var isAddingFavorite: Bool
     let geometry: GeometryProxy?
 
     private let selectionFeedback = UISelectionFeedbackGenerator()
@@ -108,7 +107,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
             })
         case .addFavorite:
             Button(action: {
-                isAddingFavorite = true
+                model.addFavorite()
             }, label: {
                 FavoriteAddItemView()
             })
@@ -132,12 +131,5 @@ private extension View {
 }
 
 #Preview {
-    PreviewWrapperView()
-}
-
-private struct PreviewWrapperView: View {
-    @State var isAddingFavorite = false
-    var body: some View {
-        FavoritesView(model: FavoritesPreviewModel(), isAddingFavorite: $isAddingFavorite, geometry: nil)
-    }
+    FavoritesView(model: FavoritesPreviewModel(), geometry: nil)
 }

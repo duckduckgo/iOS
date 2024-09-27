@@ -104,6 +104,8 @@ extension MainViewController {
             sanitization: .navigational
         )
 
+        addBookmark.delegate = newTabPageViewController
+
         let controller = UINavigationController(rootViewController: addBookmark)
         controller.modalPresentationStyle = .automatic
         present(controller, animated: true)

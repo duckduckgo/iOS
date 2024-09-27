@@ -20,8 +20,10 @@
 import SwiftUI
 import DDGSync
 import Bookmarks
+import Persistence
 import BrowserServicesKit
 import Core
+import CoreData
 
 final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
@@ -30,6 +32,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     private let variantManager: VariantManager
     private let newTabDialogFactory: any NewTabDaxDialogProvider
     private let newTabDialogTypeProvider: NewTabDialogSpecProvider
+    private let bookmarksDatabase: CoreDataDatabase
 
     private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
@@ -48,6 +51,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
          interactionModel: FavoritesListInteracting,
          bookmarksInteracting: MenuBookmarksInteracting,
          syncService: DDGSyncing,
+         bookmarksDatabase: CoreDataDatabase,
          syncBookmarksAdapter: SyncBookmarksAdapter,
          bookmarksStringSearch: BookmarksStringSearch,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
@@ -63,6 +67,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
         self.variantManager = variantManager
         self.newTabDialogFactory = newTabDialogFactory
         self.newTabDialogTypeProvider = newTabDialogTypeProvider
+        self.bookmarksDatabase = bookmarksDatabase
 
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
@@ -159,6 +164,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
             ActionMessageView.present(message: message, actionTitle: UserText.actionGenericEdit) { [weak self] in
                 guard let self else { return }
 
+                Pixel.fire(pixel: .addFavoriteToastEdit)
                 self.delegate?.newTabPageDidEditFavorite(self, favorite: favorite)
             } onDidDismiss: {
                 
@@ -285,5 +291,25 @@ extension NewTabPageViewController {
         if didFinishNTPOnboarding {
             self.newTabPageViewModel.finishOnboarding()
         }
+    }
+}
+
+extension NewTabPageViewController: AddOrEditBookmarkViewControllerDelegate {
+    func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        Pixel.fire(pixel: .newTabPageFavoriteAddedCustomEntry)
+
+        let context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        if let entity = context.object(with: entityID) as? BookmarkEntity,
+           !entity.isFavorite(on: .mobile) {
+            Pixel.fire(pixel: .addFavoriteBookmarkAdded)
+        }
+    }
+    
+    func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        // no-op
+    }
+
+    func canceledEditing(_: AddOrEditBookmarkViewController) {
+        Pixel.fire(pixel: .addFavoriteCustomEntryCancel)
     }
 }

@@ -46,6 +46,7 @@ class FavoritesViewModel: ObservableObject {
 
     @Published private(set) var allFavorites: [FavoriteItem] = []
     @Published private(set) var isCollapsed: Bool = true
+    @Published var isAddingFavorite: Bool = false
 
     private(set) var faviconLoader: FavoritesFaviconLoading?
 
@@ -106,6 +107,12 @@ class FavoritesViewModel: ObservableObject {
         }
 
         return .init(items: favorites, isCollapsible: isCollapsible)
+    }
+
+    func addFavorite() {
+        isAddingFavorite = true
+
+        pixelFiring.fire(.newTabPageAddFavorite, withAdditionalParameters: [:])
     }
 
     // MARK: - External actions

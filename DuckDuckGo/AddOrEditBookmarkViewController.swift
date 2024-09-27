@@ -30,7 +30,7 @@ protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
 
     func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID)
     func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID)
-
+    func canceledEditing(_: AddOrEditBookmarkViewController)
 }
 
 class AddOrEditBookmarkViewController: UIViewController {
@@ -153,6 +153,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
 
     @IBAction func onCancelPressed(_ sender: Any) {
+        delegate?.canceledEditing(self)
         dismiss(animated: true, completion: nil)
     }
     
@@ -226,6 +227,9 @@ extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelega
         self.delegate?.deleteBookmark(self, entityID: entityID)
     }
 
+    func canceledEditing(_: AddOrEditBookmarkViewController) {
+        // no-op
+    }
 }
 
 extension AddOrEditBookmarkViewController {

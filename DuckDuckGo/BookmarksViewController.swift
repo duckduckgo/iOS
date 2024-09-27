@@ -1074,6 +1074,10 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         tableView.reloadData()
     }
 
+    func canceledEditing(_: AddOrEditBookmarkViewController) {
+        // no-op
+    }
+
     func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
         guard let parent = bookmark.parent,
               let index = parent.childrenArray.firstIndex(of: bookmark),

@@ -781,6 +781,16 @@ extension Pixel {
         case newTabPageCustomizeShortcutRemoved(_ shortcutName: String)
         case newTabPageCustomizeShortcutAdded(_ shortcutName: String)
 
+        // MARK: New Tab Page Add Favorite flow
+        case newTabPageAddFavorite
+        case newTabPageFavoriteAddedAutocomplete
+        case newTabPageFavoriteAddedCustomEntry
+
+        case addFavoriteAddCustomWebsite
+        case addFavoriteCustomEntryCancel
+        case addFavoriteBookmarkAdded
+        case addFavoriteToastEdit
+
         // MARK: DuckPlayer        
         case duckPlayerDailyUniqueView
         case duckPlayerViewFromYoutubeViaMainOverlay
@@ -1599,6 +1609,22 @@ extension Pixel.Event {
             return "m_new_tab_page_customize_shortcut_removed_\(shortcutName)"
         case .newTabPageCustomizeShortcutAdded(let shortcutName):
             return "m_new_tab_page_customize_shortcut_added_\(shortcutName)"
+
+        case .newTabPageAddFavorite:
+            return "m_new_tab_page_add_favorite_click"
+        case .newTabPageFavoriteAddedAutocomplete:
+            return "m_new_tab_page_favorite_added_autocomplete"
+        case .newTabPageFavoriteAddedCustomEntry:
+            return "m_new_tab_page_favorite_added_custom_entry"
+
+        case .addFavoriteAddCustomWebsite:
+            return "m_add_favorite_add_custom_website_click"
+        case .addFavoriteCustomEntryCancel:
+            return "m_add_favorite_custom_entry_cancel"
+        case .addFavoriteBookmarkAdded:
+            return "m_add_favorite_bookmark_added"
+        case .addFavoriteToastEdit:
+            return "m_add_favorite_toast_edit"
 
         // MARK: DuckPlayer
         case .duckPlayerDailyUniqueView: return "duckplayer_daily-unique-view"

@@ -86,7 +86,8 @@ class AddOrEditBookmarkViewController: UIViewController {
           parentFolderID: NSManagedObjectID?,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
-          appSettings: AppSettings) {
+          appSettings: AppSettings,
+          sanitization: BookmarkSanitization?) {
 
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(addingBookmarkWith: url,
@@ -94,7 +95,8 @@ class AddOrEditBookmarkViewController: UIViewController {
                                                  toFolderWithID: parentFolderID,
                                                  bookmarksDatabase: bookmarksDatabase,
                                                  favoritesDisplayMode: appSettings.favoritesDisplayMode,
-                                                 syncService: syncService)
+                                                 syncService: syncService,
+                                                 sanitization: sanitization)
         if markAsFavorite {
             self.viewModel.addToFavorites()
         }
@@ -233,7 +235,8 @@ extension AddOrEditBookmarkViewController {
                                    parentFolderID: NSManagedObjectID?,
                                    bookmarksDatabase: CoreDataDatabase,
                                    syncService: DDGSyncing,
-                                   appSettings: AppSettings) -> AddOrEditBookmarkViewController {
+                                   appSettings: AppSettings,
+                                   sanitization: BookmarkSanitization?) -> AddOrEditBookmarkViewController {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "AddOrEditBookmarkViewController", creator: { coder in
             let controller = AddOrEditBookmarkViewController(coder: coder,
@@ -243,7 +246,8 @@ extension AddOrEditBookmarkViewController {
                                                              parentFolderID: parentFolderID,
                                                              bookmarksDatabase: bookmarksDatabase,
                                                              syncService: syncService,
-                                                             appSettings: appSettings)
+                                                             appSettings: appSettings,
+                                                             sanitization: sanitization)
 
             return controller
         })

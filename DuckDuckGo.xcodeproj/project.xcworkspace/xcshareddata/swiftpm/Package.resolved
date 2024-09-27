@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "mariusz/ntp-favorites-autocomplete",
-        "revision" : "ca6a347df613474dbaa73fe5b9f92031bfcbac72"
+        "revision" : "31505ed55ad8524b0225583253fd15b08e74124c"
       }
     },
     {

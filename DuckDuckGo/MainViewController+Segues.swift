@@ -100,7 +100,8 @@ extension MainViewController {
             parentFolderID: nil,
             bookmarksDatabase: self.bookmarksDatabase,
             syncService: self.syncService,
-            appSettings: self.appSettings
+            appSettings: self.appSettings,
+            sanitization: .navigational
         )
 
         let controller = UINavigationController(rootViewController: addBookmark)

@@ -81,7 +81,7 @@ class AddFavoriteViewModel: ObservableObject {
         // We have the same bookmark either without www or with different scheme.
         // Mark this one as a favorite.
         if case let .partialBookmark(matchedURL) = result.favoriteMatch {
-            favoritesCreating.createOrToggleFavorite(title: result.name, url: matchedURL)
+            createOrToggleFavorite(title: result.name, url: matchedURL)
             return
         }
 
@@ -107,11 +107,15 @@ class AddFavoriteViewModel: ObservableObject {
             }
 
             await MainActor.run {
-                favoritesCreating.createOrToggleFavorite(title: name, url: url)
-                if let favorite = favoritesCreating.favorite(for: url) {
-                    onFavoriteAdded?(favorite)
-                }
+                createOrToggleFavorite(title: name, url: url)
             }
+        }
+    }
+
+    private func createOrToggleFavorite(title: String, url: URL) {
+        favoritesCreating.createOrToggleFavorite(title: title, url: url)
+        if let favorite = favoritesCreating.favorite(for: url) {
+            onFavoriteAdded?(favorite)
         }
     }
 

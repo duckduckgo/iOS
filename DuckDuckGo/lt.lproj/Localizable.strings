@@ -1727,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN nustatymai";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Mėgstami";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tinkinkite savo mėgstamiausius ir pagrindines funkcijas. Pertvarkykite elementus arba paslėpkite juos, kad užtikrintumėte tvarką.";
 

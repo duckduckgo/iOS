@@ -1294,8 +1294,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: - New Tab Page
 
-    public static let newTabPageFavoritesSectionHeaderTitle = NSLocalizedString("new.tab.page.favorites.setion.header.title", value: "Favorites", comment: "Header title of Favorites section")
-
     // MARK: Shortcuts
     public static let newTabPageShortcutBookmarks = NSLocalizedString("new.tab.page.shortcut.bookmarks", value: "Bookmarks", comment: "Shortcut title leading to Bookmarks")
     public static let newTabPageShortcutAIChat = NSLocalizedString("new.tab.page.shortcut.ai.chat", value: "AI Chat", comment: "Shortcut title leading to AI Chat")

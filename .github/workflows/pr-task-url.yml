@@ -2,7 +2,7 @@ name: Asana PR Task URL
 
 on: 
   pull_request:
-    types: [opened, edited, closed, synchronize, review_requested]
+    types: [opened, edited, closed, synchronize, review_requested, ready_for_review]
 
 jobs:
 
@@ -13,6 +13,8 @@ jobs:
     name: Add Task to App Board Project
 
     runs-on: ubuntu-latest
+
+    if: ${{ !github.event.pull_request.draft }}
 
     outputs:
       task_id: ${{ steps.get-task-id.outputs.task_id }}
@@ -47,7 +49,7 @@ jobs:
 
     - name: Add Task to the App Board Project
       id: add-task-to-project
-      if: ${{ github.event.action == 'opened' && steps.check-board-membership.outputs.task_in_project == '0' }}
+      if: ${{ (github.event.action == 'opened' || github.event.action == 'ready_for_review') && steps.check-board-membership.outputs.task_in_project == '0' }}
       env:
         ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         ASANA_PROJECT_ID: ${{ vars.IOS_APP_BOARD_ASANA_PROJECT_ID }}

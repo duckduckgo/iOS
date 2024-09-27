@@ -1727,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN iestatījumi";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Izlase";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Pielāgo savu izlasi un bieži izmantotās funkcijas. Pārkārto elementus vai paslēp tos, lai lieki neaizņemtu vietu.";
 

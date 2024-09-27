@@ -1727,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Ρυθμίσεις VPN";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Αγαπημένα";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Προσαρμόστε τα Αγαπημένα και τις λειτουργίες μετάβασης. Αναδιατάξτε στοιχεία ή αποκρύψτε τα για να τη διατηρείτε καθαρή.";
 

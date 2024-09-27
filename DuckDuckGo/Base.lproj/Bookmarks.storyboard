@@ -542,7 +542,6 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="gf7-Lt-ftk" secondAttribute="bottom" constant="16" id="Im3-CK-KEh"/>
                                                         <constraint firstItem="gf7-Lt-ftk" firstAttribute="leading" secondItem="aZa-k4-hsg" secondAttribute="leading" id="Ogp-NB-SAo"/>

@@ -120,6 +120,7 @@ class AddFavoriteViewModel: ObservableObject {
     }
 
     func addCustomWebsite() {
+        pixelFiring.fire(.addFavoriteAddCustomWebsite, withAdditionalParameters: [:])
         let customWebsiteInput = searchTerm.trimmingWhitespace()
         guard !customWebsiteInput.isEmpty,
               let url = URL(string: customWebsiteInput) else {

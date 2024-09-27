@@ -1355,7 +1355,7 @@ extension TabViewController: WKNavigationDelegate {
             // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
-                // Loading a file preview in WebView
+                // Loading a file preview in web view
                 decisionHandler(decision)
             } else {
                 // Loading HTML
@@ -2153,13 +2153,13 @@ extension TabViewController {
                     return
                 }
 
-                let hasNavigationActionRequestedDownload = self.recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
-                let canShowOrPreview = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
+                let hasNavigationActionRequestedDownload = (self.recentNavigationActionShouldPerformDownloadURL != nil) && self.recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+                let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
 
-                let shouldTriggerDownloadAction = hasNavigationActionRequestedDownload || !canShowOrPreview
+                let shouldTriggerDownloadAction = hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
 
                 if shouldTriggerDownloadAction {
-                    // Show alert to start the file download
+                    // Show alert to the file download
                     self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                         callback(self.transfer(download,
                                                to: downloadManager,

@@ -21,12 +21,12 @@ import SwiftUI
 import DuckUI
 import RemoteMessaging
 
-struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptyStateModel>: View {
+struct NewTabPageView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @ObservedObject private var viewModel: NewTabPageViewModel
     @ObservedObject private var messagesModel: NewTabPageMessagesModel
-    @ObservedObject private var favoritesModel: FavoritesModelType
+    @ObservedObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var shortcutsModel: ShortcutsModel
     @ObservedObject private var shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     @ObservedObject private var sectionsSettingsModel: NewTabPageSectionsSettingsModel
@@ -36,13 +36,13 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
 
     init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
-         favoritesModel: FavoritesModelType,
+         favoritesViewModel: FavoritesViewModel,
          shortcutsModel: ShortcutsModel,
          shortcutsSettingsModel: NewTabPageShortcutsSettingsModel,
          sectionsSettingsModel: NewTabPageSectionsSettingsModel) {
         self.viewModel = viewModel
         self.messagesModel = messagesModel
-        self.favoritesModel = favoritesModel
+        self.favoritesViewModel = favoritesViewModel
         self.shortcutsModel = shortcutsModel
         self.shortcutsSettingsModel = shortcutsSettingsModel
         self.sectionsSettingsModel = sectionsSettingsModel
@@ -62,11 +62,6 @@ struct NewTabPageView<FavoritesModelType: FavoritesViewModel & FavoritesEmptySta
         if !viewModel.isOnboarding {
             mainView
                 .background(Color(designSystemColor: .background))
-                .if(favoritesModel.isShowingTooltip) {
-                    $0.highPriorityGesture(DragGesture(minimumDistance: 0, coordinateSpace: .global).onEnded { _ in
-                        favoritesModel.toggleTooltip()
-                    })
-                }
                 .sheet(isPresented: $viewModel.isShowingSettings, onDismiss: {
                     shortcutsSettingsModel.save()
                     sectionsSettingsModel.save()
@@ -181,18 +176,9 @@ private extension NewTabPageView {
     }
 
     private func favoritesSectionView(proxy: GeometryProxy) -> some View {
-        Group {
-            if favoritesModel.isEmpty {
-                FavoritesEmptyStateView(model: favoritesModel,
-                                        isAddingFavorite: $isAddingFavorite,
-                                        geometry: proxy)
-                    .padding(.top, Metrics.nonGridSectionTopPadding)
-            } else {
-                FavoritesView(model: favoritesModel,
+                FavoritesView(model: favoritesViewModel,
                               isAddingFavorite: $isAddingFavorite,
                               geometry: proxy)
-            }
-        }
     }
 
     @ViewBuilder
@@ -274,7 +260,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -299,7 +285,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 ]
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -314,7 +300,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(favorites: []),
+        favoritesViewModel: FavoritesPreviewModel(favorites: []),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel()
@@ -329,7 +315,7 @@ private struct CustomizeButtonPrefKey: PreferenceKey {
                 homeMessages: []
             )
         ),
-        favoritesModel: FavoritesPreviewModel(),
+        favoritesViewModel: FavoritesPreviewModel(),
         shortcutsModel: ShortcutsModel(),
         shortcutsSettingsModel: NewTabPageShortcutsSettingsModel(),
         sectionsSettingsModel: NewTabPageSectionsSettingsModel(storage: .emptyStorage())

@@ -1,5 +1,5 @@
 //
-//  FavoriteEmptyStateItem.swift
+//  FavoritePlaceholderItemView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-struct FavoriteEmptyStateItem: View {
+struct FavoritePlaceholderItemView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 8, style: .continuous)
             .stroke(Color(designSystemColor: .lines),
@@ -29,5 +29,5 @@ struct FavoriteEmptyStateItem: View {
 }
 
 #Preview {
-    FavoriteEmptyStateItem()
+    FavoritePlaceholderItemView()
 }

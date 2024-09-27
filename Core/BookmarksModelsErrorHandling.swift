@@ -78,22 +78,42 @@ public extension BookmarkEditorViewModel {
     convenience init(editingEntityID: NSManagedObjectID,
                      bookmarksDatabase: CoreDataDatabase,
                      favoritesDisplayMode: FavoritesDisplayMode,
-                     syncService: DDGSyncing?) {
+                     syncService: DDGSyncing?,
+                     sanitization: BookmarkSanitization? = nil) {
         self.init(editingEntityID: editingEntityID,
                   bookmarksDatabase: bookmarksDatabase,
                   favoritesDisplayMode: favoritesDisplayMode,
-                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
+                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService),
+                  sanitization: sanitization)
 
     }
 
     convenience init(creatingFolderWithParentID parentFolderID: NSManagedObjectID?,
                      bookmarksDatabase: CoreDataDatabase,
                      favoritesDisplayMode: FavoritesDisplayMode,
-                     syncService: DDGSyncing?) {
+                     syncService: DDGSyncing?,
+                     sanitization: BookmarkSanitization? = nil) {
         self.init(creatingFolderWithParentID: parentFolderID,
                   bookmarksDatabase: bookmarksDatabase,
                   favoritesDisplayMode: favoritesDisplayMode,
-                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
+                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService),
+                  sanitization: sanitization)
+    }
+
+    convenience init(addingBookmarkWith url: String,
+                     title: String,
+                     toFolderWithID folderID: NSManagedObjectID?,
+                     bookmarksDatabase: CoreDataDatabase,
+                     favoritesDisplayMode: FavoritesDisplayMode,
+                     syncService: DDGSyncing?,
+                     sanitization: BookmarkSanitization? = nil) {
+        self.init(addingBookmarkWith: url,
+                  title: title,
+                  toFolderWithID: folderID,
+                  bookmarksDatabase: bookmarksDatabase,
+                  favoritesDisplayMode: favoritesDisplayMode,
+                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService),
+                  sanitization: sanitization)
     }
 }
 

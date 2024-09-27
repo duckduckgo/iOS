@@ -52,7 +52,8 @@ class BookmarkDetailsCell: UITableViewCell {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var faviconImageView: UIImageView!
-    
+    @IBOutlet weak var faviconContainerView: UIView!
+
     func setUp() {
         selectionStyle = .none
         

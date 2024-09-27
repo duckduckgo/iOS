@@ -216,6 +216,7 @@ class BookmarkFoldersViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.title = viewModel?.bookmark.title
         cell.urlString = viewModel?.bookmark.url
+        cell.faviconContainerView.isHidden = cell.faviconImageView.image == nil
         return cell
     }
 

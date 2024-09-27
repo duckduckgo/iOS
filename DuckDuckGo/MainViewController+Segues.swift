@@ -88,14 +88,14 @@ extension MainViewController {
         }
     }
 
-    func segueToAddFavorite(url: String) {
+    func segueToAddFavorite(with text: String) {
         Logger.lifecycle.debug(#function)
         
         hideAllHighlightsIfNeeded()
 
         let addBookmark = AddOrEditBookmarkViewController.loadFromStoryboard(
-            newBookmarkURL: url,
-            title: "",
+            newBookmarkURL: "",
+            title: text,
             markAsFavorite: true,
             parentFolderID: nil,
             bookmarksDatabase: self.bookmarksDatabase,

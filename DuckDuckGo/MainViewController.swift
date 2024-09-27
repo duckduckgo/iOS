@@ -2244,8 +2244,8 @@ extension MainViewController: NewTabPageControllerDelegate {
         // no-op for now
     }
 
-    func newTabPageDidRequestAddFavorite(_ controller: NewTabPageViewController, url: String) {
-        segueToAddFavorite(url: url)
+    func newTabPageDidRequestAddFavorite(_ controller: NewTabPageViewController, text: String) {
+        segueToAddFavorite(with: text)
     }
 }
 

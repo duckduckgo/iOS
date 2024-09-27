@@ -43,7 +43,7 @@ class AddFavoriteViewModel: ObservableObject {
     private let faviconLoading: FavoritesFaviconLoading
     private let faviconUpdating: FaviconUpdating
 
-    var onAddCustomWebsite: ((_ url: String) -> Void)?
+    var onAddCustomWebsite: ((_ text: String) -> Void)?
     var onFavoriteAdded: ((_ favorite: BookmarkEntity) -> Void)?
 
     init(websiteSearching: WebsiteSearching = DDGAutocompleteWebsiteSearch(),

@@ -145,11 +145,11 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     }
 
     private func assignAddFavoriteModelActions() {
-        addFavoriteViewModel.onAddCustomWebsite = { [weak self] favoriteURL in
+        addFavoriteViewModel.onAddCustomWebsite = { [weak self] text in
             guard let self else { return }
 
             self.dismiss(animated: true) {
-                self.delegate?.newTabPageDidRequestAddFavorite(self, url: favoriteURL)
+                self.delegate?.newTabPageDidRequestAddFavorite(self, text: text)
             }
         }
 

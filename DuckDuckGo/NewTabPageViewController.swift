@@ -164,6 +164,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
             ActionMessageView.present(message: message, actionTitle: UserText.actionGenericEdit) { [weak self] in
                 guard let self else { return }
 
+                Pixel.fire(pixel: .addFavoriteToastEdit)
                 self.delegate?.newTabPageDidEditFavorite(self, favorite: favorite)
             } onDidDismiss: {
                 

@@ -1333,8 +1333,15 @@ extension TabViewController: WKNavigationDelegate {
 
         // Important: Order of these checks matter!
         if urlSchemeType == .blob {
-            // 1. If it is BLOB we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
-            decisionHandler(.download)
+            // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
+            if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
+                // BLOB already has a temporary downloaded so and we can allow loading it
+                blobDownloadTargetFrame = nil
+                decisionHandler(.allow)
+            } else {
+                // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
+                decisionHandler(.download)
+            }
             return
         } else if shouldTriggerDownloadAction,
                   let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
@@ -2118,17 +2125,6 @@ extension TabViewController {
             temporaryDownloadForPreviewedFile = nil
             return nil
         }
-        guard SchemeHandler.schemeType(for: url) != .blob else {
-            // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
-            // WKNavigationResponse._downloadAttribute private API could be used instead of it :(
-            if self.temporaryDownloadForPreviewedFile?.url != url { // if temporary download not setup yet, preview otherwise
-                // calls webView:navigationAction:didBecomeDownload:
-                return .download
-            } else {
-                self.blobDownloadTargetFrame = nil
-                return .allow
-            }
-        }
 
         let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
@@ -2173,8 +2169,11 @@ extension TabViewController {
                     self.temporaryDownloadForPreviewedFile = nil
                 } else {
                     // Showing file in the webview or in preview view
-                    if navigationResponse.canShowMIMEType {
-                        // restart blob request loading for preview that was interrupted by .download callback
+                    if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
+                        // If FilePreviewHelper can handle format we do not need to load as it will be handled by setting
+                        // temporaryDownloadForPreviewedFile and mostRecentAutoPreviewDownloadID
+                    } else if navigationResponse.canShowMIMEType {
+                        // To load BLOB in web view we need to restart the request loading as it was interrupted by .download callback
                         self.webView.load(navigationResponse.response.url!, in: self.blobDownloadTargetFrame)
                     }
                     callback(self.transfer(download,
@@ -2212,6 +2211,7 @@ extension TabViewController {
                                                     temporary: isTemporary)
 
         self.temporaryDownloadForPreviewedFile = isTemporary ? download : nil
+        self.mostRecentAutoPreviewDownloadID = isTemporary ? download?.id : nil
         if let download = download {
             downloadManager.startDownload(download)
         }

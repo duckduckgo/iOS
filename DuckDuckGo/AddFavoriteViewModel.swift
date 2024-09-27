@@ -26,6 +26,7 @@ import Persistence
 import CoreData
 
 protocol FaviconUpdating {
+    @MainActor
     func updateFavicon(forDomain domain: String, with image: UIImage)
 }
 
@@ -72,7 +73,7 @@ class AddFavoriteViewModel: ObservableObject {
         clearResults()
     }
 
-    func addFavorite(for result: FavoriteSearchResult) {
+    func addFavorite(for result: FavoriteSearchResult) async {
 
         guard result.isActionable else {
             return
@@ -81,38 +82,33 @@ class AddFavoriteViewModel: ObservableObject {
         // We have the same bookmark either without www or with different scheme.
         // Mark this one as a favorite.
         if case let .partialBookmark(matchedURL) = result.favoriteMatch {
-            createOrToggleFavorite(title: result.name, url: matchedURL)
+            await createOrToggleFavorite(title: result.name, url: matchedURL)
             return
         }
 
+        let name: String
+        let url: URL
+
         // Decorate results and use metadata to create a new bookmark.
-        // Use icon in metadata as a favicon.
-        Task {
-            let name: String
-            let url: URL
+        // Use icon from metadata as favicon.
+        let decoratedResult = await FavoriteSearchResultDecorator().decorate(results: [result])
+        if let decoratedResult = decoratedResult.first {
+            name = decoratedResult.name
+            url = decoratedResult.url
 
-            let decoratedResult = await FavoriteSearchResultDecorator().decorate(results: [result])
-            if let decoratedResult = decoratedResult.first {
-                name = decoratedResult.name
-                url = decoratedResult.url
-
-                if let host = url.host, let icon = decoratedResult.icon {
-                    await MainActor.run {
-                        faviconUpdating.updateFavicon(forDomain: host, with: icon)
-                    }
-                }
-            } else {
-                name = result.name
-                url = result.url
+            if let host = url.host, let icon = decoratedResult.icon {
+                await faviconUpdating.updateFavicon(forDomain: host, with: icon)
             }
-
-            await MainActor.run {
-                createOrToggleFavorite(title: name, url: url)
-            }
+        } else {
+            name = result.name
+            url = result.url
         }
+
+        await createOrToggleFavorite(title: name, url: url)
     }
 
-    private func createOrToggleFavorite(title: String, url: URL) {
+    @MainActor
+    func createOrToggleFavorite(title: String, url: URL) {
         favoritesCreating.createOrToggleFavorite(title: title, url: url)
         if let favorite = favoritesCreating.favorite(for: url) {
             onFavoriteAdded?(favorite)
@@ -248,6 +244,7 @@ extension AddFavoriteViewModel {
 }
 
 extension Favicons: FaviconUpdating {
+    @MainActor
     func updateFavicon(forDomain domain: String, with image: UIImage) {
         loadFavicon(forDomain: domain, intoCache: .fireproof, completion: { existingImage in
             if existingImage == nil {

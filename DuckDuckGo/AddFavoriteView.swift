@@ -86,7 +86,9 @@ struct AddFavoriteView: View {
             if !viewModel.results.isEmpty {
                 ForEach(viewModel.results) { result in
                     Button {
-                        viewModel.addFavorite(for: result)
+                        Task {
+                            await viewModel.addFavorite(for: result)
+                        }
                         dismiss()
                     } label: {
                         FavoriteSearchResultItemView(result: result, isDisabled: !result.isActionable)

@@ -104,14 +104,7 @@ class TabsBarViewController: UIViewController {
             self.present(controller: alert, fromView: fireButton)
         }
 
-        let variantManager = DefaultVariantManager()
-        
-        guard variantManager.shouldShowDaxDialogs else {
-            showClearDataAlert()
-            return
-        }
-
-        if variantManager.isContextualDaxDialogsEnabled {
+        if DefaultVariantManager().isContextualDaxDialogsEnabled {
             delegate?.tabsBarDidRequestFireEducationDialog(self)
             showClearDataAlert()
         } else {

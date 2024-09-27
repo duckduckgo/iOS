@@ -258,8 +258,6 @@ class HomeViewController: UIViewController, NewTabPage {
     }
 
     func presentNextDaxDialog() {
-        guard variantManager.shouldShowDaxDialogs else { return }
-
         if variantManager.isContextualDaxDialogsEnabled {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         } else {

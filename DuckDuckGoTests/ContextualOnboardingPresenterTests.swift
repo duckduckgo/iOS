@@ -76,29 +76,6 @@ final class ContextualOnboardingPresenterTests: XCTestCase {
         XCTAssertNotNil(parent.capturedChild)
     }
 
-    func testWhenPresentContextualOnboardingAndVariantShouldNotShowContextualDialogsThenDoNothing() {
-        // GIVEN
-        var variantManagerMock = MockVariantManager()
-        variantManagerMock.currentVariant = MockVariant(features: [.newOnboardingIntro])
-        let sut = ContextualOnboardingPresenter(variantManager: variantManagerMock, daxDialogsFactory: contextualDaxDialogsFactory)
-        let parent = TabViewControllerMock()
-        XCTAssertFalse(parent.didCallAddChild)
-        XCTAssertNil(parent.capturedChild)
-        XCTAssertFalse(parent.didCallPerformSegue)
-        XCTAssertNil(parent.capturedSegueIdentifier)
-        XCTAssertNil(parent.capturedSender)
-
-        // WHEN
-        sut.presentContextualOnboarding(for: .afterSearch, in: parent)
-
-        // THEN
-        XCTAssertFalse(parent.didCallAddChild)
-        XCTAssertNil(parent.capturedChild)
-        XCTAssertFalse(parent.didCallPerformSegue)
-        XCTAssertNil(parent.capturedSegueIdentifier)
-        XCTAssertNil(parent.capturedSender)
-    }
-
     func testWhenPresentContextualOnboardingForFireEducational_andBarAtTheTop_TheMessageHandPointsInTheRightDirection() throws {
         // GIVEN
         var variantManagerMock = MockVariantManager()

@@ -331,13 +331,7 @@ class TabSwitcherViewController: UIViewController {
         }
 
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        let variantManager = DefaultVariantManager()
-        let isNewOnboarding = variantManager.isContextualDaxDialogsEnabled
-
-        guard variantManager.shouldShowDaxDialogs else {
-            presentForgetDataAlert()
-            return
-        }
+        let isNewOnboarding = DefaultVariantManager().isContextualDaxDialogsEnabled
 
         if !isNewOnboarding
             && DaxDialogs.shared.shouldShowFireButtonPulse {

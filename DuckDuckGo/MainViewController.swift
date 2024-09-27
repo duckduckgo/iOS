@@ -2737,8 +2737,7 @@ extension MainViewController: AutoClearWorker {
             self.privacyProDataReporter.saveFireCount()
 
             // Ideally this should happen once data clearing has finished AND the animation is finished
-            // `showNextDaxDialog: true` only set from old onboarding FireDialog ActionSheet
-            if showNextDaxDialog && self.variantManager.shouldShowDaxDialogs {
+            if showNextDaxDialog {
                 self.homeController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {

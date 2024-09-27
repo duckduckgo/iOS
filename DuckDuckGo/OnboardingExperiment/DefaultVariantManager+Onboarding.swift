@@ -30,12 +30,6 @@ extension VariantManager {
         isSupported(feature: .newOnboardingIntroHighlights)
     }
 
-    var shouldShowDaxDialogs: Bool {
-        // Disable Dax Dialogs if only feature supported is .newOnboardingIntro
-        guard let features = currentVariant?.features else { return true }
-        return !(features.count == 1 && features.contains(.newOnboardingIntro))
-    }
-
     var isContextualDaxDialogsEnabled: Bool {
         isSupported(feature: .contextualDaxDialogs)
     }

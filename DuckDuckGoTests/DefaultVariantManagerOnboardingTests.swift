@@ -94,52 +94,6 @@ final class DefaultVariantManagerOnboardingTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
-    // MARK: - Should Show Dax Dialogs
-
-    func testWhenShouldShowDaxDialogs_AndFeaturesContainOnboardingIntro_ThenReturnFalse() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntro])
-
-        // WHEN
-        let result = sut.shouldShowDaxDialogs
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
-    func testWhenShouldShowDaxDialogs_AndFeaturesContainOnboardingIntroAndContextualDaxDialogs_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntro, .contextualDaxDialogs])
-
-        // WHEN
-        let result = sut.shouldShowDaxDialogs
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenShouldShowDaxDialogs_AndFeaturesContainOnboardingHighlights_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntroHighlights])
-
-        // WHEN
-        let result = sut.shouldShowDaxDialogs
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenShouldShowDaxDialogs_AndFeaturesIsEmpty_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [])
-
-        // WHEN
-        let result = sut.shouldShowDaxDialogs
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
     // MARK: - Is Contextual Dax Dialogs Enabled
 
     func testWhenIsContextualDaxDialogsEnabled_AndFeaturesContainContextualDaxDialogs_ThenReturnTrue() {

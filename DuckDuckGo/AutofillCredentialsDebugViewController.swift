@@ -194,6 +194,7 @@ class AutofillCredentialsDebugViewController: UITableViewController {
             do {
                 let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
                 cell.details.attributedText = attributedString
+                cell.details.textColor = .label
             } catch {
                 os_log("Error creating attributed string: \(error)")
             }

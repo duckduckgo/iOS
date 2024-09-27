@@ -43,6 +43,7 @@ class AddFavoriteViewModel: ObservableObject {
     private let booksmarksSearch: BookmarksStringSearch
     private let faviconLoading: FavoritesFaviconLoading
     private let faviconUpdating: FaviconUpdating
+    private let pixelFiring: PixelFiring.Type
 
     var onAddCustomWebsite: ((_ text: String) -> Void)?
     var onFavoriteAdded: ((_ favorite: BookmarkEntity) -> Void)?
@@ -51,12 +52,14 @@ class AddFavoriteViewModel: ObservableObject {
          favoritesCreating: MenuBookmarksInteracting,
          booksmarksSearch: BookmarksStringSearch,
          faviconLoading: FavoritesFaviconLoading,
-         faviconUpdating: FaviconUpdating = Favicons.shared) {
+         faviconUpdating: FaviconUpdating = Favicons.shared,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
         self.websiteSearch = websiteSearching
         self.favoritesCreating = favoritesCreating
         self.booksmarksSearch = booksmarksSearch
         self.faviconLoading = faviconLoading
         self.faviconUpdating = faviconUpdating
+        self.pixelFiring = pixelFiring
 
         $searchTerm
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
@@ -111,6 +114,7 @@ class AddFavoriteViewModel: ObservableObject {
     func createOrToggleFavorite(title: String, url: URL) {
         favoritesCreating.createOrToggleFavorite(title: title, url: url)
         if let favorite = favoritesCreating.favorite(for: url) {
+            pixelFiring.fire(.newTabPageFavoriteAddedAutocomplete, withAdditionalParameters: [:])
             onFavoriteAdded?(favorite)
         }
     }

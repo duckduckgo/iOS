@@ -794,6 +794,7 @@ class MainViewController: UIViewController {
                                                       interactionModel: favoritesViewModel,
                                                       bookmarksInteracting: menuBookmarksViewModel,
                                                       syncService: syncService,
+                                                      bookmarksDatabase: self.bookmarksDatabase,
                                                       syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                       bookmarksStringSearch: bookmarksCachingSearch,
                                                       homePageMessagesConfiguration: homePageConfiguration,

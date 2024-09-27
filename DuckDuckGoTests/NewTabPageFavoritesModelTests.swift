@@ -88,6 +88,15 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
     }
 
+    func testFiresPixelOnAddFavorite() {
+        let sut = createSUT()
+
+        sut.addFavorite()
+
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageAddFavorite)
+        XCTAssertEqual(PixelFiringMock.lastParams, [:])
+    }
+
     func testPrefixFavoritesCreatesRemainingPlaceholders() {
         let sut = createSUT()
 
@@ -125,6 +134,14 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertTrue(firstItem == .addFavorite)
     }
 
+    func testSetsPropertyOnAddingFavorite() {
+        let sut = createSUT()
+        
+        sut.addFavorite()
+
+        XCTAssertTrue(sut.isAddingFavorite)
+    }
+
     private func createSUT() -> FavoritesViewModel {
         FavoritesViewModel(favoriteDataSource: favoriteDataSource,
                            faviconLoader: FavoritesFaviconLoader(),
@@ -135,12 +152,12 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
 private final class MockNewTabPageFavoriteDataSource: NewTabPageFavoriteDataSource {
     var externalUpdates: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()
-    var favorites: [DuckDuckGo.Favorite] = []
+    var favorites: [Favorite] = []
 
-    func moveFavorite(_ favorite: DuckDuckGo.Favorite, fromIndex: Int, toIndex: Int) { }
-    func favorite(at index: Int) throws -> DuckDuckGo.Favorite? { nil }
-    func removeFavorite(_ favorite: DuckDuckGo.Favorite) { }
-    func bookmarkEntity(for favorite: DuckDuckGo.Favorite) -> Bookmarks.BookmarkEntity? {
+    func moveFavorite(_ favorite: Favorite, fromIndex: Int, toIndex: Int) { }
+    func favorite(at index: Int) throws -> Favorite? { nil }
+    func removeFavorite(_ favorite: Favorite) { }
+    func bookmarkEntity(for favorite: Favorite) -> Bookmarks.BookmarkEntity? {
         createStubBookmark()
     }
 

@@ -144,7 +144,7 @@ private extension NewTabPageView {
                         .padding([.trailing, .bottom], Metrics.largePadding)
                 }
             }
-            .sheet(isPresented: $isAddingFavorite, content: {
+            .sheet(isPresented: $favoritesViewModel.isAddingFavorite, content: {
                 NavigationView {
                     AddFavoriteView(viewModel: addFavoriteViewModel)
                 }
@@ -184,7 +184,6 @@ private extension NewTabPageView {
 
     private func favoritesSectionView(proxy: GeometryProxy) -> some View {
                 FavoritesView(model: favoritesViewModel,
-                              isAddingFavorite: $isAddingFavorite,
                               geometry: proxy)
     }
 

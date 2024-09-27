@@ -145,39 +145,42 @@ class AddFavoriteViewModel: ObservableObject {
         searchTask = Task {
 
             do {
-                let urlMatcher = AddFavoriteURLMatcher(bookmarksSearch: booksmarksSearch)
-
-                try Task.checkCancellation()
-                
                 let urls = try await websiteSearch.search(term: searchTerm)
-                let results = await withTaskGroup(of: FavoriteSearchResult.self, returning: [FavoriteSearchResult].self) { group in
-                    for url in urls {
-                        group.addTask {
-                            let favoriteMatch = await urlMatcher.favoriteMatch(for: url)
-                            let name = url.nakedString ?? url.absoluteString
-                            var image: UIImage?
-
-                            if let host = url.host {
-                                image = await self.faviconLoading.loadFavicon(for: host, size: 64)?.image
-                            }
-
-                            return FavoriteSearchResult(id: url.absoluteString, name: name, url: url, favoriteMatch: favoriteMatch, icon: image)
-                        }
-                    }
-
-                    return await group.reduce(into: [FavoriteSearchResult]()) { partialResult, result in
-                        partialResult.append(result)
-                    }
-                }
 
                 try Task.checkCancellation()
+                let results = await mapIntoSearchResults(urls)
 
+                try Task.checkCancellation()
                 await publishResults(results)
             } catch {
                 await publishResults([])
             }
 
             await setSearchCompleted(true)
+        }
+    }
+
+    private func mapIntoSearchResults(_ urls: [URL]) async -> [FavoriteSearchResult] {
+        let urlMatcher = AddFavoriteURLMatcher(bookmarksSearch: booksmarksSearch)
+        
+        return await withTaskGroup(of: FavoriteSearchResult.self, returning: [FavoriteSearchResult].self) { group in
+            for url in urls {
+                group.addTask {
+                    let favoriteMatch = await urlMatcher.favoriteMatch(for: url)
+                    let name = url.nakedString ?? url.absoluteString
+                    var image: UIImage?
+
+                    if let host = url.host {
+                        image = await self.faviconLoading.loadFavicon(for: host, size: 64)?.image
+                    }
+
+                    return FavoriteSearchResult(id: url.absoluteString, name: name, url: url, favoriteMatch: favoriteMatch, icon: image)
+                }
+            }
+
+            return await group.reduce(into: [FavoriteSearchResult]()) { partialResult, result in
+                partialResult.append(result)
+            }
         }
     }
 

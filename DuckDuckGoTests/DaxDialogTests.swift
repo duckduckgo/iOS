@@ -1100,19 +1100,6 @@ final class DaxDialog: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testWhenIsEnabledIsCalled_AndShouldShowDaxDialogsIsFalse_ThenReturnFalse() {
-        // GIVEN
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = MockVariant(features: [.newOnboardingIntro])
-        let sut = DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
-
-        // WHEN
-        let result = sut.isEnabled
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,

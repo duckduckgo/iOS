@@ -47,9 +47,6 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     }
 
     func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
-        // Extra safety net
-        guard variantManager.shouldShowDaxDialogs else { return }
-
         if variantManager.isContextualDaxDialogsEnabled {
             presentExperimentContextualOnboarding(for: spec, in: vc)
         } else {

@@ -165,9 +165,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     }
 
     func showNextDaxDialog() {
-        if variantManager.shouldShowDaxDialogs {
-            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
-        }
+        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
     }
 
     func onboardingCompleted() {

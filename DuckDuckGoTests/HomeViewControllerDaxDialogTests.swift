@@ -109,23 +109,6 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNotNil(self.dialogFactory.onDismiss)
     }
 
-    func testWhenDaxDialogsAreNotEnabled_OnDidAppear_NothingHappens() throws {
-        // GIVEN
-        variantManager.currentVariant = MockVariant(features: [.newOnboardingIntro])
-        let expectedSpec = randomDialogType()
-        specProvider.specToReturn = expectedSpec
-
-        // WHEN
-        hvc.viewDidAppear(false)
-
-        // THEN
-        XCTAssertNil(self.variantManager.capturedFeatureName)
-        XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(self.specProvider.nextHomeScreenMessageNewCalled)
-        XCTAssertNil(self.dialogFactory.homeDialog)
-        XCTAssertNil(self.dialogFactory.onDismiss)
-    }
-
     func testWhenOldOnboarding_OnDidAppear_NothingPassedDialogFactory() throws {
         // GIVEN
         variantManager.supportedFeatures = []
@@ -194,18 +177,6 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
-        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
-    }
-
-    func testWhenShowNextDaxDialog_AndShouldNotShowDaxDialogs_ThenReturnFalse() {
-        // GIVEN
-        variantManager.currentVariant = MockVariant(features: [.newOnboardingIntro])
-
-        // WHEN
-        hvc.showNextDaxDialog()
-
-        // THEN
-        XCTAssertFalse(specProvider.nextHomeScreenMessageCalled)
         XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
     }
 

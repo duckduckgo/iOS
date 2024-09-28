@@ -23,6 +23,10 @@ enum NewTabPageShortcut: CaseIterable, Equatable, Identifiable, Codable {
     var id: String { storageIdentifier }
 
     case bookmarks, aiChat, passwords, downloads, settings
+
+    static var enabledByDefault: [NewTabPageShortcut] {
+        NewTabPageShortcut.allCases.filter { $0 != .aiChat }
+    }
 }
 
 extension NewTabPageShortcut {

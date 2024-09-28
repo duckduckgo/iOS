@@ -92,9 +92,9 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc = nil
     }
 
-    func testWhenNewOnboarding_OnDidAppear_CorrectTypePassedToDialogFactory() throws {
+    func testWhenContextualDaxDialogsSupported_OnDidAppear_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
-        variantManager.isSupported = true
+        variantManager.supportedFeatures = [.contextualDaxDialogs]
         let expectedSpec = randomDialogType()
         specProvider.specToReturn = expectedSpec
 
@@ -102,7 +102,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc.viewDidAppear(false)
 
         // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
+        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.contextualDaxDialogs.rawValue)
         XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
         XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
         XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
@@ -111,7 +111,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 
     func testWhenOldOnboarding_OnDidAppear_NothingPassedDialogFactory() throws {
         // GIVEN
-        variantManager.isSupported = false
+        variantManager.supportedFeatures = []
 
         // WHEN
         hvc.viewDidAppear(false)
@@ -123,9 +123,9 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNil(dialogFactory.onDismiss)
     }
 
-    func testWhenNewOnboarding_OnOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
+    func testWhenContextualDaxDialogsSupported_OnOnboardingComplete_CorrectTypePassedToDialogFactory() throws {
         // GIVEN
-        variantManager.isSupported = true
+        variantManager.supportedFeatures = [.contextualDaxDialogs]
         let expectedSpec = randomDialogType()
         specProvider.specToReturn = expectedSpec
 
@@ -133,7 +133,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         hvc.onboardingCompleted()
 
         // THEN
-        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.newOnboardingIntro.rawValue)
+        XCTAssertEqual(self.variantManager.capturedFeatureName?.rawValue, FeatureName.contextualDaxDialogs.rawValue)
         XCTAssertFalse(self.specProvider.nextHomeScreenMessageCalled)
         XCTAssertTrue(self.specProvider.nextHomeScreenMessageNewCalled)
         XCTAssertEqual(self.dialogFactory.homeDialog, expectedSpec)
@@ -142,7 +142,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 
     func testWhenOldOnboarding_OnOnboardingComplete_NothingPassedDialogFactory() throws {
         // GIVEN
-        variantManager.isSupported = false
+        variantManager.supportedFeatures = []
 
         // WHEN
         hvc.onboardingCompleted()
@@ -156,7 +156,7 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 
     func testWhenOldOnboarding_OnOpenedAsNewTab_NothingPassedDialogFactory() throws {
         // GIVEN
-        variantManager.isSupported = false
+        variantManager.supportedFeatures = []
 
         // WHEN
         hvc.openedAsNewTab(allowingKeyboard: true)
@@ -168,6 +168,18 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNil(dialogFactory.onDismiss)
     }
 
+    func testWhenShowNextDaxDialog_AndShouldShowDaxDialogs_ThenReturnTrue() {
+        // GIVEN
+        variantManager.supportedFeatures = []
+
+        // WHEN
+        hvc.showNextDaxDialog()
+
+        // THEN
+        XCTAssertTrue(specProvider.nextHomeScreenMessageCalled)
+        XCTAssertFalse(specProvider.nextHomeScreenMessageNewCalled)
+    }
+
     private func randomDialogType() -> DaxDialogs.HomeScreenSpec {
         let specs: [DaxDialogs.HomeScreenSpec] = [.initial, .subsequent, .final, .addFavorite]
         return specs.randomElement()!
@@ -177,14 +189,14 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
 class CapturingVariantManager: VariantManager {
     var currentVariant: Variant?
     var capturedFeatureName: FeatureName?
-    var isSupported = false
+    var supportedFeatures: [FeatureName] = []
 
     func assignVariantIfNeeded(_ newInstallCompletion: (BrowserServicesKit.VariantManager) -> Void) {
     }
 
     func isSupported(feature: FeatureName) -> Bool {
         capturedFeatureName = feature
-        return isSupported
+        return supportedFeatures.contains(feature)
     }
 }
 
@@ -231,5 +243,16 @@ class MockNewTabDialogSpecProvider: NewTabDialogSpecProvider {
 
     func dismiss() {
         dismissCalled = true
+    }
+}
+
+struct MockVariant: Variant {
+    var name: String = ""
+    var weight: Int = 0
+    var isIncluded: () -> Bool = { false }
+    var features: [BrowserServicesKit.FeatureName] = []
+
+    init(features: [BrowserServicesKit.FeatureName]) {
+        self.features = features
     }
 }

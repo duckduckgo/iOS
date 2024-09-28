@@ -20,22 +20,8 @@
 import SwiftUI
 
 extension View {
-    /// Applies the given transform if the given condition evaluates to `true`.
-    /// - Parameters:
-    ///   - condition: The condition to evaluate.
-    ///   - transform: The transform to apply to the source `View`.
-    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
-    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
-    }
-}
-
-extension View {
-    /// Disables scroll if allowed by system version
+    /// Disables scroll if available for current system version
+    @available(iOS, deprecated: 16.0, renamed: "scrollDisabled")
     @ViewBuilder
     func withoutScroll(_ isScrollDisabled: Bool = true) -> some View {
         if #available(iOS 16, *) {

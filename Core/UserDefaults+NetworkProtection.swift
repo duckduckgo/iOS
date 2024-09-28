@@ -27,6 +27,14 @@ public extension UserDefaults {
         }
         return defaults
     }
+
+    static var configurationGroupDefaults: UserDefaults {
+        let suiteName = ContentBlockerStoreConstants.configurationGroupName
+        guard let defaults = UserDefaults(suiteName: suiteName) else {
+            fatalError("Failed to create configuration UserDefaults")
+        }
+        return defaults
+    }
 }
 
 public enum NetworkProtectionUserDefaultKeys {

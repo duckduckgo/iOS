@@ -200,6 +200,10 @@ class MockConfigurationStoring: ConfigurationStoring {
     func saveEtag(_ etag: String, for configuration: Configuration) throws {
     }
 
+    func fileUrl(for configuration: Configuration) -> URL {
+        return URL(string: "file:///\(configuration.rawValue)")!
+    }
+
 }
 
 class MockRemoteMessagingAvailabilityProviding: RemoteMessagingAvailabilityProviding {

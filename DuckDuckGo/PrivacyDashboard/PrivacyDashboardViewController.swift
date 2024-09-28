@@ -356,6 +356,7 @@ extension PrivacyDashboardViewController {
                                 manufacturer: "Apple",
                                 upgradedHttps: breakageAdditionalInfo.httpsForced,
                                 tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
+                                configVersion: privacyConfigurationManager.privacyConfig.version,
                                 blockedTrackerDomains: blockedTrackerDomains,
                                 installedSurrogates: privacyInfo.trackerInfo.installedSurrogates.map { $0 },
                                 isGPCEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,

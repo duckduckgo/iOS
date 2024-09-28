@@ -62,7 +62,7 @@ struct NewTabPageIntroMessageView: View {
     private enum Metrics {
         static let padding = 8.0
         static let itemSpacing = 6.0
-        static let cornerRadius = 12.0
+        static let cornerRadius = 8.0
         static let titlePadding = 20.0
     }
 }

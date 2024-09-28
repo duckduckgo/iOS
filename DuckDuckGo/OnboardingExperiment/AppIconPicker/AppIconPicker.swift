@@ -34,7 +34,7 @@ struct AppIconPicker: View {
 
     @StateObject private var viewModel = AppIconPickerViewModel()
 
-    let layout = [GridItem(.adaptive(minimum: Metrics.iconSize, maximum: Metrics.iconSize), spacing: Metrics.spacing)]
+    let layout = [GridItem(.adaptive(minimum: Metrics.iconSize), spacing: Metrics.spacing, alignment: .leading)]
     
     var body: some View {
         LazyVGrid(columns: layout, spacing: Metrics.spacing) {

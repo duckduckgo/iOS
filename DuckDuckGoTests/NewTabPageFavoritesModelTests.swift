@@ -18,13 +18,13 @@
 //
 
 import XCTest
+import Combine
 import Bookmarks
-import BrowserServicesKit
 @testable import DuckDuckGo
 
 final class NewTabPageFavoritesModelTests: XCTestCase {
-    private let favoritesListInteracting = MockFavoritesListInteracting()
-    
+    private let favoriteDataSource = MockNewTabPageFavoriteDataSource()
+
     override func tearDown() {
         PixelFiringMock.tearDown()
     }
@@ -59,23 +59,23 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
     }
 
     func testFiresPixelOnFavoriteDeleted() {
-        let bookmark = createStubBookmark()
-        favoritesListInteracting.favorites = [bookmark]
+        let favorite = Favorite.stub()
+        favoriteDataSource.favorites = [favorite]
 
         let sut = createSUT()
 
-        sut.deleteFavorite(Favorite(id: bookmark.uuid!, title: "", domain: ""))
+        sut.deleteFavorite(favorite)
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenDeleteFavorite)
     }
 
     func testFiresPixelOnFavoriteEdited() {
-        let bookmark = createStubBookmark()
-        favoritesListInteracting.favorites = [bookmark]
+        let favorite = Favorite.stub()
+        favoriteDataSource.favorites = [favorite]
 
         let sut = createSUT()
 
-        sut.editFavorite(Favorite(id: bookmark.uuid!, title: "", domain: ""))
+        sut.editFavorite(favorite)
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenEditFavorite)
     }
@@ -88,13 +88,60 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
     }
 
-    func testFiresPixelOnShowingTooltip() {
+    func testPrefixFavoritesCreatesRemainingPlaceholders() {
         let sut = createSUT()
 
-        XCTAssertFalse(sut.isShowingTooltip)
-        sut.toggleTooltip()
+        let slice = sut.prefixedFavorites(for: 3)
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesInfoTooltip)
+        XCTAssertEqual(slice.items.filter(\.isPlaceholder).count, 2)
+        XCTAssertEqual(slice.items.count, 3)
+        XCTAssertFalse(slice.isCollapsible)
+    }
+
+    func testPrefixFavoritesLimitsToTwoRows() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT()
+
+        let slice = sut.prefixedFavorites(for: 4)
+
+        XCTAssertEqual(slice.items.count, 8)
+        XCTAssertTrue(slice.isCollapsible)
+    }
+
+    func testAddItemIsLastWhenFavoritesPresent() throws {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT()
+        
+        let lastItem = try XCTUnwrap(sut.allFavorites.last)
+
+        XCTAssertTrue(lastItem == .addFavorite)
+    }
+
+    func testAddItemIsFirstWhenFavoritesEmpty() throws {
+        let sut = createSUT()
+        
+        let firstItem = try XCTUnwrap(sut.allFavorites.first)
+        
+        XCTAssertTrue(firstItem == .addFavorite)
+    }
+
+    private func createSUT() -> FavoritesViewModel {
+        FavoritesViewModel(favoriteDataSource: favoriteDataSource,
+                           faviconLoader: FavoritesFaviconLoader(),
+                           pixelFiring: PixelFiringMock.self,
+                           dailyPixelFiring: PixelFiringMock.self)
+    }
+}
+
+private final class MockNewTabPageFavoriteDataSource: NewTabPageFavoriteDataSource {
+    var externalUpdates: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()
+    var favorites: [DuckDuckGo.Favorite] = []
+
+    func moveFavorite(_ favorite: DuckDuckGo.Favorite, fromIndex: Int, toIndex: Int) { }
+    func favorite(at index: Int) throws -> DuckDuckGo.Favorite? { nil }
+    func removeFavorite(_ favorite: DuckDuckGo.Favorite) { }
+    func bookmarkEntity(for favorite: DuckDuckGo.Favorite) -> Bookmarks.BookmarkEntity? {
+        createStubBookmark()
     }
 
     private func createStubBookmark() -> BookmarkEntity {
@@ -103,10 +150,19 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         let root = BookmarkUtils.fetchRootFolder(context)!
         return BookmarkEntity.makeBookmark(title: "foo", url: "", parent: root, context: context)
     }
+}
 
-    private func createSUT() -> FavoritesDefaultModel {
-        FavoritesDefaultModel(interactionModel: favoritesListInteracting,
-                              pixelFiring: PixelFiringMock.self,
-                              dailyPixelFiring: PixelFiringMock.self)
+private extension Favorite {
+    static func stub() -> Favorite {
+        Favorite(id: UUID().uuidString, title: "foo", domain: "bar")
+    }
+}
+
+private extension FavoriteItem {
+    var isPlaceholder: Bool {
+        switch self {
+        case .placeholder: return true
+        case .favorite, .addFavorite: return false
+        }
     }
 }

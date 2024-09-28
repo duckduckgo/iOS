@@ -106,9 +106,9 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         sut.assignUserToCohort()
 
         XCTAssertTrue(sut.isEnrolled, "User should be enrolled after assigning to cohort.")
-        XCTAssertNotNil(sut.experimentCohort, "Experiment cohort should be assigned.")
-        XCTAssertNotNil(sut.enrollmentDate, "Enrollment date should be set.")
-        XCTAssertEqual(DuckPlayerLaunchExperiment.formattedDate(sut.enrollmentDate ?? Date()), "20240910", "The assigned date should match.")
+        XCTAssertNotNil(sut.experimentCohortV2, "Experiment cohort should be assigned.")
+        XCTAssertNotNil(sut.enrollmentDateV2, "Enrollment date should be set.")
+        XCTAssertEqual(DuckPlayerLaunchExperiment.formattedDate(sut.enrollmentDateV2 ?? Date()), "20240910", "The assigned date should match.")
 
         // Check the pixel event history
         let history = DuckPlayerExperimentPixelFireMock.capturedPixelEventHistory
@@ -142,7 +142,7 @@ final class DuckPlayerLaunchExperimentTests: XCTestCase {
         sut.assignUserToCohort()
         XCTAssertEqual(DuckPlayerExperimentPixelFireMock.capturedPixelEventHistory.count, 0, "Enrollment pixel should not have fired again")
         XCTAssertEqual(sut.isEnrolled, true, "The assigned date should not change.")
-        XCTAssertEqual(DuckPlayerLaunchExperiment.formattedDate(sut.enrollmentDate ?? Date()), "20240910", "The assigned date should not change.")
+        XCTAssertEqual(DuckPlayerLaunchExperiment.formattedDate(sut.enrollmentDateV2 ?? Date()), "20240910", "The assigned date should not change.")
     }
     
     func testIfUserIsEnrolled_SearchDailyPixelsFire() {

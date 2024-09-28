@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Configuration
 import Combine
 import Core
 import Networking
@@ -27,6 +28,7 @@ import NetworkProtection
 import Subscription
 import WidgetKit
 import WireGuard
+import BrowserServicesKit
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -35,6 +37,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
+
+    private let configurationStore = ConfigurationStore()
+    private let configurationManager: ConfigurationManager
+    private var configuationSubscription: AnyCancellable?
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -348,6 +354,20 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+
+        Configuration.setURLProvider(VPNAgentConfigurationURLProvider())
+        configurationManager = ConfigurationManager(store: configurationStore)
+        configurationManager.start()
+        let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
+        // Load cached config (if any)
+        privacyConfigurationManager.reload(etag: configurationStore.loadEtag(for: .privacyConfiguration), data: configurationStore.loadData(for: .privacyConfiguration))
+
+        configuationSubscription = privacyConfigurationManager.updatesPublisher
+            .sink {
+                if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest) {
+                    DailyPixel.fire(pixel: .networkProtectionConfigurationPixelTest)
+                }
+            }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default

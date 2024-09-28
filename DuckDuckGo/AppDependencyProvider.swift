@@ -39,6 +39,7 @@ protocol DependencyProvider {
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
+    var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
@@ -55,7 +56,7 @@ protocol DependencyProvider {
 
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call (e.g. ViewControllers created from Storyboards).
-class AppDependencyProvider: DependencyProvider {
+final class AppDependencyProvider: DependencyProvider {
 
     static var shared: DependencyProvider = AppDependencyProvider()
     
@@ -71,7 +72,8 @@ class AppDependencyProvider: DependencyProvider {
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
-    let configurationManager = ConfigurationManager()
+    let configurationManager: ConfigurationManager
+    let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
 
@@ -89,16 +91,17 @@ class AppDependencyProvider: DependencyProvider {
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-    
+
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-
     let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
-    init() {
+    private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+
+        configurationManager = ConfigurationManager(store: configurationStore)
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!
@@ -144,5 +147,11 @@ class AppDependencyProvider: DependencyProvider {
                                                                               persistentPixel: persistentPixel)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
+    }
+
+    /// Only meant to be used for testing.
+    ///
+    static func makeTestingInstance() -> Self {
+        Self.init()
     }
 }

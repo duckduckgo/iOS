@@ -26,10 +26,10 @@ struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
     var credentialsImportPromptPresentationCount: Int = 0
 
     var isAutofillEnabled: Bool {
-        AppDependencyProvider().appSettings.autofillCredentialsEnabled
+        AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled
     }
 
     func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
-        AppDependencyProvider().autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
+        AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
     }
 }

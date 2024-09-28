@@ -1,5 +1,5 @@
 //
-//  FavoriteEmptyStateItem.swift
+//  SubscriptionFeatureAvailabilityMock.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,17 +17,18 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import Foundation
+@testable import BrowserServicesKit
 
-struct FavoriteEmptyStateItem: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 8, style: .continuous)
-            .stroke(Color(designSystemColor: .lines),
-                    style: StrokeStyle(lineWidth: 1.5, dash: [4, 2]))
-            .padding(1) // So the stroke is not clipped on the edges
+public final class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
+    public var isFeatureAvailable: Bool
+    public var isSubscriptionPurchaseAllowed: Bool
+    public var usesUnifiedFeedbackForm: Bool
+
+    public init(isFeatureAvailable: Bool, isSubscriptionPurchaseAllowed: Bool, usesUnifiedFeedbackForm: Bool) {
+        self.isFeatureAvailable = isFeatureAvailable
+        self.isSubscriptionPurchaseAllowed = isSubscriptionPurchaseAllowed
+        self.usesUnifiedFeedbackForm = usesUnifiedFeedbackForm
     }
-}
 
-#Preview {
-    FavoriteEmptyStateItem()
 }

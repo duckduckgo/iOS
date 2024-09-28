@@ -341,7 +341,8 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private func subscribeToConfigurationChanges() {
         notificationCenter.publisher(for: .NEVPNConfigurationChange)
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] _ in
+                guard let self = self else { return }
                 Task { @MainActor in
                     guard let manager = self.internalManager else {
                         return
@@ -365,7 +366,9 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     private func subscribeToStatusChanges() {
         notificationCenter.publisher(for: .NEVPNStatusDidChange)
-            .sink(receiveValue: handleStatusChange(_:))
+            .sink { [weak self] value in
+                self?.handleStatusChange(value)
+            }
             .store(in: &cancellables)
     }
 

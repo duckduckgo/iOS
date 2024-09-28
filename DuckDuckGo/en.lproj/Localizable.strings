@@ -250,6 +250,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Same privacy.\nBetter search suggestions!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Switch to Tab";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Disabled";
 
@@ -321,6 +324,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Disable";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
@@ -416,7 +422,7 @@
 "autofill.logins.empty-view.button.title" = "Import Passwords";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "You can import saved passwords from another browser into DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "No passwords saved yet";
@@ -459,6 +465,12 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Search passwords";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Passwords are encrypted. Nobody but you can see them, not even us.";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Passwords are encrypted. Nobody but you can see them, not even us. [Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";
@@ -578,11 +590,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Never Ask for This Site";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo Passwords & Autofill stores passwords securely on your device.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Save this password?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Securely store your password on device with DuckDuckGo Passwords & Autofill.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Save password?";
@@ -1781,6 +1793,12 @@ https://duckduckgo.com/mac";
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Your New Tab Page is... New!";
 
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favorites";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Shortcuts";
+
 /* Footer of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.description" = "Show, hide, and reorder sections on the new tab page";
 
@@ -1791,7 +1809,7 @@ https://duckduckgo.com/mac";
 "new.tab.page.settings.shortcuts.header.title" = "SHORTCUTS";
 
 /* Title of New Tab Page preferences page. */
-"new.tab.page.settings.title" = "Customize New Tab";
+"new.tab.page.settings.title" = "Customize New Tab Page";
 
 /* Shortcut title leading to AI Chat */
 "new.tab.page.shortcut.ai.chat" = "AI Chat";
@@ -1851,7 +1869,7 @@ https://duckduckgo.com/mac";
 "onboarding.highlights.addressBarPosition.cta" = "Next";
 
 /* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
-"onboarding.highlights.addressBarPosition.default" = "(Default)";
+"onboarding.highlights.addressBarPosition.default" = "(default)";
 
 /* The title of the onboarding dialog popup to select the preferred address bar position. */
 "onboarding.highlights.addressBarPosition.title" = "Where should I put your address bar?";

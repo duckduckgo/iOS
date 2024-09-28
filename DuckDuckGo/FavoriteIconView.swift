@@ -22,6 +22,8 @@ import SwiftUI
 protocol FavoritesFaviconLoading {
     func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon?
     func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon
+
+    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon?
 }
 
 struct FavoriteIconView: View {
@@ -46,7 +48,7 @@ struct FavoriteIconView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .task {
-            if let favicon = await faviconLoading?.loadFavicon(for: favorite, size: Constant.faviconSize) {
+            if favicon.isFake, let favicon = await faviconLoading?.loadFavicon(for: favorite, size: Constant.faviconSize) {
                 self.favicon = favicon
             }
         }
@@ -74,7 +76,9 @@ private extension Favorite {
 
 extension FavoriteIconView {
     init(favorite: Favorite, faviconLoading: FavoritesFaviconLoading? = nil) {
-        let favicon = faviconLoading?.fakeFavicon(for: favorite, size: Constant.faviconSize) ?? .empty
+        let favicon = faviconLoading?.existingFavicon(for: favorite, size: Constant.faviconSize)
+        ?? faviconLoading?.fakeFavicon(for: favorite, size: Constant.faviconSize)
+        ?? .empty
         self.init(favicon: favicon, favorite: favorite, faviconLoading: faviconLoading)
     }
 }

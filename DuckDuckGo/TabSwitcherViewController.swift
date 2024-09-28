@@ -317,8 +317,21 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onFirePressed(sender: AnyObject) {
+        
+        func presentForgetDataAlert() {
+            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
+                self?.forgetAll()
+            })
+
+            if let anchor = sender as? UIView {
+                self.present(controller: alert, fromView: anchor)
+            } else {
+                self.present(controller: alert, fromView: toolbar)
+            }
+        }
+
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        let isNewOnboarding = DefaultVariantManager().isSupported(feature: .newOnboardingIntro)
+        let isNewOnboarding = DefaultVariantManager().isContextualDaxDialogsEnabled
 
         if !isNewOnboarding
             && DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -328,15 +341,7 @@ class TabSwitcherViewController: UIViewController {
             if isNewOnboarding {
                 ViewHighlighter.hideAll()
             }
-            let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-                self?.forgetAll()
-            })
-            
-            if let anchor = sender as? UIView {
-                self.present(controller: alert, fromView: anchor)
-            } else {
-                self.present(controller: alert, fromView: toolbar)
-            }
+            presentForgetDataAlert()
         }
     }
 

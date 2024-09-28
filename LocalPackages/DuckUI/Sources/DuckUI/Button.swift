@@ -99,11 +99,13 @@ public struct SecondaryFillButtonStyle: ButtonStyle {
     let disabled: Bool
     let compact: Bool
     let fullWidth: Bool
+    let isFreeform: Bool
 
-    public init(disabled: Bool = false, compact: Bool = false, fullWidth: Bool = true) {
+    public init(disabled: Bool = false, compact: Bool = false, fullWidth: Bool = true, isFreeform: Bool = false) {
         self.disabled = disabled
         self.compact = compact
         self.fullWidth = fullWidth
+        self.isFreeform = isFreeform
     }
 
     public func makeBody(configuration: Configuration) -> some View {
@@ -122,9 +124,12 @@ public struct SecondaryFillButtonStyle: ButtonStyle {
             .lineLimit(nil)
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? defaultForegroundColor : foregroundColor)
-            .padding(.vertical)
-            .padding(.horizontal, fullWidth ? nil : 24)
-            .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .if(!isFreeform) { view in
+                view
+                    .padding(.vertical)
+                    .padding(.horizontal, fullWidth ? nil : 24)
+                    .frame(minWidth: 0, maxWidth: fullWidth ? .infinity : nil, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            }
             .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }

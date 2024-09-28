@@ -131,9 +131,11 @@ extension Pixel {
         case autocompleteClickFavorite
         case autocompleteClickSearchHistory
         case autocompleteClickSiteHistory
+        case autocompleteClickOpenTab
         case autocompleteDisplayedLocalBookmark
         case autocompleteDisplayedLocalFavorite
         case autocompleteDisplayedLocalHistory
+        case autocompleteDisplayedOpenedTab
         case autocompleteSwipeToDelete
 
         case feedbackPositive
@@ -144,6 +146,11 @@ extension Pixel {
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
+        case onboardingIntroChooseAppIconImpressionUnique
+        case onboardingIntroChooseCustomAppIconColorCTAPressed
+        case onboardingIntroChooseAddressBarImpressionUnique
+        case onboardingIntroBottomAddressBarSelected
+
         case onboardingContextualSearchOptionTappedUnique
         case onboardingContextualSearchCustomUnique
         case onboardingContextualSiteOptionTappedUnique
@@ -164,6 +171,7 @@ extension Pixel {
         case daxDialogsFireEducationCancelledUnique
         case daxDialogsEndOfJourneyTabUnique
         case daxDialogsEndOfJourneyNewTabUnique
+        case daxDialogsEndOfJourneyDismissed
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -449,6 +457,9 @@ extension Pixel {
         case networkProtectionVPNConfigurationRemoved
         case networkProtectionVPNConfigurationRemovalFailed
 
+        case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
+        case networkProtectionConfigurationPixelTest
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -482,6 +493,7 @@ extension Pixel {
         case trackerDataReloadFailed
         case trackerDataCouldNotBeLoaded
         case fileStoreWriteFailed
+        case fileStoreCoordinatorFailed
         case privacyConfigurationReloadFailed
         case privacyConfigurationParseFailed
         case privacyConfigurationCouldNotBeLoaded
@@ -754,7 +766,6 @@ extension Pixel {
         case newTabPageMessageDismissed
 
         case newTabPageFavoritesPlaceholderTapped
-        case newTabPageFavoritesInfoTooltip
 
         case newTabPageFavoritesSeeMore
         case newTabPageFavoritesSeeLess
@@ -936,9 +947,11 @@ extension Pixel.Event {
         case .autocompleteClickFavorite: return "m_autocomplete_click_favorite"
         case .autocompleteClickSearchHistory: return "m_autocomplete_click_history_search"
         case .autocompleteClickSiteHistory: return "m_autocomplete_click_history_site"
+        case .autocompleteClickOpenTab: return "m_autocomplete_click_switch_to_tab"
         case .autocompleteDisplayedLocalBookmark: return "m_autocomplete_display_local_bookmark"
         case .autocompleteDisplayedLocalFavorite: return "m_autocomplete_display_local_favorite"
         case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
+        case .autocompleteDisplayedOpenedTab: return "m_autocomplete_display_switch_to_tab"
         case .autocompleteSwipeToDelete: return "m_autocomplete_result_deleted"
 
         case .feedbackPositive: return "mfbs_positive_submit"
@@ -949,6 +962,11 @@ extension Pixel.Event {
         case .onboardingIntroShownUnique: return "m_preonboarding_intro_shown_unique"
         case .onboardingIntroComparisonChartShownUnique: return "m_preonboarding_comparison_chart_shown_unique"
         case .onboardingIntroChooseBrowserCTAPressed: return "m_preonboarding_choose_browser_pressed"
+        case .onboardingIntroChooseAppIconImpressionUnique: return "m_preonboarding_choose_icon_impressions_unique"
+        case .onboardingIntroChooseCustomAppIconColorCTAPressed: return "m_preonboarding_icon_color_chosen"
+        case .onboardingIntroChooseAddressBarImpressionUnique: return "m_preonboarding_choose_address_bar_impressions_unique"
+        case .onboardingIntroBottomAddressBarSelected: return "m_preonboarding_bottom_address_bar_selected"
+
         case .onboardingContextualSearchOptionTappedUnique: return "m_onboarding_search_option_tapped_unique"
         case .onboardingContextualSiteOptionTappedUnique: return "m_onboarding_visit_site_option_tapped_unique"
         case .onboardingContextualSecondSiteVisitUnique: return "m_second_sitevisit_unique"
@@ -969,6 +987,7 @@ extension Pixel.Event {
         case .daxDialogsFireEducationCancelledUnique: return "m_dx_fe_ca_unique"
         case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
         case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
+        case .daxDialogsEndOfJourneyDismissed: return "m_dx_end_dialog_dismissed"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"
@@ -1234,6 +1253,9 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemoved: return "m_netp_vpn_configuration_removed"
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
+        case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
+        case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1269,6 +1291,7 @@ extension Pixel.Event {
         case .trackerDataReloadFailed: return "m_d_tds_r"
         case .trackerDataCouldNotBeLoaded: return "m_d_tds_l"
         case .fileStoreWriteFailed: return "m_d_fswf"
+        case .fileStoreCoordinatorFailed: return "m_d_configuration_file_coordinator_error"
         case .privacyConfigurationReloadFailed: return "m_d_pc_r"
         case .privacyConfigurationParseFailed: return "m_d_pc_p"
         case .privacyConfigurationCouldNotBeLoaded: return "m_d_pc_l"
@@ -1557,7 +1580,6 @@ extension Pixel.Event {
         case .newTabPageMessageDismissed: return "m_new_tab_page_message_dismissed"
 
         case .newTabPageFavoritesPlaceholderTapped: return "m_new_tab_page_favorites_placeholder_click"
-        case .newTabPageFavoritesInfoTooltip: return "m_new_tab_page_favorites_info_tooltip"
 
         case .newTabPageFavoritesSeeMore: return "m_new_tab_page_favorites_see_more"
         case .newTabPageFavoritesSeeLess: return "m_new_tab_page_favorites_see_less"
@@ -1619,11 +1641,11 @@ extension Pixel.Event {
         case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
             
         // MARK: Duckplayer experiment
-        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign"
-        case .duckplayerExperimentSearch: return "duckplayer_experiment_search"
-        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search"
-        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search"
-        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view"
+        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign_v2"
+        case .duckplayerExperimentSearch: return "duckplayer_experiment_search_v2"
+        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search_v2"
+        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search_v2"
+        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view_v2"
             
         }
     }

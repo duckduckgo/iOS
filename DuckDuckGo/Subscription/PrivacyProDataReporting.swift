@@ -122,7 +122,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
          appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         autofillCheck: @escaping () -> Bool = { AutofillSettingStatus.isAutofillEnabledInSettings },
+         autofillCheck: @escaping () -> Bool = { AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings },
          secureVaultMaker: @escaping () -> (any AutofillSecureVault)? = { try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) },
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,

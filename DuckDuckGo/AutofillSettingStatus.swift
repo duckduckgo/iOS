@@ -19,15 +19,45 @@
 
 import Foundation
 import LocalAuthentication
+import UIKit
 
-struct AutofillSettingStatus {
+protocol AutofillSettingStatusProtocol {
+    var deviceAuthenticationEnabled: Bool { get }
+    var isAutofillEnabledInSettings: Bool { get }
+}
 
-    static let appSettings = AppDependencyProvider.shared.appSettings
+final class AutofillSettingStatus: AutofillSettingStatusProtocol {
 
-    static var isAutofillEnabledInSettings: Bool {
+    var deviceAuthenticationEnabled: Bool
+
+    var isAutofillEnabledInSettings: Bool {
+        return deviceAuthenticationEnabled && appSettings.autofillCredentialsEnabled
+    }
+
+    private let appSettings: AppSettings
+
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.appSettings = appSettings
+
+        self.deviceAuthenticationEnabled = Self.refreshDeviceAuthenticationStatus()
+        registerForApplicationEvents()
+    }
+
+    private func registerForApplicationEvents() {
+        _ = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
+                                                   object: nil,
+                                                   queue: .main) { [weak self] _ in
+            self?.updateDeviceAuthenticationStatus()
+        }
+    }
+
+    private static func refreshDeviceAuthenticationStatus() -> Bool {
         let context = LAContext()
         var error: NSError?
-        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return appSettings.autofillCredentialsEnabled && canAuthenticate
+        return context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+    }
+
+    private func updateDeviceAuthenticationStatus() {
+        deviceAuthenticationEnabled = Self.refreshDeviceAuthenticationStatus()
     }
 }

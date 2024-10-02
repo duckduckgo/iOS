@@ -38,6 +38,7 @@ protocol DependencyProvider {
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
+    var autofillSettingStatus: AutofillSettingStatusProtocol { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
@@ -69,6 +70,7 @@ final class AppDependencyProvider: DependencyProvider {
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
+    lazy var autofillSettingStatus: AutofillSettingStatusProtocol = AutofillSettingStatus()
 
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()

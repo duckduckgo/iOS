@@ -938,6 +938,7 @@ import os.log
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
+            deviceAuthEnabled: isDeviceAuthEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:

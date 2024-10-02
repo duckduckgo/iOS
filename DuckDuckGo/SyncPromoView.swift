@@ -48,6 +48,7 @@ struct SyncPromoView: View {
                         Text(viewModel.secondaryButtonTitle)
                     }
                     .buttonStyle(SecondaryFillButtonStyle(compact: true, fullWidth: false))
+                    .accessibilityLabel(viewModel.secondaryButtonTitle)
 
                     Button {
                         viewModel.primaryButtonAction?()
@@ -55,6 +56,7 @@ struct SyncPromoView: View {
                         Text(viewModel.primaryButtonTitle)
                     }
                     .buttonStyle(PrimaryButtonStyle(compact: true, fullWidth: false))
+                    .accessibilityLabel(viewModel.primaryButtonTitle)
 
                 }
                 .padding(.top, 12)

@@ -24,6 +24,7 @@ import DuckUI
 struct SyncPromoView: View {
 
     let viewModel: SyncPromoViewModel
+    @State private var isAccessibilityHidden = true
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -31,6 +32,8 @@ struct SyncPromoView: View {
                 Group {
                     Image(viewModel.image)
                         .scaledToFit()
+                        .accessibilityHidden(true)
+                    
                     Text(viewModel.title)
                         .padding(.top, 4)
                         .frame(maxWidth: .infinity)
@@ -83,6 +86,7 @@ struct SyncPromoView: View {
             .alignmentGuide(.top) { dimension in
                 dimension[.top]
             }
+            .accessibilityHidden(true)
         }
         .background(
             RoundedRectangle(cornerRadius: 8)
@@ -90,6 +94,13 @@ struct SyncPromoView: View {
         )
         .padding(.horizontal, 20)
         .padding(.bottom, 12)
+        .accessibilityHidden(isAccessibilityHidden)
+        .onAppear {
+            // Delay accessibility activation for maestro
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                isAccessibilityHidden = false
+            }
+        }
     }
 }
 

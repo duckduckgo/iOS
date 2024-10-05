@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "b60b38bace7262e0c4a006018b7e4b060ba4b754",
-        "version" : "198.2.1"
+        "branch" : "mariusz/ntp-favorites-autocomplete",
+        "revision" : "ea9d374587747e48c355f0f5eff6b5a78ff76f03"
       }
     },
     {

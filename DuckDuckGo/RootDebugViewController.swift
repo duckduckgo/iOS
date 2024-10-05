@@ -49,6 +49,7 @@ class RootDebugViewController: UITableViewController {
         case resetSyncPromoPrompts = 677
         case resetDuckPlayerExperiment = 678
         case overrideDuckPlayerExperiment = 679
+        case addCustomBookmark = 680
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -189,6 +190,8 @@ class RootDebugViewController: UITableViewController {
             case .overrideDuckPlayerExperiment:
                 DuckPlayerLaunchExperiment().override()
                 ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
+            case .addCustomBookmark:
+                presentAddBookmarkController()
             }
         }
     }
@@ -209,6 +212,24 @@ class RootDebugViewController: UITableViewController {
                 break
             }
         }
+    }
+
+    private func presentAddBookmarkController() {
+        guard let mainVC = UIApplication.shared.keyWindow?.rootViewController as? MainViewController else {
+            return
+        }
+
+        let editor = AddOrEditBookmarkViewController.loadFromStoryboard(newBookmarkURL: "",
+                                                                        title: "",
+                                                                        markAsFavorite: false,
+                                                                        parentFolderID: nil,
+                                                                        bookmarksDatabase: mainVC.bookmarksDatabase,
+                                                                        syncService: mainVC.syncService,
+                                                                        appSettings: AppDependencyProvider.shared.appSettings,
+                                                                        sanitization: .navigational)
+
+        let controller = UINavigationController(rootViewController: editor)
+        present(controller, animated: true)
     }
 }
 

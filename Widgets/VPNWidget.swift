@@ -30,6 +30,15 @@ enum VPNStatus {
     case status(NEVPNStatus)
     case error
     case notConfigured
+
+    var isConnected: Bool {
+        switch self {
+        case .status(let status):
+            return status.isConnected
+        default:
+            return false
+        }
+    }
 }
 
 struct VPNStatusTimelineEntry: TimelineEntry {
@@ -288,10 +297,8 @@ struct VPNStatusView: View {
 
 @available(iOSApplicationExtension 17.0, *)
 struct VPNStatusWidget: Widget {
-    let kind: String = "VPNStatusWidget"
-
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
+        StaticConfiguration(kind: WidgetKind.vpn.rawValue, provider: VPNStatusTimelineProvider()) { entry in
             VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
         .configurationDisplayName(UserText.vpnWidgetGalleryDisplayName)

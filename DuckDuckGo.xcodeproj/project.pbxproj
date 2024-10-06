@@ -363,6 +363,8 @@
 		7B4DC5C22CB2AE4600EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C32CB2AF0700EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C42CB2B1D000EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
+		7B4DC5E12CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */; };
+		7B4DC5E22CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */; };
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BFC32B02CB291BB007A8E17 /* VPNControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFC32AF2CB291BB007A8E17 /* VPNControlWidget.swift */; };
@@ -1273,6 +1275,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		7B4DC5D92CB2D0F100EE5CC2 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83E282AC20BC1840005FBE88 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1648,6 +1660,7 @@
 		7B4DC5BC2CB29D8400EE5CC2 /* VPNToggleIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNToggleIntent.swift; sourceTree = "<group>"; };
 		7B4DC5BF2CB2A4A500EE5CC2 /* VPNStatusValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNStatusValueProvider.swift; sourceTree = "<group>"; };
 		7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
+		7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAutoShortcuts.swift; sourceTree = "<group>"; };
 		7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNActivationDateStore.swift; sourceTree = "<group>"; };
 		7BFC32AF2CB291BB007A8E17 /* VPNControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNControlWidget.swift; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
@@ -3748,6 +3761,7 @@
 			children = (
 				4B5C46292AF2A6E6002A4432 /* VPNIntents.swift */,
 				7B4DC5BC2CB29D8400EE5CC2 /* VPNToggleIntent.swift */,
+				7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */,
 			);
 			name = Intents;
 			sourceTree = "<group>";
@@ -6512,6 +6526,7 @@
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
 				83E282AC20BC1840005FBE88 /* Embed App Extensions */,
 				EE9286812A812BD2002B7818 /* Embed PacketTunnelProvider */,
+				7B4DC5D92CB2D0F100EE5CC2 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
@@ -6752,7 +6767,7 @@
 		84E3418A1E2F7EFB00BDBA6F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = DuckDuckGo;
 				TargetAttributes = {
@@ -7458,6 +7473,7 @@
 				C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
+				7B4DC5E22CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */,
 				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
@@ -8121,6 +8137,7 @@
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
 				4B5C462B2AF2BDC4002A4432 /* VPNIntents.swift in Sources */,
 				4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */,
+				7B4DC5E12CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
 				85DB12EB2A1FE2A4000A4A72 /* LockScreenWidgets.swift in Sources */,
 				4BD96E0E2C4DCFD7003BC32C /* VPNSnoozeLiveActivityWidget.swift in Sources */,
@@ -9470,7 +9487,6 @@
 		84E341BB1E2F7EFC00BDBA6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -9495,7 +9511,6 @@
 		84E341BC1E2F7EFC00BDBA6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -9518,7 +9533,6 @@
 		84E341BE1E2F7EFC00BDBA6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
@@ -9538,7 +9552,6 @@
 		84E341BF1E2F7EFC00BDBA6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
@@ -9971,7 +9984,6 @@
 		D664C7DF2B28A0FD00CBFA76 /* Alpha Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "DDG-AppIcon-Alpha";
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -10199,7 +10211,6 @@
 		D664C7E72B28A0FD00CBFA76 /* Alpha Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
@@ -10363,7 +10374,6 @@
 		EE5A7C472A82BBB700387C84 /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "DDG-AppIcon-Alpha";
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -10602,7 +10612,6 @@
 		EE5A7C4F2A82BBB700387C84 /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;

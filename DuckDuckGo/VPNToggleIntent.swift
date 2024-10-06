@@ -29,6 +29,7 @@ import Core
 struct VPNToggleIntent: SetValueIntent {
     static let title: LocalizedStringResource = "Toggle DuckDuckGo VPN"
     static let description: LocalizedStringResource = "Toggles the DuckDuckGo VPN"
+    static let isDiscoverable: Bool = false
 
     @Parameter(title: "Enabled")
     var value: Bool

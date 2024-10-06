@@ -28,9 +28,9 @@ struct NetworkProtectionStatusView: View {
 
     // MARK: - Tips
 
-    private let geoswitchingTip = VPNGeoswitchingTip()
-    private let snoozeTip = VPNSnoozeTip()
-    private let widgetTip = VPNWidgetTip()
+    private let geoswitchingTip = VPNChangeLocationTip()
+    private let snoozeTip = VPNUseSnoozeTip()
+    private let widgetTip = VPNAddWidgetTip()
 
     // MARK: - View
 

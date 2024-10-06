@@ -363,7 +363,6 @@
 		7B4DC5C22CB2AE4600EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C32CB2AF0700EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C42CB2B1D000EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
-		7B4DC5E12CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */; };
 		7B4DC5E22CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5E02CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift */; };
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
@@ -8137,7 +8136,6 @@
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
 				4B5C462B2AF2BDC4002A4432 /* VPNIntents.swift in Sources */,
 				4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */,
-				7B4DC5E12CB2D87C00EE5CC2 /* VPNAutoShortcuts.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
 				85DB12EB2A1FE2A4000A4A72 /* LockScreenWidgets.swift in Sources */,
 				4BD96E0E2C4DCFD7003BC32C /* VPNSnoozeLiveActivityWidget.swift in Sources */,

@@ -26,15 +26,36 @@ struct VPNAutoShortcutsiOS17: AppShortcutsProvider {
     @AppShortcutsBuilder
     static var appShortcuts: [AppShortcut] {
         AppShortcut(intent: EnableVPNIntent(),
-                    phrases: EnableVPNIntent.phrases,
+                    phrases: [
+                        "Connect \(.applicationName) VPN",
+                        "Connect the \(.applicationName) VPN",
+                        "Turn \(.applicationName) VPN on",
+                        "Turn the \(.applicationName) VPN on",
+                        "Turn on \(.applicationName) VPN",
+                        "Turn on the \(.applicationName) VPN",
+                        "Enable \(.applicationName) VPN",
+                        "Enable the \(.applicationName) VPN",
+                        "Start \(.applicationName) VPN",
+                        "Start the \(.applicationName) VPN",
+                        "Start the VPN connection with \(.applicationName)",
+                        "Secure my connection with \(.applicationName)",
+                        "Protect my connection with \(.applicationName)"
+                    ],
                     systemImageName: "globe")
         AppShortcut(intent: DisableVPNIntent(),
-                    phrases: DisableVPNIntent.phrases,
-                    systemImageName: "globe")
-        AppShortcut(intent: VPNToggleIntent(),
-                    phrases: ["Toggle \(.applicationName) VPN",
-                              "Toggle a VPN connection with \(.applicationName)",
-                              "Switch \(.applicationName) VPN on/off"],
+                    phrases: [
+                        "Disconnect \(.applicationName) VPN",
+                        "Disconnect the \(.applicationName) VPN",
+                        "Turn \(.applicationName) VPN off",
+                        "Turn the \(.applicationName) VPN off",
+                        "Turn off \(.applicationName) VPN",
+                        "Turn off the \(.applicationName) VPN",
+                        "Disable \(.applicationName) VPN",
+                        "Disable the \(.applicationName) VPN",
+                        "Stop \(.applicationName) VPN",
+                        "Stop the \(.applicationName) VPN",
+                        "Stop a VPN connection with \(.applicationName)"
+                    ],
                     systemImageName: "globe")
     }
 }

@@ -32,22 +32,7 @@ struct DisableVPNIntent: AppIntent {
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
-
-    static var phrases: [AppShortcutPhrase<DisableVPNIntent>] {
-        [
-            "Turn off VPN with \(.applicationName)",
-            "Turn the VPN off with \(.applicationName)",
-            "Turn off \(.applicationName) VPN",
-            "Turn off the \(.applicationName) VPN",
-            "Disable VPN with \(.applicationName)",
-            "Disable the VPN with \(.applicationName)",
-            "Disable \(.applicationName) VPN",
-            "Disable the \(.applicationName) VPN",
-            "Stop \(.applicationName) VPN",
-            "Stop the \(.applicationName) VPN",
-            "Stop a VPN connection with \(.applicationName)"
-        ]
-    }
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     @MainActor
     func perform() async throws -> some IntentResult {
@@ -85,7 +70,6 @@ struct DisableVPNIntent: AppIntent {
             return .result()
         }
     }
-
 }
 
 @available(iOS 17.0, *)
@@ -95,24 +79,7 @@ struct EnableVPNIntent: AppIntent {
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
     static let openAppWhenRun: Bool = false
     static let isDiscoverable: Bool = true
-
-    static var phrases: [AppShortcutPhrase<EnableVPNIntent>] {
-        [
-            "Turn on VPN with \(.applicationName)",
-            "Turn {the} VPN on with \(.applicationName)",
-            "Turn on \(.applicationName) VPN",
-            "Turn on the \(.applicationName) VPN",
-            "Enable VPN with \(.applicationName)",
-            "Enable the VPN with \(.applicationName)",
-            "Enable \(.applicationName) VPN",
-            "Enable the \(.applicationName) VPN",
-            "Start \(.applicationName) VPN",
-            "Start the \(.applicationName) VPN",
-            "Start the VPN connection with \(.applicationName)",
-            "Secure my connection with \(.applicationName)",
-            "Protect my connection with \(.applicationName)"
-        ]
-    }
+    static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
 
     @MainActor
     func perform() async throws -> some IntentResult {

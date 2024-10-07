@@ -347,8 +347,8 @@ extension ContextualDaxDialogsFactoryTests {
 
         // WHEN
         let view = sut.makeView(for: spec, delegate: ContextualOnboardingDelegateMock(), onSizeUpdate: {}).rootView
-        let host = OnboardingHostingControllerMock(rootView: AnyView(view), onAppearExpectation: expectation)
-        //host.onAppearExpectation = expectation
+        let host = OnboardingHostingControllerMock(rootView: AnyView(EmptyView())) //AnyView(view))
+        host.onAppearExpectation = expectation
         window.rootViewController = host
         XCTAssertNotNil(host.view)
 

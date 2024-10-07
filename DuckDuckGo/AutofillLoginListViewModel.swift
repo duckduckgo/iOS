@@ -469,10 +469,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func updateViewState() {
         var newViewState: AutofillLoginListViewModel.ViewState
         
-        if authenticator.state == .loggedOut && !authenticationNotRequired {
-            newViewState = .authLocked
-        } else if authenticator.state == .notAvailable {
+        if !authenticator.canAuthenticate() {
             newViewState = .noAuthAvailable
+        } else if authenticator.state == .loggedOut && !authenticationNotRequired {
+            newViewState = .authLocked
         } else if isSearching {
             if sections.count == 0 {
                 newViewState = .searchingNoResults

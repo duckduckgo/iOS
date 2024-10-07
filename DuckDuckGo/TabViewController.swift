@@ -1554,7 +1554,7 @@ extension TabViewController: WKNavigationDelegate {
     private func checkLoginDetectionAfterNavigation() {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
                                                       currentURL: url,
-                                                      isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
+                                                      isAutofillEnabled: AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings,
                                                       saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
                                                       saveLoginPromptIsPresenting: saveLoginPromptIsPresenting)
            ?? false {
@@ -2668,7 +2668,7 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
 
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-        guard AutofillSettingStatus.isAutofillEnabledInSettings,
+        guard AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
 
@@ -2706,7 +2706,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
-        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
+        let isEnabled = AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings &&
                         featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
                         !isLinkPreview
         let isDataProtected = !UIApplication.shared.isProtectedDataAvailable
@@ -2726,7 +2726,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
         
         if let credentials = data.credentials,
-            AutofillSettingStatus.isAutofillEnabledInSettings,
+            AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
             if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
@@ -2756,7 +2756,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
-        if !AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
+        if !AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
             completionHandler(nil)
             return
         }
@@ -2890,7 +2890,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     private func buildContentScopePropertiesForDomain(_ domain: String) -> ContentScopeProperties {
         var supportedFeatures = ContentScopeFeatureToggles.supportedFeaturesOniOS
 
-        if AutofillSettingStatus.isAutofillEnabledInSettings,
+        if AppDependencyProvider.shared.autofillSettingStatus.isAutofillEnabledInSettings,
            featureFlagger.isFeatureOn(.autofillCredentialsSaving),
            autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain) {
             supportedFeatures.passwordGeneration = false

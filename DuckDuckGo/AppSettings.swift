@@ -71,6 +71,7 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     func setAutofillIsNewInstallForOnByDefault()
     var autofillImportViaSyncStart: Date? { get set }
     func clearAutofillImportViaSyncStart()
+    var autofillDeviceAuthStatusChecked: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
 

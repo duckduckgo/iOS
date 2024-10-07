@@ -71,6 +71,8 @@ class AppSettingsMock: AppSettings {
         autofillImportViaSyncStart = nil
     }
 
+    var autofillDeviceAuthStatusChecked: Bool = false
+
     var voiceSearchEnabled: Bool = false
 
     var widgetInstalled: Bool = false

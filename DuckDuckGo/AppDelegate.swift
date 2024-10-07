@@ -928,9 +928,17 @@ import os.log
     }
 
     private func setUpAutofillPixelReporter() {
+        let isDeviceAuthEnabled = AppDependencyProvider.shared.autofillSettingStatus.deviceAuthenticationEnabled
+
+        if !AppDependencyProvider.shared.appSettings.autofillDeviceAuthStatusChecked {
+            Pixel.fire(pixel: isDeviceAuthEnabled ? .autofillDeviceCapabilityCapable : .autofillDeviceCapabilityDeviceAuthDisabled)
+            AppDependencyProvider.shared.appSettings.autofillDeviceAuthStatusChecked = true
+        }
+
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
+            deviceAuthEnabled: isDeviceAuthEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:

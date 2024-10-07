@@ -310,6 +310,9 @@ public class AppUserDefaults: AppSettings {
         autofillImportViaSyncStart = nil
     }
 
+    @UserDefaultsWrapper(key: .autofillDeviceAuthStatusChecked, defaultValue: false)
+    var autofillDeviceAuthStatusChecked: Bool
+
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 

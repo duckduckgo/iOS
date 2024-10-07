@@ -132,9 +132,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage
 
         return OnboardingFirstSearchDoneDialog(message: message, shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
-            //.onFirstAppear { [weak self] in
-            //    self?.contextualOnboardingPixelReporter.trackScreenImpression(event: afterSearchPixelEvent)
-            //}
+            .onFirstAppear { [weak self] in
+                self?.contextualOnboardingPixelReporter.trackScreenImpression(event: afterSearchPixelEvent)
+            }
     }
 
     private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {

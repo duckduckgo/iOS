@@ -2819,6 +2819,15 @@ extension TabViewController: SecureVaultManagerDelegate {
                                              useLargeDetent: Bool,
                                              onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                                              completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+
+        var responseSent: Bool = false
+
+        let sendResponse: (SecureVaultModels.WebsiteAccount?) -> Void = { account in
+            guard !responseSent else { return }
+            responseSent = true
+            completionHandler(account)
+        }
+
         let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                              domain: domain,
                                                                              trigger: trigger,
@@ -2834,10 +2843,10 @@ extension TabViewController: SecureVaultManagerDelegate {
                     onAccountSelected(account)
                 },
                                                          completionHandler: { account in
-                    completionHandler(account)
+                    sendResponse(account)
                 })
             } else {
-                completionHandler(account)
+                sendResponse(account)
             }
         })
 

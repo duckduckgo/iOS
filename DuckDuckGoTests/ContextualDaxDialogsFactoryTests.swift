@@ -341,13 +341,13 @@ extension ContextualDaxDialogsFactoryTests {
 
     func testDialogDefinedBy(spec: DaxDialogs.BrowsingSpec, firesEvent event: Pixel.Event) {
         // GIVEN
-        let expectation = self.expectation(description: "asd")//#function)
+        let expectation = self.expectation(description: #function)
         XCTAssertFalse(pixelReporterMock.didCallTrackScreenImpressionCalled)
         XCTAssertNil(pixelReporterMock.capturedScreenImpression)
 
         // WHEN
         let view = sut.makeView(for: spec, delegate: ContextualOnboardingDelegateMock(), onSizeUpdate: {}).rootView
-        let host = OnboardingHostingControllerMock(rootView: AnyView(EmptyView())) //AnyView(view))
+        let host = OnboardingHostingControllerMock(rootView: AnyView(view))
         host.onAppearExpectation = expectation
         window.rootViewController = host
         XCTAssertNotNil(host.view)

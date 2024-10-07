@@ -119,13 +119,13 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
             { [weak delegate, weak self] in
-                //onSizeUpdate()
-                //delegate?.didAcknowledgeContextualOnboardingSearch()
-                //self?.contextualOnboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
+                onSizeUpdate()
+                delegate?.didAcknowledgeContextualOnboardingSearch()
+                self?.contextualOnboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
             }
         } else {
             { [weak delegate] in
-                //delegate?.didTapDismissContextualOnboardingAction()
+                delegate?.didTapDismissContextualOnboardingAction()
             }
         }
 

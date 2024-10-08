@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/netp/featureflag",
-        "revision" : "ea54c9cd4bdadce0de3b4cb39ab9c5ab03d73e42"
+        "revision" : "4e6a8da6a088439565ed7f6a2ac83e83ad7fd10e",
+        "version" : "198.3.1"
       }
     },
     {

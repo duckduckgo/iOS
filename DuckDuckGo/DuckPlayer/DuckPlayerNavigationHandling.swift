@@ -38,4 +38,6 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleEvent(event: DuckPlayerNavigationEvent,
                      url: URL?,
                      navigationAction: WKNavigationAction?)
+    func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    
 }

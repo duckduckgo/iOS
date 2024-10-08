@@ -33,6 +33,7 @@ final class DuckPlayerNavigationHandler {
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
+    var navigationType: WKNavigationType = .other
     var experiment: DuckPlayerLaunchExperimentHandling
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
@@ -338,7 +339,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                                webView: WKWebView) {
         
         Logger.duckPlayer.debug("Handling DecidePolicyFor for \(navigationAction.request.url?.absoluteString ?? "")")
-                
+        
+        // This means navigation originated in user Event
+        // and not automatic.  This is used further to
+        // determine how navigation is performed (new tab, etc)
+        // Resets on next attachment
+        if navigationAction.navigationType == .linkActivated {
+            self.navigationType = navigationAction.navigationType
+        }
+        
         guard let url = navigationAction.request.url else {
             completion(.cancel)
             return
@@ -403,6 +412,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
+        
+        // Assume JS Navigation is user-triggered
+        self.navigationType = .linkActivated
         
         handleURLChange(url: url, webView: webView)
     }
@@ -491,12 +503,25 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     // Handle custom events
+    // This method is used to delegate tasks to DuckPlayerHandler, such as firing pixels and etc.
     func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction?) {
-        
         switch event {
         case .youtubeVideoPageVisited:
             handleYouTubePageVisited(url: url, navigationAction: navigationAction)
         }
+    }
+    
+    // Determine if the links should be open in a new tab, based on the User setting
+    func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
+        // let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let openInNewTab = true
+        let isDuckPlayer = navigationAction.request.url?.isDuckPlayer ?? false
+        let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
+        
+        if openInNewTab && isDuckPlayer && navigationType == .linkActivated && isDuckPlayerEnabled {
+            return true
+        }
+        return false
     }
     
 }

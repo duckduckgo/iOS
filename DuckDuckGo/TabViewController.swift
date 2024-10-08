@@ -1886,7 +1886,13 @@ extension TabViewController: WKNavigationDelegate {
             duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                      url: url,
                                                      navigationAction: navigationAction)
-            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            
+            // Validate Duck Player setting to open in new tab or locally
+            if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {
+                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: nil)
+            } else {
+                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            }
             completion(.cancel)
             return
 

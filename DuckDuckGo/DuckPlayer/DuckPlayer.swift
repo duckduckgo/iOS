@@ -184,6 +184,9 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
     
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
+        // If the user is in the 'control' group, sending 'nil' effectively disables
+        // Duckplayer in SERP, showing old overlays.
+        // Fixes: https://app.asana.com/0/1207252092703676/1208450923559111
         let duckPlayerExperiment = DuckPlayerLaunchExperiment()
         if duckPlayerExperiment.isEnrolled && duckPlayerExperiment.isExperimentCohort {
             return encodeUserValues()

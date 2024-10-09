@@ -634,9 +634,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = """
 Endpoint: \(AppDependencyProvider.shared.vpnSettings.selectedEnvironment.endpointURL.absoluteString)
 
-isPrivacyProLaunched: \(vpnVisibility.isPrivacyProLaunched() ? "YES" : "NO")
-
-shouldMonitorEntitlement: \(vpnVisibility.shouldMonitorEntitlement() ? "YES" : "NO")
 shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
 """
         case .none:

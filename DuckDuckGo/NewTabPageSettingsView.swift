@@ -51,14 +51,13 @@ struct NewTabPageSettingsView: View {
         if sectionsSettingsModel.enabledItems.contains(.shortcuts) {
             GeometryReader { geometry in
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 0) {
                         sectionsList(withFrameUpdates: true, geometry: geometry)
                             .withoutScroll()
                             .frame(height: listHeight)
 
-                        EditableShortcutsView(model: shortcutsSettingsModel)
+                        EditableShortcutsView(model: shortcutsSettingsModel, geometry: geometry)
                             .padding(.horizontal, Metrics.horizontalPadding)
-                            .coordinateSpace(name: Constant.scrollCoordinateSpaceName)
                     }
                 }
             }
@@ -105,11 +104,11 @@ struct NewTabPageSettingsView: View {
         ForEach(sectionsSettingsModel.itemsSettings, id: \.item) { setting in
             switch setting.item {
             case .favorites:
-                NewTabPageSettingsSectionItemView(title: "Favorites",
+                NewTabPageSettingsSectionItemView(title: UserText.newTabPageSettingsSectionNameFavorites,
                                                   iconResource: .favorite24,
                                                   isEnabled: setting.isEnabled)
             case .shortcuts:
-                NewTabPageSettingsSectionItemView(title: "Shortcuts",
+                NewTabPageSettingsSectionItemView(title: UserText.newTabPageSettingsSectionNameShortcuts,
                                                   iconResource: .shortcut24,
                                                   isEnabled: setting.isEnabled)
             }
@@ -119,16 +118,8 @@ struct NewTabPageSettingsView: View {
     }
 }
 
-private struct Constant {
-    static let scrollCoordinateSpaceName = "Scroll"
-}
-
-private extension CoordinateSpace {
-    static let scroll = CoordinateSpace.named(Constant.scrollCoordinateSpaceName)
-}
-
 private struct Metrics {
-    static let horizontalPadding = 16.0
+    static let horizontalPadding = 24.0
     static let initialListHeight = 5000.0
 }
 

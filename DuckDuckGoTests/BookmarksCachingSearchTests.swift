@@ -46,7 +46,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     
     let simpleStore = MockBookmarksSearchStore()
     let urlStore = MockBookmarksSearchStore()
-    
+    let quotedTitleStore = MockBookmarksSearchStore()
+
     enum Entry: String {
         case b1 = "bookmark test 1"
         case b2 = "test bookmark 2"
@@ -61,6 +62,9 @@ class BookmarksCachingSearchTests: XCTestCase {
         case urlExample2 = "Test E 2"
         case urlNasa = "Test N 1 Duck"
         case urlDDG = "Test D 1"
+
+        case quotedTitle1 = "\"Cats and Dogs\""
+        case quotedTitle2 = "«Рукописи не горят»: первый замысел"
     }
     
     private var mockObjectID: NSManagedObjectID!
@@ -75,20 +79,29 @@ class BookmarksCachingSearchTests: XCTestCase {
         mockObjectID = BookmarkUtils.fetchRootFolder(inMemoryStore.viewContext)?.objectID
         XCTAssertNotNil(mockObjectID)
     
-        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b1.rawValue, url: url, isFavorite: false),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b2.rawValue, url: url, isFavorite: false),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12.rawValue, url: url, isFavorite: false),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12a.rawValue, url: url, isFavorite: false),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f1.rawValue, url: url, isFavorite: true),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f2.rawValue, url: url, isFavorite: true),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12.rawValue, url: url, isFavorite: true),
-                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12a.rawValue, url: url, isFavorite: true)]
-        
+        simpleStore.dataSet = [
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b1.rawValue, url: url, isFavorite: false),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b2.rawValue, url: url, isFavorite: false),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12.rawValue, url: url, isFavorite: false),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12a.rawValue, url: url, isFavorite: false),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f1.rawValue, url: url, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f2.rawValue, url: url, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12.rawValue, url: url, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12a.rawValue, url: url, isFavorite: true),
+        ]
+
         urlStore.dataSet = [
             BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample1.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
             BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
             BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!, isFavorite: true),
-            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlDDG.rawValue, url: url, isFavorite: true)]
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlDDG.rawValue, url: url, isFavorite: true),
+        ]
+
+        quotedTitleStore.dataSet = [
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.quotedTitle1.rawValue, url: url, isFavorite: false),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.quotedTitle2.rawValue, url: url, isFavorite: false),
+        ]
+
     }
     
     override func tearDown() {
@@ -96,6 +109,34 @@ class BookmarksCachingSearchTests: XCTestCase {
         inMemoryStore = nil
         
         super.tearDown()
+    }
+
+    func testWhenSearchingForCharactersThenCharactersAtTheStartAreMatched() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: quotedTitleStore)
+        var bookmarks = engine.search(query: "\"")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "«")
+        XCTAssertEqual(bookmarks.count, 1)
+    }
+
+    func testWhenSearchingForWordsAtStartWithQuotesThenWordsAreMatched() async throws {
+
+        let engine = BookmarksCachingSearch(bookmarksStore: quotedTitleStore)
+        var bookmarks = engine.search(query: "Cats")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "Р")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "Ру")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "Рук")
+        XCTAssertEqual(bookmarks.count, 1)
+
+        bookmarks = engine.search(query: "Nope")
+        XCTAssertEqual(bookmarks.count, 0)
     }
 
     func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() async throws {

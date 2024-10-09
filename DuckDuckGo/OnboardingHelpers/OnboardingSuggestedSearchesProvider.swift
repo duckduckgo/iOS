@@ -21,19 +21,34 @@ import Foundation
 import Onboarding
 
 struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding {
-    private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
+    private static let imageSearch = "!image "
 
-    init(countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current) {
+    private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
+    private let onboardingManager: OnboardingHighlightsManaging
+
+    init(
+        countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current,
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
+    ) {
         self.countryAndLanguageProvider = countryAndLanguageProvider
+        self.onboardingManager = onboardingManager
     }
 
     var list: [ContextualOnboardingListItem] {
-        return [
-            option1,
-            option2,
-            option3,
-            surpriseMe
-        ]
+        if onboardingManager.isOnboardingHighlightsEnabled {
+            [
+               option1,
+               option2,
+               surpriseMe
+           ]
+        } else {
+            [
+               option1,
+               option2,
+               option3,
+               surpriseMe
+           ]
+        }
     }
 
     private var country: String? {
@@ -55,7 +70,9 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
 
     private var option2: ContextualOnboardingListItem {
         var search: String
-        if country == "us" {
+        // ISO 3166-1 Region capitalized.
+        // https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
+        if isUSCountry {
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2English
         } else {
             search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2International
@@ -69,13 +86,21 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
     }
 
     private var surpriseMe: ContextualOnboardingListItem {
-        var search: String
-        if country == "us" {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish
+        let search = if onboardingManager.isOnboardingHighlightsEnabled {
+            Self.imageSearch + UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
         } else {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
+            isUSCountry ?
+            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish :
+            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
         }
+
         return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
+    }
+
+    private var isUSCountry: Bool {
+        // ISO 3166-1 Region capitalized.
+        // https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
+        country == "US"
     }
 
 }

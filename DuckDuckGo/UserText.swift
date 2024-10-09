@@ -396,7 +396,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save password?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo Passwords & Autofill stores passwords securely on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginSecurityMessage = NSLocalizedString("autofill.save-login.security.message", value: "Securely store your password on device with DuckDuckGo Passwords & Autofill.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNeverPromptCTA = NSLocalizedString("autofill.save-login.never-prompt.CTA", value: "Never Ask for This Site", comment: "CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin")
 
     public static func autofillUpdatePassword(for title: String) -> String {
@@ -701,8 +701,10 @@ public struct UserText {
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Passwords from other browsers or apps can be imported using the desktop version of the DuckDuckGo browser.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle.first.paragraph", value:"You can import saved passwords from another browser into DuckDuckGo.", comment: "Subtitle for view displayed when no autofill passwords have been saved")
     public static let autofillEmptyViewButtonTitle = NSLocalizedString("autofill.logins.empty-view.button.title", value:"Import Passwords", comment: "Title for button to Import Passwords when autofill has no items")
+
+    public static let autofillLearnMoreLinkTitle = NSLocalizedString("autofill.learn.more.link.title", value: "Learn More", comment: "A link that takes the user to the DuckDuckGo help pages explaining password managers")
 
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
@@ -726,6 +728,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Passwords", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search passwords", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
+    public static let autofillLoginListSettingsFooterMarkdown = NSLocalizedString("autofill.logins.list.settings.footer.markdown", value: "Passwords are encrypted. Nobody but you can see them, not even us. [Learn More](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)", comment: "Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More.")
+    public static let autofillLoginListSettingsFooterFallback = NSLocalizedString("autofill.logins.list.settings.footer.fallback", value: "Passwords are encrypted. Nobody but you can see them, not even us.", comment: "Subtext under Autofill Settings briefly explaining security to alleviate user concerns.")
 
     public static let autofillResetNeverSavedActionTitle = NSLocalizedString("autofill.logins.list.never.saved.reset.action.title", value:"If you reset excluded sites, you will be prompted to save your password next time you sign in to any of these sites.", comment: "Alert title")
     public static let autofillResetNeverSavedActionConfirmButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.confirm", value: "Reset Excluded Sites", comment: "Confirm button to reset list of never saved sites")
@@ -1247,6 +1251,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autocompleteHistoryWarningTitle = NSLocalizedString("autocomplete.history.warning.title", value: "Same privacy.\nBetter search suggestions!", comment: "Title for message show in suggestions")
     public static let autocompleteHistoryWarningDescription = NSLocalizedString("autocomplete.history.warning.message", value: "Search suggestions now include your recently visited sites. Turn off in Settings, or clear anytime with the 🔥 Fire Button.", comment: "The message text shown in suggestions")
     public static let autocompleteSearchDuckDuckGo = NSLocalizedString("autocomplete.history.search.duckduckgo", value: "Search DuckDuckGo", comment: "Subtitle for search history items")
+    public static let autocompleteSwitchToTab = NSLocalizedString("autocomplete.switch.to.tab", value: "Switch to Tab", comment: "Switch to tab hint")
 
     // Site not working
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
@@ -1302,10 +1307,12 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: Settings
 
-    public static let newTabPageSettingsTitle = NSLocalizedString("new.tab.page.settings.title", value: "Customize New Tab", comment: "Title of New Tab Page preferences page.")
+    public static let newTabPageSettingsTitle = NSLocalizedString("new.tab.page.settings.title", value: "Customize New Tab Page", comment: "Title of New Tab Page preferences page.")
     public static let newTabPageSettingsSectionsHeaderTitle = NSLocalizedString("new.tab.page.settings.sections.header.title", value: "SECTIONS", comment: "Header title of the group allowing for setting up new tab page sections")
     public static let newTabPageSettingsSectionsDescription = NSLocalizedString("new.tab.page.settings.sections.description", value: "Show, hide, and reorder sections on the new tab page", comment: "Footer of the group allowing for setting up new tab page sections")
     public static let newTabPageSettingsShortcutsHeaderTitle = NSLocalizedString("new.tab.page.settings.shortcuts.header.title", value: "SHORTCUTS", comment: "Header title of the shortcuts in New Tab Page preferences.")
+    public static let newTabPageSettingsSectionNameFavorites = NSLocalizedString("new.tab.page.settings.section.name.favorites", value: "Favorites", comment: "Name of favorites section setting")
+    public static let newTabPageSettingsSectionNameShortcuts = NSLocalizedString("new.tab.page.settings.section.name.shortcuts", value: "Shortcuts", comment: "Name of shortcuts section setting")
 
     // MARK: Intro message
 
@@ -1365,10 +1372,10 @@ But if you *do* want a peek under the hood, you can find more information about 
         }
         
         enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
 
             enum Features {
-                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
+                public static let trackerBlockers = NSLocalizedString("onboarding.highlights.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
                 public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
                 public static let eraseBrowsingData = NSLocalizedString("onboarding.highlights.browsers.features.eraseBrowsingData.title", value: "Erase browsing data swiftly", comment: "Message to highlight browser capability of swiftly erase browsing data")
@@ -1383,7 +1390,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 
         enum AddressBarPosition {
             public static let title = NSLocalizedString("onboarding.highlights.addressBarPosition.title", value: "Where should I put your address bar?", comment: "The title of the onboarding dialog popup to select the preferred address bar position.")
-            public static let topTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.top.title", value: "Top (Default)", comment: "The title of the option to set the address bar to the top.")
+            public static let topTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.top.title", value: "Top", comment: "The title of the option to set the address bar to the top.")
+            public static let defaultOption = NSLocalizedString("onboarding.highlights.addressBarPosition.default", value: "(default)", comment: "Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default)")
             public static let topMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.top.message", value: "Easy to see", comment: "The message of the option to set the address bar to the top.")
             public static let bottomTitle = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.title", value: "Bottom", comment: "The title of the option to set the address bar to the bottom.")
             public static let bottomMessage = NSLocalizedString("onboarding.highlights.addressBarPosition.bottom.message", value: "Easy to reach", comment: "The message of the option to set the address bar to the bottom.")
@@ -1394,6 +1402,7 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.highlights.try-a-search.message", value: "Your DuckDuckGo searches are always private.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are private")
             static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.highlights.first-search-done.message", value: "That’s DuckDuckGo Search! Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
             static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.highlights.final-screen.message", value: "Remember: every time you browse with me a creepy ad loses its wings.", comment: "Message of the last screen of the onboarding to the browser app.")
+            static let tryASearchOptionSurpriseMe = NSLocalizedString("contextual.onboarding.highlights.try-search.surprise-me", value: "baby ducklings", comment: "Browser Search query for baby ducklings")
         }
 
         enum FireDialog {

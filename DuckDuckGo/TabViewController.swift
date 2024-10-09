@@ -186,6 +186,8 @@ class TabViewController: UIViewController {
 
     let syncService: DDGSyncing
 
+    private let daxDialogsDebouncer = Debouncer(mode: .common)
+
     public var url: URL? {
         willSet {
             if newValue != url {
@@ -985,7 +987,13 @@ class TabViewController: UIViewController {
         webView.scrollView.refreshControl = isEnabled ? refreshControl : nil
     }
 
-    private var didGoBackForward: Bool = false
+    private var didGoBackForward: Bool = false {
+        didSet {
+            if didGoBackForward {
+                contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+            }
+        }
+    }
 
     private func resetDashboardInfo() {
         if let url = url {
@@ -993,7 +1001,7 @@ class TabViewController: UIViewController {
                 self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                privacyInfo = makePrivacyInfo(url: url)
+                privacyInfo = makePrivacyInfo(url: url, shouldCheckServerTrust: true)
             }
         } else {
             privacyInfo = nil
@@ -1001,14 +1009,15 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    public func makePrivacyInfo(url: URL, shouldCheckServerTrust: Bool = false) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findParentEntityOrFallback(forHost: host)
 
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
-                                      protectionStatus: makeProtectionStatus(for: host))
+                                      protectionStatus: makeProtectionStatus(for: host),
+                                      shouldCheckServerTrust: shouldCheckServerTrust)
         let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
         if let isValid {
             privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
@@ -1446,7 +1455,11 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
-        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        // Present the Dax dialog with a delay to mitigate issue where user script detec trackers after the dialog is show to the user
+        // Debounce to avoid showing multiple animations on redirects. e.g. !image baby ducklings
+        daxDialogsDebouncer.debounce(for: 0.8) { [weak self] in
+            self?.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        }
 
         Task { @MainActor in
             if await webView.isCurrentSiteReferredFromDuckDuckGo {
@@ -1495,7 +1508,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if !DefaultVariantManager().isContextualDaxDialogsEnabled {
             isShowingFullScreenDaxDialog = true
         }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
@@ -3015,6 +3028,9 @@ extension TabViewController: ContextualOnboardingEventDelegate {
     }
 
     func didTapDismissContextualOnboardingAction() {
+        // Reset last visited onboarding site and last dax dialog shown.
+        contextualOnboardingLogic.setDaxDialogDismiss()
+
         contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
     }
 

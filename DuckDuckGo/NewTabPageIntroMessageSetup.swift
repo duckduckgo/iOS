@@ -21,24 +21,24 @@ import BrowserServicesKit
 import Core
 
 struct NewTabPageIntroMessageSetup {
-    let appSettings: AppSettings
+    let storage: NewTabPageIntroDataStoring
     let statistics: StatisticsStore
     let newTabPageManager: NewTabPageManaging
 
-    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+    init(storage: NewTabPageIntroDataStoring = NewTabPageIntroDataUserDefaultsStorage(),
          statistics: StatisticsStore = StatisticsUserDefaults(),
          newTabPageManager: NewTabPageManaging = NewTabPageManager()) {
-        self.appSettings = appSettings
+        self.storage = storage
         self.statistics = statistics
         self.newTabPageManager = newTabPageManager
     }
 
     func perform() {
         
-        let isNotSetUp = appSettings.newTabPageIntroMessageEnabled == nil
+        let isNotSetUp = storage.newTabPageIntroMessageEnabled == nil
         guard newTabPageManager.isAvailableInPublicRelease && isNotSetUp else { return }
 
         // For new users we **don't** want intro message
-        appSettings.newTabPageIntroMessageEnabled = statistics.installDate != nil
+        storage.newTabPageIntroMessageEnabled = statistics.installDate != nil
     }
 }

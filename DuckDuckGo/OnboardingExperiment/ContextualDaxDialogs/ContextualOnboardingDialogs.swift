@@ -24,7 +24,7 @@ import DuckUI
 
 struct OnboardingTrySearchDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage)
+    let message: String
     let viewModel: OnboardingSearchSuggestionsViewModel
 
     var body: some View {
@@ -33,7 +33,7 @@ struct OnboardingTrySearchDialog: View {
                 ContextualDaxDialogContent(
                     title: title,
                     titleFont: Font(UIFont.daxTitle3()),
-                    message: message,
+                    message: NSAttributedString(string: message),
                     list: viewModel.itemsList,
                     listAction: viewModel.listItemPressed
                 )
@@ -95,8 +95,8 @@ struct OnboardingFireButtonDialogContent: View {
 }
 
 struct OnboardingFirstSearchDoneDialog: View {
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage)
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+    let message: NSAttributedString
 
     @State private var showNextScreen: Bool = false
 
@@ -185,7 +185,7 @@ struct OnboardingTrackersDoneDialog: View {
 
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage)
+    let message: String
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     
     let highFiveAction: () -> Void
@@ -196,7 +196,7 @@ struct OnboardingFinalDialog: View {
                 ContextualDaxDialogContent(
                     title: title,
                     titleFont: Font(UIFont.daxTitle3()),
-                    message: message,
+                    message: NSAttributedString(string: message),
                     customActionView: AnyView(
                         OnboardingCTAButton(
                             title: cta,
@@ -226,7 +226,7 @@ struct OnboardingCTAButton: View {
 // MARK: - Preview
 
 #Preview("Try Search") {
-    OnboardingTrySearchDialog(viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
+    OnboardingTrySearchDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
@@ -248,12 +248,12 @@ struct OnboardingCTAButton: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
+    OnboardingFirstSearchDoneDialog(message: NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage), shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
         .padding()
 }
 
 #Preview("Final Dialog") {
-    OnboardingFinalDialog(highFiveAction: {})
+    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, highFiveAction: {})
         .padding()
 }
 

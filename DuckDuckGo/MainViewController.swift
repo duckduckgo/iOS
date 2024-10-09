@@ -128,7 +128,8 @@ class MainViewController: UIViewController {
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-    
+    private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
+
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
@@ -397,7 +398,9 @@ class MainViewController: UIViewController {
             SuggestionTrayViewController(coder: coder,
                                          favoritesViewModel: self.favoritesViewModel,
                                          bookmarksDatabase: self.bookmarksDatabase,
-                                         historyManager: self.historyManager)
+                                         historyManager: self.historyManager,
+                                         tabsModel: self.tabManager.model,
+                                         featureFlagger: self.featureFlagger)
         }) else {
             assertionFailure()
             return
@@ -633,6 +636,7 @@ class MainViewController: UIViewController {
 
             UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
                 self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
+                self.newTabPageViewController?.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: max(52, keyboardHeight), right: 0)
             }
         }
 
@@ -794,7 +798,8 @@ class MainViewController: UIViewController {
                                                       privacyProDataReporting: privacyProDataReporter,
                                                       variantManager: variantManager,
                                                       newTabDialogFactory: newTabDaxDialogFactory,
-                                                      newTabDialogTypeProvider: DaxDialogs.shared)
+                                                      newTabDialogTypeProvider: DaxDialogs.shared,
+                                                      faviconLoader: faviconLoader)
 
             controller.delegate = self
             controller.shortcutsDelegate = self
@@ -847,7 +852,7 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if variantManager.isContextualDaxDialogsEnabled {
             // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
             currentTab?.dismissContextualDaxFireDialog()
             ViewHighlighter.hideAll()
@@ -1381,14 +1386,18 @@ class MainViewController: UIViewController {
 
     private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
-            self?.hideNotification()
-            self?.brokenSitePromptLimiter.didDismissToast()
-            self?.brokenSitePromptViewHostingController = nil
+            Task { @MainActor in
+                self?.hideNotification()
+                self?.brokenSitePromptLimiter.didDismissToast()
+                self?.brokenSitePromptViewHostingController = nil
+            }
         }, onDidSubmit: { [weak self] in
-            self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
-            self?.hideNotification()
-            self?.brokenSitePromptLimiter.didOpenReport()
-            self?.brokenSitePromptViewHostingController = nil
+            Task { @MainActor in
+                self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+                self?.hideNotification()
+                self?.brokenSitePromptLimiter.didOpenReport()
+                self?.brokenSitePromptViewHostingController = nil
+            }
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
     }
@@ -2081,16 +2090,26 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 Logger.lifecycle.error("Couldn‘t form URL for suggestion: \(phrase, privacy: .public)")
             }
+
         case .website(url: let url):
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {
                 loadUrl(url)
             }
+
         case .bookmark(_, url: let url, _, _):
             loadUrl(url)
+
         case .historyEntry(_, url: let url, _):
             loadUrl(url)
+
+        case .openTab(title: _, url: let url):
+            if homeViewController != nil, let tab = tabManager.model.currentTab {
+                self.closeTab(tab)
+            }
+            loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: .noAttribution)
+
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
@@ -2112,6 +2131,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             viewCoordinator.omniBar.textField.text = title
         case .historyEntry(title: let title, _, _):
             viewCoordinator.omniBar.textField.text = title
+        case .openTab: break // no-op
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
@@ -2129,7 +2149,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             }
         case .website(url: let url):
             viewCoordinator.omniBar.textField.text = url.absoluteString
-        case .bookmark(title: let title, _, _, _):
+        case .bookmark(title: let title, _, _, _), .openTab(title: let title, url: _):
             viewCoordinator.omniBar.textField.text = title
             if title.hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
@@ -2142,6 +2162,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             if (title ?? url.absoluteString).hasPrefix(query) {
                 viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
+
         case .unknown(value: let value), .internalPage(title: let value, url: _):
             assertionFailure("Unknown suggestion: \(value)")
         }
@@ -2395,10 +2416,6 @@ extension MainViewController: TabDelegate {
             tab.findInPage?.done()
             tab.findInPage = nil
         }
-    }
-    
-    func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation(showNextDaxDialog: true)
     }
     
     func tabDidRequestFireButtonPulse(tab: TabViewController) {
@@ -2730,8 +2747,8 @@ extension MainViewController: AutoClearWorker {
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
 
-            if self.variantManager.isSupported(feature: .newOnboardingIntro) {
-                DaxDialogs.shared.setFireEducationMessageSeen()
+            if self.variantManager.isContextualDaxDialogsEnabled {
+                DaxDialogs.shared.clearedBrowserData()
             }
         }
     }

@@ -22,12 +22,24 @@ import Onboarding
 @testable import DuckDuckGo
 
 class OnboardingSuggestedSearchesProviderTests: XCTestCase {
-
+    private var onboardingManagerMock: OnboardingManagerMock!
     let userText = UserText.DaxOnboardingExperiment.ContextualOnboarding.self
+    let highlightsUserText = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.self
+    static let imageSearch = "!image "
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        onboardingManagerMock = OnboardingManagerMock()
+    }
+
+    override func tearDownWithError() throws {
+        onboardingManagerMock = nil
+        try super.tearDownWithError()
+    }
 
     func testSearchesListForEnglishLanguageAndUsRegion() {
-        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "us", languageCode: "en")
-        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider)
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "US", languageCode: "en")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
 
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1English),
@@ -40,8 +52,8 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
     }
 
     func testSearchesListForNonEnglishLanguageAndNonUSRegion() {
-        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "fr", languageCode: "fr")
-        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider)
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "FR", languageCode: "fr")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
 
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
@@ -54,8 +66,8 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
     }
 
     func testSearchesListForUSRegionAndNonEnglishLanguage() {
-        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "us", languageCode: "es")
-        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider)
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "US", languageCode: "es")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
 
         let expectedSearches = [
             ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
@@ -66,6 +78,51 @@ class OnboardingSuggestedSearchesProviderTests: XCTestCase {
 
         XCTAssertEqual(provider.list, expectedSearches)
     }
+
+    // MARK: - Higlights Experiment
+
+    func testWhenHighlightsOnboardingAndSearchesListForEnglishLanguageAndUsRegionThenDoNotReturnOption3() {
+        onboardingManagerMock.isOnboardingHighlightsEnabled = true
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "US", languageCode: "en")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
+
+        let expectedSearches = [
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption1English),
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
+            ContextualOnboardingListItem.surprise(title: Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+        ]
+
+        XCTAssertEqual(provider.list, expectedSearches)
+    }
+
+    func testWhenHighlightsOnboardingAndSearchesListForNonEnglishLanguageAndNonUSRegionThenDoNotReturnOption3() {
+        onboardingManagerMock.isOnboardingHighlightsEnabled = true
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "FR", languageCode: "fr")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
+
+        let expectedSearches = [
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption2International),
+            ContextualOnboardingListItem.surprise(title: Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+        ]
+
+        XCTAssertEqual(provider.list, expectedSearches)
+    }
+
+    func testWhenHighlightsOnboardingAndSearchesListForUSRegionAndNonEnglishLanguageThenDoNotReturnOption3() {
+        onboardingManagerMock.isOnboardingHighlightsEnabled = true
+        let mockProvider = MockOnboardingRegionAndLanguageProvider(regionCode: "US", languageCode: "es")
+        let provider = OnboardingSuggestedSearchesProvider(countryAndLanguageProvider: mockProvider, onboardingManager: onboardingManagerMock)
+
+        let expectedSearches = [
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption1International),
+            ContextualOnboardingListItem.search(title: userText.tryASearchOption2English),
+            ContextualOnboardingListItem.surprise(title: Self.imageSearch + highlightsUserText.tryASearchOptionSurpriseMe, visibleTitle: "Surprise me!")
+        ]
+
+        XCTAssertEqual(provider.list, expectedSearches)
+    }
+
 }
 
 class MockOnboardingRegionAndLanguageProvider: OnboardingRegionAndLanguageProvider {

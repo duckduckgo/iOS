@@ -33,6 +33,8 @@ class AutofillDebugViewController: UITableViewController {
         case resetAutofillData = 204
         case addAutofillData = 205
         case resetAutofillBrokenReports = 206
+        case resetAutofillSurveys = 207
+        case viewAllCredentials = 208
     }
 
     let defaults = AppUserDefaults()
@@ -87,6 +89,13 @@ class AutofillDebugViewController: UITableViewController {
                 let expiryDate = Calendar.current.date(byAdding: .day, value: 60, to: Date())!
                 _ = reporter.persistencyManager.removeExpiredItems(currentDate: expiryDate)
                 ActionMessageView.present(message: "Autofill Broken Reports reset")
+            } else if cell.tag == Row.resetAutofillSurveys.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
+                let autofillSurveyManager = AutofillSurveyManager()
+                autofillSurveyManager.resetSurveys()
+                ActionMessageView.present(message: "Autofill Surveys reset")
+            } else if cell.tag == Row.viewAllCredentials.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }
@@ -114,7 +123,7 @@ class AutofillDebugViewController: UITableViewController {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
 
         for i in 1...count {
-            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "https://fill.dev", notes: "")
+            let account = SecureVaultModels.WebsiteAccount(title: "", username: "Dax \(i)", domain: "fill.dev", notes: "")
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: "password".data(using: .utf8))
             do {
                 _ = try secureVault?.storeWebsiteCredentials(credentials)

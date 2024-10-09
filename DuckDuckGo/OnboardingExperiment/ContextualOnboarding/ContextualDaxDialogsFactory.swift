@@ -48,17 +48,24 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
     private let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
+    private let onboardingManager: OnboardingHighlightsManaging
+
+    private var gradientType: OnboardingGradientType {
+        onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+    }
 
     init(
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
-        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
+        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
+        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
         self.contextualOnboardingSiteSuggestionsProvider = contextualOnboardingSiteSuggestionsProvider
+        self.onboardingManager = onboardingManager
     }
 
     func makeView(for spec: DaxDialogs.BrowsingSpec, delegate: ContextualOnboardingDelegate, onSizeUpdate: @escaping () -> Void) -> UIHostingController<AnyView> {
@@ -92,7 +99,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
         let viewWithBackground = rootView
             .onboardingDaxDialogStyle()
-            .onboardingContextualBackgroundStyle()
+            .onboardingContextualBackgroundStyle(background: .gradientOnly(gradientType))
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
@@ -107,6 +114,17 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         afterSearchPixelEvent: Pixel.Event,
         onSizeUpdate: @escaping () -> Void
     ) -> some View {
+
+        func dialogMessage() -> NSAttributedString {
+            if onboardingManager.isOnboardingHighlightsEnabled {
+                let message = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage
+                let boldRange = message.range(of: "DuckDuckGo Search")
+                return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
+            } else {
+                return UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage.attributed
+            }
+        }
+
         let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
 
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
@@ -122,7 +140,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             }
         }
 
-        return OnboardingFirstSearchDoneDialog(shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
+        return OnboardingFirstSearchDoneDialog(message: dialogMessage(), shouldFollowUp: shouldFollowUpToWebsiteSearch, viewModel: viewModel, gotItAction: gotItAction)
             .onFirstAppear { [weak self] in
                 self?.contextualOnboardingPixelReporter.trackScreenImpression(event: afterSearchPixelEvent)
             }
@@ -164,8 +182,11 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        OnboardingFinalDialog(highFiveAction: { [weak delegate] in
+        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+
+        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in
             delegate?.didTapDismissContextualOnboardingAction()
+            self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
         })
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

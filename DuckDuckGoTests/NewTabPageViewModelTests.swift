@@ -1,5 +1,5 @@
 //
-//  NewTabPageModelTests.swift
+//  NewTabPageViewModelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,51 +20,51 @@
 import XCTest
 @testable import DuckDuckGo
 
-final class NewTabPageModelTests: XCTestCase {
+final class NewTabPageViewModelTests: XCTestCase {
 
-    let appSettings = AppSettingsMock()
+    let introDataStorage = NewTabPageIntroDataStoringMock()
 
     override func tearDown() {
         PixelFiringMock.tearDown()
     }
 
     func testDoesNotShowIntroIfSettingUndefined() {
-        let sut = NewTabPageModel(appSettings: appSettings)
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         XCTAssertFalse(sut.isIntroMessageVisible)
     }
 
     func testShowsIntroMessage() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         XCTAssertTrue(sut.isIntroMessageVisible)
     }
 
     func testDisablesIntroMessageWhenDismissed() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         sut.dismissIntroMessage()
 
         XCTAssertFalse(sut.isIntroMessageVisible)
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+        XCTAssertEqual(introDataStorage.newTabPageIntroMessageEnabled, false)
     }
 
     func testDisablesIntroMessageAfterMultipleImpressions() {
-        appSettings.newTabPageIntroMessageEnabled = true
-        let sut = NewTabPageModel(appSettings: appSettings)
+        introDataStorage.newTabPageIntroMessageEnabled = true
+        let sut = NewTabPageViewModel(introDataStorage: introDataStorage)
 
         for _ in 1...3 {
             sut.introMessageDisplayed()
         }
 
         XCTAssertTrue(sut.isIntroMessageVisible) // We want to keep the message visible on last occurence
-        XCTAssertEqual(appSettings.newTabPageIntroMessageEnabled, false)
+        XCTAssertEqual(introDataStorage.newTabPageIntroMessageEnabled, false)
     }
 
     func testFiresPixelWhenIntroMessageDismissed() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.dismissIntroMessage()
 
@@ -72,7 +72,7 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testFiresPixelWhenIntroMessageDisplayed() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.introMessageDisplayed()
 
@@ -80,7 +80,7 @@ final class NewTabPageModelTests: XCTestCase {
     }
 
     func testFiresPixelOnNewTabPageCustomize() {
-        let sut = NewTabPageModel(pixelFiring: PixelFiringMock.self)
+        let sut = NewTabPageViewModel(pixelFiring: PixelFiringMock.self)
 
         sut.customizeNewTabPage()
 

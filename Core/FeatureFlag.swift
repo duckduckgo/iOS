@@ -42,6 +42,10 @@ public enum FeatureFlag: String {
     case syncPromotionPasswords
     case onboardingHighlights
     case autofillSurveys
+    case autcompleteTabs
+
+    /// https://app.asana.com/0/72649045549333/1208231259093710/f
+    case networkProtectionUserTips
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -78,9 +82,9 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .newTabPageSections:
             return .remoteDevelopment(.feature(.newTabPageImprovements))
         case .duckPlayer:
-            return .remoteReleasable(.feature(.duckPlayer))
+            return .remoteReleasable(.subfeature(DuckPlayerSubfeature.enableDuckPlayer))
         case .sslCertificatesBypass:
-            return .remoteReleasable(.subfeature(sslCertificatesSubfeature.allowBypass))
+            return .remoteReleasable(.subfeature(SslCertificatesSubfeature.allowBypass))
         case .syncPromotionBookmarks:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.bookmarks))
         case .syncPromotionPasswords:
@@ -89,6 +93,10 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .internalOnly
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
+        case .autcompleteTabs:
+            return .remoteReleasable(.feature(.autocompleteTabs))
+        case .networkProtectionUserTips:
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FavoritesSectionHeader.swift
+//  FavoriteAddItemView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,31 +19,20 @@
 
 import SwiftUI
 import DesignResourcesKit
-import Core
 
-struct FavoritesSectionHeader: View {
-
-    let model: any FavoritesEmptyStateModel
-
+struct FavoriteAddItemView: View {
     var body: some View {
-        HStack(spacing: 16, content: {
-            Text("Favorites")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(alignment: .leading)
-
-            Spacer()
-
-            Button(action: {
-                model.toggleTooltip()
-            }, label: {
-                Image(.info12)
-                    .foregroundStyle(Color(designSystemColor: .textPrimary))
-            })
-        })
+        RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .fill(.clear)
+            .overlay {
+                Image(.add24)
+                    .tintIfAvailable(Color(designSystemColor: .icons))
+            }
+            .aspectRatio(1.0, contentMode: .fit)
     }
 }
 
 #Preview {
-    return FavoritesSectionHeader(model: FavoritesPreviewModel())
+    FavoriteAddItemView()
+        .frame(width: 100)
 }

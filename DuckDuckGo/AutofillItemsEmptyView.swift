@@ -53,7 +53,6 @@ struct AutofillItemsEmptyView: View {
             }
             .buttonStyle(PrimaryButtonStyle(fullWidth: false))
             .padding(.top, 24)
-
         }
         .frame(maxWidth: 300.0)
         .padding(.top, 16)

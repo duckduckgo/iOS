@@ -50,6 +50,17 @@ class AutofillLoginListViewModelTests: XCTestCase {
                     }
                 ]
             },
+            "autofillSurveys": {
+                "state": "enabled",
+                "settings": {
+                    "surveys": [
+                      {
+                        "id": "123",
+                        "url": "https://asurveyurl.com"
+                      }
+                    ]
+                },
+            },
         },
         "unprotectedTemporary": []
     }
@@ -65,6 +76,17 @@ class AutofillLoginListViewModelTests: XCTestCase {
                 },
                 "exceptions": []
             },
+             "autofillSurveys": {
+                 "state": "disabled",
+                 "settings": {
+                     "surveys": [
+                       {
+                         "id": "240900",
+                         "url": "https://asurveyurl.com"
+                       }
+                     ]
+                 },
+             },
         },
         "unprotectedTemporary": []
     }
@@ -72,6 +94,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
+        setupUserDefault(with: #file)
         manager = AutofillNeverPromptWebsitesManager(secureVault: vault)
         syncService = MockDDGSyncing(authState: .inactive, scheduler: CapturingScheduler(), isSyncInProgress: false)
     }
@@ -492,7 +515,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
         let model = AutofillLoginListViewModel(appSettings: appSettings,
                                                tld: tld,
                                                secureVault: vault,
-                                               currentTabUrl: URL(string: "https://\(testDomain)"),
+                                               currentTabUrl: currentTabUrl,
                                                currentTabUid: "1",
                                                autofillNeverPromptWebsitesManager: manager,
                                                privacyConfig: makePrivacyConfig(from: configEnabled),
@@ -529,6 +552,60 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
         XCTAssertTrue(model.shouldShowBreakageReporter())
     }
+
+    func testWhenLocaleIsNotEnglishThenNoSurveyIsReturned() {
+        let nonEnglishLocale = Locale(identifier: "es")
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager, syncService: syncService, locale: nonEnglishLocale)
+
+        XCTAssertNil(model.getSurveyToPresent())
+    }
+
+    func testWhenViewStateIsIneligibleThenNoSurveyIsReturned() throws {
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: "1", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+        for account in vault.storedAccounts {
+            _ = try vault.storeWebsiteCredentials(SecureVaultModels.WebsiteCredentials(account: account, password: nil))
+        }
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager, syncService: syncService)
+
+        XCTAssertNil(model.getSurveyToPresent())
+    }
+
+    func testWhenIsEditingThenNoSurveyIsReturned() {
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager, syncService: syncService)
+        model.isEditing = true
+
+        XCTAssertNil(model.getSurveyToPresent())
+    }
+
+    func testWhenSurveyConfigIsDisabledThenNoSurveyIsReturned() {
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               privacyConfig: makePrivacyConfig(from: configDisabled),
+                                               syncService: syncService)
+
+        XCTAssertNil(model.getSurveyToPresent())
+    }
+
+    func testWhenAllConditionsAreMetThenSurveyIsReturnedAndWhenDismissedNotSurveyIsReturned() {
+        let model = AutofillLoginListViewModel(appSettings: appSettings,
+                                               tld: tld,
+                                               secureVault: vault,
+                                               privacyConfig: makePrivacyConfig(from: configEnabled),
+                                               syncService: syncService)
+        let survey = model.getSurveyToPresent()
+        XCTAssertNotNil(survey)
+        XCTAssertEqual(survey?.id, "123")
+        XCTAssertEqual(survey?.url, "https://asurveyurl.com")
+
+        model.dismissSurvey(id: "123")
+
+        XCTAssertNil(model.getSurveyToPresent())
+    }
+
 }
 
 class AutofillLoginListSectionTypeTests: XCTestCase {

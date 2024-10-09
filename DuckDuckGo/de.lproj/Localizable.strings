@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Bearbeiten";
 
@@ -253,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Gleiche Privatsphäre.\nBessere Suchvorschläge!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Zu Tab wechseln";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Deaktiviert";
 
@@ -324,6 +330,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Deaktivieren";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ansehen";
@@ -419,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Passwörter importieren";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Passwörter aus anderen Browsern oder Apps können mit der Desktop-Version des DuckDuckGo-Browsers importiert werden.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Du kannst gespeicherte Passwörter aus einem anderen Browser in DuckDuckGo importieren.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Noch keine Passwörter gespeichert";
@@ -462,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Passwörter suchen";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Passwörter sind verschlüsselt. Niemand außer dir kann sie sehen, nicht einmal wir. [Mehr erfahren](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Vorgeschlagen";
@@ -581,11 +593,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Für diese Website niemals fragen";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo Passwörter & Autovervollständigen speichert Passwörter sicher auf deinem Gerät.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dieses Passwort speichern?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Speichere dein Passwort mit DuckDuckGo Passwörter & Autovervollständigen sicher auf dem Gerät.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Passwort speichern?";
@@ -772,6 +784,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Verstanden.";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Hinweis: Jedes Mal, wenn du mit mir browst, verliert eine gruselige Anzeige ihren Schrecken.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "Das ist die DuckDuckGo Search! Privat. Schnell. Weniger Werbung.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "Deine Suchen über DuckDuckGo sind immer privat.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "Entenküken";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Versuche, eine Website zu besuchen!";
@@ -1154,9 +1178,6 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Entfernen";
 
-/* No comment provided by engineer. */
-"Favorites" = "Favoriten";
-
 /* Display Mode for favorites */
 "favorites.settings.all-devices" = "Alle Gerätefavoriten";
 
@@ -1168,9 +1189,6 @@
 
 /* Display Mode for favorites */
 "favorites.settings.mobile-only" = "Nur mobile Favoriten";
-
-/* No comment provided by engineer. */
-"Feature flag enabled" = "Feature flag enabled";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blockieren von Werbungen und Pop-ups";
@@ -1476,9 +1494,6 @@
 "launchscreenWelcomeMessage" = "Willkommen bei\nDuckDuckGo!";
 
 /* No comment provided by engineer. */
-"Local setting enabled" = "Local setting enabled";
-
-/* No comment provided by engineer. */
 "LOREM IPSUM" = "LOREM IPSUM";
 
 /* Summary text for the macOS browser waitlist */
@@ -1714,11 +1729,19 @@
 
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Passe deine Favoriten und häufig genutzten Funktionen an. Ordne die Dinge neu an oder blende sie aus, um die Übersichtlichkeit zu wahren.";
-/* Footer of the group allowing for setting up new tab page sections */
-"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
 
 /* Title of information message about New Tab Page redesign */
 "new.tab.page.intro.message.title" = "Deine „Neuer Tab“-Seite ist ... neu!";
+
+/* Name of favorites section setting */
+"new.tab.page.settings.section.name.favorites" = "Favoriten";
+
+/* Name of shortcuts section setting */
+"new.tab.page.settings.section.name.shortcuts" = "Shortcuts";
+
+/* Footer of the group allowing for setting up new tab page sections */
+"new.tab.page.settings.sections.description" = "Abschnitte auf der neuen Tab-Seite anzeigen, ausblenden und neu anordnen";
+
 /* Header title of the group allowing for setting up new tab page sections */
 "new.tab.page.settings.sections.header.title" = "ABSCHNITTE";
 
@@ -1758,13 +1781,13 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Wähle deinen Browser";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Cookie-Pop-ups blockieren";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Aufdringliche Werbung blockieren";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Browserdaten schnell löschen";
 
 /* Message to highlight browser capability of private searches */
@@ -1776,8 +1799,56 @@
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Datenschutz aktiviert!";
 
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Öffne Links jederzeit sicher und ohne Sorge.";
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Leicht erreichbar";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "Unten";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Weiter";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(standard)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Wo soll deine Adressleiste platziert werden?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Leicht erkennbar";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Nach oben";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Weiter";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Wähle dein App-Symbol aus:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Welche Farbe gefällt dir am besten?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Cookie-Anfragen und Popups blocken";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Gezielte Werbung blockieren";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Browserdaten schnell löschen";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blockiert Tracker von Drittanbietern";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Schutz aktiviert!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Überspringen";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Hallo.\n\nBereit für einen schnelleren Browser, der dich schützt?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Los geht's!";
@@ -1906,9 +1977,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "In einer anderen App öffnen?";
-
-/* No comment provided by engineer. */
-"Requires internal user" = "Requires internal user";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adresse suchen oder eingeben";

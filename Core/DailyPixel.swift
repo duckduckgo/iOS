@@ -43,7 +43,7 @@ public final class DailyPixel {
 
     }
 
-    private static let storage: UserDefaults = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)!
+    public static let storage: UserDefaults = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)!
 
     /// Sends a given Pixel once per day.
     /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.

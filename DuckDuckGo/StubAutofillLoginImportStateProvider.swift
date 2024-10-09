@@ -1,5 +1,5 @@
 //
-//  FavoriteEmptyStateItem.swift
+//  StubAutofillLoginImportStateProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,17 +17,19 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import Foundation
+import BrowserServicesKit
 
-struct FavoriteEmptyStateItem: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 8, style: .continuous)
-            .stroke(Color(designSystemColor: .lines),
-                    style: StrokeStyle(lineWidth: 1.5, dash: [4, 2]))
-            .padding(1) // So the stroke is not clipped on the edges
+struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
+    public var isNewDDGUser: Bool = false
+    public var hasImportedLogins: Bool = false
+    var credentialsImportPromptPresentationCount: Int = 0
+
+    var isAutofillEnabled: Bool {
+        AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled
     }
-}
 
-#Preview {
-    FavoriteEmptyStateItem()
+    func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
+        AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
+    }
 }

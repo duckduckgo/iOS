@@ -249,6 +249,11 @@ private struct SuggestionView: View {
                                    title: title ?? "",
                                    subtitle: url.formattedForSuggestion())
 
+            case .openTab(title: let title, url: let url):
+                SuggestionListItem(icon: Image("OpenTab-24"),
+                                   title: title,
+                                   subtitle: "\(UserText.autocompleteSwitchToTab) · \(url.formattedForSuggestion())")
+
             case .internalPage, .unknown:
                 FailedAssertionView("Unknown or unsupported suggestion type")
             }
@@ -336,6 +341,7 @@ private extension URL {
         let string = absoluteString
             .dropping(prefix: "https://")
             .dropping(prefix: "http://")
+            .droppingWwwPrefix()
         return pathComponents.isEmpty ? string : string.dropping(suffix: "/")
     }
 

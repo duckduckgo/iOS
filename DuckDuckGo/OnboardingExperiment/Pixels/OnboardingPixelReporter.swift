@@ -49,6 +49,10 @@ protocol OnboardingIntroImpressionReporting {
 protocol OnboardingIntroPixelReporting: OnboardingIntroImpressionReporting {
     func trackBrowserComparisonImpression()
     func trackChooseBrowserCTAAction()
+    func trackChooseAppIconImpression()
+    func trackChooseCustomAppIconColor()
+    func trackAddressBarPositionSelectionImpression()
+    func trackChooseBottomAddressBarPosition()
 }
 
 protocol OnboardingCustomInteractionPixelReporting {
@@ -58,11 +62,12 @@ protocol OnboardingCustomInteractionPixelReporting {
     func trackPrivacyDashboardOpenedForFirstTime()
 }
 
-protocol OnboardingScreenImpressionReporting {
+protocol OnboardingDaxDialogsReporting {
     func trackScreenImpression(event: Pixel.Event)
+    func trackEndOfJourneyDialogCTAAction()
 }
 
-typealias OnboardingPixelReporting = OnboardingIntroImpressionReporting & OnboardingIntroPixelReporting & OnboardingSearchSuggestionsPixelReporting & OnboardingSiteSuggestionsPixelReporting & OnboardingCustomInteractionPixelReporting & OnboardingScreenImpressionReporting
+typealias OnboardingPixelReporting = OnboardingIntroImpressionReporting & OnboardingIntroPixelReporting & OnboardingSearchSuggestionsPixelReporting & OnboardingSiteSuggestionsPixelReporting & OnboardingCustomInteractionPixelReporting & OnboardingDaxDialogsReporting
 
 // MARK: - Implementation
 
@@ -146,6 +151,22 @@ extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
         fire(event: .onboardingIntroChooseBrowserCTAPressed, unique: false)
     }
 
+    func trackChooseAppIconImpression() {
+        fire(event: .onboardingIntroChooseAppIconImpressionUnique, unique: true, includedParameters: [.appVersion])
+    }
+
+    func trackChooseCustomAppIconColor() {
+        fire(event: .onboardingIntroChooseCustomAppIconColorCTAPressed, unique: false, includedParameters: [.appVersion])
+    }
+
+    func trackAddressBarPositionSelectionImpression() {
+        fire(event: .onboardingIntroChooseAddressBarImpressionUnique, unique: true, includedParameters: [.appVersion])
+    }
+
+    func trackChooseBottomAddressBarPosition() {
+        fire(event: .onboardingIntroBottomAddressBarSelected, unique: false, includedParameters: [.appVersion])
+    }
+
 }
 
 // MARK: - OnboardingPixelReporter + List
@@ -153,7 +174,7 @@ extension OnboardingPixelReporter: OnboardingIntroPixelReporting {
 extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
     
     func trackSearchSuggetionOptionTapped() {
-        fire(event: .onboardingContextualSearchOptionTappedUnique, unique: true)
+        // Left empty on purpose. These were temporary pixels in iOS. macOS will still use them.
     }
 
 }
@@ -161,7 +182,7 @@ extension OnboardingPixelReporter: OnboardingSearchSuggestionsPixelReporting {
 extension OnboardingPixelReporter: OnboardingSiteSuggestionsPixelReporting {
     
     func trackSiteSuggetionOptionTapped() {
-        fire(event: .onboardingContextualSiteOptionTappedUnique, unique: true)
+        // Left empty on purpose. These were temporary pixels in iOS. macOS will still use them.
     }
 
 }
@@ -199,10 +220,14 @@ extension OnboardingPixelReporter: OnboardingCustomInteractionPixelReporting {
 
 // MARK: - OnboardingPixelReporter + Screen Impression
 
-extension OnboardingPixelReporter: OnboardingScreenImpressionReporting {
+extension OnboardingPixelReporter: OnboardingDaxDialogsReporting {
     
     func trackScreenImpression(event: Pixel.Event) {
         fire(event: event, unique: true)
+    }
+
+    func trackEndOfJourneyDialogCTAAction() {
+        fire(event: .daxDialogsEndOfJourneyDismissed, unique: false)
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  ToggleExpandButtonView.swift
+//  ToggleExpandButtonStyle.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,38 +18,38 @@
 //
 
 import SwiftUI
-import DuckUI
+import DesignResourcesKit
 
 struct ToggleExpandButtonStyle: ButtonStyle {
-    @Environment(\.colorScheme) private var colorScheme
-
+    
     func makeBody(configuration: Configuration) -> some View {
-        let isDark = colorScheme == .dark
+        let backgroundColor = configuration.isPressed ? Color(designSystemColor: .buttonsSecondaryFillPressed) : Color(designSystemColor: .buttonsSecondaryFillDefault)
 
         HStack(spacing: 0) {
             VStack {
                 ExpandButtonDivider()
             }
-            ZStack {
-                Circle()
-                    .stroke(Color(designSystemColor: .lines), lineWidth: 1)
-                    .frame(width: 32)
-                    .if(configuration.isPressed, transform: {
-                        $0.background(Circle()
-                            .fill(isDark ? Color.tint(0.12) : Color.shade(0.06)))
-                    })
-                    .background(
-                        Circle()
-                            .fill(Color(designSystemColor: .background))
-                    )
-                configuration.label
-                    .foregroundColor(isDark ? .tint(0.6) : .shade(0.6))
-                    .frame(width: 16, height: 16)
-            }
+
+            Circle()
+                .stroke(Color(designSystemColor: .lines), lineWidth: 1)
+                .frame(width: 32, height: 32)
+                .background(
+                    Circle()
+                        .fill(backgroundColor)
+                )
+                .overlay {
+                    configuration.label
+                        .foregroundColor(Color(designSystemColor: .iconsSecondary))
+                        .frame(width: 16, height: 16)
+                        
+                }
+
             VStack {
                 ExpandButtonDivider()
             }
         }
+        .padding(.vertical, 0.5) // Adjust padding for drawing group, otherwise the circle stroke is clipped
+        .drawingGroup()
     }
 }
 

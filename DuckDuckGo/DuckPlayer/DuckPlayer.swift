@@ -184,7 +184,12 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
     
     public func getUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
-        encodeUserValues()
+        let duckPlayerExperiment = DuckPlayerLaunchExperiment()
+        if duckPlayerExperiment.isEnrolled && duckPlayerExperiment.isExperimentCohort {
+            return encodeUserValues()
+        }
+        return nil
+        
     }
     
     @MainActor

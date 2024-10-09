@@ -441,7 +441,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
         activationDateStore.setActivationDateIfNecessary()
         activationDateStore.updateLastActiveDate()
-        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+
+        VPNReloadStatusWidgets()
     }
 
     private static func entitlementCheck(accountManager: AccountManager) async -> Result<Bool, Error> {

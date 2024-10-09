@@ -36,9 +36,13 @@ tags:
 - inputText: "https://example.com"
 - pressKey: Enter
 
-# Check history
-- longPressOn: "Tab Switcher"
+# Close tab
+- tapOn: "Tab Switcher"
+- tapOn: "Close \"Example Domain\" at example.com"
+- tapOn:
+    id: "Add"
 
+# Check history
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
@@ -46,7 +50,7 @@ tags:
 - inputText: "ex"
 - assertVisible: "example.com"
 - assertVisible: "Example Domain"
-- tapOn: "Cancel"
+- tapOn: "Example Domain"
 
 # Fire button
 - tapOn: "Close Tabs and Clear Data"

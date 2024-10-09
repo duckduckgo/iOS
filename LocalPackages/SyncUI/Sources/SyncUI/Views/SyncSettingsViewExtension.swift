@@ -195,22 +195,6 @@ extension SyncSettingsView {
         } header: {
             Text(UserText.syncedDevicesSectionHeader)
         }
-        .sheet(item: $selectedDevice) { device in
-            Group {
-                if device.isThisDevice {
-                    EditDeviceView(model: model.createEditDeviceModel(device))
-                } else {
-                    RemoveDeviceView(model: model.createRemoveDeviceModel(device))
-                }
-            }
-            .modifier {
-                if #available(iOS 16.0, *) {
-                    $0.presentationDetents([.medium])
-                } else {
-                    $0
-                }
-            }
-        }
         .onReceive(timer) { _ in
             if selectedDevice == nil {
                 model.delegate?.refreshDevices(clearDevices: false)

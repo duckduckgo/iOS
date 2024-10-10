@@ -184,9 +184,11 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func dismissHomeMessage(_ message: HomeMessage,
                                     at indexPath: IndexPath,
                                     in collectionView: UICollectionView) {
-        homePageConfiguration.dismissHomeMessage(message)
-        animateCellDismissal(at: indexPath, in: collectionView) {
-            self.controller?.homeMessageRenderer(self, didDismissHomeMessage: message)
+        Task { @MainActor in
+            await homePageConfiguration.dismissHomeMessage(message)
+            animateCellDismissal(at: indexPath, in: collectionView) {
+                self.controller?.homeMessageRenderer(self, didDismissHomeMessage: message)
+            }
         }
     }
     

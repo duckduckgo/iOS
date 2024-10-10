@@ -34,7 +34,7 @@ struct HomeMessageViewModelBuilder {
 
     static func build(for remoteMessage: RemoteMessageModel,
                       with privacyProDataReporter: PrivacyProDataReporting?,
-                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void,
+                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) async -> Void,
                       onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 

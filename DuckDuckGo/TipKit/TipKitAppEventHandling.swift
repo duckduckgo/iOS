@@ -1,5 +1,5 @@
 //
-//  TipKitAppEventHandler.swift
+//  TipKitAppEventHandling.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,19 +17,11 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
+import os.log
 import TipKit
 
-struct TipKitAppEventHandler {
-
-    func appDidFinishLaunching() {
-        if #available(iOS 17.0, *) {
-            Task {
-                try Tips.configure([
-                    .displayFrequency(.immediate),
-                    .datastoreLocation(.applicationDefault)
-                ])
-            }
-        }
-    }
+protocol TipKitAppEventHandling {
+    func appDidFinishLaunching()
 }

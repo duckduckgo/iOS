@@ -24,6 +24,7 @@ import WidgetKit
 import BrowserServicesKit
 import Core
 import Subscription
+import TipKit
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -100,6 +101,15 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
 
+    // MARK: - Tips
+
+    @Published
+    var vpnEnabledTips = TipGroup(.ordered) {
+        VPNChangeLocationTip()
+        VPNUseSnoozeTip()
+        VPNAddWidgetTip()
+    }
+
     // MARK: Error
 
     struct ErrorItem {
@@ -121,7 +131,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Toggle Item
 
-    @Published public var isNetPEnabled = false
+    @Published public var isNetPEnabled = false {
+        didSet {
+            if #available(iOS 17.0, *) {
+                if isNetPEnabled {
+                    VPNChangeLocationTip.donateVPNConnectedEvent()
+                }
+
+                VPNUseSnoozeTip.vpnEnabled = isNetPEnabled
+                VPNAddWidgetTip.vpnEnabled = isNetPEnabled
+            }
+        }
+    }
+
     @Published public var isSnoozing = false {
         didSet {
             snoozeRequestPending = false
@@ -546,6 +568,17 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.downloadTotal = nil
     }
 
+    // MARK: - UI Events handling
+
+    /// The user opened the VPN locations view
+    ///
+    func handleUserOpenedVPNLocations() {
+        if #available(iOS 17.0, *) {
+            Task { @MainActor in
+                (vpnEnabledTips.currentTip as? VPNChangeLocationTip)?.invalidate(reason: .actionPerformed)
+            }
+        }
+    }
 }
 
 private extension ConnectionStatus {

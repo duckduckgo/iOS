@@ -28,6 +28,11 @@ struct VPNAddWidgetTip {}
 @available(iOS 17.0, *)
 extension VPNAddWidgetTip: Tip {
 
+    @Parameter(.transient)
+    static var vpnEnabled: Bool = false
+
+    private static let vpnDisconnectedEvent = Tips.Event(id: "com.duckduckgo.tipkit.VPNChangeLocationTip.vpnDisconnectedEvent")
+
     var id: String {
         "com.duckduckgo.tipkit.VPNAddWidgetTip"
     }
@@ -48,5 +53,11 @@ extension VPNAddWidgetTip: Tip {
         [Action(title: "Add widget") {
             // WidgetEducationView()
         }]
+    }
+
+    var rules: [Rule] {
+        #Rule(Self.$vpnEnabled) {
+            $0 == false
+        }
     }
 }

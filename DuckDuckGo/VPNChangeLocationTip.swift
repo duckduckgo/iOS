@@ -28,16 +28,7 @@ struct VPNChangeLocationTip {}
 @available(iOS 17.0, *)
 extension VPNChangeLocationTip: Tip {
 
-    /// Whether the VPN is running.
-    ///
-    @Parameter
-    static var vpnIsRunning: Bool = false
-
-    /// Whether the tip has been dismissed at least once by tapping on X to close it, or by going into
-    /// GeoSwitching while the tip was being shown.
-    ///
-    @Parameter
-    static var tipDismissedOnce: Bool = false
+    private static let vpnConnectedEvent = Tips.Event(id: "com.duckduckgo.tipkit.VPNChangeLocationTip.vpnConnectedEvent")
 
     var id: String {
         "com.duckduckgo.tipkit.VPNChangeLocationTip"
@@ -56,11 +47,14 @@ extension VPNChangeLocationTip: Tip {
     }
 
     var rules: [Rule] {
-        [#Rule(Self.$vpnIsRunning) {
-            $0 == true
-        },
-         #Rule(Self.$tipDismissedOnce) {
-            $0 == false
-        }]
+        #Rule(Self.vpnConnectedEvent) {
+            $0.donations.donatedWithin(.week).count > 0
+        }
+    }
+
+    static func donateVPNConnectedEvent() {
+        Task {
+            await vpnConnectedEvent.donate()
+        }
     }
 }

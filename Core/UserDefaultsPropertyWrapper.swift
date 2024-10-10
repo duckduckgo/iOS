@@ -179,7 +179,9 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired.v2"
         case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered.v2"
         case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override.v2"
-        
+
+        // TipKit
+        case resetTipKitOnNextLaunch = "com.duckduckgo.ios.tipKit.resetOnNextLaunch"
     }
 
     private let key: Key

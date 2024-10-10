@@ -55,7 +55,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
     // MARK: Callbacks
 
-    func testCallsDismissOnClose() throws {
+    func testCallsDismissOnClose() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -64,12 +64,12 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.close)
+        await model.onDidClose(.close)
 
         XCTAssertEqual(messagesConfiguration.lastDismissedHomeMessage, messagesConfiguration.homeMessages.first)
     }
 
-    func testCallsDismissOnAction() throws {
+    func testCallsDismissOnAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -78,12 +78,12 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.action(isShare: false))
+        await model.onDidClose(.action(isShare: false))
 
         XCTAssertEqual(messagesConfiguration.lastDismissedHomeMessage, messagesConfiguration.homeMessages.first)
     }
 
-    func testCallsDismissOnPrimaryAction() throws {
+    func testCallsDismissOnPrimaryAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -92,12 +92,12 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.primaryAction(isShare: false))
+        await model.onDidClose(.primaryAction(isShare: false))
 
         XCTAssertEqual(messagesConfiguration.lastDismissedHomeMessage, messagesConfiguration.homeMessages.first)
     }
 
-    func testCallsDismissOnSecondaryAction() throws {
+    func testCallsDismissOnSecondaryAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -106,12 +106,12 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.secondaryAction(isShare: false))
+        await model.onDidClose(.secondaryAction(isShare: false))
 
         XCTAssertEqual(messagesConfiguration.lastDismissedHomeMessage, messagesConfiguration.homeMessages.first)
     }
 
-    func testDoesNotCallDismissWhenSharing() throws {
+    func testDoesNotCallDismissWhenSharing() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -120,16 +120,16 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.action(isShare: true))
-        model.onDidClose(.primaryAction(isShare: true))
-        model.onDidClose(.secondaryAction(isShare: true))
+        await model.onDidClose(.action(isShare: true))
+        await model.onDidClose(.primaryAction(isShare: true))
+        await model.onDidClose(.secondaryAction(isShare: true))
 
         XCTAssertNil(messagesConfiguration.lastDismissedHomeMessage)
     }
 
     // MARK: Pixels
 
-    func testFiresPixelOnClose() throws {
+    func testFiresPixelOnClose() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -138,13 +138,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.close)
+        await model.onDidClose(.close)
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageDismissed)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
-    func testFiresPixelOnAction() throws {
+    func testFiresPixelOnAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -152,13 +152,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.action(isShare: false))
+        await model.onDidClose(.action(isShare: false))
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
-    func testFiresPixelOnPrimaryAction() throws {
+    func testFiresPixelOnPrimaryAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -166,13 +166,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.primaryAction(isShare: false))
+        await model.onDidClose(.primaryAction(isShare: false))
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessagePrimaryActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
-    func testFiresPixelOnSecondaryAction() throws {
+    func testFiresPixelOnSecondaryAction() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: "")),
@@ -180,13 +180,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.secondaryAction(isShare: false))
+        await model.onDidClose(.secondaryAction(isShare: false))
 
         XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageSecondaryActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
-    func testDoesNotFirePixelOnCloseWhenMetricsAreDisabled() throws {
+    func testDoesNotFirePixelOnCloseWhenMetricsAreDisabled() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
@@ -195,13 +195,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
 
-        model.onDidClose(.close)
+        await model.onDidClose(.close)
 
         XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
-    func testDoesNotFirePixelOnActionWhenMetricsAreDisabled() throws {
+    func testDoesNotFirePixelOnActionWhenMetricsAreDisabled() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
@@ -209,13 +209,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.action(isShare: false))
+        await model.onDidClose(.action(isShare: false))
 
         XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
-    func testDoesNotFirePixelOnPrimaryActionWhenMetricsAreDisabled() throws {
+    func testDoesNotFirePixelOnPrimaryActionWhenMetricsAreDisabled() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
@@ -223,13 +223,13 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.primaryAction(isShare: false))
+        await model.onDidClose(.primaryAction(isShare: false))
 
         XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
-    func testDoesNotFirePixelOnSecondaryActionWhenMetricsAreDisabled() throws {
+    func testDoesNotFirePixelOnSecondaryActionWhenMetricsAreDisabled() async throws {
         let sut = createSUT()
         messagesConfiguration.homeMessages = [
             .mockRemote(withType: .small(titleText: "", descriptionText: ""), isMetricsEnabled: false),
@@ -237,7 +237,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         sut.load()
 
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
-        model.onDidClose(.secondaryAction(isShare: false))
+        await model.onDidClose(.secondaryAction(isShare: false))
 
         XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)

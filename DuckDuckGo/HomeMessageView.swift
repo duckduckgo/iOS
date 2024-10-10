@@ -103,7 +103,9 @@ struct HomeMessageView: View {
     
     private var closeButton: some View {
         Button {
-            viewModel.onDidClose(.close)
+            Task {
+                await viewModel.onDidClose(.close)
+            }
         } label: {
             Image("Close-24")
                 .foregroundColor(.primary)
@@ -143,9 +145,11 @@ struct HomeMessageView: View {
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) { buttonModel in
             Button {
-                buttonModel.action()
-                if case .share(let value, let title) = buttonModel.actionStyle {
-                    activityItem = ShareItem(value: value, title: title)
+                Task { @MainActor in
+                    await buttonModel.action()
+                    if case .share(let value, let title) = buttonModel.actionStyle {
+                        activityItem = ShareItem(value: value, title: title)
+                    }
                 }
             } label: {
                 HStack {

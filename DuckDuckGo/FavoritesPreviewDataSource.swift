@@ -21,7 +21,7 @@ import Combine
 import Bookmarks
 import Foundation
 
-final class FavoritesPreviewModel: FavoritesDefaultViewModel {
+final class FavoritesPreviewModel: FavoritesViewModel {
     init(favorites: [Favorite] = randomFavorites) {
         super.init(favoriteDataSource: FavoritesPreviewDataSource(favorites: favorites), faviconLoader: EmptyFaviconLoading())
     }

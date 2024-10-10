@@ -23,6 +23,7 @@ import UniformTypeIdentifiers
 enum FavoriteItem {
     case favorite(Favorite)
     case addFavorite
+    case placeholder(_ id: String)
 }
 
 extension FavoriteItem: Identifiable {
@@ -32,6 +33,8 @@ extension FavoriteItem: Identifiable {
             return favorite.id
         case .addFavorite:
             return "addFavorite"
+        case .placeholder(let id):
+            return id
         }
     }
 }
@@ -43,7 +46,7 @@ extension FavoriteItem: Reorderable {
             let itemProvider = NSItemProvider(object: (favorite.urlObject?.absoluteString ?? "") as NSString)
             let metadata = MoveMetadata(itemProvider: itemProvider, type: .plainText)
             return .movable(metadata)
-        case .addFavorite:
+        case .addFavorite, .placeholder:
             return .stationary
         }
     }

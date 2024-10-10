@@ -20,8 +20,12 @@
 import Foundation
 import BrowserServicesKit
 
+/// This is only intended to be used during the install (first run after downloading from the app store).
 protocol ReturnUserMeasurement {
 
+    /// Based on the value in the keychain, so if you use this after the install process it will return true.
+    ///  If you really want to know if the user is "returning" then look at the variant in the `StatisticsStore`
+    ///  which will be set to `ru`.
     var isReturningUser: Bool { get }
     func installCompletedWithATB(_ atb: Atb)
     func updateStoredATB(_ atb: Atb)

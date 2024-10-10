@@ -1,5 +1,5 @@
 //
-//  AddFavoritePlaceholderItemView.swift
+//  FavoriteAddItemView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import SwiftUI
 import DesignResourcesKit
 
-struct AddFavoritePlaceholderItemView: View {
+struct FavoriteAddItemView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 8, style: .continuous)
             .fill(.clear)
@@ -33,6 +33,6 @@ struct AddFavoritePlaceholderItemView: View {
 }
 
 #Preview {
-    AddFavoritePlaceholderItemView()
+    FavoriteAddItemView()
         .frame(width: 100)
 }

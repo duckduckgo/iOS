@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -253,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Ista privatnost.\nBolji prijedlozi za pretraživanje!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Prebaci se na karticu";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Onemogućeno";
 
@@ -324,6 +330,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Onemogući";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Pregled";
@@ -419,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Uvezi lozinke";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Lozinke iz drugih preglednika ili aplikacija mogu se uvesti pomoću desktop verzije preglednika DuckDuckGo.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Možeš uvesti spremljene lozinke iz drugog preglednika u DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Još nema spremljenih lozinki";
@@ -462,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje lozinki";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi. [Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predloženo";
@@ -581,11 +593,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nikada ne traži za ovu web lokaciju";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo funkcija Passwords & Autofill sigurno pohranjuje lozinke na tvom uređaju.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li spremiti ovu lozinku?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Sigurno pohrani svoju lozinku na uređaj pomoću usluge automatskog popunjavanja DuckDuckGo Passwords & Autofill.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Želiš li spremiti lozinku?";
@@ -772,6 +784,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Shvaćam!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Zapamti: svaki put kada pregledavaš sa mnom grozna reklama gubi krila.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "To je DuckDuckGo Search! Privatno. Brzo. Manje oglasa.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "Tvoja su DuckDuckGo pretraživanja uvijek privatna.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "pačići";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Pokušaj posjetiti web-mjesto!";
@@ -1703,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN postavke";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Omiljeno";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prilagodi svoje favorite i najdraže značajke. Preuredi stvari ili ih sakrij kako bi sve bilo jasno.";
 
@@ -1760,13 +1781,13 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Odaberi preglednik";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Blokiraj skočne prozore kolačića";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Blokiraj neželjene oglase";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Brzo izbriši podatke pregledavanja";
 
 /* Message to highlight browser capability of private searches */
@@ -1778,8 +1799,56 @@
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Zaštita privatnosti aktivirana!";
 
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Svaki put poveznice otvori spokojno.";
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Lako dostupno";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "Dno";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Dalje";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(zadano)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Gdje trebam staviti tvoju adresnu traku?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Lako se vidi";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Vrh";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Dalje";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Odaberi ikonu aplikacije:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Koja boja izgleda najbolje na meni?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Blokiraj zahtjeve kolačića & skočne prozore";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Blokiraj ciljane oglase";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Brzo izbriši podatke o pregledavanju";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blokiraj alate za praćenje trećih strana";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Zaštite aktivirane!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Preskoči";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Pozdrav.\n\nJesi li spreman za brži preglednik koji te štiti?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Učinimo to!";

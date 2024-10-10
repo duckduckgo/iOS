@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -253,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Samme personvern.\nBedre søkeforslag!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Bytt til fane";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Deaktivert";
 
@@ -324,6 +330,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Slå av";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vis";
@@ -419,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Importer passord";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Passord fra andre nettlesere eller apper kan importeres med skrivebordsversjonen av DuckDuckGo-nettleseren.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Du kan importere lagrede passord fra en annen nettleser til DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen passord er lagret ennå";
@@ -462,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søk i passord";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Passord krypteres. Ingen andre enn du kan se dem, ikke engang vi. [Finn ut mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Forslag";
@@ -581,11 +593,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Aldri spør for dette nettstedet";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo-passord og -autofyll lagrer passord trygt på enheten din.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vil du lagre dette passordet?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Lagre passordet ditt trygt på enheten med DuckDuckGos passord og autofyll.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Vil du lagre passordet?";
@@ -772,6 +784,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Skjønner!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Husk: Hver gang du surfer med meg, klippes vingene på en uhyggelig annonse.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "Det er DuckDuckGo Search! Privat. Raskt. Færre annonser.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "DuckDuckGo-søkene dine er alltid private.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "andunger";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Prøv å besøke et nettsted!";
@@ -1703,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-innstillinger";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Favoritter";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Tilpass favorittene dine og de funksjonene du bruker mest. Endre på rekkefølgen av ting eller skjul dem for å holde orden.";
 
@@ -1760,13 +1781,13 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Velg nettleseren din";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Blokker popup-vinduer om informasjonskapsler";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Blokker påtrengende annonser";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Slett nettleserdata raskt";
 
 /* Message to highlight browser capability of private searches */
@@ -1778,8 +1799,56 @@
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Personvern er aktivert!";
 
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Åpne lenker med ro i sinnet, hver gang.";
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Lett å nå";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "Nederst";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Neste";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(standard)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Hvor skal jeg plassere adressefeltet?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Lett å se";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Topp";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Neste";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Velg appikonet ditt:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Hvilken farge passer best på meg?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Blokker forespørsler om informasjonskapsler og popup-vinduer";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Blokker målrettede annonser";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Slett nettleserdata raskt";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blokker tredjepartssporere";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Beskyttelser er aktivert!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Hopp over";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Heisann.\n\nKlar for en raskere nettleser som holder deg beskyttet?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Sett i gang!";

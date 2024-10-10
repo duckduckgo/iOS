@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "tom/disable-domain-suggestions",
-        "revision" : "0c9c993c8a893347c67d75568bffb917305bfcc2"
+        "revision" : "c642e92389688016e2dad549f6d6e7c4cd1642d3",
+        "version" : "198.4.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
-        "version" : "6.16.0"
+        "revision" : "1ed569676555d493c9c5575eaed22aa02569aac9",
+        "version" : "6.19.0"
       }
     },
     {

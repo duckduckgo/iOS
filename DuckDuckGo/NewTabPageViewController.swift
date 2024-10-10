@@ -23,7 +23,7 @@ import Bookmarks
 import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView<FavoritesDefaultViewModel>>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
@@ -35,7 +35,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
 
     private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
-    private let favoritesModel: FavoritesDefaultViewModel
+    private let favoritesModel: FavoritesViewModel
     private let shortcutsModel: ShortcutsModel
     private let shortcutsSettingsModel: NewTabPageShortcutsSettingsModel
     private let sectionsSettingsModel: NewTabPageSectionsSettingsModel
@@ -64,13 +64,13 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesDefaultViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
+        favoritesModel = FavoritesViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
 
         let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
                                             messagesModel: messagesModel,
-                                            favoritesModel: favoritesModel,
+                                            favoritesViewModel: favoritesModel,
                                             shortcutsModel: shortcutsModel,
                                             shortcutsSettingsModel: shortcutsSettingsModel,
                                             sectionsSettingsModel: sectionsSettingsModel)
@@ -179,7 +179,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView<Favorit
     // MARK: - Onboarding
 
     private func presentNextDaxDialog() {
-        if variantManager.isSupported(feature: .newOnboardingIntro) {
+        if variantManager.isContextualDaxDialogsEnabled {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
         }
     }

@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upraviť";
 
@@ -253,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Rovnaké súkromie.\nLepšie návrhy vyhľadávania!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Prepnúť na kartu";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Zakázané";
 
@@ -324,6 +330,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Zakázať";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobraziť";
@@ -419,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Importovať heslá";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Heslá z iných prehliadačov alebo aplikácií možno importovať pomocou verzie prehliadača DuckDuckGo pre počítače.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Uložené heslá môžete importovať z iného prehliadača do DuckDuckGo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne heslá";
@@ -462,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Vyhľadávanie hesiel";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Heslá sú zašifrované. Nikto okrem vás ich nemôže vidieť, dokonca ani my. [Viac informácií](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Navrhované";
@@ -581,11 +593,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Nikdy sa nepýtať na túto stránku";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo Passwords & Autofill bezpečne ukladá heslá vo vašom zariadení.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Uložiť toto heslo?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Heslo bezpečne uložte do zariadenia pomocou aplikácie DuckDuckGo Passwords & Autofill.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Uložiť heslo?";
@@ -772,6 +784,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Rozumiem!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Pamätajte: zakaždým, keď prehliadate v našej aplikácii, divnej reklame pristrihávate krídla.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "To je DuckDuckGo Search! Súkromne. Rýchlo. Menej reklám.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "Vaše vyhľadávania v službe DuckDuckGo sú vždy súkromné.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "malé kačiatka";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Skúste navštíviť stránku!";
@@ -1703,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "Nastavenia siete VPN";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Obľúbené položky";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Prispôsobenie obľúbených položiek a funkcií. Pre prehľadnosť zmeňte usporiadanie vecí alebo ich skryte.";
 
@@ -1760,13 +1781,13 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Vyberte si prehliadač";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Blokovanie vyskakovacích okien o súboroch cookie";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Blokovať nepríjemné reklamy";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Rýchle vymazanie údajov prehliadania";
 
 /* Message to highlight browser capability of private searches */
@@ -1778,8 +1799,56 @@
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Ochrana súkromia bola aktivovaná!";
 
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Vždy otvor odkazy s pokojom mysle.";
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Ľahko dosiahnuteľné";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "Spodná časť";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Ďalšie";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(predvolené)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Kam mám umiestniť váš riadok s adresou?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Ľahko viditeľné";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Hore";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Ďalšie";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Vyberte ikonu aplikácie:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Ktorá farba na mne vyzerá najlepšie?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Blokovanie požiadaviek na súbory cookie & vyskakovacie okná";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Blokovanie cielených reklám";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Rýchlo vymažte údaje prehliadania";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blokovať sledovanie tretími stranami";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Ochrany boli aktivované!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Preskočiť";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Dobrý deň.\n\nSte pripravení na rýchlejší prehliadač, ktorý vás ochráni?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Poďme na to!";

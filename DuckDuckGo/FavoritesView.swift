@@ -81,7 +81,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
                 .frame(width: NewTabPageGrid.Item.edgeSize)
                 .previewShape()
                 .transition(.opacity)
-        case .addFavorite:
+        case .addFavorite, .placeholder:
             EmptyView()
         }
     }
@@ -110,10 +110,17 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
             Button(action: {
                 isAddingFavorite = true
             }, label: {
-                AddFavoritePlaceholderItemView()
+                FavoriteAddItemView()
             })
             .buttonStyle(SecondaryFillButtonStyle(isFreeform: true))
             .frame(width: NewTabPageGrid.Item.edgeSize)
+        case .placeholder:
+            FavoritePlaceholderItemView()
+                .frame(width: NewTabPageGrid.Item.edgeSize, height: NewTabPageGrid.Item.edgeSize)
+                .contentShape(.rect)
+                .onTapGesture {
+                    model.placeholderTapped()
+                }
         }
     }
 }

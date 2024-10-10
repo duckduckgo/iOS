@@ -2786,8 +2786,17 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
+
+        var responseSent: Bool = false
+
+        let sendResponse: (Bool) -> Void = { useGeneratedPassword in
+            guard !responseSent else { return }
+            responseSent = true
+            completionHandler(useGeneratedPassword)
+        }
+
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                completionHandler(useGeneratedPassword)
+            sendResponse(useGeneratedPassword)
         }
 
         if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
@@ -2810,6 +2819,15 @@ extension TabViewController: SecureVaultManagerDelegate {
                                              useLargeDetent: Bool,
                                              onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                                              completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+
+        var responseSent: Bool = false
+
+        let sendResponse: (SecureVaultModels.WebsiteAccount?) -> Void = { account in
+            guard !responseSent else { return }
+            responseSent = true
+            completionHandler(account)
+        }
+
         let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                              domain: domain,
                                                                              trigger: trigger,
@@ -2825,10 +2843,10 @@ extension TabViewController: SecureVaultManagerDelegate {
                     onAccountSelected(account)
                 },
                                                          completionHandler: { account in
-                    completionHandler(account)
+                    sendResponse(account)
                 })
             } else {
-                completionHandler(account)
+                sendResponse(account)
             }
         })
 

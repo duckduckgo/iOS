@@ -153,6 +153,10 @@ public struct PixelParameters {
     // Subscription
     public static let privacyProKeychainAccessType = "access_type"
     public static let privacyProKeychainError = "error"
+
+    // Persistent pixel
+    public static let originalPixelTimestamp = "originalPixelTimestamp"
+    public static let retriedPixel = "retriedPixel"
 }
 
 public struct PixelValues {
@@ -172,7 +176,7 @@ public class Pixel {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
-    public enum QueryParameters {
+    public enum QueryParameters: Codable {
         case atb
         case appVersion
     }

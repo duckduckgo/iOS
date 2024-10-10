@@ -29,6 +29,21 @@ public protocol PixelFiring {
 
     static func fire(_ pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String])
+
+    static func fire(pixelNamed pixelName: String,
+                     forDeviceType deviceType: UIUserInterfaceIdiom?,
+                     withAdditionalParameters params: [String: String],
+                     allowedQueryReservedCharacters: CharacterSet?,
+                     withHeaders headers: APIRequest.Headers,
+                     includedParameters: [Pixel.QueryParameters],
+                     onComplete: @escaping (Error?) -> Void)
+
+    static func fire(pixel: Pixel.Event,
+                     error: Error?,
+                     includedParameters: [Pixel.QueryParameters],
+                     withAdditionalParameters params: [String: String],
+                     onComplete: @escaping (Error?) -> Void)
+
 }
 
 extension Pixel: PixelFiring {

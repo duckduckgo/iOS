@@ -50,6 +50,8 @@ protocol DependencyProvider {
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
+    var persistentPixel: PersistentPixelFiring { get }
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -93,6 +95,7 @@ final class AppDependencyProvider: DependencyProvider {
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
@@ -140,7 +143,8 @@ final class AppDependencyProvider: DependencyProvider {
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 #endif
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: persistentPixel)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }

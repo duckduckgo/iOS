@@ -564,6 +564,8 @@ import os.log
         Task {
             await privacyProDataReporter.saveWidgetAdded()
         }
+
+        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {

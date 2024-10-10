@@ -54,8 +54,10 @@ final class NewTabPageMessagesModel: ObservableObject {
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
-        homePageMessagesConfiguration.dismissHomeMessage(homeMessage)
-        updateHomeMessageViewModel()
+        Task { @MainActor in
+            await homePageMessagesConfiguration.dismissHomeMessage(homeMessage)
+            updateHomeMessageViewModel()
+        }
     }
 
     func didAppear(_ homeMessage: HomeMessage) {

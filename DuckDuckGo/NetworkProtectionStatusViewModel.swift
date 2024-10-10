@@ -573,6 +573,15 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: - UI Events handling
 
+    @available(iOS 17.0, *)
+    @MainActor
+    func addWidgetActionHandler(action: Tips.Action) {
+        if action.id == VPNAddWidgetTip.addWidgetActionId {
+            showAddWidgetEducationView = true
+            (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
+        }
+    }
+
     /// The user opened the VPN locations view
     ///
     func handleUserOpenedVPNLocations() {

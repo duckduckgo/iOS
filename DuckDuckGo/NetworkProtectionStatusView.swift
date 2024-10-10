@@ -24,7 +24,9 @@ import TipKit
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 
-    @StateObject public var statusModel: NetworkProtectionStatusViewModel
+    @ObservedObject
+    public var statusModel: NetworkProtectionStatusViewModel
+    @State var forceRedraw: Bool = false
 
     // MARK: - View
 
@@ -153,11 +155,8 @@ struct NetworkProtectionStatusView: View {
         if !statusModel.isNetPEnabled {
 
             if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
-                TipView(tip) { action in
-                    if action.id == VPNAddWidgetTip.addWidgetActionId {
-                        statusModel.showAddWidgetEducationView = true
-                    }
-                }.removeGroupedListStyleInsets()
+                TipView(tip, action: statusModel.addWidgetActionHandler(action:))
+                    .removeGroupedListStyleInsets()
                     .tipCornerRadius(0)
                     .tipBackground(Color(designSystemColor: .surface))
                     .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
@@ -165,8 +164,9 @@ struct NetworkProtectionStatusView: View {
                             WidgetEducationView()
                                 .toolbar {
                                     ToolbarItem(placement: .navigationBarTrailing) {
-                                        Button(UserText.subscriptionCloseButton) {
+                                        Button(UserText.navigationTitleDone) {
                                             statusModel.showAddWidgetEducationView = false
+                                            forceRedraw.toggle()
                                         }
                                     }
                                 }

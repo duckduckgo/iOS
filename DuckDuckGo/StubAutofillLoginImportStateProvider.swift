@@ -21,9 +21,11 @@ import Foundation
 import BrowserServicesKit
 
 struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
-    public var isNewDDGUser: Bool = false
+
+    public var isEligibleDDGUser: Bool = false
     public var hasImportedLogins: Bool = false
     var credentialsImportPromptPresentationCount: Int = 0
+    var isCredentialsImportPromptPermanantlyDismissed: Bool = false
 
     var isAutofillEnabled: Bool {
         AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled

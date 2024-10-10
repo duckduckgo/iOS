@@ -89,15 +89,8 @@ struct NetworkProtectionStatusView: View {
             }
             .padding([.top, .bottom], 2)
 
-            if #available(iOS 17.0, *),
-               !statusModel.isNetPEnabled {
-
-                if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
-                    TipView(tip)
-                        .removeGroupedListStyleInsets()
-                        .tipCornerRadius(0)
-                        .tipBackground(Color(designSystemColor: .surface))
-                }
+            if #available(iOS 17.0, *) {
+                addWidgetTip()
             }
 
             snooze()
@@ -151,6 +144,35 @@ struct NetworkProtectionStatusView: View {
             .padding(.horizontal, -16)
             .background(Color(designSystemColor: .background))
             Spacer(minLength: 0)
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func addWidgetTip() -> some View {
+        if !statusModel.isNetPEnabled {
+
+            if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
+                TipView(tip) { action in
+                    if action.id == VPNAddWidgetTip.addWidgetActionId {
+                        statusModel.showAddWidgetEducationView = true
+                    }
+                }.removeGroupedListStyleInsets()
+                    .tipCornerRadius(0)
+                    .tipBackground(Color(designSystemColor: .surface))
+                    .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
+                        NavigationView {
+                            WidgetEducationView()
+                                .toolbar {
+                                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        Button(UserText.subscriptionCloseButton) {
+                                            statusModel.showAddWidgetEducationView = false
+                                        }
+                                    }
+                                }
+                        }
+                    }
+            }
         }
     }
 

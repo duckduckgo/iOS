@@ -104,6 +104,9 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: - Tips
 
     @Published
+    var showAddWidgetEducationView: Bool = false
+
+    @Published
     var vpnEnabledTips = TipGroup(.ordered) {
         VPNChangeLocationTip()
         VPNUseSnoozeTip()

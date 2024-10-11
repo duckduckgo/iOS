@@ -155,9 +155,10 @@ public class StatisticsLoader {
 
     private func processUsageSegmentation(atb: Atb?, activityType: UsageActivityType) {
         guard let installAtbValue = statisticsStore.atb else { return }
-        let installAtb = Atb(version: installAtbValue, updateVersion: nil)
-        let actualAtb = atb ?? installAtb
-        self.usageSegmentation.processATB(actualAtb, withInstallAtb: installAtb, andActivityType: activityType)
+        let installAtb = Atb(version: installAtbValue + (statisticsStore.variant ?? ""), updateVersion: nil)
+        let usageAtb = atb ?? installAtb
+
+        self.usageSegmentation.processATB(usageAtb, withInstallAtb: installAtb, andActivityType: activityType)
     }
 
     private func updateUsageSegmentationWithAtb(_ atb: Atb, activityType: UsageActivityType) {

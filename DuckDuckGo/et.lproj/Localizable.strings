@@ -1,6 +1,9 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ " = "%@ ";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
 
@@ -253,6 +256,9 @@
 /* Title for message show in suggestions */
 "autocomplete.history.warning.title" = "Sama privaatsus.\nParemad otsingusoovitused!";
 
+/* Switch to tab hint */
+"autocomplete.switch.to.tab" = "Vaheta vahekaardile";
+
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.disabled" = "Keelatud";
 
@@ -324,6 +330,9 @@
 
 /* Disable action for alert when asking the user if they want to keep using autofill */
 "autofill.keep-enabled.alert.disable" = "Keela";
+
+/* A link that takes the user to the DuckDuckGo help pages explaining password managers */
+"autofill.learn.more.link.title" = "Learn More";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Kuva";
@@ -419,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Impordi paroolid";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle" = "Teiste brauserite või rakenduste paroole saab importida DuckDuckGo brauseri töölauaversiooni abil.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Salvestatud paroole saad importida teisest brauserist DuckDuckGo-sse.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Paroole ei ole veel salvestatud";
@@ -462,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Otsi paroole";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
+"autofill.logins.list.settings.footer.markdown" = "Paroolid on krüpteeritud. Keegi peale sinu ei näe neid, isegi mitte meie. [Lisateave](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Soovitatud";
@@ -581,11 +593,11 @@
 /* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
 "autofill.save-login.never-prompt.CTA" = "Ära selle saidi kohta rohkem küsi";
 
-/* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo paroolid ja automaatne täitmine salvestab paroole turvaliselt sinu seadmes.";
-
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas salvestada see parool?";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.security.message" = "Salvesta oma parool turvaliselt seadmesse DuckDuckGo paroolide ja automaatse täitmisega.";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Kas salvestada parool?";
@@ -772,6 +784,18 @@
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Sain aru!";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.highlights.final-screen.message" = "Pea meeles: iga kord kui minuga sirvid, kaotab jube reklaam oma tiivad.";
+
+/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
+"contextual.onboarding.highlights.first-search-done.message" = "See on DuckDuckGo Search! Privaatne. Kiire. Vähem reklaame.";
+
+/* Message of a popover on the browser that invites the user to try a search explaining that their searches are private */
+"contextual.onboarding.highlights.try-a-search.message" = "Sinu DuckDuckGo otsingud on alati privaatsed.";
+
+/* Browser Search query for baby ducklings */
+"contextual.onboarding.highlights.try-search.surprise-me" = "pardipojad";
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Proovi külastada saiti!";
@@ -1703,9 +1727,6 @@
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN-i seaded";
 
-/* Header title of Favorites section */
-"new.tab.page.favorites.setion.header.title" = "Lemmikud";
-
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Kohanda oma lemmikuid ja enim kasutatavaid funktsioone. Järjesta valikud ümber või peida need, et kõik oleks lihtsasti leitav.";
 
@@ -1760,13 +1781,13 @@
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Vali oma brauser";
 
-/* Message to highlight browser capability of blocking cookie pop-ups */
+/* Message to highlight how the browser allows you to block cookie pop-ups */
 "onboarding.browsers.features.cookiePopups.title" = "Blokeeri küpsiste hüpikaknad";
 
 /* Message to highlight browser capability of blocking creepy ads */
 "onboarding.browsers.features.creepyAds.title" = "Blokeeri sihitud reklaamid";
 
-/* Message to highlight browser capability ofswiftly erase browsing data */
+/* Message to highlight browser capability of swiftly erase browsing data */
 "onboarding.browsers.features.eraseBrowsingData.title" = "Sirvimisandmete kiire kustutamine";
 
 /* Message to highlight browser capability of private searches */
@@ -1778,8 +1799,56 @@
 /* The title of the dialog to show the privacy features that DuckDuckGo offers */
 "onboarding.browsers.title" = "Privaatsuskaitsed on aktiveeritud!";
 
-/* Subheader message for the screen to choose DuckDuckGo as default browser */
-"onboarding.defaultBrowser.message" = "Ava linke igal ajal, rahuliku meelega.";
+/* The message of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.message" = "Kergesti ligipääsetav";
+
+/* The title of the option to set the address bar to the bottom. */
+"onboarding.highlights.addressBarPosition.bottom.title" = "All";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.addressBarPosition.cta" = "Järgmine";
+
+/* Indicates what address bar option (Top/Bottom) is the default one. E.g. Top (Default) */
+"onboarding.highlights.addressBarPosition.default" = "(vaikimisi)";
+
+/* The title of the onboarding dialog popup to select the preferred address bar position. */
+"onboarding.highlights.addressBarPosition.title" = "Kuhu soovid oma aadressiriba paigutada?";
+
+/* The message of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.message" = "Kergesti märgatav";
+
+/* The title of the option to set the address bar to the top. */
+"onboarding.highlights.addressBarPosition.top.title" = "Populaarseimad";
+
+/* The title of the CTA to progress to the next onboarding screen. */
+"onboarding.highlights.appIconSelection.cta" = "Järgmine";
+
+/* The subheader of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.message" = "Vali oma rakenduse ikoon:";
+
+/* The title of the onboarding dialog popup to select the preferred App icon. */
+"onboarding.highlights.appIconSelection.title" = "Milline värv tundub kõige paremini sobivat?";
+
+/* Message to highlight how the browser allows you to block cookie pop-ups */
+"onboarding.highlights.browsers.features.cookiePopups.title" = "Blokeeri küpsiste päringud ja hüpikaknad";
+
+/* Message to highlight browser capability of blocking creepy ads */
+"onboarding.highlights.browsers.features.creepyAds.title" = "Blokeeri suunatud reklaamid";
+
+/* Message to highlight browser capability of swiftly erase browsing data */
+"onboarding.highlights.browsers.features.eraseBrowsingData.title" = "Kustuta sirvimisandmed kiiresti";
+
+/* Message to highlight browser capability ofblocking 3rd party trackers */
+"onboarding.highlights.browsers.features.trackerBlocker.title" = "Blokeeri kolmanda poole jälgurid";
+
+/* The title of the dialog to show the privacy features that DuckDuckGo offers */
+"onboarding.highlights.browsers.title" = "Kaitsed aktiveeritud!";
+
+/* The title of the fire button CTA to skip erasing the data. */
+"onboarding.highlights.fireDialog.cta.skip" = "Jäta vahele";
+
+/* The title of the onboarding dialog popup */
+"onboarding.highlights.intro.title" = "Tere!\n\nKas oled valmis kasutama kiiremat brauserit, mis hoiab sind kaitstud?";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Teeme ära!";

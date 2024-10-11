@@ -71,8 +71,6 @@ protocol TabDelegate: AnyObject {
 
     func tabContentProcessDidTerminate(tab: TabViewController)
     
-    func tabDidRequestForgetAll(tab: TabViewController)
-    
     func tabDidRequestFireButtonPulse(tab: TabViewController)
 
     func tabDidRequestPrivacyDashboardButtonPulse(tab: TabViewController, animated: Bool)

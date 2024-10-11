@@ -20,18 +20,12 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-protocol Reorderable: Hashable {
-    var dropItemProvider: NSItemProvider { get }
-    var dropType: UTType { get }
-}
-
 struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Preview: View>: View {
 
     typealias ContentBuilder = (Data) -> Content
     typealias PreviewBuilder = (Data) -> Preview
 
     private let data: [Data]
-    private let isReorderingEnabled: Bool
     private let id: KeyPath<Data, ID>
 
     private let content: ContentBuilder
@@ -42,12 +36,10 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
 
     init(_ data: [Data],
          id: KeyPath<Data, ID>,
-         isReorderingEnabled: Bool = true,
          @ViewBuilder content: @escaping ContentBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) where Preview == EmptyView {
         self.data = data
         self.id = id
-        self.isReorderingEnabled = isReorderingEnabled
         self.content = content
         self.preview = nil
         self.onMove = onMove
@@ -61,7 +53,6 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) {
         self.data = data
         self.id = id
-        self.isReorderingEnabled = isReorderingEnabled
         self.content = content
         self.preview = preview
         self.onMove = onMove
@@ -69,31 +60,38 @@ struct ReorderableForEach<Data: Reorderable, ID: Hashable, Content: View, Previe
 
     var body: some View {
         ForEach(data, id: id) { item in
-            if isReorderingEnabled {
-                if let preview {
-                    droppableContent(for: item)
-                        .onDrag {
-                            movedItem = item
-                            return item.dropItemProvider
-                        } preview: {
-                            preview(item)
-                        }
-                } else {
-                    droppableContent(for: item)
-                        .onDrag {
-                            movedItem = item
-                            return item.dropItemProvider
-                        }
-                }
+            contentForItem(item: item)
+        }
+    }
+
+    @ViewBuilder
+    private func contentForItem(item: Data) -> some View {
+        switch item.trait {
+        case .stationary:
+            content(item)
+        case .movable(let metadata):
+            if let preview {
+                droppableContent(for: item, metadata: metadata)
+                    .onDrag {
+                        movedItem = item
+                        return metadata.itemProvider
+                    } preview: {
+                        preview(item)
+                    }
             } else {
-                content(item)
+                droppableContent(for: item, metadata: metadata)
+                    .onDrag {
+                        movedItem = item
+                        return metadata.itemProvider
+                    }
             }
         }
     }
 
-    private func droppableContent(for item: Data) -> some View {
+    @ViewBuilder
+    private func droppableContent(for item: Data, metadata: MoveMetadata) -> some View {
         content(item)
-            .onDrop(of: [item.dropType], delegate: ReorderDropDelegate(
+            .onDrop(of: [metadata.type], delegate: ReorderDropDelegate(
                 data: data,
                 item: item,
                 onMove: onMove,
@@ -129,33 +127,43 @@ private struct ReorderDropDelegate<Data: Reorderable>: DropDelegate {
 
     func performDrop(info: DropInfo) -> Bool {
         movedItem = nil
-        return info.hasItemsConforming(to: [item.dropType])
+        return true
     }
 }
 
 extension ReorderableForEach where Data: Identifiable, ID == Data.ID {
     init(_ data: [Data],
-         isReorderingEnabled: Bool = true,
          @ViewBuilder content: @escaping ContentBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) where Preview == EmptyView {
         self.data = data
         self.id = \Data.id
-        self.isReorderingEnabled = isReorderingEnabled
         self.content = content
         self.preview = nil
         self.onMove = onMove
     }
 
     init(_ data: [Data],
-         isReorderingEnabled: Bool = true,
          @ViewBuilder content: @escaping ContentBuilder,
          @ViewBuilder preview: @escaping PreviewBuilder,
          onMove: @escaping (_ from: IndexSet, _ to: Int) -> Void) {
         self.data = data
         self.id = \Data.id
-        self.isReorderingEnabled = isReorderingEnabled
         self.content = content
         self.preview = preview
         self.onMove = onMove
     }
+}
+
+struct MoveMetadata {
+    var itemProvider: NSItemProvider
+    var type: UTType
+}
+
+enum ReorderableTrait {
+    case stationary
+    case movable(MoveMetadata)
+}
+
+protocol Reorderable: Hashable {
+    var trait: ReorderableTrait { get }
 }

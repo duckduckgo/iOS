@@ -38,7 +38,6 @@ import Subscription
 import NetworkProtection
 import WebKit
 import os.log
-import TipKit
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
     

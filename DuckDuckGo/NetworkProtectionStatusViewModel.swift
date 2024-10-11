@@ -95,6 +95,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
+    private let featureFlagger = AppDependencyProvider.shared.featureFlagger
     private let tunnelController: (TunnelController & TunnelSessionProvider)
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
@@ -102,6 +103,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     // MARK: - Tips
+
+    var canShowTips: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionUserTips)
+    }
 
     @Published
     var showAddWidgetEducationView: Bool = false

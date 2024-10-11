@@ -422,7 +422,7 @@ extension SettingsViewModel {
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
             duckPlayerMode: appSettings.duckPlayerMode,
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
-            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayer)
+            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab)
             
         )
         

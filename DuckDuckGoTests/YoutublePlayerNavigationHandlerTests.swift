@@ -493,6 +493,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
         
+        handler.navigationType = .linkActivated
         playerSettings.mode = .disabled
         mockAppSettings.duckPlayerOpenInNewTab = true
         

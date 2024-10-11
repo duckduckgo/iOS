@@ -552,7 +552,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             isFeatureEnabled &&
             isSubFeatureEnabled &&
             isDuckPlayer &&
-            navigationAction.navigationType == .linkActivated &&
+            self.navigationType == .linkActivated &&
             isDuckPlayerEnabled {
             return true
         }

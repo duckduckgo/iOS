@@ -363,7 +363,6 @@
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC97CC42CB7ECDE00FF521F /* TipGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC97CC32CB7ECDE00FF521F /* TipGroup.swift */; };
-		7BF78DFF2CA2CAEE0026A1FC /* VPNAppEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF78DFE2CA2CAEE0026A1FC /* VPNAppEventsHandler.swift */; };
 		7BF78E022CA2CC3E0026A1FC /* TipKitAppEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */; };
 		7BFD5FD52C9DA310000FF959 /* VPNAddWidgetTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD42C9DA310000FF959 /* VPNAddWidgetTip.swift */; };
 		7BFD5FD72C9DB9D7000FF959 /* VPNChangeLocationTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD62C9DB9D7000FF959 /* VPNChangeLocationTip.swift */; };
@@ -1648,7 +1647,6 @@
 		7B1604ED2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitDebugOptionsUIActionHandling.swift; sourceTree = "<group>"; };
 		7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNActivationDateStore.swift; sourceTree = "<group>"; };
 		7BC97CC32CB7ECDE00FF521F /* TipGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipGroup.swift; sourceTree = "<group>"; };
-		7BF78DFE2CA2CAEE0026A1FC /* VPNAppEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAppEventsHandler.swift; sourceTree = "<group>"; };
 		7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitAppEventHandling.swift; sourceTree = "<group>"; };
 		7BFD5FD42C9DA310000FF959 /* VPNAddWidgetTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAddWidgetTip.swift; sourceTree = "<group>"; };
 		7BFD5FD62C9DB9D7000FF959 /* VPNChangeLocationTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNChangeLocationTip.swift; sourceTree = "<group>"; };
@@ -4027,14 +4025,6 @@
 			name = AdAttribution;
 			sourceTree = "<group>";
 		};
-		7BF78DFD2CA2CAD10026A1FC /* AppIntegration */ = {
-			isa = PBXGroup;
-			children = (
-				7BF78DFE2CA2CAEE0026A1FC /* VPNAppEventsHandler.swift */,
-			);
-			path = AppIntegration;
-			sourceTree = "<group>";
-		};
 		7BF78E002CA2CC100026A1FC /* TipKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -5588,7 +5578,6 @@
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
-				7BF78DFD2CA2CAD10026A1FC /* AppIntegration */,
 				7BFD5FD32C9DA235000FF959 /* TipKit */,
 				4BD96E072C4DCCD1003BC32C /* LiveActivity */,
 				4B37E04E2B928C91009E81CA /* Resources */,
@@ -7508,7 +7497,6 @@
 				D64648AD2B59936B0033090B /* SubscriptionEmailView.swift in Sources */,
 				BD862E032B30DA170073E2EE /* VPNFeedbackFormViewModel.swift in Sources */,
 				F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */,
-				7BF78DFF2CA2CAEE0026A1FC /* VPNAppEventsHandler.swift in Sources */,
 				6FE1273A2C204BD000EB5724 /* NewTabPageView.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,

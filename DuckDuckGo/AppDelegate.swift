@@ -57,6 +57,7 @@ import TipKit
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
 
+    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
 
     @MainActor
@@ -92,7 +93,6 @@ import TipKit
     // MARK: - Feature specific app event handlers
 
     private let tipKitAppEventsHandler = TipKitAppEventHandler()
-    private let vpnAppEventsHandler = VPNAppEventsHandler()
 
     // MARK: lifecycle
 
@@ -378,7 +378,7 @@ import TipKit
 
         NewTabPageIntroMessageSetup().perform()
 
-        vpnAppEventsHandler.appDidFinishLaunching()
+        widgetRefreshModel.beginObservingVPNStatus()
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
@@ -541,7 +541,7 @@ import TipKit
 
         fireFailedCompilationsPixelIfNeeded()
 
-        VPNAppEventsHandler().appDidBecomeActive()
+        widgetRefreshModel.refreshVPNWidget()
 
         if tunnelDefaults.showEntitlementAlert {
             presentExpiredEntitlementAlert()

@@ -212,7 +212,7 @@ public class Pixel {
             onComplete(nil)
         }
     }
-
+    
     private static func updatePixelLastFireDate(pixel: Pixel.Event) {
         storage.set(Date(), forKey: pixel.name)
     }

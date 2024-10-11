@@ -23,8 +23,6 @@ import TipKit
 ///
 struct VPNChangeLocationTip {}
 
-/// Necessary split to support older iOS versions.
-///
 @available(iOS 17.0, *)
 extension VPNChangeLocationTip: Tip {
 

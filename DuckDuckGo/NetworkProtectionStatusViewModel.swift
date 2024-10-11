@@ -575,7 +575,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @available(iOS 17.0, *)
     @MainActor
-    func addWidgetActionHandler(action: Tips.Action) {
+    func widgetActionHandler(action: Tips.Action) {
         if action.id == VPNAddWidgetTip.addWidgetActionId {
             showAddWidgetEducationView = true
             (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)

@@ -26,7 +26,6 @@ struct NetworkProtectionStatusView: View {
 
     @ObservedObject
     public var statusModel: NetworkProtectionStatusViewModel
-    @State var forceRedraw: Bool = false
 
     // MARK: - View
 
@@ -57,6 +56,18 @@ struct NetworkProtectionStatusView: View {
                 .animation(.easeOut, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
+        .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
+            NavigationView {
+                WidgetEducationView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(UserText.navigationTitleDone) {
+                                statusModel.showAddWidgetEducationView = false
+                            }
+                        }
+                    }
+            }
+        }
     }
 
     @ViewBuilder
@@ -92,20 +103,13 @@ struct NetworkProtectionStatusView: View {
             .padding([.top, .bottom], 2)
 
             if #available(iOS 17.0, *) {
-                addWidgetTip()
+                widgetTip()
             }
 
             snooze()
 
-            if #available(iOS 17.0, *),
-               statusModel.hasServerInfo {
-
-                if let tip = statusModel.vpnEnabledTips.currentTip as? VPNUseSnoozeTip {
-                    TipView(tip)
-                        .removeGroupedListStyleInsets()
-                        .tipCornerRadius(0)
-                        .tipBackground(Color(designSystemColor: .surface))
-                }
+            if #available(iOS 17.0, *) {
+                snoozeTip()
             }
         } header: {
             header()
@@ -146,33 +150,6 @@ struct NetworkProtectionStatusView: View {
             .padding(.horizontal, -16)
             .background(Color(designSystemColor: .background))
             Spacer(minLength: 0)
-        }
-    }
-
-    @available(iOS 17.0, *)
-    @ViewBuilder
-    private func addWidgetTip() -> some View {
-        if !statusModel.isNetPEnabled {
-
-            if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
-                TipView(tip, action: statusModel.addWidgetActionHandler(action:))
-                    .removeGroupedListStyleInsets()
-                    .tipCornerRadius(0)
-                    .tipBackground(Color(designSystemColor: .surface))
-                    .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
-                        NavigationView {
-                            WidgetEducationView()
-                                .toolbar {
-                                    ToolbarItem(placement: .navigationBarTrailing) {
-                                        Button(UserText.navigationTitleDone) {
-                                            statusModel.showAddWidgetEducationView = false
-                                            forceRedraw.toggle()
-                                        }
-                                    }
-                                }
-                        }
-                    }
-            }
         }
     }
 
@@ -228,13 +205,8 @@ struct NetworkProtectionStatusView: View {
                 }
             }
 
-            if #available(iOS 17.0, *),
-               let changeLocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
-
-                TipView(changeLocationTip)
-                    .removeGroupedListStyleInsets()
-                    .tipCornerRadius(0)
-                    .tipBackground(Color(designSystemColor: .surface))
+            if #available(iOS 17.0, *) {
+               geolocationTip()
             }
         } header: {
             Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
@@ -325,6 +297,45 @@ struct NetworkProtectionStatusView: View {
             ),
             isAnimating: $statusModel.isNetPEnabled
         )
+    }
+
+    // MARK: - Tips
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func geolocationTip() -> some View {
+        if let changeLocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
+            TipView(changeLocationTip)
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func snoozeTip() -> some View {
+        if statusModel.hasServerInfo,
+           let tip = statusModel.vpnEnabledTips.currentTip as? VPNUseSnoozeTip {
+
+            TipView(tip)
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func widgetTip() -> some View {
+        if !statusModel.isNetPEnabled {
+            if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
+                TipView(tip, action: statusModel.widgetActionHandler(action:))
+                    .removeGroupedListStyleInsets()
+                    .tipCornerRadius(0)
+                    .tipBackground(Color(designSystemColor: .surface))
+            }
+        }
     }
 }
 

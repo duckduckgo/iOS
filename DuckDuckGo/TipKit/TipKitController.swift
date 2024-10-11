@@ -33,12 +33,25 @@ protocol TipKitControlling {
 typealias TipKitAppEventHandler = TipKitController
 
 final class TipKitController {
-    @UserDefaultsWrapper(key: .resetTipKitOnNextLaunch, defaultValue: false)
-    private var resetTipKitOnNextLaunch: Bool
-    private let logger: Logger
 
-    init(logger: Logger = .tipKit) {
+    private let logger: Logger
+    private let userDefaults: UserDefaults
+
+    private var resetTipKitOnNextLaunch: Bool {
+        get {
+            userDefaults.bool(forKey: "resetTipKitOnNextLaunch")
+        }
+
+        set {
+            userDefaults.set(newValue, forKey: "resetTipKitOnNextLaunch")
+        }
+    }
+
+    init(logger: Logger = .tipKit,
+         userDefaults: UserDefaults = .standard) {
+
         self.logger = logger
+        self.userDefaults = userDefaults
     }
 
     @available(iOS 17.0, *)

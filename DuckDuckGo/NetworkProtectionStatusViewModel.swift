@@ -598,7 +598,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     func widgetActionHandler(action: Tips.Action) {
         if action.id == VPNAddWidgetTip.ActionIdentifiers.addWidget.rawValue {
             showAddWidgetEducationView = true
-            (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
+            (vpnEnabledTips.current as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
         }
     }
 
@@ -607,7 +607,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     func handleUserOpenedVPNLocations() {
         if #available(iOS 17.0, *) {
             Task { @MainActor in
-                (vpnEnabledTips.currentTip as? VPNChangeLocationTip)?.invalidate(reason: .actionPerformed)
+                (vpnEnabledTips.current as? VPNChangeLocationTip)?.invalidate(reason: .actionPerformed)
             }
         }
     }

@@ -295,7 +295,7 @@ struct NetworkProtectionStatusView: View {
     @available(iOS 17.0, *)
     @ViewBuilder
     private func geolocationTip() -> some View {
-        if let changeLocationTip = statusModel.vpnEnabledTips.current as? VPNChangeLocationTip {
+        if let changeLocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
             TipView(changeLocationTip)
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
@@ -307,7 +307,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func snoozeTip() -> some View {
         if statusModel.hasServerInfo,
-           let tip = statusModel.vpnEnabledTips.current as? VPNUseSnoozeTip {
+           let tip = statusModel.vpnEnabledTips.currentTip as? VPNUseSnoozeTip {
 
             TipView(tip, action: statusModel.snoozeActionHandler(action:))
                 .removeGroupedListStyleInsets()
@@ -320,7 +320,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func widgetTip() -> some View {
         if !statusModel.isNetPEnabled {
-            if let tip = statusModel.vpnEnabledTips.current as? VPNAddWidgetTip {
+            if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
                 TipView(tip, action: statusModel.widgetActionHandler(action:))
                     .removeGroupedListStyleInsets()
                     .tipCornerRadius(0)

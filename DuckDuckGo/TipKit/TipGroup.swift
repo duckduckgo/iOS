@@ -21,22 +21,16 @@ import Foundation
 import TipKit
 
 protocol TipGrouping {
+    @available(iOS 17.0, *)
     @MainActor
-    var current: Any? { get }
+    var currentTip: (any Tip)? { get }
 }
 
-@available(iOS 18.0, *)
-extension TipGroup: TipGrouping {
-    @MainActor
-    var current: Any? {
-        currentTip
-    }
-}
-
-/// A glorified no-op to be able to compile TipGrouping in iOS versions below 17
+/// A glorified no-op to be able to compile TipGrouping in iOS versions below 17.
 ///
 struct EmptyTipGroup: TipGrouping {
-    var current: Any? {
+    @available(iOS 17.0, *)
+    var currentTip: (any Tip)? {
         return nil
     }
 }

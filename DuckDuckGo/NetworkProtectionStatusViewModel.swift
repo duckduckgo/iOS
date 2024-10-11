@@ -575,14 +575,16 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @available(iOS 17.0, *)
     func snoozeActionHandler(action: Tips.Action) {
-       let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
-       UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if action.id == VPNUseSnoozeTip.ActionIdentifiers.learnMore.rawValue {
+            let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
     @available(iOS 17.0, *)
     @MainActor
     func widgetActionHandler(action: Tips.Action) {
-        if action.id == VPNAddWidgetTip.widgetActionId {
+        if action.id == VPNAddWidgetTip.ActionIdentifiers.addWidget.rawValue {
             showAddWidgetEducationView = true
             (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
         }

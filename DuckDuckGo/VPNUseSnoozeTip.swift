@@ -28,7 +28,9 @@ struct VPNUseSnoozeTip {}
 @available(iOS 17.0, *)
 extension VPNUseSnoozeTip: Tip {
 
-    static let learnMoreId = "com.duckduckgo.tipkit.VPNChangeLocationTip.learnMoreId"
+    enum ActionIdentifiers: String {
+        case learnMore = "com.duckduckgo.tipkit.VPNUseSnoozeTip.learnMoreId"
+    }
 
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
@@ -50,7 +52,7 @@ extension VPNUseSnoozeTip: Tip {
     }
 
     var actions: [Action] {
-        [Action(id: Self.learnMoreId, title: "Learn more")]
+        [Action(id: ActionIdentifiers.learnMore.rawValue, title: "Learn more")]
     }
 
     var rules: [Rule] {

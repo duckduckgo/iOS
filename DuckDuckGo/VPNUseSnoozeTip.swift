@@ -28,6 +28,8 @@ struct VPNUseSnoozeTip {}
 @available(iOS 17.0, *)
 extension VPNUseSnoozeTip: Tip {
 
+    static let learnMoreId = "com.duckduckgo.tipkit.VPNChangeLocationTip.learnMoreId"
+
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
 
@@ -48,10 +50,7 @@ extension VPNUseSnoozeTip: Tip {
     }
 
     var actions: [Action] {
-        [Action(title: "Learn more") {
-            let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }]
+        [Action(id: Self.learnMoreId, title: "Learn more")]
     }
 
     var rules: [Rule] {

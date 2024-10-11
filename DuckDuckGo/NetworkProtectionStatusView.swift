@@ -318,7 +318,7 @@ struct NetworkProtectionStatusView: View {
         if statusModel.hasServerInfo,
            let tip = statusModel.vpnEnabledTips.currentTip as? VPNUseSnoozeTip {
 
-            TipView(tip)
+            TipView(tip, action: statusModel.snoozeActionHandler(action:))
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))

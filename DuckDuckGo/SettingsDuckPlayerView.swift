@@ -73,8 +73,10 @@ struct SettingsDuckPlayerView: View {
                                        selectedOption: viewModel.duckPlayerModeBinding)
                 .disabled(viewModel.shouldDisplayDuckPlayerContingencyMessage)
                 
-                SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
-                                 accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                if viewModel.state.duckPlayerOpenInNewTabEnabled || viewModel.isInternalUser {
+                    SettingsCellView(label: UserText.settingsOpenDuckPlayerNewTabLabel,
+                                     accessory: .toggle(isOn: viewModel.duckPlayerOpenInNewTabBinding))
+                }
             }
         }
         .applySettingsListModifiers(title: UserText.duckPlayerFeatureName,

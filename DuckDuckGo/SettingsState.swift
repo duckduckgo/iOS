@@ -100,6 +100,7 @@ struct SettingsState {
     var duckPlayerEnabled: Bool
     var duckPlayerMode: DuckPlayerMode?
     var duckPlayerOpenInNewTab: Bool
+    var duckPlayerOpenInNewTabEnabled: Bool
     
     static var defaults: SettingsState {
         return SettingsState(
@@ -138,7 +139,8 @@ struct SettingsState {
             syncSource: nil,
             duckPlayerEnabled: false,
             duckPlayerMode: .alwaysAsk,
-            duckPlayerOpenInNewTab: true
+            duckPlayerOpenInNewTab: true,
+            duckPlayerOpenInNewTabEnabled: false
         )
     }
 }

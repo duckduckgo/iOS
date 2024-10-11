@@ -252,10 +252,17 @@ final class DuckPlayerNavigationHandler {
         guard let url else {
             return
         }
-        let openInNewTab = appSettings.duckPlayerOpenInNewTab && featureFlagger.isFeatureOn(.duckPlayer)
+        
+        // let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let isFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayer)
+        let isSubFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) || internalUserDecider.isInternalUser
         let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
-        let newTab = url.isDuckPlayer && openInNewTab && isDuckPlayerEnabled
-        if newTab {
+        
+        if openInNewTab &&
+            isFeatureEnabled &&
+            isSubFeatureEnabled &&
+            isDuckPlayerEnabled {
             navigationType = .linkActivated
         } else {
             navigationType = .other
@@ -535,11 +542,18 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
         
         // let openInNewTab = appSettings.duckPlayerOpenInNewTab
-        let openInNewTab = appSettings.duckPlayerOpenInNewTab && featureFlagger.isFeatureOn(.duckPlayer)
+        let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let isFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayer)
+        let isSubFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) || internalUserDecider.isInternalUser
         let isDuckPlayer = navigationAction.request.url?.isDuckPlayer ?? false
         let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
         
-        if openInNewTab && isDuckPlayer && navigationAction.navigationType == .linkActivated && isDuckPlayerEnabled {
+        if openInNewTab &&
+            isFeatureEnabled &&
+            isSubFeatureEnabled &&
+            isDuckPlayer &&
+            navigationAction.navigationType == .linkActivated &&
+            isDuckPlayerEnabled {
             return true
         }
         return false

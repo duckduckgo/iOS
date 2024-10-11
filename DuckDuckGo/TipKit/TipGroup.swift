@@ -27,9 +27,10 @@ protocol TipGrouping {
 }
 
 // This only compiles in Xcode 16 and needs to be re-enalbed once we move to it.
+// Ref: https://app.asana.com/0/414235014887631/1208528787265444/f
 //
-//@available(iOS 18.0, *)
-//extension TipGroup: TipGrouping {}
+// @available(iOS 18.0, *)
+// extension TipGroup: TipGrouping {}
 
 /// A glorified no-op to be able to compile TipGrouping in iOS versions below 17.
 ///

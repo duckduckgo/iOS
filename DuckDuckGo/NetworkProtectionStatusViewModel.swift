@@ -113,7 +113,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     let vpnEnabledTips: TipGrouping = {
         // This is temporarily disabled until Xcode 16 is available.
-        // Ref:
+        // Ref: https://app.asana.com/0/414235014887631/1208528787265444/f
+        //
         // if #available(iOS 18.0, *) {
         //     return TipGroup(.ordered) {
         //     VPNChangeLocationTip()

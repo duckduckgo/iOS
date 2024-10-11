@@ -111,15 +111,16 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published
     var showAddWidgetEducationView: Bool = false
 
-    @Published
-    var vpnEnabledTips: TipGrouping = {
-        if #available(iOS 18.0, *) {
-            return TipGroup(.ordered) {
-                VPNChangeLocationTip()
-                VPNUseSnoozeTip()
-                VPNAddWidgetTip()
-            }
-        } else if #available(iOS 17.0, *) {
+    let vpnEnabledTips: TipGrouping = {
+        // This is temporarily disabled until Xcode 16 is available.
+        // Ref:
+        // if #available(iOS 18.0, *) {
+        //     return TipGroup(.ordered) {
+        //     VPNChangeLocationTip()
+        //     VPNUseSnoozeTip()
+        //     VPNAddWidgetTip()
+        // }
+        if #available(iOS 17.0, *) {
             return LegacyTipGroup(.ordered) {
                 VPNChangeLocationTip()
                 VPNUseSnoozeTip()

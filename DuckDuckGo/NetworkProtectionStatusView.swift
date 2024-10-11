@@ -57,16 +57,7 @@ struct NetworkProtectionStatusView: View {
         })
         .applyInsetGroupedListStyle()
         .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
-            NavigationView {
-                WidgetEducationView()
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(UserText.navigationTitleDone) {
-                                statusModel.showAddWidgetEducationView = false
-                            }
-                        }
-                    }
-            }
+            widgetEducationSheet()
         }
     }
 
@@ -335,6 +326,21 @@ struct NetworkProtectionStatusView: View {
                     .tipCornerRadius(0)
                     .tipBackground(Color(designSystemColor: .surface))
             }
+        }
+    }
+
+    // MARK: - Sheets
+
+    private func widgetEducationSheet() -> some View {
+        NavigationView {
+            WidgetEducationView()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(UserText.navigationTitleDone) {
+                            statusModel.showAddWidgetEducationView = false
+                        }
+                    }
+                }
         }
     }
 }

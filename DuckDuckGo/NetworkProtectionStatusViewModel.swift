@@ -107,11 +107,23 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     var showAddWidgetEducationView: Bool = false
 
     @Published
-    var vpnEnabledTips = TipGroup(.ordered) {
-        VPNChangeLocationTip()
-        VPNUseSnoozeTip()
-        VPNAddWidgetTip()
-    }
+    var vpnEnabledTips: TipGrouping = {
+        if #available(iOS 18.0, *) {
+            return TipGroup(.ordered) {
+                VPNChangeLocationTip()
+                VPNUseSnoozeTip()
+                VPNAddWidgetTip()
+            }
+        } else if #available(iOS 17.0, *) {
+            return LegacyTipGroup(.ordered) {
+                VPNChangeLocationTip()
+                VPNUseSnoozeTip()
+                VPNAddWidgetTip()
+            }
+        } else {
+            return EmptyTipGroup()
+        }
+    }()
 
     // MARK: Error
 

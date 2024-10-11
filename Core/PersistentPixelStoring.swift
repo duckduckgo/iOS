@@ -20,17 +20,30 @@
 import Foundation
 import Networking
 
-public struct PersistentPixelMetadata: Codable, Equatable {
-    enum PixelType: Codable {
+public struct PersistentPixelMetadata: Identifiable, Codable, Equatable {
+
+    public enum PixelType: Codable {
         case daily
         case count
         case regular
     }
 
-    let eventName: String
-    let pixelType: PixelType
-    let additionalParameters: [String: String]
-    let includedParameters: [Pixel.QueryParameters]
+    public let id: UUID
+    public let eventName: String
+    public let pixelType: PixelType
+    public let additionalParameters: [String: String]
+    public let includedParameters: [Pixel.QueryParameters]
+
+    public init(eventName: String,
+                pixelType: PersistentPixelMetadata.PixelType,
+                additionalParameters: [String: String],
+                includedParameters: [Pixel.QueryParameters]) {
+        self.id = UUID()
+        self.eventName = eventName
+        self.pixelType = pixelType
+        self.additionalParameters = additionalParameters
+        self.includedParameters = includedParameters
+    }
 
     var pixelName: String {
         switch pixelType {
@@ -46,8 +59,8 @@ public struct PersistentPixelMetadata: Codable, Equatable {
 }
 
 protocol PersistentPixelStoring {
-    func append(pixel: PersistentPixelMetadata) throws
-    func replaceStoredPixels(with pixels: [PersistentPixelMetadata]) throws
+    func append(pixels: [PersistentPixelMetadata]) throws
+    func remove(pixelsWithIDs: Set<UUID>) throws
     func storedPixels() throws -> [PersistentPixelMetadata]
 }
 
@@ -95,21 +108,27 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
         }
     }
 
-    func append(pixel: PersistentPixelMetadata) throws {
+    func append(pixels newPixels: [PersistentPixelMetadata]) throws {
         try fileAccessQueue.sync {
             var pixels = try self.readStoredPixelDataFromFileSystem()
-            pixels.append(pixel)
+            pixels.append(contentsOf: newPixels)
 
             if pixels.count > pixelCountLimit {
-                pixels.removeFirst()
+                pixels = pixels.suffix(Constants.pixelCountLimit)
             }
 
             try writePixelDataToFileSystem(pixels: pixels)
         }
     }
 
-    func replaceStoredPixels(with pixels: [PersistentPixelMetadata]) throws {
+    func remove(pixelsWithIDs pixelIDs: Set<UUID>) throws {
         try fileAccessQueue.sync {
+            var pixels = try self.readStoredPixelDataFromFileSystem()
+            
+            pixels.removeAll { pixel in
+                pixelIDs.contains(pixel.id)
+            }
+            
             try writePixelDataToFileSystem(pixels: pixels)
         }
     }

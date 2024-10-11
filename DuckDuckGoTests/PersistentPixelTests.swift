@@ -159,16 +159,17 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
     }
 
-    func testWhenPixelsAreStored_AndSendQueuedPixelsIsCalled_AndPixelRetrySucceeds_ThenPixelIsRemovedFromStorage() throws {
+    func testWhenPixelsAreStored_AndSendQueuedPixelsIsCalled_AndPixelRetrySucceeds_ThenPixelsAreRemovedFromStorage() throws {
         let persistentPixel = createPersistentPixel()
         let expectation = expectation(description: "sendQueuedPixels")
 
-        let pixel = PersistentPixelMetadata(eventName: "test1", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
-        let pixel2 = PersistentPixelMetadata(eventName: "test2", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
-        let pixel3 = PersistentPixelMetadata(eventName: "test3", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
-        let pixel4 = PersistentPixelMetadata(eventName: "test4", pixelType: .count, additionalParameters: ["key": "value"], includedParameters: [.appVersion])
+        let params = ["key": "value", PixelParameters.originalPixelTimestamp: testDateString!]
+        let pixel = PersistentPixelMetadata(eventName: "test1", pixelType: .count, additionalParameters: params, includedParameters: [.appVersion])
+        let pixel2 = PersistentPixelMetadata(eventName: "test2", pixelType: .count, additionalParameters: params, includedParameters: [.appVersion])
+        let pixel3 = PersistentPixelMetadata(eventName: "test3", pixelType: .count, additionalParameters: params, includedParameters: [.appVersion])
+        let pixel4 = PersistentPixelMetadata(eventName: "test4", pixelType: .count, additionalParameters: params, includedParameters: [.appVersion])
 
-        try persistentStorage.replaceStoredPixels(with: [pixel, pixel2, pixel3, pixel4])
+        try persistentStorage.append(pixels: [pixel, pixel2, pixel3, pixel4])
         persistentPixel.sendQueuedPixels { _ in
             expectation.fulfill()
         }
@@ -190,7 +191,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [pixel])
+        try persistentStorage.append(pixels: [pixel])
         persistentPixel.sendQueuedPixels { _ in
             expectation.fulfill()
         }
@@ -220,7 +221,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [pixel])
+        try persistentStorage.append(pixels: [pixel])
         persistentPixel.sendQueuedPixels { _ in
             expectation.fulfill()
         }
@@ -250,7 +251,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [pixel])
+        try persistentStorage.append(pixels: [pixel])
         persistentPixel.sendQueuedPixels { _ in
             expectation.fulfill()
         }
@@ -277,7 +278,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [initialPixel])
+        try persistentStorage.append(pixels: [initialPixel])
 
         // Initiate pixel queue processing:
         persistentPixel.sendQueuedPixels { _ in
@@ -287,28 +288,28 @@ final class PersistentPixelTests: XCTestCase {
         // Trigger a failed pixel call while processing:
         persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
 
-        // Check that the failed pixel call didn't cause a pixel to get stored:
+        // Check that the new failed pixel call caused a pixel to get stored:
         let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
-        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels, [initialPixel])
+        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels.count, 2)
+        XCTAssert(storedPixelsWhenSendingQueuedPixels.contains(initialPixel))
 
         // Complete pixel processing callback:
         DelayedPixelFiringMock.callCompletionHandler()
 
         wait(for: [sendQueuedPixelsExpectation], timeout: 3.0)
 
-        // Check that the incoming failed pixel call is now stored and ready to retry for next time:
-        let expectedPixel = PersistentPixelMetadata(
-            eventName: Pixel.Event.appLaunch.name,
-            pixelType: .count,
-            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
-            includedParameters: [.appVersion]
-        )
-
         let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
-        XCTAssertEqual(storedPixelsAfterSendingQueuedPixels, [expectedPixel])
+
+        XCTAssertEqual(storedPixelsAfterSendingQueuedPixels.count, 1)
+        XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(where: { pixel in
+            return pixel.eventName == Pixel.Event.appLaunch.name
+            && pixel.pixelType == .count
+            && pixel.additionalParameters == [PixelParameters.originalPixelTimestamp: testDateString]
+            && pixel.includedParameters == [.appVersion]
+        }))
     }
 
-    func testWhenPixelQueueIsProcessing_AndProcessingFails_AndNewFailedPixelIsReceived_ThenExistingAndNewPixelsAreStored() throws {
+    func testWhenPixelQueueIsRetrying_AndNewFailedPixelIsReceived_AndRetryingFails_ThenExistingAndNewPixelsAreStored() throws {
         PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 1)
         DelayedPixelFiringMock.completionError = NSError(domain: "PixelFailure", code: 1)
 
@@ -320,7 +321,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [initialPixel])
+        try persistentStorage.append(pixels: [initialPixel])
 
         let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
 
@@ -332,9 +333,10 @@ final class PersistentPixelTests: XCTestCase {
         // Trigger a failed pixel call while processing:
         persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
 
-        // Check that the failed pixel call didn't cause a pixel to get stored:
+        // Check that the new failed pixel call caused a pixel to get stored:
         let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
-        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels, [initialPixel])
+        XCTAssertEqual(storedPixelsWhenSendingQueuedPixels.count, 2)
+        XCTAssert(storedPixelsWhenSendingQueuedPixels.contains(initialPixel))
 
         // Complete pixel processing callback:
         DelayedPixelFiringMock.callCompletionHandler()
@@ -350,8 +352,14 @@ final class PersistentPixelTests: XCTestCase {
         )
 
         let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
+        XCTAssertEqual(storedPixelsAfterSendingQueuedPixels.count, 2)
         XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(initialPixel))
-        XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(expectedPixel))
+        XCTAssert(storedPixelsAfterSendingQueuedPixels.contains(where: { pixel in
+            return pixel.eventName == Pixel.Event.appLaunch.name
+            && pixel.pixelType == .count
+            && pixel.additionalParameters == [PixelParameters.originalPixelTimestamp: testDateString]
+            && pixel.includedParameters == [.appVersion]
+        }))
     }
 
     func testWhenPixelQueueHasRecentlyProcessed_ThenPixelsAreNotProcessed() throws {
@@ -366,7 +374,7 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion]
         )
 
-        try persistentStorage.replaceStoredPixels(with: [pixel])
+        try persistentStorage.append(pixels: [pixel])
 
         // Set a last processing date of 1 minute ago:
         timestampStorage.set(currentDate.addingTimeInterval(-60), forKey: PersistentPixel.Constants.lastProcessingDateKey)

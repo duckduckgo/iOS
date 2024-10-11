@@ -40,7 +40,7 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
 
     func testWhenStoringPixel_ThenPixelCanBeSuccessfullyRead() throws {
         let metadata = event(named: "test", parameters: ["param": "value"])
-        try persistentStorage.append(pixel: metadata)
+        try persistentStorage.append(pixels: [metadata])
         let storedPixels = try persistentStorage.storedPixels()
 
         XCTAssertEqual([metadata], storedPixels)
@@ -51,19 +51,17 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
         let metadata2 = event(named: "test2", parameters: ["param2": "value2"])
         let metadata3 = event(named: "test3", parameters: ["param3": "value3"])
 
-        try persistentStorage.append(pixel: metadata1)
-        try persistentStorage.append(pixel: metadata2)
-        try persistentStorage.append(pixel: metadata3)
+        try persistentStorage.append(pixels: [metadata1, metadata2, metadata3])
 
         let storedPixels = try persistentStorage.storedPixels()
 
         XCTAssertEqual([metadata1, metadata2, metadata3], storedPixels)
     }
 
-    func testWhenStoringMorePixelsThanTheLimit_ThenOldPixelsAreDropped() throws {
+    func testWhenStoringMorePixelsThanTheLimit_AndPixelsAreAddedIncrementally_ThenOldPixelsAreDropped() throws {
         for index in 1...(DefaultPersistentPixelStorage.Constants.pixelCountLimit + 50) {
             let metadata = event(named: "pixel\(index)", parameters: ["param\(index)": "value\(index)"])
-            try persistentStorage.append(pixel: metadata)
+            try persistentStorage.append(pixels: [metadata])
         }
 
         let storedPixels = try persistentStorage.storedPixels()
@@ -73,24 +71,47 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
         XCTAssertEqual(storedPixels.last?.pixelName, "pixel150")
     }
 
-    func testWhenReplacingPixels_AndNoPixelsAreStored_ThenNewPixelsAreStored() throws {
+    func testWhenStoringMorePixelsThanTheLimit_AndPixelsAreAddedInASingleBatch_ThenOldPixelsAreDropped() throws {
+        var pixelsToAdd: [PersistentPixelMetadata] = []
+
+        for index in 1...(DefaultPersistentPixelStorage.Constants.pixelCountLimit + 50) {
+            let metadata = event(named: "pixel\(index)", parameters: ["param\(index)": "value\(index)"])
+            pixelsToAdd.append(metadata)
+        }
+
+        try persistentStorage.append(pixels: pixelsToAdd)
+
+        let storedPixels = try persistentStorage.storedPixels()
+
+        XCTAssertEqual(storedPixels.count, DefaultPersistentPixelStorage.Constants.pixelCountLimit)
+        XCTAssertEqual(storedPixels.first?.pixelName, "pixel51")
+        XCTAssertEqual(storedPixels.last?.pixelName, "pixel150")
+    }
+
+    func testWhenRemovingPixels_AndNoPixelsAreStored_ThenNothingHappens() throws {
+        try persistentStorage.remove(pixelsWithIDs: Set([UUID()]))
+        let storedPixels = try persistentStorage.storedPixels()
+
+        XCTAssertEqual([], storedPixels)
+    }
+
+    func testWhenRemovingPixels_AndIDDoesNotMatchStoredPixel_ThenNothingHappens() throws {
         let metadata = event(named: "test", parameters: ["param": "value"])
-        try persistentStorage.replaceStoredPixels(with: [metadata])
+        try persistentStorage.append(pixels: [metadata])
+        try persistentStorage.remove(pixelsWithIDs: Set([UUID()]))
         let storedPixels = try persistentStorage.storedPixels()
 
         XCTAssertEqual([metadata], storedPixels)
     }
 
-    func testWhenReplacingPixels_AndExistingPixelsAreStored_ThenOldPixelsAreReplacedWithNewOnes() throws {
-        let initialMetadata = event(named: "test", parameters: ["param1": "value1"])
-        try persistentStorage.replaceStoredPixels(with: [initialMetadata])
-
-        let newMetadata = event(named: "test", parameters: ["param2": "value2"])
-        try persistentStorage.replaceStoredPixels(with: [newMetadata])
-
+    func testWhenRemovingPixels_AndIDMatchesStoredPixel_ThenPixelIsRemoved() throws {
+        let metadata = event(named: "test", parameters: ["param": "value"])
+        try persistentStorage.remove(pixelsWithIDs: Set([metadata.id]))
         let storedPixels = try persistentStorage.storedPixels()
-        XCTAssertEqual([newMetadata], storedPixels)
+
+        XCTAssertEqual([], storedPixels)
     }
+
 
     // MARK: - Test Utilities
 

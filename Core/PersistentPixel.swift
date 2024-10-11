@@ -59,7 +59,6 @@ public final class PersistentPixel: PersistentPixelFiring {
 
     private let pixelProcessingLock = NSLock()
     private var isSendingQueuedPixels: Bool = false
-    private var failedPixelsPendingStorage: [PersistentPixelMetadata] = []
 
     private let dateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
@@ -218,39 +217,39 @@ public final class PersistentPixel: PersistentPixelFiring {
             let queuedPixels = try persistentPixelStorage.storedPixels()
 
             if queuedPixels.isEmpty {
-                self.stopProcessingQueueAndPersistPendingPixels()
+                self.stopProcessingQueue()
                 completion(nil)
                 return
             }
 
             Logger.general.debug("Persistent pixel retrying \(queuedPixels.count, privacy: .public) pixels")
 
-            fire(queuedPixels: queuedPixels) { failedPixels in
+            fire(queuedPixels: queuedPixels) { pixelIDsToRemove in
                 Logger.general.debug("Persistent pixel retrying done, \(queuedPixels.count, privacy: .public) pixels failed and will retry later")
 
                 do {
-                    try self.persistentPixelStorage.replaceStoredPixels(with: failedPixels)
-                    self.stopProcessingQueueAndPersistPendingPixels()
+                    try self.persistentPixelStorage.remove(pixelsWithIDs: pixelIDsToRemove)
+                    self.stopProcessingQueue()
                     completion(nil)
                 } catch {
-                    self.stopProcessingQueueAndPersistPendingPixels()
+                    self.stopProcessingQueue()
                     completion(PersistentPixelStorageError.writeError(error))
                 }
             }
         } catch {
-            self.stopProcessingQueueAndPersistPendingPixels()
+            self.stopProcessingQueue()
             completion(PersistentPixelStorageError.readError(error))
         }
     }
 
     // MARK: - Private
 
-    /// Sends queued pixels and calls the completion handler with any that failed.
-    private func fire(queuedPixels: [PersistentPixelMetadata], completion: @escaping ([PersistentPixelMetadata]) -> Void) {
+    /// Sends queued pixels and calls the completion handler with those that should be removed.
+    private func fire(queuedPixels: [PersistentPixelMetadata], completion: @escaping (Set<UUID>) -> Void) {
         let dispatchGroup = DispatchGroup()
 
-        let failedPixelsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
-        var failedPixels: [PersistentPixelMetadata] = []
+        let pixelIDsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
+        var pixelIDsToRemove: Set<UUID> = []
         let currentDate = dateGenerator()
 
         for pixelMetadata in queuedPixels {
@@ -258,6 +257,9 @@ public final class PersistentPixel: PersistentPixelFiring {
                let originalSendDate = dateFormatter.date(from: originalSendDateString),
                let date28DaysAgo = calendar.date(byAdding: .day, value: -28, to: currentDate) {
                 if originalSendDate < date28DaysAgo {
+                    pixelIDsAccessQueue.sync {
+                        _ = pixelIDsToRemove.insert(pixelMetadata.id)
+                    }
                     continue
                 }
             } else {
@@ -277,9 +279,9 @@ public final class PersistentPixel: PersistentPixelFiring {
                 withHeaders: APIRequest.Headers(),
                 includedParameters: pixelMetadata.includedParameters,
                 onComplete: { error in
-                    if error != nil {
-                        failedPixelsAccessQueue.sync {
-                            failedPixels.append(pixelMetadata)
+                    if error == nil {
+                        pixelIDsAccessQueue.sync {
+                            _ = pixelIDsToRemove.insert(pixelMetadata.id)
                         }
                     }
 
@@ -289,7 +291,7 @@ public final class PersistentPixel: PersistentPixelFiring {
         }
 
         dispatchGroup.notify(queue: .global()) {
-            completion(failedPixels)
+            completion(pixelIDsToRemove)
         }
     }
 
@@ -299,22 +301,13 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         Logger.general.debug("Saving persistent pixel named \(pixelMetadata.pixelName)")
 
-        if self.isSendingQueuedPixels {
-            self.failedPixelsPendingStorage.append(pixelMetadata)
-        } else {
-            try self.persistentPixelStorage.append(pixel: pixelMetadata)
-        }
+        try self.persistentPixelStorage.append(pixels: [pixelMetadata])
     }
 
-    private func stopProcessingQueueAndPersistPendingPixels() {
+    private func stopProcessingQueue() {
         pixelProcessingLock.lock()
         defer { pixelProcessingLock.unlock() }
 
-        for pixel in self.failedPixelsPendingStorage {
-            try? self.persistentPixelStorage.append(pixel: pixel)
-        }
-
-        self.failedPixelsPendingStorage = []
         self.updateLastProcessingTimestamp()
         self.isSendingQueuedPixels = false
     }

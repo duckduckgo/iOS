@@ -421,6 +421,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
                 
+        handler.navigationType = .linkActivated
         playerSettings.mode = .enabled
                 
         XCTAssertTrue(handler.shouldOpenInNewTab(navigationAction, webView: webView))
@@ -435,7 +436,8 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
-                
+        
+        handler.navigationType = .linkActivated
         playerSettings.mode = .enabled
         
         XCTAssertFalse(handler.shouldOpenInNewTab(navigationAction, webView: webView))
@@ -451,6 +453,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
                 
+        handler.navigationType = .linkActivated
         playerSettings.mode = .enabled
                 
         XCTAssertFalse(handler.shouldOpenInNewTab(navigationAction, webView: webView))

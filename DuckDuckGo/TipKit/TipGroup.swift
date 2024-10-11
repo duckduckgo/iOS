@@ -38,10 +38,9 @@ struct EmptyTipGroup: TipGrouping {
     }
 }
 
-/// Backport of TipKit's TipGroup to iOS versions lower than iOS 18.
+/// Backport of TipKit's TipGroup to iOS 17.
 ///
 /// In iOS 17: this class should provide the same functionality as TipKit's `TipGroup`.
-/// Before iOS 17: this class should be a glorified no-op that compiles correctly.
 ///
 @available(iOS 17.0, *)
 @available(iOS, obsoleted: 18.0)

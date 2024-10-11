@@ -489,6 +489,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
+        if #available(iOS 17.0, *) {
+            (vpnEnabledTips.currentTip as? VPNUseSnoozeTip)?.invalidate(reason: .actionPerformed)
+        }
+
         let defaultDuration: TimeInterval = .minutes(20)
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))

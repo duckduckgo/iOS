@@ -319,7 +319,7 @@ struct NetworkProtectionStatusView: View {
     @available(iOS 17.0, *)
     @ViewBuilder
     private func widgetTip() -> some View {
-        if !statusModel.isNetPEnabled {
+        if !statusModel.isNetPEnabled && !statusModel.isSnoozing {
             if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
                 TipView(tip, action: statusModel.widgetActionHandler(action:))
                     .removeGroupedListStyleInsets()

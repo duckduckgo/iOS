@@ -53,8 +53,9 @@ final class NewTabPageMessagesModel: ObservableObject {
         refresh()
     }
 
-    func dismissHomeMessage(_ homeMessage: HomeMessage) {
-        homePageMessagesConfiguration.dismissHomeMessage(homeMessage)
+    @MainActor
+    func dismissHomeMessage(_ homeMessage: HomeMessage) async {
+        await homePageMessagesConfiguration.dismissHomeMessage(homeMessage)
         updateHomeMessageViewModel()
     }
 
@@ -77,7 +78,7 @@ final class NewTabPageMessagesModel: ObservableObject {
         switch message {
         case .placeholder:
             return HomeMessageViewModel(messageId: "", sendPixels: false, modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
-                self?.dismissHomeMessage(message)
+                await self?.dismissHomeMessage(message)
             } onDidAppear: {
                 // no-op
             } onAttachAdditionalParameters: { _, params in
@@ -89,7 +90,7 @@ final class NewTabPageMessagesModel: ObservableObject {
             // as a result of refreshing a config while the user was on a new tab page already.
             didAppear(message)
 
-            return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { [weak self] action in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage, with: privacyProDataReporter) { @MainActor [weak self] action in
                 guard let action,
                       let self else { return }
 
@@ -97,7 +98,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
                 case .action(let isSharing):
                     if !isSharing {
-                        self.dismissHomeMessage(message)
+                        await self.dismissHomeMessage(message)
                     }
                     if remoteMessage.isMetricsEnabled {
                         pixelFiring.fire(.remoteMessageActionClicked,
@@ -106,7 +107,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
-                        self.dismissHomeMessage(message)
+                        await self.dismissHomeMessage(message)
                     }
                     if remoteMessage.isMetricsEnabled {
                         pixelFiring.fire(.remoteMessagePrimaryActionClicked,
@@ -115,7 +116,7 @@ final class NewTabPageMessagesModel: ObservableObject {
 
                 case .secondaryAction(let isSharing):
                     if !isSharing {
-                        self.dismissHomeMessage(message)
+                        await self.dismissHomeMessage(message)
                     }
                     if remoteMessage.isMetricsEnabled {
                         pixelFiring.fire(.remoteMessageSecondaryActionClicked,
@@ -123,7 +124,7 @@ final class NewTabPageMessagesModel: ObservableObject {
                     }
 
                 case .close:
-                    self.dismissHomeMessage(message)
+                    await self.dismissHomeMessage(message)
                     if remoteMessage.isMetricsEnabled {
                         pixelFiring.fire(.remoteMessageDismissed,
                                          withAdditionalParameters: self.additionalParameters(for: remoteMessage.id))

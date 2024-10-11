@@ -44,6 +44,9 @@ public enum FeatureFlag: String {
     case onboardingHighlights
     case autofillSurveys
     case autcompleteTabs
+
+    /// https://app.asana.com/0/72649045549333/1208231259093710/f
+    case networkProtectionUserTips
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -95,6 +98,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.autofillSurveys))
         case .autcompleteTabs:
             return .remoteReleasable(.feature(.autocompleteTabs))
+        case .networkProtectionUserTips:
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
         }
     }
 }

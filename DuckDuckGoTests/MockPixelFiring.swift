@@ -131,27 +131,33 @@ class DelayedPixelFiringMock: PixelFiring {
     static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
 
     static var completionError: Error?
-    static var lastCompletionHandler: ((Error?) -> Void)?
+    static var lastCompletionHandlers: [((Error?) -> Void)] = []
 
     static func tearDown() {
         completionError = nil
-        lastCompletionHandler = nil
+        lastCompletionHandlers = []
     }
 
     static func callCompletionHandler() {
-        lastCompletionHandler?(completionError)
+        for completionHandler in lastCompletionHandlers {
+            completionHandler(completionError)
+        }
     }
 
     static func fire(_ pixel: Core.Pixel.Event,
                      withAdditionalParameters params: [String: String],
                      includedParameters: [Core.Pixel.QueryParameters],
                      onComplete: @escaping ((any Error)?) -> Void) {
-        lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: includedParameters)
-        lastCompletionHandler = onComplete
+        DispatchQueue.global().async {
+            lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: includedParameters)
+            lastCompletionHandlers.append(onComplete)
+        }
     }
 
     static func fire(_ pixel: Core.Pixel.Event, withAdditionalParameters params: [String: String]) {
-        lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: nil)
+        DispatchQueue.global().async {
+            lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: nil)
+        }
     }
 
     static func fire(pixelNamed pixelName: String,
@@ -161,9 +167,11 @@ class DelayedPixelFiringMock: PixelFiring {
                      withHeaders headers: Networking.APIRequest.Headers,
                      includedParameters: [Core.Pixel.QueryParameters],
                      onComplete: @escaping ((any Error)?) -> Void) {
-        lastPixelName = pixelName
-        lastDailyPixelInfo = PixelInfo(pixel: nil, error: nil, params: params, includedParams: includedParameters)
-        lastCompletionHandler = onComplete
+        DispatchQueue.global().async {
+            lastPixelName = pixelName
+            lastDailyPixelInfo = PixelInfo(pixel: nil, error: nil, params: params, includedParams: includedParameters)
+            lastCompletionHandlers.append(onComplete)
+        }
     }
 
     static func fire(pixel: Pixel.Event,
@@ -171,8 +179,10 @@ class DelayedPixelFiringMock: PixelFiring {
                      includedParameters: [Pixel.QueryParameters],
                      withAdditionalParameters params: [String: String],
                      onComplete: @escaping (Error?) -> Void) {
-        lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: includedParameters)
-        lastCompletionHandler = onComplete
+        DispatchQueue.global().async {
+            lastPixelInfo = PixelInfo(pixel: pixel, error: nil, params: params, includedParams: includedParameters)
+            lastCompletionHandlers.append(onComplete)
+        }
     }
 
 }

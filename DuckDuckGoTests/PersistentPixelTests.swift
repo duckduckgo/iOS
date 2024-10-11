@@ -285,8 +285,12 @@ final class PersistentPixelTests: XCTestCase {
             sendQueuedPixelsExpectation.fulfill()
         }
 
-        // Trigger a failed pixel call while processing:
-        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
+        // Trigger a failed pixel call while processing, and wait for it to complete:
+        let dailyCountPixelExpectation = expectation(description: "sendQueuedPixels")
+        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in
+            dailyCountPixelExpectation.fulfill()
+        })
+        wait(for: [dailyCountPixelExpectation], timeout: 3.0)
 
         // Check that the new failed pixel call caused a pixel to get stored:
         let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
@@ -330,8 +334,12 @@ final class PersistentPixelTests: XCTestCase {
             sendQueuedPixelsExpectation.fulfill()
         }
 
-        // Trigger a failed pixel call while processing:
-        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in })
+        // Trigger a failed pixel call while processing, and wait for it to complete:
+        let dailyCountPixelExpectation = expectation(description: "daily/count pixel call")
+        persistentPixel.fireDailyAndCount(pixel: .appLaunch, withAdditionalParameters: [:], includedParameters: [.appVersion], completion: { _ in
+            dailyCountPixelExpectation.fulfill()
+        })
+        wait(for: [dailyCountPixelExpectation], timeout: 3.0)
 
         // Check that the new failed pixel call caused a pixel to get stored:
         let storedPixelsWhenSendingQueuedPixels = try persistentStorage.storedPixels()
@@ -342,14 +350,6 @@ final class PersistentPixelTests: XCTestCase {
         DelayedPixelFiringMock.callCompletionHandler()
 
         wait(for: [sendQueuedPixelsExpectation], timeout: 3.0)
-
-        // Check that the incoming failed pixel call is now stored and ready to retry for next time:
-        let expectedPixel = PersistentPixelMetadata(
-            eventName: Pixel.Event.appLaunch.name,
-            pixelType: .count,
-            additionalParameters: [PixelParameters.originalPixelTimestamp: testDateString],
-            includedParameters: [.appVersion]
-        )
 
         let storedPixelsAfterSendingQueuedPixels = try persistentStorage.storedPixels()
         XCTAssertEqual(storedPixelsAfterSendingQueuedPixels.count, 2)

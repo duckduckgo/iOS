@@ -56,9 +56,7 @@ public final class PersistentPixel: PersistentPixelFiring {
     private let lastProcessingDateStorage: KeyValueStoring
     private let calendar: Calendar
     private let dateGenerator: () -> Date
-
-    private let pixelProcessingLock = NSLock()
-    private var isSendingQueuedPixels: Bool = false
+    private let workQueue = DispatchQueue(label: "Persistent Pixel Retry Queue")
 
     private let dateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
@@ -107,20 +105,25 @@ public final class PersistentPixel: PersistentPixelFiring {
                          withAdditionalParameters: additionalParameters) { pixelFireError in
             if pixelFireError != nil {
                 do {
-                    if let error { additionalParameters.appendErrorPixelParams(error: error) }
-                    try self.save(PersistentPixelMetadata(
-                        eventName: pixel.name,
-                        pixelType: .regular,
-                        additionalParameters: additionalParameters,
-                        includedParameters: includedParameters
-                    ))
+                    if let error {
+                        additionalParameters.appendErrorPixelParams(error: error)
+                    }
+
+                    try self.persistentPixelStorage.append(pixels: [
+                        PersistentPixelMetadata(
+                            eventName: pixel.name,
+                            pixelType: .regular,
+                            additionalParameters: additionalParameters,
+                            includedParameters: includedParameters
+                        )
+                    ])
+
+                    onComplete(nil)
                 } catch {
                     onComplete(error)
                 }
             }
         }
-
-        onComplete(nil)
     }
 
     public func fireDailyAndCount(pixel: Pixel.Event,
@@ -153,12 +156,14 @@ public final class PersistentPixel: PersistentPixelFiring {
                     do {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         Logger.general.debug("Saving persistent daily pixel named \(pixel.name)")
-                        try self.save(PersistentPixelMetadata(
-                            eventName: pixel.name,
-                            pixelType: .daily,
-                            additionalParameters: additionalParameters,
-                            includedParameters: includedParameters
-                        ))
+                        try self.persistentPixelStorage.append(pixels: [
+                            PersistentPixelMetadata(
+                                eventName: pixel.name,
+                                pixelType: .daily,
+                                additionalParameters: additionalParameters,
+                                includedParameters: includedParameters
+                            )
+                        ])
                     } catch {
                         dailyPixelStorageError = error
                     }
@@ -170,12 +175,14 @@ public final class PersistentPixel: PersistentPixelFiring {
                     do {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         Logger.general.debug("Saving persistent count pixel named \(pixel.name)")
-                        try self.save(PersistentPixelMetadata(
-                            eventName: pixel.name,
-                            pixelType: .count,
-                            additionalParameters: additionalParameters,
-                            includedParameters: includedParameters
-                        ))
+                        try self.persistentPixelStorage.append(pixels: [
+                            PersistentPixelMetadata(
+                                eventName: pixel.name,
+                                pixelType: .count,
+                                additionalParameters: additionalParameters,
+                                includedParameters: includedParameters
+                            )
+                        ])
                     } catch {
                         countPixelStorageError = error
                     }
@@ -194,51 +201,40 @@ public final class PersistentPixel: PersistentPixelFiring {
     // MARK: - Queue Processing
 
     public func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void) {
-        pixelProcessingLock.lock()
-        guard !self.isSendingQueuedPixels else {
-            pixelProcessingLock.unlock()
-            completion(nil)
-            return
-        }
-
-        if let lastProcessingDate = lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
-            let threshold = dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
-            if threshold <= lastProcessingDate {
-                pixelProcessingLock.unlock()
-                completion(nil)
-                return
-            }
-        }
-
-        self.isSendingQueuedPixels = true
-        pixelProcessingLock.unlock()
-
-        do {
-            let queuedPixels = try persistentPixelStorage.storedPixels()
-
-            if queuedPixels.isEmpty {
-                self.stopProcessingQueue()
-                completion(nil)
-                return
-            }
-
-            Logger.general.debug("Persistent pixel retrying \(queuedPixels.count, privacy: .public) pixels")
-
-            fire(queuedPixels: queuedPixels) { pixelIDsToRemove in
-                Logger.general.debug("Persistent pixel retrying done, \(queuedPixels.count, privacy: .public) pixels failed and will retry later")
-
-                do {
-                    try self.persistentPixelStorage.remove(pixelsWithIDs: pixelIDsToRemove)
-                    self.stopProcessingQueue()
+        workQueue.async {
+            if let lastProcessingDate = self.lastProcessingDateStorage.object(forKey: Constants.lastProcessingDateKey) as? Date {
+                let threshold = self.dateGenerator().addingTimeInterval(-Constants.minimumProcessingInterval)
+                if threshold <= lastProcessingDate {
                     completion(nil)
-                } catch {
-                    self.stopProcessingQueue()
-                    completion(PersistentPixelStorageError.writeError(error))
+                    return
                 }
             }
-        } catch {
-            self.stopProcessingQueue()
-            completion(PersistentPixelStorageError.readError(error))
+
+            self.lastProcessingDateStorage.set(self.dateGenerator(), forKey: Constants.lastProcessingDateKey)
+
+            do {
+                let queuedPixels = try self.persistentPixelStorage.storedPixels()
+
+                if queuedPixels.isEmpty {
+                    completion(nil)
+                    return
+                }
+
+                Logger.general.debug("Persistent pixel retrying \(queuedPixels.count, privacy: .public) pixels")
+
+                self.fire(queuedPixels: queuedPixels) { pixelIDsToRemove in
+                    Logger.general.debug("Persistent pixel retrying done, \(pixelIDsToRemove.count, privacy: .public) pixels successfully sent")
+
+                    do {
+                        try self.persistentPixelStorage.remove(pixelsWithIDs: pixelIDsToRemove)
+                        completion(nil)
+                    } catch {
+                        completion(PersistentPixelStorageError.writeError(error))
+                    }
+                }
+            } catch {
+                completion(PersistentPixelStorageError.readError(error))
+            }
         }
     }
 
@@ -263,7 +259,12 @@ public final class PersistentPixel: PersistentPixelFiring {
                     continue
                 }
             } else {
-                // If we don't have a timestamp for some reason, ignore the retry - retries are only useful if they have a timestamp attached
+                // If we don't have a timestamp for some reason, ignore the retry - retries are only useful if they have a timestamp attached.
+                // It's not expected that this will ever happen, so an assertion failure is used to report it when debugging.
+                assertionFailure("Did not find a timestamp for pixel \(pixelMetadata.pixelName)")
+                pixelIDsAccessQueue.sync {
+                    _ = pixelIDsToRemove.insert(pixelMetadata.id)
+                }
                 continue
             }
 
@@ -293,27 +294,6 @@ public final class PersistentPixel: PersistentPixelFiring {
         dispatchGroup.notify(queue: .global()) {
             completion(pixelIDsToRemove)
         }
-    }
-
-    private func save(_ pixelMetadata: PersistentPixelMetadata) throws {
-        pixelProcessingLock.lock()
-        defer { pixelProcessingLock.unlock() }
-
-        Logger.general.debug("Saving persistent pixel named \(pixelMetadata.pixelName)")
-
-        try self.persistentPixelStorage.append(pixels: [pixelMetadata])
-    }
-
-    private func stopProcessingQueue() {
-        pixelProcessingLock.lock()
-        defer { pixelProcessingLock.unlock() }
-
-        self.updateLastProcessingTimestamp()
-        self.isSendingQueuedPixels = false
-    }
-
-    private func updateLastProcessingTimestamp() {
-        lastProcessingDateStorage.set(dateGenerator(), forKey: Constants.lastProcessingDateKey)
     }
 
 }

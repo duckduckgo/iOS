@@ -26,6 +26,9 @@ protocol TipGrouping {
     var currentTip: (any Tip)? { get }
 }
 
+@available(iOS 18.0, *)
+extension TipGroup: TipGrouping {}
+
 /// A glorified no-op to be able to compile TipGrouping in iOS versions below 17.
 ///
 struct EmptyTipGroup: TipGrouping {

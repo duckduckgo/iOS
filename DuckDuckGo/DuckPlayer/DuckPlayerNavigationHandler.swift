@@ -245,6 +245,23 @@ final class DuckPlayerNavigationHandler {
 
     }
     
+    // Determines if the link should be opened in a new tab
+    // And sets the correct navigationType
+    // This is uses for JS based navigation links
+    private func setOpenInNewTab(url: URL?) {
+        guard let url else {
+            return
+        }
+        let openInNewTab = true
+        let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
+        let newTab = url.isDuckPlayer && openInNewTab && isDuckPlayerEnabled
+        if newTab {
+            navigationType = .linkActivated
+        } else {
+            navigationType = .other
+        }
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -508,11 +525,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         switch event {
         case .youtubeVideoPageVisited:
             handleYouTubePageVisited(url: url, navigationAction: navigationAction)
+        case .JSTriggeredNavigation:
+            setOpenInNewTab(url: url)
+            
         }
     }
     
-    // Determine if the links should be open in a new tab, based on the User setting
+    // Determine if the links should be open in a new tab, based on the navigationAction and User setting
+    // This is used for manually activated links
     func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
+        
         // let openInNewTab = appSettings.duckPlayerOpenInNewTab
         let openInNewTab = true
         let isDuckPlayer = navigationAction.request.url?.isDuckPlayer ?? false
@@ -524,4 +546,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         return false
     }
     
+}
+
+extension WKWebView {
+    var isEmptyTab: Bool {
+        return self.url == nil || self.url?.absoluteString == "about:blank"
+    }
 }

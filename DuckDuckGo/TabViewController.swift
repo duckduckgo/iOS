@@ -766,6 +766,12 @@ class TabViewController: UIViewController {
         }
         if let url {
             duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
+            
+            // Open in new tab if required
+            // If the lastRenderedURL is nil, it means we're already in a new tab
+            if webView.url != nil && lastRenderedURL != nil {
+                duckPlayerNavigationHandler?.handleEvent(event: .JSTriggeredNavigation, url: webView.url, navigationAction: nil)
+            }
         }
     }
     

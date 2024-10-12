@@ -433,7 +433,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             await disableNetP()
         }
 
-        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+        VPNReloadStatusWidgets()
     }
 
     @MainActor

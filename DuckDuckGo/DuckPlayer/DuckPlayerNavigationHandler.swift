@@ -180,10 +180,6 @@ final class DuckPlayerNavigationHandler {
         return false
     }
     
-    private func isOpenInYoutubeURL(url: URL) -> Bool {
-        return isWatchInYouTubeURL(url: url)
-    }
-
     private func getYoutubeURLFromOpenInYoutubeLink(url: URL) -> URL? {
         guard isWatchInYouTubeURL(url: url),
               let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
@@ -217,7 +213,7 @@ final class DuckPlayerNavigationHandler {
         if let navigationAction, isSERPLink(navigationAction: navigationAction) {
             referrer = .serp
         }
-                
+        
         if featureFlagger.isFeatureOn(.duckPlayer) || internalUserDecider.isInternalUser {
             
             // DuckPlayer Experiment run
@@ -496,6 +492,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         switch event {
         case .youtubeVideoPageVisited:
             handleYouTubePageVisited(url: url, navigationAction: navigationAction)
+        case .pageDidFinishLoading:
+            duckPlayer.settings.allowFirstVideo = false
         }
     }
     

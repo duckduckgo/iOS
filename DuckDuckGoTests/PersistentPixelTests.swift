@@ -62,7 +62,7 @@ final class PersistentPixelTests: XCTestCase {
         let expectation = expectation(description: "fireDailyAndCount")
 
         persistentPixel.fireDailyAndCount(
-            pixel: .appLaunch,
+            pixel: .networkProtectionMemoryWarning,
             withAdditionalParameters: ["key": "value"],
             includedParameters: [.appVersion, .atb],
             completion: { errors in
@@ -76,7 +76,7 @@ final class PersistentPixelTests: XCTestCase {
         let storedPixels = try persistentStorage.storedPixels()
         XCTAssertEqual(storedPixels, [])
 
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixelName, Pixel.Event.appLaunch.name)
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixelName, Pixel.Event.networkProtectionMemoryWarning.name)
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, ["key": "value", PixelParameters.originalPixelTimestamp: testDateString])
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion, .atb])
     }
@@ -202,12 +202,12 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssert(storedPixels.isEmpty)
 
         XCTAssertEqual(PixelFiringMock.lastPixelName, "test_d")
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, [
+        XCTAssertEqual(PixelFiringMock.lastPixelInfo?.params, [
             "key": "value",
             PixelParameters.retriedPixel: "1",
             PixelParameters.originalPixelTimestamp: testDateString
         ])
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+        XCTAssertEqual(PixelFiringMock.lastPixelInfo?.includedParams, [.appVersion])
     }
 
     func testWhenCountPixelIsStored_AndSendQueuedPixelsIsCalled_ThenCountPixelIsSent() throws {
@@ -232,12 +232,12 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssert(storedPixels.isEmpty)
 
         XCTAssertEqual(PixelFiringMock.lastPixelName, "test_c")
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.params, [
+        XCTAssertEqual(PixelFiringMock.lastPixelInfo?.params, [
             "key": "value",
             PixelParameters.retriedPixel: "1",
             PixelParameters.originalPixelTimestamp: testDateString
         ])
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion])
+        XCTAssertEqual(PixelFiringMock.lastPixelInfo?.includedParams, [.appVersion])
     }
 
     func testWhenPixelIsStored_AndSendQueuedPixelsIsCalled_AndPixelIsOlderThan28Days_ThenPixelIsNotSent_AndPixelIsNoLongerStored() throws {

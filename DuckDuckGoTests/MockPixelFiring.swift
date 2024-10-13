@@ -41,10 +41,9 @@ struct PixelInfo {
 
 final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
 
+    static var expectedFireError: Error?
     static var expectedDailyPixelFireError: Error?
     static var expectedCountPixelFireError: Error?
-
-    static var expectedFireError: Error?
 
     static var allPixelsFired = [PixelInfo]()
 
@@ -145,6 +144,8 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         lastPixelInfo = nil
         lastDailyPixelInfo = nil
         expectedFireError = nil
+        expectedDailyPixelFireError = nil
+        expectedCountPixelFireError = nil
     }
 
     private init() {}
@@ -152,10 +153,7 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
 
 class DelayedPixelFiringMock: PixelFiring {
 
-    static var lastPixelName: String?
     static var lastPixelInfo: PixelInfo?
-    static var lastDailyPixelInfo: PixelInfo?
-
     static var lastParams: [String: String]? { lastPixelInfo?.params }
     static var lastPixel: String? { lastPixelInfo?.pixelName }
     static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
@@ -164,6 +162,7 @@ class DelayedPixelFiringMock: PixelFiring {
     static var lastCompletionHandlers: [((Error?) -> Void)] = []
 
     static func tearDown() {
+        lastPixelInfo = nil
         completionError = nil
         lastCompletionHandlers = []
     }
@@ -205,8 +204,7 @@ class DelayedPixelFiringMock: PixelFiring {
                      includedParameters: [Core.Pixel.QueryParameters],
                      onComplete: @escaping ((any Error)?) -> Void) {
         DispatchQueue.global().async {
-            lastPixelName = pixelName
-            lastDailyPixelInfo = PixelInfo(pixelName: nil, error: nil, params: params, includedParams: includedParameters)
+            lastPixelInfo = PixelInfo(pixelName: pixelName, error: nil, params: params, includedParams: includedParameters)
             lastCompletionHandlers.append(onComplete)
         }
     }

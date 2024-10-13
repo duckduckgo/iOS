@@ -265,7 +265,7 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssertNil(PixelFiringMock.lastDailyPixelInfo)
     }
 
-    func testWhenPixelQueueIsProcessing_AndProcessingSucceeds_AndNewFailedPixelIsReceived_ThenPixelIsNotStoredUntilProcessingIsComplete() throws {
+    func testWhenPixelQueueIsProcessing_AndNewFailedPixelIsReceived_ThenPixelIsStoredEvenIfProcessingIsActive() throws {
         PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 1)
 
         let persistentPixel = createPersistentPixel(pixelFiring: DelayedPixelFiringMock.self)
@@ -280,10 +280,20 @@ final class PersistentPixelTests: XCTestCase {
 
         try persistentStorage.append(pixels: [initialPixel])
 
+        // Wait for the queued pixel completion handlers to be received by the mock:
+        let delayedPixelPendingClosureExpectation = expectation(description: "completionHandlerUpdateClosure")
+        DelayedPixelFiringMock.completionHandlerUpdateClosure = { count in
+            if count == 1 {
+                delayedPixelPendingClosureExpectation.fulfill()
+            }
+        }
+
         // Initiate pixel queue processing:
         persistentPixel.sendQueuedPixels { _ in
             sendQueuedPixelsExpectation.fulfill()
         }
+
+        wait(for: [delayedPixelPendingClosureExpectation], timeout: 3.0)
 
         // Trigger a failed pixel call while processing, and wait for it to complete:
         let dailyCountPixelExpectation = expectation(description: "sendQueuedPixels")
@@ -327,12 +337,21 @@ final class PersistentPixelTests: XCTestCase {
 
         try persistentStorage.append(pixels: [initialPixel])
 
-        let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
+        // Wait for the queued pixel completion handlers to be received by the mock:
+        let delayedPixelPendingClosureExpectation = expectation(description: "completionHandlerUpdateClosure")
+        DelayedPixelFiringMock.completionHandlerUpdateClosure = { count in
+            if count == 1 {
+                delayedPixelPendingClosureExpectation.fulfill()
+            }
+        }
 
         // Initiate pixel queue processing:
+        let sendQueuedPixelsExpectation = expectation(description: "sendQueuedPixels")
         persistentPixel.sendQueuedPixels { _ in
             sendQueuedPixelsExpectation.fulfill()
         }
+
+        wait(for: [delayedPixelPendingClosureExpectation], timeout: 3.0)
 
         // Trigger a failed pixel call while processing, and wait for it to complete:
         let dailyCountPixelExpectation = expectation(description: "daily/count pixel call")

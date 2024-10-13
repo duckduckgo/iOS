@@ -151,6 +151,8 @@ public final class PersistentPixel: PersistentPixelFiring {
             error: error,
             withAdditionalParameters: additionalParameters,
             includedParameters: includedParameters,
+            pixelFiring: Pixel.self,
+            dailyPixelStore: DailyPixel.storage,
             onDailyComplete: { dailyError in
                 if dailyError != nil {
                     do {
@@ -272,12 +274,10 @@ public final class PersistentPixel: PersistentPixelFiring {
             pixelParameters[PixelParameters.retriedPixel] = "1"
 
             dispatchGroup.enter()
+
             pixelFiring.fire(
                 pixelNamed: pixelMetadata.pixelName,
-                forDeviceType: UIDevice.current.userInterfaceIdiom,
                 withAdditionalParameters: pixelParameters,
-                allowedQueryReservedCharacters: nil,
-                withHeaders: APIRequest.Headers(),
                 includedParameters: pixelMetadata.includedParameters,
                 onComplete: { error in
                     if error == nil {

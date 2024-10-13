@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Persistence
 
 public protocol DailyPixelFiring {
     static func fireDaily(_ pixel: Pixel.Event,
@@ -27,6 +28,8 @@ public protocol DailyPixelFiring {
                                   error: Swift.Error?,
                                   withAdditionalParameters params: [String: String],
                                   includedParameters: [Pixel.QueryParameters],
+                                  pixelFiring: PixelFiring.Type,
+                                  dailyPixelStore: KeyValueStoring,
                                   onDailyComplete: @escaping (Swift.Error?) -> Void,
                                   onCountComplete: @escaping (Swift.Error?) -> Void)
 

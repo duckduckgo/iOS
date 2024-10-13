@@ -26,7 +26,7 @@ final class MockPersistentPixel: PersistentPixelFiring {
     static var lastDailyPixelInfo: PixelInfo?
 
     static var lastParams: [String: String]? { lastPixelInfo?.params }
-    static var lastPixel: Pixel.Event? { lastPixelInfo?.pixel }
+    static var lastPixelName: String? { lastPixelInfo?.pixelName }
     static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
 
     func fire(pixel: Core.Pixel.Event,
@@ -34,7 +34,7 @@ final class MockPersistentPixel: PersistentPixelFiring {
               includedParameters: [Core.Pixel.QueryParameters],
               withAdditionalParameters params: [String: String],
               onComplete: @escaping ((any Error)?) -> Void) {
-        MockPersistentPixel.lastPixelInfo = .init(pixel: pixel, error: error, params: params, includedParams: includedParameters)
+        MockPersistentPixel.lastPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
         onComplete(nil)
     }
     
@@ -43,7 +43,7 @@ final class MockPersistentPixel: PersistentPixelFiring {
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Core.Pixel.QueryParameters],
                            completion: @escaping ([any Error]) -> Void) {
-        MockPersistentPixel.lastDailyPixelInfo = .init(pixel: pixel, error: error, params: params, includedParams: includedParameters)
+        MockPersistentPixel.lastDailyPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
         completion([])
     }
 

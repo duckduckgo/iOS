@@ -25,6 +25,7 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+import os.log
 import Subscription
 import WidgetKit
 import WireGuard
@@ -53,7 +54,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                             withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
                             includedParameters: [.appVersion, .atb])
 
-            persistentPixel.sendQueuedPixels { _ in }
+            persistentPixel.sendQueuedPixels { error in
+                Logger.networkProtection.error("Failed to send queued pixels, with error: \(error)")
+            }
         case .connectionTesterStatusChange(let status, let server):
             vpnLogger.log(status, server: server)
 
@@ -410,7 +413,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
-
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,

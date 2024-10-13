@@ -180,7 +180,7 @@ class DelayedPixelFiringMock: PixelFiring {
     }
 
     static func fire(_ pixel: Core.Pixel.Event,
-                     withAdditionalParameters params: [String : String],
+                     withAdditionalParameters params: [String: String],
                      includedParameters: [Core.Pixel.QueryParameters],
                      onComplete: @escaping ((any Error)?) -> Void) {
         self.fire(pixelNamed: pixel.name, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: onComplete)

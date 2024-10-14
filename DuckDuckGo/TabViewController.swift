@@ -1342,22 +1342,20 @@ extension TabViewController: WKNavigationDelegate {
                 // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
                 decisionHandler(.download)
             }
-            return
+        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+            // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
+            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            mostRecentAutoPreviewDownloadID = download?.id
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
         } else if shouldTriggerDownloadAction,
                   let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-            // 2. We know the response should trigger the file download prompt
+            // 3. We know the response should trigger the file download prompt
             self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                 self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
             } cancelHandler: {
                 decisionHandler(.cancel)
             }
-            return
-        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-            // 3. For this MIME type we are able to provide our custom preview via FilePreviewHelper
-            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-            mostRecentAutoPreviewDownloadID = download?.id
-            Pixel.fire(pixel: .downloadStarted,
-                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
         } else if navigationResponse.canShowMIMEType {
             // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
             url = webView.url

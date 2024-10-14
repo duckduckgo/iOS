@@ -21,6 +21,7 @@ import WebKit
 
 enum DuckPlayerNavigationEvent {
     case youtubeVideoPageVisited
+    case pageDidFinishLoading
 }
 
 protocol DuckPlayerNavigationHandling: AnyObject {

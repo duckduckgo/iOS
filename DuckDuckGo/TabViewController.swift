@@ -1466,6 +1466,8 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+        
+        duckPlayerNavigationHandler?.handleEvent(event: .pageDidFinishLoading, url: webView.url, navigationAction: nil)
     }
 
     func trackSecondSiteVisitIfNeeded(url: URL?) {

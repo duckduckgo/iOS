@@ -98,9 +98,10 @@ public class WebCacheManager {
         // This should not be a problem as these containers are not supposed to be used anymore.
         // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
         if #available(iOS 17, *), !leftoverContainerIDs.isEmpty {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            Task {
+                try? await Task.sleep(for: .seconds(3))
                 for uuid in leftoverContainerIDs {
-                    WKWebsiteDataStore.remove(forIdentifier: uuid, completionHandler: { _ in })
+                    try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
                 }
             }
         }

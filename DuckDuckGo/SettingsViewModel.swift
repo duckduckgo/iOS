@@ -285,6 +285,11 @@ final class SettingsViewModel: ObservableObject {
             set: {
                 self.appSettings.duckPlayerOpenInNewTab = $0
                 self.state.duckPlayerOpenInNewTab = $0
+                if self.state.duckPlayerOpenInNewTab {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOn)
+                } else {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOff)
+                }
             }
         )
     }

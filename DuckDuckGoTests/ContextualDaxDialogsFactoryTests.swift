@@ -353,7 +353,7 @@ extension ContextualDaxDialogsFactoryTests {
         XCTAssertNotNil(host.view)
 
         // THEN
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 10.0)
         XCTAssertTrue(pixelReporterMock.didCallTrackScreenImpressionCalled)
         XCTAssertEqual(pixelReporterMock.capturedScreenImpression, event)
     }

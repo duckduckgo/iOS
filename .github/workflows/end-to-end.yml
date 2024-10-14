@@ -103,7 +103,6 @@ jobs:
 
     steps:
     - name: Create Asana task when workflow failed
-      if: ${{ failure() }}
       run: |
         curl -s "https://app.asana.com/api/1.0/tasks" \
           --header "Accept: application/json" \

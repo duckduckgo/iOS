@@ -20,6 +20,7 @@
 import XCTest
 import Combine
 import Bookmarks
+@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageFavoritesModelTests: XCTestCase {
@@ -35,7 +36,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertTrue(sut.isCollapsed)
         sut.toggleCollapse()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesSeeMore)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesSeeMore.name)
     }
 
     func testFiresPixelWhenCollapsingList() {
@@ -46,7 +47,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertFalse(sut.isCollapsed)
         sut.toggleCollapse()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesSeeLess)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesSeeLess.name)
     }
 
     func testFiresPixelsOnFavoriteSelected() {
@@ -54,8 +55,8 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.favoriteSelected(Favorite(id: "", title: "", domain: "", urlObject: URL(string: "https://foo.bar")))
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .favoriteLaunchedNTP)
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixel, .favoriteLaunchedNTPDaily)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.favoriteLaunchedNTP.name)
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixelName, Pixel.Event.favoriteLaunchedNTPDaily.name)
     }
 
     func testFiresPixelOnFavoriteDeleted() {
@@ -66,7 +67,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.deleteFavorite(favorite)
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenDeleteFavorite)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.homeScreenDeleteFavorite.name)
     }
 
     func testFiresPixelOnFavoriteEdited() {
@@ -77,7 +78,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.editFavorite(favorite)
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenEditFavorite)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.homeScreenEditFavorite.name)
     }
 
     func testFiresPixelOnTappingPlaceholder() {
@@ -85,7 +86,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.placeholderTapped()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesPlaceholderTapped.name)
     }
 
     func testPrefixFavoritesCreatesRemainingPlaceholders() {

@@ -1,5 +1,5 @@
 //
-//  HomePageMessagesConfiguration.swift
+//  DefaultVariantManager+Onboarding.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,12 +18,20 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
-protocol HomePageMessagesConfiguration {
-    var homeMessages: [HomeMessage] { get }
+extension VariantManager {
 
-    func refresh()
-    
-    func dismissHomeMessage(_ homeMessage: HomeMessage) async
-    func didAppear(_ homeMessage: HomeMessage)
+    var isNewIntroFlow: Bool {
+        isSupported(feature: .newOnboardingIntro) || isSupported(feature: .newOnboardingIntroHighlights)
+    }
+
+    var isOnboardingHighlightsExperiment: Bool {
+        isSupported(feature: .newOnboardingIntroHighlights)
+    }
+
+    var isContextualDaxDialogsEnabled: Bool {
+        isSupported(feature: .contextualDaxDialogs)
+    }
+
 }

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/xcode-16",
-        "revision" : "d93ca97bec5cbfd00bf60e8b9e96737c71a4ab50"
+        "revision" : "c4aaa669840308ecc1d73216f73a101900a73459"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
-        "version" : "6.16.0"
+        "revision" : "1ed569676555d493c9c5575eaed22aa02569aac9",
+        "version" : "6.19.0"
       }
     },
     {

@@ -25,17 +25,20 @@ final class OnboardingManagerTests: XCTestCase {
     private var sut: OnboardingManager!
     private var appSettingsMock: AppSettingsMock!
     private var featureFlaggerMock: MockFeatureFlagger!
+    private var variantManagerMock: MockVariantManager!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         appSettingsMock = AppSettingsMock()
         featureFlaggerMock = MockFeatureFlagger()
-        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock)
+        variantManagerMock = MockVariantManager()
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)
     }
 
     override func tearDownWithError() throws {
         appSettingsMock = nil
         featureFlaggerMock = nil
+        variantManagerMock = nil
         sut = nil
         try super.tearDownWithError()
     }
@@ -118,5 +121,33 @@ final class OnboardingManagerTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(result)
+    }
+
+    func testWhenIsOnboardingHiglightsEnabledAndVariantManagerSupportOnboardingHighlightsReturnTrue() {
+        // GIVEN
+        variantManagerMock.isSupportedBlock = { _ in true }
+        appSettingsMock.onboardingHighlightsEnabled = false
+        featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingHighlights]
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)
+
+        // WHEN
+        let result = sut.isOnboardingHighlightsEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsOnboardingHiglightsEnabledAndVariantManagerSupportOnboardingHighlightsReturnFalse() {
+        // GIVEN
+        variantManagerMock.isSupportedBlock = { _ in false }
+        appSettingsMock.onboardingHighlightsEnabled = false
+        featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingHighlights]
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)
+
+        // WHEN
+        let result = sut.isOnboardingHighlightsEnabled
+
+        // THEN
+        XCTAssertFalse(result)
     }
 }

@@ -416,7 +416,7 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
-    @UserDefaultsWrapper(key: .duckPlayerOpenInNewTab, defaultValue: false)
+    @UserDefaultsWrapper(key: .duckPlayerOpenInNewTab, defaultValue: true)
     var duckPlayerOpenInNewTab: Bool
     
 

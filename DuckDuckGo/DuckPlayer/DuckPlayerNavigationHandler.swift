@@ -440,7 +440,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Assume JS Navigation is user-triggered
         self.navigationType = .linkActivated
         
-        handleURLChange(url: url, webView: webView)
+        // Only handle URL changes if the allowFirstVideo is set to false
+        // This prevents Youtube redirects from triggering DuckPlayer when is not expected
+        if !duckPlayer.settings.allowFirstVideo {
+            handleURLChange(url: url, webView: webView)
+        }
     }
     
     @MainActor

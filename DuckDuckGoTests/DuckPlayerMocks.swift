@@ -76,13 +76,19 @@ class MockWebView: WKWebView {
 
 class MockNavigationAction: WKNavigationAction {
     private let _request: URLRequest
+    private let _navigationType: WKNavigationType
     
-    init(request: URLRequest) {
+    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated ) {
         self._request = request
+        self._navigationType = navigationType
     }
     
     override var request: URLRequest {
         return _request
+    }
+    
+    override var navigationType: WKNavigationType {
+        return _navigationType
     }
 }
 

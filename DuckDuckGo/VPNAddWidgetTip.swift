@@ -54,7 +54,10 @@ extension VPNAddWidgetTip: Tip {
     }
 
     var actions: [Action] {
-        [Action(id: ActionIdentifiers.addWidget.rawValue, title: "Add widget")]
+        [Action(id: ActionIdentifiers.addWidget.rawValue) {
+            Text("Add widget")
+                .foregroundStyle(Color(designSystemColor: .accent))
+        }]
     }
 
     var rules: [Rule] {

@@ -52,7 +52,10 @@ extension VPNUseSnoozeTip: Tip {
     }
 
     var actions: [Action] {
-        [Action(id: ActionIdentifiers.learnMore.rawValue, title: "Learn more")]
+        [Action(id: ActionIdentifiers.learnMore.rawValue) {
+            Text("Learn more")
+                .foregroundStyle(Color(designSystemColor: .accent))
+        }]
     }
 
     var rules: [Rule] {

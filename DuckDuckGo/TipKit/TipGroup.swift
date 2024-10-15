@@ -61,16 +61,19 @@ struct LegacyTipGroup: TipGrouping {
     }
 
     private let priority: Priority
-    private let tips: [any Tip]
 
-    init(_ priority: Priority, @LegacyTipGroupBuilder _ builder: () -> [any Tip]) {
+    @LegacyTipGroupBuilder
+    private let tipBuilder: () -> [any Tip]
+
+    init(_ priority: Priority = .ordered, @LegacyTipGroupBuilder _ tipBuilder: @escaping () -> [any Tip]) {
+
         self.priority = priority
-        self.tips = builder()
+        self.tipBuilder = tipBuilder
     }
 
     @MainActor
     var currentTip: (any Tip)? {
-        return tips.first {
+        return tipBuilder().first {
             switch $0.status {
             case .available:
                 return true

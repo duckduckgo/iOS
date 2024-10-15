@@ -93,19 +93,23 @@ struct NetworkProtectionStatusView: View {
             }
             .padding([.top, .bottom], 2)
 
-            if #available(iOS 17.0, *) {
-                widgetTip()
-            }
-
             snooze()
 
-            if #available(iOS 17.0, *) {
-                snoozeTip()
-            }
         } header: {
             header()
         }
         .increaseHeaderProminence()
+        .listRowBackground(Color(designSystemColor: .surface))
+
+        Section {
+            if #available(iOS 17.0, *) {
+                widgetTip()
+            }
+
+            if #available(iOS 17.0, *) {
+                snoozeTip()
+            }
+        }
         .listRowBackground(Color(designSystemColor: .surface))
     }
 
@@ -195,13 +199,16 @@ struct NetworkProtectionStatusView: View {
                     NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
             }
-
-            if #available(iOS 17.0, *) {
-               geolocationTip()
-            }
         } header: {
             Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
                 .foregroundColor(.init(designSystemColor: .textSecondary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+
+        Section {
+            if #available(iOS 17.0, *) {
+                geolocationTip()
+            }
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
@@ -296,9 +303,9 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func geolocationTip() -> some View {
         if statusModel.canShowTips,
-           let changeLocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
+           let geolocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
 
-            TipView(changeLocationTip)
+            TipView(geolocationTip)
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))

@@ -229,15 +229,15 @@ final class DuckPlayerNavigationHandler {
             // Enroll user if not enrolled
             if !experiment.isEnrolled {
                 experiment.assignUserToCohort()
-            }
-            
-            // DuckPlayer is disabled before user enrolls,
-            // So trigger a settings change notification
-            // to let the FE know about the 'actual' setting
-            // and update Experiment value
-            if experiment.isExperimentCohort {
-                duckPlayer.settings.triggerNotification()
-                experiment.duckPlayerMode = duckPlayer.settings.mode
+                
+                // DuckPlayer is disabled before user enrolls,
+                // So trigger a settings change notification
+                // to let the FE know about the 'actual' setting
+                // and update Experiment value
+                if experiment.isExperimentCohort {
+                    duckPlayer.settings.triggerNotification()
+                    experiment.duckPlayerMode = duckPlayer.settings.mode
+                }
             }
             
             experiment.fireYoutubePixel(videoID: videoID)

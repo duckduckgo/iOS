@@ -24,20 +24,20 @@ import Core
 
 struct NetworkProtectionRootView: View {
 
-    let statusViewModel: NetworkProtectionStatusViewModel
-
-    init() {
+    @StateObject
+    var statusViewModel: NetworkProtectionStatusViewModel = {
         let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
         let subscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         let usesUnifiedFeedbackForm = accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
-        statusViewModel = NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
+
+        return NetworkProtectionStatusViewModel(tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController,
                                                            settings: AppDependencyProvider.shared.vpnSettings,
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository,
                                                            usesUnifiedFeedbackForm: usesUnifiedFeedbackForm)
-    }
+    }()
 
     var body: some View {
         NetworkProtectionStatusView(statusModel: statusViewModel)

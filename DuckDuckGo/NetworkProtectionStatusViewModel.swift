@@ -24,6 +24,8 @@ import WidgetKit
 import BrowserServicesKit
 import Core
 import Subscription
+import TipKit
+import TipKitUtils
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {
@@ -94,11 +96,42 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         return formatter
     }()
 
+    private let featureFlagger = AppDependencyProvider.shared.featureFlagger
     private let tunnelController: (TunnelController & TunnelSessionProvider)
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
+
+    // MARK: - Tips
+
+    var canShowTips: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionUserTips)
+    }
+
+    @Published
+    var showAddWidgetEducationView: Bool = false
+
+    let vpnEnabledTips: TipGrouping = {
+        // This is temporarily disabled until Xcode 16 is available.
+        // Ref: https://app.asana.com/0/414235014887631/1208528787265444/f
+        //
+        // if #available(iOS 18.0, *) {
+        //     return TipGroup(.ordered) {
+        //     VPNChangeLocationTip()
+        //     VPNUseSnoozeTip()
+        //     VPNAddWidgetTip()
+        // }
+        if #available(iOS 17.0, *) {
+            return LegacyTipGroup(.ordered) {
+                VPNChangeLocationTip()
+                VPNUseSnoozeTip()
+                VPNAddWidgetTip()
+            }
+        } else {
+            return EmptyTipGroup()
+        }
+    }()
 
     // MARK: Error
 
@@ -121,7 +154,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Toggle Item
 
-    @Published public var isNetPEnabled = false
+    @Published public var isNetPEnabled = false {
+        didSet {
+            if #available(iOS 17.0, *) {
+                if isNetPEnabled {
+                    VPNChangeLocationTip.donateVPNConnectedEvent()
+                }
+
+                VPNUseSnoozeTip.vpnEnabled = isNetPEnabled
+                VPNAddWidgetTip.vpnEnabled = isNetPEnabled
+            }
+        }
+    }
+
     @Published public var isSnoozing = false {
         didSet {
             snoozeRequestPending = false
@@ -452,6 +497,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
+        if #available(iOS 17.0, *) {
+            (vpnEnabledTips.currentTip as? VPNUseSnoozeTip)?.invalidate(reason: .actionPerformed)
+        }
+
         let defaultDuration: TimeInterval = .minutes(20)
         snoozeRequestPending = true
         try? await activeSession.sendProviderMessage(.startSnooze(defaultDuration))
@@ -546,6 +595,34 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.downloadTotal = nil
     }
 
+    // MARK: - UI Events handling
+
+    @available(iOS 17.0, *)
+    func snoozeActionHandler(action: Tips.Action) {
+        if action.id == VPNUseSnoozeTip.ActionIdentifiers.learnMore.rawValue {
+            let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @MainActor
+    func widgetActionHandler(action: Tips.Action) {
+        if action.id == VPNAddWidgetTip.ActionIdentifiers.addWidget.rawValue {
+            showAddWidgetEducationView = true
+            (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
+        }
+    }
+
+    /// The user opened the VPN locations view
+    ///
+    func handleUserOpenedVPNLocations() {
+        if #available(iOS 17.0, *) {
+            Task { @MainActor in
+                (vpnEnabledTips.currentTip as? VPNChangeLocationTip)?.invalidate(reason: .actionPerformed)
+            }
+        }
+    }
 }
 
 private extension ConnectionStatus {

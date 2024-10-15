@@ -20,8 +20,32 @@
 import Core
 import Foundation
 import os.log
-import TipKit
+import TipKitUtils
 
 protocol TipKitAppEventHandling {
     func appDidFinishLaunching()
+}
+
+struct TipKitAppEventHandler: TipKitAppEventHandling {
+
+    private let controller: TipKitController
+    private let logger: Logger
+
+    init(controller: TipKitController = .make(),
+         logger: Logger = .tipKit) {
+
+        self.controller = controller
+        self.logger = logger
+    }
+
+    func appDidFinishLaunching() {
+        if #available(iOS 17.0, *) {
+            controller.configureTipKit([
+                .displayFrequency(.immediate),
+                .datastoreLocation(.applicationDefault)
+            ])
+        } else {
+            logger.log("TipKit initialization skipped: iOS 17.0 or later is required.")
+        }
+    }
 }

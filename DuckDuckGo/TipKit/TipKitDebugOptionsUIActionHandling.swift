@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import TipKitUtils
 
 protocol TipKitDebugOptionsUIActionHandling {
     /// Resets TipKit
@@ -30,10 +31,10 @@ struct TipKitDebugOptionsUIActionHandler: TipKitDebugOptionsUIActionHandling {
     private let controller: TipKitController
     private let logger: Logger
 
-    init(controller: TipKitController? = nil,
+    init(controller: TipKitController = .make(),
          logger: Logger = .tipKit) {
 
-        self.controller = controller ?? TipKitController(logger: logger)
+        self.controller = controller
         self.logger = logger
     }
 

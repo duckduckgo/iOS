@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1727101913728,
+    "version": 1728900024972,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -88,9 +88,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -117,7 +114,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "39481c86e0647ab1f235b35986da0fa0"
+            "hash": "fa5f86bac5946c528cd6bc7449a2718a"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -369,17 +366,11 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "disabledCMPs": [
-                    "generic-cosmetic",
-                    "termsfeed3",
-                    "healthline-media",
-                    "ketch"
+                    "healthline-media"
                 ]
             },
             "state": "enabled",
@@ -402,7 +393,7 @@
                     }
                 }
             },
-            "hash": "ee8caeb715c81bf398024ed686bc3f5c"
+            "hash": "ea2fef42c1666e9d9e4cabd49e57764d"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -415,15 +406,10 @@
         "autofillSurveys": {
             "state": "enabled",
             "settings": {
-                "surveys": [
-                    {
-                        "id": "2024-09-10",
-                        "url": "https://selfserve.decipherinc.com/survey/selfserve/32ab/240900"
-                    }
-                ]
+                "surveys": []
             },
             "exceptions": [],
-            "hash": "fa60baa3935e8ab70e77dafa347a6a71"
+            "hash": "1d554e00b6a8adc2a7514accf9a92fdb"
         },
         "autofill": {
             "exceptions": [
@@ -531,12 +517,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "28a9e2628d3c372ae3434c9166031693"
+            "hash": "37e0cf88badfc8b01b6394f0884502f6"
         },
         "brokenSitePrompt": {
             "state": "enabled",
@@ -1240,9 +1223,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1260,7 +1240,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "600351972c8dec803846ad9c596164bd"
+            "hash": "cb1f114a9e0314393b2a0f789cba163f"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1278,9 +1258,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1293,7 +1270,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "ab8fd25afb81834139eabf76f3e0db20"
+            "hash": "894fb86c1f058aee9db47cfcdf3637de"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1338,12 +1315,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "6b730954cd0f48a877191e501bf431fc"
+            "hash": "96b2f778bab196aa424e9c859ddea778"
         },
         "cookie": {
             "settings": {
@@ -1408,13 +1382,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "081af6c291ebfb57c69ccb7dd486c671"
+            "hash": "6b4d2cef180104c5c84f5687479b8492"
         },
         "customUserAgent": {
             "settings": {
@@ -1488,7 +1459,8 @@
                     "state": "disabled"
                 },
                 "enableDuckPlayer": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.139.0"
                 }
             },
             "settings": {
@@ -1525,7 +1497,8 @@
                                 ".ytd-video-preview",
                                 "#thumbnail-container",
                                 "#video-title-link",
-                                "#video-title"
+                                "#video-title",
+                                "video.video-stream.html5-main-video"
                             ]
                         },
                         "thumbnailOverlays": {
@@ -1575,8 +1548,8 @@
                     }
                 ]
             },
-            "state": "internal",
-            "hash": "887a8548cb01c9568e4d1b4d195af88b"
+            "state": "enabled",
+            "hash": "7f82d68f07b3e2aaac1b89725c1d379e"
         },
         "elementHiding": {
             "exceptions": [
@@ -1597,9 +1570,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -3474,6 +3444,15 @@
                         ]
                     },
                     {
+                        "domain": "livebeaches.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='random-ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "livemint.com",
                         "rules": [
                             {
@@ -4889,7 +4868,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "0882839182c425cbc9f98b8329036254"
+            "hash": "91a3dbe67daa37762247c415766a2634"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4907,13 +4886,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4940,12 +4916,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "1699e10a89e3f845b762d979c7784e07"
+            "hash": "7f042650922da2636492e77ed1101bce"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4966,13 +4939,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "7d41daff22dc87c5e77130ecfe07a5b2"
+            "hash": "fcc2138fa97c35ded544b39708fda919"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -5077,13 +5047,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "2d8237d98a58f72e1722594501e7a10a"
+            "hash": "49a3d497835bf5715aaaa73f87dd974f"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -5149,13 +5116,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "9f2be706bd8afb4ab5b20bcf105f3029"
+            "hash": "cd4a8461973d1c1648dd20e6d1f532a7"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5209,13 +5173,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "af086ad86fb05240c6ae07b4f27990cb"
+            "hash": "046340bb9287a20efed6189525ec5fed"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -5242,13 +5203,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "7503c4ad77f4d9a2e679c89f3a6d7758"
+            "hash": "14b7fe3d276b52109c59f0c71aee4f71"
         },
         "googleRejected": {
             "exceptions": [
@@ -5266,13 +5224,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "gpc": {
             "state": "enabled",
@@ -5329,6 +5284,9 @@
                     "domain": "jcrew.com"
                 },
                 {
+                    "domain": "pgealerts.alerts.pge.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5345,9 +5303,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5359,7 +5314,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "91efce5371a70d32b647ef748376666e"
+            "hash": "fb031f27a1e1c2b143505c4f2e7b3ba7"
         },
         "harmfulApis": {
             "settings": {
@@ -5475,13 +5430,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "179ae7bb9c2f25cdca27e9ae3da9f506"
+            "hash": "fb598c4167ff166d85dd49c701cc5579"
         },
         "history": {
             "state": "enabled",
@@ -5532,12 +5484,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "3beb9d0dc3e5b08f87862264e6845d22"
+            "hash": "b47d255c6f836ecb7ae0b3e61cc2c025"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5596,9 +5545,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5609,7 +5555,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "85c8d252b38056bb00cb6846fe2793cc"
+            "hash": "d14f6e3a9aa4139ee1d517016b59691e"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5619,15 +5565,23 @@
                 },
                 "waitlist": {
                     "state": "enabled"
+                },
+                "userTips": {
+                    "state": "enabled"
                 }
             },
             "exceptions": [],
-            "hash": "7899368978e0f3aaf7eb141a027e4150"
+            "hash": "324309d731591edf4174a6e5d11b837c"
         },
         "newTabContinueSetUp": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "newTabSearchField": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "nonTracking3pCookies": {
             "settings": {
@@ -5648,13 +5602,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "09dadf2e11272ecfd8637c057f9970c3"
+            "hash": "82088db85ca7f64418fbfd57db25ade1"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5673,12 +5624,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "d6d280cf631363943027afc66a36ffff"
+            "hash": "6792064606a5a72c5cd44addb4d40bda"
         },
         "phishingDetection": {
             "state": "disabled",
@@ -5697,12 +5645,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "28a9e2628d3c372ae3434c9166031693"
+            "hash": "37e0cf88badfc8b01b6394f0884502f6"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5819,13 +5764,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "10bf3098ef71a9cac101c1fdce462b22"
+            "hash": "138c3b2409f6b3bf967b804ab9bf2ce2"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -5849,15 +5791,12 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "72518a0c7421196ec071b1fb9167fde7"
+            "hash": "baf19d9e0f506ed09f46c95b1849adee"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5876,13 +5815,16 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {},
-            "hash": "baf8b326d74f71ed4f63a1ffa3d42794"
+            "hash": "dfede9f06b9e322e198736703d013d15"
+        },
+        "sendFullPackageInstallSource": {
+            "state": "enabled",
+            "settings": {},
+            "exceptions": [],
+            "hash": "26d319ff4b2f43012a287b5f35a8db3a"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -5900,13 +5842,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "sslCertificates": {
             "state": "enabled",
@@ -6813,6 +6752,7 @@
                                     "nytimes.com",
                                     "realmadrid.com",
                                     "rocketnews24.com",
+                                    "solitaired.com",
                                     "stuff.co.nz",
                                     "uwbadgers.com",
                                     "wunderground.com",
@@ -7052,7 +6992,8 @@
                                 "domains": [
                                     "bandsintown.com",
                                     "nextdoor.co.uk",
-                                    "nextdoor.com"
+                                    "nextdoor.com",
+                                    "solitaired.com"
                                 ]
                             },
                             {
@@ -7379,6 +7320,7 @@
                                     "bodyelectricvitality.com.au",
                                     "cosmicbook.news",
                                     "eatroyo.com",
+                                    "piedmontng.com",
                                     "thesimsresource.com",
                                     "tradersync.com",
                                     "vanguardplan.com"
@@ -7473,6 +7415,7 @@
                                     "local12.com",
                                     "local21news.com",
                                     "midmichigannow.com",
+                                    "mlb.com",
                                     "my15wtcn.com",
                                     "my24milwaukee.com",
                                     "my48.tv",
@@ -8066,7 +8009,7 @@
                     "nosto.com": {
                         "rules": [
                             {
-                                "rule": "connect.nosto.com/script/shopify/nosto.js",
+                                "rule": "connect.nosto.com",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -8452,6 +8395,7 @@
                                 "rule": "a.pub.network/core/prebid-universal-creative.js",
                                 "domains": [
                                     "signupgenius.com",
+                                    "smithsonianmag.com",
                                     "titantv.com"
                                 ]
                             },
@@ -8596,6 +8540,16 @@
                             }
                         ]
                     },
+                    "sascdn.com": {
+                        "rules": [
+                            {
+                                "rule": "sascdn.com/tag/",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "scene7.com": {
                         "rules": [
                             {
@@ -8716,6 +8670,16 @@
                                 "rule": "c.slickstream.com/app/",
                                 "domains": [
                                     "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "smartadserver.com": {
+                        "rules": [
+                            {
+                                "rule": "smartadserver.com/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
                                 ]
                             }
                         ]
@@ -9250,6 +9214,16 @@
                             }
                         ]
                     },
+                    "eltiempo.co": {
+                        "rules": [
+                            {
+                                "rule": "ads.eltiempo.co/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "yandex.tm": {
                         "rules": [
                             {
@@ -9277,12 +9251,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "d41dab46e3e6b98fa00b3f09d4982a14"
+            "hash": "0692c3f8cc6179433b9f23f00c7dd0ac"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9306,13 +9277,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "3266e0df13e8d3959de6e9d0bf35c089"
+            "hash": "763f56424b0827b5731927a043219912"
         },
         "trackingCookies3p": {
             "settings": {
@@ -9333,13 +9301,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "09dadf2e11272ecfd8637c057f9970c3"
+            "hash": "82088db85ca7f64418fbfd57db25ade1"
         },
         "trackingParameters": {
             "exceptions": [
@@ -9363,9 +9328,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -9398,7 +9360,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "6aa495863362a10fcd54398369d780a4"
+            "hash": "3805ecfb8a129f70a99e73a364b38f38"
         },
         "userAgentRotation": {
             "settings": {
@@ -9419,13 +9381,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "b1ca9a99352f9a9f1da0bce34d66a2fa"
+            "hash": "9225b8785d6973db37abde99d81d219c"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -9456,9 +9415,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
@@ -9477,6 +9433,10 @@
                         ],
                         "undefined": []
                     }
+                },
+                "modifyLocalStorage": {
+                    "state": "enabled",
+                    "changes": []
                 },
                 "domains": [
                     {
@@ -9498,10 +9458,36 @@
                                 "value": "enabled"
                             }
                         ]
+                    },
+                    {
+                        "domain": "msn.com",
+                        "patchSettings": [
+                            {
+                                "op": "add",
+                                "path": "/modifyLocalStorage/changes/-",
+                                "value": {
+                                    "key": "continuousReadingOnAppState",
+                                    "action": "delete"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "privacy-test-pages.site",
+                        "patchSettings": [
+                            {
+                                "op": "add",
+                                "path": "/modifyLocalStorage/changes/-",
+                                "value": {
+                                    "key": "keyToBeDeleted",
+                                    "action": "delete"
+                                }
+                            }
+                        ]
                     }
                 ]
             },
-            "hash": "efc01837e0f1a6d59fffd8d00f67be41"
+            "hash": "2853748f3ebb813d59f4db4a7bb13c83"
         },
         "webViewBlobDownload": {
             "exceptions": [],
@@ -9514,6 +9500,11 @@
             "hash": "52857469413a66e8b0c7b00de5589162"
         },
         "windowsExternalPreviewReleases": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsFireWindow": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"

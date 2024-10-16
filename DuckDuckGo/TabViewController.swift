@@ -186,6 +186,8 @@ class TabViewController: UIViewController {
 
     let syncService: DDGSyncing
 
+    private let daxDialogsDebouncer = Debouncer(mode: .common)
+
     public var url: URL? {
         willSet {
             if newValue != url {
@@ -764,6 +766,12 @@ class TabViewController: UIViewController {
         }
         if let url {
             duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
+            
+            // Open in new tab if required
+            // If the lastRenderedURL is nil, it means we're already in a new tab
+            if webView.url != nil && lastRenderedURL != nil {
+                duckPlayerNavigationHandler?.handleEvent(event: .JSTriggeredNavigation, url: webView.url, navigationAction: nil)
+            }
         }
     }
     
@@ -985,7 +993,13 @@ class TabViewController: UIViewController {
         webView.scrollView.refreshControl = isEnabled ? refreshControl : nil
     }
 
-    private var didGoBackForward: Bool = false
+    private var didGoBackForward: Bool = false {
+        didSet {
+            if didGoBackForward {
+                contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
+            }
+        }
+    }
 
     private func resetDashboardInfo() {
         if let url = url {
@@ -1447,7 +1461,11 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
-        showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        // Present the Dax dialog with a delay to mitigate issue where user script detec trackers after the dialog is show to the user
+        // Debounce to avoid showing multiple animations on redirects. e.g. !image baby ducklings
+        daxDialogsDebouncer.debounce(for: 0.8) { [weak self] in
+            self?.showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        }
 
         Task { @MainActor in
             if await webView.isCurrentSiteReferredFromDuckDuckGo {
@@ -1496,7 +1514,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if !DefaultVariantManager().isContextualDaxDialogsEnabled {
             isShowingFullScreenDaxDialog = true
         }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
@@ -1874,7 +1892,13 @@ extension TabViewController: WKNavigationDelegate {
             duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                      url: url,
                                                      navigationAction: navigationAction)
-            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            
+            // Validate Duck Player setting to open in new tab or locally
+            if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {
+                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: nil)
+            } else {
+                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            }
             completion(.cancel)
             return
 
@@ -2774,8 +2798,17 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
+
+        var responseSent: Bool = false
+
+        let sendResponse: (Bool) -> Void = { useGeneratedPassword in
+            guard !responseSent else { return }
+            responseSent = true
+            completionHandler(useGeneratedPassword)
+        }
+
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                completionHandler(useGeneratedPassword)
+            sendResponse(useGeneratedPassword)
         }
 
         if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
@@ -2798,6 +2831,15 @@ extension TabViewController: SecureVaultManagerDelegate {
                                              useLargeDetent: Bool,
                                              onAccountSelected: @escaping (SecureVaultModels.WebsiteAccount?) -> Void,
                                              completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+
+        var responseSent: Bool = false
+
+        let sendResponse: (SecureVaultModels.WebsiteAccount?) -> Void = { account in
+            guard !responseSent else { return }
+            responseSent = true
+            completionHandler(account)
+        }
+
         let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                              domain: domain,
                                                                              trigger: trigger,
@@ -2813,10 +2855,10 @@ extension TabViewController: SecureVaultManagerDelegate {
                     onAccountSelected(account)
                 },
                                                          completionHandler: { account in
-                    completionHandler(account)
+                    sendResponse(account)
                 })
             } else {
-                completionHandler(account)
+                sendResponse(account)
             }
         })
 
@@ -3016,6 +3058,9 @@ extension TabViewController: ContextualOnboardingEventDelegate {
     }
 
     func didTapDismissContextualOnboardingAction() {
+        // Reset last visited onboarding site and last dax dialog shown.
+        contextualOnboardingLogic.setDaxDialogDismiss()
+
         contextualOnboardingPresenter.dismissContextualOnboardingIfNeeded(from: self)
     }
 

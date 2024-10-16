@@ -118,40 +118,40 @@ struct HomeMessageViewModel {
         }
     }
     
-    let onDidClose: (ButtonAction?) -> Void
+    let onDidClose: (ButtonAction?) async -> Void
     let onDidAppear: () -> Void
     let onAttachAdditionalParameters: ((_ useCase: PrivacyProDataReportingUseCase, _ params: [String: String]) -> [String: String])?
 
     func mapActionToViewModel(remoteAction: RemoteAction,
                               buttonAction: HomeMessageViewModel.ButtonAction,
-                              onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
+                              onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) async -> Void) -> () async -> Void {
 
         switch remoteAction {
         case .share:
-            return {
-                onDidClose(buttonAction)
+            return { @MainActor in
+                await onDidClose(buttonAction)
             }
         case .url(let value):
-            return {
+            return { @MainActor in
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction)
+                await onDidClose(buttonAction)
             }
         case .survey(let value):
-            return {
+            return { @MainActor in
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction)
+                await onDidClose(buttonAction)
             }
         case .appStore:
-            return {
+            return { @MainActor in
                 let url = URL.appStore
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }
-                onDidClose(buttonAction)
+                await onDidClose(buttonAction)
             }
         case .dismiss:
-            return {
-                onDidClose(buttonAction)
+            return { @MainActor in
+                await onDidClose(buttonAction)
             }
         }
     }
@@ -166,6 +166,6 @@ struct HomeMessageButtonViewModel {
     
     let title: String
     var actionStyle: ActionStyle = .default
-    let action: () -> Void
+    let action: () async -> Void
 
 }

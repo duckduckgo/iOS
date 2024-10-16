@@ -852,7 +852,7 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if variantManager.isContextualDaxDialogsEnabled {
             // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
             currentTab?.dismissContextualDaxFireDialog()
             ViewHighlighter.hideAll()
@@ -2418,10 +2418,6 @@ extension MainViewController: TabDelegate {
         }
     }
     
-    func tabDidRequestForgetAll(tab: TabViewController) {
-        forgetAllWithAnimation(showNextDaxDialog: true)
-    }
-    
     func tabDidRequestFireButtonPulse(tab: TabViewController) {
         showFireButtonPulse()
     }
@@ -2751,8 +2747,8 @@ extension MainViewController: AutoClearWorker {
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
 
-            if self.variantManager.isSupported(feature: .newOnboardingIntro) {
-                DaxDialogs.shared.setFireEducationMessageSeen()
+            if self.variantManager.isContextualDaxDialogsEnabled {
+                DaxDialogs.shared.clearedBrowserData()
             }
         }
     }

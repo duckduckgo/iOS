@@ -104,7 +104,7 @@ class TabsBarViewController: UIViewController {
             self.present(controller: alert, fromView: fireButton)
         }
 
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if DefaultVariantManager().isContextualDaxDialogsEnabled {
             delegate?.tabsBarDidRequestFireEducationDialog(self)
             showClearDataAlert()
         } else {
@@ -322,7 +322,7 @@ extension MainViewController: TabsBarDelegate {
     }
     
     func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController) {
-        if DefaultVariantManager().isSupported(feature: .newOnboardingIntro) {
+        if DefaultVariantManager().isContextualDaxDialogsEnabled {
             currentTab?.dismissContextualDaxFireDialog()
             ViewHighlighter.hideAll()
         } else {

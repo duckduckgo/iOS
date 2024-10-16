@@ -46,6 +46,27 @@ tags:
 - assertVisible: ".*Privacy Test Pages.*"
 - tapOn: "Refresh Page"
 
+# Suggestions
+- assertVisible:
+    id: "searchEntry"
+
+- tapOn: 
+    id: "searchEntry"
+- inputText: "ad click"
+- assertVisible: "Switch to Tab.*search-company.site"
+- tapOn: "Switch to Tab.*search-company.site"
+- assertVisible: ".*Ad Click Flow.*"
+
+- tapOn: 
+    id: "searchEntry"
+- inputText: "privacy"
+- assertVisible: "Switch to Tab.*privacy-test-pages.site"
+- tapOn: "Switch to Tab.*privacy-test-pages.site"
+- assertVisible: ".*Privacy Test Pages.*"
+
+# Needed or else test can't see the Tab Switcher button for some reason
+- tapOn: "Refresh Page"
+
 # Close Tab
 - assertVisible: Tab Switcher
 - tapOn: Tab Switcher
@@ -57,3 +78,26 @@ tags:
 - assertNotVisible: ".*Ad Click Flow.*"
 - assertVisible: "1 Private Tab"
 - tapOn: "Done"
+
+# Switch tabs from new tab
+- tapOn: "Refresh Page"
+- assertVisible: Tab Switcher
+- tapOn: Tab Switcher
+- assertVisible: ".*Privacy Test Pages.*"
+- assertVisible: 
+    id: "Add"
+- tapOn:
+    id: "Add"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "privacy"
+- assertVisible: "Switch to Tab.*privacy-test-pages.site"
+- tapOn: "Switch to Tab.*privacy-test-pages.site"
+- assertVisible: ".*Privacy Test Pages.*"
+- tapOn: "Refresh Page"
+- assertVisible: Tab Switcher
+- tapOn: Tab Switcher
+- assertVisible: "1 Private Tab"
+

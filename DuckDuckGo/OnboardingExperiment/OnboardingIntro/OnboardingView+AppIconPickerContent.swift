@@ -66,7 +66,6 @@ extension OnboardingView {
 
                 VStack(spacing: 24) {
                     AppIconPicker()
-                        .offset(x: Metrics.pickerLeadingOffset) // Remove left padding for the first item
 
                     Button(action: action) {
                         Text(UserText.HighlightsOnboardingExperiment.AppIconSelection.cta)

@@ -62,7 +62,7 @@ import os.log
     @MainActor
     private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
         return VPNRedditSessionWorkaround(
-            accountManager: AppDependencyProvider.shared.accountManager,
+            subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
             tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
         )
     }()
@@ -93,10 +93,6 @@ import os.log
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
-
-    var accountManager: AccountManager {
-        AppDependencyProvider.shared.accountManager
-    }
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
@@ -375,7 +371,7 @@ import os.log
 
         widgetRefreshModel.beginObservingVPNStatus()
 
-        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+//        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         setUpAutofillPixelReporter()
 
@@ -552,7 +548,7 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
+        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
             if isSubscriptionActive {
                 DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
@@ -568,7 +564,8 @@ import os.log
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
         // Only remove the VPN if the user is not authenticated, and it's installed:
-        guard !accountManager.isUserAuthenticated, await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
+        guard !AppDependencyProvider.shared.subscriptionManager.isUserAuthenticated,
+              await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
             return
         }
 
@@ -965,7 +962,8 @@ import os.log
             return
         }
 
-        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        let entitlements = AppDependencyProvider.shared.subscriptionManager.entitlements
+        if entitlements.contains(.networkProtection) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1043,12 +1041,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func presentNetworkProtectionStatusSettingsModal() {
-        Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (window?.rootViewController as? MainViewController)?.segueToVPN()
-            } else {
-                (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
-            }
+        let entitlements = AppDependencyProvider.shared.subscriptionManager.entitlements
+        if entitlements.contains(.networkProtection) {
+            (window?.rootViewController as? MainViewController)?.segueToVPN()
+        } else {
+            (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
         }
     }
 

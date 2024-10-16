@@ -19,6 +19,7 @@
 
 import BrowserServicesKit
 import Subscription
+import Networking
 
 struct SettingsState {
     
@@ -43,8 +44,8 @@ struct SettingsState {
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
-        var entitlements: [Entitlement.ProductName]
-        var platform: DDGSubscription.Platform
+        var entitlements: [SubscriptionEntitlement]
+        var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
     }
     

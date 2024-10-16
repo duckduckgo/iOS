@@ -26,6 +26,7 @@ import Combine
 import Subscription
 import Core
 import os.log
+import Networking
 
 enum SubscriptionTransactionStatus: String {
     case idle, purchasing, restoring, polling
@@ -90,22 +91,21 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private let subscriptionAttributionOrigin: String?
     private let subscriptionManager: SubscriptionManager
-    private var accountManager: AccountManager { subscriptionManager.accountManager }
     private let appStorePurchaseFlow: AppStorePurchaseFlow
     private let appStoreRestoreFlow: AppStoreRestoreFlow
-    private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
+//    private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
     private let privacyProDataReporter: PrivacyProDataReporting?
 
     init(subscriptionManager: SubscriptionManager,
          subscriptionAttributionOrigin: String?,
          appStorePurchaseFlow: AppStorePurchaseFlow,
          appStoreRestoreFlow: AppStoreRestoreFlow,
-         appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
+//         appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
          privacyProDataReporter: PrivacyProDataReporting? = nil) {
         self.subscriptionManager = subscriptionManager
         self.appStorePurchaseFlow = appStorePurchaseFlow
         self.appStoreRestoreFlow = appStoreRestoreFlow
-        self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
+//        self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
         self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
     }
@@ -191,10 +191,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Broker Methods (Called from WebView via UserScripts)
     
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        await appStoreAccountManagementFlow.refreshAuthTokenIfNeeded()
-        let authToken = accountManager.authToken ?? Constants.empty
-
-        return [Constants.token: authToken]
+        let accessToken = (try? await subscriptionManager.getTokens(policy: .localValid).accessToken) ?? Constants.empty
+        return [Constants.token: accessToken]
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
@@ -224,7 +222,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         let message = original
-        guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
+        guard let subscriptionSelection: SubscriptionSelection = CodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
             Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
             setTransactionStatus(.idle)
@@ -243,8 +241,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         let emailAccessToken = try? EmailManager().getToken()
         let purchaseTransactionJWS: String
 
-        switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id,
-                                                               emailAccessToken: emailAccessToken) {
+        switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id) {
         case .success(let transactionJWS):
             Logger.subscription.debug("Subscription purchased successfully")
             purchaseTransactionJWS = transactionJWS
@@ -287,7 +284,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        guard let subscriptionValues: SubscriptionValues = DecodableHelper.decode(from: params) else {
+        guard let subscriptionValues: SubscriptionValues = CodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             setTransactionError(.generalError)
@@ -297,17 +294,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         // Clear subscription Cache
         subscriptionManager.subscriptionEndpointService.signOut()
 
-        let authToken = subscriptionValues.token
-        if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
-           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-            accountManager.storeAuthToken(token: authToken)
-            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
-            onSetSubscription?()
-            
-        } else {
-            Logger.subscription.error("Failed to obtain subscription options")
-            setTransactionError(.failedToSetSubscription)
-        }
+        // TODO: what are we doing here??
+
+//        let authToken = subscriptionValues.token
+//        if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
+//           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+//            accountManager.storeAuthToken(token: authToken)
+//            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+//            onSetSubscription?()
+//            
+//        } else {
+//            Logger.subscription.error("Failed to obtain subscription options")
+//            setTransactionError(.failedToSetSubscription)
+//        }
 
         return nil
     }
@@ -319,7 +318,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func featureSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
-        guard let featureSelection: FeatureSelection = DecodableHelper.decode(from: params) else {
+        guard let featureSelection: FeatureSelection = CodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of FeatureSelection")
             return nil
@@ -338,31 +337,34 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
-        guard let accessToken = accountManager.accessToken else {
-            Logger.subscription.error("Missing access token")
-            return nil
-        }
-
-        switch await accountManager.fetchAccountDetails(with: accessToken) {
-        case .success(let accountDetails):
-            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken) {
-            case .success:
-                accountManager.storeAccount(token: accessToken,
-                                            email: accountDetails.email,
-                                            externalID: accountDetails.externalID)
-                onBackToSettings?()
-            case .failure(let error):
-                Logger.subscription.error("Error retrieving subscription details: \(error.localizedDescription)")
-            }
-        case .failure(let error):
-            Logger.subscription.error("Could not get account Details: \(error.localizedDescription)")
-            setTransactionError(.generalError)
-        }
+//        guard let accessToken = accountManager.accessToken else {
+//            Logger.subscription.error("Missing access token")
+//            return nil
+//        }
+//
+//        switch await accountManager.fetchAccountDetails(with: accessToken) {
+//        case .success(let accountDetails):
+//            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken) {
+//            case .success:
+//                accountManager.storeAccount(token: accessToken,
+//                                            email: accountDetails.email,
+//                                            externalID: accountDetails.externalID)
+//                onBackToSettings?()
+//            case .failure(let error):
+//                Logger.subscription.error("Error retrieving subscription details: \(error.localizedDescription)")
+//            }
+//        case .failure(let error):
+//            Logger.subscription.error("Could not get account Details: \(error.localizedDescription)")
+//            setTransactionError(.generalError)
+//        }
+//        return nil
+        subscriptionManager.refreshAccount()
+        onBackToSettings?()
         return nil
     }
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = subscriptionManager.accountManager.accessToken {
+        if let accessToken = try? await subscriptionManager.getTokens(policy: .localValid) {
             return [Constants.token: accessToken]
         } else {
             return [String: String]()

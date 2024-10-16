@@ -66,7 +66,7 @@ extension NetworkProtectionVPNSettingsViewModel {
 
 extension NetworkProtectionLocationListCompositeRepository {
     
-    convenience init(accountManager: AccountManager) {
+    convenience init() {
         let settings = AppDependencyProvider.shared.vpnSettings
         self.init(
             environment: settings.selectedEnvironment,
@@ -78,8 +78,8 @@ extension NetworkProtectionLocationListCompositeRepository {
 
 extension NetworkProtectionVPNLocationViewModel {
     
-    convenience init(accountManager: AccountManager) {
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
+    convenience init() {
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository()
         self.init(
             locationListRepository: locationListRepository,
             settings: AppDependencyProvider.shared.vpnSettings

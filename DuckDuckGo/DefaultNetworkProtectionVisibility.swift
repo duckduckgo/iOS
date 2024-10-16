@@ -23,21 +23,22 @@ import Waitlist
 import NetworkProtection
 import Core
 import Subscription
+import Networking
 
 struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     private let userDefaults: UserDefaults
-    private let accountManager: AccountManager
+    private let oAuthClient: any OAuthClient
 
-    init(userDefaults: UserDefaults, accountManager: AccountManager) {
+    init(userDefaults: UserDefaults, oAuthClient: any OAuthClient) {
         self.userDefaults = userDefaults
-        self.accountManager = accountManager
+        self.oAuthClient = oAuthClient
     }
 
     var token: String? {
-        return accountManager.accessToken
+        return oAuthClient.currentTokensContainer?.accessToken
     }
 
     func shouldShowVPNShortcut() -> Bool {
-        return accountManager.isUserAuthenticated
+        oAuthClient.isUserAuthenticated
     }
 }

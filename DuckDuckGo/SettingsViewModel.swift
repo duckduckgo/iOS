@@ -25,6 +25,7 @@ import Common
 import Combine
 import SyncUI
 import DuckPlayer
+import Networking
 
 import Subscription
 import NetworkProtection
@@ -340,7 +341,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     var usesUnifiedFeedbackForm: Bool {
-        subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
+        subscriptionManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
     }
 
     // MARK: Default Init
@@ -694,10 +695,10 @@ extension SettingsViewModel {
         state.subscription.canPurchase = subscriptionManager.canPurchase
 
         // Update if user is signed in based on the presence of token
-        state.subscription.isSignedIn = subscriptionManager.accountManager.isUserAuthenticated
+        state.subscription.isSignedIn = subscriptionManager.isUserAuthenticated
 
         // Active subscription check
-        guard let token = subscriptionManager.accountManager.accessToken else {
+        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .local) else {
             // Reset state in case cache was outdated
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
@@ -706,29 +707,26 @@ extension SettingsViewModel {
             subscriptionStateCache.set(state.subscription) // Sync cache
             return
         }
-        
-        let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token)
-        switch subscriptionResult {
-            
-        case .success(let subscription):
+
+        do {
+            let subscription = try await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: tokensContainer.accessToken)
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
-
             // Check entitlements and update state
-            var currentEntitlements: [Entitlement.ProductName] = []
-            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+            self.state.subscription.entitlements = tokensContainer.decodedAccessToken.subscriptionEntitlements
 
-            for entitlement in entitlementsToCheck {
-                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
-                    currentEntitlements.append(entitlement)
-                }
-            }
+//            var currentEntitlements: [SubscriptionEntitlement] = []
+//            let entitlementsToCheck: [SubscriptionEntitlement] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+//
+//            for entitlement in entitlementsToCheck {
+//                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+//                    currentEntitlements.append(entitlement)
+//                }
+//            }
+//
+//            self.state.subscription.entitlements = currentEntitlements
 
-            self.state.subscription.entitlements = currentEntitlements
-
-        case .failure:
-            break
-        }
+        } catch {}
         
         // Sync Cache
         subscriptionStateCache.set(state.subscription)
@@ -757,10 +755,11 @@ extension SettingsViewModel {
     
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
+
+        let authClient = SubscriptionContainerViewFactory.makeOAuthClient(subscriptionManager: subscriptionManager)
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
-                                                             authEndpointService: subscriptionManager.authEndpointService)
+                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

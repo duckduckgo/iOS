@@ -99,21 +99,26 @@ protocol VPNMetadataCollector {
     func collectVPNMetadata() async -> VPNMetadata
 }
 
+protocol PrivacyProInfoProvider {
+    var isUserAuthenticated: Bool { get }
+    var hasVPNEntitlements: Bool { get }
+}
+
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let accountManager: AccountManager
+    private let privacyProInfoProvider: PrivacyProInfoProvider
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-         accountManager: AccountManager = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         privacyProInfoProvider: PrivacyProInfoProvider = AppDependencyProvider.shared.privacyProInfoProvider,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.accountManager = accountManager
+        self.privacyProInfoProvider = privacyProInfoProvider
         self.settings = settings
         self.defaults = defaults
     }
@@ -242,10 +247,10 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() async -> VPNMetadata.PrivacyProInfo {
-        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
+//        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
         return .init(
-            hasPrivacyProAccount: accountManager.isUserAuthenticated,
-            hasVPNEntitlement: hasVPNEntitlement
+            hasPrivacyProAccount: privacyProInfoProvider.isUserAuthenticated,
+            hasVPNEntitlement: privacyProInfoProvider.hasVPNEntitlements
         )
     }
 

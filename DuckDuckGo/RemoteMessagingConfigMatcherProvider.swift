@@ -62,7 +62,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         let variantManager = DefaultVariantManager()
         let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
 
-        let isPrivacyProSubscriber = subscriptionManager.accountManager.isUserAuthenticated
+        let isPrivacyProSubscriber = subscriptionManager.isUserAuthenticated
         let isPrivacyProEligibleUser = subscriptionManager.canPurchase
 
         let activationDateStore = DefaultVPNActivationDateStore()
@@ -84,12 +84,9 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         
         let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
-        if let accessToken = subscriptionManager.accountManager.accessToken {
-            let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(
-                accessToken: accessToken
-            )
-
-            if case let .success(subscription) = subscriptionResult {
+        if let accessToken = try? await subscriptionManager.getTokens(policy: .localValid).accessToken {
+            do {
+                let subscription = try await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: accessToken)
                 privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
                 privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
                 privacyProPurchasePlatform = subscription.platform.rawValue
@@ -109,7 +106,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
                     statisticsStore: statisticsStore,
                     vpnActivationDateStore: DefaultVPNActivationDateStore(),
                     subscription: subscription)
-            } else {
+            } catch {
                 surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
                     statisticsStore: statisticsStore,
                     vpnActivationDateStore: DefaultVPNActivationDateStore(),

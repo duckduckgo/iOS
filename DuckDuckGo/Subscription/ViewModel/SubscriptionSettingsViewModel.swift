@@ -24,6 +24,7 @@ import Subscription
 import Core
 import os.log
 import BrowserServicesKit
+import Networking
 
 final class SubscriptionSettingsViewModel: ObservableObject {
     
@@ -40,7 +41,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         var isShowingGoogleView: Bool = false
         var isShowingFAQView: Bool = false
         var isShowingLearnMoreView: Bool = false
-        var subscriptionInfo: Subscription?
+        var subscriptionInfo: PrivacyProSubscription?
         var isLoadingSubscriptionInfo: Bool = false
         var isLoadingEmailInfo: Bool = false
 
@@ -75,7 +76,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
         self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)
-        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
+        self.usesUnifiedFeedbackForm = subscriptionManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
 
         setupNotificationObservers()
     }
@@ -109,15 +110,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
 
-    private func fetchAndUpdateSubscriptionDetails(cachePolicy: APICachePolicy, loadingIndicator: Bool) async -> Bool {
+    private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionCachePolicy, loadingIndicator: Bool) async -> Bool {
         Logger.subscription.debug("\(#function)")
-        guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
+        guard let token = try? await subscriptionManager.getTokens(policy: .localValid).accessToken else { return false }
 
         if loadingIndicator { displaySubscriptionLoader(true) }
-        let subscriptionResult = await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
-                                                                                                            cachePolicy: cachePolicy)
-        switch subscriptionResult {
-        case .success(let subscription):
+        do {
+            let subscription = try await self.subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
+                                                                                                              cachePolicy: cachePolicy)
             DispatchQueue.main.async {
                 self.state.subscriptionInfo = subscription
                 if loadingIndicator { self.displaySubscriptionLoader(false) }
@@ -127,7 +127,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                                                    product: subscription.productId,
                                                    billingPeriod: subscription.billingPeriod)
             return true
-        case .failure(let error):
+        } catch {
             Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
             DispatchQueue.main.async {
                 if loadingIndicator { self.displaySubscriptionLoader(true) }
@@ -136,42 +136,38 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         }
     }
 
-    func fetchAndUpdateAccountEmail(cachePolicy: APICachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
+    func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
         Logger.subscription.debug("\(#function)")
-        guard let token = self.subscriptionManager.accountManager.accessToken else { return false }
+        let tokensPolicy: TokensCachePolicy = cachePolicy == .returnCacheDataDontLoad ? .local : .localValid
 
-        switch cachePolicy {
-        case .returnCacheDataDontLoad, .returnCacheDataElseLoad:
-            DispatchQueue.main.async {
-                self.state.subscriptionEmail = self.subscriptionManager.accountManager.email
-            }
-            return true
-        case .reloadIgnoringLocalCacheData:
-            break
+        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: tokensPolicy) else { return false }
+        DispatchQueue.main.async {
+            self.state.subscriptionEmail = tokensContainer.decodedAccessToken.email
+            if loadingIndicator { self.displayEmailLoader(true) }
         }
+        return true
 
-        if loadingIndicator { displayEmailLoader(true) }
-        switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
-        case .success(let details):
-            Logger.subscription.debug("Account details fetched successfully")
-            DispatchQueue.main.async {
-                self.state.subscriptionEmail = details.email
-                if loadingIndicator { self.displayEmailLoader(false) }
-            }
-
-            // If fetched email is different then update accountManager
-            if details.email != subscriptionManager.accountManager.email {
-                let externalID = subscriptionManager.accountManager.externalID
-                subscriptionManager.accountManager.storeAccount(token: token, email: details.email, externalID: externalID)
-            }
-            return true
-        case .failure(let error):
-            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
-            DispatchQueue.main.async {
-                if loadingIndicator { self.displayEmailLoader(true) }
-            }
-            return false
-        }
+//        switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
+//        case .success(let details):
+//            Logger.subscription.debug("Account details fetched successfully")
+//            DispatchQueue.main.async {
+//                self.state.subscriptionEmail = details.email
+//                if loadingIndicator { self.displayEmailLoader(false) }
+//            }
+//
+//            // If fetched email is different then update accountManager
+//            if details.email != subscriptionManager.accountManager.email {
+//                let externalID = subscriptionManager.accountManager.externalID
+//                subscriptionManager.accountManager.storeAccount(token: token, email: details.email, externalID: externalID)
+//            }
+//            return true
+//        case .failure(let error):
+//            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
+//            DispatchQueue.main.async {
+//                if loadingIndicator { self.displayEmailLoader(true) }
+//            }
+//            return false
+//        }
     }
 
     private func displaySubscriptionLoader(_ show: Bool) {
@@ -211,7 +207,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
+    private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
         let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
         let date = dateFormatter.string(from: date)
 
@@ -226,7 +222,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
-        subscriptionManager.accountManager.signOut()
+        subscriptionManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
                                   presentationLocation: .withoutBottomBar)
@@ -293,13 +289,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let token = subscriptionManager.accountManager.accessToken,
-                let externalID = subscriptionManager.accountManager.externalID else { return }
-        let serviceResponse = await  subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: token, externalID: externalID)
-
-        // Get Stripe Customer Portal URL and update the model
-        if case .success(let response) = serviceResponse {
-            guard let url = URL(string: response.customerPortalUrl) else { return }
+        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .localValid) else { return }
+        do {
+            // Get Stripe Customer Portal URL and update the model
+            let serviceResponse = try await subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: tokensContainer.accessToken, externalID: tokensContainer.decodedAccessToken.externalID)
+            guard let url = URL(string: serviceResponse.customerPortalUrl) else { return }
             if let existingModel = state.stripeViewModel {
                 existingModel.url = url
             } else {
@@ -308,9 +302,11 @@ final class SubscriptionSettingsViewModel: ObservableObject {
                     self.state.stripeViewModel = model
                 }
             }
-        }
-        DispatchQueue.main.async {
-            self.displayStripeView(true)
+            DispatchQueue.main.async {
+                self.displayStripeView(true)
+            }
+        } catch {
+            Logger.subscription.error("\(error.localizedDescription)")
         }
     }
 

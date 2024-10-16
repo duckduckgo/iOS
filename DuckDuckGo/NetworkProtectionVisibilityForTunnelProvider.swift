@@ -19,28 +19,26 @@
 
 import Foundation
 import Subscription
+import Networking
 
-struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
-
-    private let accountManager: AccountManager
-
-    init(accountManager: AccountManager) {
-        self.accountManager = accountManager
-    }
-
-    func isPrivacyProLaunched() -> Bool {
-        accountManager.isUserAuthenticated
-    }
-    
-    func shouldMonitorEntitlement() -> Bool {
-        isPrivacyProLaunched()
-    }
-
-    func shouldShowVPNShortcut() -> Bool {
-        guard isPrivacyProLaunched() else {
-            return false
-        }
-
-        return accountManager.isUserAuthenticated
-    }
-}
+// struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
+//
+//    private let oAuthClient: any OAuthClient
+//
+//    init(oAuthClient: any OAuthClient) {
+//        self.oAuthClient = oAuthClient
+//    }
+//
+//    func isPrivacyProLaunched() -> Bool {
+//        let tokensContainer = oAuthClient.getStoredTokens()
+//        return tokensContainer?.accessToken != nil
+//    }
+//    
+//    func shouldMonitorEntitlement() -> Bool {
+//        isPrivacyProLaunched()
+//    }
+//
+//    func shouldShowVPNShortcut() -> Bool {
+//        return isPrivacyProLaunched()
+//    }
+// }

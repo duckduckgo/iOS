@@ -118,7 +118,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
-    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
+    init(tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()

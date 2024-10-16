@@ -124,25 +124,21 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var connectionTestResults: [ConnectionTestResult] = []
     private var connectionTestResultError: String?
     private let connectionTestQueue = DispatchQueue(label: "com.duckduckgo.ios.vpnDebugConnectionTestQueue")
-    private let accountManager: AccountManager
 
     // MARK: Lifecycle
 
     required init?(coder: NSCoder,
                    tokenStore: NetworkProtectionTokenStore,
-                   debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures(),
-                   accountManager: AccountManager) {
+                   debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
         
         self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
-        self.accountManager = accountManager
 
         super.init(coder: coder)
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore,
-                  accountManager: AppDependencyProvider.shared.subscriptionManager.accountManager)
+        self.init(coder: coder, tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -671,7 +667,7 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
                 if subscriptionOverrideEnabled {
                     defaults.subscriptionOverrideEnabled = false
-                    accountManager.signOut()
+                    AppDependencyProvider.shared.subscriptionManager.signOut()
                 } else {
                     defaults.resetsubscriptionOverrideEnabled()
                 }

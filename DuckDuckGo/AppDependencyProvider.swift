@@ -26,6 +26,8 @@ import Subscription
 import Common
 import NetworkProtection
 import RemoteMessaging
+import Networking
+import os.log
 
 protocol DependencyProvider {
 
@@ -43,7 +45,7 @@ protocol DependencyProvider {
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
-    var accountManager: AccountManager { get }
+    var privacyProInfoProvider: any PrivacyProInfoProvider { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
@@ -81,9 +83,10 @@ final class AppDependencyProvider: DependencyProvider {
 
     // Subscription
     let subscriptionManager: SubscriptionManager
-    var accountManager: AccountManager {
-        subscriptionManager.accountManager
-    }
+//    var accountManager: AccountManager {
+//        subscriptionManager.accountManager
+//    }
+    let privacyProInfoProvider: any PrivacyProInfoProvider
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     let networkProtectionTunnelController: NetworkProtectionTunnelController
@@ -105,31 +108,56 @@ final class AppDependencyProvider: DependencyProvider {
         let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
 
-        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
-                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
-                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
-                                                   entitlementsCache: entitlementsCache,
-                                                   subscriptionEndpointService: subscriptionService,
-                                                   authEndpointService: authService)
-        
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
-                                                             accountManager: accountManager,
-                                                             subscriptionEndpointService: subscriptionService,
-                                                             authEndpointService: authService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
-        accountManager.delegate = subscriptionManager
+//        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
+//                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
+//                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+//        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+//        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+//        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+//        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
+//                                                   entitlementsCache: entitlementsCache,
+//                                                   subscriptionEndpointService: subscriptionService,
+//                                                   authEndpointService: authService)
 
+        let configuration = URLSessionConfiguration.default
+        configuration.httpCookieStorage = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let urlSession = URLSession(configuration: configuration,
+                                    delegate: SessionDelegate(),
+                                    delegateQueue: nil)
+        let apiService = DefaultAPIService(urlSession: urlSession)
+        let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
+
+        let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
+        let keychainManager = SubscriptionKeychainManager()
+        let authClient = DefaultOAuthClient(tokensStorage: keychainManager, authService: authService)
+        self.privacyProInfoProvider = authClient
+        apiService.authorizationRefresherCallback = { _ in // TODO: is this updated?
+            // safety check
+            if keychainManager.tokensContainer?.decodedAccessToken.isExpired() == false {
+                assertionFailure("Refresh attempted on non expired token")
+            }
+            Logger.OAuth.debug("Refreshing tokens")
+            let tokens = try await authClient.refreshTokens()
+            return tokens.accessToken
+        }
+        let storePurchaseManager = DefaultStorePurchaseManager()
+        
+        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService, baseURL: authEnvironment.url)
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
+                                                             oAuthClient: authClient,
+                                                             subscriptionEndpointService: subscriptionEndpointService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
         self.subscriptionManager = subscriptionManager
 
         let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
-        let accessTokenProvider: () -> String? = {
-            return { accountManager.accessToken }
+        let accessTokenProvider: () -> String? = { // TODO: refactor all of this
+            return {
+//                try? await authClient.getTokens(policy: .local).accessToken
+                return ""
+            }
         }()
 #if os(macOS)
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
@@ -139,15 +167,24 @@ final class AppDependencyProvider: DependencyProvider {
 #else
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
 #endif
-        networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
-                                                                  accountManager: accountManager)
+                                                                  oAuthClient: authClient)
     }
 
     /// Only meant to be used for testing.
     ///
     static func makeTestingInstance() -> Self {
         Self.init()
+    }
+}
+
+extension DefaultOAuthClient: PrivacyProInfoProvider {
+    
+    var hasVPNEntitlements: Bool {
+        guard let tokensContainer = tokensStorage.tokensContainer else {
+            return false
+        }
+        return tokensContainer.decodedAccessToken.hasEntitlement(.networkProtection)
     }
 }

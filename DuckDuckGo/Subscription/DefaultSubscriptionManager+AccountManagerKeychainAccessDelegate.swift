@@ -21,16 +21,16 @@ import Foundation
 import Core
 import Subscription
 
-extension DefaultSubscriptionManager: AccountManagerKeychainAccessDelegate {
-
-    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
-        let parameters = [
-            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
-            PixelParameters.privacyProKeychainError: error.errorDescription,
-            PixelParameters.source: "browser"
-        ]
-
-        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
-                                     withAdditionalParameters: parameters)
-    }
-}
+// extension DefaultSubscriptionManager: AccountManagerKeychainAccessDelegate {
+//
+//    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+//        let parameters = [
+//            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+//            PixelParameters.privacyProKeychainError: error.errorDescription,
+//            PixelParameters.source: "browser"
+//        ]
+//
+//        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+//                                     withAdditionalParameters: parameters)
+//    }
+// }

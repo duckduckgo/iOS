@@ -1611,8 +1611,10 @@ class MainViewController: UIViewController {
     @objc
     private func onEntitlementsChange(_ notification: Notification) {
         Task {
-            let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
-            guard case .success(false) = await accountManager.hasEntitlement(forProductName: .networkProtection) else { return }
+            let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
+
+            guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .localValid),
+            tokensContainer.decodedAccessToken.hasEntitlement(.networkProtection) else { return }
 
             if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()

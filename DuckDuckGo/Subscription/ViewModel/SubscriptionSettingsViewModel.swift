@@ -28,6 +28,7 @@ import BrowserServicesKit
 final class SubscriptionSettingsViewModel: ObservableObject {
     
     private let subscriptionManager: SubscriptionManager
+    private let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var signOutObserver: Any?
     
     private var externalAllowedDomains = ["stripe.com"]
@@ -70,8 +71,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     public let usesUnifiedFeedbackForm: Bool
 
     init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager,
-         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability) {
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability) {
         self.subscriptionManager = subscriptionManager
+        self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
         self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)

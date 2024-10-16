@@ -125,6 +125,7 @@ class MainViewController: UIViewController {
     private var vpnCancellables = Set<AnyCancellable>()
     private var feedbackCancellable: AnyCancellable?
 
+    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -195,7 +196,8 @@ class MainViewController: UIViewController {
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
-        statisticsStore: StatisticsStore = StatisticsUserDefaults()
+        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+        subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -226,6 +228,7 @@ class MainViewController: UIViewController {
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
         self.statisticsStore = statisticsStore
+        self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
 
         super.init(nibName: nil, bundle: nil)
         

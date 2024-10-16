@@ -124,7 +124,6 @@ class MainViewController: UIViewController {
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
     private var feedbackCancellable: AnyCancellable?
-    private var isSettingBarsVisibility = false
 
     let privacyProDataReporter: PrivacyProDataReporting
 
@@ -1722,8 +1721,6 @@ extension MainViewController: BrowserChromeDelegate {
     }
     
     func setBarsVisibility(_ percent: CGFloat, animated: Bool = false) {
-        guard !isSettingBarsVisibility else { return }
-
         if percent < 1 {
             hideKeyboard()
             hideMenuHighlighter()
@@ -1732,23 +1729,19 @@ extension MainViewController: BrowserChromeDelegate {
         }
         
         let updateBlock = {
-            self.isSettingBarsVisibility = true
             self.updateToolbarConstant(percent)
             self.updateNavBarConstant(percent)
 
             self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
-
-            self.view.layoutIfNeeded()
-
-            DispatchQueue.main.async {
-                self.isSettingBarsVisibility = false
-            }
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
+            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+                updateBlock()
+                self.view.layoutIfNeeded()
+            }
         } else {
             updateBlock()
         }

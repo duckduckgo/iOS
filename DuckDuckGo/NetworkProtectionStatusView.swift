@@ -207,7 +207,7 @@ struct NetworkProtectionStatusView: View {
 
         Section {
             if #available(iOS 17.0, *) {
-                geolocationTip()
+                geoswitchingTip()
             }
         }
         .listRowBackground(Color(designSystemColor: .surface))
@@ -301,11 +301,11 @@ struct NetworkProtectionStatusView: View {
 
     @available(iOS 17.0, *)
     @ViewBuilder
-    private func geolocationTip() -> some View {
+    private func geoswitchingTip() -> some View {
         if statusModel.canShowTips,
-           let geolocationTip = statusModel.vpnEnabledTips.currentTip as? VPNChangeLocationTip {
+           let tip = statusModel.vpnEnabledTips.currentTip as? VPNGeoswitchingTip {
 
-            TipView(geolocationTip)
+            TipView(tip)
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
@@ -317,7 +317,7 @@ struct NetworkProtectionStatusView: View {
     private func snoozeTip() -> some View {
         if statusModel.canShowTips,
            statusModel.hasServerInfo,
-           let tip = statusModel.vpnEnabledTips.currentTip as? VPNUseSnoozeTip {
+           let tip = statusModel.vpnEnabledTips.currentTip as? VPNSnoozeTip {
 
             TipView(tip, action: statusModel.snoozeActionHandler(action:))
                 .removeGroupedListStyleInsets()

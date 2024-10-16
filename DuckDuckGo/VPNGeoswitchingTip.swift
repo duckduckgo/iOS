@@ -1,5 +1,5 @@
 //
-//  VPNChangeLocationTip.swift
+//  VPNGeoswitchingTip.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,15 +21,15 @@ import TipKit
 
 /// A tip to suggest to the user to change their location using geo-switching
 ///
-struct VPNChangeLocationTip {}
+struct VPNGeoswitchingTip {}
 
 @available(iOS 17.0, *)
-extension VPNChangeLocationTip: Tip {
+extension VPNGeoswitchingTip: Tip {
 
-    private static let vpnConnectedEvent = Tips.Event(id: "com.duckduckgo.tipkit.VPNChangeLocationTip.vpnConnectedEvent")
+    private static let vpnConnectedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.geoswitching.vpnConnectedEvent")
 
     var id: String {
-        "com.duckduckgo.tipkit.VPNChangeLocationTip"
+        "com.duckduckgo.vpn.tip.geoswitching"
     }
 
     var title: Text {

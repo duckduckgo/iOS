@@ -109,6 +109,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         featureFlagger.isFeatureOn(.networkProtectionUserTips)
     }
 
+    /// Whether the "Add Widget" education sheet should be presented to the user.
+    ///
     @Published
     var showAddWidgetEducationView: Bool = false
 
@@ -124,8 +126,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         // }
         if #available(iOS 17.0, *) {
             return LegacyTipGroup(.ordered) {
-                VPNChangeLocationTip()
-                VPNUseSnoozeTip()
+                VPNGeoswitchingTip()
+                VPNSnoozeTip()
                 VPNAddWidgetTip()
             }
         } else {
@@ -158,10 +160,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         didSet {
             if #available(iOS 17.0, *) {
                 if isNetPEnabled {
-                    VPNChangeLocationTip.donateVPNConnectedEvent()
+                    VPNGeoswitchingTip.donateVPNConnectedEvent()
                 }
 
-                VPNUseSnoozeTip.vpnEnabled = isNetPEnabled
+                VPNSnoozeTip.vpnEnabled = isNetPEnabled
                 VPNAddWidgetTip.vpnEnabled = isNetPEnabled
             }
         }
@@ -498,7 +500,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
 
         if #available(iOS 17.0, *) {
-            (vpnEnabledTips.currentTip as? VPNUseSnoozeTip)?.invalidate(reason: .actionPerformed)
+            (vpnEnabledTips.currentTip as? VPNSnoozeTip)?.invalidate(reason: .actionPerformed)
         }
 
         let defaultDuration: TimeInterval = .minutes(20)
@@ -599,7 +601,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @available(iOS 17.0, *)
     func snoozeActionHandler(action: Tips.Action) {
-        if action.id == VPNUseSnoozeTip.ActionIdentifiers.learnMore.rawValue {
+        if action.id == VPNSnoozeTip.ActionIdentifiers.learnMore.rawValue {
             let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
@@ -619,7 +621,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     func handleUserOpenedVPNLocations() {
         if #available(iOS 17.0, *) {
             Task { @MainActor in
-                (vpnEnabledTips.currentTip as? VPNChangeLocationTip)?.invalidate(reason: .actionPerformed)
+                (vpnEnabledTips.currentTip as? VPNGeoswitchingTip)?.invalidate(reason: .actionPerformed)
             }
         }
     }

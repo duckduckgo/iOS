@@ -24,7 +24,7 @@ import os
 extension TipKitController {
 
     static func make(logger: Logger = .tipKit,
-                     userDefaults: UserDefaults = .networkProtectionGroupDefaults) -> Self {
+                     userDefaults: UserDefaults = .standard) -> Self {
 
         self.init(logger: logger, userDefaults: userDefaults)
     }

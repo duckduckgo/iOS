@@ -29,16 +29,16 @@ struct VPNAddWidgetTip {}
 extension VPNAddWidgetTip: Tip {
 
     enum ActionIdentifiers: String {
-        case addWidget = "com.duckduckgo.tipkit.VPNAddWidgetTip.addWidget"
+        case addWidget = "com.duckduckgo.vpn.tip.addWidget.action.addWidget"
     }
 
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
 
-    private static let vpnDisconnectedEvent = Tips.Event(id: "com.duckduckgo.tipkit.VPNAddWidgetTip.vpnDisconnectedEvent")
+    private static let vpnDisconnectedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.addWidget.vpnDisconnectedEvent")
 
     var id: String {
-        "com.duckduckgo.tipkit.VPNAddWidgetTip"
+        "com.duckduckgo.vpn.tip.addWidget"
     }
 
     var title: Text {

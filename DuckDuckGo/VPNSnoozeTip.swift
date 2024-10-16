@@ -1,5 +1,5 @@
 //
-//  VPNUseSnoozeTip.swift
+//  VPNSnoozeTip.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,22 +21,22 @@ import TipKit
 
 /// A tip to suggest to the user to use the snooze feature to momentarily disable the VPN
 ///
-struct VPNUseSnoozeTip {}
+struct VPNSnoozeTip {}
 
 /// Necessary split to support older iOS versions.
 ///
 @available(iOS 17.0, *)
-extension VPNUseSnoozeTip: Tip {
+extension VPNSnoozeTip: Tip {
 
     enum ActionIdentifiers: String {
-        case learnMore = "com.duckduckgo.tipkit.VPNUseSnoozeTip.learnMoreId"
+        case learnMore = "com.duckduckgo.vpn.tip.snooze.learnMoreId"
     }
 
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
 
     var id: String {
-        "com.duckduckgo.tipkit.VPNUseSnoozeTip"
+        "com.duckduckgo.vpn.tip.snooze"
     }
 
     var title: Text {

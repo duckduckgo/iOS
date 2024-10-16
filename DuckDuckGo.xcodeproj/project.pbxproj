@@ -366,8 +366,8 @@
 		7BDBAD0E2CBFB3F1000379B7 /* VPN.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */; };
 		7BF78E022CA2CC3E0026A1FC /* TipKitAppEventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */; };
 		7BFD5FD52C9DA310000FF959 /* VPNAddWidgetTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD42C9DA310000FF959 /* VPNAddWidgetTip.swift */; };
-		7BFD5FD72C9DB9D7000FF959 /* VPNChangeLocationTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD62C9DB9D7000FF959 /* VPNChangeLocationTip.swift */; };
-		7BFD5FD92C9DBC24000FF959 /* VPNUseSnoozeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD82C9DBC24000FF959 /* VPNUseSnoozeTip.swift */; };
+		7BFD5FD72C9DB9D7000FF959 /* VPNGeoswitchingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD62C9DB9D7000FF959 /* VPNGeoswitchingTip.swift */; };
+		7BFD5FD92C9DBC24000FF959 /* VPNSnoozeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFD5FD82C9DBC24000FF959 /* VPNSnoozeTip.swift */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
 		83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */; };
 		83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */; };
@@ -1655,8 +1655,8 @@
 		7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VPN.xcassets; sourceTree = "<group>"; };
 		7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitAppEventHandling.swift; sourceTree = "<group>"; };
 		7BFD5FD42C9DA310000FF959 /* VPNAddWidgetTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAddWidgetTip.swift; sourceTree = "<group>"; };
-		7BFD5FD62C9DB9D7000FF959 /* VPNChangeLocationTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNChangeLocationTip.swift; sourceTree = "<group>"; };
-		7BFD5FD82C9DBC24000FF959 /* VPNUseSnoozeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNUseSnoozeTip.swift; sourceTree = "<group>"; };
+		7BFD5FD62C9DB9D7000FF959 /* VPNGeoswitchingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNGeoswitchingTip.swift; sourceTree = "<group>"; };
+		7BFD5FD82C9DBC24000FF959 /* VPNSnoozeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNSnoozeTip.swift; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
 		83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIAlertControllerExtension.swift; path = ../Core/UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerBrowsingMenuExtension.swift; sourceTree = "<group>"; };
@@ -4045,8 +4045,8 @@
 			isa = PBXGroup;
 			children = (
 				7BFD5FD42C9DA310000FF959 /* VPNAddWidgetTip.swift */,
-				7BFD5FD62C9DB9D7000FF959 /* VPNChangeLocationTip.swift */,
-				7BFD5FD82C9DBC24000FF959 /* VPNUseSnoozeTip.swift */,
+				7BFD5FD62C9DB9D7000FF959 /* VPNGeoswitchingTip.swift */,
+				7BFD5FD82C9DBC24000FF959 /* VPNSnoozeTip.swift */,
 			);
 			name = TipKit;
 			sourceTree = "<group>";
@@ -7385,7 +7385,7 @@
 				851672D12BED1FC900592F24 /* AutocompleteView.swift in Sources */,
 				3161D13227AC161B00285CF6 /* DownloadMetadata.swift in Sources */,
 				D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */,
-				7BFD5FD72C9DB9D7000FF959 /* VPNChangeLocationTip.swift in Sources */,
+				7BFD5FD72C9DB9D7000FF959 /* VPNGeoswitchingTip.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				C1CDA3162AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift in Sources */,
@@ -7458,7 +7458,7 @@
 				9F5E5AB02C3E4C6000165F54 /* ContextualOnboardingPresenter.swift in Sources */,
 				310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
-				7BFD5FD92C9DBC24000FF959 /* VPNUseSnoozeTip.swift in Sources */,
+				7BFD5FD92C9DBC24000FF959 /* VPNSnoozeTip.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				4B2C79612C5B27AC00A240CC /* VPNSnoozeActivityAttributes.swift in Sources */,
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,

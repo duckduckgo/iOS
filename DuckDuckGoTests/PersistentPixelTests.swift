@@ -67,7 +67,8 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion, .atb],
             completion: { errors in
                 expectation.fulfill()
-                XCTAssert(errors.isEmpty)
+                XCTAssertNil(errors.dailyPixelStorageError)
+                XCTAssertNil(errors.countPixelStorageError)
             }
         )
 
@@ -95,7 +96,8 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion],
             completion: { errors in
                 expectation.fulfill()
-                XCTAssert(errors.isEmpty)
+                XCTAssertNil(errors.dailyPixelStorageError)
+                XCTAssertNil(errors.countPixelStorageError)
             }
         )
 
@@ -120,7 +122,8 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion],
             completion: { errors in
                 expectation.fulfill()
-                XCTAssert(errors.isEmpty)
+                XCTAssertNil(errors.dailyPixelStorageError)
+                XCTAssertNil(errors.countPixelStorageError)
             }
         )
 
@@ -164,7 +167,8 @@ final class PersistentPixelTests: XCTestCase {
             includedParameters: [.appVersion],
             completion: { errors in
                 expectation.fulfill()
-                XCTAssert(errors.isEmpty)
+                XCTAssertNil(errors.dailyPixelStorageError)
+                XCTAssertNil(errors.countPixelStorageError)
             }
         )
 

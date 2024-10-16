@@ -22,29 +22,41 @@ import Foundation
 
 final class MockPersistentPixel: PersistentPixelFiring {
 
-    static var lastPixelInfo: PixelInfo?
-    static var lastDailyPixelInfo: PixelInfo?
+    var expectedFireError: Error?
+    var expectedDailyPixelStorageError: Error?
+    var expectedCountPixelStorageError: Error?
 
-    static var lastParams: [String: String]? { lastPixelInfo?.params }
-    static var lastPixelName: String? { lastPixelInfo?.pixelName }
-    static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
+    var lastPixelInfo: PixelInfo?
+    var lastDailyPixelInfo: PixelInfo?
+
+    var lastParams: [String: String]? { lastPixelInfo?.params }
+    var lastPixelName: String? { lastPixelInfo?.pixelName }
+    var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
+
+    func tearDown() {
+        lastPixelInfo = nil
+        lastDailyPixelInfo = nil
+        expectedFireError = nil
+        expectedDailyPixelStorageError = nil
+        expectedCountPixelStorageError = nil
+    }
 
     func fire(pixel: Core.Pixel.Event,
               error: (any Error)?,
               includedParameters: [Core.Pixel.QueryParameters],
               withAdditionalParameters params: [String: String],
               onComplete: @escaping ((any Error)?) -> Void) {
-        MockPersistentPixel.lastPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
-        onComplete(nil)
+        self.lastPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
+        onComplete(expectedFireError)
     }
     
     func fireDailyAndCount(pixel: Core.Pixel.Event,
                            error: (any Error)?,
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Core.Pixel.QueryParameters],
-                           completion: @escaping ([any Error]) -> Void) {
-        MockPersistentPixel.lastDailyPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
-        completion([])
+                           completion: @escaping ((dailyPixelStorageError: Error?, countPixelStorageError: Error?)) -> Void) {
+        self.lastDailyPixelInfo = .init(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
+        completion((expectedDailyPixelStorageError, expectedCountPixelStorageError))
     }
 
     func sendQueuedPixels(completion: @escaping (Core.PersistentPixelStorageError?) -> Void) {

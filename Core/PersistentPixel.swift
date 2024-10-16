@@ -33,7 +33,7 @@ public protocol PersistentPixelFiring {
                            error: Swift.Error?,
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Pixel.QueryParameters],
-                           completion: @escaping ([Error]) -> Void)
+                           completion: @escaping ((dailyPixelStorageError: Error?, countPixelStorageError: Error?)) -> Void)
 
     func sendQueuedPixels(completion: @escaping (PersistentPixelStorageError?) -> Void)
 }
@@ -130,7 +130,7 @@ public final class PersistentPixel: PersistentPixelFiring {
                                   error: Swift.Error? = nil,
                                   withAdditionalParameters additionalParameters: [String: String],
                                   includedParameters: [Pixel.QueryParameters] = [.appVersion],
-                                  completion: @escaping ([Error]) -> Void = { _ in }) {
+                                  completion: @escaping ((dailyPixelStorageError: Error?, countPixelStorageError: Error?)) -> Void = { _ in }) {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter() // onDailyComplete
@@ -196,7 +196,7 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         dispatchGroup.notify(queue: .global()) {
             let errors = [dailyPixelStorageError, countPixelStorageError].compactMap { $0 }
-            completion(errors)
+            completion((dailyPixelStorageError: dailyPixelStorageError, countPixelStorageError: countPixelStorageError))
         }
     }
 

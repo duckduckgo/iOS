@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/enable-import-prompt-for-all-users",
-        "revision" : "240cf5858d5d056be37fb7c7f23887444ae23eac"
+        "revision" : "f72f952e71e1e5c730cf228cb0dc3b7b58620fd3"
       }
     },
     {

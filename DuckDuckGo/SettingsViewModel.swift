@@ -279,6 +279,21 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    
+    var duckPlayerOpenInNewTabBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.duckPlayerOpenInNewTab },
+            set: {
+                self.appSettings.duckPlayerOpenInNewTab = $0
+                self.state.duckPlayerOpenInNewTab = $0
+                if self.state.duckPlayerOpenInNewTab {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOn)
+                } else {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOff)
+                }
+            }
+        )
+    }
 
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
@@ -411,7 +426,10 @@ extension SettingsViewModel {
             sync: getSyncState(),
             syncSource: nil,
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
-            duckPlayerMode: appSettings.duckPlayerMode
+            duckPlayerMode: appSettings.duckPlayerMode,
+            duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
+            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab)
+            
         )
         
         updateRecentlyVisitedSitesVisibility()

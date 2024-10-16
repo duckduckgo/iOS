@@ -81,6 +81,30 @@ final class PersistentPixelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.includedParams, [.appVersion, .atb])
     }
 
+    func testWhenDailyPixelFailsDueToAlreadySentError_ThenNoPixelIsStored() throws {
+        PixelFiringMock.expectedDailyPixelFireError = DailyPixel.Error.alreadyFired // This is expected behaviour from the daily pixel
+
+        let persistentPixel = createPersistentPixel()
+        let error = NSError(domain: "domain", code: 1)
+        let expectation = expectation(description: "fireDailyAndCount")
+
+        persistentPixel.fireDailyAndCount(
+            pixel: .appLaunch,
+            error: error,
+            withAdditionalParameters: ["param": "value"],
+            includedParameters: [.appVersion],
+            completion: { errors in
+                expectation.fulfill()
+                XCTAssert(errors.isEmpty)
+            }
+        )
+
+        wait(for: [expectation], timeout: 1.0)
+
+        let storedPixels = try persistentStorage.storedPixels()
+        XCTAssert(storedPixels.isEmpty)
+    }
+
     func testWhenDailyAndCountPixelsFail_ThenPixelsAreStored() throws {
         PixelFiringMock.expectedDailyPixelFireError = NSError(domain: "PixelFailure", code: 1)
         PixelFiringMock.expectedCountPixelFireError = NSError(domain: "PixelFailure", code: 2)

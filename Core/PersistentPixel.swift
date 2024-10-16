@@ -154,7 +154,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             pixelFiring: Pixel.self,
             dailyPixelStore: DailyPixel.storage,
             onDailyComplete: { dailyError in
-                if dailyError != nil {
+                if let dailyError, (dailyError as? DailyPixel.Error) != .alreadyFired {
                     do {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         Logger.general.debug("Saving persistent daily pixel named \(pixel.name)")

@@ -446,8 +446,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             duckPlayer.settings.openInNewTab &&
             duckPlayer.settings.mode != .disabled {
             setOpenInNewTab(url: url)
-            webView.stopLoading()
-            webView.goBack()
+            handleGoBack(webView: webView)
         }
         
         // Only handle URL changes if the allowFirstVideo is set to false

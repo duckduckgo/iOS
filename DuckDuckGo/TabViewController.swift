@@ -1322,15 +1322,6 @@ extension TabViewController: WKNavigationDelegate {
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        // HTTP response has "Content-Disposition: attachment" header
-        let hasContentDispositionAttachment = httpResponse?.shouldDownload ?? false
-        // If preceding WKNavigationAction requested to start the download
-        let hasNavigationActionRequestedDownload = (recentNavigationActionShouldPerformDownloadURL != nil) && recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
-        // File can be rendered by web view or in custom preview handled by FilePreviewHelper
-        let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(mimeType)
-
-        let shouldTriggerDownloadAction = hasContentDispositionAttachment || hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
-
         // Important: Order of these checks matter!
         if urlSchemeType == .blob {
             // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
@@ -1348,7 +1339,7 @@ extension TabViewController: WKNavigationDelegate {
             mostRecentAutoPreviewDownloadID = download?.id
             Pixel.fire(pixel: .downloadStarted,
                        withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-        } else if shouldTriggerDownloadAction,
+        } else if shouldTriggerDownloadAction(for: navigationResponse),
                   let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
             // 3. We know the response should trigger the file download prompt
             self.presentSaveToDownloadsAlert(with: downloadMetadata) {
@@ -1375,6 +1366,22 @@ extension TabViewController: WKNavigationDelegate {
             // Fallback
             decisionHandler(.allow)
         }
+    }
+
+    private func shouldTriggerDownloadAction(for navigationResponse: WKNavigationResponse) -> Bool {
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let httpResponse = navigationResponse.response as? HTTPURLResponse
+
+        // HTTP response has "Content-Disposition: attachment" header
+        let hasContentDispositionAttachment = httpResponse?.shouldDownload ?? false
+
+        // If preceding WKNavigationAction requested to start the download (e.g. link `download` attribute or BLOB object)
+        let hasNavigationActionRequestedDownload = (recentNavigationActionShouldPerformDownloadURL != nil) && recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+
+        // File can be rendered by web view or in custom preview handled by FilePreviewHelper
+        let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(mimeType)
+
+        return hasContentDispositionAttachment || hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -2147,12 +2154,7 @@ extension TabViewController {
                     return
                 }
 
-                let hasNavigationActionRequestedDownload = (self.recentNavigationActionShouldPerformDownloadURL != nil) && self.recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
-                let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
-
-                let shouldTriggerDownloadAction = hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
-
-                if shouldTriggerDownloadAction {
+                if self.shouldTriggerDownloadAction(for: navigationResponse) {
                     // Show alert to the file download
                     self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                         callback(self.transfer(download,

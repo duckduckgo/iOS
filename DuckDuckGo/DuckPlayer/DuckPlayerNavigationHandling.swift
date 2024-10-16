@@ -21,14 +21,13 @@ import WebKit
 
 enum DuckPlayerNavigationEvent {
     case youtubeVideoPageVisited
-    case JSTriggeredNavigation
 }
 
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
-    func handleJSNavigation(url: URL?, webView: WKWebView)
+    func handleJSNavigation(url: URL?, webView: WKWebView, isNewTab: Bool)
     func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
                                completion: @escaping (WKNavigationActionPolicy) -> Void,
                                webView: WKWebView)

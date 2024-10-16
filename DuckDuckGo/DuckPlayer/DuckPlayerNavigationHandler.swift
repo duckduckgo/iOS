@@ -429,7 +429,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     @MainActor
-    func handleJSNavigation(url: URL?, webView: WKWebView) {
+    func handleJSNavigation(url: URL?, webView: WKWebView, isNewTab: Bool = false) {
         
         Logger.duckPlayer.debug("Handling JS Navigation for \(url?.absoluteString ?? "")")
         
@@ -439,6 +439,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Assume JS Navigation is user-triggered
         self.navigationType = .linkActivated
+        
+        // If the WebView is not a new tab and Opening in New tab setting is enabled
+        // Set things up, and navigate back in the current view as the video will load there
+        if !isNewTab &&
+            duckPlayer.settings.openInNewTab &&
+            duckPlayer.settings.mode != .disabled {
+            setOpenInNewTab(url: url)
+            webView.stopLoading()
+            webView.goBack()
+        }
         
         // Only handle URL changes if the allowFirstVideo is set to false
         // This prevents Youtube redirects from triggering DuckPlayer when is not expected
@@ -536,8 +546,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         switch event {
         case .youtubeVideoPageVisited:
             handleYouTubePageVisited(url: url, navigationAction: navigationAction)
-        case .JSTriggeredNavigation:
-            setOpenInNewTab(url: url)
         }
     }
     

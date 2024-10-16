@@ -249,12 +249,11 @@ public final class PersistentPixel: PersistentPixelFiring {
         let pixelIDsAccessQueue = DispatchQueue(label: "Failed Pixel Retry Attempt Metadata Queue")
         var pixelIDsToRemove: Set<UUID> = []
         let currentDate = dateGenerator()
+        let date28DaysAgo = calendar.date(byAdding: .day, value: -28, to: currentDate)
 
         for pixelMetadata in queuedPixels {
-            if let originalSendDateString = pixelMetadata.timestamp,
-               let originalSendDate = dateFormatter.date(from: originalSendDateString),
-               let date28DaysAgo = calendar.date(byAdding: .day, value: -28, to: currentDate) {
-                if originalSendDate < date28DaysAgo {
+            if let sendDateString = pixelMetadata.timestamp, let sendDate = dateFormatter.date(from: sendDateString), let date28DaysAgo {
+                if sendDate < date28DaysAgo {
                     pixelIDsAccessQueue.sync {
                         _ = pixelIDsToRemove.insert(pixelMetadata.id)
                     }

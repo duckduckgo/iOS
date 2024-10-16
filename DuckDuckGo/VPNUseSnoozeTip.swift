@@ -48,7 +48,7 @@ extension VPNUseSnoozeTip: Tip {
     }
 
     var image: Image? {
-        Image(systemName: "powersleep")
+        Image(.vpnUseSnoozeTipIcon)
     }
 
     var actions: [Action] {

@@ -50,7 +50,7 @@ extension VPNAddWidgetTip: Tip {
     }
 
     var image: Image? {
-        Image(systemName: "rectangle.and.hand.point.up.left.fill")
+        Image(.vpnAddWidgetTipIcon)
     }
 
     var actions: [Action] {

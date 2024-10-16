@@ -41,7 +41,7 @@ extension VPNChangeLocationTip: Tip {
     }
 
     var image: Image? {
-        Image(systemName: "globe.americas.fill")
+        Image(.vpnChangeLocationTipIcon)
     }
 
     var rules: [Rule] {

@@ -1309,7 +1309,7 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
 
-        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
         let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1369,7 +1369,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func shouldTriggerDownloadAction(for navigationResponse: WKNavigationResponse) -> Bool {
-        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
         let httpResponse = navigationResponse.response as? HTTPURLResponse
 
         // HTTP response has "Content-Disposition: attachment" header

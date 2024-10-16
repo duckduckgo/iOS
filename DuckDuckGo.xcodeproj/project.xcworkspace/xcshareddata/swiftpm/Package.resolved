@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "graeme/enable-import-prompt-for-all-users",
-        "revision" : "aec7c42d3928ef62be3ac65e5da3979c375b75bb"
+        "revision" : "240cf5858d5d056be37fb7c7f23887444ae23eac"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "4f0d109f13beec7e8beaf0bd5c0e2c1d528677f8",
-        "version" : "6.16.0"
+        "revision" : "1ed569676555d493c9c5575eaed22aa02569aac9",
+        "version" : "6.19.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "branch" : "dbajpeyi/feature/dismiss-password-import-flow",
-        "revision" : "a4ea240f7bb66ca7c0c2dc6f0ac798d04b627cf7"
+        "branch" : "dbajpeyi/remove-get-available-input-types-caching",
+        "revision" : "131e0d5efc8548b449fa4b811004fba26048a41c"
       }
     },
     {
@@ -138,7 +138,7 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
         "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
         "version" : "1.4.0"

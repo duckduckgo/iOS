@@ -247,7 +247,7 @@ class BookmarksExporterTests: XCTestCase {
                     url: "https://www.wsj.com/?mod=wsjheader_logo"),
             BookmarksExporter.Template.closeFolder(level: level),
             BookmarksExporter.Template.bookmark(level: level,
-                    title: "DuckDuckGo — Privacy, simplified.",
+                    title: "DuckDuckGo — Your protection, our priority.",
                     url: "https://duckduckgo.com/"),
             BookmarksExporter.Template.openFolder(level: level, named: "DupeFolderNameContents"),
             BookmarksExporter.Template.bookmark(level: level + 1,

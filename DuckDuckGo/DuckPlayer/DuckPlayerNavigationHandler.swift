@@ -478,6 +478,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         Logger.duckPlayer.debug("DP: Handling Back Navigation")
                 
         renderedVideoID = nil
+        renderedURL = nil
         
         let experiment = DuckPlayerLaunchExperiment()
         let duckPlayerMode = experiment.isExperimentCohort ? duckPlayerMode : .disabled
@@ -519,7 +520,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleReload(webView: WKWebView) {
         
         Logger.duckPlayer.debug("DP: Handling Reload")
-                
+        
+        renderedVideoID = nil
+        renderedURL = nil
+        
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.reload()
             return

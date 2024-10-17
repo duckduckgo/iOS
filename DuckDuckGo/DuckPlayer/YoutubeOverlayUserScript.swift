@@ -124,7 +124,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
             // TODO: Send Pixel Here
             return nil
         }
-        duckPlayer.openVideoInDuckPlayer(url: url, webView: webView)
+        duckPlayer.openVideo(url: url, webView: webView)
         return nil
     }
 

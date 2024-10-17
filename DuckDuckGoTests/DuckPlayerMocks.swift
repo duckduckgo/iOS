@@ -154,7 +154,7 @@ final class MockDuckPlayer: DuckPlayerProtocol {
         nil
     }
     
-    func openVideoInDuckPlayer(url: URL, webView: WKWebView) {
+    func openVideo(url: URL, webView: WKWebView) {
         
     }
     

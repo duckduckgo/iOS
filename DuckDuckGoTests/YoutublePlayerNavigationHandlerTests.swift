@@ -121,7 +121,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
         var navigationPolicy: WKNavigationActionPolicy?
         
-        handler.lastHandledVideoID = "abc123"
+        handler.renderedVideoID = "abc123"
         
         handler.handleDecidePolicyFor(navigationAction, completion: { policy in
             navigationPolicy = policy
@@ -215,7 +215,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
         
-        handler.lastHandledVideoID = "abc123"
+        handler.renderedVideoID = "abc123"
         handler.handleJSNavigation(url: youtubeURL, webView: webView)
         
         XCTAssertEqual(webView.url?.absoluteString, url.absoluteString)

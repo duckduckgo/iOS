@@ -20,18 +20,21 @@
 import WebKit
 
 enum DuckPlayerNavigationEvent {
-    case youtubeVideoPageVisited
     case JSTriggeredNavigation
+}
+
+enum DuckPlayerNavigationType: String, Codable {
+    case javascript,
+         direct
 }
 
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
-    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
-    func handleJSNavigation(url: URL?, webView: WKWebView)
-    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                               completion: @escaping (WKNavigationActionPolicy) -> Void,
-                               webView: WKWebView)
+    func handleNavigation(_ navigationAction: WKNavigationAction,
+                          webView: WKWebView,
+                          navigationType: DuckPlayerNavigationType)
+    func handleJSNavigationFor(webView: WKWebView) -> Bool
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)

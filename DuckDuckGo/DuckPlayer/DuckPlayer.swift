@@ -101,7 +101,7 @@ protocol DuckPlayerProtocol: AnyObject {
 
     func setUserValues(params: Any, message: WKScriptMessage) -> Encodable?
     func getUserValues(params: Any, message: WKScriptMessage) -> Encodable?
-    func openVideoInDuckPlayer(url: URL, webView: WKWebView)
+    func openVideo(url: URL, webView: WKWebView)
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> Encodable?
     func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
     
@@ -196,8 +196,16 @@ final class DuckPlayer: DuckPlayerProtocol {
     }
     
     @MainActor
-    public func openVideoInDuckPlayer(url: URL, webView: WKWebView) {
-        webView.load(URLRequest(url: url))
+    public func openVideo(url: URL, webView: WKWebView) {
+        // The FE hijacks Youtube links on the page, and prevents normal navigation
+        // This is a VERY bad idea, and will eventually cause breakage later
+        // If we get a duck:// link, just convert to plain Youtube
+        // And the DuckPlayer logic will take care of the rest
+        var finalURL = url
+        if url.isDuckURLScheme, let (videoID, _ ) = url.youtubeVideoParams {
+            finalURL = URL.youtube(videoID)
+        }
+        webView.load(URLRequest(url: finalURL))
     }
 
     @MainActor

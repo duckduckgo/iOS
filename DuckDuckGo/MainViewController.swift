@@ -792,44 +792,45 @@ class MainViewController: UIViewController {
         }
 
         let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared, onboardingPixelReporter: contextualOnboardingPixelReporter)
-        if homeTabManager.isNewTabPageSectionsEnabled {
-            let controller = NewTabPageViewController(tab: tabModel,
-                                                      interactionModel: favoritesViewModel,
-                                                      syncService: syncService,
-                                                      syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
-                                                      homePageMessagesConfiguration: homePageConfiguration,
-                                                      privacyProDataReporting: privacyProDataReporter,
-                                                      variantManager: variantManager,
-                                                      newTabDialogFactory: newTabDaxDialogFactory,
-                                                      newTabDialogTypeProvider: DaxDialogs.shared,
-                                                      faviconLoader: faviconLoader)
+//                if homeTabManager.isNewTabPageSectionsEnabled {
+        let controller = NewTabPageViewController(tab: tabModel,
+                                                  isNewTabPageCustomizationEnabled: homeTabManager.isNewTabPageSectionsEnabled,
+                                                  interactionModel: favoritesViewModel,
+                                                  syncService: syncService,
+                                                  syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
+                                                  homePageMessagesConfiguration: homePageConfiguration,
+                                                  privacyProDataReporting: privacyProDataReporter,
+                                                  variantManager: variantManager,
+                                                  newTabDialogFactory: newTabDaxDialogFactory,
+                                                  newTabDialogTypeProvider: DaxDialogs.shared,
+                                                  faviconLoader: faviconLoader)
 
-            controller.delegate = self
-            controller.shortcutsDelegate = self
-            controller.chromeDelegate = self
+        controller.delegate = self
+        controller.shortcutsDelegate = self
+        controller.chromeDelegate = self
 
-            newTabPageViewController = controller
-            addToContentContainer(controller: controller)
-            viewCoordinator.logoContainer.isHidden = true
-            adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
-        } else {
-            let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
-                                                            model: tabModel,
-                                                            favoritesViewModel: favoritesViewModel,
-                                                            appSettings: appSettings,
-                                                            syncService: syncService,
-                                                            syncDataProviders: syncDataProviders,
-                                                            privacyProDataReporter: privacyProDataReporter,
-                                                            variantManager: variantManager,
-                                                            newTabDialogFactory: newTabDaxDialogFactory,
-                                                            newTabDialogTypeProvider: DaxDialogs.shared)
-            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencies)
-
-            controller.delegate = self
-            controller.chromeDelegate = self
-            homeViewController = controller
-            addToContentContainer(controller: controller)
-        }
+        newTabPageViewController = controller
+        addToContentContainer(controller: controller)
+        viewCoordinator.logoContainer.isHidden = true
+        adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
+//        } else {
+//            let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
+//                                                            model: tabModel,
+//                                                            favoritesViewModel: favoritesViewModel,
+//                                                            appSettings: appSettings,
+//                                                            syncService: syncService,
+//                                                            syncDataProviders: syncDataProviders,
+//                                                            privacyProDataReporter: privacyProDataReporter,
+//                                                            variantManager: variantManager,
+//                                                            newTabDialogFactory: newTabDaxDialogFactory,
+//                                                            newTabDialogTypeProvider: DaxDialogs.shared)
+//            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencies)
+//
+//            controller.delegate = self
+//            controller.chromeDelegate = self
+//            homeViewController = controller
+//            addToContentContainer(controller: controller)
+//        }
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
@@ -1189,7 +1190,7 @@ class MainViewController: UIViewController {
 
     func refreshMenuButtonState() {
         let expectedState: MenuButton.State
-        if !homeTabManager.isNewTabPageSectionsEnabled && homeViewController != nil {
+        if !homeTabManager.isNewTabPageSectionsEnabled && homeController != nil {
             expectedState = .bookmarksImage
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint

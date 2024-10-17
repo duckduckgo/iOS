@@ -59,7 +59,8 @@ class FavoritesViewModel: ObservableObject {
         allFavorites.filter(\.isFavorite).isEmpty
     }
 
-    init(favoriteDataSource: NewTabPageFavoriteDataSource,
+    init(isNewTabPageCustomizationEnabled: Bool = false,
+         favoriteDataSource: NewTabPageFavoriteDataSource,
          faviconLoader: FavoritesFaviconLoading,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {

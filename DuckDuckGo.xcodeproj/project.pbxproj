@@ -301,6 +301,7 @@
 		6F3537A42C4AC140009F8717 /* NewTabPageDaxLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3537A32C4AC140009F8717 /* NewTabPageDaxLogoView.swift */; };
 		6F40D15B2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40D15A2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift */; };
 		6F40D15E2C34436500BF22F0 /* HomePageDisplayDailyPixelBucketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F40D15C2C34436200BF22F0 /* HomePageDisplayDailyPixelBucketTests.swift */; };
+		6F5041C92CC11A5100989E48 /* SimpleNewTabPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5041C82CC11A5100989E48 /* SimpleNewTabPageView.swift */; };
 		6F5345AF2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5345AE2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift */; };
 		6F5CC0812C2AFFE400AFC840 /* ToggleExpandButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CC0802C2AFFE400AFC840 /* ToggleExpandButtonStyle.swift */; };
 		6F64AA532C47E92600CF4489 /* FavoritesFaviconLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F64AA522C47E92600CF4489 /* FavoritesFaviconLoader.swift */; };
@@ -1581,6 +1582,7 @@
 		6F3537A32C4AC140009F8717 /* NewTabPageDaxLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageDaxLogoView.swift; sourceTree = "<group>"; };
 		6F40D15A2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDisplayDailyPixelBucket.swift; sourceTree = "<group>"; };
 		6F40D15C2C34436200BF22F0 /* HomePageDisplayDailyPixelBucketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDisplayDailyPixelBucketTests.swift; sourceTree = "<group>"; };
+		6F5041C82CC11A5100989E48 /* SimpleNewTabPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNewTabPageView.swift; sourceTree = "<group>"; };
 		6F5345AE2C53F2DE00424A43 /* NewTabPageSettingsPersistentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageSettingsPersistentStorage.swift; sourceTree = "<group>"; };
 		6F5CC0802C2AFFE400AFC840 /* ToggleExpandButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleExpandButtonStyle.swift; sourceTree = "<group>"; };
 		6F64AA522C47E92600CF4489 /* FavoritesFaviconLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesFaviconLoader.swift; sourceTree = "<group>"; };
@@ -3952,6 +3954,7 @@
 				6F03CAF82C32C3AA004179A8 /* Messages */,
 				6FE127372C20492500EB5724 /* NewTabPage.swift */,
 				6FD8E51F2C5BA23200345670 /* NewTabPageViewModel.swift */,
+				6F5041C82CC11A5100989E48 /* SimpleNewTabPageView.swift */,
 				6FE127392C204BD000EB5724 /* NewTabPageView.swift */,
 				6FE127452C2054A900EB5724 /* NewTabPageViewController.swift */,
 				6FD3F8182C41252900DA5797 /* NewTabPageControllerDelegate.swift */,
@@ -7453,6 +7456,7 @@
 				C185ED612BD4329700BAE9DC /* ImportPasswordsStatusHandler.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
+				6F5041C92CC11A5100989E48 /* SimpleNewTabPageView.swift in Sources */,
 				D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */,
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,

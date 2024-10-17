@@ -23,7 +23,7 @@ import Bookmarks
 import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
@@ -44,6 +44,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     private var hostingController: UIHostingController<AnyView>?
 
     init(tab: Tab,
+         isNewTabPageCustomizationEnabled: Bool,
          interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
@@ -64,18 +65,24 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
+        favoritesModel = FavoritesViewModel(isNewTabPageCustomizationEnabled: isNewTabPageCustomizationEnabled,
+                                            favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel),
+                                            faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
 
-        let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
-                                            messagesModel: messagesModel,
-                                            favoritesViewModel: favoritesModel,
-                                            shortcutsModel: shortcutsModel,
-                                            shortcutsSettingsModel: shortcutsSettingsModel,
-                                            sectionsSettingsModel: sectionsSettingsModel)
-
-        super.init(rootView: newTabPageView)
+        if isNewTabPageCustomizationEnabled {
+            super.init(rootView: AnyView(NewTabPageView(viewModel: self.newTabPageViewModel,
+                                                        messagesModel: self.messagesModel,
+                                                        favoritesViewModel: self.favoritesModel,
+                                                        shortcutsModel: self.shortcutsModel,
+                                                        shortcutsSettingsModel: self.shortcutsSettingsModel,
+                                                        sectionsSettingsModel: self.sectionsSettingsModel)))
+        } else {
+            super.init(rootView: AnyView(SimpleNewTabPageView(viewModel: self.newTabPageViewModel,
+                                                              messagesModel: self.messagesModel,
+                                                              favoritesViewModel: self.favoritesModel)))
+        }
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()

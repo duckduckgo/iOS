@@ -35,7 +35,6 @@ struct SettingsSubscriptionView: View {
     }
 
     @EnvironmentObject var settingsViewModel: SettingsViewModel
-    @EnvironmentObject var subscriptionSettingsViewModel: SubscriptionSettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
@@ -119,7 +118,6 @@ struct SettingsSubscriptionView: View {
 
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .expired,
-                                                    subscriptionSettingsViewModel: subscriptionSettingsViewModel,
                                                     settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
@@ -141,7 +139,6 @@ struct SettingsSubscriptionView: View {
         
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .activating,
-                                                    subscriptionSettingsViewModel: subscriptionSettingsViewModel,
                                                     settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
@@ -191,11 +188,8 @@ struct SettingsSubscriptionView: View {
             }
         }
         
-        NavigationLink(
-            destination: SubscriptionSettingsView(configuration: .subscribed,
-                                                  subscriptionSettingsViewModel: subscriptionSettingsViewModel,
-                                                  settingsViewModel: settingsViewModel)
-                .environmentObject(subscriptionNavigationCoordinator)
+        NavigationLink(destination: SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel)
+            .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })
         }

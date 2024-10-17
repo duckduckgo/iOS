@@ -31,7 +31,7 @@ struct SubscriptionSettingsView: View {
     }
     @State var configuration: Configuration
     @Environment(\.dismiss) var dismiss
-    @StateObject var subscriptionSettingsViewModel: SubscriptionSettingsViewModel
+    @StateObject var subscriptionSettingsViewModel = SubscriptionSettingsViewModel()
     @StateObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     var viewPlans: (() -> Void)?

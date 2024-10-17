@@ -307,6 +307,7 @@ extension MainViewController {
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                  subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager,

@@ -1189,7 +1189,7 @@ class MainViewController: UIViewController {
 
     func refreshMenuButtonState() {
         let expectedState: MenuButton.State
-        if homeViewController != nil {
+        if !homeTabManager.isNewTabPageSectionsEnabled && homeViewController != nil {
             expectedState = .bookmarksImage
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
@@ -1749,7 +1749,7 @@ extension MainViewController: BrowserChromeDelegate {
             updateBlock()
         }
     }
-    
+
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
         
@@ -1888,7 +1888,7 @@ extension MainViewController: OmniBarDelegate {
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]
-        if isNewTabPageVisible {
+        if homeTabManager.isNewTabPageSectionsEnabled {
             menuEntries = tab.buildShortcutsMenu()
             headerEntries = []
         } else {

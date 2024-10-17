@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/fix-dialog-width",
-        "revision" : "30a3f9878234bb774470e5bfad02d9e56473a0a1"
+        "revision" : "4e9ce77a747b16b4032823ceae9d5490a68ffd2b",
+        "version" : "199.3.1"
       }
     },
     {

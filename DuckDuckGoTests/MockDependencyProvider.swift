@@ -40,7 +40,6 @@ class MockDependencyProvider: DependencyProvider {
     var configurationManager: ConfigurationManager
     var configurationStore: ConfigurationStore
     var userBehaviorMonitor: UserBehaviorMonitor
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     var subscriptionManager: SubscriptionManager
     var accountManager: AccountManager
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
@@ -65,7 +64,6 @@ class MockDependencyProvider: DependencyProvider {
         configurationStore = defaultProvider.configurationStore
         configurationManager = defaultProvider.configurationManager
         userBehaviorMonitor = defaultProvider.userBehaviorMonitor
-        subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
         accountManager = AccountManagerMock()
 

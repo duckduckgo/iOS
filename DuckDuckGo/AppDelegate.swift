@@ -87,6 +87,7 @@ import os.log
     private var autofillPixelReporter: AutofillPixelReporter?
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
+    private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle
@@ -302,6 +303,10 @@ import os.log
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
+        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            purchasePlatform: .appStore)
+
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
@@ -336,7 +341,8 @@ import os.log
                                           variantManager: variantManager,
                                           contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main

@@ -54,6 +54,7 @@ class FavoritesViewModel: ObservableObject {
     private let favoriteDataSource: NewTabPageFavoriteDataSource
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
+    private let isNewTabPageCustomizationEnabled: Bool
 
     var isEmpty: Bool {
         allFavorites.filter(\.isFavorite).isEmpty
@@ -67,6 +68,9 @@ class FavoritesViewModel: ObservableObject {
         self.favoriteDataSource = favoriteDataSource
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
+        self.isNewTabPageCustomizationEnabled = isNewTabPageCustomizationEnabled
+        self.isCollapsed = isNewTabPageCustomizationEnabled
+
         self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
             guard let self else { return }
 
@@ -94,6 +98,10 @@ class FavoritesViewModel: ObservableObject {
     }
 
     func prefixedFavorites(for columnsCount: Int) -> FavoritesSlice {
+        guard isNewTabPageCustomizationEnabled else {
+            return .init(items: allFavorites, isCollapsible: false)
+        }
+
         let hasFavorites = allFavorites.contains(where: \.isFavorite)
         let maxCollapsedItemsCount = hasFavorites ? columnsCount * 2 : columnsCount
         let isCollapsible = allFavorites.count > maxCollapsedItemsCount
@@ -171,7 +179,10 @@ class FavoritesViewModel: ObservableObject {
         var allFavorites = favoriteDataSource.favorites.map {
             FavoriteItem.favorite($0)
         }
-        allFavorites.append(.addFavorite)
+
+        if isNewTabPageCustomizationEnabled {
+            allFavorites.append(.addFavorite)
+        }
 
         self.allFavorites = allFavorites
     }

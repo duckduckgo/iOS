@@ -426,8 +426,14 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             
             // Check if the current and previous/next video IDs match
             if listVideoID == currentVideoID {
-                let nextIndex = direction == .back ? 1 : 0
-                webView.go(to: navigationList.reversed()[nextIndex])
+                let reversedList = navigationList.reversed()
+                let nextIndex = reversedList.index(reversedList.startIndex, offsetBy: direction == .back ? 1 : 0)
+                
+                if nextIndex < reversedList.endIndex {
+                    webView.go(to: reversedList[nextIndex])
+                } else {
+                    performBackForwardNavigation(webView: webView, direction: direction)
+                }
             } else {
                 performBackForwardNavigation(webView: webView, direction: direction)
             }

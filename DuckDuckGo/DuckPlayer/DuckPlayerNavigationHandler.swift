@@ -446,13 +446,17 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         } else {
             // We may need to skip the previous URL
             // Which is the YouTube video we already rendered in DuckPlayer
-            guard let (videoID, _) = backList.reversed().first?.url.youtubeVideoParams, duckPlayer.settings.mode == .enabled else {
+            guard let (backListVideoID, _) = backList.reversed().first?.url.youtubeVideoParams,
+                  let (currentVideoID, _) = webView.url?.youtubeVideoParams,
+                    duckPlayer.settings.mode == .enabled else {
                 webView.goBack()
                 return
             }
             
-            if videoID == renderedVideoID {
+            if backListVideoID == currentVideoID {
                 webView.go(to: backList.reversed()[1])
+            } else {
+                webView.goBack()
             }
             
         }

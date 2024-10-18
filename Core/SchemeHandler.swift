@@ -29,6 +29,7 @@ public class SchemeHandler {
     }
 
     public enum SchemeType: Equatable {
+        case allow
         case navigational
         case external(Action)
         case blob
@@ -77,7 +78,7 @@ public class SchemeHandler {
         switch PlatformScheme(rawValue: schemeString) {
         case .marketKit:
             if #available(iOS 17.4, *) {
-                return .external(.open)
+                return .allow
             } else {
                 return .unknown
             }

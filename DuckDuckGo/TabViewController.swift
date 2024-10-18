@@ -1887,6 +1887,10 @@ extension TabViewController: WKNavigationDelegate {
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
+        case .allow:
+            completion(.allow)
+            return
+            
         case .navigational:
             performNavigationFor(url: url,
                                  navigationAction: navigationAction,

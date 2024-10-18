@@ -3823,6 +3823,17 @@
 			name = NewTabPage;
 			sourceTree = "<group>";
 		};
+		6F32EEC32CC2B6B2007F3DA2 /* FavoritesSearchOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				85B9CB8321AEBD72009001F1 /* Cells */,
+				85374D3621AC417200FF5A1E /* Renderers */,
+				85058367219C49E000ED4EDB /* HomeViewSectionRenderer.swift */,
+				85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */,
+			);
+			name = FavoritesSearchOverlay;
+			sourceTree = "<group>";
+		};
 		6F35379C2C4AAF1C009F8717 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3914,22 +3925,6 @@
 				6FDC64002C92F4A300DB71B3 /* NewTabPageIntroDataStoring.swift */,
 			);
 			name = IntroMessage;
-			sourceTree = "<group>";
-		};
-		6FE127362C20436A00EB5724 /* HomeRedesign */ = {
-			isa = PBXGroup;
-			children = (
-				6FE1273B2C204C0D00EB5724 /* Subviews */,
-				6F03CAF82C32C3AA004179A8 /* Messages */,
-				6FE127372C20492500EB5724 /* NewTabPage.swift */,
-				6FD8E51F2C5BA23200345670 /* NewTabPageViewModel.swift */,
-				6F5041C82CC11A5100989E48 /* SimpleNewTabPageView.swift */,
-				6FE127392C204BD000EB5724 /* NewTabPageView.swift */,
-				6FE127452C2054A900EB5724 /* NewTabPageViewController.swift */,
-				6FD3F8182C41252900DA5797 /* NewTabPageControllerDelegate.swift */,
-				6FB1FEA12C256ACD0075B68B /* NewTabPageManager.swift */,
-			);
-			name = HomeRedesign;
 			sourceTree = "<group>";
 		};
 		6FE1273B2C204C0D00EB5724 /* Subviews */ = {
@@ -4191,7 +4186,7 @@
 				3157B43627F4C8380042D3D7 /* Favicons */,
 				839F119520DBC489007CD8C2 /* Feedback */,
 				85F2FFFE2215C163006BB258 /* FindInPage */,
-				F13B4BF31F18C73A00814661 /* Home */,
+				F13B4BF31F18C73A00814661 /* NewTabPage */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				98B001B1251EABB40090EC07 /* InfoPlist.strings */,
 				85DFEDEB24C7CC7600973FE7 /* iPad */,
@@ -5727,20 +5722,25 @@
 			name = TabSwitcher;
 			sourceTree = "<group>";
 		};
-		F13B4BF31F18C73A00814661 /* Home */ = {
+		F13B4BF31F18C73A00814661 /* NewTabPage */ = {
 			isa = PBXGroup;
 			children = (
-				6FE127362C20436A00EB5724 /* HomeRedesign */,
+				6F32EEC32CC2B6B2007F3DA2 /* FavoritesSearchOverlay */,
 				F4D9C4F8251179CC00814B71 /* HomeMessages */,
+				6FE1273B2C204C0D00EB5724 /* Subviews */,
+				6F03CAF82C32C3AA004179A8 /* Messages */,
 				85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */,
 				6F03CAFD2C32DD08004179A8 /* HomePageMessagesConfiguration.swift */,
 				6F40D15A2C34423800BF22F0 /* HomePageDisplayDailyPixelBucket.swift */,
-				85058367219C49E000ED4EDB /* HomeViewSectionRenderer.swift */,
-				85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */,
-				85B9CB8321AEBD72009001F1 /* Cells */,
-				85374D3621AC417200FF5A1E /* Renderers */,
+				6FE127372C20492500EB5724 /* NewTabPage.swift */,
+				6FD8E51F2C5BA23200345670 /* NewTabPageViewModel.swift */,
+				6F5041C82CC11A5100989E48 /* SimpleNewTabPageView.swift */,
+				6FE127392C204BD000EB5724 /* NewTabPageView.swift */,
+				6FE127452C2054A900EB5724 /* NewTabPageViewController.swift */,
+				6FD3F8182C41252900DA5797 /* NewTabPageControllerDelegate.swift */,
+				6FB1FEA12C256ACD0075B68B /* NewTabPageManager.swift */,
 			);
-			name = Home;
+			name = NewTabPage;
 			sourceTree = "<group>";
 		};
 		F13B4BF41F18C74500814661 /* Tabs */ = {

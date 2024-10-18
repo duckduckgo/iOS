@@ -217,8 +217,7 @@ final class BrowsingMenuViewController: UIViewController {
         topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
 
-        let barPositionOffset: CGFloat = appSettings.currentAddressBarPosition.isBottom ? 52 : 0
-        bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10) - barPositionOffset
+        bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10)
         rightConstraint.constant = isIPad ? 67 : 10
 
         recalculatePreferredWidthConstraint()

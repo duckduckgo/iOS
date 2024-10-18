@@ -44,7 +44,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .appleAdAttribution)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.appleAdAttribution.name)
         XCTAssertTrue(result)
     }
 
@@ -55,7 +55,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         await fetcherStorage.markAttributionReportSuccessful()
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastPixelName)
         XCTAssertFalse(result)
     }
 
@@ -65,7 +65,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel?.name, "m_apple-ad-attribution")
+        XCTAssertEqual(PixelFiringMock.lastPixelName, "m_apple-ad-attribution")
         XCTAssertTrue(result)
     }
 
@@ -130,7 +130,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastPixelName)
         XCTAssertTrue(fetcherStorage.wasAttributionReportSuccessful)
         XCTAssertTrue(result)
     }
@@ -141,7 +141,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
         let result = await sut.reportAttributionIfNeeded()
 
-        XCTAssertNil(PixelFiringMock.lastPixel)
+        XCTAssertNil(PixelFiringMock.lastPixelName)
         XCTAssertFalse(fetcherStorage.wasAttributionReportSuccessful)
         XCTAssertFalse(result)
     }

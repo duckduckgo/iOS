@@ -34,7 +34,7 @@ struct SettingsSubscriptionView: View {
         static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
     }
 
-    @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
@@ -46,7 +46,8 @@ struct SettingsSubscriptionView: View {
 
     var subscriptionRestoreView: some View {
         SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                           subscriptionManager: subscriptionManager)
+                                                         subscriptionManager: subscriptionManager,
+                                                         subscriptionFeatureAvailability: settingsViewModel.subscriptionFeatureAvailability)
     }
     
     private var manageSubscriptionView: some View {
@@ -117,7 +118,7 @@ struct SettingsSubscriptionView: View {
 
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .expired,
-                                                    settingsViewModel: viewModel,
+                                                    settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
@@ -138,7 +139,7 @@ struct SettingsSubscriptionView: View {
         
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .activating,
-                                                    settingsViewModel: viewModel,
+                                                    settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
@@ -155,17 +156,17 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var subscriptionDetailsView: some View {
         
-        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
+        if settingsViewModel.state.subscription.entitlements.contains(.networkProtection) {
             NavigationLink(destination: NetworkProtectionRootView(), isActive: $isShowingVPN) {
                 SettingsCellView(
                     label: UserText.settingsPProVPNTitle,
                     image: Image("SettingsPrivacyProVPN"),
-                    statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtectionConnected ? .on : .off)
+                    statusIndicator: StatusIndicatorView(status: settingsViewModel.state.networkProtectionConnected ? .on : .off)
                 )
             }
         }
         
-        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
+        if settingsViewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
             NavigationLink(destination: SubscriptionPIRView(), isActive: $isShowingDBP) {
                 SettingsCellView(
                     label: UserText.settingsPProDBPTitle,
@@ -175,7 +176,7 @@ struct SettingsSubscriptionView: View {
             }
         }
         
-        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
+        if settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
             NavigationLink(
                 destination: SubscriptionITPView(),
                 isActive: $isShowingITP) {
@@ -187,10 +188,8 @@ struct SettingsSubscriptionView: View {
             }
         }
         
-        NavigationLink(
-            destination: SubscriptionSettingsView(configuration: .subscribed,
-                                                  settingsViewModel: viewModel)
-                .environmentObject(subscriptionNavigationCoordinator)
+        NavigationLink(destination: SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel)
+            .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })
         }
@@ -200,9 +199,9 @@ struct SettingsSubscriptionView: View {
         Group {
             if isShowingPrivacyPro {
 
-                let isSignedIn = viewModel.state.subscription.isSignedIn
-                let hasActiveSubscription = viewModel.state.subscription.hasActiveSubscription
-                let hasNoEntitlements = viewModel.state.subscription.entitlements.isEmpty
+                let isSignedIn = settingsViewModel.state.subscription.isSignedIn
+                let hasActiveSubscription = settingsViewModel.state.subscription.hasActiveSubscription
+                let hasNoEntitlements = settingsViewModel.state.subscription.entitlements.isEmpty
 
                 let footerLink = Link(UserText.settingsPProSectionFooter,
                                       destination: ViewConstants.privacyPolicyURL)
@@ -239,7 +238,7 @@ struct SettingsSubscriptionView: View {
                 }
             }
         }
-        .onReceive(viewModel.$state) { state in
+        .onReceive(settingsViewModel.$state) { state in
             isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
         }
     }

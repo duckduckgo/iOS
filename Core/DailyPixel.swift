@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Persistence
 
 /// A variant of pixel that is fired at most once per day.
 ///
@@ -52,6 +53,8 @@ public final class DailyPixel {
                             error: Swift.Error? = nil,
                             withAdditionalParameters params: [String: String] = [:],
                             includedParameters: [Pixel.QueryParameters] = [.appVersion],
+                            pixelFiring: PixelFiring.Type = Pixel.self,
+                            dailyPixelStore: KeyValueStoring = DailyPixel.storage,
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         var key: String = pixel.name
 
@@ -61,13 +64,13 @@ public final class DailyPixel {
             key.append(":\(createSortedStringOfValues(from: errorParams))")
         }
 
-        if !hasBeenFiredToday(forKey: key, dailyPixelStorage: storage) {
-            Pixel.fire(pixel: pixel,
-                       error: error,
-                       includedParameters: includedParameters,
-                       withAdditionalParameters: params,
-                       onComplete: onComplete)
-            updatePixelLastFireDate(forKey: key)
+        if !hasBeenFiredToday(forKey: key, dailyPixelStore: dailyPixelStore) {
+            pixelFiring.fire(pixel: pixel,
+                             error: error,
+                             includedParameters: includedParameters,
+                             withAdditionalParameters: params,
+                             onComplete: onComplete)
+            updatePixelLastFireDate(forKey: key, dailyPixelStore: dailyPixelStore)
         } else {
             onComplete(Error.alreadyFired)
         }
@@ -80,12 +83,14 @@ public final class DailyPixel {
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
                                          includedParameters: [Pixel.QueryParameters] = [.appVersion],
+                                         pixelFiring: PixelFiring.Type = Pixel.self,
+                                         dailyPixelStore: KeyValueStoring = DailyPixel.storage,
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         let key: String = pixel.name
 
-        if !hasBeenFiredToday(forKey: key, dailyPixelStorage: storage) {
-            Pixel.fire(
+        if !hasBeenFiredToday(forKey: key, dailyPixelStore: dailyPixelStore) {
+            pixelFiring.fire(
                 pixelNamed: pixel.name + "_d",
                 withAdditionalParameters: params,
                 includedParameters: includedParameters,
@@ -94,12 +99,12 @@ public final class DailyPixel {
         } else {
             onDailyComplete(Error.alreadyFired)
         }
-        updatePixelLastFireDate(forKey: key)
+        updatePixelLastFireDate(forKey: key, dailyPixelStore: dailyPixelStore)
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        Pixel.fire(
+        pixelFiring.fire(
             pixelNamed: pixel.name + "_c",
             withAdditionalParameters: newParams,
             includedParameters: includedParameters,
@@ -107,12 +112,12 @@ public final class DailyPixel {
         )
     }
 
-    private static func updatePixelLastFireDate(forKey key: String) {
-        storage.set(Date(), forKey: key)
+    private static func updatePixelLastFireDate(forKey key: String, dailyPixelStore: KeyValueStoring) {
+        dailyPixelStore.set(Date(), forKey: key)
     }
 
-    private static func hasBeenFiredToday(forKey key: String, dailyPixelStorage: UserDefaults) -> Bool {
-        if let lastFireDate = dailyPixelStorage.object(forKey: key) as? Date {
+    private static func hasBeenFiredToday(forKey key: String, dailyPixelStore: KeyValueStoring) -> Bool {
+        if let lastFireDate = dailyPixelStore.object(forKey: key) as? Date {
             return Date().isSameDay(lastFireDate)
         }
         return false

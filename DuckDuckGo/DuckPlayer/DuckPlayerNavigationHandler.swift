@@ -226,6 +226,30 @@ final class DuckPlayerNavigationHandler {
         }
     }
     
+    // Determines if the link should be opened in a new tab
+    // And sets the correct navigationType
+    // This is uses for JS based navigation links
+    private func setOpenInNewTab(url: URL?) {
+        guard let url else {
+            return
+        }
+        
+        // let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let isFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayer)
+        let isSubFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) || internalUserDecider.isInternalUser
+        let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
+        
+        if openInNewTab &&
+            isFeatureEnabled &&
+            isSubFeatureEnabled &&
+            isDuckPlayerEnabled {
+            navigationType = .linkActivated
+        } else {
+            navigationType = .other
+        }
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {

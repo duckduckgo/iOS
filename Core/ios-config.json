@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1728095993160,
+    "version": 1728900024972,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -370,10 +370,7 @@
             ],
             "settings": {
                 "disabledCMPs": [
-                    "generic-cosmetic",
-                    "termsfeed3",
-                    "healthline-media",
-                    "ketch"
+                    "healthline-media"
                 ]
             },
             "state": "enabled",
@@ -396,7 +393,7 @@
                     }
                 }
             },
-            "hash": "cc06869d3abb10ef0570aa68829cc37b"
+            "hash": "ea2fef42c1666e9d9e4cabd49e57764d"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -1462,7 +1459,8 @@
                     "state": "disabled"
                 },
                 "enableDuckPlayer": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.139.0"
                 }
             },
             "settings": {
@@ -1499,7 +1497,8 @@
                                 ".ytd-video-preview",
                                 "#thumbnail-container",
                                 "#video-title-link",
-                                "#video-title"
+                                "#video-title",
+                                "video.video-stream.html5-main-video"
                             ]
                         },
                         "thumbnailOverlays": {
@@ -1549,8 +1548,8 @@
                     }
                 ]
             },
-            "state": "internal",
-            "hash": "887a8548cb01c9568e4d1b4d195af88b"
+            "state": "enabled",
+            "hash": "7f82d68f07b3e2aaac1b89725c1d379e"
         },
         "elementHiding": {
             "exceptions": [
@@ -3445,6 +3444,15 @@
                         ]
                     },
                     {
+                        "domain": "livebeaches.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='random-ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "livemint.com",
                         "rules": [
                             {
@@ -4860,7 +4868,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "ee31df28088021bca94518f6f8c63ce9"
+            "hash": "91a3dbe67daa37762247c415766a2634"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5276,6 +5284,9 @@
                     "domain": "jcrew.com"
                 },
                 {
+                    "domain": "pgealerts.alerts.pge.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5303,7 +5314,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "dfbfd6b6e23a093d562989baa78a2f25"
+            "hash": "fb031f27a1e1c2b143505c4f2e7b3ba7"
         },
         "harmfulApis": {
             "settings": {
@@ -7404,6 +7415,7 @@
                                     "local12.com",
                                     "local21news.com",
                                     "midmichigannow.com",
+                                    "mlb.com",
                                     "my15wtcn.com",
                                     "my24milwaukee.com",
                                     "my48.tv",
@@ -7997,7 +8009,7 @@
                     "nosto.com": {
                         "rules": [
                             {
-                                "rule": "connect.nosto.com/script/shopify/nosto.js",
+                                "rule": "connect.nosto.com",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -8383,6 +8395,7 @@
                                 "rule": "a.pub.network/core/prebid-universal-creative.js",
                                 "domains": [
                                     "signupgenius.com",
+                                    "smithsonianmag.com",
                                     "titantv.com"
                                 ]
                             },
@@ -8527,6 +8540,16 @@
                             }
                         ]
                     },
+                    "sascdn.com": {
+                        "rules": [
+                            {
+                                "rule": "sascdn.com/tag/",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "scene7.com": {
                         "rules": [
                             {
@@ -8647,6 +8670,16 @@
                                 "rule": "c.slickstream.com/app/",
                                 "domains": [
                                     "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "smartadserver.com": {
+                        "rules": [
+                            {
+                                "rule": "smartadserver.com/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
                                 ]
                             }
                         ]
@@ -9181,6 +9214,16 @@
                             }
                         ]
                     },
+                    "eltiempo.co": {
+                        "rules": [
+                            {
+                                "rule": "ads.eltiempo.co/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "yandex.tm": {
                         "rules": [
                             {
@@ -9210,7 +9253,7 @@
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "aacc956491f7760f65ab1c508b92b26d"
+            "hash": "0692c3f8cc6179433b9f23f00c7dd0ac"
         },
         "trackingCookies1p": {
             "settings": {

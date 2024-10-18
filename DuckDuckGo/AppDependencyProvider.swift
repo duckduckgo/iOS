@@ -34,14 +34,12 @@ protocol DependencyProvider {
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
     var storageCache: StorageCache { get }
-    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
     var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
@@ -65,7 +63,6 @@ final class AppDependencyProvider: DependencyProvider {
     let featureFlagger: FeatureFlagger
 
     let storageCache = StorageCache()
-    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
@@ -74,10 +71,6 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
-
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        purchasePlatform: .appStore)
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -125,9 +118,6 @@ final class AppDependencyProvider: DependencyProvider {
 
         self.subscriptionManager = subscriptionManager
 
-        let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
             return { accountManager.accessToken }
         }()

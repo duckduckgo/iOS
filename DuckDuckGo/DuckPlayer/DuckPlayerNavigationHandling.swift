@@ -20,19 +20,41 @@
 import WebKit
 
 enum DuckPlayerNavigationEvent {
-    case youtubeVideoPageVisited
     case JSTriggeredNavigation
+}
+
+enum DuckPlayerNavigationType: String, Codable {
+    case javascript,
+         direct
+}
+
+enum DuckPlayerNavigationHandlerURLChangeResult {
+    
+    enum HandlingResult {
+        case featureOff
+        case duckPlayerDisabled
+        case isAlreadyDuckAddress
+        case urlHasNotChanged
+        case videoIDNotPresent
+        case videoAlreadyHandled
+        case disabledForNextVideo
+    }
+
+    case handled
+    case notHandled(HandlingResult)
+}
+
+enum DuckPlayerNavigationDirection {
+    case back, forward
 }
 
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
-    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
-    func handleJSNavigation(url: URL?, webView: WKWebView)
-    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                               completion: @escaping (WKNavigationActionPolicy) -> Void,
-                               webView: WKWebView)
-    func handleGoBack(webView: WKWebView)
+    func handleNavigation(_ navigationAction: WKNavigationAction,
+                          webView: WKWebView)
+    func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult
+    func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
@@ -40,5 +62,6 @@ protocol DuckPlayerNavigationHandling: AnyObject {
                      url: URL?,
                      navigationAction: WKNavigationAction?)
     func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    
     
 }

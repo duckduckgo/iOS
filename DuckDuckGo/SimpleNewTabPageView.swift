@@ -46,6 +46,15 @@ struct SimpleNewTabPageView: View {
         if !viewModel.isOnboarding {
             mainView
                 .background(Color(designSystemColor: .background))
+                .simultaneousGesture(
+                    DragGesture()
+                        .onChanged({ value in
+                            if value.translation.height > 0 {
+                                viewModel.beginDragging()
+                            }
+                        })
+                        .onEnded({ _ in viewModel.endDragging() })
+                )
         }
     }
 

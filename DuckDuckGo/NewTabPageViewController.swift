@@ -188,7 +188,7 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
     // MARK: - NewTabPage
 
-    let isDragging: Bool = false
+    var isDragging: Bool { newTabPageViewModel.isDragging }
 
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var delegate: NewTabPageControllerDelegate?

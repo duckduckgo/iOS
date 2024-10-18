@@ -77,7 +77,7 @@ public class SchemeHandler {
         switch PlatformScheme(rawValue: schemeString) {
         case .marketKit:
             if #available(iOS 17.4, *) {
-                return .external(.askForConfirmation)
+                return .external(.open)
             } else {
                 return .unknown
             }

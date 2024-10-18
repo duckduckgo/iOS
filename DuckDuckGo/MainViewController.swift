@@ -110,6 +110,7 @@ class MainViewController: UIViewController {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let statisticsStore: StatisticsStore
+    let voiceSearchHelper: VoiceSearchHelperProtocol
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -197,7 +198,8 @@ class MainViewController: UIViewController {
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-        subscriptionFeatureAvailability: SubscriptionFeatureAvailability
+        subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
+        voiceSearchHelper: VoiceSearchHelperProtocol
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -229,6 +231,7 @@ class MainViewController: UIViewController {
         self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
+        self.voiceSearchHelper = voiceSearchHelper
 
         super.init(nibName: nil, bundle: nil)
         
@@ -264,7 +267,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view, voiceSearchHelper: voiceSearchHelper)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
@@ -346,8 +349,9 @@ class MainViewController: UIViewController {
         
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
-                                                    appSettings: appSettings) { [weak self] in
-            
+                                                    appSettings: appSettings,
+                                                    voiceSearchHelper: voiceSearchHelper) { [weak self] in
+
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
             DailyPixel.fire(pixel: .swipeTabsUsedDaily)

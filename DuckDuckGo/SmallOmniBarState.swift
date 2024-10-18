@@ -234,7 +234,7 @@ struct SmallOmniBarState {
         var onEnterPhoneState: OmniBarState { return self }
         var onReloadState: OmniBarState { return BrowsingTextEditingStartedState(voiceSearchHelper: voiceSearchHelper) }
         var showSearchLoupe: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
-        var showVoiceSearch: Bool { !voiceSearchHelper.isVoiceSearchEnabled }
+        var showVoiceSearch: Bool { voiceSearchHelper.isVoiceSearchEnabled }
 
         let voiceSearchHelper: VoiceSearchHelperProtocol
     }

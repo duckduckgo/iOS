@@ -47,6 +47,7 @@ class MockDependencyProvider: DependencyProvider {
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
+    var persistentPixel: PersistentPixelFiring
 
     init() {
         let defaultProvider = AppDependencyProvider.makeTestingInstance()
@@ -78,12 +79,14 @@ class MockDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: MockPersistentPixel())
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()
         serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        persistentPixel = MockPersistentPixel()
     }
 }

@@ -276,7 +276,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 
                 webView.stopLoading()
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.performRequest(request: newRequest, webView: webView)
                     self.renderedVideoID = videoID
                 }

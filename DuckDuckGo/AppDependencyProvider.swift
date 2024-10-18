@@ -41,7 +41,6 @@ protocol DependencyProvider {
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: SubscriptionManager { get }
     var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
@@ -74,10 +73,6 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
-
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        purchasePlatform: .appStore)
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -125,9 +120,6 @@ final class AppDependencyProvider: DependencyProvider {
 
         self.subscriptionManager = subscriptionManager
 
-        let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
             return { accountManager.accessToken }
         }()

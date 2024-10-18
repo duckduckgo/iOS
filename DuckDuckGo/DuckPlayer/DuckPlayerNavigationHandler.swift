@@ -197,6 +197,7 @@ final class DuckPlayerNavigationHandler {
               let (videoID, _) = url.youtubeVideoParams else { return }
                 
         renderedURL = url
+        renderedVideoID = videoID
         let duckPlayerURL = URL.duckPlayer(videoID)
         Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
         webView.load(URLRequest(url: duckPlayerURL))
@@ -256,7 +257,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // If DuckPlayer is disabled, Just Redirect to the matching URL in Youtube
         // This will preserve navigation for User Bookmarks and direct urls
-        guard featureFlagger.isFeatureOn(.duckPlayer) else {
+        guard featureFlagger.isFeatureOn(.duckPlayer) && duckPlayer.settings.mode != .disabled else {
             if let (videoID, _) = url.youtubeVideoParams {
                 webView.load(URLRequest(url: URL.youtube(videoID)))
             }
@@ -345,32 +346,32 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     @MainActor
-    func handleURLChange(webView: WKWebView) -> Bool {
+    func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
         Logger.duckPlayer.debug("DP: Initalizing Navigation handler for URL: (\(webView.url?.absoluteString ?? "No URL")) ")
         
         // If DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
-            return false
+            return .notHandled(.featureOff)
         }
         
         // If the URL is a DuckPlayer URL, navigation will be taken care by
         // the delegate, so exit
         guard !(webView.url?.isDuckURLScheme ?? false) else {
-            return false
+            return .notHandled(.isAlreadyDuckAddress)
         }
         
         // If the URL has not changed, exit
         guard webView.url != renderedURL else {
             Logger.duckPlayer.debug("DP: URL has not changed, skipping")
-            return false
+            return .notHandled(.urlHasNotChanged)
         }
         
         // If DuckPlayer is not active, exit
         guard duckPlayer.settings.mode == .enabled else {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")
-            return false
+            return .notHandled(.duckPlayerDisabled)
         }
         
         // Log updates, and handle pixels and other events
@@ -390,13 +391,13 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if let (videoID, _) = webView.url?.youtubeVideoParams {
                 renderedVideoID = nil
             }
-            return false
+            return .notHandled(.videoIDNotPresent)
         }
         
         // If the video was already rendered, do not handle again
         guard renderedVideoID != videoID else {
             Logger.duckPlayer.debug("DP: Video should not be handled, as its already rendered")
-            return false
+            return .notHandled(.videoAlreadyHandled)
         }
         
         // If DuckPlayer should be disable for the next video, exit
@@ -405,14 +406,14 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             duckPlayer.settings.allowFirstVideo = false
             Logger.duckPlayer.debug("DP: Video should not be handled, as DuckPlayer is disabled for the next video")
             renderedVideoID = videoID
-            return false
+            return .notHandled(.disabledForNextVideo)
         }
         
         // Finally, redirect to DuckPlayer Scheme
         Logger.duckPlayer.debug("DP: Handling Navigation for (\(webView.url?.absoluteString ?? "No URL"))")
         
         redirectToDuckPlayerVideo(url: url, webView: webView)
-        return true
+        return .handled
          
     }
     

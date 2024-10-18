@@ -66,6 +66,7 @@ class MockWebView: WKWebView {
     
     override func load(_ request: URLRequest) -> WKNavigation? {
         lastLoadedRequest = request
+        currentURL = request.url
         return nil
     }
     
@@ -154,7 +155,7 @@ final class MockDuckPlayer: DuckPlayerProtocol {
         nil
     }
     
-    func openVideo(url: URL, webView: WKWebView) {
+    func openVideoInDuckPlayer(url: URL, webView: WKWebView) {
         
     }
     

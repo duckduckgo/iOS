@@ -28,12 +28,28 @@ enum DuckPlayerNavigationType: String, Codable {
          direct
 }
 
+enum DuckPlayerNavigationHandlerURLChangeResult {
+    
+    enum HandlingResult {
+        case featureOff
+        case duckPlayerDisabled
+        case isAlreadyDuckAddress
+        case urlHasNotChanged
+        case videoIDNotPresent
+        case videoAlreadyHandled
+        case disabledForNextVideo
+    }
+
+    case handled
+    case notHandled(HandlingResult)
+}
+
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView)
-    func handleURLChange(webView: WKWebView) -> Bool
+    func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
@@ -42,5 +58,6 @@ protocol DuckPlayerNavigationHandling: AnyObject {
                      url: URL?,
                      navigationAction: WKNavigationAction?)
     func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    
     
 }

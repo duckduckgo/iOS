@@ -22,10 +22,6 @@ import UIKit
 /// An extension that implements the protocol so that other classes don't need to implement everything.
 extension HomeViewSectionRenderer {
 
-    func install(into controller: HomeViewController) { }
-
-    func remove(from controller: HomeViewController) { }
-
     func openedAsNewTab(allowingKeyboard: Bool) { }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {

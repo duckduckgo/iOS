@@ -199,12 +199,13 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
-        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
+        if allowingKeyboard && KeyboardSettings().onNewTab {
 
-        // The omnibar is inside a collection view so this needs a chance to do its thing
-        // which might also be async. Not great.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.launchNewSearch()
+            // The omnibar is inside a collection view so this needs a chance to do its thing
+            // which might also be async. Not great.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.launchNewSearch()
+            }
         }
 
         if !variantManager.isContextualDaxDialogsEnabled {

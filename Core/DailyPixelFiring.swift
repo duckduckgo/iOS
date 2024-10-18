@@ -25,6 +25,7 @@ public protocol DailyPixelFiring {
                           withAdditionalParameters params: [String: String])
 
     static func fireDailyAndCount(pixel: Pixel.Event,
+                                  pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
                                   error: Swift.Error?,
                                   withAdditionalParameters params: [String: String],
                                   includedParameters: [Pixel.QueryParameters],

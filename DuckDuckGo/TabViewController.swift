@@ -1429,7 +1429,9 @@ extension TabViewController: WKNavigationDelegate {
         urlProvidedBasicAuthCredential = nil
 
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         includedParameters: [.appVersion, .atb])
         }
 
         specialErrorPageUserScript?.isEnabled = webView.url == failedURL

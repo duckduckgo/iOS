@@ -124,6 +124,7 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
     }
 
     static func fireDailyAndCount(pixel: Pixel.Event,
+                                  pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
                                   error: (any Error)?,
                                   withAdditionalParameters params: [String: String],
                                   includedParameters: [Core.Pixel.QueryParameters],

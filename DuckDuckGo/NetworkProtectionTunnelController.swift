@@ -184,13 +184,14 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         do {
             try await tunnelManager?.removeFromPreferences()
 
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
-                PixelParameters.reason: reason.rawValue
-            ])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         withAdditionalParameters: [PixelParameters.reason: reason.rawValue])
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed, error: error, withAdditionalParameters: [
-                PixelParameters.reason: reason.rawValue
-            ])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         error: error,
+                                         withAdditionalParameters: [PixelParameters.reason: reason.rawValue])
         }
     }
 

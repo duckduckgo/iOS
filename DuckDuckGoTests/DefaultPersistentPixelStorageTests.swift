@@ -67,8 +67,8 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
         let storedPixels = try persistentStorage.storedPixels()
 
         XCTAssertEqual(storedPixels.count, DefaultPersistentPixelStorage.Constants.pixelCountLimit)
-        XCTAssertEqual(storedPixels.first?.pixelName, "pixel51")
-        XCTAssertEqual(storedPixels.last?.pixelName, "pixel150")
+        XCTAssertEqual(storedPixels.first?.eventName, "pixel51")
+        XCTAssertEqual(storedPixels.last?.eventName, "pixel150")
     }
 
     func testWhenStoringMorePixelsThanTheLimit_AndPixelsAreAddedInASingleBatch_ThenOldPixelsAreDropped() throws {
@@ -84,8 +84,8 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
         let storedPixels = try persistentStorage.storedPixels()
 
         XCTAssertEqual(storedPixels.count, DefaultPersistentPixelStorage.Constants.pixelCountLimit)
-        XCTAssertEqual(storedPixels.first?.pixelName, "pixel51")
-        XCTAssertEqual(storedPixels.last?.pixelName, "pixel150")
+        XCTAssertEqual(storedPixels.first?.eventName, "pixel51")
+        XCTAssertEqual(storedPixels.last?.eventName, "pixel150")
     }
 
     func testWhenRemovingPixels_AndNoPixelsAreStored_ThenNothingHappens() throws {
@@ -126,7 +126,7 @@ class DefaultPersistentPixelStorageTests: XCTestCase {
     }
 
     private func event(named name: String, parameters: [String: String]) -> PersistentPixelMetadata {
-        return PersistentPixelMetadata(eventName: name, pixelType: .regular, additionalParameters: parameters, includedParameters: [.appVersion])
+        return PersistentPixelMetadata(eventName: name, additionalParameters: parameters, includedParameters: [.appVersion])
     }
 
 }

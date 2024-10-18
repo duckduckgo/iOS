@@ -38,9 +38,11 @@ public final class DailyPixel {
 
     }
 
-    private enum Constant {
+    public enum Constant {
 
         static let dailyPixelStorageIdentifier = "com.duckduckgo.daily.pixel.storage"
+        public static let dailyPixelSuffixes = (dailySuffix: "_daily", countSuffix: "_count")
+        public static let legacyDailyPixelSuffixes = (dailySuffix: "_d", countSuffix: "_c")
 
     }
 
@@ -80,6 +82,7 @@ public final class DailyPixel {
     /// This means a pixel will get sent twice the first time it is called per-day, and subsequent calls that day will only send the `_c` variant.
     /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.
     public static func fireDailyAndCount(pixel: Pixel.Event,
+                                         pixelNameSuffixes: (dailySuffix: String, countSuffix: String) = Constant.dailyPixelSuffixes,
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
                                          includedParameters: [Pixel.QueryParameters] = [.appVersion],
@@ -91,7 +94,7 @@ public final class DailyPixel {
 
         if !hasBeenFiredToday(forKey: key, dailyPixelStore: dailyPixelStore) {
             pixelFiring.fire(
-                pixelNamed: pixel.name + "_d",
+                pixelNamed: pixel.name + pixelNameSuffixes.dailySuffix,
                 withAdditionalParameters: params,
                 includedParameters: includedParameters,
                 onComplete: onDailyComplete
@@ -105,7 +108,7 @@ public final class DailyPixel {
             newParams.appendErrorPixelParams(error: error)
         }
         pixelFiring.fire(
-            pixelNamed: pixel.name + "_c",
+            pixelNamed: pixel.name + pixelNameSuffixes.countSuffix,
             withAdditionalParameters: newParams,
             includedParameters: includedParameters,
             onComplete: onCountComplete

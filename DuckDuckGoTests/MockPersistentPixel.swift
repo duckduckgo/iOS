@@ -51,6 +51,7 @@ final class MockPersistentPixel: PersistentPixelFiring {
     }
     
     func fireDailyAndCount(pixel: Core.Pixel.Event,
+                           pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
                            error: (any Error)?,
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Core.Pixel.QueryParameters],

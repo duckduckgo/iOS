@@ -22,35 +22,16 @@ import Networking
 
 public struct PersistentPixelMetadata: Identifiable, Codable, Equatable {
 
-    public enum PixelType: Codable {
-        case daily
-        case count
-        case regular
-    }
-
     public let id: UUID
     public let eventName: String
-    public let pixelType: PixelType
     public let additionalParameters: [String: String]
     public let includedParameters: [Pixel.QueryParameters]
 
-    public init(eventName: String,
-                pixelType: PersistentPixelMetadata.PixelType,
-                additionalParameters: [String: String],
-                includedParameters: [Pixel.QueryParameters]) {
+    public init(eventName: String, additionalParameters: [String: String], includedParameters: [Pixel.QueryParameters]) {
         self.id = UUID()
         self.eventName = eventName
-        self.pixelType = pixelType
         self.additionalParameters = additionalParameters
         self.includedParameters = includedParameters
-    }
-
-    var pixelName: String {
-        switch pixelType {
-        case .daily: return eventName + "_d"
-        case .count: return eventName + "_c"
-        case .regular: return eventName
-        }
     }
 
     var timestamp: String? {

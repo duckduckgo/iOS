@@ -30,6 +30,7 @@ public protocol PersistentPixelFiring {
               onComplete: @escaping (Error?) -> Void)
 
     func fireDailyAndCount(pixel: Pixel.Event,
+                           pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
                            error: Swift.Error?,
                            withAdditionalParameters params: [String: String],
                            includedParameters: [Pixel.QueryParameters],
@@ -110,12 +111,9 @@ public final class PersistentPixel: PersistentPixelFiring {
                     }
 
                     try self.persistentPixelStorage.append(pixels: [
-                        PersistentPixelMetadata(
-                            eventName: pixel.name,
-                            pixelType: .regular,
-                            additionalParameters: additionalParameters,
-                            includedParameters: includedParameters
-                        )
+                        PersistentPixelMetadata(eventName: pixel.name,
+                                                additionalParameters: additionalParameters,
+                                                includedParameters: includedParameters)
                     ])
 
                     onComplete(nil)
@@ -127,6 +125,7 @@ public final class PersistentPixel: PersistentPixelFiring {
     }
 
     public func fireDailyAndCount(pixel: Pixel.Event,
+                                  pixelNameSuffixes: (dailySuffix: String, countSuffix: String) = DailyPixel.Constant.dailyPixelSuffixes,
                                   error: Swift.Error? = nil,
                                   withAdditionalParameters additionalParameters: [String: String],
                                   includedParameters: [Pixel.QueryParameters] = [.appVersion],
@@ -148,6 +147,7 @@ public final class PersistentPixel: PersistentPixelFiring {
 
         dailyPixelFiring.fireDailyAndCount(
             pixel: pixel,
+            pixelNameSuffixes: pixelNameSuffixes,
             error: error,
             withAdditionalParameters: additionalParameters,
             includedParameters: includedParameters,
@@ -159,12 +159,9 @@ public final class PersistentPixel: PersistentPixelFiring {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         Logger.general.debug("Saving persistent daily pixel named \(pixel.name)")
                         try self.persistentPixelStorage.append(pixels: [
-                            PersistentPixelMetadata(
-                                eventName: pixel.name,
-                                pixelType: .daily,
-                                additionalParameters: additionalParameters,
-                                includedParameters: includedParameters
-                            )
+                            PersistentPixelMetadata(eventName: pixel.name + pixelNameSuffixes.dailySuffix,
+                                                    additionalParameters: additionalParameters,
+                                                    includedParameters: includedParameters)
                         ])
                     } catch {
                         dailyPixelStorageError = error
@@ -178,12 +175,9 @@ public final class PersistentPixel: PersistentPixelFiring {
                         if let error { additionalParameters.appendErrorPixelParams(error: error) }
                         Logger.general.debug("Saving persistent count pixel named \(pixel.name)")
                         try self.persistentPixelStorage.append(pixels: [
-                            PersistentPixelMetadata(
-                                eventName: pixel.name,
-                                pixelType: .count,
-                                additionalParameters: additionalParameters,
-                                includedParameters: includedParameters
-                            )
+                            PersistentPixelMetadata(eventName: pixel.name + pixelNameSuffixes.countSuffix,
+                                                    additionalParameters: additionalParameters,
+                                                    includedParameters: includedParameters)
                         ])
                     } catch {
                         countPixelStorageError = error
@@ -262,7 +256,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             } else {
                 // If we don't have a timestamp for some reason, ignore the retry - retries are only useful if they have a timestamp attached.
                 // It's not expected that this will ever happen, so an assertion failure is used to report it when debugging.
-                assertionFailure("Did not find a timestamp for pixel \(pixelMetadata.pixelName)")
+                assertionFailure("Did not find a timestamp for pixel \(pixelMetadata.eventName)")
                 pixelIDsAccessQueue.sync {
                     _ = pixelIDsToRemove.insert(pixelMetadata.id)
                 }
@@ -275,7 +269,7 @@ public final class PersistentPixel: PersistentPixelFiring {
             dispatchGroup.enter()
 
             pixelFiring.fire(
-                pixelNamed: pixelMetadata.pixelName,
+                pixelNamed: pixelMetadata.eventName,
                 withAdditionalParameters: pixelParameters,
                 includedParameters: pixelMetadata.includedParameters,
                 onComplete: { error in

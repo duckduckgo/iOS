@@ -256,134 +256,96 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Handle rendering the simulated request for duck:// links
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
-                
+
         Logger.duckPlayer.debug("Handling Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
-        
-        // This is passed to the FE overlay at init to disable the overlay for one video
-        duckPlayer.settings.allowFirstVideo = false
-        
+
+        duckPlayer.settings.allowFirstVideo = false // Disable overlay for first video
+
         guard let url = navigationAction.request.url else { return }
-        
-        // If DuckPlayer is disabled, Just Redirect to the matching URL in Youtube
-        // This will preserve navigation for User Bookmarks and direct urls
+
+        // Redirect to YouTube if DuckPlayer is disabled
         guard featureFlagger.isFeatureOn(.duckPlayer) && duckPlayer.settings.mode != .disabled else {
             if let (videoID, _) = url.youtubeVideoParams {
                 webView.load(URLRequest(url: URL.youtube(videoID)))
             }
             return
         }
-        
-        // Handle Open in Youtube Links
-        // duck://player/openInYoutube?v=12345
-        if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
-                        
-            Pixel.fire(pixel: Pixel.Event.duckPlayerWatchOnYoutube)
 
-            // These links should always skip the overlay
-            duckPlayer.settings.allowFirstVideo = true
-
-            // Attempt to open in YouTube app (if installed) or load in webView
-            if let (videoID, _) = newURL.youtubeVideoParams {
-                if appSettings.allowUniversalLinks,
-                   isYouTubeAppInstalled,
-                   let url = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
-                    UIApplication.shared.open(url)
-                } else {
-                    redirectToYouTubeVideo(url: url, webView: webView)
-                }
-                return
-            }
-        }
-        
-        // Daily Unique View Pixel
-        if url.isDuckPlayer,
-           duckPlayerMode != .disabled {
-            let setting = duckPlayerMode == .enabled ? Constants.duckPlayerAlwaysString : Constants.duckPlayerDefaultString
-            DailyPixel.fire(pixel: Pixel.Event.duckPlayerDailyUniqueView, withAdditionalParameters: [Constants.settingsKey: setting])
-        }
-        
-        // Pixel for Views From Youtube
-        if referrer == .youtube,
-           duckPlayerMode == .enabled {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeAutomatic)
-        }
-        
-        // If this is a new duck:// URL, we perform a simulated request
-        if url.isDuckURLScheme {
-           
-            guard let (videoID, _) = url.youtubeVideoParams else { return }
+        // Handle "open in YouTube" links (duck://player/openInYoutube)
+        if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url),
+           let (videoID, _) = newURL.youtubeVideoParams {
             
-            // If DuckPlayer is Enabled or in ask mode, render the video
+            duckPlayer.settings.allowFirstVideo = true // Always skip overlay for these links
+
+            // Attempt to open in YouTube app or load in webView
+            if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
+               let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
+                UIApplication.shared.open(youtubeAppURL)
+            } else {
+                redirectToYouTubeVideo(url: newURL, webView: webView)
+            }
+            return
+        }
+
+        // Handle duck:// scheme URLs
+        if url.isDuckURLScheme,
+           let (videoID, _) = url.youtubeVideoParams {
+
+            // Simulate DuckPlayer request if in enabled/ask mode and not redirected to YouTube
             if duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk,
                !url.hasWatchInYoutubeQueryParameter {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-                
-                Logger.duckPlayer.debug("DP: Loading Simulated Request for \(navigationAction.request.url?.absoluteString ?? "")")
+                Logger.duckPlayer.debug("DP: Loading Simulated Request for \(url.absoluteString)")
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.performRequest(request: newRequest, webView: webView)
                     self.renderedVideoID = videoID
                 }
-                            
-            // Otherwise, just redirect to YouTube
             } else {
                 redirectToYouTubeVideo(url: url, webView: webView)
             }
-            
             return
         }
-        
-        // If this is a Youtube Watch URL, redirect to the right URL based
-        // on the current DuckPlayer Setting
-        if url.isYoutubeWatch,
-                       
-            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-            
-            // We use Youtube's embeds_uri parameter to determine if
-            // the video should open in Youtube or not
-            // This parameter is added to links within the embed
-            // for Age-restricted videos and other content that cannot be embedded
-            // If this parameter is present, we always redirect to Youtube
+
+        // Handle YouTube watch URLs based on DuckPlayer settings
+        if url.isYoutubeWatch, duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             if url.hasWatchInYoutubeQueryParameter {
                 redirectToYouTubeVideo(url: url, webView: webView)
             } else {
                 redirectToDuckPlayerVideo(url: url, webView: webView)
             }
-
         }
-        
     }
     
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
-        Logger.duckPlayer.debug("DP: Initalizing Navigation handler for URL: (\(webView.url?.absoluteString ?? "No URL")) ")
+        Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
         
-        // If DuckPlayer feature is ON
+        // Check if DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
             return .notHandled(.featureOff)
         }
         
-        // If the URL is a DuckPlayer URL, navigation will be taken care by
-        // the delegate, so exit
+        // Check if the URL is a DuckPlayer URL (handled elsewhere)
         guard !(webView.url?.isDuckURLScheme ?? false) else {
             return .notHandled(.isAlreadyDuckAddress)
         }
         
-        // If the URL has not changed, exit
+        // If the URL hasn't changed, exit
         guard webView.url != renderedURL else {
             Logger.duckPlayer.debug("DP: URL has not changed, skipping")
             return .notHandled(.urlHasNotChanged)
         }
         
-        // If DuckPlayer is not active, exit
+        // Ensure DuckPlayer is active
         guard duckPlayer.settings.mode == .enabled else {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")
             return .notHandled(.duckPlayerDisabled)
         }
         
-        // Log updates, and handle pixels and other events
+        // Update rendered URL and handle YouTube-specific actions
         if let url = webView.url {
             renderedURL = url
             referrer = url.isYoutube ? .youtube : .other
@@ -393,38 +355,34 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             }
         }
         
-        // If there are no video details in the URL, exit
+        // Check for valid YouTube video parameters
         guard let url = webView.url,
               let (videoID, _) = url.youtubeVideoParams else {
             Logger.duckPlayer.debug("DP: No video parameters present in the URL, skipping")
-            if let (videoID, _) = webView.url?.youtubeVideoParams {
-                renderedVideoID = nil
-            }
+            renderedVideoID = nil
             return .notHandled(.videoIDNotPresent)
         }
         
-        // If the video was already rendered, do not handle again
+        // If the video has already been rendered, exit
         guard renderedVideoID != videoID else {
-            Logger.duckPlayer.debug("DP: Video should not be handled, as its already rendered")
+            Logger.duckPlayer.debug("DP: Video already rendered, skipping")
             return .notHandled(.videoAlreadyHandled)
         }
         
-        // If DuckPlayer should be disable for the next video, exit
-        if duckPlayer.settings.allowFirstVideo,
-            let (videoID, _) = url.youtubeVideoParams {
+        // If DuckPlayer is disabled for the next video, skip handling and reset
+        if duckPlayer.settings.allowFirstVideo {
             duckPlayer.settings.allowFirstVideo = false
-            Logger.duckPlayer.debug("DP: Video should not be handled, as DuckPlayer is disabled for the next video")
+            Logger.duckPlayer.debug("DP: Skipping video, DuckPlayer disabled for the next video")
             renderedVideoID = videoID
             return .notHandled(.disabledForNextVideo)
         }
         
-        // Finally, redirect to DuckPlayer Scheme
-        Logger.duckPlayer.debug("DP: Handling Navigation for (\(webView.url?.absoluteString ?? "No URL"))")
-        
+        // Finally, handle the redirection to DuckPlayer
+        Logger.duckPlayer.debug("DP: Handling navigation for \(webView.url?.absoluteString ?? "No URL")")
         redirectToDuckPlayerVideo(url: url, webView: webView)
         return .handled
-         
     }
+
     
     @MainActor
     func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {

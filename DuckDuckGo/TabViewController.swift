@@ -579,10 +579,10 @@ class TabViewController: UIViewController {
                 self?.load(urlRequest: cleanURLRequest)
                 
                 
-                // if let handler = self?.duckPlayerNavigationHandler,
-                //    let webView = self?.webView {
-                //    handler.handleAttach(webView: webView)
-                // }
+                 if let handler = self?.duckPlayerNavigationHandler,
+                    let webView = self?.webView {
+                    handler.handleAttach(webView: webView)
+                 }
             })
         }
 
@@ -752,7 +752,7 @@ class TabViewController: UIViewController {
         // Handle DuckPlayer Navigation
         if let url = webView.url {
             if let handler = duckPlayerNavigationHandler,
-               handler.handleJSNavigationFor(webView: webView) {
+               handler.handleURLChange(webView: webView) {
                 return
             }
         }
@@ -1866,7 +1866,7 @@ extension TabViewController: WKNavigationDelegate {
             if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {
                 delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: nil)
             } else {
-                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView, navigationType: .direct)
+                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             }
             completion(.cancel)
             return

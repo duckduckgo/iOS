@@ -195,8 +195,7 @@ final class DuckPlayerNavigationHandler {
     private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView) {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
-        
-        webView.stopLoading()
+                
         renderedURL = url
         let duckPlayerURL = URL.duckPlayer(videoID)
         Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
@@ -247,7 +246,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Handle rendering the simulated request if the URL is duck://
     // and DuckPlayer is either enabled or alwaysAsk
     @MainActor
-    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView, navigationType: DuckPlayerNavigationType) {
+    func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
                 
         Logger.duckPlayer.debug("Handling Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
 
@@ -332,82 +331,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
     }
     
-    // DecidePolicyFor handler to redirect relevant requests
-    // to duck://player
-    /*
     @MainActor
-    func handleDecidePolicyFor(_ navigationAction: WKNavigationAction,
-                               completion: @escaping (WKNavigationActionPolicy) -> Void,
-                               webView: WKWebView) {
-        
-        Logger.duckPlayer.debug("Handling DecidePolicyFor for \(navigationAction.request.url?.absoluteString ?? "")")
-        
-        // This means navigation originated in user Event
-        // and not automatic.  This is used further to
-        // determine how navigation is performed (new tab, etc)
-        // Resets on next attachment
-        if navigationAction.navigationType == .linkActivated {
-            self.navigationType = navigationAction.navigationType
-        }
-        
-        guard let url = navigationAction.request.url else {
-            completion(.cancel)
-            return
-        }
-        
-        guard featureFlagger.isFeatureOn(.duckPlayer) else {
-            completion(.allow)
-            return
-        }
-        
-        // This is passed to the FE overlay at init to disable the overlay for one video
-        duckPlayer.settings.allowFirstVideo = false
-        
-        if let (videoID, _) = url.youtubeVideoParams,
-           videoID == lastHandledVideoID,
-            !url.hasWatchInYoutubeQueryParameter {
-            Logger.duckPlayer.debug("DP: DecidePolicy: URL (\(url.absoluteString)) already handled, skipping")
-            completion(.cancel)
-            return
-        }
-        
-         // Handle Youtube internal links like "Age restricted" and "Copyright restricted" videos
-         // These should not be handled by DuckPlayer and not include overlays
-         if url.isYoutubeVideo,
-            url.hasWatchInYoutubeQueryParameter {
-                duckPlayer.settings.allowFirstVideo = true
-                completion(.allow)
-                return
-         }
-
-        // SERP referals
-        if isSERPLink(navigationAction: navigationAction) {
-            // Set the referer
-            referrer = .serp
-            
-            if duckPlayerMode == .enabled, !url.isDuckPlayer {
-                Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromSERP, debounce: 2)
-            }
-            
-        } else {
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromOther, debounce: 2)
-        }
-        
-        
-        if url.isYoutubeVideo,
-           !url.isDuckPlayer,
-            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-                Logger.duckPlayer.debug("DP: Handling decidePolicy for Duck Player with \(url.absoluteString)")
-                completion(.cancel)
-                handleURLChange(url: url, webView: webView)
-                return
-        }
-        
-        completion(.allow)
-    }*/
-    
-    @MainActor
-    func handleJSNavigationFor(webView: WKWebView) -> Bool {
+    func handleURLChange(webView: WKWebView) -> Bool {
         
         Logger.duckPlayer.debug("DP: Initalizing Navigation handler for URL: (\(webView.url?.absoluteString ?? "No URL")) ")
         
@@ -424,7 +349,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // If DuckPlayer is active
-        guard duckPlayer.settings.mode == .enabled else {
+        guard duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk else {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")
             return false
         }
@@ -476,9 +401,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleGoBack(webView: WKWebView) {
         
         Logger.duckPlayer.debug("DP: Handling Back Navigation")
-                
-        renderedVideoID = nil
-        renderedURL = nil
         
         let experiment = DuckPlayerLaunchExperiment()
         let duckPlayerMode = experiment.isExperimentCohort ? duckPlayerMode : .disabled
@@ -493,26 +415,28 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             webView.goBack()
             return
         }
-        
-        // Find the last non plain YouTube video URL in the back list
-        // (Excluding the OpenInYouTube videos), and navigate to it
+
+        // Get the History List
         let backList = webView.backForwardList.backList
-        var nonYoutubeItem: WKBackForwardListItem?
-        
-        for item in backList.reversed() {
-            if !item.url.isYoutubeVideo && !item.url.isDuckPlayer && !item.url.hasWatchInYoutubeQueryParameter {
-                nonYoutubeItem = item
-                break
-            }
-        }
-        
-        if let nonYoutubeItem = nonYoutubeItem, duckPlayerMode == .enabled {
-            Logger.duckPlayer.debug("DP: Navigating back to \(nonYoutubeItem.url.absoluteString)")
-            webView.go(to: nonYoutubeItem)
-        } else {
-            Logger.duckPlayer.debug("DP: Navigating back to previous page")
+
+        // If we are not at Duck Player, just go back
+        if !(webView.url?.isDuckPlayer ?? false) {
             webView.goBack()
+            
+        } else {
+            // We may need to skip the previous URL
+            // Which is the YouTube video we already rendered in DuckPlayer
+            guard let (videoID, _) = backList.reversed().first?.url.youtubeVideoParams else {
+                webView.goBack()
+                return
+            }
+            
+            if videoID == renderedVideoID {
+                webView.go(to: backList.reversed()[1])
+            }
+            
         }
+        
     }
     
     // Handle Reload for DuckPlayer Videos

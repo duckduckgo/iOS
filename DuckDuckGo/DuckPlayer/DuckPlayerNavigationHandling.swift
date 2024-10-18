@@ -32,9 +32,8 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction,
-                          webView: WKWebView,
-                          navigationType: DuckPlayerNavigationType)
-    func handleJSNavigationFor(webView: WKWebView) -> Bool
+                          webView: WKWebView)
+    func handleURLChange(webView: WKWebView) -> Bool
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)

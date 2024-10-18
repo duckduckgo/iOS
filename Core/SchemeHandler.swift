@@ -51,6 +51,7 @@ public class SchemeHandler {
         case shortcuts
         case shortcutsProduction = "shortcuts-production"
         case workflow
+        case marketKit = "marketplace-kit"
     }
 
     private enum BlockedScheme: String {
@@ -74,6 +75,12 @@ public class SchemeHandler {
         }
 
         switch PlatformScheme(rawValue: schemeString) {
+        case .marketKit:
+            if #available(iOS 17.4, *) {
+                return .external(.askForConfirmation)
+            } else {
+                return .unknown
+            }
         case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss, .shortcuts, .shortcutsProduction, .workflow:
             return .external(.askForConfirmation)
         case .none:

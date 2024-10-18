@@ -120,7 +120,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
         
         handler.handleNavigation(navigationAction, webView: webView)
-        XCTAssertEqual(webView.url, nil)
+        XCTAssertEqual(webView.url, youtubeURL)
         
     }
     

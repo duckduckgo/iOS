@@ -276,7 +276,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             }
             return
         }
-
+        
         // Handle "open in YouTube" links (duck://player/openInYoutube)
         if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url),
            let (videoID, _) = newURL.youtubeVideoParams {

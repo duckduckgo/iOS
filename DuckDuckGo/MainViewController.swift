@@ -1120,7 +1120,7 @@ class MainViewController: UIViewController {
 
     private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
         guard brokenSitePromptViewHostingController != nil,
-                let event = brokenSitePromptEvent?.rawValue else { return }
+              brokenSitePromptEvent != nil else { return }
         brokenSitePromptViewHostingController = nil
         hideNotification()
     }

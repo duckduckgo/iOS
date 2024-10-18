@@ -189,7 +189,6 @@ public final class PersistentPixel: PersistentPixelFiring {
         )
 
         dispatchGroup.notify(queue: .global()) {
-            let errors = [dailyPixelStorageError, countPixelStorageError].compactMap { $0 }
             completion((dailyPixelStorageError: dailyPixelStorageError, countPixelStorageError: countPixelStorageError))
         }
     }

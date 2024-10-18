@@ -52,7 +52,7 @@ public class SchemeHandler {
         case shortcuts
         case shortcutsProduction = "shortcuts-production"
         case workflow
-        case marketKit = "marketplace-kit"
+        case marketplaceKit = "marketplace-kit"
     }
 
     private enum BlockedScheme: String {
@@ -76,7 +76,8 @@ public class SchemeHandler {
         }
 
         switch PlatformScheme(rawValue: schemeString) {
-        case .marketKit:
+        case .marketplaceKit:
+            // marketplaceKit urls have to be allowed through without interference
             if #available(iOS 17.4, *) {
                 return .allow
             } else {

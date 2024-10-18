@@ -83,13 +83,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return Constants.defaultHeaderHeight
     }
 
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-        if numberOfItems > 0 {
-            controller.hideLogo()
-        }
-    }
-
     func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }

@@ -21,7 +21,7 @@ import UIKit
 
 protocol NewTabPage: UIViewController {
 
-    var isDragging: Bool { get } // TODO: Mariusz, check if needed in both
+    var isDragging: Bool { get }
 
     func launchNewSearch()
     func openedAsNewTab(allowingKeyboard: Bool)

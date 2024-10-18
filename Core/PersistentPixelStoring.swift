@@ -122,7 +122,15 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
 
     // MARK: - Private
 
+    private var cachedPixelMetadata: [PersistentPixelMetadata]?
+
     private func readStoredPixelDataFromFileSystem() throws -> [PersistentPixelMetadata] {
+        dispatchPrecondition(condition: .onQueue(fileAccessQueue))
+
+        if let cachedPixelMetadata {
+            return cachedPixelMetadata
+        }
+
         guard fileManager.fileExists(atPath: fileURL.path) else {
             return []
         }
@@ -131,7 +139,9 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
             let pixelFileData = try Data(contentsOf: fileURL)
 
             do {
-                return try decoder.decode([PersistentPixelMetadata].self, from: pixelFileData)
+                let decodedMetadata = try decoder.decode([PersistentPixelMetadata].self, from: pixelFileData)
+                self.cachedPixelMetadata = decodedMetadata
+                return decodedMetadata
             } catch {
                 throw PersistentPixelStorageError.decodingError(error)
             }
@@ -141,11 +151,14 @@ final class DefaultPersistentPixelStorage: PersistentPixelStoring {
     }
 
     private func writePixelDataToFileSystem(pixels: [PersistentPixelMetadata]) throws {
+        dispatchPrecondition(condition: .onQueue(fileAccessQueue))
+        
         do {
             let encodedPixelData = try encoder.encode(pixels)
 
             do {
                 try encodedPixelData.write(to: fileURL)
+                self.cachedPixelMetadata = pixels
             } catch {
                 throw PersistentPixelStorageError.writeError(error)
             }

@@ -249,7 +249,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
                 
         Logger.duckPlayer.debug("Handling Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
-
+        
         // This is passed to the FE overlay at init to disable the overlay for one video
         duckPlayer.settings.allowFirstVideo = false
         
@@ -295,7 +295,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // If this is a new duck:// URL, load DuckPlayer Request
         if url.isDuckURLScheme {
            
-            guard let (videoID, _) = url.youtubeVideoParams, videoID != renderedVideoID else { return }
+            guard let (videoID, _) = url.youtubeVideoParams else { return }
             
             // If DuckPlayer is Enabled or in ask mode, render the video
             if duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk,
@@ -342,6 +342,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return false
         }
         
+        // If the URL is a DuckPlayer URL, navigation will be taken care by
+        // the delegate
+        guard !(webView.url?.isDuckURLScheme ?? false) else {
+            return false
+        }
+        
         // If the URL has actually changed
         guard webView.url != renderedURL else {
             Logger.duckPlayer.debug("DP: URL has not changed, skipping")
@@ -349,7 +355,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // If DuckPlayer is active
-        guard duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk else {
+        guard duckPlayer.settings.mode == .enabled else {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")
             return false
         }
@@ -426,7 +432,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         } else {
             // We may need to skip the previous URL
             // Which is the YouTube video we already rendered in DuckPlayer
-            guard let (videoID, _) = backList.reversed().first?.url.youtubeVideoParams else {
+            guard let (videoID, _) = backList.reversed().first?.url.youtubeVideoParams, duckPlayer.settings.mode == .enabled else {
                 webView.goBack()
                 return
             }

@@ -22,7 +22,6 @@ import UIKit
 protocol NewTabPage: UIViewController {
 
     var isDragging: Bool { get } // TODO: Mariusz, check if needed in both
-    func reloadFavorites() // TODO: Mariusz: check if needed with reactive approach
 
     func launchNewSearch()
     func openedAsNewTab(allowingKeyboard: Bool)

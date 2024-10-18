@@ -78,8 +78,7 @@ class FavoritesViewModel: ObservableObject {
                 self.faviconMissing()
             }
         })
-
-
+        
         favoriteDataSource.externalUpdates.sink { [weak self] _ in
             self?.updateData()
         }.store(in: &cancellables)

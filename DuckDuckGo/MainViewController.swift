@@ -673,7 +673,6 @@ class MainViewController: UIViewController {
                 }
                 self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
                 self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
-                self.newTabPageViewController?.reloadFavorites()
                 WidgetCenter.shared.reloadAllTimelines()
             }
     }
@@ -687,9 +686,6 @@ class MainViewController: UIViewController {
         syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.favoritesViewModel.reloadData()
-                DispatchQueue.main.async {
-                    self?.newTabPageViewController?.reloadFavorites()
-                }
             }
     }
 

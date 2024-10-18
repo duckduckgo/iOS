@@ -97,6 +97,8 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
+
+        view.backgroundColor = UIColor(designSystemColor: .background)
     }
 
     // MARK: - Private

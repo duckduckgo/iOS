@@ -274,7 +274,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
                 Logger.duckPlayer.debug("DP: Loading Simulated Request for \(url.absoluteString)")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                // The webview needs some time for state to propagate
+                // Before performing the simulated request
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     webView.stopLoading()
                     self.performRequest(request: newRequest, webView: webView)
                     self.renderedVideoID = videoID

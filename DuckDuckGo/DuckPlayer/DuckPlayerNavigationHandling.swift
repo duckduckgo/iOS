@@ -44,13 +44,17 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
     case notHandled(HandlingResult)
 }
 
+enum DuckPlayerNavigationDirection {
+    case back, forward
+}
+
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView)
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult
-    func handleGoBack(webView: WKWebView)
+    func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL

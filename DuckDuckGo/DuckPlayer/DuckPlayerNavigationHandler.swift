@@ -216,6 +216,15 @@ final class DuckPlayerNavigationHandler {
         webView.load(URLRequest(url: parsedURL))
     }
     
+    // Performs a simple back/forward navigation
+    private func performBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {
+        if direction == .back {
+            webView.goBack()
+        } else {
+            webView.goForward()
+        }
+    }
+    
     // Determines if the link should be opened in a new tab
     // And sets the correct navigationType
     // This is uses for JS based navigation links
@@ -418,50 +427,49 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     @MainActor
-    func handleGoBack(webView: WKWebView) {
-        
-        Logger.duckPlayer.debug("DP: Handling Back Navigation")
+    func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {
         
         let experiment = DuckPlayerLaunchExperiment()
         let duckPlayerMode = experiment.isExperimentCohort ? duckPlayerMode : .disabled
         
+        Logger.duckPlayer.debug("DP: Handling \(direction == .back ? "Back" : "Forward") Navigation")
+        
+        // Check if the DuckPlayer feature is enabled
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
-            webView.goBack()
+            performBackForwardNavigation(webView: webView, direction: direction)
             return
         }
         
-        // Check if the back list has items
-        guard !webView.backForwardList.backList.isEmpty else {
-            webView.goBack()
+        // Check if the list has items in the desired direction
+        let navigationList = direction == .back ? webView.backForwardList.backList : webView.backForwardList.forwardList
+        guard !navigationList.isEmpty else {
+            performBackForwardNavigation(webView: webView, direction: direction)
             return
         }
 
-        // Get the History List
-        let backList = webView.backForwardList.backList
-
-        // If we are not at Duck Player, just go back
+        // If we are not at DuckPlayer, just perform the navigation
         if !(webView.url?.isDuckPlayer ?? false) {
-            webView.goBack()
+            performBackForwardNavigation(webView: webView, direction: direction)
             
         } else {
-            // We may need to skip the previous URL
-            // Which is the YouTube video we already rendered in DuckPlayer
-            guard let (backListVideoID, _) = backList.reversed().first?.url.youtubeVideoParams,
+            // We may need to skip the YouTube video already rendered in DuckPlayer
+            guard let (listVideoID, _) = (direction == .back ? navigationList.reversed().first : navigationList.first)?.url.youtubeVideoParams,
                   let (currentVideoID, _) = webView.url?.youtubeVideoParams,
-                    duckPlayer.settings.mode == .enabled else {
-                webView.goBack()
+                  duckPlayer.settings.mode == .enabled else {
+                performBackForwardNavigation(webView: webView, direction: direction)
                 return
             }
             
-            if backListVideoID == currentVideoID {
-                webView.go(to: backList.reversed()[1])
+            // Check if the current and previous/next video IDs match
+            if listVideoID == currentVideoID {
+                let nextIndex = direction == .back ? 1 : 0
+                webView.go(to: navigationList.reversed()[nextIndex])
             } else {
-                webView.goBack()
+                performBackForwardNavigation(webView: webView, direction: direction)
             }
-            
         }
-        
     }
+
     
     // Handle Reload for DuckPlayer Videos
     @MainActor

@@ -486,7 +486,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     
-    /*
     func testHandleJSNavigationEventWhenEnabled() {
         let youtubeURL = URL(string: "duck://player/abc123")!
         
@@ -532,6 +531,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         
         XCTAssertFalse(handler.navigationType == .linkActivated)
     }
-     */
+     
 
 }

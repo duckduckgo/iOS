@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "new-cpm-experiment",
-        "revision" : "60b5c80d341c60195dfc6f1676dbd6ea9d42d8f9"
+        "revision" : "f1a033cc4b97ab6b4d845815e825ba179c02635a",
+        "version" : "199.4.0"
       }
     },
     {

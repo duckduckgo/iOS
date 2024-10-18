@@ -18,8 +18,6 @@
 //
 
 import XCTest
-import OHHTTPStubs
-import OHHTTPStubsSwift
 import Networking
 import TestUtils
 import Persistence
@@ -404,12 +402,6 @@ final class DailyPixelTests: XCTestCase {
 
     func testThatDailyPixelWithDefaultPixelSuffixesWillAppendDailyAndCount() {
         let expectation = XCTestExpectation()
-
-        stub { request in
-            request.url?.absoluteString.contains(Pixel.Event.forgetAllPressedBrowsing.name + "_daily") == true
-        } response: { _ in
-            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-        }
 
         updateLastFireDateToYesterday(for: .forgetAllPressedBrowsing)
 

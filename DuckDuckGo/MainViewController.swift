@@ -77,12 +77,8 @@ class MainViewController: UIViewController {
         emailManager.requestDelegate = self
         return emailManager
     }()
-    
-    var homeViewController: HomeViewController?
+
     var newTabPageViewController: NewTabPageViewController?
-    var homeController: (NewTabPage & HomeScreenTransitionSource)? {
-        homeViewController ?? newTabPageViewController
-    }
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
     
@@ -482,7 +478,7 @@ class MainViewController: UIViewController {
 
     @objc
     private func keyboardWillHide() {
-        if homeController?.isDragging == true, keyboardShowing {
+        if newTabPageViewController?.isDragging == true, keyboardShowing {
             Pixel.fire(pixel: .addressBarGestureDismiss)
         }
     }
@@ -677,7 +673,7 @@ class MainViewController: UIViewController {
                 }
                 self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
                 self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
-                self.homeController?.reloadFavorites()
+                self.newTabPageViewController?.reloadFavorites()
                 WidgetCenter.shared.reloadAllTimelines()
             }
     }
@@ -692,7 +688,7 @@ class MainViewController: UIViewController {
             .sink { [weak self] _ in
                 self?.favoritesViewModel.reloadData()
                 DispatchQueue.main.async {
-                    self?.homeController?.reloadFavorites()
+                    self?.newTabPageViewController?.reloadFavorites()
                 }
             }
     }
@@ -792,7 +788,6 @@ class MainViewController: UIViewController {
         }
 
         let newTabDaxDialogFactory = NewTabDaxDialogFactory(delegate: self, contextualOnboardingLogic: DaxDialogs.shared, onboardingPixelReporter: contextualOnboardingPixelReporter)
-//                if homeTabManager.isNewTabPageSectionsEnabled {
         let controller = NewTabPageViewController(tab: tabModel,
                                                   isNewTabPageCustomizationEnabled: homeTabManager.isNewTabPageSectionsEnabled,
                                                   interactionModel: favoritesViewModel,
@@ -813,33 +808,14 @@ class MainViewController: UIViewController {
         addToContentContainer(controller: controller)
         viewCoordinator.logoContainer.isHidden = true
         adjustNewTabPageSafeAreaInsets(for: appSettings.currentAddressBarPosition)
-//        } else {
-//            let homePageDependencies = HomePageDependencies(homePageConfiguration: homePageConfiguration,
-//                                                            model: tabModel,
-//                                                            favoritesViewModel: favoritesViewModel,
-//                                                            appSettings: appSettings,
-//                                                            syncService: syncService,
-//                                                            syncDataProviders: syncDataProviders,
-//                                                            privacyProDataReporter: privacyProDataReporter,
-//                                                            variantManager: variantManager,
-//                                                            newTabDialogFactory: newTabDaxDialogFactory,
-//                                                            newTabDialogTypeProvider: DaxDialogs.shared)
-//            let controller = HomeViewController.loadFromStoryboard(homePageDependecies: homePageDependencies)
-//
-//            controller.delegate = self
-//            controller.chromeDelegate = self
-//            homeViewController = controller
-//            addToContentContainer(controller: controller)
-//        }
 
         refreshControls()
         syncService.scheduler.requestSyncImmediately()
     }
 
     fileprivate func removeHomeScreen() {
-        homeController?.willMove(toParent: nil)
-        homeController?.dismiss()
-        homeViewController = nil
+        newTabPageViewController?.willMove(toParent: nil)
+        newTabPageViewController?.dismiss()
         newTabPageViewController = nil
     }
 
@@ -1190,7 +1166,7 @@ class MainViewController: UIViewController {
 
     func refreshMenuButtonState() {
         let expectedState: MenuButton.State
-        if !homeTabManager.isNewTabPageSectionsEnabled && homeController != nil {
+        if !homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
             expectedState = .bookmarksImage
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
@@ -1429,18 +1405,7 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
-        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
-    }
-    
-    func animateLogoAppearance() {
-        viewCoordinator.logoContainer.alpha = 0
-        viewCoordinator.logoContainer.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            UIView.animate(withDuration: 0.2) {
-                self.viewCoordinator.logoContainer.alpha = 1
-                self.viewCoordinator.logoContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }
-        }
+        newTabPageViewController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
     func updateFindInPage() {
@@ -1820,7 +1785,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         if updatedQuery.isEmpty {
-            if homeController != nil {
+            if newTabPageViewController != nil {
                 hideSuggestionTray()
             } else {
                 let didShow = tryToShowSuggestionTray(.favorites)
@@ -1930,7 +1895,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func fireControllerAwarePixel(ntp: Pixel.Event, serp: Pixel.Event, website: Pixel.Event) {
-        if homeController != nil {
+        if newTabPageViewController != nil {
             Pixel.fire(pixel: ntp)
         } else if let currentTab {
             if currentTab.url?.isDuckDuckGoSearch == true {
@@ -2002,7 +1967,7 @@ extension MainViewController: OmniBarDelegate {
             fireControllerAwarePixel(ntp: .addressBarClickOnNTP, serp: .addressBarClickOnSERP, website: .addressBarClickOnWebsite)
         }
 
-        guard homeController == nil else { return }
+        guard newTabPageViewController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             tryToShowSuggestionTray(.autocomplete(query: query))
@@ -2019,10 +1984,10 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        guard let homeController = homeController else {
+        guard let newTabPageViewController = newTabPageViewController else {
             return selectQueryText
         }
-        homeController.launchNewSearch()
+        newTabPageViewController.launchNewSearch()
         return selectQueryText
     }
 
@@ -2062,7 +2027,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .favoriteLaunchedWebsite)
-        homeViewController?.chromeDelegate = nil
+        newTabPageViewController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         if url.isBookmarklet() {
@@ -2085,7 +2050,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     }
 
     func autocomplete(selectedSuggestion suggestion: Suggestion) {
-        homeViewController?.chromeDelegate = nil
+        newTabPageViewController?.chromeDelegate = nil
         dismissOmniBar()
         viewCoordinator.omniBar.cancel()
         switch suggestion {
@@ -2110,7 +2075,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             loadUrl(url)
 
         case .openTab(title: _, url: let url):
-            if homeViewController != nil, let tab = tabManager.model.currentTab {
+            if newTabPageViewController != nil, let tab = tabManager.model.currentTab {
                 self.closeTab(tab)
             }
             loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: .noAttribution)
@@ -2189,49 +2154,6 @@ extension MainViewController {
             loadUrl(url)
         }
     }
-}
-
-extension MainViewController: HomeControllerDelegate {
-    
-    func home(_ home: HomeViewController, didRequestQuery query: String) {
-        loadQueryInNewTab(query)
-    }
-
-    func home(_ home: HomeViewController, didRequestUrl url: URL) {
-        handleRequestedURL(url)
-    }
-    
-    func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        segueToEditBookmark(favorite)
-    }
-    
-    func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
-        allowContentUnderflow = shouldOverflow
-        return contentUnderflow
-    }
-
-    func homeDidDeactivateOmniBar(home: HomeViewController) {
-        hideSuggestionTray()
-        dismissOmniBar()
-    }
-    
-    func showSettings(_ home: HomeViewController) {
-        segueToSettings()
-    }
-    
-    func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
-        viewCoordinator.logoContainer.isHidden = hidden
-    }
-    
-    func homeDidRequestLogoContainer(_ home: HomeViewController) -> UIView {
-        return viewCoordinator.logoContainer
-    }
-    
-    func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
-        viewCoordinator.statusBackground.alpha = percent
-        viewCoordinator.navigationBarContainer.alpha = percent
-    }
-    
 }
 
 extension MainViewController: NewTabPageControllerDelegate {
@@ -2509,17 +2431,19 @@ extension MainViewController: TabDelegate {
 
 extension MainViewController: TabSwitcherDelegate {
 
+    private func animateLogoAppearance() {
+        newTabPageViewController?.view.transform = CGAffineTransform().scaledBy(x: 0.5, y: 0.5)
+        newTabPageViewController?.view.alpha = 0.0
+        UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseInOut, .beginFromCurrentState]) {
+            self.newTabPageViewController?.view.transform = .identity
+            self.newTabPageViewController?.view.alpha = 1.0
+        }
+    }
+
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         newTab()
-        if homeViewController != nil {
+        if newTabPageViewController != nil {
             animateLogoAppearance()
-        } else if newTabPageViewController != nil {
-            newTabPageViewController?.view.transform = CGAffineTransform().scaledBy(x: 0.5, y: 0.5)
-            newTabPageViewController?.view.alpha = 0.0
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: [.curveEaseInOut, .beginFromCurrentState]) {
-                self.newTabPageViewController?.view.transform = .identity
-                self.newTabPageViewController?.view.alpha = 1.0
-            }
         }
     }
 
@@ -2537,7 +2461,7 @@ extension MainViewController: TabSwitcherDelegate {
             //  switcher is still presented.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 tabSwitcher.dismiss(animated: true) {
-                    self.homeController?.viewDidAppear(true)
+                    self.newTabPageViewController?.viewDidAppear(true)
                 }
             }
         }
@@ -2743,7 +2667,7 @@ extension MainViewController: AutoClearWorker {
 
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
-                self.homeController?.showNextDaxDialog()
+                self.newTabPageViewController?.showNextDaxDialog()
             } else if KeyboardSettings().onNewTab {
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
@@ -2837,7 +2761,7 @@ extension MainViewController: OnboardingDelegate {
         markOnboardingSeen()
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
-        homeController?.onboardingCompleted()
+        newTabPageViewController?.onboardingCompleted()
     }
     
     func markOnboardingSeen() {

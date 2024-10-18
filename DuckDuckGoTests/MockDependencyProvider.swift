@@ -33,7 +33,6 @@ class MockDependencyProvider: DependencyProvider {
     var featureFlagger: FeatureFlagger
     var internalUserDecider: InternalUserDecider
     var storageCache: StorageCache
-    var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
     var autofillLoginSession: AutofillLoginSession
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
@@ -56,7 +55,6 @@ class MockDependencyProvider: DependencyProvider {
         featureFlagger = defaultProvider.featureFlagger
         internalUserDecider = defaultProvider.internalUserDecider
         storageCache = defaultProvider.storageCache
-        voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager

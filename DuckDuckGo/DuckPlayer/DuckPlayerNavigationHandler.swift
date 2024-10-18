@@ -207,13 +207,19 @@ final class DuckPlayerNavigationHandler {
     // Validates a youtube watch URL and loads it
     private func redirectToYouTubeVideo(url: URL?, webView: WKWebView) {
         guard let url,
-               let parsedURL = getYoutubeURLFromOpenInYoutubeLink(url: url)?.addingWatchInYoutubeQueryParameter(),
-                parsedURL.isYoutubeWatch,
-                let (videoID, _) = url.youtubeVideoParams else { return }
-                
+              let (videoID, _) = url.youtubeVideoParams else { return }
+        
+        var redirectURL = url
+        
+        // Parse OpenInYouTubeURLs if present
+        if let parsedURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
+            redirectURL = parsedURL
+        }
         duckPlayer.settings.allowFirstVideo = true
         renderedVideoID = videoID
-        webView.load(URLRequest(url: parsedURL))
+        if let finalURL = redirectURL.addingWatchInYoutubeQueryParameter() {
+            webView.load(URLRequest(url: redirectURL))
+        }
     }
     
     // Performs a simple back/forward navigation

@@ -204,6 +204,29 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
+    @MainActor
+    func testHandleNavigationLoadsOpenInYoutubeURL() {
+        
+        let link = URL(string: "duck://player/openInYoutube?v=12345")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link))
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .alwaysAsk
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, experiment: DuckPlayerExperimentMock())
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Youtube Redirect Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            XCTAssertEqual(self.webView.url?.absoluteString, "https://m.youtube.com/watch?v=12345&embeds_referring_euri=some_value")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    
+    }
+    
     
     // MARK: Handle URL Change tests
     @MainActor

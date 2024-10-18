@@ -183,24 +183,28 @@ final class SubscriptionFlowViewModel: ObservableObject {
         case .cancelledByUser:
             state.transactionError = nil
         case .accountCreationFailed:
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureAccountNotCreated,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             state.transactionError = .generalError
         default:
             state.transactionError = .generalError
         }
 
         if isStoreError {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureStoreError)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureStoreError,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
 
         if isBackendError {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureBackendError)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailureBackendError,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
 
         if state.transactionError != .hasActiveSubscription &&
            state.transactionError != .cancelledByUser {
             // The observer of `transactionError` does the same calculation, if the error is anything else than .hasActiveSubscription then shows a "Something went wrong" alert
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseFailure,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
     }
     

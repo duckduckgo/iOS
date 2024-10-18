@@ -19,6 +19,8 @@
 
 import Foundation
 import Core
+import Networking
+import Persistence
 
 struct PixelInfo {
     let pixelName: String?
@@ -38,8 +40,10 @@ struct PixelInfo {
 }
 
 final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
-    
+
     static var expectedFireError: Error?
+    static var expectedDailyPixelFireError: Error?
+    static var expectedCountPixelFireError: Error?
 
     static var allPixelsFired = [PixelInfo]()
 
@@ -119,6 +123,21 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         allPixelsFired.append(info)
     }
 
+    static func fireDailyAndCount(pixel: Pixel.Event,
+                                  pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
+                                  error: (any Error)?,
+                                  withAdditionalParameters params: [String: String],
+                                  includedParameters: [Core.Pixel.QueryParameters],
+                                  pixelFiring: any PixelFiring.Type,
+                                  dailyPixelStore: any Persistence.KeyValueStoring,
+                                  onDailyComplete: @escaping ((any Error)?) -> Void,
+                                  onCountComplete: @escaping ((any Error)?) -> Void) {
+        lastDailyPixelInfo = PixelInfo(pixelName: pixel.name, error: error, params: params, includedParams: includedParameters)
+
+        onDailyComplete(expectedDailyPixelFireError)
+        onCountComplete(expectedCountPixelFireError)
+    }
+
     // -
 
     static func tearDown() {
@@ -126,7 +145,78 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
         lastPixelInfo = nil
         lastDailyPixelInfo = nil
         expectedFireError = nil
+        expectedDailyPixelFireError = nil
+        expectedCountPixelFireError = nil
     }
 
     private init() {}
+}
+
+class DelayedPixelFiringMock: PixelFiring {
+
+    static var lastPixelInfo: PixelInfo?
+    static var lastParams: [String: String]? { lastPixelInfo?.params }
+    static var lastPixel: String? { lastPixelInfo?.pixelName }
+    static var lastIncludedParams: [Pixel.QueryParameters]? { lastPixelInfo?.includedParams }
+    static var completionHandlerUpdateClosure: ((Int) -> Void)?
+
+    static var completionError: Error?
+    static var lastCompletionHandlers: [(Error?) -> Void] = [] {
+        didSet {
+            completionHandlerUpdateClosure?(lastCompletionHandlers.count)
+        }
+    }
+
+    static func tearDown() {
+        lastPixelInfo = nil
+        completionError = nil
+        completionHandlerUpdateClosure = nil
+        lastCompletionHandlers = []
+    }
+
+    static func callCompletionHandler() {
+        for completionHandler in lastCompletionHandlers {
+            completionHandler(completionError)
+        }
+    }
+
+    static func fire(_ pixel: Core.Pixel.Event,
+                     withAdditionalParameters params: [String: String],
+                     includedParameters: [Core.Pixel.QueryParameters],
+                     onComplete: @escaping ((any Error)?) -> Void) {
+        self.fire(pixelNamed: pixel.name, withAdditionalParameters: params, includedParameters: includedParameters, onComplete: onComplete)
+    }
+
+    static func fire(pixelNamed pixelName: String,
+                     withAdditionalParameters params: [String: String],
+                     includedParameters: [Core.Pixel.QueryParameters],
+                     onComplete: @escaping ((any Error)?) -> Void) {
+        lastPixelInfo = PixelInfo(pixelName: pixelName, error: nil, params: params, includedParams: includedParameters)
+        lastCompletionHandlers.append(onComplete)
+    }
+
+    static func fire(_ pixel: Core.Pixel.Event, withAdditionalParameters params: [String: String]) {
+        lastPixelInfo = PixelInfo(pixelName: pixel.name, error: nil, params: params, includedParams: nil)
+    }
+
+    static func fire(pixelNamed pixelName: String,
+                     forDeviceType deviceType: UIUserInterfaceIdiom?,
+                     withAdditionalParameters params: [String: String],
+                     allowedQueryReservedCharacters: CharacterSet?,
+                     withHeaders headers: Networking.APIRequest.Headers,
+                     includedParameters: [Core.Pixel.QueryParameters],
+                     onComplete: @escaping ((any Error)?) -> Void) {
+        lastPixelInfo = PixelInfo(pixelName: pixelName, error: nil, params: params, includedParams: includedParameters)
+        lastCompletionHandlers.append(onComplete)
+    }
+
+    static func fire(pixel: Pixel.Event,
+                     error: Error?,
+                     includedParameters: [Pixel.QueryParameters],
+                     withAdditionalParameters params: [String: String],
+                     onComplete: @escaping (Error?) -> Void) {
+        lastPixelInfo = PixelInfo(pixelName: pixel.name, error: nil, params: params, includedParams: includedParameters)
+        lastCompletionHandlers.append(onComplete)
+    }
+
 }

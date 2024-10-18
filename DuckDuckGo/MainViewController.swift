@@ -1850,7 +1850,7 @@ extension MainViewController: OmniBarDelegate {
 
         let menuEntries: [BrowsingMenuEntry]
         let headerEntries: [BrowsingMenuEntry]
-        if homeTabManager.isNewTabPageSectionsEnabled {
+        if homeTabManager.isNewTabPageSectionsEnabled && newTabPageViewController != nil {
             menuEntries = tab.buildShortcutsMenu()
             headerEntries = []
         } else {

@@ -1,5 +1,5 @@
 //
-//  HomeViewControllerDaxDialogTests.swift
+//  NewTabPageControllerDaxDialogTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -26,12 +26,12 @@ import SwiftUI
 import Persistence
 import BrowserServicesKit
 
-final class HomeViewControllerDaxDialogTests: XCTestCase {
+final class NewTabPageControllerDaxDialogTests: XCTestCase {
 
     var variantManager: CapturingVariantManager!
     var dialogFactory: CapturingNewTabDaxDialogProvider!
     var specProvider: MockNewTabDialogSpecProvider!
-    var hvc: HomeViewController!
+    var hvc: NewTabPageViewController!
 
     override func setUpWithError() throws {
         let db = CoreDataDatabase.bookmarksMock
@@ -56,19 +56,18 @@ final class HomeViewControllerDaxDialogTests: XCTestCase {
             remoteMessagingAvailabilityProvider: MockRemoteMessagingAvailabilityProviding(),
             duckPlayerStorage: MockDuckPlayerStorage())
         let homePageConfiguration = HomePageConfiguration(remoteMessagingClient: remoteMessagingClient, privacyProDataReporter: MockPrivacyProDataReporter())
-        let dependencies = HomePageDependencies(
-            homePageConfiguration: homePageConfiguration,
-            model: Tab(),
-            favoritesViewModel: MockFavoritesListInteracting(),
-            appSettings: AppSettingsMock(),
+        hvc = NewTabPageViewController(
+            tab: Tab(),
+            isNewTabPageCustomizationEnabled: false,
+            interactionModel: MockFavoritesListInteracting(),
             syncService: MockDDGSyncing(authState: .active, isSyncInProgress: false),
-            syncDataProviders: dataProviders,
-            privacyProDataReporter: MockPrivacyProDataReporter(),
+            syncBookmarksAdapter: dataProviders.bookmarksAdapter,
+            homePageMessagesConfiguration: homePageConfiguration,
             variantManager: variantManager,
             newTabDialogFactory: dialogFactory,
-            newTabDialogTypeProvider: specProvider)
-        hvc = HomeViewController.loadFromStoryboard(
-            homePageDependecies: dependencies)
+            newTabDialogTypeProvider: specProvider,
+            faviconLoader: EmptyFaviconLoading()
+        )
 
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

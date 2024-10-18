@@ -40,8 +40,12 @@ actor FavoritesFaviconLoader: FavoritesFaviconLoading {
         }
 
         tasks[domain] = newTask
+        let value = await newTask.value
+        if value == nil {
+            tasks[domain] = nil
+        }
 
-        return await newTask.value
+        return value
     }
 
     nonisolated func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {

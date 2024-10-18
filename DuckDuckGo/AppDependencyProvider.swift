@@ -34,7 +34,6 @@ protocol DependencyProvider {
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
     var storageCache: StorageCache { get }
-    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
@@ -66,7 +65,6 @@ final class AppDependencyProvider: DependencyProvider {
     let featureFlagger: FeatureFlagger
 
     let storageCache = StorageCache()
-    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()

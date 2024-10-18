@@ -77,7 +77,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             contextualOnboardingLogic: contextualOnboardingLogicMock,
             contextualOnboardingPixelReporter: OnboardingPixelReporterMock(),
             tutorialSettings: tutorialSettingsMock,
-            subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled
+            subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
+            voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true)
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

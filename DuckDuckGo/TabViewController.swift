@@ -1798,9 +1798,6 @@ extension TabViewController: WKNavigationDelegate {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                     privacyProDataReporter.saveSearchCount()
-                    
-                    // Duck Player Search Experiment
-                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

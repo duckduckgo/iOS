@@ -35,7 +35,6 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var navigationType: WKNavigationType = .other
-    var experiment: DuckPlayerLaunchExperimentHandling
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
     private struct Constants {
@@ -58,12 +57,10 @@ final class DuckPlayerNavigationHandler {
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         appSettings: AppSettings,
-         experiment: DuckPlayerLaunchExperimentHandling = DuckPlayerLaunchExperiment()) {
+         appSettings: AppSettings) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
-        self.experiment = experiment
     }
     
     static var htmlTemplatePath: String {
@@ -110,7 +107,7 @@ final class DuckPlayerNavigationHandler {
     }
     
     private var duckPlayerMode: DuckPlayerMode {
-        let isEnabled = experiment.isEnrolled && experiment.isExperimentCohort && featureFlagger.isFeatureOn(.duckPlayer)
+        let isEnabled = featureFlagger.isFeatureOn(.duckPlayer)
         return isEnabled ? duckPlayer.settings.mode : .disabled
     }
     
@@ -158,35 +155,9 @@ final class DuckPlayerNavigationHandler {
         // Parse openInYoutubeURL if present
         let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
         
-        guard let (videoID, _) = newURL.youtubeVideoParams else { return }
-        
         // If this is a SERP link, set the referrer accordingly
         if let navigationAction, isSERPLink(navigationAction: navigationAction) {
             referrer = .serp
-        }
-                
-        if featureFlagger.isFeatureOn(.duckPlayer) || internalUserDecider.isInternalUser {
-            
-            // DuckPlayer Experiment run
-            let experiment = DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayerMode,
-                                                        referrer: referrer,
-                                                        isInternalUser: internalUserDecider.isInternalUser)
-            
-            // Enroll user if not enrolled
-            if !experiment.isEnrolled {
-                experiment.assignUserToCohort()
-            }
-            
-            // DuckPlayer is disabled before user enrolls,
-            // So trigger a settings change notification
-            // to let the FE know about the 'actual' setting
-            // and update Experiment value
-            if experiment.isExperimentCohort {
-                duckPlayer.settings.triggerNotification()
-                experiment.duckPlayerMode = duckPlayer.settings.mode
-            }
-            
-            experiment.fireYoutubePixel(videoID: videoID)
         }
 
     }
@@ -303,7 +274,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
                 Logger.duckPlayer.debug("DP: Loading Simulated Request for \(url.absoluteString)")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                webView.stopLoading()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     self.performRequest(request: newRequest, webView: webView)
                     self.renderedVideoID = videoID
                 }
@@ -393,8 +366,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {
         
-        let experiment = DuckPlayerLaunchExperiment()
-        let duckPlayerMode = experiment.isExperimentCohort ? duckPlayerMode : .disabled
+        // Reset DuckPlayer status
+        duckPlayer.settings.allowFirstVideo = false
         
         Logger.duckPlayer.debug("DP: Handling \(direction == .back ? "Back" : "Forward") Navigation")
         
@@ -447,6 +420,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         Logger.duckPlayer.debug("DP: Handling Reload")
         
+        // Reset DuckPlayer status
+        duckPlayer.settings.allowFirstVideo = false
         renderedVideoID = nil
         renderedURL = nil
         
@@ -470,6 +445,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleAttach(webView: WKWebView) {
         
         Logger.duckPlayer.debug("DP: Attach WebView")
+        
+        // Reset DuckPlayer status
+        duckPlayer.settings.allowFirstVideo = false
         
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return

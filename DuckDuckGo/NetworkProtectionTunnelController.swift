@@ -293,6 +293,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         return tunnelManager
     }
 
+    @MainActor
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
 
@@ -319,6 +320,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     /// Setups the tunnel manager if it's not set up already.
     ///
+    @MainActor
     private func setup(_ tunnelManager: NETunnelProviderManager) {
         tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
@@ -327,14 +329,69 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             let protocolConfiguration = NETunnelProviderProtocol()
             protocolConfiguration.serverAddress = "127.0.0.1" // Dummy address... the NetP service will take care of grabbing a real server
 
+            protocolConfiguration.providerConfiguration = [
+                NetworkProtectionOptionKey.includedRoutes: includedRoutes().map(\.stringRepresentation) as NSArray
+            ]
+
             // always-on
             protocolConfiguration.disconnectOnSleep = false
+
+            // kill switch
+            protocolConfiguration.enforceRoutes = AppDependencyProvider.shared.vpnSettings.enforceRoutes
+
+            #if DEBUG
+            if #available(iOS 17.4, *) {
+                protocolConfiguration.excludeDeviceCommunication = true
+            }
+            #endif
 
             return protocolConfiguration
         }()
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    /// extra Included Routes appended to 0.0.0.0, ::/0 (peers) and interface.addresses
+    @MainActor
+    private func includedRoutes() -> [NetworkProtection.IPAddressRange] {
+        [
+            IPAddressRange(stringLiteral: "0.0.0.0/0"),
+            IPAddressRange(stringLiteral: "1.0.0.0/8"),
+            IPAddressRange(stringLiteral: "2.0.0.0/8"),
+            IPAddressRange(stringLiteral: "3.0.0.0/8"),
+            IPAddressRange(stringLiteral: "4.0.0.0/6"),
+            IPAddressRange(stringLiteral: "8.0.0.0/7"),
+            IPAddressRange(stringLiteral: "10.11.12.1"),
+            IPAddressRange(stringLiteral: "11.0.0.0/8"),
+            IPAddressRange(stringLiteral: "12.0.0.0/6"),
+            IPAddressRange(stringLiteral: "16.0.0.0/4"),
+            IPAddressRange(stringLiteral: "32.0.0.0/3"),
+            IPAddressRange(stringLiteral: "64.0.0.0/2"),
+            IPAddressRange(stringLiteral: "128.0.0.0/3"),
+            IPAddressRange(stringLiteral: "160.0.0.0/5"),
+            IPAddressRange(stringLiteral: "168.0.0.0/6"),
+            IPAddressRange(stringLiteral: "172.0.0.0/12"),
+            IPAddressRange(stringLiteral: "172.32.0.0/11"),
+            IPAddressRange(stringLiteral: "172.64.0.0/10"),
+            IPAddressRange(stringLiteral: "172.128.0.0/9"),
+            IPAddressRange(stringLiteral: "173.0.0.0/8"),
+            IPAddressRange(stringLiteral: "174.0.0.0/7"),
+            IPAddressRange(stringLiteral: "176.0.0.0/4"),
+            IPAddressRange(stringLiteral: "192.0.0.0/9"),
+            IPAddressRange(stringLiteral: "192.128.0.0/11"),
+            IPAddressRange(stringLiteral: "192.160.0.0/13"),
+            IPAddressRange(stringLiteral: "192.169.0.0/16"),
+            IPAddressRange(stringLiteral: "192.170.0.0/15"),
+            IPAddressRange(stringLiteral: "192.172.0.0/14"),
+            IPAddressRange(stringLiteral: "192.176.0.0/12"),
+            IPAddressRange(stringLiteral: "192.192.0.0/10"),
+            IPAddressRange(stringLiteral: "193.0.0.0/8"),
+            IPAddressRange(stringLiteral: "194.0.0.0/7"),
+            IPAddressRange(stringLiteral: "196.0.0.0/6"),
+            IPAddressRange(stringLiteral: "200.0.0.0/5"),
+            IPAddressRange(stringLiteral: "208.0.0.0/4")
+         ]
     }
 
     // MARK: - Observing Configuration Changes

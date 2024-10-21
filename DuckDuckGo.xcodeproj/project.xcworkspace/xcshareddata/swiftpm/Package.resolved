@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/enable-import-prompt-for-all-users",
-        "revision" : "f72f952e71e1e5c730cf228cb0dc3b7b58620fd3"
+        "revision" : "9f62aacd878a0c05bff7256eb25b8776aa4e917f",
+        "version" : "200.0.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "branch" : "dbajpeyi/remove-get-available-input-types-caching",
-        "revision" : "131e0d5efc8548b449fa4b811004fba26048a41c"
+        "revision" : "945ac09a0189dc6736db617867fde193ea984b20",
+        "version" : "15.0.0"
       }
     },
     {

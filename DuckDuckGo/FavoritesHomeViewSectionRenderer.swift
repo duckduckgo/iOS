@@ -43,7 +43,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         static let defaultHeaderHeight: CGFloat = 20
         static let horizontalMargin: CGFloat = 2
         static let largeModeMargin: CGFloat = 24
-        
+        static let sideInsets: CGFloat = 25
+
     }
     
     let viewModel: FavoritesListInteracting
@@ -96,7 +97,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
         } else {
-            let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
+            let defaultMargin = FavoritesHomeViewSectionRenderer.Constants.sideInsets
             let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }

@@ -40,6 +40,7 @@ import SpecialErrorPages
 import NetworkProtection
 import Onboarding
 import os.log
+import Navigation
 
 class TabViewController: UIViewController {
 
@@ -166,6 +167,9 @@ class TabViewController: UIViewController {
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
     private var blobDownloadTargetFrame: WKFrameInfo?
+
+    // Recent request's URL if its WKNavigationAction had shouldPerformDownload set to true
+    private var recentNavigationActionShouldPerformDownloadURL: URL?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     
@@ -1269,7 +1273,7 @@ extension TabViewController: WKNavigationDelegate {
     private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
                                             completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard shouldBypassSSLError,
-        let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
+              let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
             completionHandler(.performDefaultHandling, nil)
             return
         }
@@ -1319,7 +1323,8 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
 
-        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
+        let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
@@ -1331,11 +1336,39 @@ extension TabViewController: WKNavigationDelegate {
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+        // Important: Order of these checks matter!
+        if urlSchemeType == .blob {
+            // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
+            if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
+                // BLOB already has a temporary downloaded so and we can allow loading it
+                blobDownloadTargetFrame = nil
+                decisionHandler(.allow)
+            } else {
+                // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
+                decisionHandler(.download)
+            }
+        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+            // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
+            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            mostRecentAutoPreviewDownloadID = download?.id
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+        } else if shouldTriggerDownloadAction(for: navigationResponse),
+                  let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+            // 3. We know the response should trigger the file download prompt
+            self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            } cancelHandler: {
+                decisionHandler(.cancel)
+            }
+        } else if navigationResponse.canShowMIMEType {
+            // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+                // Loading a file preview in web view
                 decisionHandler(decision)
             } else {
+                // Loading HTML
                 if navigationResponse.isForMainFrame && isSuccessfulResponse {
                     adClickAttributionDetection.on2XXResponse(url: url)
                 }
@@ -1343,38 +1376,26 @@ extension TabViewController: WKNavigationDelegate {
                     decisionHandler(.allow)
                 }
             }
-        } else if isSuccessfulResponse {
-            if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                mostRecentAutoPreviewDownloadID = download?.id
-                Pixel.fire(pixel: .downloadStarted,
-                           withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-            } else if let url = navigationResponse.response.url,
-                      case .blob = SchemeHandler.schemeType(for: url) {
-                decisionHandler(.download)
-
-            } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
-                .downloadMetaData(for: navigationResponse.response) {
-                if view.window == nil {
-                    decisionHandler(.cancel)
-                } else {
-                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                    } cancelHandler: {
-                        decisionHandler(.cancel)
-                    }
-                    // Rewrite the current URL to prevent spoofing from download URLs
-                    self.chromeDelegate?.omniBar.textField.text = "about:blank"
-                }
-            } else {
-                Pixel.fire(pixel: .unhandledDownload)
-                decisionHandler(.cancel)
-            }
-
         } else {
-            // MIME type should trigger download but response has no 2xx status code
+            // Fallback
             decisionHandler(.allow)
         }
+    }
+
+    private func shouldTriggerDownloadAction(for navigationResponse: WKNavigationResponse) -> Bool {
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
+        let httpResponse = navigationResponse.response as? HTTPURLResponse
+
+        // HTTP response has "Content-Disposition: attachment" header
+        let hasContentDispositionAttachment = httpResponse?.shouldDownload ?? false
+
+        // If preceding WKNavigationAction requested to start the download (e.g. link `download` attribute or BLOB object)
+        let hasNavigationActionRequestedDownload = (recentNavigationActionShouldPerformDownloadURL != nil) && recentNavigationActionShouldPerformDownloadURL == navigationResponse.response.url
+
+        // File can be rendered by web view or in custom preview handled by FilePreviewHelper
+        let canLoadOrPreviewTheFile = navigationResponse.canShowMIMEType || FilePreviewHelper.canAutoPreviewMIMEType(mimeType)
+
+        return hasContentDispositionAttachment || hasNavigationActionRequestedDownload || !canLoadOrPreviewTheFile
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -1408,7 +1429,9 @@ extension TabViewController: WKNavigationDelegate {
         urlProvidedBasicAuthCredential = nil
 
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         includedParameters: [.appVersion, .atb])
         }
 
         specialErrorPageUserScript?.isEnabled = webView.url == failedURL
@@ -1760,6 +1783,8 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if navigationAction.isTargetingMainFrame(),
+           !navigationAction.isSameDocumentNavigation,
+           !navigationAction.shouldDownload,
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
@@ -1834,6 +1859,8 @@ extension TabViewController: WKNavigationDelegate {
 
         let tld = storageCache.tld
         
+        // If WKNavigationAction requests to shouldPerformDownload prepare for handling it in decidePolicyFor:navigationResponse:
+        recentNavigationActionShouldPerformDownloadURL = navigationAction.shouldPerformDownload ? navigationAction.request.url : nil
 
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
@@ -1871,7 +1898,7 @@ extension TabViewController: WKNavigationDelegate {
             }
            
         }
-        
+
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -2129,17 +2156,6 @@ extension TabViewController {
             temporaryDownloadForPreviewedFile = nil
             return nil
         }
-        guard SchemeHandler.schemeType(for: url) != .blob else {
-            // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
-            // WKNavigationResponse._downloadAttribute private API could be used instead of it :(
-            if self.temporaryDownloadForPreviewedFile?.url != url { // if temporary download not setup yet, preview otherwise
-                // calls webView:navigationAction:didBecomeDownload:
-                return .download
-            } else {
-                self.blobDownloadTargetFrame = nil
-                return .allow
-            }
-        }
 
         let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
@@ -2164,31 +2180,33 @@ extension TabViewController {
                     return
                 }
 
-                let isTemporary = navigationResponse.canShowMIMEType
-                    || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
-                if isTemporary {
-                    // restart blob request loading for preview that was interrupted by .download callback
-                    if navigationResponse.canShowMIMEType {
+                if self.shouldTriggerDownloadAction(for: navigationResponse) {
+                    // Show alert to the file download
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        callback(self.transfer(download,
+                                               to: downloadManager,
+                                               with: navigationResponse.response,
+                                               suggestedFilename: suggestedFilename,
+                                               isTemporary: false))
+                    } cancelHandler: {
+                        callback(nil)
+                    }
+
+                    self.temporaryDownloadForPreviewedFile = nil
+                } else {
+                    // Showing file in the webview or in preview view
+                    if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
+                        // If FilePreviewHelper can handle format we do not need to load as it will be handled by setting
+                        // temporaryDownloadForPreviewedFile and mostRecentAutoPreviewDownloadID
+                    } else if navigationResponse.canShowMIMEType {
+                        // To load BLOB in web view we need to restart the request loading as it was interrupted by .download callback
                         self.webView.load(navigationResponse.response.url!, in: self.blobDownloadTargetFrame)
                     }
                     callback(self.transfer(download,
                                            to: downloadManager,
                                            with: navigationResponse.response,
                                            suggestedFilename: suggestedFilename,
-                                           isTemporary: isTemporary))
-
-                } else {
-                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                        callback(self.transfer(download,
-                                               to: downloadManager,
-                                               with: navigationResponse.response,
-                                               suggestedFilename: suggestedFilename,
-                                               isTemporary: isTemporary))
-                    } cancelHandler: {
-                        callback(nil)
-                    }
-
-                    self.temporaryDownloadForPreviewedFile = nil
+                                           isTemporary: true))
                 }
 
                 delegate.decideDestinationCallback = nil
@@ -2219,6 +2237,7 @@ extension TabViewController {
                                                     temporary: isTemporary)
 
         self.temporaryDownloadForPreviewedFile = isTemporary ? download : nil
+        self.mostRecentAutoPreviewDownloadID = isTemporary ? download?.id : nil
         if let download = download {
             downloadManager.startDownload(download)
         }
@@ -2362,7 +2381,7 @@ extension TabViewController: WKUIDelegate {
             return
         }
         
-        let alert = WebJSAlert(domain: frame.request.url?.host
+        let alert = WebJSAlert(domain: frame.safeRequest?.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
                                ?? self.url?.absoluteString
@@ -2382,7 +2401,7 @@ extension TabViewController: WKUIDelegate {
             return
         }
         
-        let alert = WebJSAlert(domain: frame.request.url?.host
+        let alert = WebJSAlert(domain: frame.safeRequest?.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
                                ?? self.url?.absoluteString

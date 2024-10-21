@@ -36,14 +36,12 @@ protocol DependencyProvider {
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
     var storageCache: StorageCache { get }
-    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
     var subscriptionManager: any SubscriptionManager { get }
     var oAuthClient: any OAuthClient { get }
     var privacyProInfoProvider: any PrivacyProInfoProvider { get }
@@ -53,6 +51,8 @@ protocol DependencyProvider {
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
+    var persistentPixel: PersistentPixelFiring { get }
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -68,7 +68,6 @@ final class AppDependencyProvider: DependencyProvider {
     let featureFlagger: FeatureFlagger
 
     let storageCache = StorageCache()
-    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
@@ -77,10 +76,6 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationStore = ConfigurationStore()
 
     let userBehaviorMonitor = UserBehaviorMonitor()
-
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        purchasePlatform: .appStore)
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -95,6 +90,7 @@ final class AppDependencyProvider: DependencyProvider {
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
@@ -163,7 +159,8 @@ final class AppDependencyProvider: DependencyProvider {
             }
         }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore)
+        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: persistentPixel)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   oAuthClient: authClient)
     }

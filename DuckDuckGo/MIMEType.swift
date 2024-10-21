@@ -33,7 +33,17 @@ enum MIMEType: String {
     init(from string: String?) {
         self = MIMEType(rawValue: string ?? "") ?? .unknown
     }
-    
+
+    init(from string: String?, fileExtension: String?) {
+        let initialMIMEType = MIMEType(from: string)
+
+        switch (initialMIMEType, fileExtension) {
+        case (.octetStream, "pkpass"): self = .passbook
+        case (.octetStream, "pkpasses"): self = .multipass
+        default: self = initialMIMEType
+        }
+    }
+
     var isHTML: Bool {
         switch self {
         case .html, .xhtml:

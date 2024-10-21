@@ -112,9 +112,11 @@ final class SubscriptionRestoreViewModel: ObservableObject {
         }
 
         if state.activationResult == .notFound {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureNotFound,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         } else {
-            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreFailureOther,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
     }
     
@@ -125,13 +127,15 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     
     @MainActor
     func restoreAppstoreTransaction() {
-        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart)
+        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreStart,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         Task {
             state.transactionStatus = .restoring
             state.activationResult = .unknown
             do {
                 try await subFeature.restoreAccountFromAppStorePurchase()
-                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseStoreSuccess,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
                 state.activationResult = .activated
                 state.transactionStatus = .idle
             } catch let error {

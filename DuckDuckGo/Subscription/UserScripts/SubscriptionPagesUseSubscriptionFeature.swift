@@ -93,19 +93,19 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     private let subscriptionManager: SubscriptionManager
     private let appStorePurchaseFlow: AppStorePurchaseFlow
     private let appStoreRestoreFlow: AppStoreRestoreFlow
-//    private let appStoreAccountManagementFlow: AppStoreAccountManagementFlow
+    private let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let privacyProDataReporter: PrivacyProDataReporting?
 
     init(subscriptionManager: SubscriptionManager,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
          subscriptionAttributionOrigin: String?,
          appStorePurchaseFlow: AppStorePurchaseFlow,
          appStoreRestoreFlow: AppStoreRestoreFlow,
-//         appStoreAccountManagementFlow: AppStoreAccountManagementFlow,
          privacyProDataReporter: PrivacyProDataReporting? = nil) {
         self.subscriptionManager = subscriptionManager
+        self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.appStorePurchaseFlow = appStorePurchaseFlow
         self.appStoreRestoreFlow = appStoreRestoreFlow
-//        self.appStoreAccountManagementFlow = appStoreAccountManagementFlow
         self.subscriptionAttributionOrigin = subscriptionAttributionOrigin
         self.privacyProDataReporter = subscriptionAttributionOrigin != nil ? privacyProDataReporter : nil
     }
@@ -198,7 +198,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
         resetSubscriptionFlow()
         if let subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions() {
-            if AppDependencyProvider.shared.subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
+            if subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
                 return SubscriptionOptions.empty
@@ -212,7 +212,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     func subscriptionSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
 
-        DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
+        DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         setTransactionError(nil)
         setTransactionStatus(.purchasing)
         resetSubscriptionFlow()
@@ -269,7 +270,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success(let purchaseUpdate):
             Logger.subscription.debug("Subscription purchase completed successfully")
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
             setTransactionStatus(.idle)

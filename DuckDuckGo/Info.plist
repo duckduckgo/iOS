@@ -244,5 +244,7 @@
 	<string>https://duckduckgo.com</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>VAULT_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(VAULT_APP_GROUP)</string>
 </dict>
 </plist>

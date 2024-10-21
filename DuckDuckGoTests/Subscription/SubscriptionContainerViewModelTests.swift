@@ -27,9 +27,9 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
 
     let subscriptionManager: SubscriptionManager = {
         let accountManager = AccountManagerMock()
-        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
-        let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let subscriptionService = SubscriptionEndpointServiceMock()
+        let authService = AuthEndpointServiceMock()
+        let storePurchaseManager = StorePurchaseManagerMock()
         return SubscriptionManagerMock(accountManager: accountManager,
                                        subscriptionEndpointService: subscriptionService,
                                        authEndpointService: authService,

@@ -169,3 +169,12 @@ struct HomeMessageButtonViewModel {
     let action: () async -> Void
 
 }
+
+private extension RemoteAction {
+    var isShare: Bool {
+        if case .share = self.actionStyle() {
+            return true
+        }
+        return false
+    }
+}

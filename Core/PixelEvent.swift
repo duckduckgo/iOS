@@ -527,7 +527,6 @@ extension Pixel {
         case cachedTabPreviewRemovalError
         
         case missingDownloadedFile
-        case unhandledDownload
         
         case compilationResult(result: CompileRulesResult, waitTime: BucketAggregation, appState: AppState)
         
@@ -799,6 +798,8 @@ extension Pixel {
         case duckPlayerSettingNeverOverlayYoutube
         case duckPlayerContingencySettingsDisplayed
         case duckPlayerContingencyLearnMoreClicked
+        case duckPlayerNewTabSettingOn
+        case duckPlayerNewTabSettingOff
 
         // MARK: enhanced statistics
         case usageSegments
@@ -1329,7 +1330,6 @@ extension Pixel.Event {
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
             
         case .missingDownloadedFile: return "m_d_missing_downloaded_file"
-        case .unhandledDownload: return "m_d_unhandled_download"
             
         case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
@@ -1618,6 +1618,8 @@ extension Pixel.Event {
         case .duckPlayerSettingNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerContingencySettingsDisplayed: return "duckplayer_ios_contingency_settings-displayed"
         case .duckPlayerContingencyLearnMoreClicked: return "duckplayer_ios_contingency_learn-more-clicked"
+        case .duckPlayerNewTabSettingOn: return "duckplayer_ios_newtab_setting-on"
+        case .duckPlayerNewTabSettingOff: return "duckplayer_ios_newtab_setting-off"
 
         // MARK: Enhanced statistics
         case .usageSegments: return "m_retention_segments"

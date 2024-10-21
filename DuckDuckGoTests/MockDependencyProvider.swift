@@ -33,14 +33,12 @@ class MockDependencyProvider: DependencyProvider {
     var featureFlagger: FeatureFlagger
     var internalUserDecider: InternalUserDecider
     var storageCache: StorageCache
-    var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
     var autofillLoginSession: AutofillLoginSession
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
     var configurationStore: ConfigurationStore
     var userBehaviorMonitor: UserBehaviorMonitor
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     var subscriptionManager: SubscriptionManager
     var accountManager: AccountManager
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility
@@ -49,6 +47,7 @@ class MockDependencyProvider: DependencyProvider {
     var connectionObserver: NetworkProtection.ConnectionStatusObserver
     var serverInfoObserver: NetworkProtection.ConnectionServerInfoObserver
     var vpnSettings: NetworkProtection.VPNSettings
+    var persistentPixel: PersistentPixelFiring
 
     init() {
         let defaultProvider = AppDependencyProvider.makeTestingInstance()
@@ -57,14 +56,12 @@ class MockDependencyProvider: DependencyProvider {
         featureFlagger = defaultProvider.featureFlagger
         internalUserDecider = defaultProvider.internalUserDecider
         storageCache = defaultProvider.storageCache
-        voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
         autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
         configurationStore = defaultProvider.configurationStore
         configurationManager = defaultProvider.configurationManager
         userBehaviorMonitor = defaultProvider.userBehaviorMonitor
-        subscriptionFeatureAvailability = defaultProvider.subscriptionFeatureAvailability
 
         accountManager = AccountManagerMock()
 
@@ -82,12 +79,14 @@ class MockDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = { { "sometoken" } }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              persistentPixel: MockPersistentPixel())
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
 
         connectionObserver = ConnectionStatusObserverThroughSession()
         serverInfoObserver = ConnectionServerInfoObserverThroughSession()
         vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        persistentPixel = MockPersistentPixel()
     }
 }

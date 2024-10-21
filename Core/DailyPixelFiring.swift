@@ -18,11 +18,22 @@
 //
 
 import Foundation
+import Persistence
 
 public protocol DailyPixelFiring {
     static func fireDaily(_ pixel: Pixel.Event,
                           withAdditionalParameters params: [String: String])
-    
+
+    static func fireDailyAndCount(pixel: Pixel.Event,
+                                  pixelNameSuffixes: (dailySuffix: String, countSuffix: String),
+                                  error: Swift.Error?,
+                                  withAdditionalParameters params: [String: String],
+                                  includedParameters: [Pixel.QueryParameters],
+                                  pixelFiring: PixelFiring.Type,
+                                  dailyPixelStore: KeyValueStoring,
+                                  onDailyComplete: @escaping (Swift.Error?) -> Void,
+                                  onCountComplete: @escaping (Swift.Error?) -> Void)
+
     static func fireDaily(_ pixel: Pixel.Event)
 }
 

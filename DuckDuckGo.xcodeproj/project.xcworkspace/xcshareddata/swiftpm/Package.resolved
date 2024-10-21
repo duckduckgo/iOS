@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/ntp-search-bar",
-        "revision" : "a75663d8a9cbcbfa77f31b55befbfd31c985421f"
+        "revision" : "1e7ded11104f3a4265acee6b72b67911e7808e54"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "1fee787458d13f8ed07f9fe81aecd6e59609339e",
-        "version" : "13.1.0"
+        "revision" : "945ac09a0189dc6736db617867fde193ea984b20",
+        "version" : "15.0.0"
       }
     },
     {

@@ -396,7 +396,6 @@
 		850559D023CF647C0055C0D5 /* PreserveLogins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559CF23CF647C0055C0D5 /* PreserveLogins.swift */; };
 		850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */; };
 		85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */; };
-		85058368219C49E000ED4EDB /* HomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85058367219C49E000ED4EDB /* HomeViewSectionRenderer.swift */; };
 		85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
 		8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */; };
 		8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */; };
@@ -535,7 +534,6 @@
 		85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */; };
 		85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85C29709247EB7AA0063A335 /* Text.xcassets */; };
 		85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */; };
-		85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */; };
 		85C8E61D2B0E47380029A6BD /* BookmarksDatabaseSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C8E61C2B0E47380029A6BD /* BookmarksDatabaseSetup.swift */; };
 		85C91CA224671F4C00A11132 /* AppDeepLinkSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinkSchemes.swift */; };
 		85CA53A824BB343700A6288C /* Favicons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53A324B9F2BD00A6288C /* Favicons.swift */; };
@@ -1688,7 +1686,6 @@
 		850559CF23CF647C0055C0D5 /* PreserveLogins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLogins.swift; sourceTree = "<group>"; };
 		850559D123CF710C0055C0D5 /* WebCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCacheManagerTests.swift; sourceTree = "<group>"; };
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
-		85058367219C49E000ED4EDB /* HomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		850ABD002AC3961100A733DF /* MainViewController+Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Segues.swift"; sourceTree = "<group>"; };
 		850ABD022AC4D46C00A733DF /* SuggestionTray.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SuggestionTray.storyboard; sourceTree = "<group>"; };
 		850F93DA2B594AB800823EEA /* ZippedPassKitPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZippedPassKitPreviewHelper.swift; sourceTree = "<group>"; };
@@ -1819,7 +1816,6 @@
 		85C29706247BDCFF0063A335 /* DaxDialogsBrowsingSpecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogsBrowsingSpecTests.swift; sourceTree = "<group>"; };
 		85C29709247EB7AA0063A335 /* Text.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Text.xcassets; sourceTree = "<group>"; };
 		85C29719248162CA0063A335 /* DaxOnboardingPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingPadViewController.swift; sourceTree = "<group>"; };
-		85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderersExtension.swift; sourceTree = "<group>"; };
 		85C8E61C2B0E47380029A6BD /* BookmarksDatabaseSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksDatabaseSetup.swift; sourceTree = "<group>"; };
 		85CA53A324B9F2BD00A6288C /* Favicons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Favicons.swift; path = ../DuckDuckGo/Favicons.swift; sourceTree = "<group>"; };
 		85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundCachingDownloader.swift; sourceTree = "<group>"; };
@@ -3828,8 +3824,6 @@
 			children = (
 				85B9CB8321AEBD72009001F1 /* Cells */,
 				85374D3621AC417200FF5A1E /* Renderers */,
-				85058367219C49E000ED4EDB /* HomeViewSectionRenderer.swift */,
-				85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */,
 			);
 			name = FavoritesSearchOverlay;
 			sourceTree = "<group>";
@@ -7637,7 +7631,6 @@
 				1DEAADEC2BA45B4500E25A97 /* SettingsAccessibilityView.swift in Sources */,
 				85C8E61D2B0E47380029A6BD /* BookmarksDatabaseSetup.swift in Sources */,
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
-				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				CB825C922C071B1400BCC586 /* AlertView.swift in Sources */,
 				1DDF40292BA04FCD006850D9 /* SettingsPrivacyProtectionsView.swift in Sources */,
 				BDE91CD82C629A910005CB74 /* UnifiedFeedbackSender.swift in Sources */,
@@ -7693,7 +7686,6 @@
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */,
 				D6E83C312B1EA309006C8AFB /* SettingsCell.swift in Sources */,
-				85058368219C49E000ED4EDB /* HomeViewSectionRenderer.swift in Sources */,
 				1DEAADEE2BA45DFE00E25A97 /* SettingsDataClearingView.swift in Sources */,
 				6F96FF102C2B128500162692 /* NewTabPageCustomizeButtonView.swift in Sources */,
 				EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */,

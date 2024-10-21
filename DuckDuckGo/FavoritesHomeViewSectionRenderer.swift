@@ -34,7 +34,7 @@ protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
                            favoriteDeleted favorite: BookmarkEntity)
 }
 
-class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
+class FavoritesHomeViewSectionRenderer {
 
     struct Constants {
         

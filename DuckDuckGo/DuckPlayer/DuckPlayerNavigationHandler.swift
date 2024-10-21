@@ -203,6 +203,7 @@ final class DuckPlayerNavigationHandler {
             pixelFiring.fire(.duckPlayerViewFromSERP, withAdditionalParameters: [:])
         }
         
+        // Other referers
         if referrer == .other {
             pixelFiring.fire(.duckPlayerViewFromOther, withAdditionalParameters: [:])
         }
@@ -214,14 +215,22 @@ final class DuckPlayerNavigationHandler {
         guard let url = webView.url else { return }
         
         switch true {
+        
+            // Duck Duck Go search
         case url.isDuckDuckGo:
             referrer = .serp
             Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
-        case url.isYoutube && !url.isYoutubeWatch:
+        
+        // DuckPlayer is enabled and last URL was Youtube
+        case url.isYoutube || (url.isYoutubeWatch && duckPlayer.settings.mode == .enabled):
             referrer = .youtube
             Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
+        
+        // DuckPlayer is in ask mode and last URL was Youtube Watch
         case url.isYoutubeWatch && duckPlayer.settings.mode == .alwaysAsk:
             referrer = .youtubeOverlay
+        
+        // Any other URL that's not DuckPlayer
         case !url.isDuckPlayer:
             referrer = .other
             Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")

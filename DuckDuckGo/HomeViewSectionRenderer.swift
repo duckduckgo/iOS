@@ -83,10 +83,3 @@ protocol HomeViewSectionRenderer: AnyObject {
     func didAppear()
     
 }
-
-struct HomeViewSectionRenderers {
-
-    struct Constants {
-        static let sideInsets: CGFloat = 25
-    }
-}

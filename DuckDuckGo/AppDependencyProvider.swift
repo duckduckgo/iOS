@@ -44,7 +44,8 @@ protocol DependencyProvider {
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
-    var subscriptionManager: SubscriptionManager { get }
+    var subscriptionManager: any SubscriptionManager { get }
+    var oAuthClient: any OAuthClient { get }
     var privacyProInfoProvider: any PrivacyProInfoProvider { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
@@ -83,9 +84,7 @@ final class AppDependencyProvider: DependencyProvider {
 
     // Subscription
     let subscriptionManager: SubscriptionManager
-//    var accountManager: AccountManager {
-//        subscriptionManager.accountManager
-//    }
+    let oAuthClient: any OAuthClient
     let privacyProInfoProvider: any PrivacyProInfoProvider
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
@@ -131,49 +130,45 @@ final class AppDependencyProvider: DependencyProvider {
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
         let keychainManager = SubscriptionKeychainManager()
         let authClient = DefaultOAuthClient(tokensStorage: keychainManager, authService: authService)
+
         self.privacyProInfoProvider = authClient
-        apiService.authorizationRefresherCallback = { _ in // TODO: is this updated?
-            // safety check
-            if keychainManager.tokensContainer?.decodedAccessToken.isExpired() == false {
-                assertionFailure("Refresh attempted on non expired token")
+        self.oAuthClient = authClient
+
+        apiService.authorizationRefresherCallback = { _ in
+            guard let tokensContainer = keychainManager.tokensContainer else {
+                throw OAuthClientError.internalError("Missing refresh token")
             }
-            Logger.OAuth.debug("Refreshing tokens")
-            let tokens = try await authClient.refreshTokens()
-            return tokens.accessToken
+
+            if tokensContainer.decodedAccessToken.isExpired() {
+                Logger.OAuth.debug("Refreshing tokens")
+                let tokens = try await authClient.refreshTokens()
+                return tokens.accessToken
+            } else {
+                Logger.general.debug("Trying to refresh valid token, using the old one")
+                return tokensContainer.accessToken
+            }
         }
         let storePurchaseManager = DefaultStorePurchaseManager()
         
-        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService, baseURL: authEnvironment.url)
+        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionEnvironment: subscriptionEnvironment)
         self.subscriptionManager = subscriptionManager
-
-        let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
-        let accessTokenProvider: () -> String? = { // TODO: refactor all of this
+        let accessTokenProvider: () -> String? = {
             return {
-//                try? await authClient.getTokens(policy: .local).accessToken
-                return ""
+                authClient.currentTokensContainer?.accessToken
             }
         }()
-#if os(macOS)
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                                                                                  errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  accessTokenProvider: accessTokenProvider)
-#else
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-#endif
         networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   oAuthClient: authClient)
     }
 
     /// Only meant to be used for testing.
-    ///
     static func makeTestingInstance() -> Self {
         Self.init()
     }

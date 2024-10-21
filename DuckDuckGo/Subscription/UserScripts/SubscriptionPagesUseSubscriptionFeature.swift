@@ -284,9 +284,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
+
+        // Note: This is called by the web FE when a subscription is retrieved, `params` contains an auth token V1 that will need to be exchanged for a V2. This is a temporary workaround until the FE fully supports v2 auth.
+
         guard let subscriptionValues: SubscriptionValues = CodableHelper.decode(from: params) else {
             assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
-            Logger.subscription.error("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
+            Logger.subscription.fault("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             setTransactionError(.generalError)
             return nil
         }
@@ -294,20 +297,15 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         // Clear subscription Cache
         subscriptionManager.subscriptionEndpointService.signOut()
 
-        // TODO: what are we doing here??
-
-//        let authToken = subscriptionValues.token
-//        if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
-//           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
-//            accountManager.storeAuthToken(token: authToken)
-//            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
-//            onSetSubscription?()
-//            
-//        } else {
-//            Logger.subscription.error("Failed to obtain subscription options")
-//            setTransactionError(.failedToSetSubscription)
-//        }
-
+        let authToken = subscriptionValues.token
+        do {
+            let tokensContainer = try await subscriptionManager.exchange(tokenV1: authToken)
+            Logger.subscription.debug("v1 token exchanged for v2")
+            onSetSubscription?()
+        } catch {
+            Logger.subscription.error("Failed to exchange v1 token for v2")
+            setTransactionError(.failedToSetSubscription)
+        }
         return nil
     }
 

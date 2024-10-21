@@ -371,7 +371,7 @@ import os.log
 
         widgetRefreshModel.beginObservingVPNStatus()
 
-//        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
+        AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
         setUpAutofillPixelReporter()
 
@@ -548,11 +548,12 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
-            if isSubscriptionActive {
-                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-            }
-        }
+        // TODO: restore but limit the number of parallel subscription fetches
+//        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
+//            if isSubscriptionActive {
+//                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+//            }
+//        }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()

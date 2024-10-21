@@ -37,7 +37,7 @@ struct SettingsState {
         var size: Int
     }
 
-    struct Subscription: Codable {
+    struct SubscriptionState: Codable {
         var enabled: Bool
         var canPurchase: Bool
         var isSignedIn: Bool
@@ -91,7 +91,7 @@ struct SettingsState {
     var networkProtectionConnected: Bool
 
     // Subscriptions Properties
-    var subscription: Subscription
+    var subscription: SubscriptionState
     
     // Sync Properties
     var sync: SyncSettings
@@ -127,7 +127,7 @@ struct SettingsState {
             speechRecognitionAvailable: false,
             loginsEnabled: false,
             networkProtectionConnected: false,
-            subscription: Subscription(enabled: false,
+            subscription: SubscriptionState(enabled: false,
                                        canPurchase: false,
                                        isSignedIn: false,
                                        hasActiveSubscription: false,

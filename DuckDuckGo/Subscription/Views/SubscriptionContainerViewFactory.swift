@@ -24,38 +24,12 @@ import os.log
 
 enum SubscriptionContainerViewFactory {
 
-    static func makeOAuthClient(subscriptionManager: SubscriptionManager) -> OAuthClient {
-        let configuration = URLSessionConfiguration.default
-        configuration.httpCookieStorage = nil
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        let urlSession = URLSession(configuration: configuration,
-                                    delegate: SessionDelegate(),
-                                    delegateQueue: nil)
-        let apiService = DefaultAPIService(urlSession: urlSession)
-        let authEnvironment: OAuthEnvironment = subscriptionManager.currentEnvironment.serviceEnvironment == .production ? .production : .staging
-
-        let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
-        let keychainManager = SubscriptionKeychainManager()
-        let authClient = DefaultOAuthClient(tokensStorage: keychainManager, authService: authService)
-
-        apiService.authorizationRefresherCallback = { _ in // TODO: is this updated?
-            // safety check
-            if keychainManager.tokensContainer?.decodedAccessToken.isExpired() == false {
-                assertionFailure("Refresh attempted on non expired token")
-            }
-            Logger.OAuth.debug("Refreshing tokens")
-            let tokens = try await authClient.refreshTokens()
-            return tokens.accessToken
-        }
-        return authClient
-    }
-
     static func makeSubscribeFlow(origin: String?,
                                   navigationCoordinator: SubscriptionNavigationCoordinator,
                                   subscriptionManager: SubscriptionManager,
                                   privacyProDataReporter: PrivacyProDataReporting?) -> some View {
 
-        let authClient = SubscriptionContainerViewFactory.makeOAuthClient(subscriptionManager: subscriptionManager)
+        let authClient = AppDependencyProvider.shared.oAuthClient
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
@@ -80,7 +54,7 @@ enum SubscriptionContainerViewFactory {
 
     static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
                                 subscriptionManager: SubscriptionManager) -> some View {
-        let authClient = SubscriptionContainerViewFactory.makeOAuthClient(subscriptionManager: subscriptionManager)
+        let authClient = AppDependencyProvider.shared.oAuthClient
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
@@ -104,7 +78,7 @@ enum SubscriptionContainerViewFactory {
     static func makeEmailFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
                               subscriptionManager: SubscriptionManager,
                               onDisappear: @escaping () -> Void) -> some View {
-        let authClient = SubscriptionContainerViewFactory.makeOAuthClient(subscriptionManager: subscriptionManager)
+        let authClient = AppDependencyProvider.shared.oAuthClient
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)

@@ -26,9 +26,9 @@ import Combine
 import SyncUI
 import DuckPlayer
 import Networking
-
 import Subscription
 import NetworkProtection
+import os.log
 
 final class SettingsViewModel: ObservableObject {
 
@@ -56,7 +56,7 @@ final class SettingsViewModel: ObservableObject {
         case subscriptionState = "com.duckduckgo.ios.subscription.state"
     }
     // Used to cache the lasts subscription state for up to a week
-    private let subscriptionStateCache = UserDefaultsCache<SettingsState.Subscription>(key: UserDefaultsCacheKey.subscriptionState,
+    private let subscriptionStateCache = UserDefaultsCache<SettingsState.SubscriptionState>(key: UserDefaultsCacheKey.subscriptionState,
                                                                          settings: UserDefaultsCacheSettings(defaultExpirationInterval: .days(7)))
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -715,37 +715,33 @@ extension SettingsViewModel {
         // Update if user is signed in based on the presence of token
         state.subscription.isSignedIn = subscriptionManager.isUserAuthenticated
 
-        // Active subscription check
-        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .local) else {
-            // Reset state in case cache was outdated
+        // Fetch subscription details using a stored access token
+        do {
+            if let subscription = try await subscriptionManager.currentSubscription(refresh: true) {
+                state.subscription.platform = subscription.platform
+                state.subscription.hasActiveSubscription = subscription.isActive
+
+                // Check entitlements and update state
+                state.subscription.entitlements = subscriptionManager.entitlements
+                /*var currentEntitlements: [Entitlement.ProductName] = []
+                 let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+                 for entitlement in entitlementsToCheck {
+                 if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
+                 currentEntitlements.append(entitlement)
+                 }
+                 }
+                 self.state.subscription.entitlements = currentEntitlements*/
+            }
+        } catch SubscriptionEndpointServiceError.noData {
+            // Auth successful but no Subscription is available
+            Logger.subscription.debug("Subscription not present")
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
-            state.subscription.platform = .unknown
-
-            subscriptionStateCache.set(state.subscription) // Sync cache
-            return
+        } catch {
+            // Generic error, we don't update the cached data
+            Logger.subscription.error("Failed to load Subscription")
         }
 
-        do {
-            let subscription = try await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: tokensContainer.accessToken)
-            state.subscription.platform = subscription.platform
-            state.subscription.hasActiveSubscription = subscription.isActive
-            // Check entitlements and update state
-            self.state.subscription.entitlements = tokensContainer.decodedAccessToken.subscriptionEntitlements
-
-//            var currentEntitlements: [SubscriptionEntitlement] = []
-//            let entitlementsToCheck: [SubscriptionEntitlement] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-//
-//            for entitlement in entitlementsToCheck {
-//                if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
-//                    currentEntitlements.append(entitlement)
-//                }
-//            }
-//
-//            self.state.subscription.entitlements = currentEntitlements
-
-        } catch {}
-        
         // Sync Cache
         subscriptionStateCache.set(state.subscription)
     }
@@ -774,8 +770,7 @@ extension SettingsViewModel {
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
 
-        let authClient = SubscriptionContainerViewFactory.makeOAuthClient(subscriptionManager: subscriptionManager)
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: AppDependencyProvider.shared.oAuthClient,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()

@@ -365,6 +365,30 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         }
     }
     
+    @MainActor
+    func testReturnsNotHandledForYoutubePlayerLinks() {
+        let url = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14&&embeds_referring_euri=somevalue")!
+        
+        // Set up mock player settings and player
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        playerSettings.allowFirstVideo = true
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
+        
+        // Simulate webView loading the URL
+        _ = mockWebView.load(URLRequest(url: url))
+                
+        let result = handler.handleURLChange(webView: mockWebView)
+                
+        switch result {
+        case .notHandled(let reason):
+            XCTAssertEqual(reason, .disabledForNextVideo, "Expected .disabledForNextVideo, but got \(reason).")
+        default:
+            XCTFail("Expected .notHandled(.disabledForNextVideo), but got \(result).")
+        }
+    }
+    
     
     // MARK: Navigational Actions
     @MainActor

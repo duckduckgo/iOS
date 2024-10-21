@@ -319,6 +319,14 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return .notHandled(.urlHasNotChanged)
         }
         
+        // Disable the Youtube Overlay for Player links
+        // Youtube player links should open the video in Youtube
+        // without overlay
+        if let url = webView.url, url.hasWatchInYoutubeQueryParameter {
+            duckPlayer.settings.allowFirstVideo = true
+            return .notHandled(.disabledForNextVideo)
+        }
+        
         // Ensure DuckPlayer is active
         guard duckPlayer.settings.mode == .enabled else {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")

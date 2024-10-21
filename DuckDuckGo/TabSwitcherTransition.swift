@@ -86,7 +86,7 @@ class TabSwitcherTransitionDelegate: NSObject, UIViewControllerTransitioningDele
             return nil
         }
         
-        if mainVC.homeController != nil {
+        if mainVC.newTabPageViewController != nil {
             return FromHomeScreenTransition(mainViewController: mainVC,
                                             tabSwitcherViewController: tabSwitcherVC)
         }

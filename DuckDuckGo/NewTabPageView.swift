@@ -34,6 +34,8 @@ struct NewTabPageView: View {
     @State private var customizeButtonShowedInline = false
     @State private var isAddingFavorite: Bool = false
 
+    @State var isDragging: Bool = false
+
     init(viewModel: NewTabPageViewModel,
          messagesModel: NewTabPageMessagesModel,
          favoritesViewModel: FavoritesViewModel,
@@ -71,6 +73,15 @@ struct NewTabPageView: View {
                                                sectionsSettingsModel: sectionsSettingsModel)
                     }
                 })
+                .simultaneousGesture(
+                    DragGesture()
+                        .onChanged({ value in
+                            if value.translation.height > 0 {
+                                viewModel.beginDragging()
+                            }
+                        })
+                        .onEnded({ _ in viewModel.endDragging() })
+                )
         }
     }
 

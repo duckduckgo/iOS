@@ -2148,7 +2148,7 @@ extension TabViewController {
      */
     private func setupOrClearTemporaryDownload(for response: URLResponse) -> WKNavigationResponsePolicy? {
         let downloadManager = AppDependencyProvider.shared.downloadManager
-        guard let url = response.url,
+        guard response.url != nil,
               let downloadMetaData = downloadManager.downloadMetaData(for: response),
               !downloadMetaData.mimeType.isHTML
         else {

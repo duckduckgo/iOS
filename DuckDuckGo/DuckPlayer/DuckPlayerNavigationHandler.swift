@@ -249,7 +249,7 @@ final class DuckPlayerNavigationHandler {
     // And sets the correct navigationType
     // This is uses for JS based navigation links
     private func setOpenInNewTab(url: URL?) {
-        guard let url else {
+        guard url != nil else {
             return
         }
         

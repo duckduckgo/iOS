@@ -217,7 +217,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     func subscriptionSelected(params: Any, original: WKScriptMessage) async -> Encodable? {
 
-        DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt)
+        DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseAttempt,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         setTransactionError(nil)
         setTransactionStatus(.purchasing)
         resetSubscriptionFlow()
@@ -275,7 +276,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success(let purchaseUpdate):
             Logger.subscription.debug("Subscription purchase completed successfully")
-            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess)
+            DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
             setTransactionStatus(.idle)

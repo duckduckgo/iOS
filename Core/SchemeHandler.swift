@@ -29,6 +29,7 @@ public class SchemeHandler {
     }
 
     public enum SchemeType: Equatable {
+        case allow
         case navigational
         case external(Action)
         case blob
@@ -51,6 +52,7 @@ public class SchemeHandler {
         case shortcuts
         case shortcutsProduction = "shortcuts-production"
         case workflow
+        case marketplaceKit = "marketplace-kit"
     }
 
     private enum BlockedScheme: String {
@@ -74,6 +76,13 @@ public class SchemeHandler {
         }
 
         switch PlatformScheme(rawValue: schemeString) {
+        case .marketplaceKit:
+            // marketplaceKit urls have to be allowed through without interference
+            if #available(iOS 17.4, *) {
+                return .allow
+            } else {
+                return .unknown
+            }
         case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss, .shortcuts, .shortcutsProduction, .workflow:
             return .external(.askForConfirmation)
         case .none:

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/xcode-16",
-        "revision" : "c4aaa669840308ecc1d73216f73a101900a73459"
+        "revision" : "d42b173f40ae17815dccdff0cd6273007cbcbeec"
       }
     },
     {

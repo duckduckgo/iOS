@@ -148,7 +148,7 @@ extension YoutubeOverlayUserScript {
         
         switch pixelName {
         case "play.use":
-            Pixel.fire(pixel: Pixel.Event.duckPlayerViewFromYoutubeViaMainOverlay, debounce: 2)
+            // This pixel is fired from the navigation handler            
             duckPlayerStorage.userInteractedWithDuckPlayer = true
                         
         case "play.do_not_use":

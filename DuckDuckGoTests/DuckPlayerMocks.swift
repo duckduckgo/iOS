@@ -78,9 +78,17 @@ class MockWebView: WKWebView {
 class MockNavigationAction: WKNavigationAction {
     private let _request: URLRequest
     private let _navigationType: WKNavigationType
-    
-    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated ) {
-        self._request = request
+
+    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated, referer: String? = nil) {
+        var updatedRequest = request
+        
+        if let referer = referer {
+            var headers = updatedRequest.allHTTPHeaderFields ?? [:]
+            headers["referer"] = referer
+            updatedRequest.allHTTPHeaderFields = headers
+        }
+        
+        self._request = updatedRequest
         self._navigationType = navigationType
     }
     
@@ -92,6 +100,7 @@ class MockNavigationAction: WKNavigationAction {
         return _navigationType
     }
 }
+
 
 final class MockDuckPlayerSettings: DuckPlayerSettings {
     

@@ -31,6 +31,7 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
 
     static var lastPixelInfo: PixelInfo?
     static var lastDailyPixelInfo: PixelInfo?
+    static var pixelHistory: [PixelInfo] = []
 
     static var lastParams: [String: String]? { lastPixelInfo?.params }
     static var lastPixel: Pixel.Event? { lastPixelInfo?.pixel }
@@ -39,7 +40,9 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
     static func fire(pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String],
                      includedParameters: [Pixel.QueryParameters]) async throws {
-        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
+        let info = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
+        lastPixelInfo = info
+        pixelHistory.append(info)
 
         if let expectedFireError {
             throw expectedFireError
@@ -50,30 +53,41 @@ final actor PixelFiringMock: PixelFiring, PixelFiringAsync, DailyPixelFiring {
                      withAdditionalParameters params: [String: String],
                      includedParameters: [Pixel.QueryParameters],
                      onComplete: @escaping (Error?) -> Void) {
-        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
+        let info = PixelInfo(pixel: pixel, params: params, includedParams: includedParameters)
+        lastPixelInfo = info
+        pixelHistory.append(info)
 
         if let expectedFireError {
             onComplete(expectedFireError)
+        } else {
+            onComplete(nil)
         }
     }
 
     static func fire(_ pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String]) {
-        lastPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
+        let info = PixelInfo(pixel: pixel, params: params, includedParams: nil)
+        lastPixelInfo = info
+        pixelHistory.append(info)
     }
 
     static func fireDaily(_ pixel: Pixel.Event) {
-        lastDailyPixelInfo = PixelInfo(pixel: pixel, params: nil, includedParams: nil)
+        let info = PixelInfo(pixel: pixel, params: nil, includedParams: nil)
+        lastDailyPixelInfo = info
+        pixelHistory.append(info)
     }
 
     static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
-        lastDailyPixelInfo = PixelInfo(pixel: pixel, params: params, includedParams: nil)
+        let info = PixelInfo(pixel: pixel, params: params, includedParams: nil)
+        lastDailyPixelInfo = info
+        pixelHistory.append(info)
     }
 
     static func tearDown() {
         lastPixelInfo = nil
         lastDailyPixelInfo = nil
         expectedFireError = nil
+        pixelHistory.removeAll()
     }
 
     private init() {}

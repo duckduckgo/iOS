@@ -35,6 +35,7 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var navigationType: WKNavigationType = .other
+    var pixelFiring: PixelFiring.Type
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
     private struct Constants {
@@ -57,10 +58,12 @@ final class DuckPlayerNavigationHandler {
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         appSettings: AppSettings) {
+         appSettings: AppSettings,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
+        self.pixelFiring = pixelFiring
     }
     
     static var htmlTemplatePath: String {
@@ -118,16 +121,6 @@ final class DuckPlayerNavigationHandler {
         return false
     }
     
-    private func isSERPLink(navigationAction: WKNavigationAction) -> Bool {
-        guard let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader] else {
-            return false
-        }
-        if referrer.contains(Constants.SERPURL) {
-            return true
-        }
-        return false
-    }
-    
     private func getYoutubeURLFromOpenInYoutubeLink(url: URL) -> URL? {
         guard isWatchInYouTubeURL(url: url),
               let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
@@ -148,25 +141,12 @@ final class DuckPlayerNavigationHandler {
         return true
     }
     
-    // DuckPlayer Experiment Handling
-    private func handleYouTubePageVisited(url: URL?, navigationAction: WKNavigationAction?) {
-        guard let url else { return }
-        
-        // Parse openInYoutubeURL if present
-        let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url) ?? url
-        
-        // If this is a SERP link, set the referrer accordingly
-        if let navigationAction, isSERPLink(navigationAction: navigationAction) {
-            referrer = .serp
-        }
-
-    }
-    
     // Validates a duck:// url and loads it
     private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView) {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
-                
+        
+        
         renderedURL = url
         renderedVideoID = videoID
         let duckPlayerURL = URL.duckPlayer(videoID)
@@ -199,6 +179,54 @@ final class DuckPlayerNavigationHandler {
             webView.goBack()
         } else {
             webView.goForward()
+        }
+    }
+    
+    // Fire pixels displayed when DuckPlayer is shown
+    private func fireDuckPlayerPixels() {
+        
+        // First daily unique user Duck Player view
+        pixelFiring.fire(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayer.settings.mode.stringValue])
+        
+        // Duck Player viewed with Always setting, referred from YouTube
+        if (referrer == .youtube) && duckPlayer.settings.mode == .enabled {
+            pixelFiring.fire(.duckPlayerViewFromYoutubeAutomatic, withAdditionalParameters: [:])
+        }
+        
+        // Duck Player viewed from the YouTube overlay message
+        if referrer == .youtubeOverlay && duckPlayer.settings.mode == .alwaysAsk {
+            pixelFiring.fire(.duckPlayerViewFromYoutubeViaMainOverlay, withAdditionalParameters: [:])
+        }
+        
+        // Duck Player viewed from SERP overlay
+        if referrer == .serp && duckPlayer.settings.mode == .enabled {
+            pixelFiring.fire(.duckPlayerViewFromSERP, withAdditionalParameters: [:])
+        }
+        
+        if referrer == .other {
+            pixelFiring.fire(.duckPlayerViewFromOther, withAdditionalParameters: [:])
+        }
+        
+    }
+    
+    // Updates the referer based on the current webView URL
+    private func updateReferrer(webView: WKWebView) {
+        guard let url = webView.url else { return }
+        
+        switch true {
+        case url.isDuckDuckGo:
+            referrer = .serp
+            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
+        case url.isYoutube && !url.isYoutubeWatch:
+            referrer = .youtube
+            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
+        case url.isYoutubeWatch && duckPlayer.settings.mode == .alwaysAsk:
+            referrer = .youtubeOverlay
+        case !url.isDuckPlayer:
+            referrer = .other
+            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
+        default:
+            break
         }
     }
     
@@ -280,6 +308,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                     webView.stopLoading()
                     self.performRequest(request: newRequest, webView: webView)
                     self.renderedVideoID = videoID
+                    self.fireDuckPlayerPixels()
                 }
             } else {
                 redirectToYouTubeVideo(url: url, webView: webView)
@@ -302,6 +331,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
         
+        // Refresh the referrer if needed
+        updateReferrer(webView: webView)
+                
         // Check if DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
@@ -336,11 +368,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Update rendered URL and handle YouTube-specific actions
         if let url = webView.url {
             renderedURL = url
-            referrer = url.isYoutube ? .youtube : .other
-            
-            if url.isYoutubeVideo {
-                handleYouTubePageVisited(url: url, navigationAction: nil)
-            }
         }
         
         // Check for valid YouTube video parameters

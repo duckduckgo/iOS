@@ -76,13 +76,15 @@ public struct UIValues: Codable {
 }
 
 public enum DuckPlayerReferrer {
-    case youtube, other, serp
+    case youtube, other, serp, youtubeOverlay
     
     // Computed property to get string values
         var stringValue: String {
             switch self {
             case .youtube:
                 return "youtube"
+            case .youtubeOverlay:
+                return "youtubeOverlay"
             case .serp:
                 return "serp"
             default:

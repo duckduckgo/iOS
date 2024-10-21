@@ -52,6 +52,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         webView.navigationDelegate = nil
         mockWebView = nil
         mockNavigationDelegate = nil
+        PixelFiringMock.tearDown()
         super.tearDown()
     }
     
@@ -570,5 +571,149 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         XCTAssertFalse(handler.navigationType == .linkActivated)
     }
      
+    
+    // MARK: Pixel firing tests
+    @MainActor
+    func testPixelsAreFiredWhenAlwaysAskFromYoutubeOverlay() {
+        
+        // Set up mock player settings and player
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .alwaysAsk
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Simulate webView loading the Youtube Page + Overlay (This sets the referrer to Youtube Watch)
+        let link1 = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
+        _ = mockWebView.load(URLRequest(url: link1))
+        _ = handler.handleURLChange(webView: mockWebView)
+        
+        // Now navigate to DuckPlayer
+        let link2 = URL(string: "duck://player/I9J120SZT14")!
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link2))
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            // Ensure the pixel history contains 2 entries
+            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.pixelHistory[0]
+            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            XCTAssertEqual(firstPixel.params, ["settings": "alwaysAsk"])
+            XCTAssertNil(firstPixel.includedParams)
 
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.pixelHistory[1]
+            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromYoutubeViaMainOverlay)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
+    @MainActor
+    func testPixelsAreFiredWhenEnabledAndReferrerIsSERP() {
+        
+        // Set up mock player settings and player
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Simulate Searching for a video in DuckDuckGo
+        let link1 = URL(string: "https://www.duckduckgo.com/search?q=metallica+videos")!
+        _ = mockWebView.load(URLRequest(url: link1))
+        _ = handler.handleURLChange(webView: mockWebView)
+        
+        // Navigate to Duck Player
+        let link2 = URL(string: "duck://player/I9J120SZT14")!
+        _ = mockWebView.load(URLRequest(url: link2))
+        _ = handler.handleURLChange(webView: mockWebView)
+        
+        // Now navigate to DuckPlayer
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link2))
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            // Ensure the pixel history contains 2 entries
+            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.pixelHistory[0]
+            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
+            XCTAssertNil(firstPixel.includedParams)
+
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.pixelHistory[1]
+            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromSERP)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
+    @MainActor
+    func testPixelsAreFiredWhenEnabledAndReferrerIsOther() {
+        
+        // Set up mock player settings and player
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Simulate Searching for a video in DuckDuckGo
+        let link1 = URL(string: "https://www.google.com/search?q=metallica+videos")!
+        _ = mockWebView.load(URLRequest(url: link1))
+        _ = handler.handleURLChange(webView: mockWebView)
+        
+        // Navigate to Duck Player
+        let link2 = URL(string: "duck://player/I9J120SZT14")!
+        _ = mockWebView.load(URLRequest(url: link2))
+        _ = handler.handleURLChange(webView: mockWebView)
+        
+        // Now navigate to DuckPlayer
+        let navigationAction = MockNavigationAction(request: URLRequest(url: link2))
+        
+        handler.handleNavigation(navigationAction, webView: webView)
+                
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            // Ensure the pixel history contains 2 entries
+            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.pixelHistory[0]
+            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
+            XCTAssertNil(firstPixel.includedParams)
+
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.pixelHistory[1]
+            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromOther)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
 }

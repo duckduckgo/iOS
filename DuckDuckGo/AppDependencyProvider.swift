@@ -164,11 +164,6 @@ final class AppDependencyProvider: DependencyProvider {
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   oAuthClient: authClient)
     }
-
-    /// Only meant to be used for testing.
-    static func makeTestingInstance() -> Self {
-        Self.init()
-    }
 }
 
 extension DefaultOAuthClient: PrivacyProInfoProvider {

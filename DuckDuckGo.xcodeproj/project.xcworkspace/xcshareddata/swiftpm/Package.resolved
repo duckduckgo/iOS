@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "ec46d991838527dd8c7041a3673428c0e18e0fdc",
-        "version" : "199.0.0"
+        "branch" : "daniel/update.duckplayer.host",
+        "revision" : "86be3f4f4b792dd5a645f1fcbd0058c5823892cf"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "1fee787458d13f8ed07f9fe81aecd6e59609339e",
-        "version" : "13.1.0"
+        "revision" : "945ac09a0189dc6736db617867fde193ea984b20",
+        "version" : "15.0.0"
       }
     },
     {

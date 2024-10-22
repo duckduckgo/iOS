@@ -199,7 +199,8 @@ struct SettingsSubscriptionView: View {
         Group {
             if isShowingPrivacyPro {
 
-                let isSignedIn = settingsViewModel.state.subscription.isSignedIn
+//                let isSignedIn = settingsViewModel.state.subscription.isSignedIn
+                let subscriptionExists = settingsViewModel.state.subscription.subscriptionExist
                 let hasActiveSubscription = settingsViewModel.state.subscription.hasActiveSubscription
                 let hasNoEntitlements = settingsViewModel.state.subscription.entitlements.isEmpty
 
@@ -208,24 +209,24 @@ struct SettingsSubscriptionView: View {
                     .daxFootnoteRegular().accentColor(Color.init(designSystemColor: .accent))
 
                 Section(header: Text(UserText.settingsPProSection),
-                        footer: !isSignedIn ? footerLink : nil
+                        footer: !subscriptionExists ? footerLink : nil
                 ) {
 
-                    switch (isSignedIn, hasActiveSubscription, hasNoEntitlements) {
+                    switch (subscriptionExists, hasActiveSubscription, hasNoEntitlements) {
 
-                        // Signed In, Subscription Expired
+                        // Subscription exist, Subscription Expired
                     case (true, false, _):
                         subscriptionExpiredView
                         
-                        // Signed in, Subscription Active, Valid entitlements
+                        // Subscription exist, Subscription Active, Valid entitlements
                     case (true, true, false):
                         subscriptionDetailsView  // View for valid subscription details
                         
-                        // Signed in, Subscription Active, Empty Entitlements
+                        // Subscription exist, Subscription Active, Empty Entitlements
                     case (true, true, true):
                         noEntitlementsAvailableView  // View for no entitlements
                         
-                        // Signed out
+                        // Subscription do not exist
                     case (false, _, _):
                         purchaseSubscriptionView  // View for signing up or purchasing a subscription
                     }
@@ -239,7 +240,7 @@ struct SettingsSubscriptionView: View {
             }
         }
         .onReceive(settingsViewModel.$state) { state in
-            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
+            isShowingPrivacyPro = state.subscription.enabled && (state.subscription.subscriptionExist || state.subscription.canPurchase)
         }
     }
 }

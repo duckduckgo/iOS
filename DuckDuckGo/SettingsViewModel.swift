@@ -712,15 +712,14 @@ extension SettingsViewModel {
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase
 
-        // Update if user is signed in based on the presence of token
-        state.subscription.isSignedIn = subscriptionManager.isUserAuthenticated
-
         // Fetch subscription details using a stored access token
         do {
             if let subscription = try await subscriptionManager.currentSubscription(refresh: true) {
+                state.subscription.subscriptionExist = true
                 state.subscription.platform = subscription.platform
                 state.subscription.hasActiveSubscription = subscription.isActive
 
+                // TODO: check the logic here
                 // Check entitlements and update state
                 state.subscription.entitlements = subscriptionManager.entitlements
                 /*var currentEntitlements: [Entitlement.ProductName] = []
@@ -735,6 +734,7 @@ extension SettingsViewModel {
         } catch SubscriptionEndpointServiceError.noData {
             // Auth successful but no Subscription is available
             Logger.subscription.debug("Subscription not present")
+            state.subscription.subscriptionExist = false
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
         } catch {

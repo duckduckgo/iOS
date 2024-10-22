@@ -40,7 +40,7 @@ struct SettingsState {
     struct SubscriptionState: Codable {
         var enabled: Bool
         var canPurchase: Bool
-        var isSignedIn: Bool
+        var subscriptionExist: Bool
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
@@ -129,7 +129,7 @@ struct SettingsState {
             networkProtectionConnected: false,
             subscription: SubscriptionState(enabled: false,
                                        canPurchase: false,
-                                       isSignedIn: false,
+                                       subscriptionExist: false,
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,

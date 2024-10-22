@@ -415,7 +415,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             // We may need to skip the YouTube video already rendered in DuckPlayer
             guard let (listVideoID, _) = (direction == .back ? navigationList.reversed().first : navigationList.first)?.url.youtubeVideoParams,
                   let (currentVideoID, _) = webView.url?.youtubeVideoParams,
-                  duckPlayer.settings.mode == .enabled else {
+                  duckPlayer.settings.mode != .disabled else {
                 performBackForwardNavigation(webView: webView, direction: direction)
                 return
             }

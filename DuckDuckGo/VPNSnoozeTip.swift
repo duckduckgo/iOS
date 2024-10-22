@@ -32,6 +32,8 @@ extension VPNSnoozeTip: Tip {
         case learnMore = "com.duckduckgo.vpn.tip.snooze.learnMoreId"
     }
 
+    static let geolocationTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.snooze.geolocationTipDismissedEvent")
+
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
 
@@ -59,6 +61,9 @@ extension VPNSnoozeTip: Tip {
     }
 
     var rules: [Rule] {
+        #Rule(Self.geolocationTipDismissedEvent) {
+            $0.donations.count > 0
+        }
         #Rule(Self.$vpnEnabled) {
             $0 == true
         }

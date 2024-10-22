@@ -20,12 +20,56 @@
 import SwiftUI
 import NetworkProtection
 import TipKit
+import TipKitUtils
 
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @ObservedObject
     public var statusModel: NetworkProtectionStatusViewModel
+
+    // MARK: - Tips
+
+    let geoswitchingTip: VPNGeoswitchingTip = {
+        let tip = VPNGeoswitchingTip()
+
+        if #available(iOS 17.0, *) {
+            if tip.shouldDisplay {
+                Task {
+                    for await status in tip.statusUpdates {
+                        if case .invalidated = status {
+                            await VPNSnoozeTip.geolocationTipDismissedEvent.donate()
+                            await VPNAddWidgetTip.geolocationTipDismissedEvent.donate()
+                        }
+                    }
+                }
+            }
+        }
+
+        return tip
+    }()
+
+    let snoozeTip: VPNSnoozeTip = {
+        let tip = VPNSnoozeTip()
+
+        if #available(iOS 17.0, *) {
+            if tip.shouldDisplay {
+                Task {
+                    for await status in tip.statusUpdates {
+                        if case .invalidated = status {
+                            await VPNAddWidgetTip.snoozeTipDismissedEvent.donate()
+                        }
+                    }
+                }
+            }
+        }
+
+        return tip
+    }()
+
+    let widgetTip: VPNAddWidgetTip = {
+        VPNAddWidgetTip()
+    }()
 
     // MARK: - View
 
@@ -103,13 +147,13 @@ struct NetworkProtectionStatusView: View {
 
         Section {
             if #available(iOS 17.0, *) {
-                widgetTip()
+                widgetTipView()
                     .tipImageSize(CGSize(width: 32, height: 32))
                     .padding(.horizontal, 3)
             }
 
             if #available(iOS 17.0, *) {
-                snoozeTip()
+                snoozeTipView()
                     .tipImageSize(CGSize(width: 32, height: 32))
                     .padding(.horizontal, 3)
             }
@@ -211,7 +255,7 @@ struct NetworkProtectionStatusView: View {
 
         Section {
             if #available(iOS 17.0, *) {
-                geoswitchingTip()
+                geoswitchingTipView()
                     .tipImageSize(CGSize(width: 32, height: 32))
                     .padding(.horizontal, 3)
             }
@@ -307,11 +351,10 @@ struct NetworkProtectionStatusView: View {
 
     @available(iOS 17.0, *)
     @ViewBuilder
-    private func geoswitchingTip() -> some View {
-        if statusModel.canShowTips,
-           let tip = statusModel.vpnEnabledTips.currentTip as? VPNGeoswitchingTip {
+    private func geoswitchingTipView() -> some View {
+        if statusModel.canShowTips {
 
-            TipView(tip)
+            TipView(geoswitchingTip)
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
@@ -320,12 +363,11 @@ struct NetworkProtectionStatusView: View {
 
     @available(iOS 17.0, *)
     @ViewBuilder
-    private func snoozeTip() -> some View {
+    private func snoozeTipView() -> some View {
         if statusModel.canShowTips,
-           statusModel.hasServerInfo,
-           let tip = statusModel.vpnEnabledTips.currentTip as? VPNSnoozeTip {
+           statusModel.hasServerInfo {
 
-            TipView(tip, action: statusModel.snoozeActionHandler(action:))
+            TipView(snoozeTip, action: statusModel.snoozeActionHandler(action:))
                 .removeGroupedListStyleInsets()
                 .tipCornerRadius(0)
                 .tipBackground(Color(designSystemColor: .surface))
@@ -334,16 +376,14 @@ struct NetworkProtectionStatusView: View {
 
     @available(iOS 17.0, *)
     @ViewBuilder
-    private func widgetTip() -> some View {
+    private func widgetTipView() -> some View {
         if statusModel.canShowTips,
            !statusModel.isNetPEnabled && !statusModel.isSnoozing {
 
-            if let tip = statusModel.vpnEnabledTips.currentTip as? VPNAddWidgetTip {
-                TipView(tip, action: statusModel.widgetActionHandler(action:))
-                    .removeGroupedListStyleInsets()
-                    .tipCornerRadius(0)
-                    .tipBackground(Color(designSystemColor: .surface))
-            }
+            TipView(widgetTip, action: statusModel.widgetActionHandler(action:))
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
         }
     }
 

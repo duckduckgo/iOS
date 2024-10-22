@@ -32,6 +32,10 @@ extension VPNAddWidgetTip: Tip {
         case addWidget = "com.duckduckgo.vpn.tip.addWidget.action.addWidget"
     }
 
+    static let geolocationTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.addWidget.geolocationTipDismissedEvent")
+
+    static let snoozeTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.addWidget.geolocationTipDismissedEvent")
+
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
 
@@ -61,6 +65,12 @@ extension VPNAddWidgetTip: Tip {
     }
 
     var rules: [Rule] {
+        #Rule(Self.geolocationTipDismissedEvent) {
+            $0.donations.count > 0
+        }
+        #Rule(Self.snoozeTipDismissedEvent) {
+            $0.donations.count > 0
+        }
         #Rule(Self.$vpnEnabled) {
             $0 == false
         }

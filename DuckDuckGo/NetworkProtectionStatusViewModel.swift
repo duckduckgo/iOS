@@ -114,27 +114,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published
     var showAddWidgetEducationView: Bool = false
 
-    let vpnEnabledTips: TipGrouping = {
-        // This is temporarily disabled until Xcode 16 is available.
-        // Ref: https://app.asana.com/0/414235014887631/1208528787265444/f
-        //
-        // if #available(iOS 18.0, *) {
-        //     return TipGroup(.ordered) {
-        //     VPNChangeLocationTip()
-        //     VPNUseSnoozeTip()
-        //     VPNAddWidgetTip()
-        // }
-        if #available(iOS 17.0, *) {
-            return LegacyTipGroup(.ordered) {
-                VPNGeoswitchingTip()
-                VPNSnoozeTip()
-                VPNAddWidgetTip()
-            }
-        } else {
-            return EmptyTipGroup()
-        }
-    }()
-
     // MARK: Error
 
     struct ErrorItem {
@@ -500,7 +479,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
 
         if #available(iOS 17.0, *) {
-            (vpnEnabledTips.currentTip as? VPNSnoozeTip)?.invalidate(reason: .actionPerformed)
+            VPNSnoozeTip().invalidate(reason: .actionPerformed)
         }
 
         let defaultDuration: TimeInterval = .minutes(20)
@@ -612,7 +591,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     func widgetActionHandler(action: Tips.Action) {
         if action.id == VPNAddWidgetTip.ActionIdentifiers.addWidget.rawValue {
             showAddWidgetEducationView = true
-            (vpnEnabledTips.currentTip as? VPNAddWidgetTip)?.invalidate(reason: .actionPerformed)
+
+            VPNAddWidgetTip().invalidate(reason: .actionPerformed)
         }
     }
 
@@ -621,7 +601,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     func handleUserOpenedVPNLocations() {
         if #available(iOS 17.0, *) {
             Task { @MainActor in
-                (vpnEnabledTips.currentTip as? VPNGeoswitchingTip)?.invalidate(reason: .actionPerformed)
+                VPNGeoswitchingTip().invalidate(reason: .actionPerformed)
             }
         }
     }

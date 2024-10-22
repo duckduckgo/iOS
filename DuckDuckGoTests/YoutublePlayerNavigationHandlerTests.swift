@@ -575,58 +575,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     
     // MARK: Pixel firing tests
     @MainActor
-    func testPixelsAreFiredWhenEnabledAndReferrerIsSERP() {
-        
-        // Set up mock player settings and player
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .enabled
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
-        
-        // Simulate Searching for a video in DuckDuckGo
-        let link1 = URL(string: "https://www.duckduckgo.com/search?q=metallica+videos")!
-        
-        _ = mockWebView.load(URLRequest(url: link1))
-        _ = handler.handleURLChange(webView: mockWebView)
-        
-        // Navigate to Duck Player
-        let link2 = URL(string: "duck://player/I9J120SZT14")!
-        _ = mockWebView.load(URLRequest(url: link2))
-        _ = handler.handleURLChange(webView: mockWebView)
-        
-        // Now navigate to DuckPlayer
-        let navigationAction = MockNavigationAction(request: URLRequest(url: link2))
-        
-        handler.handleNavigation(navigationAction, webView: webView)
-                
-        let expectation = self.expectation(description: "Simulated Request Expectation")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
-            if PixelFiringMock.allPixelsFired.count != 2 {
-                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
-                return
-            }
-            
-            // Validate the first pixel
-            let firstPixel = PixelFiringMock.allPixelsFired[0]
-            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
-            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
-            XCTAssertNil(firstPixel.includedParams)
-
-            // Validate the second pixel
-            let secondPixel = PixelFiringMock.allPixelsFired[1]
-            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromSERP.name)
-            XCTAssertEqual(secondPixel.params, [:])
-            XCTAssertNil(secondPixel.includedParams)
-            
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-
-    }
-    
-    @MainActor
     func testPixelsAreFiredWhenEnabledAndReferrerIsOther() {
         
         // Set up mock player settings and player

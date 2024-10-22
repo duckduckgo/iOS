@@ -1704,6 +1704,14 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
+        // Prevent the YouTube app from intercepting
+        // links based on DuckPlayer settings
+        if let handler = duckPlayerNavigationHandler,
+            handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView) {
+                decisionHandler(.cancel)
+                return
+        }
+        
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in

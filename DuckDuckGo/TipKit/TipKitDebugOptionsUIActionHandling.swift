@@ -19,7 +19,6 @@
 
 import Foundation
 import os.log
-import TipKitUtils
 
 protocol TipKitDebugOptionsUIActionHandling {
     /// Resets TipKit

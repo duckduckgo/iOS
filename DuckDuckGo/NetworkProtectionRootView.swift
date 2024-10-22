@@ -24,8 +24,9 @@ import Core
 
 struct NetworkProtectionRootView: View {
 
-    @StateObject
-    var statusViewModel: NetworkProtectionStatusViewModel = {
+    let statusViewModel: NetworkProtectionStatusViewModel
+
+    init() {
         let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         let usesUnifiedFeedbackForm = accountManager.isUserAuthenticated
@@ -35,7 +36,7 @@ struct NetworkProtectionRootView: View {
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository,
                                                            usesUnifiedFeedbackForm: usesUnifiedFeedbackForm)
-    }()
+    }
 
     var body: some View {
         NetworkProtectionStatusView(statusModel: statusViewModel)

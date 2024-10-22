@@ -20,7 +20,6 @@
 import SwiftUI
 import NetworkProtection
 import TipKit
-import TipKitUtils
 
 struct NetworkProtectionStatusView: View {
     @Environment(\.colorScheme) var colorScheme

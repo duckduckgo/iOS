@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import TipKitUtils
 import os
 
 extension TipKitController {

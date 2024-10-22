@@ -25,7 +25,6 @@ import BrowserServicesKit
 import Core
 import Subscription
 import TipKit
-import TipKitUtils
 
 struct NetworkProtectionLocationStatusModel {
     enum LocationIcon {

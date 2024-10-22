@@ -20,7 +20,6 @@
 import Core
 import Foundation
 import os.log
-import TipKitUtils
 
 protocol TipKitAppEventHandling {
     func appDidFinishLaunching()

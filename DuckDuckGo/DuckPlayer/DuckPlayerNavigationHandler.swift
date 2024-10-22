@@ -208,6 +208,10 @@ final class DuckPlayerNavigationHandler {
         
     }
     
+    private func fireOpenInYoutubePixel() {
+        pixelFiring.fire(.duckPlayerWatchOnYoutube, withAdditionalParameters: [:])
+    }
+    
     // Determines if the link should be opened in a new tab
     // And sets the correct navigationType
     // This is uses for JS based navigation links
@@ -270,7 +274,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
            let (videoID, _) = newURL.youtubeVideoParams {
             
             duckPlayer.settings.allowFirstVideo = true // Always skip overlay for these links
-
+            
+            // Fire a Pixel for Open in Youtube
+            self.fireOpenInYoutubePixel()
+                
+            
             // Attempt to open in YouTube app or load in webView
             if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
                let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {

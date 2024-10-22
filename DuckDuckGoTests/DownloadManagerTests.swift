@@ -26,8 +26,6 @@ import WidgetKit
 class DownloadManagerTests: XCTestCase {
     private let downloadManagerTestsHelper = DownloadTestsHelper(downloadsDirectory: DownloadManager().downloadsDirectory)
     
-    var mockDependencyProvider: MockDependencyProvider!
-    
     override func tearDown() {
         super.tearDown()
         downloadManagerTestsHelper.deleteAllFiles()

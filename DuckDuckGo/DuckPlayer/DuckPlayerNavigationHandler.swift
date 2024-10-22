@@ -54,6 +54,9 @@ final class DuckPlayerNavigationHandler {
         static let urlInternalReferrer = "embeds_referring_euri"
         static let youtubeScheme = "youtube://"
         static let duckPlayerScheme = URL.NavigationalScheme.duck.rawValue
+        static let duckPlayerHeaderKey = "X-Navigation-Source"
+        static let duckPlayerHeaderValue = "DuckPlayer"
+        static let duckPlayerReferrerHeaderKey = "X-Navigation-DuckPlayerReferrer"
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
@@ -151,7 +154,7 @@ final class DuckPlayerNavigationHandler {
         renderedVideoID = videoID
         let duckPlayerURL = URL.duckPlayer(videoID)
         Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
-        webView.load(URLRequest(url: duckPlayerURL))
+        loadWithDuckPlayerHeaders(URLRequest(url: duckPlayerURL), referrer: referrer, webView: webView)
         
     }
     
@@ -169,7 +172,7 @@ final class DuckPlayerNavigationHandler {
         duckPlayer.settings.allowFirstVideo = true
         renderedVideoID = videoID
         if let finalURL = redirectURL.addingWatchInYoutubeQueryParameter() {
-            webView.load(URLRequest(url: redirectURL))
+            loadWithDuckPlayerHeaders(URLRequest(url: redirectURL), referrer: referrer, webView: webView)
         }
     }
     
@@ -263,6 +266,17 @@ final class DuckPlayerNavigationHandler {
         }
     }
     
+    // Replaces webView.load to add DuckPlayer headers, used for navigation
+    func loadWithDuckPlayerHeaders(_ request: URLRequest, referrer: DuckPlayerReferrer, webView: WKWebView) {
+            
+        var newRequest = request
+                
+        newRequest.addValue("DuckPlayer", forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerHeaderKey)
+        newRequest.addValue(referrer.stringValue, forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerReferrerHeaderKey)
+                
+        webView.load(newRequest)
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -272,7 +286,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
 
         Logger.duckPlayer.debug("Handling Navigation for \(navigationAction.request.url?.absoluteString ?? "")")
-
+                
         duckPlayer.settings.allowFirstVideo = false // Disable overlay for first video
 
         guard let url = navigationAction.request.url else { return }
@@ -280,7 +294,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Redirect to YouTube if DuckPlayer is disabled
         guard featureFlagger.isFeatureOn(.duckPlayer) && duckPlayer.settings.mode != .disabled else {
             if let (videoID, _) = url.youtubeVideoParams {
-                webView.load(URLRequest(url: URL.youtube(videoID)))
+                loadWithDuckPlayerHeaders(URLRequest(url: URL.youtube(videoID)), referrer: referrer, webView: webView)
             }
             return
         }
@@ -437,7 +451,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             // We may need to skip the YouTube video already rendered in DuckPlayer
             guard let (listVideoID, _) = (direction == .back ? navigationList.reversed().first : navigationList.first)?.url.youtubeVideoParams,
                   let (currentVideoID, _) = webView.url?.youtubeVideoParams,
-                  duckPlayer.settings.mode == .enabled else {
+                  duckPlayer.settings.mode != .disabled else {
                 performBackForwardNavigation(webView: webView, direction: direction)
                 return
             }
@@ -550,10 +564,40 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         return false
     }
     
+    // Determine if navigation should be cancelled
+    // This is to be used in DecidePolicy For to prevent the webView
+    // from opening the Youtube app on user-triggered links
+    @MainActor
+    func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
+                        
+        // Check if the custom "X-Navigation-Source" header is present
+        if let headers = navigationAction.request.allHTTPHeaderFields,
+           let navigationSource = headers[Constants.duckPlayerHeaderKey],
+           navigationSource == Constants.duckPlayerHeaderValue {
+            return false
+        }
+
+        // Otherwise, validate if the page is a Youtube page, and DuckPlayer is Enabled
+        if featureFlagger.isFeatureOn(.duckPlayer),
+            duckPlayer.settings.mode != .disabled,
+            let url = navigationAction.request.url,
+            url.isYoutube || url.isYoutubeWatch {
+
+            // Cancel the current loading and load with DuckPlayer headers
+            webView.stopLoading()
+            loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
+            return true
+        }
+
+        // Allow all other navigations
+        return false
+    }
+    
 }
 
 extension WKWebView {
     var isEmptyTab: Bool {
         return self.url == nil || self.url?.absoluteString == "about:blank"
     }
+    
 }

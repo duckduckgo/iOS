@@ -530,50 +530,58 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Sets the referrer based on URL and headers
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView) {
                     
-            // If there is a SERP referer Header, use it
-            if let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader], referrer.contains(Constants.SERPURL) {
-                self.referrer = .serp
-                return
-            }
-            
-            // If this is a new tab (no history), but there's a DuckPlayer header, use it
-            if webView.backListItemsCount() == 0,
-               let headers = navigationAction.request.allHTTPHeaderFields,
-               let navigationSource = headers[Constants.duckPlayerReferrerHeaderKey] {
-                
-                switch navigationSource {
-                case DuckPlayerReferrer.serp.stringValue:
-                    referrer = .serp
-                case DuckPlayerReferrer.youtube.stringValue:
-                    referrer = .youtube
-                case DuckPlayerReferrer.other.stringValue:
-                    referrer = .other
-                default:
-                    break
-                }
-                return
-            }
-            
-            // There's no history, so it's always other
-            if webView.backListItemsCount() == 0 {
-                referrer = .other
-                return
-            }
-                            
-            // Otherwise, just set the header based on the URL
-            if let url = navigationAction.request.url {
-                
-                // We only need a referrer when DP is enabled
-                if url.isDuckPlayer && duckPlayer.settings.mode == .enabled {
-                    referrer = .youtube
-                    return
-                }
-                
-            }
-            
+        // If there is a SERP referer Header, use it
+        if let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader], referrer.contains(Constants.SERPURL) {
+            self.referrer = .serp
+            return
         }
+        
+        // If this is a new tab (no history), but there's a DuckPlayer header, use it
+        if webView.backListItemsCount() == 0,
+           let headers = navigationAction.request.allHTTPHeaderFields,
+           let navigationSource = headers[Constants.duckPlayerReferrerHeaderKey] {
+            
+            switch navigationSource {
+            case DuckPlayerReferrer.serp.stringValue:
+                referrer = .serp
+            case DuckPlayerReferrer.youtube.stringValue:
+                referrer = .youtube
+            case DuckPlayerReferrer.other.stringValue:
+                referrer = .other
+            default:
+                break
+            }
+            return
+        }
+        
+        // If There's no history, and the user arrived directly
+        // at Watch
+        if webView.backListItemsCount() == 0
+            && webView.url?.isYoutubeWatch ?? false || webView.url == nil
+            && duckPlayer.settings.mode == .enabled {
+            referrer = .other
+            return
+        }
+        
+        // Set the referrer to be Youtube Overlay
+        // when disable and visiting a video page
+        if webView.url?.isYoutubeWatch ?? false
+            && duckPlayer.settings.mode == .alwaysAsk {
+            referrer = .youtubeOverlay
+            return
+        }
+                        
+        // Otherwise, just set the header based on the URL
+        if let url = navigationAction.request.url {
+            
+            // We only need a referrer when DP is enabled
+            if url.isDuckPlayer && duckPlayer.settings.mode == .enabled {
+                referrer = .youtube
+                return
+            }
+        }
+    }
 
-    
     // Determine if navigation should be cancelled
     // This is to be used in DecidePolicy For to prevent the webView
     // from opening the Youtube app on user-triggered links

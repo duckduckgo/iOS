@@ -699,7 +699,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         // Simulate A Youtube Page
         let link1 = URL(string: "https://www.youtube.com/watch?v=1234")!
         var navigationAction = MockNavigationAction(request: URLRequest(url: link1))
-        
+        handler.setReferrer(navigationAction: navigationAction, webView: mockWebViewWithHistory)
         _ = mockWebViewWithHistory.load(URLRequest(url: link1))
         _ = handler.handleURLChange(webView: mockWebViewWithHistory)
         
@@ -710,7 +710,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         // Simulate the URL change and navigation
         _ = mockWebViewWithHistory.load(URLRequest(url: link2))
         _ = handler.handleURLChange(webView: mockWebViewWithHistory)
-        handler.setReferrer(navigationAction: navigationAction, webView: mockWebViewWithHistory)
         handler.handleNavigation(navigationAction, webView: mockWebViewWithHistory)
                 
         let expectation = self.expectation(description: "Simulated Request Expectation")
@@ -794,6 +793,57 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
             XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromSERP.name)
             XCTAssertEqual(secondPixel.params, [:])
             XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
+    @MainActor
+    func testNoPixelIsFiredWhenLinkFromOverlay() {
+        
+        // Simulate some history
+        let mockWebViewWithHistory = MockWebView()
+        mockWebViewWithHistory.mockBackItemsCount = 4
+        
+        // Set up mock player settings and player
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .alwaysAsk
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Simulate A Youtube Page
+        let link1 = URL(string: "https://www.youtube.com/watch?v=1234")!
+        var navigationAction = MockNavigationAction(request: URLRequest(url: link1))
+        _ = mockWebViewWithHistory.load(URLRequest(url: link1))
+        _ = handler.handleURLChange(webView: mockWebViewWithHistory)
+        handler.setReferrer(navigationAction: navigationAction, webView: mockWebViewWithHistory)
+        
+        // Navigate to Duck Player
+        let link2 = URL(string: "duck://player/I9J120SZT14")!
+        navigationAction = MockNavigationAction(request: URLRequest(url: link2))
+
+        // Simulate the URL change and navigation
+        _ = mockWebViewWithHistory.load(URLRequest(url: link2))
+        _ = handler.handleURLChange(webView: mockWebViewWithHistory)
+        handler.setReferrer(navigationAction: navigationAction, webView: mockWebViewWithHistory)
+        handler.handleNavigation(navigationAction, webView: mockWebViewWithHistory)
+                
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            if PixelFiringMock.allPixelsFired.count != 1 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
+            XCTAssertEqual(firstPixel.params, ["settings": "alwaysAsk"])
+            XCTAssertNil(firstPixel.includedParams)
             
             expectation.fulfill()
         }

@@ -66,6 +66,7 @@ class MockWebView: WKWebView {
     
     override func load(_ request: URLRequest) -> WKNavigation? {
         lastLoadedRequest = request
+        currentURL = request.url
         return nil
     }
     

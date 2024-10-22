@@ -119,8 +119,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     }
     
     var mode: DuckPlayerMode {
-        let experiment = DuckPlayerLaunchExperiment()
-        if isFeatureEnabled && experiment.isEnrolled && experiment.isExperimentCohort {
+        if isFeatureEnabled {
             return appSettings.duckPlayerMode
         } else {
             return .disabled
@@ -128,8 +127,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     }
     
     var askModeOverlayHidden: Bool {
-        let experiment = DuckPlayerLaunchExperiment()
-        if isFeatureEnabled  && experiment.isEnrolled && experiment.isExperimentCohort {
+        if isFeatureEnabled {
             return appSettings.duckPlayerAskModeOverlayHidden
         } else {
             return false

@@ -248,6 +248,8 @@ class TabViewController: UIViewController {
                         
         let finalURL = duckPlayerNavigationHandler?.getDuckURLFor(url) ?? url
         let activeLink = Link(title: title, url: finalURL)
+        
+        
         guard let storedLink = tabModel.link else {
             return activeLink
         }
@@ -581,10 +583,10 @@ class TabViewController: UIViewController {
                 self?.load(urlRequest: cleanURLRequest)
                 
                 
-                if let handler = self?.duckPlayerNavigationHandler,
+                 if let handler = self?.duckPlayerNavigationHandler,
                     let webView = self?.webView {
                     handler.handleAttach(webView: webView)
-                }
+                 }
             })
         }
 
@@ -728,7 +730,12 @@ class TabViewController: UIViewController {
             progressWorker.progressDidChange(webView.estimatedProgress)
             
         case #keyPath(WKWebView.url):
-            webViewUrlHasChanged()
+            // A short delay is required here, because the URL takes some time
+            // to propagate through the webView.url property and might not
+            // be immediately available in the observer
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.webViewUrlHasChanged()
+            }
             
         case #keyPath(WKWebView.canGoBack):
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -745,37 +752,18 @@ class TabViewController: UIViewController {
     }
     
     func webViewUrlHasChanged() {
+        
+        // Handle DuckPlayer Navigation URL changes
+        if let handler = duckPlayerNavigationHandler,
+           let url = webView.url,
+           case .handled = handler.handleURLChange(webView: webView) {
+            return
+        }
+        
         if url == nil {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
-            
-            // decideForPolicy is not called for JS navigation
-            // This ensures DuckPlayer works on internal JS navigation based on
-            // URL Changes
-            
-            if let url,
-               url.isYoutubeVideo {
-                
-                duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
-                                                         url: url,
-                                                         navigationAction: nil)
-                
-                if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-                 duckPlayerNavigationHandler?.handleJSNavigation(url: url, webView: webView)
-                }
-            }
-               
-             
-        }
-        if let url {
-            duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
-            
-            // Open in new tab if required
-            // If the lastRenderedURL is nil, it means we're already in a new tab
-            if webView.url != nil && lastRenderedURL != nil {
-                duckPlayerNavigationHandler?.handleEvent(event: .JSTriggeredNavigation, url: webView.url, navigationAction: nil)
-            }
         }
     }
     
@@ -846,11 +834,11 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-        
+                
         if let url = url, url.isDuckPlayer {
             webView.stopLoading()
             if webView.canGoBack {
-                duckPlayerNavigationHandler?.handleGoBack(webView: webView)
+                duckPlayerNavigationHandler?.handleBackForwardNavigation(webView: webView, direction: .back)
                 chromeDelegate?.omniBar.resignFirstResponder()
                 return
             }
@@ -882,7 +870,20 @@ class TabViewController: UIViewController {
     
     func goForward() {
         dismissJSAlertIfNeeded()
-
+        
+        if let url = url, url.isDuckPlayer {
+            webView.stopLoading()
+            if webView.canGoBack {
+                duckPlayerNavigationHandler?.handleBackForwardNavigation(webView: webView, direction: .forward)
+                chromeDelegate?.omniBar.resignFirstResponder()
+                return
+            }
+            if openingTab != nil {
+                delegate?.tabDidRequestClose(self)
+                return
+            }
+        }
+        
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()
         }
@@ -1713,6 +1714,14 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
+        // Prevent the YouTube app from intercepting
+        // links based on DuckPlayer settings
+        if let handler = duckPlayerNavigationHandler,
+            handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView) {
+                decisionHandler(.cancel)
+                return
+        }
+        
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
@@ -1809,9 +1818,6 @@ extension TabViewController: WKNavigationDelegate {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                     privacyProDataReporter.saveSearchCount()
-                    
-                    // Duck Player Search Experiment
-                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)
@@ -1869,23 +1875,6 @@ extension TabViewController: WKNavigationDelegate {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
         
-        if navigationAction.isTargetingMainFrame(),
-           url.isYoutubeVideo {
-            
-            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
-                                                     url: url,
-                                                     navigationAction: navigationAction)
-            
-            // Handle decidePolicy For
-            if duckPlayerNavigationHandler?.duckPlayer.settings.mode == .enabled {
-                duckPlayerNavigationHandler?.handleDecidePolicyFor(navigationAction,
-                                                                  completion: completion,
-                                                                  webView: webView)
-                return
-            }
-           
-        }
-
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
@@ -1907,9 +1896,6 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
-                                                     url: url,
-                                                     navigationAction: navigationAction)
             
             // Validate Duck Player setting to open in new tab or locally
             if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {

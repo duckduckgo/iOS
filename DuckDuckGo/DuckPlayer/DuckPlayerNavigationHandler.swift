@@ -196,11 +196,6 @@ final class DuckPlayerNavigationHandler {
             pixelFiring.fire(.duckPlayerViewFromYoutubeAutomatic, withAdditionalParameters: [:])
         }
         
-        // Duck Player viewed from the YouTube overlay message
-        if referrer == .youtubeOverlay && duckPlayer.settings.mode == .alwaysAsk {
-            pixelFiring.fire(.duckPlayerViewFromYoutubeViaMainOverlay, withAdditionalParameters: [:])
-        }
-        
         // Duck Player viewed from SERP overlay
         if referrer == .serp && duckPlayer.settings.mode == .enabled {
             pixelFiring.fire(.duckPlayerViewFromSERP, withAdditionalParameters: [:])
@@ -219,13 +214,13 @@ final class DuckPlayerNavigationHandler {
         
         switch true {
         
-            // Duck Duck Go search
+        // Duck Duck Go search
         case url.isDuckDuckGo:
             referrer = .serp
             Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
         
-        // DuckPlayer is enabled and last URL was Youtube
-        case url.isYoutube || (url.isYoutubeWatch && duckPlayer.settings.mode == .enabled):
+        // DuckPlayer is enabled and last URL was Youtube (Not youtube watch)
+        case url.isYoutube && url.isYoutubeWatch && duckPlayer.settings.mode == .enabled:
             referrer = .youtube
             Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
         

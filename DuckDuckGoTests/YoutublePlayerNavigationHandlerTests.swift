@@ -22,6 +22,7 @@ import WebKit
 import ContentScopeScripts
 import Combine
 import BrowserServicesKit
+import Core
 
 @testable import DuckDuckGo
 
@@ -574,51 +575,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     
     // MARK: Pixel firing tests
     @MainActor
-    func testPixelsAreFiredWhenAlwaysAskFromYoutubeOverlay() {
-        
-        // Set up mock player settings and player
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .alwaysAsk
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
-        
-        // Simulate webView loading the Youtube Page + Overlay (This sets the referrer to Youtube Watch)
-        let link1 = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
-        _ = mockWebView.load(URLRequest(url: link1))
-        _ = handler.handleURLChange(webView: mockWebView)
-        
-        // Now navigate to DuckPlayer
-        let link2 = URL(string: "duck://player/I9J120SZT14")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: link2))
-        
-        handler.handleNavigation(navigationAction, webView: webView)
-                
-        let expectation = self.expectation(description: "Simulated Request Expectation")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
-            // Ensure the pixel history contains 2 entries
-            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
-            
-            // Validate the first pixel
-            let firstPixel = PixelFiringMock.pixelHistory[0]
-            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
-            XCTAssertEqual(firstPixel.params, ["settings": "alwaysAsk"])
-            XCTAssertNil(firstPixel.includedParams)
-
-            // Validate the second pixel
-            let secondPixel = PixelFiringMock.pixelHistory[1]
-            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromYoutubeViaMainOverlay)
-            XCTAssertEqual(secondPixel.params, [:])
-            XCTAssertNil(secondPixel.includedParams)
-            
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-
-    }
-    
-    @MainActor
     func testPixelsAreFiredWhenEnabledAndReferrerIsSERP() {
         
         // Set up mock player settings and player
@@ -645,18 +601,20 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let expectation = self.expectation(description: "Simulated Request Expectation")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             
-            // Ensure the pixel history contains 2 entries
-            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
             
             // Validate the first pixel
-            let firstPixel = PixelFiringMock.pixelHistory[0]
-            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
             XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
             XCTAssertNil(firstPixel.includedParams)
 
             // Validate the second pixel
-            let secondPixel = PixelFiringMock.pixelHistory[1]
-            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromSERP)
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromSERP.name)
             XCTAssertEqual(secondPixel.params, [:])
             XCTAssertNil(secondPixel.includedParams)
             
@@ -694,18 +652,20 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let expectation = self.expectation(description: "Simulated Request Expectation")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             
-            // Ensure the pixel history contains 2 entries
-            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
             
             // Validate the first pixel
-            let firstPixel = PixelFiringMock.pixelHistory[0]
-            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
             XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
             XCTAssertNil(firstPixel.includedParams)
 
             // Validate the second pixel
-            let secondPixel = PixelFiringMock.pixelHistory[1]
-            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromOther)
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromOther.name)
             XCTAssertEqual(secondPixel.params, [:])
             XCTAssertNil(secondPixel.includedParams)
             
@@ -743,18 +703,20 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let expectation = self.expectation(description: "Simulated Request Expectation")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             
-            // Ensure the pixel history contains 2 entries
-            XCTAssertEqual(PixelFiringMock.pixelHistory.count, 2)
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
             
             // Validate the first pixel
-            let firstPixel = PixelFiringMock.pixelHistory[0]
-            XCTAssertEqual(firstPixel.pixel, .duckPlayerDailyUniqueView)
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
             XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
             XCTAssertNil(firstPixel.includedParams)
 
             // Validate the second pixel
-            let secondPixel = PixelFiringMock.pixelHistory[1]
-            XCTAssertEqual(secondPixel.pixel, .duckPlayerViewFromYoutubeAutomatic)
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromYoutubeAutomatic.name)
             XCTAssertEqual(secondPixel.params, [:])
             XCTAssertNil(secondPixel.includedParams)
             

@@ -1910,13 +1910,7 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            
-            // Validate Duck Player setting to open in new tab or locally
-            if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {
-                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: nil)
-            } else {
-                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
-            }
+            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
             completion(.cancel)
             return
 

@@ -50,8 +50,16 @@ class MockWebView: WKWebView {
     var goToCalledWith: WKBackForwardListItem?
     var canGoBackMock = false
     var currentURL: URL?
+    var mockBackItemsCount: Int = 0
     
     private var _url: URL?
+    private var backListMockCount: Int?
+
+    // This function returns the backList count either based on real data or mocked count
+    override func backListItemsCount() -> Int {
+        return mockBackItemsCount
+    }
+
     override var url: URL? {
         return currentURL
     }

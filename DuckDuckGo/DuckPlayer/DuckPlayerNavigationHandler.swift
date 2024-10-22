@@ -208,35 +208,6 @@ final class DuckPlayerNavigationHandler {
         
     }
     
-    // Updates the referer based on the current webView URL
-    private func updateReferrer(webView: WKWebView) {
-        guard let url = webView.url else { return }
-        
-        switch true {
-        
-        // Duck Duck Go search
-        case url.isDuckDuckGo:
-            referrer = .serp
-            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
-        
-        // DuckPlayer is enabled and last URL was Youtube (Not youtube watch)
-        case url.isYoutube && url.isYoutubeWatch && duckPlayer.settings.mode == .enabled:
-            referrer = .youtube
-            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
-        
-        // DuckPlayer is in ask mode and last URL was Youtube Watch
-        case url.isYoutubeWatch && duckPlayer.settings.mode == .alwaysAsk:
-            referrer = .youtubeOverlay
-        
-        // Any other URL that's not DuckPlayer
-        case !url.isDuckPlayer:
-            referrer = .other
-            Logger.duckPlayer.debug("DP: Referrer updated to \(self.referrer.stringValue)")
-        default:
-            break
-        }
-    }
-    
     // Determines if the link should be opened in a new tab
     // And sets the correct navigationType
     // This is uses for JS based navigation links
@@ -349,9 +320,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
         
-        // Refresh the referrer if needed
-        updateReferrer(webView: webView)
-                
         // Check if DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
@@ -368,7 +336,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             Logger.duckPlayer.debug("DP: URL has not changed, skipping")
             return .notHandled(.urlHasNotChanged)
         }
-        
+                
         // Disable the Youtube Overlay for Player links
         // Youtube player links should open the video in Youtube
         // without overlay
@@ -383,7 +351,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return .notHandled(.duckPlayerDisabled)
         }
         
-        // Update rendered URL and handle YouTube-specific actions
+        // Update rendered URL and Referer if needed
         if let url = webView.url {
             renderedURL = url
         }
@@ -422,7 +390,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
-        
+            
         Logger.duckPlayer.debug("DP: Handling \(direction == .back ? "Back" : "Forward") Navigation")
         
         // Check if the DuckPlayer feature is enabled
@@ -473,7 +441,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleReload(webView: WKWebView) {
         
         Logger.duckPlayer.debug("DP: Handling Reload")
-        
+                
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
         renderedVideoID = nil
@@ -502,7 +470,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
-        
+                
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
         }
@@ -559,6 +527,53 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         return false
     }
     
+    // Sets the referrer based on URL and headers
+    func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView) {
+                    
+            // If there is a SERP referer Header, use it
+            if let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader], referrer.contains(Constants.SERPURL) {
+                self.referrer = .serp
+                return
+            }
+            
+            // If this is a new tab (no history), but there's a DuckPlayer header, use it
+            if webView.backListItemsCount() == 0,
+               let headers = navigationAction.request.allHTTPHeaderFields,
+               let navigationSource = headers[Constants.duckPlayerReferrerHeaderKey] {
+                
+                switch navigationSource {
+                case DuckPlayerReferrer.serp.stringValue:
+                    referrer = .serp
+                case DuckPlayerReferrer.youtube.stringValue:
+                    referrer = .youtube
+                case DuckPlayerReferrer.other.stringValue:
+                    referrer = .other
+                default:
+                    break
+                }
+                return
+            }
+            
+            // There's no history, so it's always other
+            if webView.backListItemsCount() == 0 {
+                referrer = .other
+                return
+            }
+                            
+            // Otherwise, just set the header based on the URL
+            if let url = navigationAction.request.url {
+                
+                // We only need a referrer when DP is enabled
+                if url.isDuckPlayer && duckPlayer.settings.mode == .enabled {
+                    referrer = .youtube
+                    return
+                }
+                
+            }
+            
+        }
+
+    
     // Determine if navigation should be cancelled
     // This is to be used in DecidePolicy For to prevent the webView
     // from opening the Youtube app on user-triggered links
@@ -593,6 +608,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
 extension WKWebView {
     var isEmptyTab: Bool {
         return self.url == nil || self.url?.absoluteString == "about:blank"
+    }
+    
+    @objc func backListItemsCount() -> Int {
+        return backForwardList.backList.count
     }
     
 }

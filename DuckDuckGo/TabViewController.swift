@@ -1727,6 +1727,11 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
+        // Set duckPlayer Referrer
+        if let handler = duckPlayerNavigationHandler {
+            handler.setReferrer(navigationAction: navigationAction, webView: webView)
+        }
+        
         // Prevent the YouTube app from intercepting
         // links based on DuckPlayer settings
         if let handler = duckPlayerNavigationHandler,

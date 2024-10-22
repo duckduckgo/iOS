@@ -62,6 +62,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
                      url: URL?,
                      navigationAction: WKNavigationAction?)
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
     func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
     
     

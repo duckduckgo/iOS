@@ -20,7 +20,7 @@ import Foundation
 import os.log
 import TipKit
 
-public protocol TipKitControlling {
+protocol TipKitControlling {
     @available(iOS 17.0, *)
     func configureTipKit()
 
@@ -28,9 +28,7 @@ public protocol TipKitControlling {
     func resetTipKitOnNextAppLaunch()
 }
 
-typealias TipKitAppEventHandler = TipKitController
-
-public final class TipKitController {
+final class TipKitController {
 
     private let logger: Logger
     private let userDefaults: UserDefaults
@@ -45,7 +43,7 @@ public final class TipKitController {
         }
     }
 
-    public init(logger: Logger,
+    init(logger: Logger,
                 userDefaults: UserDefaults) {
 
         self.logger = logger
@@ -53,7 +51,7 @@ public final class TipKitController {
     }
 
     @available(iOS 17.0, macOS 14.0, *)
-    public func configureTipKit(_ configuration: [Tips.ConfigurationOption] = []) {
+    func configureTipKit(_ configuration: [Tips.ConfigurationOption] = []) {
         do {
             if resetTipKitOnNextLaunch {
                 resetTipKit()
@@ -87,7 +85,7 @@ public final class TipKitController {
     /// app launch instead of directly trying to reset it here.
     ///
     @available(iOS 17.0, *)
-    public func resetTipKitOnNextAppLaunch() {
+    func resetTipKitOnNextAppLaunch() {
         resetTipKitOnNextLaunch = true
         logger.debug("TipKit will reset on next app launch")
     }

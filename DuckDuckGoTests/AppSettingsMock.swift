@@ -86,7 +86,8 @@ class AppSettingsMock: AppSettings {
 
     var duckPlayerMode: DuckDuckGo.DuckPlayerMode = .alwaysAsk
     var duckPlayerAskModeOverlayHidden: Bool = false
-
+    var duckPlayerOpenInNewTab: Bool = false
+    
     var newTabPageShortcutsSettings: Data?
     var newTabPageSectionsSettings: Data?
 
@@ -94,4 +95,6 @@ class AppSettingsMock: AppSettings {
     var newTabPageIntroMessageSeenCount: Int = 0
 
     var onboardingHighlightsEnabled: Bool = false
+    
+    
 }

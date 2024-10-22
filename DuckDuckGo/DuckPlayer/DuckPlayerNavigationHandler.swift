@@ -33,6 +33,7 @@ final class DuckPlayerNavigationHandler {
     var lastHandledVideoID: String?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
+    var navigationType: WKNavigationType = .other
     var experiment: DuckPlayerLaunchExperimentHandling
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     
@@ -228,20 +229,44 @@ final class DuckPlayerNavigationHandler {
             // Enroll user if not enrolled
             if !experiment.isEnrolled {
                 experiment.assignUserToCohort()
-            }
-            
-            // DuckPlayer is disabled before user enrolls,
-            // So trigger a settings change notification
-            // to let the FE know about the 'actual' setting
-            // and update Experiment value
-            if experiment.isExperimentCohort {
-                duckPlayer.settings.triggerNotification()
-                experiment.duckPlayerMode = duckPlayer.settings.mode
+                
+                // DuckPlayer is disabled before user enrolls,
+                // So trigger a settings change notification
+                // to let the FE know about the 'actual' setting
+                // and update Experiment value
+                if experiment.isExperimentCohort {
+                    duckPlayer.settings.triggerNotification()
+                    experiment.duckPlayerMode = duckPlayer.settings.mode
+                }
             }
             
             experiment.fireYoutubePixel(videoID: videoID)
         }
 
+    }
+    
+    // Determines if the link should be opened in a new tab
+    // And sets the correct navigationType
+    // This is uses for JS based navigation links
+    private func setOpenInNewTab(url: URL?) {
+        guard let url else {
+            return
+        }
+        
+        // let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let isFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayer)
+        let isSubFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) || internalUserDecider.isInternalUser
+        let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
+        
+        if openInNewTab &&
+            isFeatureEnabled &&
+            isSubFeatureEnabled &&
+            isDuckPlayerEnabled {
+            navigationType = .linkActivated
+        } else {
+            navigationType = .other
+        }
     }
     
 }
@@ -338,7 +363,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                                webView: WKWebView) {
         
         Logger.duckPlayer.debug("Handling DecidePolicyFor for \(navigationAction.request.url?.absoluteString ?? "")")
-                
+        
+        // This means navigation originated in user Event
+        // and not automatic.  This is used further to
+        // determine how navigation is performed (new tab, etc)
+        // Resets on next attachment
+        if navigationAction.navigationType == .linkActivated {
+            self.navigationType = navigationAction.navigationType
+        }
+        
         guard let url = navigationAction.request.url else {
             completion(.cancel)
             return
@@ -404,7 +437,14 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return
         }
         
-        handleURLChange(url: url, webView: webView)
+        // Assume JS Navigation is user-triggered
+        self.navigationType = .linkActivated
+        
+        // Only handle URL changes if the allowFirstVideo is set to false
+        // This prevents Youtube redirects from triggering DuckPlayer when is not expected
+        if !duckPlayer.settings.allowFirstVideo {
+            handleURLChange(url: url, webView: webView)
+        }
     }
     
     @MainActor
@@ -491,12 +531,42 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     // Handle custom events
+    // This method is used to delegate tasks to DuckPlayerHandler, such as firing pixels and etc.
     func handleEvent(event: DuckPlayerNavigationEvent, url: URL?, navigationAction: WKNavigationAction?) {
-        
         switch event {
         case .youtubeVideoPageVisited:
             handleYouTubePageVisited(url: url, navigationAction: navigationAction)
+        case .JSTriggeredNavigation:
+            setOpenInNewTab(url: url)
         }
     }
     
+    // Determine if the links should be open in a new tab, based on the navigationAction and User setting
+    // This is used for manually activated links
+    func shouldOpenInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
+        
+        // let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let openInNewTab = appSettings.duckPlayerOpenInNewTab
+        let isFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayer)
+        let isSubFeatureEnabled = featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) || internalUserDecider.isInternalUser
+        let isDuckPlayer = navigationAction.request.url?.isDuckPlayer ?? false
+        let isDuckPlayerEnabled = duckPlayer.settings.mode == .enabled || duckPlayer.settings.mode == .alwaysAsk
+        
+        if openInNewTab &&
+            isFeatureEnabled &&
+            isSubFeatureEnabled &&
+            isDuckPlayer &&
+            self.navigationType == .linkActivated &&
+            isDuckPlayerEnabled {
+            return true
+        }
+        return false
+    }
+    
+}
+
+extension WKWebView {
+    var isEmptyTab: Bool {
+        return self.url == nil || self.url?.absoluteString == "about:blank"
+    }
 }

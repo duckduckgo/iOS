@@ -104,10 +104,14 @@ struct NetworkProtectionStatusView: View {
         Section {
             if #available(iOS 17.0, *) {
                 widgetTip()
+                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .padding(.horizontal, 3)
             }
 
             if #available(iOS 17.0, *) {
                 snoozeTip()
+                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .padding(.horizontal, 3)
             }
         }
         .listRowBackground(Color(designSystemColor: .surface))
@@ -208,6 +212,8 @@ struct NetworkProtectionStatusView: View {
         Section {
             if #available(iOS 17.0, *) {
                 geoswitchingTip()
+                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .padding(.horizontal, 3)
             }
         }
         .listRowBackground(Color(designSystemColor: .surface))

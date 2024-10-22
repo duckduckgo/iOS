@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "9f62aacd878a0c05bff7256eb25b8776aa4e917f",
-        "version" : "200.0.0"
+        "branch" : "tespach/fix-outdated-phishing-datasets",
+        "revision" : "1549f59148797191d4fe578bd77d4740a52f4b6b"
       }
     },
     {

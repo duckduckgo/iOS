@@ -2171,7 +2171,7 @@ extension TabViewController {
                     return
                 }
 
-                if self.shouldTriggerDownloadAction(for: navigationResponse) {
+                if self.shouldTriggerDownloadAction(for: navigationResponse) && !FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
                     // Show alert to the file download
                     self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                         callback(self.transfer(download,

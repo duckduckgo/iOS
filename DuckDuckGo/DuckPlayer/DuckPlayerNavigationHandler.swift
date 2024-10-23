@@ -357,6 +357,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
     }
     
+    // TabVidewController's observe delegates URL changes to this method, which basically reacts
+    // to different URLs and present/redirect DuckPlayer when necesary.
+    // This also takes care of managing duplicate URL changes
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
@@ -427,6 +430,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
 
     
+    // Controls Back/Forward navigation logic for Youtube.  DuckPlayer is rendered as a new item in the
+    // HIstory stack, so we need special logic on back/forward nav.
     @MainActor
     func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {
         
@@ -478,7 +483,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
 
     
-    // Handle Reload for DuckPlayer Videos
+    // Handles reload operations for Youtube videos
     @MainActor
     func handleReload(webView: WKWebView) {
         
@@ -505,6 +510,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
     }
     
+    // Tasks performed as part of the initialization of TabViewcontroller, when the handler
+    // Is attached to it
     @MainActor
     func handleAttach(webView: WKWebView) {
         
@@ -538,7 +545,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         return URL.duckPlayer(youtubeVideoID, timestamp: timestamp)
     }
     
-    // Sets the referrer based on URL and headers
+    // Sets the DuckPlayerReferer based on URL and headers.  This is called from the NavigationDelegate
+    // as part of decidePolicy for.  The Referrer is used mostly to firing the correct pixels
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView) {
                     
         // If there is a SERP referer Header, use it
@@ -658,10 +666,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
 }
 
 extension WKWebView {
-    var isEmptyTab: Bool {
-        return self.url == nil || self.url?.absoluteString == "about:blank"
-    }
-    
     @objc func backListItemsCount() -> Int {
         return backForwardList.backList.count
     }

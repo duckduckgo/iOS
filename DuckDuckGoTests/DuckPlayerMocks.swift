@@ -120,6 +120,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     var mode: DuckPlayerMode = .disabled
     var askModeOverlayHidden: Bool = false
     var allowFirstVideo: Bool = false
+    var openInNewTab: Bool = false
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}

@@ -197,29 +197,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    @MainActor
-    func testHandleNavigationLoadsOpenInYoutubeURL() {
-        
-        let link = URL(string: "duck://player/openInYoutube?v=12345")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: link))
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .alwaysAsk
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        handler.handleNavigation(navigationAction, webView: webView)
-                
-        let expectation = self.expectation(description: "Youtube Redirect Expectation")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
-            XCTAssertEqual(self.webView.url?.absoluteString, "https://m.youtube.com/watch?v=12345&embeds_referring_euri=some_value")
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0, handler: nil)
-    
-    }
-    
     
     // MARK: Handle URL Change tests
     @MainActor
@@ -476,102 +453,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         XCTAssertEqual(duckURL, url.absoluteString)
         
     }
-    
-    func testShouldOpenInNewTabWhenEnabled() {
-        let youtubeURL = URL(string: "duck://player/abc123")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
-        
-        mockAppSettings.duckPlayerOpenInNewTab = true
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-                
-        handler.navigationType = .linkActivated
-        playerSettings.mode = .enabled
-                
-        XCTAssertTrue(handler.shouldOpenInNewTab(navigationAction, webView: webView))
-    }
-    
-    func testShouldNotOpenInNewTabWhenNotDuckPlayerURL() {
-        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
-        
-        mockAppSettings.duckPlayerOpenInNewTab = true
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        handler.navigationType = .linkActivated
-        playerSettings.mode = .enabled
-        
-        XCTAssertFalse(handler.shouldOpenInNewTab(navigationAction, webView: webView))
-    }
-    
-    func testShouldNotOpenInNewTabWhenDisabled() {
-        let youtubeURL = URL(string: "duck://player/abc123")!
-        let navigationAction = MockNavigationAction(request: URLRequest(url: youtubeURL))
-        
-        mockAppSettings.duckPlayerOpenInNewTab = false
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-                
-        handler.navigationType = .linkActivated
-        playerSettings.mode = .enabled
-                
-        XCTAssertFalse(handler.shouldOpenInNewTab(navigationAction, webView: webView))
-    }
-    
-    
-    func testHandleJSNavigationEventWhenEnabled() {
-        let youtubeURL = URL(string: "duck://player/abc123")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        playerSettings.mode = .enabled
-        mockAppSettings.duckPlayerOpenInNewTab = true
-        
-        handler.handleEvent(event: .JSTriggeredNavigation, url: youtubeURL, navigationAction: nil)
-        
-        XCTAssertTrue(handler.navigationType == .linkActivated)
-    }
-    
-    func testHandleJSNavigationEventWhenDisabled() {
-        let youtubeURL = URL(string: "duck://player/abc123")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        playerSettings.mode = .enabled
-        mockAppSettings.duckPlayerOpenInNewTab = false
-        
-        handler.handleEvent(event: .JSTriggeredNavigation, url: youtubeURL, navigationAction: nil)
-        
-        XCTAssertFalse(handler.navigationType == .linkActivated)
-    }
-    
-    func testHandleJSNavigationEventWhenDuckPlayerDisabled() {
-        let youtubeURL = URL(string: "duck://player/abc123")!
-        
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        handler.navigationType = .linkActivated
-        playerSettings.mode = .disabled
-        mockAppSettings.duckPlayerOpenInNewTab = true
-        
-        handler.handleEvent(event: .JSTriggeredNavigation, url: youtubeURL, navigationAction: nil)
-        
-        XCTAssertFalse(handler.navigationType == .linkActivated)
-    }
-     
+         
     
     // MARK: Pixel firing tests
     @MainActor

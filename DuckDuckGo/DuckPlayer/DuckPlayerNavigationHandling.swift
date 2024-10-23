@@ -41,6 +41,7 @@ enum DuckPlayerNavigationDirection {
 
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
+    var tabNavigationHandler: DuckPlayerTabNavigationHandling? { get set }
     var duckPlayer: DuckPlayerProtocol { get }
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView)
@@ -53,4 +54,8 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
     func handleYoutubeNavigation(navigationAction: WKNavigationAction, webView: WKWebView)
     
+}
+
+protocol DuckPlayerTabNavigationHandling: AnyObject {
+    func openTab(for url: URL)
 }

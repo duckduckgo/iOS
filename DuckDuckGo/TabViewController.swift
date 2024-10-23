@@ -391,6 +391,9 @@ class TabViewController: UIViewController {
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
         super.init(coder: aDecoder)
+        
+        // Set itself as DuckPlayerTabNavigationHandler
+        duckPlayerNavigationHandler?.tabNavigationHandler = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -1207,10 +1210,12 @@ class TabViewController: UIViewController {
     }
 
     deinit {
+        duckPlayerNavigationHandler = nil
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
+        
     }
 }
 
@@ -3110,4 +3115,17 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
         Pixel.fire(pixel: .certificateWarningAdvancedClicked)
     }
 
+}
+
+// This Conformance allows DuckPlayerHandler to request navigating to
+// new tabs
+extension TabViewController: DuckPlayerTabNavigationHandling {
+    
+    func openTab(for url: URL) {
+        delegate?.tab(self,
+                      didRequestNewTabForUrl: url,
+                      openedByPage: true,
+                      inheritingAttribution: adClickAttributionLogic.state)
+    }
+    
 }

@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/ntp-search-bar",
-        "revision" : "1e7ded11104f3a4265acee6b72b67911e7808e54"
+        "revision" : "36f77f0fbcd547c90e6eace63a68f9081c26f440"
       }
     },
     {

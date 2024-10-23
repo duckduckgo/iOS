@@ -188,6 +188,7 @@ class TabViewController: UIViewController {
     var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
     var isSpecialErrorPageVisible: Bool = false
 
+    let pageZoomStorage: PageZoomStoring
     let syncService: DDGSyncing
 
     private let daxDialogsDebouncer = Debouncer(mode: .common)
@@ -321,7 +322,8 @@ class TabViewController: UIViewController {
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                                   featureFlagger: FeatureFlagger) -> TabViewController {
+                                   featureFlagger: FeatureFlagger,
+                                   pageZoomStorage: PageZoomStoring) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -336,7 +338,8 @@ class TabViewController: UIViewController {
                               contextualOnboardingLogic: contextualOnboardingLogic,
                               onboardingPixelReporter: onboardingPixelReporter,
                               urlCredentialCreator: urlCredentialCreator,
-                              featureFlagger: featureFlagger
+                              featureFlagger: featureFlagger,
+                              pageZoomStorage: pageZoomStorage
             )
         })
         return controller
@@ -369,7 +372,8 @@ class TabViewController: UIViewController {
                    contextualOnboardingLogic: ContextualOnboardingLogic,
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                   featureFlagger: FeatureFlagger) {
+                   featureFlagger: FeatureFlagger,
+                   pageZoomStorage: PageZoomStoring) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -388,6 +392,7 @@ class TabViewController: UIViewController {
         self.onboardingPixelReporter = onboardingPixelReporter
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
+        self.pageZoomStorage = pageZoomStorage
         super.init(coder: aDecoder)
     }
 

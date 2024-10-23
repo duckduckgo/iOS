@@ -346,7 +346,8 @@ import os.log
                                           contextualOnboardingLogic: daxDialogs,
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
-                                          voiceSearchHelper: voiceSearchHelper)
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          featureFlagger: AppDependencyProvider.shared.featureFlagger)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main

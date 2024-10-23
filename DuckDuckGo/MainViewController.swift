@@ -199,7 +199,9 @@ class MainViewController: UIViewController {
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
-        voiceSearchHelper: VoiceSearchHelperProtocol
+        voiceSearchHelper: VoiceSearchHelperProtocol,
+        featureFlagger: FeatureFlagger,
+        pageZoomStorage: PageZoomStoring = PageZoomStorage()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -213,15 +215,18 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
-        self.tabManager = TabManager(model: tabsModel,
-                                     previewsSource: previewsSource,
-                                     bookmarksDatabase: bookmarksDatabase,
-                                     historyManager: historyManager,
-                                     syncService: syncService,
-                                     privacyProDataReporter: privacyProDataReporter,
-                                     contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                     contextualOnboardingLogic: contextualOnboardingLogic,
-                                     onboardingPixelReporter: contextualOnboardingPixelReporter)
+        self.tabManager = TabManager(
+            model: tabsModel,
+            previewsSource: previewsSource,
+            bookmarksDatabase: bookmarksDatabase,
+            historyManager: historyManager,
+            syncService: syncService,
+            privacyProDataReporter: privacyProDataReporter,
+            contextualOnboardingPresenter: contextualOnboardingPresenter,
+            contextualOnboardingLogic: contextualOnboardingLogic,
+            onboardingPixelReporter: contextualOnboardingPixelReporter,
+            featureFlagger: featureFlagger,
+            pageZoomStorage: pageZoomStorage)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()

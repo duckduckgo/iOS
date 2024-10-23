@@ -41,6 +41,8 @@ class TabManager {
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
+    private let featureFlagger: FeatureFlagger
+    private let pageZoomStorage: PageZoomStoring
 
     weak var delegate: TabDelegate?
 
@@ -57,7 +59,9 @@ class TabManager {
          privacyProDataReporter: PrivacyProDataReporting,
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
          contextualOnboardingLogic: ContextualOnboardingLogic,
-         onboardingPixelReporter: OnboardingPixelReporting) {
+         onboardingPixelReporter: OnboardingPixelReporting,
+         featureFlagger: FeatureFlagger,
+         pageZoomStorage: PageZoomStoring) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -68,6 +72,8 @@ class TabManager {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.featureFlagger = featureFlagger
+        self.pageZoomStorage = pageZoomStorage
         registerForNotifications()
     }
 
@@ -80,16 +86,18 @@ class TabManager {
     @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab,
-                                                              bookmarksDatabase: bookmarksDatabase,
-                                                              historyManager: historyManager,
-                                                              syncService: syncService,
-                                                              duckPlayer: duckPlayer,
-                                                              privacyProDataReporter: privacyProDataReporter,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic,
-                                                              onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
+        let controller = TabViewController.loadFromStoryboard(
+            model: tab,
+            bookmarksDatabase: bookmarksDatabase,
+            historyManager: historyManager,
+            syncService: syncService,
+            duckPlayer: duckPlayer,
+            privacyProDataReporter: privacyProDataReporter,
+            contextualOnboardingPresenter: contextualOnboardingPresenter,
+            contextualOnboardingLogic: contextualOnboardingLogic,
+            onboardingPixelReporter: onboardingPixelReporter,
+            featureFlagger: featureFlagger,
+            pageZoomStorage: pageZoomStorage)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -158,16 +166,18 @@ class TabManager {
         model.insert(tab: tab, at: model.currentIndex + 1)
         model.select(tabAt: model.currentIndex + 1)
 
-        let controller = TabViewController.loadFromStoryboard(model: tab,
-                                                              bookmarksDatabase: bookmarksDatabase,
-                                                              historyManager: historyManager,
-                                                              syncService: syncService,
-                                                              duckPlayer: duckPlayer,
-                                                              privacyProDataReporter: privacyProDataReporter,
-                                                              contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                              contextualOnboardingLogic: contextualOnboardingLogic,
-                                                              onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
+        let controller = TabViewController.loadFromStoryboard(
+            model: tab,
+            bookmarksDatabase: bookmarksDatabase,
+            historyManager: historyManager,
+            syncService: syncService,
+            duckPlayer: duckPlayer,
+            privacyProDataReporter: privacyProDataReporter,
+            contextualOnboardingPresenter: contextualOnboardingPresenter,
+            contextualOnboardingLogic: contextualOnboardingLogic,
+            onboardingPixelReporter: onboardingPixelReporter,
+            featureFlagger: featureFlagger,
+            pageZoomStorage: pageZoomStorage)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

@@ -154,6 +154,8 @@ extension TabViewController {
             entries.append(entry)
         }
 
+        entries.append(self.buildZoomLevelEntry(forLink: link))
+
         let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
         let image = self.tabModel.isDesktop ? UIImage(named: "Device-Mobile-16")! : UIImage(named: "Device-Desktop-16")!
         entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
@@ -164,7 +166,16 @@ extension TabViewController {
                 
         return entries
     }
-    
+
+    private func buildZoomLevelEntry(forLink link: Link) -> BrowsingMenuEntry {
+        let domain = link.url.host?.droppingWwwPrefix() ?? ""
+        let percent = pageZoomStorage.zoomLevelForDomain(domain) ?? 100
+
+        return BrowsingMenuEntry.regular(name: UserText.pageZoomWithPercent(percent), image: UIImage(named: "Type-Size-16")!, showNotificationDot: false) {
+            // TODO
+        }
+    }
+
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
         guard let domain = link.url.host, !link.url.isDuckDuckGo else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)

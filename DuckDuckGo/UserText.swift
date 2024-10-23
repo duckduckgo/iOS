@@ -358,6 +358,11 @@ public struct UserText {
     }
     public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
     
+    public static func pageZoomWithPercent(_ percent: Int) -> String {
+        let message = NSLocalizedString("action.show-page-zoom", value: "Zoom Text (%d%%)", comment: "Zoom text menu item showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56")
+        return message.format(arguments: percent)
+    }
+
     public static let actionGenericShow = NSLocalizedString("action.generic.show", value: "Show", comment: "Button label for a generic show action")
     public static let actionDownloads = NSLocalizedString("action.title.downloads", value: "Downloads", comment: "Downloads menu item opening the downlods list")
     public static let downloadsScreenTitle = NSLocalizedString("downloads.downloads-list.title", value: "Downloads", comment: "Downloads list screen title")

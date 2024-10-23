@@ -45,6 +45,19 @@ struct OnboardingDebugView: View {
             }
 
             Section {
+                Toggle(
+                    isOn: $viewModel.isOnboardingAddToDockLocalFlagEnabled,
+                    label: {
+                        Text(verbatim: "Onboarding Add to Dock local setting enabled")
+                    }
+                )
+            } header: {
+                Text(verbatim: "Onboarding Add to Dock settings")
+            } footer: {
+                Text(verbatim: "Requires internal user flag set to have an effect.")
+            }
+
+            Section {
                 Button(action: newOnboardingIntroStartAction, label: {
                     let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
                     Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
@@ -61,11 +74,18 @@ final class OnboardingDebugViewModel: ObservableObject {
         }
     }
 
-    private let manager: OnboardingHighlightsDebugging
+    @Published var isOnboardingAddToDockLocalFlagEnabled: Bool {
+        didSet {
+            manager.isAddToDockLocalFlagEnabled = isOnboardingAddToDockLocalFlagEnabled
+        }
+    }
 
-    init(manager: OnboardingHighlightsDebugging = OnboardingManager()) {
+    private let manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging
+
+    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager()) {
         self.manager = manager
         isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
+        isOnboardingAddToDockLocalFlagEnabled = manager.isAddToDockLocalFlagEnabled
     }
 
 }

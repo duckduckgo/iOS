@@ -75,7 +75,7 @@ protocol OnboardingAddToDockManaging: AnyObject {
     var isAddToDockEnabled: Bool { get }
 }
 
-protocol OnboardingAddToDockDebugging {
+protocol OnboardingAddToDockDebugging: AnyObject {
     var isAddToDockLocalFlagEnabled: Bool { get set }
     var isAddToDockFeatureFlagEnabled: Bool { get }
 }

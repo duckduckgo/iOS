@@ -235,6 +235,9 @@ final class DuckPlayerNavigationHandler {
         }
     }
     
+    // Loads the provided URL in a new Tab.  It delegates this to the tabNavigationHandler
+    // in TabViewController.
+    // We add some URL parameters to identify the URL's when they load
     private func openInNewTab(url: URL) {
         
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -242,7 +245,10 @@ final class DuckPlayerNavigationHandler {
         }
 
         var queryItems = components.queryItems ?? []
+        // Adds a Referrer header which is then parsed to fire pixels based on the referrer
         queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerHeaderKey, value: referrer.stringValue))
+        
+        // Adds a newTab parameter to prevent navigation loops in the new tab
         queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
         components.queryItems = queryItems
         
@@ -252,7 +258,9 @@ final class DuckPlayerNavigationHandler {
         
     }
     
-    // Replaces webView.load to add DuckPlayer headers, used for navigation
+    // TabViewController cancels all Youtube navigation by default, so this replaces webView.load
+    // to add specific DuckPlayer headers.  These headers are used to identify DuckPlayerHandler
+    // Navigation in Tabview controller and let it through.
     func loadWithDuckPlayerHeaders(_ request: URLRequest, referrer: DuckPlayerReferrer, webView: WKWebView) {
             
         var newRequest = request

@@ -154,12 +154,13 @@ final class DuckPlayerNavigationHandler {
               let (videoID, _) = url.youtubeVideoParams else { return }
         
         
-        // Open in new tab if needed
+        // Cancel navigation if OpenInNewTab is enabled
         if let url = webView.url,
             duckPlayer.settings.openInNewTab {
             cancelNavigation(isJavascriptLink: true, url: url, webView: webView)
         }
         
+        // Render Duck Player
         renderedURL = url
         renderedVideoID = videoID
         let duckPlayerURL = URL.duckPlayer(videoID)
@@ -653,11 +654,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         return false
     }
     
-    // This handles all navigation within youtube.com
-    @MainActor
-    func handleYoutubeNavigation(navigationAction: WKNavigationAction, webView: WKWebView) {
-        loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
-    }
     
 }
 

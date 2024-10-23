@@ -52,7 +52,6 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func getDuckURLFor(_ url: URL) -> URL
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
-    func handleYoutubeNavigation(navigationAction: WKNavigationAction, webView: WKWebView)
     
 }
 

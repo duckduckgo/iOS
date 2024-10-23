@@ -88,6 +88,7 @@ import os.log
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
+    private(set) var subscriptionCookieManager: SubscriptionCookieManaging!
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle
@@ -306,6 +307,17 @@ import os.log
         subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
+        
+        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+            
+            return WKWebsiteDataStore.current().httpCookieStore
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
@@ -562,6 +574,10 @@ import os.log
             if isSubscriptionActive {
                 DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
+        }
+
+        Task { @MainActor in
+            await subscriptionCookieManager.refreshSubscriptionCookie()
         }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)

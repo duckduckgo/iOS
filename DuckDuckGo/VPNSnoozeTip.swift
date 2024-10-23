@@ -46,7 +46,7 @@ extension VPNSnoozeTip: Tip {
     }
 
     var message: Text? {
-        Text("Snooze briefly disconnects the VPN so you can use sites or apps that block VPN traffic.")
+        Text("You can use sites or apps that block VPN traffic by snoozing the VPN connection.")
     }
 
     var image: Image? {

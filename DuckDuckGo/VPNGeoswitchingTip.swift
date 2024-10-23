@@ -37,7 +37,7 @@ extension VPNGeoswitchingTip: Tip {
     }
 
     var message: Text? {
-        Text("Connect to any of our servers worldwide to customize the VPN location.")
+        Text("You can customize your VPN location by connecting to any of our servers worldwide.")
     }
 
     var image: Image? {

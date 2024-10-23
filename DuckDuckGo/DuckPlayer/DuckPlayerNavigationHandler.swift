@@ -245,7 +245,7 @@ final class DuckPlayerNavigationHandler {
         queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
         components.queryItems = queryItems
         
-        if let url = components.url, url.isDuckPlayer {
+        if let url = components.url {
             tabNavigationHandler?.openTab(for: url)
         }
         

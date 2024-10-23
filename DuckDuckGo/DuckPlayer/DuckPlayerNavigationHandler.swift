@@ -281,7 +281,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
                 
         // Check if should open in a new tab
-        if duckPlayer.settings.openInNewTab, let url = navigationAction.request.url, !hasNewTabParameter(url: url) {
+        if duckPlayer.settings.openInNewTab,
+            let url = navigationAction.request.url,
+            !hasNewTabParameter(url: url),
+            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil {
             openInNewTab(url: url)
             return
         }
@@ -308,14 +311,13 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             
             // Fire a Pixel for Open in Youtube
             self.fireOpenInYoutubePixel()
-                
             
             // Attempt to open in YouTube app or load in webView
             if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
                let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
                 UIApplication.shared.open(youtubeAppURL)
             } else {
-                redirectToYouTubeVideo(url: newURL, webView: webView)
+                openInNewTab(url: newURL)
             }
             return
         }

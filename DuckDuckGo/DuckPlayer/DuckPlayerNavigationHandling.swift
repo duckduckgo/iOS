@@ -19,15 +19,6 @@
 
 import WebKit
 
-enum DuckPlayerNavigationEvent {
-    case JSTriggeredNavigation
-}
-
-enum DuckPlayerNavigationType: String, Codable {
-    case javascript,
-         direct
-}
-
 enum DuckPlayerNavigationHandlerURLChangeResult {
     
     enum HandlingResult {
@@ -58,13 +49,8 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
-    func handleEvent(event: DuckPlayerNavigationEvent,
-                     url: URL?,
-                     navigationAction: WKNavigationAction?)
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
     func handleYoutubeNavigation(navigationAction: WKNavigationAction, webView: WKWebView)
-    func openInNewTab(_ navigationAction: WKNavigationAction, webView: WKWebView)
-    
     
 }

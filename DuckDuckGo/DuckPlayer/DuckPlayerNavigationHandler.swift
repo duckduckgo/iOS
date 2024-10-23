@@ -227,11 +227,10 @@ final class DuckPlayerNavigationHandler {
         // Javascript links don't go through decidePolicy For, so we need to stop nav
         // And go back to the previous URL
         if isJavascriptLink {
-            webView.stopLoading()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                webView.stopLoading()
                 webView.goBack()
             }
-            
         }
     }
     

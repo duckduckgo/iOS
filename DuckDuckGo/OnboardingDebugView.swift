@@ -33,7 +33,7 @@ struct OnboardingDebugView: View {
         List {
             Section {
                 Toggle(
-                    isOn: $viewModel.isLocalFlagEnabled,
+                    isOn: $viewModel.isOnboardingHighlightsLocalFlagEnabled,
                     label: {
                         Text(verbatim: "Onboarding Highlights local setting enabled")
                     }
@@ -46,7 +46,7 @@ struct OnboardingDebugView: View {
 
             Section {
                 Button(action: newOnboardingIntroStartAction, label: {
-                    let onboardingType = viewModel.isLocalFlagEnabled ? "Highlights" : ""
+                    let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
                     Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
                 })
             }
@@ -55,9 +55,9 @@ struct OnboardingDebugView: View {
 }
 
 final class OnboardingDebugViewModel: ObservableObject {
-    @Published var isLocalFlagEnabled: Bool {
+    @Published var isOnboardingHighlightsLocalFlagEnabled: Bool {
         didSet {
-            manager.isLocalFlagEnabled = isLocalFlagEnabled
+            manager.isOnboardingHighlightsLocalFlagEnabled = isOnboardingHighlightsLocalFlagEnabled
         }
     }
 
@@ -65,7 +65,7 @@ final class OnboardingDebugViewModel: ObservableObject {
 
     init(manager: OnboardingHighlightsDebugging = OnboardingManager()) {
         self.manager = manager
-        isLocalFlagEnabled = manager.isLocalFlagEnabled
+        isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
     }
 
 }

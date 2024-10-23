@@ -43,45 +43,47 @@ final class OnboardingManagerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testWhenIsLocalFlagEnabledIsCalledAndAppDefaultsOnboardingHiglightsEnabledIsTrueThenReturnTrue() {
+    // MARK: - Onboarding Highlights
+
+    func testWhenIsOnboardingHighlightsLocalFlagEnabledCalledAndAppDefaultsOnboardingHiglightsEnabledIsTrueThenReturnTrue() {
         // GIVEN
         appSettingsMock.onboardingHighlightsEnabled = true
 
         // WHEN
-        let result = sut.isLocalFlagEnabled
+        let result = sut.isOnboardingHighlightsLocalFlagEnabled
 
         // THEN
         XCTAssertTrue(result)
     }
 
-    func testWhenIsLocalFlagEnabledIsCalledAndAppDefaultsOnboardingHiglightsEnabledIsFalseThenReturnFalse() {
+    func testWhenIsOnboardingHighlightsLocalFlagEnabledCalledAndAppDefaultsOnboardingHiglightsEnabledIsFalseThenReturnFalse() {
         // GIVEN
         appSettingsMock.onboardingHighlightsEnabled = false
 
         // WHEN
-        let result = sut.isLocalFlagEnabled
+        let result = sut.isOnboardingHighlightsLocalFlagEnabled
 
         // THEN
         XCTAssertFalse(result)
     }
 
-    func testWhenIsFeatureFlagEnabledIsCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
+    func testWhenIsOnboardingHighlightsFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingHighlights]
 
         // WHEN
-        let result = sut.isFeatureFlagEnabled
+        let result = sut.isOnboardingHighlightsFeatureFlagEnabled
 
         // THEN
         XCTAssertTrue(result)
     }
 
-    func testWhenIsFeatureFlagEnabledIsCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
+    func testWhenIsOnboardingHighlightsFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = []
 
         // WHEN
-        let result = sut.isFeatureFlagEnabled
+        let result = sut.isOnboardingHighlightsFeatureFlagEnabled
 
         // THEN
         XCTAssertFalse(result)
@@ -150,4 +152,99 @@ final class OnboardingManagerTests: XCTestCase {
         // THEN
         XCTAssertFalse(result)
     }
+
+    // MARK: - Add to Dock
+
+    func testWhenIsAddToDockLocalFlagEnabledCalledAndAppDefaultsOnboardingAddToDockEnabledIsTrueThenReturnTrue() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = true
+
+        // WHEN
+        let result = sut.isAddToDockLocalFlagEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsAddToDockLocalFlagEnabledCalledAndAppDefaultsOnboardingAddToDockEnabledIsFalseThenReturnFalse() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = false
+
+        // WHEN
+        let result = sut.isAddToDockLocalFlagEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsAddToDockFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
+        // GIVEN
+        featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.isAddToDockFeatureFlagEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsAddToDockFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
+        // GIVEN
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.isAddToDockFeatureFlagEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsAddToDockEnabledCalledAndLocalFlagEnabledIsFalseAndFeatureFlagIsFalseThenReturnFalse() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = false
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.isAddToDockEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsAddToDockEnabledCalledAndLocalFlagEnabledIsTrueAndFeatureFlagIsFalseThenReturnFalse() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = true
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.isAddToDockEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsAddToDockEnabledCalledAndLocalFlagEnabledIsFalseAndFeatureFlagEnabledIsTrueThenReturnFalse() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = false
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.isAddToDockEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsAddToDockEnabledAndLocalFlagEnabledIsTrueAndFeatureFlagEnabledIsTrueThenReturnTrue() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = true
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.isAddToDockEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
 }

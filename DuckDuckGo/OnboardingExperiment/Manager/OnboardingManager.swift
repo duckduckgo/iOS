@@ -20,16 +20,7 @@
 import BrowserServicesKit
 import Core
 
-protocol OnboardingHighlightsManaging: AnyObject {
-    var isOnboardingHighlightsEnabled: Bool { get }
-}
-
-protocol OnboardingHighlightsDebugging: OnboardingHighlightsManaging {
-    var isLocalFlagEnabled: Bool { get set }
-    var isFeatureFlagEnabled: Bool { get }
-}
-
-final class OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsDebugging {
+final class OnboardingManager {
     private var appDefaults: AppDebugSettings
     private let featureFlagger: FeatureFlagger
     private let variantManager: VariantManager
@@ -43,12 +34,27 @@ final class OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlight
         self.featureFlagger = featureFlagger
         self.variantManager = variantManager
     }
+}
+
+// MARK: - Onboarding Highlights
+
+protocol OnboardingHighlightsManaging: AnyObject {
+    var isOnboardingHighlightsEnabled: Bool { get }
+}
+
+protocol OnboardingHighlightsDebugging: OnboardingHighlightsManaging {
+    var isOnboardingHighlightsLocalFlagEnabled: Bool { get set }
+    var isOnboardingHighlightsFeatureFlagEnabled: Bool { get }
+}
+
+
+extension OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsDebugging {
 
     var isOnboardingHighlightsEnabled: Bool {
-        variantManager.isOnboardingHighlightsExperiment || (isLocalFlagEnabled && isFeatureFlagEnabled)
+        variantManager.isOnboardingHighlightsExperiment || (isOnboardingHighlightsLocalFlagEnabled && isOnboardingHighlightsFeatureFlagEnabled)
     }
 
-    var isLocalFlagEnabled: Bool {
+    var isOnboardingHighlightsLocalFlagEnabled: Bool {
         get {
             appDefaults.onboardingHighlightsEnabled
         }
@@ -57,7 +63,41 @@ final class OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlight
         }
     }
 
-    var isFeatureFlagEnabled: Bool {
+    var isOnboardingHighlightsFeatureFlagEnabled: Bool {
         featureFlagger.isFeatureOn(.onboardingHighlights)
     }
+
+}
+
+// MARK: - Add to Dock
+
+protocol OnboardingAddToDockManaging: AnyObject {
+    var isAddToDockEnabled: Bool { get }
+}
+
+protocol OnboardingAddToDockDebugging {
+    var isAddToDockLocalFlagEnabled: Bool { get set }
+    var isAddToDockFeatureFlagEnabled: Bool { get }
+}
+
+extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDebugging {
+
+    var isAddToDockEnabled: Bool {
+        // TODO: Add variant condition once the experiment is setup
+        isAddToDockLocalFlagEnabled && isAddToDockFeatureFlagEnabled
+    }
+
+    var isAddToDockLocalFlagEnabled: Bool {
+        get {
+            appDefaults.onboardingAddToDockEnabled
+        }
+        set {
+            appDefaults.onboardingAddToDockEnabled = newValue
+        }
+    }
+
+    var isAddToDockFeatureFlagEnabled: Bool {
+        featureFlagger.isFeatureOn(.onboardingAddToDock)
+    }
+
 }

@@ -179,7 +179,7 @@ class TextSizeSettingsViewController: UITableViewController {
         let appSettings = AppDependencyProvider.shared.appSettings
         appSettings.textSize = percentage
         
-        NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeChange, object: self)
+        NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeChange, object: nil)
     }
     
     private func firePixelForTextSizeChange() {

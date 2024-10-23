@@ -63,7 +63,8 @@ final class SettingsViewModel: ObservableObject {
     
     // App Data State Notification Observer
     private var appDataClearingObserver: Any?
-    
+    private var textSizeObserver: Any?
+
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
@@ -387,6 +388,7 @@ final class SettingsViewModel: ObservableObject {
     deinit {
         subscriptionSignOutObserver = nil
         appDataClearingObserver = nil
+        textSizeObserver = nil
     }
 }
 
@@ -771,6 +773,12 @@ extension SettingsViewModel {
             self?.state.autoclearDataEnabled = (AutoClearSettingsModel(settings: settings) != nil)
         }
         
+        textSizeObserver = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.textSizeChange,
+                                                                  object: nil,
+                                                                  queue: .main, using: { [weak self] _ in
+            guard let self = self else { return }
+            self.state.textSize = SettingsState.TextSize(enabled: !isPad, size: self.appSettings.textSize)
+        })
     }
     
     func restoreAccountPurchase() async {

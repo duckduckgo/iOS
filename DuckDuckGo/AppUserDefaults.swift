@@ -235,7 +235,11 @@ public class AppUserDefaults: AppSettings {
     }
 
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
-    var textSize: Int
+    var textSize: Int {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.textSizeChange, object: textSize)
+        }
+    }
 
     public var favoritesDisplayMode: FavoritesDisplayMode {
         get {

@@ -189,10 +189,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     // MARK: Broker Methods (Called from WebView via UserScripts)
-    
+
+    /// Returns the auth token
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        let accessToken = (try? await subscriptionManager.getTokens(policy: .localValid).accessToken) ?? Constants.empty
-        return [Constants.token: accessToken]
+        do {
+            let accessToken = try await subscriptionManager.getTokens(policy: .createIfNeeded).accessToken
+            return [Constants.token: accessToken]
+        } catch {
+            Logger.subscription.fault("Failed to fetch token: \(error)")
+            return Constants.empty
+        }
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
@@ -239,7 +245,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             return nil
         }
         
-        let emailAccessToken = try? EmailManager().getToken()
         let purchaseTransactionJWS: String
 
         switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id) {
@@ -253,7 +258,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             switch error {
             case .cancelledByUser:
                 setTransactionError(.cancelledByUser)
-                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "canceled"))
+                await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.canceled)
                 return nil
             case .accountCreationFailed:
                 setTransactionError(.accountCreationFailed)
@@ -267,21 +272,28 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         
         setTransactionStatus(.polling)
+
+        guard purchaseTransactionJWS.isEmpty == false else {
+            Logger.subscription.fault("Purchase transaction JWS is empty")
+            assertionFailure("Purchase transaction JWS is empty")
+            setTransactionStatus(.idle)
+            return nil
+        }
+
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
-        case .success(let purchaseUpdate):
+        case .success:
             Logger.subscription.debug("Subscription purchase completed successfully")
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
-            setTransactionStatus(.idle)
-            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
         case .failure(let error):
             Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription)")
-            setTransactionStatus(.idle)
             setTransactionError(.missingEntitlements)
-            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
         }
+
+        await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
+        setTransactionStatus(.idle)
         return nil
     }
 
@@ -358,15 +370,17 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 //            setTransactionError(.generalError)
 //        }
 //        return nil
-        subscriptionManager.refreshAccount()
+        await subscriptionManager.refreshAccount()
         onBackToSettings?()
         return nil
     }
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = try? await subscriptionManager.getTokens(policy: .localValid) {
+        do {
+            let accessToken = try await subscriptionManager.getTokens(policy: .localValid).accessToken
             return [Constants.token: accessToken]
-        } else {
+        } catch {
+            Logger.subscription.fault("Failed to fetch token: \(error)")
             return [String: String]()
         }
     }

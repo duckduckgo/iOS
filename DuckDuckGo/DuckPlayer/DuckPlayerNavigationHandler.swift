@@ -442,39 +442,42 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // History stack, so we need special logic on back/forward nav.
     @MainActor
     func handleGoBack(webView: WKWebView) {
-            
+
         Logger.duckPlayer.debug("DP: Handling Back Navigation")
-                    
+
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             webView.goBack()
             return
         }
-        
+
         renderedVideoID = nil
         renderedURL = nil
-        webView.stopLoading()
         
         // Check if the back list has items
         guard !webView.backForwardList.backList.isEmpty else {
             webView.goBack()
             return
         }
-        
+
         // Find the last non-YouTube video URL in the back list
-        // and navigate to it
         let backList = webView.backForwardList.backList
         var nonYoutubeItem: WKBackForwardListItem?
-        
+
+        Logger.duckPlayer.debug("DP: Current back list: \(backList.map { $0.url.absoluteString })")
+
         for item in backList.reversed() where !item.url.isYoutubeVideo && !item.url.isDuckPlayer {
             nonYoutubeItem = item
             break
         }
-        
+
         if let nonYoutubeItem = nonYoutubeItem, duckPlayerMode == .enabled {
             Logger.duckPlayer.debug("DP: Navigating back to \(nonYoutubeItem.url.absoluteString)")
+            // Delay stopping the loading to avoid interference with go(to:)
+            webView.stopLoading()
             webView.go(to: nonYoutubeItem)
         } else {
             Logger.duckPlayer.debug("DP: Navigating back to previous page")
+            webView.stopLoading()
             webView.goBack()
         }
     }
@@ -627,7 +630,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // from opening the Youtube app on user-triggered links
     @MainActor
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
-                        
+        
+        // Do not intercept any backForward Navigation
+        if navigationAction.navigationType == .backForward {
+            return false
+        }
+        
         // If the custom "X-Navigation-Source" header is present
         // And we should open in the same tab, don't cancel.
         if let headers = navigationAction.request.allHTTPHeaderFields,

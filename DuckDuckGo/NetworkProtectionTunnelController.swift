@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
+import BrowserServicesKit
 import Combine
 import Core
+import Foundation
 import NetworkExtension
 import NetworkProtection
 import Subscription
@@ -34,6 +35,7 @@ enum VPNConfigurationRemovalReason: String {
 final class NetworkProtectionTunnelController: TunnelController, TunnelSessionProvider {
     static var shouldSimulateFailure: Bool = false
 
+    private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
@@ -42,6 +44,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
     private let persistentPixel: PersistentPixelFiring
+    private let settings: VPNSettings
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Manager, Session, & Connection
@@ -119,9 +122,26 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
-    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore, persistentPixel: PersistentPixelFiring) {
-        self.tokenStore = tokenStore
+    // MARK: - Enforce Routes
+
+    private var mustEnforceRoutes: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
+        && settings.enforceRoutes
+    }
+
+    // MARK: - Initializers
+
+    init(accountManager: AccountManager,
+         tokenStore: NetworkProtectionKeychainTokenStore,
+         featureFlagger: FeatureFlagger,
+         persistentPixel: PersistentPixelFiring,
+         settings: VPNSettings) {
+
+        self.featureFlagger = featureFlagger
         self.persistentPixel = persistentPixel
+        self.settings = settings
+        self.tokenStore = tokenStore
+
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
         subscribeToConfigurationChanges()
@@ -293,6 +313,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         return tunnelManager
     }
 
+    @MainActor
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
 
@@ -319,6 +340,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     /// Setups the tunnel manager if it's not set up already.
     ///
+    @MainActor
     private func setup(_ tunnelManager: NETunnelProviderManager) {
         tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
@@ -327,14 +349,74 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             let protocolConfiguration = NETunnelProviderProtocol()
             protocolConfiguration.serverAddress = "127.0.0.1" // Dummy address... the NetP service will take care of grabbing a real server
 
+            protocolConfiguration.providerConfiguration = [
+                NetworkProtectionOptionKey.includedRoutes: includedRoutes().map(\.stringRepresentation) as NSArray
+            ]
+
             // always-on
             protocolConfiguration.disconnectOnSleep = false
+
+            // kill switch (limited to internal users currently)
+            protocolConfiguration.enforceRoutes = mustEnforceRoutes
+
+            #if DEBUG
+            if #available(iOS 17.4, *) {
+                // This is useful to ensure debugging is never blocked by the VPN
+                protocolConfiguration.excludeDeviceCommunication = true
+            }
+            #endif
 
             return protocolConfiguration
         }()
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    /// extra Included Routes appended to 0.0.0.0, ::/0 (peers) and interface.addresses
+    @MainActor
+    private func includedRoutes() -> [NetworkProtection.IPAddressRange] {
+        guard mustEnforceRoutes else {
+            return []
+        }
+
+        return [
+            IPAddressRange(stringLiteral: "0.0.0.0/0"),
+            IPAddressRange(stringLiteral: "1.0.0.0/8"),
+            IPAddressRange(stringLiteral: "2.0.0.0/8"),
+            IPAddressRange(stringLiteral: "3.0.0.0/8"),
+            IPAddressRange(stringLiteral: "4.0.0.0/6"),
+            IPAddressRange(stringLiteral: "8.0.0.0/7"),
+            IPAddressRange(stringLiteral: "10.11.12.1"),
+            IPAddressRange(stringLiteral: "11.0.0.0/8"),
+            IPAddressRange(stringLiteral: "12.0.0.0/6"),
+            IPAddressRange(stringLiteral: "16.0.0.0/4"),
+            IPAddressRange(stringLiteral: "32.0.0.0/3"),
+            IPAddressRange(stringLiteral: "64.0.0.0/2"),
+            IPAddressRange(stringLiteral: "128.0.0.0/3"),
+            IPAddressRange(stringLiteral: "160.0.0.0/5"),
+            IPAddressRange(stringLiteral: "168.0.0.0/6"),
+            IPAddressRange(stringLiteral: "172.0.0.0/12"),
+            IPAddressRange(stringLiteral: "172.32.0.0/11"),
+            IPAddressRange(stringLiteral: "172.64.0.0/10"),
+            IPAddressRange(stringLiteral: "172.128.0.0/9"),
+            IPAddressRange(stringLiteral: "173.0.0.0/8"),
+            IPAddressRange(stringLiteral: "174.0.0.0/7"),
+            IPAddressRange(stringLiteral: "176.0.0.0/4"),
+            IPAddressRange(stringLiteral: "192.0.0.0/9"),
+            IPAddressRange(stringLiteral: "192.128.0.0/11"),
+            IPAddressRange(stringLiteral: "192.160.0.0/13"),
+            IPAddressRange(stringLiteral: "192.169.0.0/16"),
+            IPAddressRange(stringLiteral: "192.170.0.0/15"),
+            IPAddressRange(stringLiteral: "192.172.0.0/14"),
+            IPAddressRange(stringLiteral: "192.176.0.0/12"),
+            IPAddressRange(stringLiteral: "192.192.0.0/10"),
+            IPAddressRange(stringLiteral: "193.0.0.0/8"),
+            IPAddressRange(stringLiteral: "194.0.0.0/7"),
+            IPAddressRange(stringLiteral: "196.0.0.0/6"),
+            IPAddressRange(stringLiteral: "200.0.0.0/5"),
+            IPAddressRange(stringLiteral: "208.0.0.0/4")
+         ]
     }
 
     // MARK: - Observing Configuration Changes

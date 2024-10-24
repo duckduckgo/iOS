@@ -175,7 +175,7 @@ lane :promote_latest_testflight_to_appstore do |options|
 
   app_identifier = options[:alpha] ? "com.duckduckgo.mobile.ios.alpha" : "com.duckduckgo.mobile.ios"
 
-  latest_build_info = latest_testflight_build_number(
+  latest_testflight_build_number(
     api_key: get_api_key,
     username: get_username(options),
     platform: 'ios',

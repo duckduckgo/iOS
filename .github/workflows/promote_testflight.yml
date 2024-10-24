@@ -2,6 +2,9 @@ name: Promote TestFlight to App Store
 
 on: 
   workflow_dispatch: {}
+  push:
+    branches:
+      - kieran/release-changes
 
 jobs:
   promote-testflight-to-appstore:

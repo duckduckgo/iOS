@@ -47,6 +47,9 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
+
+    /// /// https://app.asana.com/0/72649045549333/1208617860225199/f
+    case networkProtectionEnforceRoutes
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
@@ -100,6 +103,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.autocompleteTabs))
         case .networkProtectionUserTips:
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
+        case .networkProtectionEnforceRoutes:
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         }
     }
 }

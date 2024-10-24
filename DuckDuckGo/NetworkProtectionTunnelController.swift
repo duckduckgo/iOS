@@ -35,8 +35,9 @@ enum VPNConfigurationRemovalReason: String {
 final class NetworkProtectionTunnelController: TunnelController, TunnelSessionProvider {
     static var shouldSimulateFailure: Bool = false
 
+    private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
-    private var internalUserDecider: InternalUserDecider
+    private let internalUserDecider: InternalUserDecider
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
@@ -122,12 +123,24 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
+    // MARK: - Enforce Routes
+
+    private var mustEnforceRoutes: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
+        && internalUserDecider.isInternalUser
+        && settings.enforceRoutes
+    }
+
+    // MARK: - Initializers
+
     init(accountManager: AccountManager,
          tokenStore: NetworkProtectionKeychainTokenStore,
+         featureFlagger: FeatureFlagger,
          internalUserDecider: InternalUserDecider,
          persistentPixel: PersistentPixelFiring,
          settings: VPNSettings) {
 
+        self.featureFlagger = featureFlagger
         self.internalUserDecider = internalUserDecider
         self.persistentPixel = persistentPixel
         self.settings = settings
@@ -347,8 +360,9 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // always-on
             protocolConfiguration.disconnectOnSleep = false
 
+            FeatureFlag.
             // kill switch (limited to internal users currently)
-            protocolConfiguration.enforceRoutes = internalUserDecider.isInternalUser && settings.enforceRoutes
+            protocolConfiguration.enforceRoutes = mustEnforceRoutes
 
             #if DEBUG
             if #available(iOS 17.4, *) {
@@ -367,7 +381,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     /// extra Included Routes appended to 0.0.0.0, ::/0 (peers) and interface.addresses
     @MainActor
     private func includedRoutes() -> [NetworkProtection.IPAddressRange] {
-        guard internalUserDecider.isInternalUser && settings.enforceRoutes else {
+        guard mustEnforceRoutes else {
             return []
         }
 

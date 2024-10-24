@@ -171,7 +171,8 @@ public struct UserDefaultsWrapper<T> {
         // Debug keys
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
         case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
-        
+        case debugOnboardingAddToDockEnabledKey = "com.duckduckgo.ios.debug.onboardingAddToDockEnabled"
+
         // Duck Player Pixel Experiment
         case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed.v2"
         case duckPlayerPixelExperimentCohort = "com.duckduckgo.ios.duckplayer.pixel.experiment.cohort.v2"

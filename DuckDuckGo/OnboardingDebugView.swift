@@ -33,7 +33,7 @@ struct OnboardingDebugView: View {
         List {
             Section {
                 Toggle(
-                    isOn: $viewModel.isLocalFlagEnabled,
+                    isOn: $viewModel.isOnboardingHighlightsLocalFlagEnabled,
                     label: {
                         Text(verbatim: "Onboarding Highlights local setting enabled")
                     }
@@ -45,8 +45,21 @@ struct OnboardingDebugView: View {
             }
 
             Section {
+                Toggle(
+                    isOn: $viewModel.isOnboardingAddToDockLocalFlagEnabled,
+                    label: {
+                        Text(verbatim: "Onboarding Add to Dock local setting enabled")
+                    }
+                )
+            } header: {
+                Text(verbatim: "Onboarding Add to Dock settings")
+            } footer: {
+                Text(verbatim: "Requires internal user flag set to have an effect.")
+            }
+
+            Section {
                 Button(action: newOnboardingIntroStartAction, label: {
-                    let onboardingType = viewModel.isLocalFlagEnabled ? "Highlights" : ""
+                    let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
                     Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
                 })
             }
@@ -55,17 +68,24 @@ struct OnboardingDebugView: View {
 }
 
 final class OnboardingDebugViewModel: ObservableObject {
-    @Published var isLocalFlagEnabled: Bool {
+    @Published var isOnboardingHighlightsLocalFlagEnabled: Bool {
         didSet {
-            manager.isLocalFlagEnabled = isLocalFlagEnabled
+            manager.isOnboardingHighlightsLocalFlagEnabled = isOnboardingHighlightsLocalFlagEnabled
         }
     }
 
-    private let manager: OnboardingHighlightsDebugging
+    @Published var isOnboardingAddToDockLocalFlagEnabled: Bool {
+        didSet {
+            manager.isAddToDockLocalFlagEnabled = isOnboardingAddToDockLocalFlagEnabled
+        }
+    }
 
-    init(manager: OnboardingHighlightsDebugging = OnboardingManager()) {
+    private let manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging
+
+    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager()) {
         self.manager = manager
-        isLocalFlagEnabled = manager.isLocalFlagEnabled
+        isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
+        isOnboardingAddToDockLocalFlagEnabled = manager.isAddToDockLocalFlagEnabled
     }
 
 }

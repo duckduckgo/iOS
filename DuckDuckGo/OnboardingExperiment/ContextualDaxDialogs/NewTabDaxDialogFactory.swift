@@ -30,7 +30,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     private var delegate: OnboardingNavigationDelegate?
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
-    private let onboardingManager: OnboardingHighlightsManaging
+    private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
 
     private var gradientType: OnboardingGradientType {
         onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
@@ -40,7 +40,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         delegate: OnboardingNavigationDelegate?,
         contextualOnboardingLogic: ContextualOnboardingLogic,
         onboardingPixelReporter: OnboardingPixelReporting,
-        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
+        onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager()
     ) {
         self.delegate = delegate
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -99,6 +99,13 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
+        // TODO: Update views
+        if onboardingManager.isAddToDockEnabled {
+            Logger.onboarding.debug("Present Final Dialog with Add To Dock updates")
+        } else {
+            Logger.onboarding.debug("Present Final Dialog without Add To Dock updates")
+        }
+
         let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
 
         return FadeInView {

@@ -168,15 +168,27 @@ lane :alpha_adhoc do |options|
   end
 end
 
+
+
 desc 'Promotes the latest TestFlight build to App Store without submitting for review'
 lane :promote_latest_testflight_to_appstore do |options|
 
-  latest_build_info = latest_testflight_build_number(
-    api_key: get_api_key,
-    username: get_username(options),
-    platform: 'ios'
-  )
-  
+  if options[:alpha]
+    latest_build_info = latest_testflight_build_number(
+      api_key: get_api_key,
+      username: get_username(options),
+      platform: 'ios',
+      app_identifier: "com.duckduckgo.mobile.ios.alpha"
+    )
+  else
+    latest_build_info = latest_testflight_build_number(
+      api_key: get_api_key,
+      username: get_username(options),
+      platform: 'ios'
+      # No app_identifier for non-alpha
+    )
+  end
+
   latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]   
   latest_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
 
@@ -186,7 +198,6 @@ lane :promote_latest_testflight_to_appstore do |options|
   #   build_number: latest_build_number.to_s,
   #   app_version: latest_build_version.to_s,
   # }))
-
 end
 
 desc 'Makes App Store release build and uploads it to App Store Connect'

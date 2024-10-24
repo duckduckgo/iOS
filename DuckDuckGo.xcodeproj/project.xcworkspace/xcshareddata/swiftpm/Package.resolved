@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/ntp-search-bar",
-        "revision" : "36f77f0fbcd547c90e6eace63a68f9081c26f440"
+        "revision" : "a7de5bc2fe128444495e6e8345026c8974076ad7",
+        "version" : "200.2.0"
       }
     },
     {

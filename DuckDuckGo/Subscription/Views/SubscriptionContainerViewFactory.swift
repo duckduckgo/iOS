@@ -31,11 +31,10 @@ enum SubscriptionContainerViewFactory {
                                   subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
                                   privacyProDataReporter: PrivacyProDataReporting?) -> some View {
 
-        let authClient = AppDependencyProvider.shared.oAuthClient
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
-        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(oAuthClient: authClient,
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
                                                                subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
@@ -58,11 +57,10 @@ enum SubscriptionContainerViewFactory {
     static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
                                 subscriptionManager: SubscriptionManager,
                                 subscriptionFeatureAvailability: SubscriptionFeatureAvailability) -> some View {
-        let authClient = AppDependencyProvider.shared.oAuthClient
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
-        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(oAuthClient: authClient,
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
                                                                subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
@@ -83,11 +81,10 @@ enum SubscriptionContainerViewFactory {
                               subscriptionManager: SubscriptionManager,
                               subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
                               onDisappear: @escaping () -> Void) -> some View {
-        let authClient = AppDependencyProvider.shared.oAuthClient
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: authClient,
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
-        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(oAuthClient: authClient,
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
                                                                subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)

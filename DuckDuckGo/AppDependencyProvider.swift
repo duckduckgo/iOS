@@ -43,7 +43,6 @@ protocol DependencyProvider {
     var configurationStore: ConfigurationStore { get }
     var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionManager: any SubscriptionManager { get }
-    var oAuthClient: any OAuthClient { get }
     var privacyProInfoProvider: any PrivacyProInfoProvider { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
@@ -79,7 +78,6 @@ final class AppDependencyProvider: DependencyProvider {
 
     // Subscription
     let subscriptionManager: SubscriptionManager
-    let oAuthClient: any OAuthClient
     let privacyProInfoProvider: any PrivacyProInfoProvider
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
@@ -128,7 +126,6 @@ final class AppDependencyProvider: DependencyProvider {
         let authClient = DefaultOAuthClient(tokensStorage: keychainManager, authService: authService)
 
         self.privacyProInfoProvider = authClient
-        self.oAuthClient = authClient
 
         apiService.authorizationRefresherCallback = { _ in
             guard let tokensContainer = keychainManager.tokensContainer else {

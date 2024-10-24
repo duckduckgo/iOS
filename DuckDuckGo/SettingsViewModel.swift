@@ -733,7 +733,7 @@ extension SettingsViewModel {
              self.state.subscription.entitlements = currentEntitlements*/
         } catch SubscriptionEndpointServiceError.noData {
             // Auth successful but no Subscription is available
-            Logger.subscription.debug("Subscription not present")
+            Logger.subscription.log("Subscription not present")
             state.subscription.subscriptionExist = false
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
@@ -770,7 +770,7 @@ extension SettingsViewModel {
     func restoreAccountPurchase() async {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
 
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(oAuthClient: AppDependencyProvider.shared.oAuthClient,
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()

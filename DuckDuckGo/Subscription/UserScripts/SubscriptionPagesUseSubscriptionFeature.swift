@@ -141,7 +141,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
-        Logger.subscription.debug("WebView handler: \(methodName)")
+        Logger.subscription.log("WebView handler: \(methodName)")
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
@@ -183,7 +183,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private func setTransactionStatus(_ status: SubscriptionTransactionStatus) {
         if status != transactionStatus {
-            Logger.subscription.debug("Transaction state updated: \(status.rawValue)")
+            Logger.subscription.log("Transaction state updated: \(status.rawValue)")
             transactionStatus = status
         }
     }
@@ -193,7 +193,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     /// Returns the auth token
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         do {
-            let accessToken = try await subscriptionManager.getTokens(policy: .createIfNeeded).accessToken
+            let accessToken = try await subscriptionManager.getTokensContainer(policy: .createIfNeeded).accessToken
             return [Constants.token: accessToken]
         } catch {
             Logger.subscription.fault("Failed to fetch token: \(error)")
@@ -238,7 +238,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         
         // Check for active subscriptions
         if await subscriptionManager.storePurchaseManager().hasActiveSubscription() {
-            Logger.subscription.debug("Subscription already active")
+            Logger.subscription.log("Subscription already active")
             setTransactionError(.hasActiveSubscription)
             Pixel.fire(pixel: .privacyProRestoreAfterPurchaseAttempt)
             setTransactionStatus(.idle)
@@ -249,7 +249,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
         switch await appStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id) {
         case .success(let transactionJWS):
-            Logger.subscription.debug("Subscription purchased successfully")
+            Logger.subscription.log("Subscription purchased successfully")
             purchaseTransactionJWS = transactionJWS
 
         case .failure(let error):
@@ -282,7 +282,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success:
-            Logger.subscription.debug("Subscription purchase completed successfully")
+            Logger.subscription.log("Subscription purchase completed successfully")
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
@@ -309,12 +309,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.subscriptionEndpointService.signOut()
+        subscriptionManager.subscriptionEndpointService.clearSubscription()
 
         let authToken = subscriptionValues.token
         do {
             let tokensContainer = try await subscriptionManager.exchange(tokenV1: authToken)
-            Logger.subscription.debug("v1 token exchanged for v2")
+            Logger.subscription.log("v1 token exchanged for v2")
             onSetSubscription?()
         } catch {
             Logger.subscription.error("Failed to exchange v1 token for v2")
@@ -377,7 +377,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         do {
-            let accessToken = try await subscriptionManager.getTokens(policy: .localValid).accessToken
+            let accessToken = try await subscriptionManager.getTokensContainer(policy: .localValid).accessToken
             return [Constants.token: accessToken]
         } catch {
             Logger.subscription.fault("Failed to fetch token: \(error)")
@@ -388,31 +388,31 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // MARK: Pixel related actions
 
     func subscriptionsMonthlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
-        Logger.subscription.debug("Web function called: \(#function)")
+        Logger.subscription.log("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferMonthlyPriceClick)
         return nil
     }
 
     func subscriptionsYearlyPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
-        Logger.subscription.debug("Web function called: \(#function)")
+        Logger.subscription.log("Web function called: \(#function)")
         Pixel.fire(pixel: .privacyProOfferYearlyPriceClick)
         return nil
     }
 
     func subscriptionsUnknownPriceClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
         // Not used
-        Logger.subscription.debug("Web function called: \(#function)")
+        Logger.subscription.log("Web function called: \(#function)")
         return nil
     }
 
     func subscriptionsAddEmailSuccess(params: Any, original: WKScriptMessage) async -> Encodable? {
-        Logger.subscription.debug("Web function called: \(#function)")
+        Logger.subscription.log("Web function called: \(#function)")
         UniquePixel.fire(pixel: .privacyProAddEmailSuccess)
         return nil
     }
 
     func subscriptionsWelcomeFaqClicked(params: Any, original: WKScriptMessage) async -> Encodable? {
-        Logger.subscription.debug("Web function called: \(#function)")
+        Logger.subscription.log("Web function called: \(#function)")
         UniquePixel.fire(pixel: .privacyProWelcomeFAQClick)
         return nil
     }
@@ -438,12 +438,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func restoreAccountFromAppStorePurchase() async throws {
         setTransactionStatus(.restoring)
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
+
+        setTransactionStatus(.idle)
         switch result {
         case .success:
-            setTransactionStatus(.idle)
+            Logger.subscription.log("Subscription restored successfully from App Store purchase")
         case .failure(let error):
+            Logger.subscription.error("Failed to restore subscription from App Store purchase: \(error.localizedDescription)")
             let mappedError = mapAppStoreRestoreErrorToTransactionError(error)
-            setTransactionStatus(.idle)
             throw mappedError
         }
     }

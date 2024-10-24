@@ -1620,8 +1620,8 @@ class MainViewController: UIViewController {
         Task {
             let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
 
-            guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .localValid),
-            tokensContainer.decodedAccessToken.hasEntitlement(.networkProtection) else { return }
+            guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .localValid),
+                  tokensContainer.decodedAccessToken.hasEntitlement(.networkProtection) == false else { return }
 
             if await networkProtectionTunnelController.isInstalled {
                 tunnelDefaults.enableEntitlementMessaging()

@@ -109,7 +109,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     private func fetchAndUpdateSubscriptionDetails(cachePolicy: SubscriptionCachePolicy, loadingIndicator: Bool) async -> Bool {
-        Logger.subscription.debug("Fetch and update subscription details")
+        Logger.subscription.log("Fetch and update subscription details")
 
         if loadingIndicator { displaySubscriptionLoader(true) }
 
@@ -127,10 +127,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
-        Logger.subscription.debug("\(#function)")
+        Logger.subscription.log("\(#function)")
         let tokensPolicy: TokensCachePolicy = cachePolicy == .returnCacheDataDontLoad ? .local : .localValid
 
-        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: tokensPolicy) else { return false }
+        guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: tokensPolicy) else { return false }
         DispatchQueue.main.async {
             self.state.subscriptionEmail = tokensContainer.decodedAccessToken.email
             if loadingIndicator { self.displayEmailLoader(true) }
@@ -139,7 +139,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
 //        switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
 //        case .success(let details):
-//            Logger.subscription.debug("Account details fetched successfully")
+//            Logger.subscription.log("Account details fetched successfully")
 //            DispatchQueue.main.async {
 //                self.state.subscriptionEmail = details.email
 //                if loadingIndicator { self.displayEmailLoader(false) }
@@ -173,7 +173,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     func manageSubscription() {
-        Logger.subscription.debug("User action: \(#function)")
+        Logger.subscription.log("User action: \(#function)")
         switch state.subscriptionInfo?.platform {
         case .apple:
             Task { await manageAppleSubscription() }
@@ -279,7 +279,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
-        guard let tokensContainer = try? await subscriptionManager.getTokens(policy: .localValid) else { return }
+        guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .localValid) else { return }
         do {
             // Get Stripe Customer Portal URL and update the model
             let serviceResponse = try await subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: tokensContainer.accessToken, externalID: tokensContainer.decodedAccessToken.externalID)

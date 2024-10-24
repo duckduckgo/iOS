@@ -48,7 +48,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
     private let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
-    private let onboardingManager: OnboardingHighlightsManaging
+    private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
 
     private var gradientType: OnboardingGradientType {
         onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
@@ -59,7 +59,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
-        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
+        onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -182,6 +182,13 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
+        // TODO: Update views
+        if onboardingManager.isAddToDockEnabled {
+            Logger.onboarding.debug("Present Contextual Final Dialog with Add To Dock updates")
+        } else {
+            Logger.onboarding.debug("Present Contextual Final Dialog without Add To Dock updates")
+        }
+
         let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
 
         return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in

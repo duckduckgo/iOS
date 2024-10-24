@@ -104,7 +104,7 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .networkProtectionUserTips:
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
         case .networkProtectionEnforceRoutes:
-            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
+            return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         }
     }
 }

@@ -129,7 +129,6 @@ final class AppDependencyProvider: DependencyProvider {
 
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
-                                                                              internalUserDecider: internalUserDecider,
                                                                               persistentPixel: persistentPixel,
                                                                               settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,

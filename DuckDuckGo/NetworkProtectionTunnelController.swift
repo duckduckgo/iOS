@@ -37,7 +37,6 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
-    private let internalUserDecider: InternalUserDecider
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
@@ -127,7 +126,6 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     private var mustEnforceRoutes: Bool {
         featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
-        && internalUserDecider.isInternalUser
         && settings.enforceRoutes
     }
 
@@ -136,12 +134,10 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     init(accountManager: AccountManager,
          tokenStore: NetworkProtectionKeychainTokenStore,
          featureFlagger: FeatureFlagger,
-         internalUserDecider: InternalUserDecider,
          persistentPixel: PersistentPixelFiring,
          settings: VPNSettings) {
 
         self.featureFlagger = featureFlagger
-        self.internalUserDecider = internalUserDecider
         self.persistentPixel = persistentPixel
         self.settings = settings
         self.tokenStore = tokenStore
@@ -360,7 +356,6 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // always-on
             protocolConfiguration.disconnectOnSleep = false
 
-            FeatureFlag.
             // kill switch (limited to internal users currently)
             protocolConfiguration.enforceRoutes = mustEnforceRoutes
 

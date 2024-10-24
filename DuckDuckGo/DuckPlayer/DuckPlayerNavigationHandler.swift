@@ -155,7 +155,8 @@ final class DuckPlayerNavigationHandler {
         
         // Cancel navigation if OpenInNewTab is enabled
         if let url = webView.url,
-            duckPlayer.settings.openInNewTab {
+            duckPlayer.settings.openInNewTab,
+            featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) {
             cancelNavigation(isJavascriptLink: true, url: url, webView: webView)
         }
         
@@ -253,6 +254,7 @@ final class DuckPlayerNavigationHandler {
         
         if let url = components.url {
             tabNavigationHandler?.openTab(for: url)
+            renderedVideoID = nil
         }
         
     }
@@ -279,16 +281,19 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
         
-        
         let tabHasEmptyURL = navigationAction.targetFrame?.safeRequest?.url?.absoluteString == ""
         let isDuckPlayerInNewTab = navigationAction.targetFrame?.safeRequest?.url?.isDuckPlayer ?? false && duckPlayer.settings.openInNewTab
         let isNewTab = tabHasEmptyURL || isDuckPlayerInNewTab
         
         // Check if should open in a new tab
-        if duckPlayer.settings.openInNewTab,
-            let url = navigationAction.request.url,            
-            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
-            !isNewTab {
+        if featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
+           duckPlayer.settings.openInNewTab,
+           let url = navigationAction.request.url,
+           let (videoID, _) = url.youtubeVideoParams,
+           videoID != renderedVideoID,
+           getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
+           !isNewTab {
+            renderedVideoID = videoID
             openInNewTab(url: url)
             return
         }
@@ -522,6 +527,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
+        renderedVideoID = nil
+        renderedURL = nil
                 
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             return
@@ -529,9 +536,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
+            let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-            Logger.duckPlayer.debug("DP: Handling Initial Load of a video for \(url.absoluteString)")
-            handleReload(webView: webView)
+            Logger.duckPlayer.debug("DP: Handling DuckPlayer Reload for \(url.absoluteString)")
+            redirectToDuckPlayerVideo(url: url, webView: webView)
+        } else {
+            webView.reload()
         }
         
     }
@@ -643,8 +653,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             let url = navigationAction.request.url,
             url.isYoutube || url.isYoutubeWatch {
                         
-            // If we should open in the same tab, go ahead
-            if !duckPlayer.settings.openInNewTab {
+            // If open in new tab is OFF or the feature is disabled
+            if !duckPlayer.settings.openInNewTab || !featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) {
                 loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
                 return true
             }

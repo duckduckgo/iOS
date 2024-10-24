@@ -174,7 +174,7 @@ final class DuckPlayerNavigationHandler {
         }
     }
     
-    // Validates a youtube watch URL and loads it
+    // Loads a Youtube Video Page
     @MainActor
     private func redirectToYouTubeVideo(url: URL?, webView: WKWebView) {
         guard let url,
@@ -228,8 +228,8 @@ final class DuckPlayerNavigationHandler {
         // And go back to the previous URL. Which effectively cancels the navigation
         handleGoBack(webView: webView)
         
-        // The webView navigation action needs propagation
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        // The webView back navigation action needs propagation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             completion?()
         }
         

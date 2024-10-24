@@ -1903,9 +1903,11 @@ extension TabViewController: WKNavigationDelegate {
             performBlobNavigation(navigationAction, completion: completion)
         
         case .duck:
-            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
-            completion(.cancel)
-            return
+            if navigationAction.isTargetingMainFrame() {
+                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+                completion(.cancel)
+                return
+            }
 
         case .unknown:
             if navigationAction.navigationType == .linkActivated {

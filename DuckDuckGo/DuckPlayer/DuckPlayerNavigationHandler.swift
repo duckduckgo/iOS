@@ -61,6 +61,7 @@ final class DuckPlayerNavigationHandler {
         static let duckPlayerHeaderKey = "X-Navigation-Source"
         static let duckPlayerHeaderValue = "DuckPlayer"
         static let duckPlayerReferrerHeaderKey = "X-Navigation-DuckPlayerReferrer"
+        static let newTabParameter = "isNewTab"
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
@@ -249,7 +250,7 @@ final class DuckPlayerNavigationHandler {
         queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerHeaderKey, value: referrer.stringValue))
         
         // Adds a newTab parameter to prevent navigation loops in the new tab
-        //queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
+        queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
         components.queryItems = queryItems
         
         if let url = components.url {
@@ -276,6 +277,20 @@ final class DuckPlayerNavigationHandler {
         webView.load(newRequest)
     }
     
+    func isNewTab(url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems else {
+            return false
+        }
+
+        for queryItem in queryItems where queryItem.name == Constants.newTabParameter {
+            return true
+        }
+
+        return false
+    }
+
+    
     
 }
 
@@ -285,10 +300,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Handle rendering the simulated request for duck:// links
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
-              
-        let tabHasEmptyURL = navigationAction.targetFrame?.safeRequest?.url?.absoluteString == ""
-        let isDuckPlayerInNewTab = navigationAction.targetFrame?.safeRequest?.url?.isDuckPlayer ?? false && duckPlayer.settings.openInNewTab
-        let isNewTab = tabHasEmptyURL || isDuckPlayerInNewTab
         
         // Check if should open in a new tab
         if featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
@@ -297,7 +308,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
            let (videoID, _) = url.youtubeVideoParams,
            videoID != renderedVideoID,
            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
-           !isNewTab {
+           !isNewTab(url: url) {
             renderedVideoID = videoID
             openInNewTab(url: url)
             return
@@ -374,8 +385,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // This also takes care of managing duplicate URL changes
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
-                
-        
+                        
         Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
         
         // Check if DuckPlayer feature is ON

@@ -352,6 +352,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
             #if DEBUG
             if #available(iOS 17.4, *) {
+                // This is useful to ensure debugging is never blocked by the VPN
                 protocolConfiguration.excludeDeviceCommunication = true
             }
             #endif

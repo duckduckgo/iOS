@@ -32,7 +32,7 @@ final class OnboardingManagerTests: XCTestCase {
         appSettingsMock = AppSettingsMock()
         featureFlaggerMock = MockFeatureFlagger()
         variantManagerMock = MockVariantManager()
-        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: true)
     }
 
     override func tearDownWithError() throws {
@@ -245,6 +245,19 @@ final class OnboardingManagerTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(result)
+    }
+
+    func testWhenIsAddToDockEnabledAndLocalAndFeatureFlagsAreEnabledAndDeviceIsIpadReturnFalse() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockEnabled = true
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: false)
+
+        // WHEN
+        let result = sut.isAddToDockEnabled
+
+        // THEN
+        XCTAssertFalse(result)
     }
 
 }

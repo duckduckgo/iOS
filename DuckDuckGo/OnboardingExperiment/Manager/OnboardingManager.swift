@@ -24,15 +24,18 @@ final class OnboardingManager {
     private var appDefaults: AppDebugSettings
     private let featureFlagger: FeatureFlagger
     private let variantManager: VariantManager
+    private let isIphone: Bool
 
     init(
         appDefaults: AppDebugSettings = AppDependencyProvider.shared.appSettings,
         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-        variantManager: VariantManager = DefaultVariantManager()
+        variantManager: VariantManager = DefaultVariantManager(),
+        isIphone: Bool = UIDevice.current.userInterfaceIdiom == .phone
     ) {
         self.appDefaults = appDefaults
         self.featureFlagger = featureFlagger
         self.variantManager = variantManager
+        self.isIphone = isIphone
     }
 }
 
@@ -84,7 +87,7 @@ extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDeb
 
     var isAddToDockEnabled: Bool {
         // TODO: Add variant condition once the experiment is setup
-        isAddToDockLocalFlagEnabled && isAddToDockFeatureFlagEnabled
+        isIphone && isAddToDockLocalFlagEnabled && isAddToDockFeatureFlagEnabled
     }
 
     var isAddToDockLocalFlagEnabled: Bool {

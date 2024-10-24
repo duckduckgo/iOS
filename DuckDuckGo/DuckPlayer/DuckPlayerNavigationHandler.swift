@@ -365,7 +365,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
     }
     
-    // TabVidewController's observe delegates URL changes to this method, which basically reacts
+    // TabViewController's observe delegates URL changes to this method, which basically reacts
     // to different URLs and present/redirect DuckPlayer when necesary.
     // This also takes care of managing duplicate URL changes
     @MainActor
@@ -439,7 +439,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
 
     
     // Controls Back/Forward navigation logic for Youtube.  DuckPlayer is rendered as a new item in the
-    // HIstory stack, so we need special logic on back/forward nav.
+    // History stack, so we need special logic on back/forward nav.
     @MainActor
     func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection) {
         

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "tom/email-parsing",
-        "revision" : "756afd0fa7deff15c1e6ef0e222a54389c485011"
+        "revision" : "fdf6f75d570a5ef6058efa881e11f9467627fbf4",
+        "version" : "200.2.1"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "1fee787458d13f8ed07f9fe81aecd6e59609339e",
-        "version" : "13.1.0"
+        "revision" : "945ac09a0189dc6736db617867fde193ea984b20",
+        "version" : "15.0.0"
       }
     },
     {

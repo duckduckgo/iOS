@@ -26,6 +26,8 @@ final class NewTabPageViewModel: ObservableObject {
     @Published private(set) var isOnboarding: Bool
     @Published var isShowingSettings: Bool
 
+    private(set) var isDragging: Bool = false
+
     private var introDataStorage: NewTabPageIntroDataStoring
     private let pixelFiring: PixelFiring.Type
 
@@ -66,5 +68,13 @@ final class NewTabPageViewModel: ObservableObject {
 
     func finishOnboarding() {
         isOnboarding = false
+    }
+
+    func beginDragging() {
+        isDragging = true
+    }
+
+    func endDragging() {
+        isDragging = false
     }
 }

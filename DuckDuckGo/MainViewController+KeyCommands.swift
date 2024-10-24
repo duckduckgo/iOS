@@ -33,7 +33,7 @@ extension MainViewController {
         }
         
         var browsingCommands = [UIKeyCommand]()
-        if homeController == nil {
+        if newTabPageViewController == nil {
             browsingCommands = [
                 UIKeyCommand(title: "", action: #selector(keyboardFind), input: "f", modifierFlags: [.command],
                              discoverabilityTitle: UserText.keyCommandFind),
@@ -140,7 +140,7 @@ extension MainViewController {
     @objc func keyboardLocation() {
         guard tabSwitcherController == nil else { return }
 
-        if let controller = homeController {
+        if let controller = newTabPageViewController {
             controller.launchNewSearch()
         } else {
             showBars()

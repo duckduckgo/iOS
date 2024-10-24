@@ -385,19 +385,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Check if the URL is a DuckPlayer URL (handled elsewhere)
-        guard webView.url?.isYoutubeWatch ?? false || webView.url?.isDuckPlayer ?? false else {
-            Logger.duckPlayer.debug("DP: Not a Youtube Watch URL")
-            renderedURL = nil
-            renderedVideoID = nil
-            return .notHandled(.notAYoutubePage)
+        guard !(webView.url?.isDuckURLScheme ?? false) else {
+            return .notHandled(.isAlreadyDuckAddress)
         }
         
-        // Check if the URL has already been handled
-        guard webView.url != renderedURL && !(webView.url?.isDuckPlayer ?? false) else {
-            Logger.duckPlayer.debug("DP: URL already handled")
-            return .handled
+        // If the URL hasn't changed, exit
+        guard webView.url != renderedURL else {
+            Logger.duckPlayer.debug("DP: URL has not changed, skipping")
+            return .notHandled(.urlHasNotChanged)
         }
-                                
+        
         // Disable the Youtube Overlay for Player links
         // Youtube player links should open the video in Youtube
         // without overlay
@@ -411,7 +408,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             Logger.duckPlayer.debug("DP: DuckPlayer is Disabled, skipping")
             return .notHandled(.duckPlayerDisabled)
         }
-        
+
         // Check for valid YouTube video parameters
         guard let url = webView.url,
               let (videoID, _) = url.youtubeVideoParams else {
@@ -420,17 +417,22 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return .notHandled(.videoIDNotPresent)
         }
         
+        // If the video has already been rendered, exit
+        guard renderedVideoID != videoID else {
+            Logger.duckPlayer.debug("DP: Video already rendered, skipping")
+            return .notHandled(.videoAlreadyHandled)
+        }
+        
         // If DuckPlayer is disabled for the next video, skip handling and reset
         if duckPlayer.settings.allowFirstVideo {
             duckPlayer.settings.allowFirstVideo = false
             Logger.duckPlayer.debug("DP: Skipping video, DuckPlayer disabled for the next video")
+            renderedVideoID = videoID
             return .notHandled(.disabledForNextVideo)
         }
         
         // Finally, handle the redirection to DuckPlayer
         Logger.duckPlayer.debug("DP: Handling navigation for \(webView.url?.absoluteString ?? "No URL")")
-        renderedVideoID = videoID
-        renderedURL = url
         redirectToDuckPlayerVideo(url: url, webView: webView)
         return .handled
     }

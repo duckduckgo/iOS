@@ -78,7 +78,7 @@ final class SettingsViewModel: ObservableObject {
     enum Features {
         case sync
         case autofillAccessCredentialManagement
-        case textSize
+        case zoomLevel
         case voiceSearch
         case addressbarPosition
         case speechRecognition
@@ -257,6 +257,16 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var zoomLevelBinding: Binding<ZoomLevel> {
+        Binding<ZoomLevel>(
+            get: { self.state.textSize.zoomLevel },
+            set: { newValue in
+                self.appSettings.defaultZoomLevel = newValue
+                self.state.textSize.zoomLevel = newValue
+            }
+        )
+    }
+
     var duckPlayerModeBinding: Binding<DuckPlayerMode> {
         Binding<DuckPlayerMode>(
             get: {
@@ -404,7 +414,7 @@ extension SettingsViewModel {
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
-            textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
+            textSize: SettingsState.TextSize(enabled: !isPad, zoomLevel: appSettings.defaultZoomLevel),
             addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
@@ -777,7 +787,7 @@ extension SettingsViewModel {
                                                                   object: nil,
                                                                   queue: .main, using: { [weak self] _ in
             guard let self = self else { return }
-            self.state.textSize = SettingsState.TextSize(enabled: !isPad, size: self.appSettings.textSize)
+            self.state.textSize = SettingsState.TextSize(enabled: !isPad, zoomLevel: self.appSettings.defaultZoomLevel)
         })
     }
     

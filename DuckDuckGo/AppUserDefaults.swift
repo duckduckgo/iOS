@@ -235,9 +235,18 @@ public class AppUserDefaults: AppSettings {
     }
 
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
-    var textSize: Int {
+    private var textSize: Int {
         didSet {
             NotificationCenter.default.post(name: Notifications.textSizeChange, object: textSize)
+        }
+    }
+
+    var defaultZoomLevel: ZoomLevel {
+        get {
+            return ZoomLevel(rawValue: textSize) ?? .percent100
+        }
+        set {
+            textSize = newValue.rawValue
         }
     }
 

@@ -31,11 +31,9 @@ struct SettingsAccessibilityView: View {
             Section {
                 // Text Size
                 if viewModel.state.textSize.enabled {
-                    SettingsCellView(label: UserText.settingsText,
-                                     action: { viewModel.presentLegacyView(.textSize) },
-                                     accessory: .rightDetail("\(viewModel.state.textSize.size)%"),
-                                     disclosureIndicator: true,
-                                     isButton: true)
+                    SettingsPickerCellView(label: UserText.settingsText,
+                                           options: ZoomLevel.allCases,
+                                           selectedOption: viewModel.zoomLevelBinding)
                 }
             }
 

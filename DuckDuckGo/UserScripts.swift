@@ -50,10 +50,12 @@ final class UserScripts: UserScriptsProvider {
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
-    private(set) var textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: AppDependencyProvider.shared.appSettings.textSize)
+    private(set) var textSizeUserScript: TextSizeUserScript
     private(set) var debugScript = DebugUserScript()
 
-    init(with sourceProvider: ScriptSourceProviding) {
+    init(with sourceProvider: ScriptSourceProviding, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: appSettings.defaultZoomLevel.rawValue)
+
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)

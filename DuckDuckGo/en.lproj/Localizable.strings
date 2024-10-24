@@ -2353,7 +2353,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Text Size";
+"settings.text.size" = "Zoom Text";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Theme";

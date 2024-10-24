@@ -1059,7 +1059,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
     public static let settingsFirebutton = NSLocalizedString("settings.firebutton", value: "Fire Button Animation", comment: "Settings screen cell text for fire button animation")
-    public static let settingsText = NSLocalizedString("settings.text.size", value: "Text Size", comment: "Settings screen cell text for text size")
+    public static let settingsText = NSLocalizedString("settings.text.size", value: "Zoom Text", comment: "Settings screen cell text for text size")
     public static let settingsAddressBar = NSLocalizedString("settings.address.bar", value: "Address Bar Position", comment: "Settings screen cell text for addess bar position")
     public static let settingsFullURL = NSLocalizedString("settings.address.full.url", value: "Show Full Site Address", comment: "Settings screen cell title for toggling full URL visibility in address bar")
 

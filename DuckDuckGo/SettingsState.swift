@@ -33,7 +33,7 @@ struct SettingsState {
     
     struct TextSize {
         var enabled: Bool
-        var size: Int
+        var zoomLevel: ZoomLevel
     }
 
     struct Subscription: Codable {
@@ -107,7 +107,7 @@ struct SettingsState {
             appTheme: .systemDefault,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
-            textSize: TextSize(enabled: false, size: 100),
+            textSize: TextSize(enabled: false, zoomLevel: .percent100),
             addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,

@@ -60,7 +60,7 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var currentAddressBarPosition: AddressBarPosition { get set }
     var showFullSiteAddress: Bool { get set }
 
-    var textSize: Int { get set }
+    var defaultZoomLevel: ZoomLevel { get set }
 
     var favoritesDisplayMode: FavoritesDisplayMode { get set }
     

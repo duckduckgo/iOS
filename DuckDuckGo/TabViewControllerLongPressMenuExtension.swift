@@ -113,7 +113,7 @@ extension TabViewController {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: onboardingPixelReporter,
             featureFlagger: AppDependencyProvider.shared.featureFlagger,
-            pageZoomStorage: pageZoomStorage)
+            domainTextZoomStorage: domainTextZoomStorage)
 
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()

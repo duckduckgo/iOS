@@ -201,7 +201,7 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        pageZoomStorage: PageZoomStoring = PageZoomStorage()
+        domainTextZoomStorage: DomainTextZoomStoring = DomainTextZoomStorage()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -226,7 +226,7 @@ class MainViewController: UIViewController {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: contextualOnboardingPixelReporter,
             featureFlagger: featureFlagger,
-            pageZoomStorage: pageZoomStorage)
+            domainTextZoomStorage: domainTextZoomStorage)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()

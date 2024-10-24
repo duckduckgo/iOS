@@ -42,7 +42,7 @@ class TabManager {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
     private let featureFlagger: FeatureFlagger
-    private let pageZoomStorage: PageZoomStoring
+    private let domainTextZoomStorage: DomainTextZoomStoring
 
     weak var delegate: TabDelegate?
 
@@ -61,7 +61,7 @@ class TabManager {
          contextualOnboardingLogic: ContextualOnboardingLogic,
          onboardingPixelReporter: OnboardingPixelReporting,
          featureFlagger: FeatureFlagger,
-         pageZoomStorage: PageZoomStoring) {
+         domainTextZoomStorage: DomainTextZoomStoring) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -73,7 +73,7 @@ class TabManager {
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
         self.featureFlagger = featureFlagger
-        self.pageZoomStorage = pageZoomStorage
+        self.domainTextZoomStorage = domainTextZoomStorage
         registerForNotifications()
     }
 
@@ -97,7 +97,7 @@ class TabManager {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: onboardingPixelReporter,
             featureFlagger: featureFlagger,
-            pageZoomStorage: pageZoomStorage)
+            domainTextZoomStorage: domainTextZoomStorage)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -177,7 +177,7 @@ class TabManager {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: onboardingPixelReporter,
             featureFlagger: featureFlagger,
-            pageZoomStorage: pageZoomStorage)
+            domainTextZoomStorage: domainTextZoomStorage)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

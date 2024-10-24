@@ -188,7 +188,7 @@ class TabViewController: UIViewController {
     var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
     var isSpecialErrorPageVisible: Bool = false
 
-    let pageZoomStorage: PageZoomStoring
+    let domainTextZoomStorage: DomainTextZoomStoring
     let syncService: DDGSyncing
 
     private let daxDialogsDebouncer = Debouncer(mode: .common)
@@ -323,7 +323,7 @@ class TabViewController: UIViewController {
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                                    featureFlagger: FeatureFlagger,
-                                   pageZoomStorage: PageZoomStoring) -> TabViewController {
+                                   domainTextZoomStorage: DomainTextZoomStoring) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -339,7 +339,7 @@ class TabViewController: UIViewController {
                               onboardingPixelReporter: onboardingPixelReporter,
                               urlCredentialCreator: urlCredentialCreator,
                               featureFlagger: featureFlagger,
-                              pageZoomStorage: pageZoomStorage
+                              domainTextZoomStorage: domainTextZoomStorage
             )
         })
         return controller
@@ -373,7 +373,7 @@ class TabViewController: UIViewController {
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
-                   pageZoomStorage: PageZoomStoring) {
+                   domainTextZoomStorage: DomainTextZoomStoring) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -392,7 +392,7 @@ class TabViewController: UIViewController {
         self.onboardingPixelReporter = onboardingPixelReporter
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
-        self.pageZoomStorage = pageZoomStorage
+        self.domainTextZoomStorage = domainTextZoomStorage
         super.init(coder: aDecoder)
     }
 
@@ -971,7 +971,11 @@ class TabViewController: UIViewController {
     }
 
     @objc func onTextSizeChange() {
-        webView.adjustTextSize(appSettings.defaultTextZoomLevel.rawValue)
+        // If the webview returns no host then there won't be a setting for a blank string anyway.
+        let level = domainTextZoomStorage.textZoomLevelForDomain(webView.url?.host?.droppingWwwPrefix() ?? "")
+            // And if there's no setting for whatever domain is passed in, use the app default
+            ?? appSettings.defaultTextZoomLevel
+        webView.adjustTextSize(level.rawValue)
     }
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {

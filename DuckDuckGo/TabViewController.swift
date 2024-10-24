@@ -841,7 +841,7 @@ class TabViewController: UIViewController {
         if let url = url, url.isDuckPlayer {
             webView.stopLoading()
             if webView.canGoBack {
-                duckPlayerNavigationHandler?.handleBackForwardNavigation(webView: webView, direction: .back)
+                duckPlayerNavigationHandler?.handleGoBack(webView: webView)
                 chromeDelegate?.omniBar.resignFirstResponder()
                 return
             }
@@ -873,19 +873,6 @@ class TabViewController: UIViewController {
     
     func goForward() {
         dismissJSAlertIfNeeded()
-        
-        if let url = url, url.isDuckPlayer {
-            webView.stopLoading()
-            if webView.canGoBack {
-                duckPlayerNavigationHandler?.handleBackForwardNavigation(webView: webView, direction: .forward)
-                chromeDelegate?.omniBar.resignFirstResponder()
-                return
-            }
-            if openingTab != nil {
-                delegate?.tabDidRequestClose(self)
-                return
-            }
-        }
         
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()

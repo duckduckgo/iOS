@@ -40,6 +40,7 @@ enum DuckPlayerNavigationDirection {
     case back, forward
 }
 
+
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var tabNavigationHandler: DuckPlayerTabNavigationHandling? { get set }
@@ -47,7 +48,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleNavigation(_ navigationAction: WKNavigationAction,
                           webView: WKWebView)
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult
-    func handleBackForwardNavigation(webView: WKWebView, direction: DuckPlayerNavigationDirection)
+    func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL

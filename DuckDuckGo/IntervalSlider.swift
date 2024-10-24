@@ -94,6 +94,7 @@ struct IntervalSliderRepresentable: UIViewRepresentable {
 
     func updateUIView(_ uiView: IntervalSlider, context: Context) {
         uiView.value = Float(value)
+        uiView.setNeedsDisplay()
     }
 
     func makeCoordinator() -> Coordinator {

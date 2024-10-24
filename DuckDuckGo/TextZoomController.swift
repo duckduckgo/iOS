@@ -124,9 +124,9 @@ struct TextZoomEditorView: View {
             .foregroundColor(Color(designSystemColor: .textPrimary))
             .padding(12)
         }
-        .background(RoundedRectangle(cornerRadius: 8))
+        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color(designSystemColor: .surface)))
         .padding(16)
-        .foregroundColor(Color(designSystemColor: .surface))
+
     }
 
     var body: some View {

@@ -173,8 +173,8 @@ extension TabViewController {
 
         return BrowsingMenuEntry.regular(name: UserText.pageZoomWithPercent(percent), 
                                          image: UIImage(named: "Type-Size-16")!,
-                                         showNotificationDot: false) {
-            // TODO
+                                         showNotificationDot: false) { [weak self] in
+            self?.showTextZoomAdjustment()
         }
     }
 

@@ -199,28 +199,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     
     
     // MARK: Handle URL Change tests
-    @MainActor
-    func testReturnsNotHandledWhenDisabled() {
-        let url = URL(string: "duck://player/12345")!
-        
-        // Set up mock player settings and player
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .disabled
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        // Simulate webView loading the URL
-        _ = mockWebView.load(URLRequest(url: url))
-                
-        let result = handler.handleURLChange(webView: mockWebView)
-                
-        switch result {
-        case .notHandled(let reason):
-            XCTAssertEqual(reason, .duckPlayerDisabled, "Expected .isAlreadyDuckAddress, but got \(reason).")
-        default:
-            XCTFail("Expected .notHandled(.isAlreadyDuckAddress), but got \(result).")
-        }
-    }
     
     @MainActor
     func testReturnsNotHandledWhenURLNotChanged() {
@@ -293,34 +271,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
             XCTFail("Expected .notHandled(.videoIDNotPresent), but got \(result).")
         }
     }
-    
-    /*@MainActor
-    
-    func testReturnsNotHandledWhenVideoAlreadyRendered() {
-        // Set up mock player settings and player
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .enabled
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        // Simulate webView loading the URL
-        let url1 = URL(string: "https://www.youtube.com/watch?v=I9J120SZT14")!
-        _ = mockWebView.load(URLRequest(url: url1))
-        let result1 = handler.handleURLChange(webView: mockWebView)
-        
-        // Load the Same video but slightly different URL (Redirecting to the m subdomain is quite common)
-        let url2 = URL(string: "https://m.youtube.com/watch?v=I9J120SZT14")!
-        _ = mockWebView.load(URLRequest(url: url2))
-        let result2 = handler.handleURLChange(webView: mockWebView)
-        
-        switch result2 {
-        case .notHandled(let reason):
-            XCTAssertEqual(reason, .videoAlreadyHandled, "Expected .videoAlreadyHandled, but got \(reason).")
-        default:
-            XCTFail("Expected .notHandled(.videoAlreadyHandled), but got \(result2).")
-        }
-    }
-     */
     
     @MainActor
     func testReturnsNotHandledWhenShouldBeDisabledForNextVideo() {

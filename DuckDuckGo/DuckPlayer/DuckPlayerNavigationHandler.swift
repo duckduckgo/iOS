@@ -273,16 +273,7 @@ final class DuckPlayerNavigationHandler {
         newRequest.addValue("DuckPlayer", forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerHeaderKey)
         newRequest.addValue(referrer.stringValue, forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerReferrerHeaderKey)
         
-        Logger.duckPlayer.debug("Loading Youtube URL with DuckPlayer headers: \(request.url?.absoluteString ?? "")")
-            
-        if let url = newRequest.url {
-            renderedURL = url
-            if let (videoID, _) = url.youtubeVideoParams {
-                renderedVideoID = videoID
-            } else {
-                renderedVideoID = nil
-            }
-        }
+        Logger.duckPlayer.debug("DP: Loading Youtube URL with DuckPlayer headers: \(request.url?.absoluteString ?? "")")
         
         // Perform the load
         webView.load(newRequest)
@@ -386,20 +377,27 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // This also takes care of managing duplicate URL changes
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
-                
-        
+                        
         Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
-        
-        // Check if the URL is a DuckPlayer URL (handled elsewhere)
-        guard webView.url?.isYoutube ?? false || webView.url?.isDuckPlayer ?? false else {
-            Logger.duckPlayer.debug("DP: Not a Youtube Watch URL")
-            return .notHandled(.notAYoutubePage)
-        }
         
         // Check if DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
             return .notHandled(.featureOff)
+        }
+
+        // Check if the URL is a DuckPlayer URL (handled elsewhere)
+        guard webView.url?.isYoutubeWatch ?? false || webView.url?.isDuckPlayer ?? false else {
+            Logger.duckPlayer.debug("DP: Not a Youtube Watch URL")
+            renderedURL = nil
+            renderedVideoID = nil
+            return .notHandled(.notAYoutubePage)
+        }
+        
+        // Check if the URL has already been handled
+        guard webView.url != renderedURL && !(webView.url?.isDuckPlayer ?? false) else {
+            Logger.duckPlayer.debug("DP: URL already handled")
+            return .handled
         }
                                 
         // Disable the Youtube Overlay for Player links
@@ -428,12 +426,13 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         if duckPlayer.settings.allowFirstVideo {
             duckPlayer.settings.allowFirstVideo = false
             Logger.duckPlayer.debug("DP: Skipping video, DuckPlayer disabled for the next video")
-            renderedVideoID = videoID
             return .notHandled(.disabledForNextVideo)
         }
         
         // Finally, handle the redirection to DuckPlayer
         Logger.duckPlayer.debug("DP: Handling navigation for \(webView.url?.absoluteString ?? "No URL")")
+        renderedVideoID = videoID
+        renderedURL = url
         redirectToDuckPlayerVideo(url: url, webView: webView)
         return .handled
     }

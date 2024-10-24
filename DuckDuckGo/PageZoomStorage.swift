@@ -20,25 +20,29 @@
 import Foundation
 
 protocol PageZoomStoring {
-    func zoomLevelForDomain(_ domain: String) -> Int?
-    func set(zoomLevel: Int, forDomain domain: String)
-    func resetZoomLevels(_ excludingDomains: [String])
+    func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel?
+    func set(textZoomLevel: TextZoomLevel, forDomain domain: String)
+    func resetTextZoomLevels(_ excludingDomains: [String])
 }
 
 class PageZoomStorage: PageZoomStoring {
 
-    var zoomLevels: [String: Int] = [:]
+    // TODO persist this
+    var textZoomLevels: [String: Int] = [:]
 
-    func zoomLevelForDomain(_ domain: String) -> Int? {
-        return zoomLevels[domain]
+    func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel? {
+        guard let zoomLevel = textZoomLevels[domain] else {
+            return nil
+        }
+        return TextZoomLevel(rawValue: zoomLevel)
     }
     
-    func set(zoomLevel: Int, forDomain domain: String) {
-        zoomLevels[domain] = zoomLevel
+    func set(textZoomLevel: TextZoomLevel, forDomain domain: String) {
+        textZoomLevels[domain] = textZoomLevel.rawValue
     }
 
-    func resetZoomLevels(_ excludingDomains: [String]) {
-        zoomLevels = zoomLevels.filter {
+    func resetTextZoomLevels(_ excludingDomains: [String]) {
+        textZoomLevels = textZoomLevels.filter {
             !excludingDomains.contains($0.key)
         }
     }

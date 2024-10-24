@@ -241,9 +241,9 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    var defaultZoomLevel: ZoomLevel {
+    var defaultTextZoomLevel: TextZoomLevel {
         get {
-            return ZoomLevel(rawValue: textSize) ?? .percent100
+            return TextZoomLevel(rawValue: textSize) ?? .percent100
         }
         set {
             textSize = newValue.rawValue

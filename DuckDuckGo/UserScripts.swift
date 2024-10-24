@@ -54,7 +54,7 @@ final class UserScripts: UserScriptsProvider {
     private(set) var debugScript = DebugUserScript()
 
     init(with sourceProvider: ScriptSourceProviding, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
-        textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: appSettings.defaultZoomLevel.rawValue)
+        textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: appSettings.defaultTextZoomLevel.rawValue)
 
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)

@@ -32,8 +32,8 @@ struct SettingsAccessibilityView: View {
                 // Text Size
                 if viewModel.state.textSize.enabled {
                     SettingsPickerCellView(label: UserText.settingsText,
-                                           options: ZoomLevel.allCases,
-                                           selectedOption: viewModel.zoomLevelBinding)
+                                           options: TextZoomLevel.allCases,
+                                           selectedOption: viewModel.textZoomLevelBinding)
                 }
             }
 

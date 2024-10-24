@@ -971,7 +971,7 @@ class TabViewController: UIViewController {
     }
 
     @objc func onTextSizeChange() {
-        webView.adjustTextSize(appSettings.defaultZoomLevel.rawValue)
+        webView.adjustTextSize(appSettings.defaultTextZoomLevel.rawValue)
     }
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
@@ -2519,7 +2519,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autofillUserScript.vaultDelegate = vaultManager
         userScripts.faviconScript.delegate = faviconUpdater
         userScripts.printingUserScript.delegate = self
-        userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.defaultZoomLevel.rawValue
+        userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.defaultTextZoomLevel.rawValue
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
         userScripts.specialErrorPageUserScript?.delegate = self

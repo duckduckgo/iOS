@@ -169,7 +169,7 @@ extension TabViewController {
 
     private func buildZoomLevelEntry(forLink link: Link) -> BrowsingMenuEntry {
         let domain = link.url.host?.droppingWwwPrefix() ?? ""
-        let percent = pageZoomStorage.zoomLevelForDomain(domain) ?? 100
+        let percent = pageZoomStorage.textZoomLevelForDomain(domain)?.rawValue ?? appSettings.defaultTextZoomLevel.rawValue
 
         return BrowsingMenuEntry.regular(name: UserText.pageZoomWithPercent(percent), image: UIImage(named: "Type-Size-16")!, showNotificationDot: false) {
             // TODO

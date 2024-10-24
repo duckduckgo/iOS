@@ -19,7 +19,7 @@
 
 import Foundation
 
-enum ZoomLevel: Int, CaseIterable, CustomStringConvertible {
+enum TextZoomLevel: Int, CaseIterable, CustomStringConvertible {
     
     var description: String {
         return "\(self.rawValue)%"

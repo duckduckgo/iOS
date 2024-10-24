@@ -31,9 +31,9 @@ struct SettingsState {
         var position: AddressBarPosition
     }
     
-    struct TextSize {
+    struct TextZoom {
         var enabled: Bool
-        var zoomLevel: ZoomLevel
+        var level: TextZoomLevel
     }
 
     struct Subscription: Codable {
@@ -57,7 +57,7 @@ struct SettingsState {
     var appTheme: ThemeName
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
-    var textSize: TextSize
+    var textSize: TextZoom
     var addressBar: AddressBar
     var showsFullURL: Bool
 
@@ -107,7 +107,7 @@ struct SettingsState {
             appTheme: .systemDefault,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
-            textSize: TextSize(enabled: false, zoomLevel: .percent100),
+            textSize: TextZoom(enabled: false, level: .percent100),
             addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,

@@ -762,7 +762,7 @@ class TabViewController: UIViewController {
            case .handled = handler.handleURLChange(webView: webView) {
             return
         }
-        
+            
         if url == nil {
             url = webView.url
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {

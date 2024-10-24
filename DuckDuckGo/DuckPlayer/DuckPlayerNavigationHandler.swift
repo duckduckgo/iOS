@@ -58,7 +58,6 @@ final class DuckPlayerNavigationHandler {
         static let duckPlayerHeaderKey = "X-Navigation-Source"
         static let duckPlayerHeaderValue = "DuckPlayer"
         static let duckPlayerReferrerHeaderKey = "X-Navigation-DuckPlayerReferrer"
-        static let newTabParameter = "newTab"
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
@@ -249,7 +248,7 @@ final class DuckPlayerNavigationHandler {
         queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerHeaderKey, value: referrer.stringValue))
         
         // Adds a newTab parameter to prevent navigation loops in the new tab
-        queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
+        //queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
         components.queryItems = queryItems
         
         if let url = components.url {
@@ -271,15 +270,6 @@ final class DuckPlayerNavigationHandler {
         webView.load(newRequest)
     }
     
-    private func hasNewTabParameter(url: URL) -> Bool {
-        
-        if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-           let isNewTabQueryItem = urlComponents.queryItems?.first(where: { $0.name == Constants.newTabParameter }),
-           isNewTabQueryItem.value == "1" {
-            return true
-        }
-        return false
-    }
     
 }
 
@@ -288,12 +278,17 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Handle rendering the simulated request for duck:// links
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
-                
+        
+        
+        let tabHasEmptyURL = navigationAction.targetFrame?.safeRequest?.url?.absoluteString == ""
+        let isDuckPlayerInNewTab = navigationAction.targetFrame?.safeRequest?.url?.isDuckPlayer ?? false && duckPlayer.settings.openInNewTab
+        let isNewTab = tabHasEmptyURL || isDuckPlayerInNewTab
+        
         // Check if should open in a new tab
         if duckPlayer.settings.openInNewTab,
-            let url = navigationAction.request.url,
-            !hasNewTabParameter(url: url),
-            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil {
+            let url = navigationAction.request.url,            
+            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
+            !isNewTab {
             openInNewTab(url: url)
             return
         }

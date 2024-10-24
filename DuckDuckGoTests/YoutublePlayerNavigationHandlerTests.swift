@@ -514,7 +514,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let mockWebViewWithHistory = MockWebView()
         mockWebViewWithHistory.mockBackItemsCount = 4
         
-        
         // Set up mock player settings and player
         let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
         playerSettings.mode = .enabled

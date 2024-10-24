@@ -1,5 +1,5 @@
 //
-//  FavoriteDataSource.swift
+//  FavoritesListInteractingAdapter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -24,12 +24,30 @@ import Bookmarks
 final class FavoritesListInteractingAdapter: NewTabPageFavoriteDataSource {
 
     let favoritesListInteracting: FavoritesListInteracting
+    let appSettings: AppSettings
 
-    init(favoritesListInteracting: FavoritesListInteracting) {
+    private var cancellables: Set<AnyCancellable> = []
+
+    private var displayModeSubject = PassthroughSubject<Void, Never>()
+
+    init(favoritesListInteracting: FavoritesListInteracting, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         self.favoritesListInteracting = favoritesListInteracting
+        self.appSettings = appSettings
+        self.externalUpdates = favoritesListInteracting.externalUpdates.merge(with: displayModeSubject).eraseToAnyPublisher()
+
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                favoritesListInteracting.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                displayModeSubject.send()
+            }
+            .store(in: &cancellables)
     }
 
-    var externalUpdates: AnyPublisher<Void, Never> { favoritesListInteracting.externalUpdates }
+    let externalUpdates: AnyPublisher<Void, Never>
 
     var favorites: [Favorite] {
         (try? favoritesListInteracting.favorites.map(Favorite.init)) ?? []

@@ -136,9 +136,4 @@ final class AppDependencyProvider: DependencyProvider {
                                                                   accountManager: accountManager)
     }
 
-    /// Only meant to be used for testing.
-    ///
-    static func makeTestingInstance() -> Self {
-        Self.init()
-    }
 }

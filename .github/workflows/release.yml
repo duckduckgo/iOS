@@ -6,7 +6,7 @@ on:
       destination:
         description: "Upload destination (App Store or TestFlight)"
         required: true
-        default: appstore
+        default: testflight
         type: choice
         options:
         - appstore
@@ -36,10 +36,10 @@ jobs:
       id: destination
       run: |
         INPUT_DESTINATION=${{ github.event.inputs.destination }}
-        echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
+        echo "destination=${INPUT_DESTINATION:-"testflight"}" >> $GITHUB_OUTPUT
 
     - name: Assert release branch
-      if: steps.destination.outputs.destination == 'appstore'
+      if: steps.destination.outputs.destination == 'appstore' || steps.destination.outputs.destination == 'testflight'
       run: |
         case "${{ github.ref }}" in
           *release/*) ;;

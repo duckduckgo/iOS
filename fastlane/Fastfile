@@ -185,7 +185,6 @@ lane :promote_latest_testflight_to_appstore do |options|
       api_key: get_api_key,
       username: get_username(options),
       platform: 'ios'
-      # No app_identifier for non-alpha
     )
   end
 
@@ -194,10 +193,10 @@ lane :promote_latest_testflight_to_appstore do |options|
 
   UI.message("The latest build number #{latest_build_number} of the latest version: #{latest_build_version}")
 
-  # upload_metadata(options.merge({
-  #   build_number: latest_build_number.to_s,
-  #   app_version: latest_build_version.to_s,
-  # }))
+  upload_metadata(options.merge({
+    build_number: latest_build_number.to_s,
+    app_version: latest_build_version.to_s,
+  }))
 end
 
 desc 'Makes App Store release build and uploads it to App Store Connect'

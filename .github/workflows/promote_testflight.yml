@@ -2,9 +2,6 @@ name: Promote TestFlight to App Store
 
 on: 
   workflow_dispatch: {}
-  push:
-    branches:
-      - kieran/release-changes
 
 jobs:
   promote-testflight-to-appstore:
@@ -34,5 +31,3 @@ jobs:
         git config --global user.name "Dax the Duck"
         git config --global user.email "dax@duckduckgo.com"
         bundle exec fastlane promote_latest_testflight_to_appstore alpha:true
-        bundle exec fastlane promote_latest_testflight_to_appstore
-  

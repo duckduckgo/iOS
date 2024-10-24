@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
+import BrowserServicesKit
 import Combine
 import Core
+import Foundation
 import NetworkExtension
 import NetworkProtection
 import Subscription
@@ -35,6 +36,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     static var shouldSimulateFailure: Bool = false
 
     private var internalManager: NETunnelProviderManager?
+    private var internalUserDecider: InternalUserDecider
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
     private let errorStore = NetworkProtectionTunnelErrorStore()
@@ -42,6 +44,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
     private let persistentPixel: PersistentPixelFiring
+    private let settings: VPNSettings
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Manager, Session, & Connection
@@ -119,9 +122,17 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
-    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore, persistentPixel: PersistentPixelFiring) {
-        self.tokenStore = tokenStore
+    init(accountManager: AccountManager,
+         tokenStore: NetworkProtectionKeychainTokenStore,
+         internalUserDecider: InternalUserDecider,
+         persistentPixel: PersistentPixelFiring,
+         settings: VPNSettings) {
+
+        self.internalUserDecider = internalUserDecider
         self.persistentPixel = persistentPixel
+        self.settings = settings
+        self.tokenStore = tokenStore
+
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
         subscribeToConfigurationChanges()
@@ -336,8 +347,8 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // always-on
             protocolConfiguration.disconnectOnSleep = false
 
-            // kill switch
-            protocolConfiguration.enforceRoutes = AppDependencyProvider.shared.vpnSettings.enforceRoutes
+            // kill switch (limited to internal users currently)
+            protocolConfiguration.enforceRoutes = internalUserDecider.isInternalUser && settings.enforceRoutes
 
             #if DEBUG
             if #available(iOS 17.4, *) {
@@ -355,7 +366,11 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     /// extra Included Routes appended to 0.0.0.0, ::/0 (peers) and interface.addresses
     @MainActor
     private func includedRoutes() -> [NetworkProtection.IPAddressRange] {
-        [
+        guard internalUserDecider.isInternalUser && settings.enforceRoutes else {
+            return []
+        }
+
+        return [
             IPAddressRange(stringLiteral: "0.0.0.0/0"),
             IPAddressRange(stringLiteral: "1.0.0.0/8"),
             IPAddressRange(stringLiteral: "2.0.0.0/8"),

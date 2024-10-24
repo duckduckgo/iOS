@@ -111,7 +111,7 @@ final class AppDependencyProvider: DependencyProvider {
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
-        
+
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
@@ -124,17 +124,14 @@ final class AppDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = {
             return { accountManager.accessToken }
         }()
-#if os(macOS)
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                                                                                  errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  accessTokenProvider: accessTokenProvider)
-#else
+
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-#endif
+
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
-                                                                              persistentPixel: persistentPixel)
+                                                                              internalUserDecider: internalUserDecider,
+                                                                              persistentPixel: persistentPixel,
+                                                                              settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }

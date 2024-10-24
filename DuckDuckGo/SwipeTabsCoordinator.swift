@@ -308,14 +308,12 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
         if !isEnabled || tabsModel.currentIndex == indexPath.row {
             cell.omniBar = coordinator.omniBar
-            cell.setNeedsUpdateConstraints()
         } else {
             // Strong reference while we use the omnibar
             let omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
 
             cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
-            cell.setNeedsUpdateConstraints()
 
             cell.omniBar?.showSeparator()
             if self.appSettings.currentAddressBarPosition.isBottom {
@@ -331,7 +329,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             }
 
         }
-        
+
+        cell.setNeedsUpdateConstraints()
+
         return cell
     }
     

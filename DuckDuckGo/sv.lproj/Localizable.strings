@@ -596,6 +596,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Spara det här lösenordet?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.not-now.CTA" = "Inte nu";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Förvara ditt lösenord säkert på enheten med DuckDuckGo Lösenord och autofyll.";
 

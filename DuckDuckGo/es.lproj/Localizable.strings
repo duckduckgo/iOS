@@ -596,6 +596,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "¿Guardar esta contraseña?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.not-now.CTA" = "Ahora no";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Almacena de forma segura tu contraseña en el dispositivo con DuckDuckGo Contraseñas y Autocompletar.";
 

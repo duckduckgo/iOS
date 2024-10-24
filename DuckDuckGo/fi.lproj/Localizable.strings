@@ -596,6 +596,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Tallennetaanko tämä salasana?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.not-now.CTA" = "Ei nyt";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Tallenna salasanasi turvallisesti laitteeseen DuckDuckGon salasanojen ja automaattisen täytön avulla.";
 

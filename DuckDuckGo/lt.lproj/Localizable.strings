@@ -596,6 +596,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Išsaugoti šį slaptažodį?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.not-now.CTA" = "Ne dabar";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Saugiai išsaugokite slaptažodį įrenginyje naudodami „DuckDuckGo“ slaptažodžių ir automatinio pildymo parinktį.";
 

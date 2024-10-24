@@ -596,6 +596,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai saglabāt šo paroli?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.not-now.CTA" = "Ne tagad";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Droši saglabā paroli ierīcē, izmantojot DuckDuckGo paroles un automātisko aizpildīšanu.";
 

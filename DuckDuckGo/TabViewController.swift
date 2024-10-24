@@ -1488,6 +1488,7 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+            
     }
 
     func trackSecondSiteVisitIfNeeded(url: URL?) {

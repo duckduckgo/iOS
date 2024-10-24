@@ -53,7 +53,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleAttach(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
-    func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
+    func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)    
     
 }
 

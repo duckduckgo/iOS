@@ -90,6 +90,10 @@ import os.log
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     var privacyProDataReporter: PrivacyProDataReporting!
 
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
+
     // MARK: lifecycle
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
@@ -393,6 +397,8 @@ import os.log
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false
         }
+
+        tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
     }

@@ -30,4 +30,4 @@ jobs:
       run: |
         git config --global user.name "Dax the Duck"
         git config --global user.email "dax@duckduckgo.com"
-        bundle exec fastlane promote_latest_testflight_to_appstore alpha:true
+        bundle exec fastlane promote_latest_testflight_to_appstore

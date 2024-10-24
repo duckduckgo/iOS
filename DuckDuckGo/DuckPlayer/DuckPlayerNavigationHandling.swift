@@ -29,6 +29,7 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
         case videoIDNotPresent
         case videoAlreadyHandled
         case disabledForNextVideo
+        case notAYoutubePage
     }
 
     case handled

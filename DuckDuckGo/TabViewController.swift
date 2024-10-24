@@ -759,7 +759,7 @@ class TabViewController: UIViewController {
         // Handle DuckPlayer Navigation URL changes
         if let handler = duckPlayerNavigationHandler,
            let url = webView.url,
-           case .handled = handler.handleURLChange(webView: webView) {
+           case .handled = handler.handleURLChange(webView: webView) {            
             return
         }
             

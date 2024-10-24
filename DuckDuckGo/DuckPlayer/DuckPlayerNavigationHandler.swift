@@ -152,20 +152,25 @@ final class DuckPlayerNavigationHandler {
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
+        let duckPlayerURL = URL.duckPlayer(videoID)
         
         // Cancel navigation if OpenInNewTab is enabled
         if let url = webView.url,
             duckPlayer.settings.openInNewTab,
             featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) {
-            cancelNavigation(isJavascriptLink: true, url: url, webView: webView)
+            cancelNavigation(url: url, webView: webView, completion: {
+                Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
+                self.loadWithDuckPlayerHeaders(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView)
+            })
         }
         
-        // Render Duck Player
-        renderedURL = url
-        renderedVideoID = videoID
-        let duckPlayerURL = URL.duckPlayer(videoID)
-        Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
-        loadWithDuckPlayerHeaders(URLRequest(url: duckPlayerURL), referrer: referrer, webView: webView)
+        // If the URL is a Youtube Watch video, cancel navigation
+        if url.isYoutubeWatch {
+            cancelNavigation(url: url, webView: webView, completion: {
+                Logger.duckPlayer.debug("DP: Redirecting to DuckPlayer Video: \(duckPlayerURL.absoluteString)")
+                self.loadWithDuckPlayerHeaders(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView)
+            })
+        }
         
     }
     
@@ -223,15 +228,14 @@ final class DuckPlayerNavigationHandler {
         pixelFiring.fire(.duckPlayerWatchOnYoutube, withAdditionalParameters: [:])
     }
     
-    private func cancelNavigation(isJavascriptLink: Bool, url: URL, webView: WKWebView) {
+    private func cancelNavigation(url: URL, webView: WKWebView, completion: (() -> Void)? = nil) {
         
         // Javascript links don't go through decidePolicy For, so we need to stop nav
-        // And go back to the previous URL
-        if isJavascriptLink {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                webView.stopLoading()
-                webView.goBack()
-            }
+        // And go back to the previous URL. Which effectively cancels the navigation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            webView.stopLoading()
+            self.handleBackForwardNavigation(webView: webView, direction: .back)
+            completion?()
         }
     }
     
@@ -268,7 +272,19 @@ final class DuckPlayerNavigationHandler {
                 
         newRequest.addValue("DuckPlayer", forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerHeaderKey)
         newRequest.addValue(referrer.stringValue, forHTTPHeaderField: DuckPlayerNavigationHandler.Constants.duckPlayerReferrerHeaderKey)
-                
+        
+        Logger.duckPlayer.debug("Loading Youtube URL with DuckPlayer headers: \(request.url?.absoluteString ?? "")")
+            
+        if let url = newRequest.url {
+            renderedURL = url
+            if let (videoID, _) = url.youtubeVideoParams {
+                renderedVideoID = videoID
+            } else {
+                renderedVideoID = nil
+            }
+        }
+        
+        // Perform the load
         webView.load(newRequest)
     }
     
@@ -370,26 +386,22 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // This also takes care of managing duplicate URL changes
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
+                
         
         Logger.duckPlayer.debug("DP: Initializing Navigation handler for URL: \(webView.url?.absoluteString ?? "No URL")")
+        
+        // Check if the URL is a DuckPlayer URL (handled elsewhere)
+        guard webView.url?.isYoutube ?? false || webView.url?.isDuckPlayer ?? false else {
+            Logger.duckPlayer.debug("DP: Not a Youtube Watch URL")
+            return .notHandled(.notAYoutubePage)
+        }
         
         // Check if DuckPlayer feature is ON
         guard featureFlagger.isFeatureOn(.duckPlayer) else {
             Logger.duckPlayer.debug("DP: Feature flag is off, skipping")
             return .notHandled(.featureOff)
         }
-        
-        // Check if the URL is a DuckPlayer URL (handled elsewhere)
-        guard !(webView.url?.isDuckURLScheme ?? false) else {
-            return .notHandled(.isAlreadyDuckAddress)
-        }
-        
-        // If the URL hasn't changed, exit
-        guard webView.url != renderedURL else {
-            Logger.duckPlayer.debug("DP: URL has not changed, skipping")
-            return .notHandled(.urlHasNotChanged)
-        }
-                
+                                
         // Disable the Youtube Overlay for Player links
         // Youtube player links should open the video in Youtube
         // without overlay
@@ -404,23 +416,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return .notHandled(.duckPlayerDisabled)
         }
         
-        // Update rendered URL and Referer if needed
-        if let url = webView.url {
-            renderedURL = url
-        }
-        
         // Check for valid YouTube video parameters
         guard let url = webView.url,
               let (videoID, _) = url.youtubeVideoParams else {
             Logger.duckPlayer.debug("DP: No video parameters present in the URL, skipping")
             renderedVideoID = nil
             return .notHandled(.videoIDNotPresent)
-        }
-        
-        // If the video has already been rendered, exit
-        guard renderedVideoID != videoID else {
-            Logger.duckPlayer.debug("DP: Video already rendered, skipping")
-            return .notHandled(.videoAlreadyHandled)
         }
         
         // If DuckPlayer is disabled for the next video, skip handling and reset
@@ -655,17 +656,19 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                         
             // If open in new tab is OFF or the feature is disabled
             if !duckPlayer.settings.openInNewTab || !featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) {
+                webView.stopLoading()
                 loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
                 return true
             }
             
             if duckPlayer.settings.openInNewTab && !url.isYoutubeWatch {
+                webView.stopLoading()
                 loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
                 return true
             }
             
             if duckPlayer.settings.openInNewTab && url.isYoutubeWatch {
-                cancelNavigation(isJavascriptLink: false, url: url, webView: webView)
+                webView.stopLoading()
                 loadWithDuckPlayerHeaders(navigationAction.request, referrer: referrer, webView: webView)
                 return true
             }

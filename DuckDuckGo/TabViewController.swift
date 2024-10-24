@@ -1325,6 +1325,7 @@ extension TabViewController: WKNavigationDelegate {
 
         let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
         let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
+        let urlNavigationalScheme = navigationResponse.response.url?.scheme.map { URL.NavigationalScheme(rawValue: $0) }
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
@@ -1355,7 +1356,13 @@ extension TabViewController: WKNavigationDelegate {
                        withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
         } else if shouldTriggerDownloadAction(for: navigationResponse),
                   let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-            // 3. We know the response should trigger the file download prompt
+            // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
+            if urlNavigationalScheme == .data {
+                decisionHandler(.download)
+                return
+            }
+
+            // 3b. We know the response should trigger the file download prompt
             self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                 self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
             } cancelHandler: {

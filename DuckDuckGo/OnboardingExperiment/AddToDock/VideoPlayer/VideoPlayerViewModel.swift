@@ -25,7 +25,6 @@ final class VideoPlayerViewModel: ObservableObject {
     @Published private(set) var player: AVPlayer
 
     let url: URL
-    let hidePlayerControls: Bool
 
     private var playerLooper: AVPlayerLooper?
 
@@ -35,12 +34,10 @@ final class VideoPlayerViewModel: ObservableObject {
 
     init(
         url: URL,
-        hidePlayerControls: Bool,
         loopVideo: Bool,
         player: AVQueuePlayer = AVQueuePlayer()
     ) {
         self.url = url
-        self.hidePlayerControls = hidePlayerControls
         self.player = player
 
         configureVideoPlayer()
@@ -62,7 +59,8 @@ final class VideoPlayerViewModel: ObservableObject {
 private extension VideoPlayerViewModel {
 
     func configureVideoPlayer() {
-        // Let the application goes to sleep if needed when the video is playing.
+        // Let the application goes to sleep if needed when the video is playing. Set to false as we're not playing a movie.
+        // If in the future we have cases where these values need to be different we can inject a configuration.
         player.preventsDisplaySleepDuringVideoPlayback = false
         // Disable playback video on external displays.
         player.allowsExternalPlayback = false

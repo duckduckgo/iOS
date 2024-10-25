@@ -31,7 +31,7 @@ final class VideoPlayerViewModelTests: XCTestCase {
         try super.setUpWithError()
         let url = try XCTUnwrap(fakeURL)
         mockPlayer = .init()
-        sut = VideoPlayerViewModel(url: url, hidePlayerControls: true, loopVideo: false, player: mockPlayer)
+        sut = VideoPlayerViewModel(url: url, loopVideo: false, player: mockPlayer)
     }
 
     override func tearDownWithError() throws {
@@ -48,7 +48,7 @@ final class VideoPlayerViewModelTests: XCTestCase {
         XCTAssertNil(mockPlayer.capturedCurrentItem)
 
         // WHEN
-        sut = VideoPlayerViewModel(url: url, hidePlayerControls: true, loopVideo: true, player: mockPlayer)
+        sut = VideoPlayerViewModel(url: url, loopVideo: true, player: mockPlayer)
 
         // THEN
         let asset = try XCTUnwrap(mockPlayer.capturedCurrentItem?.asset as? AVURLAsset)
@@ -61,7 +61,7 @@ final class VideoPlayerViewModelTests: XCTestCase {
         // GIVEN
         let url = try XCTUnwrap(fakeURL)
         mockPlayer = .init()
-        sut = VideoPlayerViewModel(url: url, hidePlayerControls: true, loopVideo: true, player: mockPlayer)
+        sut = VideoPlayerViewModel(url: url, loopVideo: true, player: mockPlayer)
 
         // WHEN
         let result = sut.isLoopingVideo
@@ -75,7 +75,7 @@ final class VideoPlayerViewModelTests: XCTestCase {
         // GIVEN
         let url = try XCTUnwrap(fakeURL)
         mockPlayer = .init()
-        sut = VideoPlayerViewModel(url: url, hidePlayerControls: true, loopVideo: false, player: mockPlayer)
+        sut = VideoPlayerViewModel(url: url, loopVideo: false, player: mockPlayer)
 
         // WHEN
         let result = sut.isLoopingVideo

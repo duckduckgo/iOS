@@ -19,7 +19,6 @@
 
 import SwiftUI
 import AVFoundation
-import AVKit
 
 struct VideoPlayerView: View {
 
@@ -30,12 +29,10 @@ struct VideoPlayerView: View {
     init(
         url: URL,
         isPlaying: Binding<Bool> = .constant(true),
-        hidePlayerControls: Bool = true,
         loopVideo: Bool = false
     ) {
          let playerModel = VideoPlayerViewModel(
             url: url,
-            hidePlayerControls: hidePlayerControls,
             loopVideo: loopVideo
          )
         self.isPlaying = isPlaying
@@ -43,8 +40,8 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        VideoPlayer(player: model.player)
-            .disabled(model.hidePlayerControls) // Disable player controls
+        PlayerView(player: model.player)
+            .foregroundColor(Color.red)
             .onChange(of: isPlaying.wrappedValue) { newValue in
                 if newValue {
                     model.play()
@@ -55,6 +52,49 @@ struct VideoPlayerView: View {
     }
 
 }
+
+// MARK: - Private
+
+// AVKit provides a SwiftUI view called VideoPlayer view to render AVPlayer.
+// The issue is that is not possible to change the background/foreground color of the view so the default color is black.
+// Using UIKit -> AVPlayerLayer solves the problem.
+private struct PlayerView: UIViewRepresentable {
+
+    private let player: AVPlayer
+
+    init(player: AVPlayer) {
+        self.player = player
+    }
+
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
+    }
+
+    func makeUIView(context: Context) -> UIView {
+        return PlayerUIView(player: player)
+    }
+}
+
+private final class PlayerUIView: UIView {
+    private let playerLayer = AVPlayerLayer()
+
+    init(player: AVPlayer) {
+        playerLayer.player = player
+        super.init(frame: .zero)
+        layer.addSublayer(playerLayer)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer.frame = bounds
+    }
+}
+
+// MARK: - Preview
 
 struct VideoPlayerView_Previews: PreviewProvider {
 
@@ -71,8 +111,6 @@ struct VideoPlayerView_Previews: PreviewProvider {
             .onAppear(perform: {
                 isPlaying = true
             })
-            .aspectRatio(contentMode: .fill)
-            .frame(maxHeight: 234)
         }
     }
 

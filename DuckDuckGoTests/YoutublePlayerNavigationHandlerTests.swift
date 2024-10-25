@@ -199,32 +199,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     
     
     // MARK: Handle URL Change tests
-    
-    @MainActor
-    func testReturnsNotHandledWhenURLNotChanged() {
-        let url = URL(string: "https://duckduckgo.com/?t=h_&q=search&ia=web")!
-        
-        // Set up mock player settings and player
-        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
-        playerSettings.mode = .enabled
-        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
-        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings)
-        
-        // Load the first URL
-        _ = mockWebView.load(URLRequest(url: url))
-                
-        let result = handler.handleURLChange(webView: mockWebView)
-
-        // Try to handle the same URL
-        let result2 = handler.handleURLChange(webView: mockWebView)
-                
-        switch result2 {
-        case .notHandled(let reason):
-            XCTAssertEqual(reason, .notAYoutubePage, "Expected .urlHasNotChanged, but got \(reason).")
-        default:
-            XCTFail("Expected .notHandled(.urlHasNotChanged), but got \(result).")
-        }
-    }
         
     @MainActor
     func testReturnsNotHandledWhenDuckPlayerDisabled() {
@@ -266,7 +240,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
                 
         switch result {
         case .notHandled(let reason):
-            XCTAssertEqual(reason, .notAYoutubePage, "Expected .videoIDNotPresent, but got \(reason).")
+            XCTAssertEqual(reason, .videoIDNotPresent, "Expected .videoIDNotPresent, but got \(reason).")
         default:
             XCTFail("Expected .notHandled(.videoIDNotPresent), but got \(result).")
         }

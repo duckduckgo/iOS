@@ -39,6 +39,7 @@ final class DuckPlayerNavigationHandler {
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var pixelFiring: PixelFiring.Type
+    var isOpeningNewTab: Bool = false
     weak var tabNavigationHandler: DuckPlayerTabNavigationHandling?
     
     private struct Constants {
@@ -194,8 +195,9 @@ final class DuckPlayerNavigationHandler {
         }
         duckPlayer.settings.allowFirstVideo = true
         renderedVideoID = videoID
+        renderedURL = removeDuckPlayerParameters(from: url)
         if let finalURL = redirectURL.addingWatchInYoutubeQueryParameter() {
-            loadWithDuckPlayerHeaders(URLRequest(url: redirectURL), referrer: referrer, webView: webView)
+            loadWithDuckPlayerHeaders(URLRequest(url: finalURL), referrer: referrer, webView: webView)
         }
     }
     
@@ -242,13 +244,12 @@ final class DuckPlayerNavigationHandler {
             return
         }
         
-        // Only open a new tab if the URL is different
-        // Javascript may fire multiple navigation events simultaneously
-        // We dont want multiple tabs in that case
-        if renderedURL != removeDuckPlayerParameters(from: url) {
-            
-            // Update the URL
-            renderedURL = removeDuckPlayerParameters(from: url)
+        // Only open a new tab for the fist event
+        // Youtube Javascript Navigation may fire multiple
+        // navigation events simultaneously
+        // While this is OK for regular navigation,
+        // We don't want multiple if that's tabs in that case
+        if !isOpeningNewTab {
             
             var queryItems = components.queryItems ?? []
             // Adds a Referrer header which is then parsed to fire pixels based on the referrer
@@ -260,12 +261,13 @@ final class DuckPlayerNavigationHandler {
             
             if let url = components.url {
                 tabNavigationHandler?.openTab(for: url)
-                renderedVideoID = nil
-                
-                // After the new tab is open, reset the rendered URL
-                // So tapping the same video in the source page works again.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+
+                // After the new tab is open, reset the rendered URL and video ID
+                // In the source tab so you can open the same video Again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.renderedURL = nil
+                    self.renderedVideoID = nil
+                    self.isOpeningNewTab = false
                 }
             }
         }
@@ -342,7 +344,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
            renderedURL != removeDuckPlayerParameters(from: url),
            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
            !isNewTab(url: url) {
-            renderedVideoID = videoID
             openInNewTab(url: url)
             return
         }
@@ -690,6 +691,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Otherwise, validate if the page is a Youtube page, and DuckPlayer is Enabled and Load it if so
         if isDuckPlayerFeatureEnabled,
             duckPlayerMode != .disabled,
+            !duckPlayer.settings.allowFirstVideo,
             let url = navigationAction.request.url,
             url.isYoutube || url.isYoutubeWatch {
                         

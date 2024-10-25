@@ -2063,6 +2063,7 @@ extension TabViewController: WKNavigationDelegate {
         if !(error.failedUrl?.isCustomURLScheme() ?? false) {
             url = error.failedUrl
             showError(message: error.localizedDescription)
+            Pixel.fire(pixel: .webViewErrorPageShown)
         }
 
         webpageDidFailToLoad()

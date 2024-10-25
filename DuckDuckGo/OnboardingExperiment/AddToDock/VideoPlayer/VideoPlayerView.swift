@@ -22,21 +22,13 @@ import AVFoundation
 
 struct VideoPlayerView: View {
 
-    @StateObject private var model: VideoPlayerViewModel
+    @ObservedObject private var model: VideoPlayerViewModel
 
     private var isPlaying: Binding <Bool>
 
-    init(
-        url: URL,
-        isPlaying: Binding<Bool> = .constant(true),
-        loopVideo: Bool = false
-    ) {
-         let playerModel = VideoPlayerViewModel(
-            url: url,
-            loopVideo: loopVideo
-         )
+    init(model: VideoPlayerViewModel, isPlaying: Binding<Bool> = .constant(true)) {
+        self.model = model
         self.isPlaying = isPlaying
-        _model = StateObject(wrappedValue: playerModel)
     }
 
     var body: some View {
@@ -98,15 +90,16 @@ private final class PlayerUIView: UIView {
 
 struct VideoPlayerView_Previews: PreviewProvider {
 
+    @MainActor
     struct VideoPlayerPreview: View {
-        let videoURL = Bundle.main.url(forResource: "add-to-dock-demo", withExtension: "mp4")!
+        static let videoURL = Bundle.main.url(forResource: "add-to-dock-demo", withExtension: "mp4")!
         @State var isPlaying = false
+        @State var model = VideoPlayerViewModel(url: Self.videoURL, loopVideo: true)
 
         var body: some View {
             VideoPlayerView(
-                url: videoURL,
-                isPlaying: $isPlaying,
-                loopVideo: true
+                model: model,
+                isPlaying: $isPlaying
             )
             .onAppear(perform: {
                 isPlaying = true

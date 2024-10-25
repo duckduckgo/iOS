@@ -42,7 +42,7 @@ class DaxDialogViewController: UIViewController {
             initCTA()
         }
     }
-    
+
     func calculateHeight() -> CGFloat {
         guard let text = message ?? cta, !text.isEmpty else { return 370.0 }
         
@@ -59,7 +59,7 @@ class DaxDialogViewController: UIViewController {
         let bottomMargin: CGFloat = 24.0
         return iconHeight + topMargin + size.height + buttonHeight + bottomMargin
     }
-    
+
     var onTapCta: (() -> Void)?
     
     private var position: Int = 0
@@ -186,5 +186,16 @@ extension DaxDialogViewController {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             finish()
         }
+    }
+}
+
+extension DaxDialogViewController {
+    static func loadFromStoryboard() -> DaxDialogViewController {
+        let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: Bundle.main)
+        guard let controller = storyboard.instantiateViewController(identifier: "DaxDialog") as? DaxDialogViewController else {
+            fatalError("Failed to instantiate DaxDialogViewController from storyboard")
+        }
+
+        return controller
     }
 }

@@ -101,17 +101,6 @@ final class AppDependencyProvider: DependencyProvider {
         let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
 
-//        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
-//                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
-//                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-//        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-//        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-//        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-//        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
-//                                                   entitlementsCache: entitlementsCache,
-//                                                   subscriptionEndpointService: subscriptionService,
-//                                                   authEndpointService: authService)
-
         let configuration = URLSessionConfiguration.default
         configuration.httpCookieStorage = nil
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData

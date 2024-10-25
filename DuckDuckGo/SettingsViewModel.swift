@@ -723,18 +723,8 @@ extension SettingsViewModel {
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
 
-            // TODO: check the logic here
             // Check entitlements and update state
             state.subscription.entitlements = subscriptionManager.entitlements
-
-            /*var currentEntitlements: [Entitlement.ProductName] = []
-             let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-             for entitlement in entitlementsToCheck {
-             if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
-             currentEntitlements.append(entitlement)
-             }
-             }
-             self.state.subscription.entitlements = currentEntitlements*/
         } catch SubscriptionEndpointServiceError.noData {
             // Auth successful but no Subscription is available
             Logger.subscription.log("Subscription not present")

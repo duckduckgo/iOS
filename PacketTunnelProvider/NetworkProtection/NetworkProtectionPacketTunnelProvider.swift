@@ -52,7 +52,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var vpnLogger = VPNLogger()
     private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
-//    private let accountManager: AccountManager
+    private let subscriptionManager: any SubscriptionManager
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
@@ -440,32 +440,50 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
 
         // MARK: - Configure Subscription
-//        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: UserDefaults.standard,
-//                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
-//                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let configuration = URLSessionConfiguration.default
+        configuration.httpCookieStorage = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let urlSession = URLSession(configuration: configuration,
+                                    delegate: SessionDelegate(),
+                                    delegateQueue: nil)
+        let apiService = DefaultAPIService(urlSession: urlSession)
+        let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
-        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-//        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-//        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-//        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-//        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
-//                                                   entitlementsCache: entitlementsCache,
-//                                                   subscriptionEndpointService: subscriptionService,
-//                                                   authEndpointService: authService)
-//        self.accountManager = accountManager
+        let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
+        let keychainManager = SubscriptionKeychainManager()
+        let legacyAccountStorage = AccountKeychainStorage()
+        let authClient = DefaultOAuthClient(tokensStorage: keychainManager,
+                                            legacyTokenStorage: legacyAccountStorage,
+                                            authService: authService)
 
-//        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(oAuthClient: <#T##any OAuthClient#>)
+        apiService.authorizationRefresherCallback = { _ in
+            guard let tokensContainer = keychainManager.tokensContainer else {
+                throw OAuthClientError.internalError("Missing refresh token")
+            }
+
+            if tokensContainer.decodedAccessToken.isExpired() {
+                Logger.OAuth.debug("Refreshing tokens")
+                let tokens = try await authClient.refreshTokens()
+                return tokens.accessToken
+            } else {
+                Logger.general.debug("Trying to refresh valid token, using the old one")
+                return tokensContainer.accessToken
+            }
+        }
+        let storePurchaseManager = DefaultStorePurchaseManager()
+        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
+                                                             oAuthClient: authClient,
+                                                             subscriptionEndpointService: subscriptionEndpointService,
+                                                             subscriptionEnvironment: subscriptionEnvironment)
+        self.subscriptionManager = subscriptionManager
         let accessTokenProvider: () -> String? = {
-//            if featureVisibility.shouldMonitorEntitlement() {
-                return {
-//                    accountManager.accessToken
-                    "" // TODO: :(
-                }
-//            }
-            return { nil }
+            return {
+                authClient.currentTokensContainer?.accessToken
+            }
         }()
         let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
 
@@ -475,6 +493,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
+
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
@@ -486,10 +505,12 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
-                   entitlementCheck: { return await Self.entitlementCheck() }
+                   entitlementCheck: {
+            let hasEntitlement = subscriptionManager.entitlements.contains(.networkProtection)
+            return .success(hasEntitlement)
+        }
         )
 
-//        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -537,19 +558,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
-    private static func entitlementCheck() async -> Result<Bool, Error> {
-        return .success(true) // TODO: WTF?
-//        guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
-//            return .success(true)
-//        }
-//
-//        let result = await accountManager.hasEntitlement(forProductName: .networkProtection)
-//        switch result {
-//        case .success(let hasEntitlement):
-//            return .success(hasEntitlement)
-//        case .failure(let error):
-//            return .failure(error)
-//        }
+    private func entitlementCheck() async -> Result<Bool, Error> {
+        let hasEntitlement = subscriptionManager.entitlements.contains(.networkProtection)
+        return .success(hasEntitlement)
     }
 }
 

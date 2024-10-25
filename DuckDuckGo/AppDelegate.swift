@@ -558,12 +558,11 @@ import os.log
             }
         }
 
-        // TODO: restore but limit the number of parallel subscription fetches
-//        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
-//            if isSubscriptionActive {
-//                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
-//            }
-//        }
+        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
+            if isSubscriptionActive {
+                DailyPixel.fire(pixel: .privacyProSubscriptionActive)
+            }
+        }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()

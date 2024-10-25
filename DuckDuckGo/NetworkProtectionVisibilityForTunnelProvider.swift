@@ -23,15 +23,8 @@ import Networking
 
 // struct NetworkProtectionVisibilityForTunnelProvider: NetworkProtectionFeatureVisibility {
 //
-//    private let oAuthClient: any OAuthClient
-//
-//    init(oAuthClient: any OAuthClient) {
-//        self.oAuthClient = oAuthClient
-//    }
-//
 //    func isPrivacyProLaunched() -> Bool {
-//        let tokensContainer = oAuthClient.getStoredTokens()
-//        return tokensContainer?.accessToken != nil
+//        return true
 //    }
 //    
 //    func shouldMonitorEntitlement() -> Bool {

@@ -761,6 +761,21 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Yes";
 
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.dismiss" = "Start Browsing";
+
+/* Button on the last screen of the onboarding, it will show the Add to Duck tutorial. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Show Me How";
+
+/* Message of the last screen of the onboarding to the browser app. */
+"contextual.onboarding.addToDock.endOfJourney.message" = "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Adding me to your Dock is easy.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 

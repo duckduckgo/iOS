@@ -123,7 +123,10 @@ final class AppDependencyProvider: DependencyProvider {
 
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
         let keychainManager = SubscriptionKeychainManager()
-        let authClient = DefaultOAuthClient(tokensStorage: keychainManager, authService: authService)
+        let legacyAccountStorage = AccountKeychainStorage()
+        let authClient = DefaultOAuthClient(tokensStorage: keychainManager,
+                                            legacyTokenStorage: legacyAccountStorage,
+                                            authService: authService)
 
         self.privacyProInfoProvider = authClient
 

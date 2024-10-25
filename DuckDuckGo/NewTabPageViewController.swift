@@ -23,7 +23,7 @@ import Bookmarks
 import BrowserServicesKit
 import Core
 
-final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTabPage {
+final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
     private let syncService: DDGSyncing
     private let syncBookmarksAdapter: SyncBookmarksAdapter
@@ -43,7 +43,15 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
     private var hostingController: UIHostingController<AnyView>?
 
+    private weak var daxDialogViewController: DaxDialogViewController?
+    private var daxDialogHeightConstraint: NSLayoutConstraint?
+
+    var isDaxDialogVisible: Bool {
+        daxDialogViewController?.view.isHidden == false
+    }
+
     init(tab: Tab,
+         isNewTabPageCustomizationEnabled: Bool,
          interactionModel: FavoritesListInteracting,
          syncService: DDGSyncing,
          syncBookmarksAdapter: SyncBookmarksAdapter,
@@ -64,21 +72,33 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
         sectionsSettingsModel = NewTabPageSectionsSettingsModel()
-        favoritesModel = FavoritesViewModel(favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel), faviconLoader: faviconLoader)
+        favoritesModel = FavoritesViewModel(isNewTabPageCustomizationEnabled: isNewTabPageCustomizationEnabled,
+                                            favoriteDataSource: FavoritesListInteractingAdapter(favoritesListInteracting: interactionModel),
+                                            faviconLoader: faviconLoader)
         shortcutsModel = ShortcutsModel()
         messagesModel = NewTabPageMessagesModel(homePageMessagesConfiguration: homePageMessagesConfiguration, privacyProDataReporter: privacyProDataReporting)
 
-        let newTabPageView = NewTabPageView(viewModel: newTabPageViewModel,
-                                            messagesModel: messagesModel,
-                                            favoritesViewModel: favoritesModel,
-                                            shortcutsModel: shortcutsModel,
-                                            shortcutsSettingsModel: shortcutsSettingsModel,
-                                            sectionsSettingsModel: sectionsSettingsModel)
-
-        super.init(rootView: newTabPageView)
+        if isNewTabPageCustomizationEnabled {
+            super.init(rootView: AnyView(NewTabPageView(viewModel: self.newTabPageViewModel,
+                                                        messagesModel: self.messagesModel,
+                                                        favoritesViewModel: self.favoritesModel,
+                                                        shortcutsModel: self.shortcutsModel,
+                                                        shortcutsSettingsModel: self.shortcutsSettingsModel,
+                                                        sectionsSettingsModel: self.sectionsSettingsModel)))
+        } else {
+            super.init(rootView: AnyView(SimpleNewTabPageView(viewModel: self.newTabPageViewModel,
+                                                              messagesModel: self.messagesModel,
+                                                              favoritesViewModel: self.favoritesModel)))
+        }
 
         assignFavoriteModelActions()
         assignShorcutsModelActions()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setUpDaxDialog()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +110,34 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
         Pixel.fire(pixel: .homeScreenShown)
         sendDailyDisplayPixel()
+
+        view.backgroundColor = UIColor(designSystemColor: .background)
+    }
+
+    private func setUpDaxDialog() {
+        let daxDialogController = DaxDialogViewController.loadFromStoryboard()
+        guard let dialogView = daxDialogController.view else { return }
+
+        self.addChild(daxDialogController)
+        self.view.addSubview(dialogView)
+
+        dialogView.translatesAutoresizingMaskIntoConstraints = false
+        dialogView.isHidden = true
+
+        let widthConstraint = dialogView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 1)
+        widthConstraint.priority = .defaultHigh
+        let heightConstraint = dialogView.heightAnchor.constraint(equalToConstant: 250)
+        daxDialogHeightConstraint = heightConstraint
+        NSLayoutConstraint.activate([
+            dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44.0),
+            dialogView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dialogView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+            heightConstraint,
+            widthConstraint
+        ])
+
+        daxDialogController.didMove(toParent: self)
+        daxDialogViewController = daxDialogController
     }
 
     // MARK: - Private
@@ -140,7 +188,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
 
     // MARK: - NewTabPage
 
-    let isDragging: Bool = false
+    var isDragging: Bool { newTabPageViewModel.isDragging }
 
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var delegate: NewTabPageControllerDelegate?
@@ -151,12 +199,18 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     }
 
     func openedAsNewTab(allowingKeyboard: Bool) {
-        guard allowingKeyboard && KeyboardSettings().onNewTab else { return }
+        if allowingKeyboard && KeyboardSettings().onNewTab {
 
-        // The omnibar is inside a collection view so this needs a chance to do its thing
-        // which might also be async. Not great.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.launchNewSearch()
+            // The omnibar is inside a collection view so this needs a chance to do its thing
+            // which might also be async. Not great.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.launchNewSearch()
+            }
+        }
+
+        if !variantManager.isContextualDaxDialogsEnabled {
+            // In the new onboarding this gets called twice (viewDidAppear in Tab) which then reset the spec to nil.
+            presentNextDaxDialog()
         }
     }
 
@@ -165,7 +219,7 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     }
 
     func showNextDaxDialog() {
-        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        presentNextDaxDialog()
     }
 
     func onboardingCompleted() {
@@ -181,6 +235,8 @@ final class NewTabPageViewController: UIHostingController<NewTabPageView>, NewTa
     private func presentNextDaxDialog() {
         if variantManager.isContextualDaxDialogsEnabled {
             showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
+        } else {
+            showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
         }
     }
 
@@ -217,6 +273,37 @@ extension NewTabPageViewController: HomeScreenTransitionSource {
 }
 
 extension NewTabPageViewController {
+
+    func showNextDaxDialog(dialogProvider: NewTabDialogSpecProvider) {
+        guard let spec = dialogProvider.nextHomeScreenMessage() else { return }
+        guard !isDaxDialogVisible else { return }
+        guard let daxDialogViewController = daxDialogViewController else { return }
+
+        newTabPageViewModel.startOnboarding()
+
+        daxDialogViewController.view.isHidden = false
+        daxDialogViewController.view.alpha = 0.0
+
+        daxDialogViewController.loadViewIfNeeded()
+        daxDialogViewController.message = spec.message
+        daxDialogViewController.accessibleMessage = spec.accessibilityLabel
+
+        if spec == .initial {
+            UniquePixel.fire(pixel: .onboardingContextualTryVisitSiteUnique, includedParameters: [.appVersion, .atb])
+        }
+
+        view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
+
+        daxDialogHeightConstraint?.constant = daxDialogViewController.calculateHeight()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.animate(withDuration: 0.4, animations: {
+                daxDialogViewController.view.alpha = 1.0
+            }, completion: { _ in
+                daxDialogViewController.start()
+            })
+        }
+    }
 
     func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
         dismissHostingController(didFinishNTPOnboarding: false)

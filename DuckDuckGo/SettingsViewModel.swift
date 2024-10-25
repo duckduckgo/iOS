@@ -714,6 +714,10 @@ extension SettingsViewModel {
 
         // Fetch subscription details using a stored access token
         do {
+            guard subscriptionManager.isUserAuthenticated == true else {
+                throw SubscriptionEndpointServiceError.noData
+            }
+
             let subscription = try await subscriptionManager.currentSubscription(refresh: true)
             state.subscription.subscriptionExist = true
             state.subscription.platform = subscription.platform
@@ -739,7 +743,7 @@ extension SettingsViewModel {
             state.subscription.entitlements = []
         } catch {
             // Generic error, we don't update the cached data
-            Logger.subscription.error("Failed to load Subscription")
+            Logger.subscription.error("Failed to load Subscription: \(error, privacy: .public)")
         }
 
         // Sync Cache

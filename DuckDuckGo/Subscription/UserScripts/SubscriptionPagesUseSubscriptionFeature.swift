@@ -287,13 +287,13 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
+
+            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
+            setTransactionStatus(.idle)
         case .failure(let error):
-            Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription)")
+            Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription, privacy: .public)")
             setTransactionError(.missingEntitlements)
         }
-
-        await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
-        setTransactionStatus(.idle)
         return nil
     }
 
@@ -302,8 +302,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         // Note: This is called by the web FE when a subscription is retrieved, `params` contains an auth token V1 that will need to be exchanged for a V2. This is a temporary workaround until the FE fully supports v2 auth.
 
         guard let subscriptionValues: SubscriptionValues = CodableHelper.decode(from: params) else {
-            assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             Logger.subscription.fault("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
+            assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
             setTransactionError(.generalError)
             return nil
         }
@@ -313,8 +313,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
         let authToken = subscriptionValues.token
         do {
-            let tokensContainer = try await subscriptionManager.exchange(tokenV1: authToken)
+            _ = try await subscriptionManager.exchange(tokenV1: authToken)
             Logger.subscription.log("v1 token exchanged for v2")
+
             onSetSubscription?()
         } catch {
             Logger.subscription.error("Failed to exchange v1 token for v2")

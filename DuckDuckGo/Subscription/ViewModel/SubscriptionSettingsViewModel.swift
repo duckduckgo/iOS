@@ -127,37 +127,18 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
 
     func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
-        Logger.subscription.log("\(#function)")
+        Logger.subscription.log("Fetch and update account email")
         let tokensPolicy: TokensCachePolicy = cachePolicy == .returnCacheDataDontLoad ? .local : .localValid
 
-        guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: tokensPolicy) else { return false }
-        DispatchQueue.main.async {
-            self.state.subscriptionEmail = tokensContainer.decodedAccessToken.email
-            if loadingIndicator { self.displayEmailLoader(true) }
+        await subscriptionManager.refreshAccount()
+        if let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .local) {
+            DispatchQueue.main.async {
+                self.state.subscriptionEmail = tokensContainer.decodedAccessToken.email
+                if loadingIndicator { self.displayEmailLoader(true) }
+            }
+            return true
         }
-        return true
-
-//        switch await self.subscriptionManager.accountManager.fetchAccountDetails(with: token) {
-//        case .success(let details):
-//            Logger.subscription.log("Account details fetched successfully")
-//            DispatchQueue.main.async {
-//                self.state.subscriptionEmail = details.email
-//                if loadingIndicator { self.displayEmailLoader(false) }
-//            }
-//
-//            // If fetched email is different then update accountManager
-//            if details.email != subscriptionManager.accountManager.email {
-//                let externalID = subscriptionManager.accountManager.externalID
-//                subscriptionManager.accountManager.storeAccount(token: token, email: details.email, externalID: externalID)
-//            }
-//            return true
-//        case .failure(let error):
-//            Logger.subscription.error("\(#function) error: \(error.localizedDescription)")
-//            DispatchQueue.main.async {
-//                if loadingIndicator { self.displayEmailLoader(true) }
-//            }
-//            return false
-//        }
+        return false
     }
 
     private func displaySubscriptionLoader(_ show: Bool) {
@@ -198,6 +179,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor
     private func updateSubscriptionsStatusMessage(status: PrivacyProSubscription.Status, date: Date, product: String, billingPeriod: PrivacyProSubscription.BillingPeriod) {
+        Logger.subscription.log("Update subscription status: \(status.rawValue)")
         let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
         let date = dateFormatter.string(from: date)
 
@@ -212,6 +194,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func removeSubscription() {
+        Logger.subscription.log("Remove subscription")
         subscriptionManager.signOut()
         _ = ActionMessageView()
         ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
@@ -219,12 +202,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func displayGoogleView(_ value: Bool) {
+        Logger.subscription.log("Show google")
         if value != state.isShowingGoogleView {
             state.isShowingGoogleView = value
         }
     }
     
     func displayStripeView(_ value: Bool) {
+        Logger.subscription.log("Show stripe")
         if value != state.isShowingStripeView {
             state.isShowingStripeView = value
         }
@@ -237,12 +222,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
     
     func displayFAQView(_ value: Bool) {
+        Logger.subscription.log("Show faq")
         if value != state.isShowingFAQView {
             state.isShowingFAQView = value
         }
     }
 
     func displayLearnMoreView(_ value: Bool) {
+        Logger.subscription.log("Show learn more")
         if value != state.isShowingLearnMoreView {
             state.isShowingLearnMoreView = value
         }
@@ -258,12 +245,14 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     @MainActor
     func showTermsOfService() {
+        Logger.subscription.log("Show terms of service")
         self.openURL(SettingsSubscriptionView.ViewConstants.privacyPolicyURL)
     }
 
     // MARK: -
     
     @MainActor private func manageAppleSubscription() async {
+        Logger.subscription.log("Managing Apple Subscription")
         if state.subscriptionInfo?.isActive ?? false {
             let url = subscriptionManager.url(for: .manageSubscriptionsInAppStore)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -279,6 +268,7 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     }
          
     private func manageStripeSubscription() async {
+        Logger.subscription.log("Managing Stripe Subscription")
         guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .localValid) else { return }
         do {
             // Get Stripe Customer Portal URL and update the model

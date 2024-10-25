@@ -223,6 +223,26 @@ struct OnboardingCTAButton: View {
 
 }
 
+struct OnboardingAddToDockDialog: View {
+    let title = "Adding me to your Dock is easy."
+    let message = "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!"
+    let cta = "Start Browsing"
+
+    let dismissAction: () -> Void
+
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .top) {
+                AddToDockTutorialView(
+                    title: title,
+                    message: message,
+                    action: dismissAction)
+            }
+            .padding()
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("Try Search") {
@@ -270,3 +290,29 @@ struct OnboardingCTAButton: View {
     )
     .padding()
 }
+
+#Preview("Add To Dock Tutorial - Light") {
+    OnboardingAddToDockDialog(dismissAction: {})
+        .preferredColorScheme(.light)
+}
+
+#Preview("Add To Dock Tutorial - Dark") {
+    OnboardingAddToDockDialog(dismissAction: {})
+        .preferredColorScheme(.dark)
+}
+
+//struct OnboardingAddToDockDialog_Previews: PreviewProvider {
+//
+//    struct AddToDockPreview: View {
+//
+//        var body: some View {
+//            OnboardingAddToDockDialog(dismissAction: {})
+//        }
+//
+//    }
+//
+//    static var previews: some View {
+//        AddToDockPreview()
+//            .preferredColorScheme(.light)
+//   }
+//}

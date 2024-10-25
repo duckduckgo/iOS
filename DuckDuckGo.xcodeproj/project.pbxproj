@@ -423,6 +423,9 @@
 		851672D12BED1FC900592F24 /* AutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851672D02BED1FC900592F24 /* AutocompleteView.swift */; };
 		851672D32BED23FE00592F24 /* AutocompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851672D22BED23FE00592F24 /* AutocompleteViewModel.swift */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
+		851A373A2CCC437400CF190B /* TextZoomEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A37392CCC437400CF190B /* TextZoomEditorModel.swift */; };
+		851A373C2CCC439E00CF190B /* TextZoomEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A373B2CCC439E00CF190B /* TextZoomEditorView.swift */; };
+		851A373E2CCC476F00CF190B /* TabViewController+TextZoomEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A373D2CCC476F00CF190B /* TabViewController+TextZoomEditor.swift */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
 		851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */; };
@@ -1718,6 +1721,9 @@
 		851672D02BED1FC900592F24 /* AutocompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteView.swift; sourceTree = "<group>"; };
 		851672D22BED23FE00592F24 /* AutocompleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteViewModel.swift; sourceTree = "<group>"; };
 		8517D98A221783A0006A8DD0 /* FindInPage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FindInPage.xcassets; sourceTree = "<group>"; };
+		851A37392CCC437400CF190B /* TextZoomEditorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextZoomEditorModel.swift; sourceTree = "<group>"; };
+		851A373B2CCC439E00CF190B /* TextZoomEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextZoomEditorView.swift; sourceTree = "<group>"; };
+		851A373D2CCC476F00CF190B /* TabViewController+TextZoomEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabViewController+TextZoomEditor.swift"; sourceTree = "<group>"; };
 		851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImproveOnboardingExperiment1Tests.swift; sourceTree = "<group>"; };
 		851B128722200575004781BC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		851B128B2220483A004781BC /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -4567,7 +4573,10 @@
 			isa = PBXGroup;
 			children = (
 				85D3FF2A2CC941C100487724 /* DomainTextZoomStorage.swift */,
+				851A373D2CCC476F00CF190B /* TabViewController+TextZoomEditor.swift */,
 				859DA3312CCAC0A300C90694 /* TextZoomController.swift */,
+				851A37392CCC437400CF190B /* TextZoomEditorModel.swift */,
+				851A373B2CCC439E00CF190B /* TextZoomEditorView.swift */,
 				85147CB52CCA755300677835 /* TextZoomLevel.swift */,
 			);
 			name = TextZoom;
@@ -7759,6 +7768,7 @@
 				980891A32237146B00313A70 /* Feedback.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarksViewControllerCells.swift in Sources */,
 				9F9EE4D42C37BB1300D4118E /* OnboardingView+Landing.swift in Sources */,
+				851A373C2CCC439E00CF190B /* TextZoomEditorView.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				BDE219E62C406D19005D5884 /* PrivacyProDataReporting.swift in Sources */,
 				D6E83C312B1EA309006C8AFB /* SettingsCell.swift in Sources */,
@@ -7820,6 +7830,7 @@
 				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
 				56D060282C380D83003BAEB5 /* OnboardingSuggestedSearchesProvider.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
+				851A373A2CCC437400CF190B /* TextZoomEditorModel.swift in Sources */,
 				C1EA86622C74CB8B00E8604D /* SyncPromoViewModel.swift in Sources */,
 				F1FDC9302BF4E0B3006B1435 /* SubscriptionEnvironment+Default.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
@@ -7840,6 +7851,7 @@
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				D64648AF2B5993890033090B /* SubscriptionEmailViewModel.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
+				851A373E2CCC476F00CF190B /* TabViewController+TextZoomEditor.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
 				1E7A711C2934EEBC00B7EA19 /* OmniBarNotification.swift in Sources */,

@@ -181,6 +181,8 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered.v2"
         case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override.v2"
         
+        // Domain specific text zoom
+        case domainTextZoomStorage = "com.duckduckgo.ios.domainTextZoomStorage"
     }
 
     private let key: Key

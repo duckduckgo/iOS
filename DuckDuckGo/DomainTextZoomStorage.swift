@@ -18,17 +18,19 @@
 //
 
 import Foundation
+import Core
+import Common
 
 protocol DomainTextZoomStoring {
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel?
     func set(textZoomLevel: TextZoomLevel, forDomain domain: String)
-    func resetTextZoomLevels(_ excludingDomains: [String])
+    func resetTextZoomLevels(excludingDomains: [String])
 }
 
 class DomainTextZoomStorage: DomainTextZoomStoring {
 
-    // TODO persist this
-    var textZoomLevels: [String: Int] = [:]
+    @UserDefaultsWrapper(key: .domainTextZoomStorage, defaultValue: [:])
+    var textZoomLevels: [String: Int]
 
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel? {
         guard let zoomLevel = textZoomLevels[domain] else {
@@ -41,9 +43,12 @@ class DomainTextZoomStorage: DomainTextZoomStoring {
         textZoomLevels[domain] = textZoomLevel.rawValue
     }
 
-    func resetTextZoomLevels(_ excludingDomains: [String]) {
-        textZoomLevels = textZoomLevels.filter {
-            !excludingDomains.contains($0.key)
+    func resetTextZoomLevels(excludingDomains: [String]) {
+        let tld = TLD()
+        textZoomLevels = textZoomLevels.filter { level in
+            excludingDomains.contains(where: {
+                tld.eTLDplus1($0) == level.key
+            })
         }
     }
 

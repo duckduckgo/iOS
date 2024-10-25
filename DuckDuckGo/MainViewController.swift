@@ -173,6 +173,9 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    let preserveLogins: PreserveLogins
+    let domainTextZoomStorage: DomainTextZoomStoring
+
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
@@ -197,7 +200,8 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        domainTextZoomStorage: DomainTextZoomStoring = DomainTextZoomStorage()
+        domainTextZoomStorage: DomainTextZoomStoring = DomainTextZoomStorage(),
+        preserveLogins: PreserveLogins = .shared
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -233,6 +237,8 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
+        self.domainTextZoomStorage = domainTextZoomStorage
+        self.preserveLogins = preserveLogins
 
         super.init(nibName: nil, bundle: nil)
         
@@ -2658,6 +2664,7 @@ extension MainViewController: AutoClearWorker {
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             self.stopAllOngoingDownloads()
+            self.forgetTextZoom()
             self.forgetTabs()
             await self.forgetData()
             Instruments.shared.endTimedEvent(for: spid)
@@ -2712,6 +2719,11 @@ extension MainViewController: AutoClearWorker {
     private func dismissPrivacyDashboardButtonPulse() {
         DaxDialogs.shared.setPrivacyButtonPulseSeen()
         viewCoordinator.omniBar.dismissOnboardingPrivacyIconAnimation()
+    }
+
+    private func forgetTextZoom() {
+        let allowedDomains = preserveLogins.allowedDomains
+        domainTextZoomStorage.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 
 }

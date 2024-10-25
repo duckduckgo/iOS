@@ -14,7 +14,10 @@
 "action.ok" = "OK";
 
 /* Zoom text menu item showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56 */
-"action.show-page-zoom" = "Zoom Text (%d%%)";
+"action.text-zoom-sheet-menu-item" = "Zoom Text (%d%%)";
+
+/* Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56 */
+"action.text-zoom-sheet-title" = "Zoom (%d%%)";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Add";

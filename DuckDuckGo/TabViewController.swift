@@ -971,8 +971,9 @@ class TabViewController: UIViewController {
     }
 
     @objc func onTextSizeChange() {
+        let domain = TLD().eTLDplus1(webView.url?.host) ?? ""
         // If the webview returns no host then there won't be a setting for a blank string anyway.
-        let level = domainTextZoomStorage.textZoomLevelForDomain(webView.url?.host?.droppingWwwPrefix() ?? "")
+        let level = domainTextZoomStorage.textZoomLevelForDomain(domain)
             // And if there's no setting for whatever domain is passed in, use the app default
             ?? appSettings.defaultTextZoomLevel
         webView.adjustTextSize(level.rawValue)

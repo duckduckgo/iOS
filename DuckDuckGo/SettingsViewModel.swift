@@ -39,13 +39,13 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
-    private let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
+    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var subscriptionSignOutObserver: Any?
     var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
         DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
@@ -278,6 +278,21 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    
+    var duckPlayerOpenInNewTabBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.duckPlayerOpenInNewTab },
+            set: {
+                self.appSettings.duckPlayerOpenInNewTab = $0
+                self.state.duckPlayerOpenInNewTab = $0
+                if self.state.duckPlayerOpenInNewTab {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOn)
+                } else {
+                    Pixel.fire(pixel: Pixel.Event.duckPlayerNewTabSettingOff)
+                }
+            }
+        )
+    }
 
     func setVoiceSearchEnabled(to value: Bool) {
         if value {
@@ -347,8 +362,8 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          subscriptionManager: SubscriptionManager,
-         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability,
-         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
+         voiceSearchHelper: VoiceSearchHelperProtocol,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
@@ -402,15 +417,18 @@ extension SettingsViewModel {
             version: versionProvider.versionAndBuildNumber,
             crashCollectionOptInStatus: appSettings.crashCollectionOptInStatus,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
-            voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
-            speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+            voiceSearchEnabled: voiceSearchHelper.isVoiceSearchEnabled,
+            speechRecognitionAvailable: voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
             sync: getSyncState(),
             syncSource: nil,
             duckPlayerEnabled: featureFlagger.isFeatureOn(.duckPlayer) || shouldDisplayDuckPlayerContingencyMessage,
-            duckPlayerMode: appSettings.duckPlayerMode
+            duckPlayerMode: appSettings.duckPlayerMode,
+            duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
+            duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab)
+            
         )
         
         updateRecentlyVisitedSitesVisibility()
@@ -688,7 +706,7 @@ extension SettingsViewModel {
         }
 
         // Update visibility based on Feature flag
-        state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
+        state.subscription.enabled = subscriptionFeatureAvailability.isFeatureAvailable
 
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase

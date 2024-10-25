@@ -770,6 +770,12 @@ class TabViewController: UIViewController {
         }
         if let url {
             duckPlayerNavigationHandler?.referrer = url.isYoutube ? .youtube : .other
+            
+            // Open in new tab if required
+            // If the lastRenderedURL is nil, it means we're already in a new tab
+            if webView.url != nil && lastRenderedURL != nil {
+                duckPlayerNavigationHandler?.handleEvent(event: .JSTriggeredNavigation, url: webView.url, navigationAction: nil)
+            }
         }
     }
     
@@ -1430,7 +1436,9 @@ extension TabViewController: WKNavigationDelegate {
         urlProvidedBasicAuthCredential = nil
 
         if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch, includedParameters: [.appVersion, .atb])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         includedParameters: [.appVersion, .atb])
         }
 
         specialErrorPageUserScript?.isEnabled = webView.url == failedURL
@@ -1918,7 +1926,13 @@ extension TabViewController: WKNavigationDelegate {
             duckPlayerNavigationHandler?.handleEvent(event: .youtubeVideoPageVisited,
                                                      url: url,
                                                      navigationAction: navigationAction)
-            duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            
+            // Validate Duck Player setting to open in new tab or locally
+            if duckPlayerNavigationHandler?.shouldOpenInNewTab(navigationAction, webView: webView) ?? false {
+                delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: nil)
+            } else {
+                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+            }
             completion(.cancel)
             return
 

@@ -33,8 +33,18 @@ class AutoClearSettingsViewController: UITableViewController {
     @IBOutlet weak var clearDataToggle: UISwitch!
     @IBOutlet var labels: [UILabel]!
     
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    private var appSettings: AppSettings
     private var clearDataSettings: AutoClearSettingsModel?
+
+    init?(appSettings: AppSettings, coder: NSCoder) {
+        self.appSettings = appSettings
+        super.init(coder: coder)
+    }
+
+    @available(*, unavailable, renamed: "init(appSettings:coder:)")
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

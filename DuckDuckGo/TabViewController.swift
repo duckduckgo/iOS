@@ -765,8 +765,8 @@ class TabViewController: UIViewController {
             switch result {
             case .handled:
                 return
-            case .notHandled(let reason):
-                Swift.print("DuckPlayer did not handle the change. Reason: \(reason)")
+            default:
+                return
             }
         }
             
@@ -1727,8 +1727,7 @@ extension TabViewController: WKNavigationDelegate {
             // Call shouldCancelNavigation to get the synchronous result
             let shouldCancel = handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView)
             
-            if shouldCancel {
-                Logger.duckPlayer.debug("DP: Navigation policy: Cancel due to DuckPlayer rules")
+            if shouldCancel {                
                 decisionHandler(.cancel)
                 return
             }

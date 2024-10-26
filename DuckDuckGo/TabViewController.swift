@@ -758,9 +758,16 @@ class TabViewController: UIViewController {
         
         // Handle DuckPlayer Navigation URL changes
         if let handler = duckPlayerNavigationHandler,
-           let url = webView.url,
-           case .handled = handler.handleURLChange(webView: webView) {            
-            return
+           let currentURL = webView.url {
+            let result = handler.handleURLChange(webView: webView)
+            
+            // Handle DuckPlayer results based on the change result
+            switch result {
+            case .handled:
+                return
+            case .notHandled(let reason):
+                Swift.print("DuckPlayer did not handle the change. Reason: \(reason)")
+            }
         }
             
         if url == nil {
@@ -837,18 +844,10 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-                
-        if let url = url, url.isDuckPlayer {
-            webView.stopLoading()
-            if webView.canGoBack {
-                duckPlayerNavigationHandler?.handleGoBack(webView: webView)
-                chromeDelegate?.omniBar.resignFirstResponder()
-                return
-            }
-            if openingTab != nil {
-                delegate?.tabDidRequestClose(self)
-                return
-            }
+                        
+        if openingTab != nil {
+            delegate?.tabDidRequestClose(self)
+            return
         }
 
         if isError {
@@ -860,13 +859,14 @@ class TabViewController: UIViewController {
         }
 
         if webView.canGoBack {
-            webView.goBack()
+            if let handler = duckPlayerNavigationHandler {
+                handler.handleGoBack(webView: webView)
+            }
+            else {
+                webView.goBack()
+            }
             chromeDelegate?.omniBar.resignFirstResponder()
             return
-        }
-
-        if openingTab != nil {
-            delegate?.tabDidRequestClose(self)
         }
         
     }
@@ -1720,18 +1720,20 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        // Set duckPlayer Referrer
+        // Set DuckPlayer Referrer and call shouldCancelNavigation synchronously
         if let handler = duckPlayerNavigationHandler {
             handler.setReferrer(navigationAction: navigationAction, webView: webView)
-        }
-        
-        // Prevent the YouTube app from intercepting
-        // links based on DuckPlayer settings
-        if let handler = duckPlayerNavigationHandler, navigationAction.isTargetingMainFrame(),
-            handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView) {
+            
+            // Call shouldCancelNavigation to get the synchronous result
+            let shouldCancel = handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView)
+            
+            if shouldCancel {
+                Logger.duckPlayer.debug("DP: Navigation policy: Cancel due to DuckPlayer rules")
                 decisionHandler(.cancel)
                 return
+            }
         }
+    
         
         if let url = navigationAction.request.url,
            !url.isDuckDuckGoSearch,

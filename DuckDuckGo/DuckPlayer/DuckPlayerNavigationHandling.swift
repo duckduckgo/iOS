@@ -24,12 +24,13 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
     enum HandlingResult {
         case featureOff
         case duckPlayerDisabled
-        case isAlreadyDuckAddress
+        case isNotYoutubeWatch
         case urlHasNotChanged
         case videoIDNotPresent
         case videoAlreadyHandled
         case disabledForNextVideo
         case notAYoutubePage
+        case duplicateNavigation
     }
 
     case handled

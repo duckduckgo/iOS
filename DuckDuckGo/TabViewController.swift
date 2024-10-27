@@ -315,7 +315,7 @@ class TabViewController: UIViewController {
                                    bookmarksDatabase: CoreDataDatabase,
                                    historyManager: HistoryManaging,
                                    syncService: DDGSyncing,
-                                   duckPlayer: DuckPlayerProtocol?,
+                                   duckPlayer: DuckPlayerControlling?,
                                    privacyProDataReporter: PrivacyProDataReporting,
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
@@ -349,7 +349,7 @@ class TabViewController: UIViewController {
 
     let historyManager: HistoryManaging
     let historyCapture: HistoryCapture
-    weak var duckPlayer: DuckPlayerProtocol?
+    weak var duckPlayer: DuckPlayerControlling?
     var duckPlayerNavigationHandler: DuckPlayerNavigationHandling?
 
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
@@ -363,7 +363,7 @@ class TabViewController: UIViewController {
                    historyManager: HistoryManaging,
                    syncService: DDGSyncing,
                    certificateTrustEvaluator: CertificateTrustEvaluating = CertificateTrustEvaluator(),
-                   duckPlayer: DuckPlayerProtocol?,
+                   duckPlayer: DuckPlayerControlling?,
                    privacyProDataReporter: PrivacyProDataReporting,
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
@@ -1715,14 +1715,10 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        // Set DuckPlayer Referrer and call shouldCancelNavigation synchronously
+        // Ask DuckPlayer to handle navigation if possible
         if let handler = duckPlayerNavigationHandler {
-            handler.setReferrer(navigationAction: navigationAction, webView: webView)
-            
-            // Call shouldCancelNavigation to get the synchronous result
-            let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: webView)
-            
-            if shouldCancel {
+                                    
+            if handler.handleDelegateNavigation(navigationAction: navigationAction, webView: webView) {
                 decisionHandler(.cancel)
                 return
             }
@@ -1903,7 +1899,7 @@ extension TabViewController: WKNavigationDelegate {
         
         case .duck:
             if navigationAction.isTargetingMainFrame() {
-                duckPlayerNavigationHandler?.handleNavigation(navigationAction, webView: webView)
+                duckPlayerNavigationHandler?.handleDuckNavigation(navigationAction, webView: webView)
                 completion(.cancel)
                 return
             }

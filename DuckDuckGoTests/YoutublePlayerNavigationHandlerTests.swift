@@ -91,9 +91,9 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         mockWebView.loadCallCount = 0
 
         // Act
-        handler.handleNavigation(navigationAction1, webView: mockWebView)
-        handler.handleNavigation(navigationAction2, webView: mockWebView)
-        handler.handleNavigation(navigationAction3, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction1, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction2, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction3, webView: mockWebView)
 
         // Wait for a short time to allow any asynchronous processing
         await Task.sleep(UInt64(0.1 * Double(NSEC_PER_SEC)))
@@ -118,7 +118,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         featureFlagger.isFeatureEnabled = true  // Feature is enabled
 
         // Act
-        handler.handleNavigation(navigationAction, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
         // Assert
         await Task.yield()
@@ -141,7 +141,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         featureFlagger.isFeatureEnabled = true  // Feature is enabled
 
         // Act
-        handler.handleNavigation(navigationAction, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
         // Assert
         XCTAssertTrue(tabNavigator.isNewTab, "Expected a new tab to be opened")
@@ -163,7 +163,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         featureFlagger.isFeatureEnabled = true
 
         // Act
-        handler.handleNavigation(navigationAction, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
         // Assert
         // It should redirect to YouTube
@@ -185,7 +185,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         featureFlagger.isFeatureEnabled = true
 
         // Act
-        handler.handleNavigation(navigationAction, webView: mockWebView)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
         // Assert
         // It should redirect to DuckPlayer

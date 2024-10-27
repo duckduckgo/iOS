@@ -167,7 +167,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     
 }
 
-final class MockDuckPlayer: DuckPlayerProtocol {
+final class MockDuckPlayer: DuckPlayerControlling {
     
     var hostView: UIViewController?
     

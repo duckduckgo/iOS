@@ -21,6 +21,7 @@ import BrowserServicesKit
 import Combine
 import Core
 
+/// Represents the different modes for Duck Player operation.
 enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     case enabled, alwaysAsk, disabled
     
@@ -28,6 +29,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     private static let alwaysAskString = "alwaysAsk"
     private static let neverString = "disabled"
     
+    /// Provides a user-friendly description of the mode.
     var description: String {
         switch self {
         case .enabled:
@@ -39,6 +41,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
         }
     }
     
+    /// Returns the string value of the mode.
     var stringValue: String {
         switch self {
         case .enabled:
@@ -50,6 +53,9 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
         }
     }
 
+    /// Initializes a `DuckPlayerMode` from a string value.
+    ///
+    /// - Parameter stringValue: The string representation of the mode.
     init?(stringValue: String) {
         switch stringValue {
         case Self.enabledString:
@@ -64,27 +70,51 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     }
 }
 
+/// Protocol defining the settings for Duck Player.
 protocol DuckPlayerSettings: AnyObject {
     
+    /// Publisher that emits when Duck Player settings change.
     var duckPlayerSettingsPublisher: AnyPublisher<Void, Never> { get }
+    
+    /// The current mode of Duck Player.
     var mode: DuckPlayerMode { get }
+    
+    /// Indicates if the "Always Ask" overlay has been hidden.
     var askModeOverlayHidden: Bool { get }
+    
+    /// Flag to allow the first video to play without redirection.
     var allowFirstVideo: Bool { get set }
+    
+    /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool { get }
     
+    /// Initializes a new instance with the provided app settings and privacy configuration manager.
+    ///
+    /// - Parameters:
+    ///   - appSettings: The application settings.
+    ///   - privacyConfigManager: The privacy configuration manager.
     init(appSettings: AppSettings, privacyConfigManager: PrivacyConfigurationManaging)
     
+    /// Sets the Duck Player mode.
+    ///
+    /// - Parameter mode: The mode to set.
     func setMode(_ mode: DuckPlayerMode)
+    
+    /// Sets whether the "Always Ask" overlay has been hidden.
+    ///
+    /// - Parameter overlayHidden: A Boolean indicating if the overlay is hidden.
     func setAskModeOverlayHidden(_ overlayHidden: Bool)
+    
+    /// Triggers a notification to update subscribers about settings changes.
     func triggerNotification()
 }
 
+/// Default implementation of `DuckPlayerSettings`.
 final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     
     private var appSettings: AppSettings
     private let privacyConfigManager: PrivacyConfigurationManaging
     private var isFeatureEnabledCancellable: AnyCancellable?
-    
     
     private var _isFeatureEnabled: Bool
     private var isFeatureEnabled: Bool {
@@ -104,6 +134,11 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         duckPlayerSettingsSubject.eraseToAnyPublisher()
     }
     
+    /// Initializes a new instance with the provided app settings and privacy configuration manager.
+    ///
+    /// - Parameters:
+    ///   - appSettings: The application settings.
+    ///   - privacyConfigManager: The privacy configuration manager.
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          privacyConfigManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.appSettings = appSettings
@@ -113,6 +148,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         registerForNotificationChanges()
     }
     
+    /// Domains related to the Duck Player feature.
     public struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
         static let youtubeWWW = "www.youtube.com"
@@ -120,6 +156,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         static let youtubeMobile = "m.youtube.com"
     }
     
+    /// The current mode of Duck Player.
     var mode: DuckPlayerMode {
         if isFeatureEnabled {
             return appSettings.duckPlayerMode
@@ -128,6 +165,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         }
     }
     
+    /// Indicates if the "Always Ask" overlay has been hidden.
     var askModeOverlayHidden: Bool {
         if isFeatureEnabled {
             return appSettings.duckPlayerAskModeOverlayHidden
@@ -136,12 +174,15 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         }
     }
     
+    /// Flag to allow the first video to play without redirection.
     var allowFirstVideo: Bool = false
     
+    /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool {
         return appSettings.duckPlayerOpenInNewTab
     }
     
+    /// Registers a publisher to listen for changes in the privacy configuration.
     private func registerConfigPublisher() {
         isFeatureEnabledCancellable = privacyConfigManager.updatesPublisher
             .map { [weak privacyConfigManager] in
@@ -153,6 +194,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
             }
     }
     
+    /// Registers for notification changes in Duck Player settings.
     private func registerForNotificationChanges() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(publishUpdate),
@@ -160,6 +202,9 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
                                                object: nil)
     }
     
+    /// Sets the Duck Player mode.
+    ///
+    /// - Parameter mode: The mode to set.
     func setMode(_ mode: DuckPlayerMode) {
         if mode != appSettings.duckPlayerMode {
             appSettings.duckPlayerMode = mode
@@ -167,6 +212,9 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         }
     }
     
+    /// Sets whether the "Always Ask" overlay has been hidden.
+    ///
+    /// - Parameter overlayHidden: A Boolean indicating if the overlay is hidden.
     func setAskModeOverlayHidden(_ overlayHidden: Bool) {
         if overlayHidden != appSettings.duckPlayerAskModeOverlayHidden {
             appSettings.duckPlayerAskModeOverlayHidden = overlayHidden
@@ -174,10 +222,14 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         }
     }
     
+    /// Publishes an update notification when settings change.
+    ///
+    /// - Parameter notification: The notification received.
     @objc private func publishUpdate(_ notification: Notification) {
         triggerNotification()
     }
     
+    /// Triggers a notification to update subscribers about settings changes.
     func triggerNotification() {
         duckPlayerSettingsSubject.send()
     }

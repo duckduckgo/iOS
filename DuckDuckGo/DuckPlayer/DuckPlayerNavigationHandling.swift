@@ -19,21 +19,31 @@
 
 import WebKit
 
+/// Represents the referrer source for the Duck Player.
 public enum DuckPlayerReferrer: String {
+    /// Navigated from YouTube.
     case youtube
+    /// Navigated from a YouTube overlay.
     case youtubeOverlay
+    /// Navigated from the DuckDuckGo search results page (SERP).
     case serp
+    /// Navigated from any other source.
     case other
 }
 
 extension DuckPlayerReferrer {
+    /// Initializes a `DuckPlayerReferrer` from a string value.
+    ///
+    /// - Parameter string: The string representation of the referrer.
     init(string: String) {
         self = DuckPlayerReferrer(rawValue: string) ?? .other
     }
 }
 
+/// Represents the result of handling a URL change in the Duck Player navigation handler.
 enum DuckPlayerNavigationHandlerURLChangeResult {
     
+    /// Possible reasons for not handling a URL change.
     enum HandlingResult {
         case featureOff
         case invalidURL
@@ -43,49 +53,110 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
         case duplicateNavigation
     }
 
+    /// The URL change was handled.
     case handled
+    /// The URL change was not handled, with a specific reason.
     case notHandled(HandlingResult)
 }
 
+/// Represents the direction of navigation in the Duck Player.
 enum DuckPlayerNavigationDirection {
-    case back, forward
+    case back
+    case forward
 }
 
 @MainActor
+/// Protocol defining the navigation handling for Duck Player.
 protocol DuckPlayerNavigationHandling: AnyObject {
+    /// The referrer of the Duck Player.
     var referrer: DuckPlayerReferrer { get set }
+    /// Delegate for handling tab navigation events.
     var tabNavigationHandler: DuckPlayerTabNavigationHandling? { get set }
-    var duckPlayer: DuckPlayerProtocol { get }
-    func handleNavigation(_ navigationAction: WKNavigationAction,
-                          webView: WKWebView)
+    /// The DuckPlayer instance used for handling video playback.
+    var duckPlayer: DuckPlayerControlling { get }
+    
+    /// Handles URL changes in the web view.
+    ///
+    /// - Parameter webView: The web view where the URL change occurred.
+    /// - Returns: The result of handling the URL change.
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult
+    
+    /// Handles the back navigation action in the web view.
+    ///
+    /// - Parameter webView: The web view to navigate back in.
     func handleGoBack(webView: WKWebView)
+    
+    /// Handles the reload action in the web view.
+    ///
+    /// - Parameter webView: The web view to reload.
     func handleReload(webView: WKWebView)
+    
+    /// Performs actions when the handler is attached to a web view.
+    ///
+    /// - Parameter webView: The web view being attached.
     func handleAttach(webView: WKWebView)
+    
+    /// Handles the start of page loading in the web view.
+    ///
+    /// - Parameter webView: The web view that started loading.
     func handleDidStartLoading(webView: WKWebView)
+    
+    /// Handles the completion of page loading in the web view.
+    ///
+    /// - Parameter webView: The web view that finished loading.
     func handleDidFinishLoading(webView: WKWebView)
+    
+    /// Converts a standard YouTube URL to its Duck Player equivalent if applicable.
+    ///
+    /// - Parameter url: The YouTube URL to convert.
+    /// - Returns: A Duck Player URL if applicable.
     func getDuckURLFor(_ url: URL) -> URL
+    
+    /// Handles navigation actions to Duck Player URLs.
+    ///
+    /// - Parameters:
+    ///   - navigationAction: The navigation action to handle.
+    ///   - webView: The web view where navigation is occurring.
+    func handleDuckNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView)
+    
+    /// Decides whether to cancel navigation to prevent opening the YouTube app from the web view.
+    ///
+    /// - Parameters:
+    ///   - navigationAction: The navigation action to evaluate.
+    ///   - webView: The web view where navigation is occurring.
+    /// - Returns: `true` if the navigation should be canceled, `false` otherwise.
     func handleDelegateNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
-    func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
-    
 }
 
+/// Protocol defining the tab navigation handling for Duck Player.
 protocol DuckPlayerTabNavigationHandling: AnyObject {
+    /// Indicates whether the current tab is a new tab.
     var isNewTab: Bool { get }
-    func openTab(for url: URL)
-    func closeTab()
     
+    /// Opens a new tab for the specified URL.
+    ///
+    /// - Parameter url: The URL to open in a new tab.
+    func openTab(for url: URL)
+    
+    /// Closes the current tab.
+    func closeTab()
 }
 
+/// Protocol defining a navigation action for Duck Player.
 protocol NavigationActionProtocol {
+    /// The request associated with the navigation action.
     var request: URLRequest { get }
+    
+    /// Indicates whether the navigation targets the main frame.
     var isTargetingMainFrame: Bool { get }
+    
+    /// The type of navigation action.
     var navigationType: WKNavigationType { get }
 }
 
 extension WKNavigationAction: NavigationActionProtocol {
+    /// Indicates whether the navigation action targets the main frame.
     var isTargetingMainFrame: Bool {
         return self.targetFrame?.isMainFrame ?? false
     }
 }
-

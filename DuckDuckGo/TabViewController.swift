@@ -1482,6 +1482,10 @@ extension TabViewController: WKNavigationDelegate {
                 inferredOpenerContext = .serp
             }
         }
+        
+        if let handler = duckPlayerNavigationHandler {
+            handler.handleDidFinishLoading(webView: webView)
+        }
             
     }
 

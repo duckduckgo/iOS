@@ -729,7 +729,12 @@ class TabViewController: UIViewController {
             progressWorker.progressDidChange(webView.estimatedProgress)
             
         case #keyPath(WKWebView.url):
-            webViewUrlHasChanged()
+        // A short delay is required here, because the URL takes some time
+        // to propagate to the webView.url property accessor and might not
+        // be immediately available in the observer
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.webViewUrlHasChanged()
+        }
             
         case #keyPath(WKWebView.canGoBack):
             delegate?.tabLoadingStateDidChange(tab: self)

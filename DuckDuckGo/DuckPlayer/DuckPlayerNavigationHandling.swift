@@ -19,33 +19,16 @@
 
 import WebKit
 
-public enum DuckPlayerReferrer {
-    case youtube, other, serp, youtubeOverlay
-    
-    var stringValue: String {
-        switch self {
-        case .youtube:
-            return "youtube"
-        case .youtubeOverlay:
-            return "youtubeOverlay"
-        case .serp:
-            return "serp"
-        default:
-            return "other"
-        }
-    }
-        
-    static func from(string: String) -> DuckPlayerReferrer {
-        switch string {
-        case "youtube":
-            return .youtube
-        case "youtubeOverlay":
-            return .youtubeOverlay
-        case "serp":
-            return .serp
-        default:
-            return .other
-        }
+public enum DuckPlayerReferrer: String {
+    case youtube
+    case youtubeOverlay
+    case serp
+    case other
+}
+
+extension DuckPlayerReferrer {
+    init(string: String) {
+        self = DuckPlayerReferrer(rawValue: string) ?? .other
     }
 }
 
@@ -82,7 +65,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleDidStartLoading(webView: WKWebView)
     func handleDidFinishLoading(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
-    func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
+    func handleDelegateNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView)
     
 }
@@ -93,3 +76,16 @@ protocol DuckPlayerTabNavigationHandling: AnyObject {
     func closeTab()
     
 }
+
+protocol NavigationActionProtocol {
+    var request: URLRequest { get }
+    var isTargetingMainFrame: Bool { get }
+    var navigationType: WKNavigationType { get }
+}
+
+extension WKNavigationAction: NavigationActionProtocol {
+    var isTargetingMainFrame: Bool {
+        return self.targetFrame?.isMainFrame ?? false
+    }
+}
+

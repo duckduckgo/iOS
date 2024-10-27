@@ -1720,7 +1720,7 @@ extension TabViewController: WKNavigationDelegate {
             handler.setReferrer(navigationAction: navigationAction, webView: webView)
             
             // Call shouldCancelNavigation to get the synchronous result
-            let shouldCancel = handler.shouldCancelNavigation(navigationAction: navigationAction, webView: webView)
+            let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: webView)
             
             if shouldCancel {
                 decisionHandler(.cancel)

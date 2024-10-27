@@ -261,8 +261,8 @@ final class DuckPlayerNavigationHandler: NSObject {
     }
         
     // TabViewController cancels all Youtube navigation by default, so this replaces webView.load
-    // to add specific DuckPlayer headers.  These headers are used to identify DuckPlayerHandler
-    // Navigation in Tabview controller and let it through.
+    // to add specific DuckPlayer parameters.  These params are used to identify DuckPlayerHandler
+    // navigation and
     private func loadWithDuckPlayerParameters(_ request: URLRequest,
                                               referrer: DuckPlayerReferrer,
                                               webView: WKWebView,
@@ -294,7 +294,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         // Get parameter values
         let isNewTab = (isOpenInNewTabEnabled && duckPlayerMode == .enabled) || forceNewTab ? "1" : "0"
         let allowFirstVideo = allowFirstVideo ? "1" : "0"
-        let referrer = referrer.stringValue
+        let referrer = referrer.rawValue
                 
         var newURL = strippedURL
         var urlComponents = URLComponents(url: strippedURL, resolvingAgainstBaseURL: false)
@@ -333,7 +333,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         let youtubeEmbedURI = queryItems.first(where: { $0.name == Constants.youtubeEmbedURI })?.value
         
         // Use the from(string:) method to parse referrer
-        let referrer = DuckPlayerReferrer.from(string: referrerValue ?? "")
+        let referrer = DuckPlayerReferrer(string: referrerValue ?? "")
         let allowFirstVideo = allowFirstVideoValue == "1" || youtubeEmbedURI.map(\.isEmpty) ?? false
         let isNewTab = isNewTabValue == "1"
         
@@ -489,6 +489,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             lastURLChangeHandling = Date()
             return .handled
         }
+        
+        guard duckPlayerMode == .enabled else {
+            return .notHandled(.duckPlayerDisabled)
+        }
 
         // Handle YouTube watch URLs based on DuckPlayer settings
         if duckPlayerMode == .enabled && !parameters.allowFirstVideo {
@@ -498,6 +502,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             lastURLChangeHandling = Date()
             Logger.duckPlayer.debug("Handling URL change for \(webView.url?.absoluteString ?? "")")
             return .handled
+        } else {
+            
         }
         
         return .notHandled(.isNotYoutubeWatch)
@@ -628,11 +634,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             let referrerParam = urlComponents?.queryItems?.first(where: { $0.name == Constants.duckPlayerReferrerParameter })?.value
             
             switch referrerParam {
-            case DuckPlayerReferrer.serp.stringValue:
+            case DuckPlayerReferrer.serp.rawValue:
                 referrer = .serp
-            case DuckPlayerReferrer.youtube.stringValue:
+            case DuckPlayerReferrer.youtube.rawValue:
                 referrer = .youtube
-            case DuckPlayerReferrer.other.stringValue:
+            case DuckPlayerReferrer.other.rawValue:
                 referrer = .other
             default:
                 break
@@ -668,7 +674,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // This is to be used in DecidePolicy For to prevent the webView
     // from opening the Youtube app on user-triggered links
     @MainActor
-    func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
+    func handleDelegateNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
         
         guard let url = navigationAction.request.url else {
             return false

@@ -1010,7 +1010,6 @@
 		D6E83C602B22B3C9006C8AFB /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C5F2B22B3C9006C8AFB /* SettingsState.swift */; };
 		D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */; };
 		D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C672B23B6A3006C8AFB /* FontSettings.swift */; };
-		D6F557BA2C8859040034444B /* DuckPlayerExperimentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F557B92C8859040034444B /* DuckPlayerExperimentTests.swift */; };
 		D6F93E3C2B4FFA97004C268D /* SubscriptionDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F93E3B2B4FFA97004C268D /* SubscriptionDebugViewController.swift */; };
 		D6F93E3E2B50A8A0004C268D /* SubscriptionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */; };
 		D6FEB8B12B7498A300C3615F /* HeadlessWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FEB8B02B7498A300C3615F /* HeadlessWebView.swift */; };
@@ -2832,7 +2831,6 @@
 		D6E83C5F2B22B3C9006C8AFB /* SettingsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDebugView.swift; sourceTree = "<group>"; };
 		D6E83C672B23B6A3006C8AFB /* FontSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettings.swift; sourceTree = "<group>"; };
-		D6F557B92C8859040034444B /* DuckPlayerExperimentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerExperimentTests.swift; sourceTree = "<group>"; };
 		D6F93E3B2B4FFA97004C268D /* SubscriptionDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDebugViewController.swift; sourceTree = "<group>"; };
 		D6F93E3D2B50A8A0004C268D /* SubscriptionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSettingsView.swift; sourceTree = "<group>"; };
 		D6FEB8B02B7498A300C3615F /* HeadlessWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlessWebView.swift; sourceTree = "<group>"; };
@@ -5301,7 +5299,6 @@
 				D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */,
 				D62EC3BB2C2470E000FC9D04 /* DuckPlayerTests.swift */,
 				D62EC3B82C246A5600FC9D04 /* YoutublePlayerNavigationHandlerTests.swift */,
-				D6F557B92C8859040034444B /* DuckPlayerExperimentTests.swift */,
 			);
 			name = DuckPlayer;
 			sourceTree = "<group>";
@@ -7935,7 +7932,6 @@
 				F1BDDBFD2C340D9C00459306 /* SubscriptionContainerViewModelTests.swift in Sources */,
 				987243142C5232B5007ECC76 /* BookmarksDatabaseSetupTests.swift in Sources */,
 				CBDD5DDF29A6736A00832877 /* APIHeadersTests.swift in Sources */,
-				D6F557BA2C8859040034444B /* DuckPlayerExperimentTests.swift in Sources */,
 				986B45D0299E30A50089D2D7 /* BookmarkEntityTests.swift in Sources */,
 				981C49B02C8FA61D00DF11E8 /* DataStoreIdManagerTests.swift in Sources */,
 				B6AD9E3828D4512E0019CDE9 /* EmbeddedTrackerDataTests.swift in Sources */,

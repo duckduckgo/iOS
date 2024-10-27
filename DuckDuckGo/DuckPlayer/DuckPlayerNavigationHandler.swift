@@ -234,13 +234,18 @@ final class DuckPlayerNavigationHandler: NSObject {
     @MainActor
     private func cancelJavascriptNavigation(webView: WKWebView, completion: (() -> Void)? = nil) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            webView.stopLoading()
-            if webView.canGoBack {
-                webView.goBack()
+        if duckPlayerMode == .enabled {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                webView.stopLoading()
+                if webView.canGoBack {
+                    webView.goBack()
+                }
+                completion?()
             }
+        } else {
             completion?()
         }
+        
     }
         
     // TabViewController cancels all Youtube navigation by default, so this replaces webView.load
@@ -686,7 +691,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Only account for in 'Always' mode
-        if url.isDuckPlayer, duckPlayerMode != .enabled {
+        if duckPlayerMode != .enabled {
+            return false
+        }
+        
+        // Only account for in 'Always' mode
+        if url.isDuckPlayer {
             return false
         }
         

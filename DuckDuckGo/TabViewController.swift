@@ -1093,6 +1093,11 @@ class TabViewController: UIViewController {
         willMove(toParent: nil)
         removeFromParent()
         view.removeFromSuperview()
+        
+        // Cleanup DuckPlayer Handler
+        duckPlayerNavigationHandler?.duckPlayer.removeHostView()
+        duckPlayerNavigationHandler?.tabNavigationHandler = nil
+        duckPlayerNavigationHandler = nil
     }
 
     private func removeObservers() {

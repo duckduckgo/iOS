@@ -23,13 +23,10 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
     
     enum HandlingResult {
         case featureOff
+        case invalidURL
         case duckPlayerDisabled
         case isNotYoutubeWatch
-        case urlHasNotChanged
-        case videoIDNotPresent
-        case videoAlreadyHandled
-        case disabledForNextVideo
-        case notAYoutubePage
+        case disabledForVideo        
         case duplicateNavigation
     }
 
@@ -60,4 +57,5 @@ protocol DuckPlayerNavigationHandling: AnyObject {
 
 protocol DuckPlayerTabNavigationHandling: AnyObject {
     func openTab(for url: URL)
+    func closeTab()
 }

@@ -30,15 +30,22 @@ final class DuckPlayerNavigationHandler: NSObject {
 
     var duckPlayer: DuckPlayerProtocol
     var referrer: DuckPlayerReferrer = .other
-    var renderedVideoID: String?
-    var renderedURL: URL?
     var featureFlagger: FeatureFlagger
     var appSettings: AppSettings
     var pixelFiring: PixelFiring.Type
+    var lastWatchInYoutubeVideo: String?
        
     // Redirection Throttle
     private var lastDuckPlayerRedirect: Date?
     private let lastDuckPlayerRedirectThrottleDuration: TimeInterval = 1
+    
+    // Navigation URL Changing Throttle
+    private var lastURLChangeHandling: Date?
+    private let lastURLChangeHandlingThrottleDuration: TimeInterval = 1
+    
+    // Navigation Cancelling Throttle
+    private var lastNavigationHandling: Date?
+    private let lastNavigationHandlingThrottleDuration: TimeInterval = 1
             
     weak var tabNavigationHandler: DuckPlayerTabNavigationHandling?
     
@@ -58,8 +65,15 @@ final class DuckPlayerNavigationHandler: NSObject {
         static let urlInternalReferrer = "embeds_referring_euri"
         static let youtubeScheme = "youtube://"
         static let duckPlayerScheme = URL.NavigationalScheme.duck.rawValue
-        static let duckPlayerReferrerParameter = "duckPlayerReferrer"
-        static let newTabParameter = "isNewTab"
+        static let duckPlayerReferrerParameter = "dp_referrer"
+        static let newTabParameter = "dp_isNewTab"
+        static let allowFirstVideoParameter = "dp_allowFirstVideo"
+    }
+    
+    private struct DuckPlayerParameters {
+        let referrer: DuckPlayerReferrer
+        let isNewTap: Bool
+        let allowFirstVideo: Bool
     }
     
     init(duckPlayer: DuckPlayerProtocol = DuckPlayer(),
@@ -108,7 +122,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     }
     
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
-        webView.loadSimulatedRequest(request, responseHTML: responseHTML)        
+        webView.loadSimulatedRequest(request, responseHTML: responseHTML)
     }
     
     private func performRequest(request: URLRequest, webView: WKWebView) {
@@ -159,20 +173,18 @@ final class DuckPlayerNavigationHandler: NSObject {
     
     // Loads a URL in Duck Player
     @MainActor
-    private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView) {
+    private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
         let duckPlayerURL = URL.duckPlayer(videoID)
-        
-        //Logger.duckPlayer.debug("DP: redirectToDuckPlayerVideo: \(duckPlayerURL.absoluteString)")
-        self.loadWithDuckPlayerParameters(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView)
+        self.loadWithDuckPlayerParameters(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView, forceNewTab: forceNewTab)
     }
     
     // Loads a Youtube Video Page
     @MainActor
-    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView) {
+    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
@@ -184,10 +196,8 @@ final class DuckPlayerNavigationHandler: NSObject {
             redirectURL = parsedURL
         }
         duckPlayer.settings.allowFirstVideo = true
-        renderedVideoID = videoID
-        renderedURL = removeDuckPlayerParameters(from: url)
         if let finalURL = redirectURL.addingWatchInYoutubeQueryParameter() {
-            loadWithDuckPlayerParameters(URLRequest(url: finalURL), referrer: referrer, webView: webView)
+            loadWithDuckPlayerParameters(URLRequest(url: finalURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab)
         }
     }
     
@@ -223,49 +233,25 @@ final class DuckPlayerNavigationHandler: NSObject {
     // just need to go back to the previous page
     @MainActor
     private func cancelJavascriptNavigation(webView: WKWebView, completion: (() -> Void)? = nil) {
-                    
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             webView.stopLoading()
-            webView.goBack()
+            if webView.canGoBack {
+                webView.goBack()
+            }
             completion?()
         }
-    }
-    
-    // Loads the provided URL in a new Tab.  It delegates this to the tabNavigationHandler
-    // in TabViewController.
-    // We add some URL parameters to identify the URL's when they load
-    private func openInNewTab(url: URL) {
-        
-        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            return
-        }
-                    
-        var queryItems = components.queryItems ?? []
-        // Adds a Referrer header which is then parsed to fire pixels based on the referrer
-        queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerParameter, value: referrer.stringValue))
-        
-        // Adds a newTab parameter to prevent navigation loops in the new tab
-        queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: "1"))
-        components.queryItems = queryItems
-        
-        if let url = components.url {
-            tabNavigationHandler?.openTab(for: url)
-            Logger.duckPlayer.debug("DP: openInNewTab: Done for \(url.absoluteString)")
-
-            // After the new tab is open, reset the rendered URL and video ID
-            // In the source tab so you can open the same video Again
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.renderedURL = nil
-                self.renderedVideoID = nil
-            }
-        }
-        
     }
         
     // TabViewController cancels all Youtube navigation by default, so this replaces webView.load
     // to add specific DuckPlayer headers.  These headers are used to identify DuckPlayerHandler
     // Navigation in Tabview controller and let it through.
-    private func loadWithDuckPlayerParameters(_ request: URLRequest, referrer: DuckPlayerReferrer, webView: WKWebView) {
+    private func loadWithDuckPlayerParameters(_ request: URLRequest, referrer: DuckPlayerReferrer, webView: WKWebView, forceNewTab: Bool = false) {
+        
+        guard let url = request.url,
+              let (videoID, _) = url.youtubeVideoParams else {
+            return
+        }
         
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick url changes
@@ -278,21 +264,22 @@ final class DuckPlayerNavigationHandler: NSObject {
         
         lastDuckPlayerRedirect = Date()
         
-        guard let url = request.url else {
-            return
-        }
-        
         // Remove any DP Parameters
         guard let strippedURL = removeDuckPlayerParameters(from: url) else {
             return
         }
         
+        let isNewTab = duckPlayer.settings.openInNewTab ? "1" : "0"
+        let referrer = referrer.stringValue
+        let allowFirstVideo = duckPlayer.settings.allowFirstVideo ? "1" : "0"
+        
         var newURL = strippedURL
         var urlComponents = URLComponents(url: strippedURL, resolvingAgainstBaseURL: false)
         var queryItems = urlComponents?.queryItems ?? []
-        
-        queryItems.append(URLQueryItem(name: Constants.refererHeader, value: "1"))
-        queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerParameter, value: referrer.stringValue))
+                
+        queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: isNewTab))
+        queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerParameter, value: referrer))
+        queryItems.append(URLQueryItem(name: Constants.allowFirstVideoParameter, value: allowFirstVideo))
         urlComponents?.queryItems = queryItems
         
         // Create a new request with the modified URL
@@ -302,24 +289,32 @@ final class DuckPlayerNavigationHandler: NSObject {
         
         Logger.duckPlayer.debug("DP: loadWithDuckPlayerParameters: \(newURL.absoluteString)")
         
-        // Perform the load
-        webView.load(newRequest)
+        if (duckPlayer.settings.openInNewTab || forceNewTab) {
+            tabNavigationHandler?.openTab(for: url)
+        } else {
+            webView.load(newRequest)
+        }
+        
+        
     }
     
-    private func getDuckPlayerReferrer(from url: URL) -> String? {
+    private func getDuckPlayerParameters(url: URL) -> DuckPlayerParameters? {
         
-        // Use URLComponents to parse the query items
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let queryItems = urlComponents.queryItems else {
             return nil
         }
         
-        // Find the query item with the DuckPlayer referrer parameter
-        let referrerParameter = queryItems.first(where: { $0.name == Constants.duckPlayerReferrerParameter })
+        let referrerValue = queryItems.first(where: { $0.name == Constants.duckPlayerReferrerParameter })?.value
+        let allowFirstVideoValue = queryItems.first(where: { $0.name == Constants.allowFirstVideoParameter })?.value
+        let isNewTabValue = queryItems.first(where: { $0.name == Constants.newTabParameter })?.value
         
-        // Return the value if the parameter is found
-        return referrerParameter?.value
+        // Use the from(string:) method to parse referrer
+        let referrer = DuckPlayerReferrer.from(string: referrerValue ?? "")
+        let allowFirstVideo = allowFirstVideoValue == "1"
+        let isNewTab = isNewTabValue == "1"
         
+        return DuckPlayerParameters(referrer: referrer, isNewTap: isNewTab, allowFirstVideo: allowFirstVideo)
     }
     
     private func isNewTab(url: URL) -> Bool {
@@ -361,17 +356,30 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
         
+        Logger.duckPlayer.debug("Handling Navigation for \(webView.url?.absoluteString ?? "")")
+        
+        // We want to prevent multiple simultaneous redirects
+        // This can be caused by Duplicate Nav events, and quick url changes
+        if let lastTimestamp = lastNavigationHandling {
+            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
+            if timeSinceLastThrottle < lastNavigationHandlingThrottleDuration {
+                return
+            }
+        }
+        
+        lastNavigationHandling = Date()
+        
+        /*
         // Check if should open in a new tab
         if isOpenInNewTabEnabled,
            let url = navigationAction.request.url,
            let (videoID, _) = url.youtubeVideoParams,
-           videoID != renderedVideoID,
-           renderedURL != removeDuckPlayerParameters(from: url),
            getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
            !isNewTab(url: url) {
-            //openInNewTab(url: url)
+            openInNewTab(url: url)
             return
         }
+         */
                 
         duckPlayer.settings.allowFirstVideo = false
 
@@ -380,7 +388,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Redirect to YouTube if DuckPlayer is disabled
         guard duckPlayerMode != .disabled else {
             if let (videoID, _) = url.youtubeVideoParams {
-                loadWithDuckPlayerParameters(URLRequest(url: URL.youtube(videoID)), referrer: referrer, webView: webView)
+                redirectToYouTubeVideo(url: URL.youtube(videoID), webView: webView)
             }
             return
         }
@@ -398,8 +406,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
                let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
                 UIApplication.shared.open(youtubeAppURL)
-            } else {
-                openInNewTab(url: newURL)
+            } else {                
+                redirectToYouTubeVideo(url: newURL, webView: webView, forceNewTab: true)
             }
             return
         }
@@ -412,13 +420,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if duckPlayerMode != .disabled,
                !url.hasWatchInYoutubeQueryParameter {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
-                Logger.duckPlayer.debug("DP: handleNavigation: Loading Simulated Request for \(url.absoluteString)")
                 
                 // The webview needs some time for state to propagate
                 // Before performing the simulated request
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     self.performRequest(request: newRequest, webView: webView)
-                    self.renderedVideoID = videoID
                     self.fireDuckPlayerPixels()
                 }
             } else {
@@ -438,46 +444,65 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     }
     
     // TabViewController's observe delegates URL changes to this method, which basically reacts
-    // to different URLs and present/redirect DuckPlayer when necesary.
+    // to different URLs and present/redirect DuckPlayer when necessary.
     // This also takes care of managing duplicate URL changes
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
+        // We want to prevent multiple simultaneous redirects
+        // This can be caused by Duplicate Nav events, and quick url changes
+        if let lastTimestamp = lastURLChangeHandling {
+            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
+            if timeSinceLastThrottle < lastURLChangeHandlingThrottleDuration {
+                return .notHandled(.duplicateNavigation)
+            }
+        }
+        
+        // We don't want Youtube redirects happening while default navigation is happening
+        // This can be caused by Duplicate Nav events, and quick url changes
+        if let lastTimestamp = lastNavigationHandling {
+            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
+            if timeSinceLastThrottle < lastNavigationHandlingThrottleDuration {
+                return .notHandled(.duplicateNavigation)
+            }
+        }
+        
         // Check if DuckPlayer feature is enabled
         guard isDuckPlayerFeatureEnabled else {
-            //Logger.duckPlayer.debug("DP: handleURLChange: Feature flag is off, skipping")
             return .notHandled(.featureOff)
         }
         
-        // Handle non-YouTube URLs first
-        guard webView.url?.isYoutubeWatch ?? false else {
-            //Logger.duckPlayer.debug("DP: handleURLChange: Not a YouTube video page, skipping")
-            return .notHandled(.isNotYoutubeWatch)
-        }
-
-        // Avoid duplicate handling of the same video URL
-        guard let url = webView.url, removeDuckPlayerParameters(from: url) != renderedURL else {
-            //Logger.duckPlayer.debug("DP: handleURLChange: URL has not changed, skipping")
-            return .notHandled(.urlHasNotChanged)
+        guard let url = webView.url, let (videoID, _) = url.youtubeVideoParams else {
+            return .notHandled(.invalidURL)
         }
         
-        // Disable the Youtube Overlay for Player links
-        // Youtube player links should open the video in Youtube
-        // without overlay
-        if let url = webView.url, url.hasWatchInYoutubeQueryParameter {
-            duckPlayer.settings.allowFirstVideo = true
-            return .notHandled(.disabledForNextVideo)
+        guard url.isYoutubeWatch else {
+            return .notHandled(.isNotYoutubeWatch)
         }
-
-        // Handle YouTube watch URLs based on DuckPlayer settings
-        if url.isYoutubeWatch, duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-            cancelJavascriptNavigation(webView: webView, completion: {
-                self.redirectToDuckPlayerVideo(url: url, webView: webView)
-            })
+        
+        guard videoID != lastWatchInYoutubeVideo else {
+            lastURLChangeHandling = Date()
+            return .handled
+        }
+        
+        if url.hasWatchInYoutubeQueryParameter {
+            duckPlayer.settings.allowFirstVideo = true
+            lastWatchInYoutubeVideo = videoID
+            lastURLChangeHandling = Date()
             return .handled
         }
 
-        return .notHandled(.duckPlayerDisabled)
+        // Handle YouTube watch URLs based on DuckPlayer settings
+        if duckPlayerMode == .enabled && !duckPlayer.settings.allowFirstVideo {
+            cancelJavascriptNavigation(webView: webView, completion: {
+                self.redirectToDuckPlayerVideo(url: url, webView: webView)
+            })
+            lastURLChangeHandling = Date()
+            Logger.duckPlayer.debug("Handling URL change for \(webView.url?.absoluteString ?? "")")
+            return .handled
+        }
+        
+        return .notHandled(.isNotYoutubeWatch)
     }
     
     // Controls BackNavigation logic for Youtube.  DuckPlayer is rendered as a new item in the
@@ -489,13 +514,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             webView.goBack()
             return
         }
-
-        renderedVideoID = nil
-        renderedURL = nil
         
-        // Check if the back list has items
+        // Check if the back list has items, and it not try to close the tab
         guard !webView.backForwardList.backList.isEmpty else {
-            webView.goBack()
+            tabNavigationHandler?.closeTab()
             return
         }
 
@@ -509,12 +531,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
 
         if let nonYoutubeItem = nonYoutubeItem, duckPlayerMode == .enabled {
-            //Logger.duckPlayer.debug("DP: handleGoBack: Navigating back to \(nonYoutubeItem.url.absoluteString)")
             // Delay stopping the loading to avoid interference with go(to:)
             webView.stopLoading()
             webView.go(to: nonYoutubeItem)
         } else {
-            //Logger.duckPlayer.debug("DP: handleGoBack: Navigating back to previous page")
             webView.stopLoading()
             webView.goBack()
         }
@@ -527,8 +547,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
-        renderedVideoID = nil
-        renderedURL = nil
         
         guard isDuckPlayerFeatureEnabled else {
             webView.reload()
@@ -539,7 +557,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             !url.isDuckURLScheme,
             let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-            //Logger.duckPlayer.debug("DP: handleReload: Handling DuckPlayer Reload for \(url.absoluteString)")
             redirectToDuckPlayerVideo(url: url, webView: webView)
         } else {
             webView.reload()
@@ -553,8 +570,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
-        renderedVideoID = nil
-        renderedURL = nil
                 
         guard isDuckPlayerFeatureEnabled else {
             return
@@ -562,7 +577,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
-            let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             redirectToDuckPlayerVideo(url: url, webView: webView)
         } else {
@@ -664,44 +678,50 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool {
         
-        // Fire the logic immediately
         guard let url = navigationAction.request.url else {
-            //Logger.duckPlayer.debug("DP: shouldCancelNavigation: false: invalid URL")
-            return false
-        }
-        
-        // Check if it's a valid Watch Page, and DuckPlayer is enabled
-        guard url.isYoutubeWatch, isDuckPlayerFeatureEnabled, duckPlayerMode != .disabled else {
-            //Logger.duckPlayer.debug("DP: shouldCancelNavigation: false: is not a valid Watch Page or DuckPlayer is disabled")
             return false
         }
         
         // Only account for MainFrame navigation
         guard navigationAction.isTargetingMainFrame() else {
-            //Logger.duckPlayer.debug("DP: shouldCancelNavigation: false: Not targeting MainFrame")
+            return false
+        }
+        
+        // Only if DuckPlayer is enabled
+        guard isDuckPlayerFeatureEnabled else {
+            return false
+        }
+        
+        // Only account for in 'Always' mode
+        if url.isDuckPlayer, duckPlayerMode != .enabled {
             return false
         }
         
         // Do not intercept any back/forward navigation
         if navigationAction.navigationType == .backForward {
-            //Logger.duckPlayer.debug("DP: shouldCancelNavigation: false: backForward")
             return false
         }
         
-        // Ignore DuckPlayer videos
+        // Only account for non Duck Player URLs
         guard !url.isDuckURLScheme else {
-            //Logger.duckPlayer.debug("DP: shouldCancelNavigation: false: Skipped: already a DuckPlayer video")
             return false
         }
         
-        //Logger.duckPlayer.debug("DP: shouldCancelNavigation: true: Valid URL")
+        // Ignore Youtube Watch URL's if allowFirst video is set
+        if url.isYoutubeWatch && duckPlayer.settings.allowFirstVideo {
+            return false
+        }
+                
+        // Redirect any other Watch Navigation to Duck Player
+        if url.isYoutubeWatch {
+            redirectToDuckPlayerVideo(url: url, webView: webView)
+            return true
+        }
         
-        // Return true to indicate the navigation should be canceled
-        redirectToDuckPlayerVideo(url: url, webView: webView)
-        return true
+        // Allow everything else
+        return false
+        
     }
-
-    
     
 }
 

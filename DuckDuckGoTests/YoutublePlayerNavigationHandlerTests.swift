@@ -264,7 +264,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
                 
         switch result {
         case .notHandled(let reason):
-            XCTAssertEqual(reason, .disabledForNextVideo, "Expected .disabledForNextVideo, but got \(reason).")
+            XCTAssertEqual(reason, .disabledForVideo, "Expected .disabledForNextVideo, but got \(reason).")
         default:
             XCTFail("Expected .notHandled(.disabledForNextVideo), but got \(result).")
         }
@@ -288,7 +288,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
                 
         switch result {
         case .notHandled(let reason):
-            XCTAssertEqual(reason, .disabledForNextVideo, "Expected .disabledForNextVideo, but got \(reason).")
+            XCTAssertEqual(reason, .disabledForVideo, "Expected .disabledForNextVideo, but got \(reason).")
         default:
             XCTFail("Expected .notHandled(.disabledForNextVideo), but got \(result).")
         }

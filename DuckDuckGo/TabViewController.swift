@@ -759,15 +759,7 @@ class TabViewController: UIViewController {
         // Handle DuckPlayer Navigation URL changes
         if let handler = duckPlayerNavigationHandler,
            let currentURL = webView.url {
-            let result = handler.handleURLChange(webView: webView)
-            
-            // Handle DuckPlayer results based on the change result
-            switch result {
-            case .handled:
-                return
-            default:
-                return
-            }
+            _ = handler.handleURLChange(webView: webView)
         }
             
         if url == nil {
@@ -844,7 +836,19 @@ class TabViewController: UIViewController {
 
     func goBack() {
         dismissJSAlertIfNeeded()
-                        
+                   
+        if let handler = duckPlayerNavigationHandler {
+            handler.handleGoBack(webView: webView)
+            chromeDelegate?.omniBar.resignFirstResponder()
+            return
+        } else {
+            if webView.canGoBack {
+                webView.goBack()
+                chromeDelegate?.omniBar.resignFirstResponder()
+                return
+            }
+        }
+        
         if openingTab != nil {
             delegate?.tabDidRequestClose(self)
             return
@@ -858,17 +862,7 @@ class TabViewController: UIViewController {
             return
         }
 
-        if webView.canGoBack {
-            if let handler = duckPlayerNavigationHandler {
-                handler.handleGoBack(webView: webView)
-            }
-            else {
-                webView.goBack()
-            }
-            chromeDelegate?.omniBar.resignFirstResponder()
-            return
-        }
-        
+  
     }
     
     func goForward() {
@@ -3117,6 +3111,13 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
                       didRequestNewTabForUrl: url,
                       openedByPage: true,
                       inheritingAttribution: adClickAttributionLogic.state)
+    }
+    
+    func closeTab() {
+        if openingTab != nil {
+            delegate?.tabDidRequestClose(self)
+            return
+        }
     }
     
 }

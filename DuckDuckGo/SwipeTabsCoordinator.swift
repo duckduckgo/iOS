@@ -311,8 +311,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
 
             cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
-            cell.updateConstraints()
-            
+
             cell.omniBar?.showSeparator()
             if self.appSettings.currentAddressBarPosition.isBottom {
                 cell.omniBar?.moveSeparatorToTop()
@@ -327,7 +326,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             }
 
         }
-        
+
+        cell.setNeedsUpdateConstraints()
+
         return cell
     }
     
@@ -340,7 +341,7 @@ class OmniBarCell: UICollectionViewCell {
             subviews.forEach { $0.removeFromSuperview() }
             if let omniBar {
                 addSubview(omniBar)
-                
+
                 NSLayoutConstraint.activate([
                     constrainView(omniBar, by: .leadingMargin),
                     constrainView(omniBar, by: .trailingMargin),
@@ -351,14 +352,14 @@ class OmniBarCell: UICollectionViewCell {
             }
         }
     }
-    
+
     override func updateConstraints() {
-        super.updateConstraints()
         let left = superview?.safeAreaInsets.left ?? 0
         let right = superview?.safeAreaInsets.right ?? 0
         omniBar?.updateOmniBarPadding(left: left, right: right)
+
+        super.updateConstraints()
     }
-    
 }
 
 extension TabsModel {

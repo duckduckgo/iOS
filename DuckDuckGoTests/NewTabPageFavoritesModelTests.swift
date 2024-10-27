@@ -49,6 +49,13 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesSeeLess)
     }
 
+    func testReturnsAllFavoritesWhenCustomizationDisabled() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+        
+        XCTAssertEqual(sut.prefixedFavorites(for: 1).items.count, 10)
+    }
+
     func testFiresPixelsOnFavoriteSelected() {
         let sut = createSUT()
 
@@ -98,6 +105,16 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertFalse(slice.isCollapsible)
     }
 
+    func testPrefixFavoritesDoesNotCreatePlaceholdersWhenCustomizationDisabled() {
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        let slice = sut.prefixedFavorites(for: 3)
+
+        XCTAssertTrue(slice.items.filter(\.isPlaceholder).isEmpty)
+        XCTAssertTrue(slice.items.isEmpty)
+        XCTAssertFalse(slice.isCollapsible)
+    }
+
     func testPrefixFavoritesLimitsToTwoRows() {
         favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
         let sut = createSUT()
@@ -106,6 +123,16 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         XCTAssertEqual(slice.items.count, 8)
         XCTAssertTrue(slice.isCollapsible)
+    }
+
+    func testListNotCollapsibleWhenCustomizationDisabled() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        let favorites = sut.prefixedFavorites(for: 1)
+        XCTAssertFalse(favorites.isCollapsible)
+        XCTAssertFalse(sut.isCollapsed)
     }
 
     func testAddItemIsLastWhenFavoritesPresent() throws {
@@ -125,8 +152,19 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertTrue(firstItem == .addFavorite)
     }
 
-    private func createSUT() -> FavoritesViewModel {
-        FavoritesViewModel(favoriteDataSource: favoriteDataSource,
+    func testDoesNotAppendAddItemWhenCustomizationDisabled() {
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        XCTAssertNil(sut.allFavorites.first)
+
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+
+        XCTAssertNil(sut.allFavorites.first(where: { $0 == .addFavorite }))
+    }
+
+    private func createSUT(isNewTabPageCustomizationEnabled: Bool = true) -> FavoritesViewModel {
+        FavoritesViewModel(isNewTabPageCustomizationEnabled: isNewTabPageCustomizationEnabled,
+                           favoriteDataSource: favoriteDataSource,
                            faviconLoader: FavoritesFaviconLoader(),
                            pixelFiring: PixelFiringMock.self,
                            dailyPixelFiring: PixelFiringMock.self)

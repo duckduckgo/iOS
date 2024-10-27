@@ -1306,7 +1306,9 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
 
-        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType, fileExtension: navigationResponse.response.url?.pathExtension)
+        let urlSchemeType = navigationResponse.response.url.map { SchemeHandler.schemeType(for: $0) } ?? .unknown
+        let urlNavigationalScheme = navigationResponse.response.url?.scheme.map { URL.NavigationalScheme(rawValue: $0) }
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
@@ -1318,7 +1320,39 @@ extension TabViewController: WKNavigationDelegate {
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+        // Important: Order of these checks matter!
+        if urlSchemeType == .blob {
+            // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
+            if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
+                // BLOB already has a temporary downloaded so and we can allow loading it
+                blobDownloadTargetFrame = nil
+                decisionHandler(.allow)
+            } else {
+                // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
+                decisionHandler(.download)
+            }
+        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+            // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
+            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            mostRecentAutoPreviewDownloadID = download?.id
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+        } else if shouldTriggerDownloadAction(for: navigationResponse),
+                  let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+            // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
+            if urlNavigationalScheme == .data {
+                decisionHandler(.download)
+                return
+            }
+
+            // 3b. We know the response should trigger the file download prompt
+            self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+            } cancelHandler: {
+                decisionHandler(.cancel)
+            }
+        } else if navigationResponse.canShowMIMEType {
+            // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
             url = webView.url
             if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
                 decisionHandler(decision)
@@ -1668,19 +1702,6 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        if #available(iOS 17.4, *),
-            navigationAction.request.url?.scheme == "marketplace-kit",
-            internalUserDecider.isInternalUser {
-
-            decisionHandler(.allow)
-            let urlString = navigationAction.request.url?.absoluteString ?? "<no url>"
-            ActionMessageView.present(message: "Marketplace Kit URL detected",
-                                      actionTitle: "COPY",
-                                      presentationLocation: .withoutBottomBar, onAction: {
-                UIPasteboard.general.string = urlString
-            })
-            return
-        }
         
         if let url = navigationAction.request.url {
             if !tabURLInterceptor.allowsNavigatingTo(url: url) {
@@ -1861,6 +1882,10 @@ extension TabViewController: WKNavigationDelegate {
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {
+        case .allow:
+            completion(.allow)
+            return
+            
         case .navigational:
             performNavigationFor(url: url,
                                  navigationAction: navigationAction,
@@ -2017,6 +2042,7 @@ extension TabViewController: WKNavigationDelegate {
         if !(error.failedUrl?.isCustomURLScheme() ?? false) {
             url = error.failedUrl
             showError(message: error.localizedDescription)
+            Pixel.fire(pixel: .webViewErrorPageShown)
         }
 
         webpageDidFailToLoad()
@@ -2143,20 +2169,8 @@ extension TabViewController {
                     return
                 }
 
-                let isTemporary = navigationResponse.canShowMIMEType
-                    || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
-                if isTemporary {
-                    // restart blob request loading for preview that was interrupted by .download callback
-                    if navigationResponse.canShowMIMEType {
-                        self.webView.load(navigationResponse.response.url!, in: self.blobDownloadTargetFrame)
-                    }
-                    callback(self.transfer(download,
-                                           to: downloadManager,
-                                           with: navigationResponse.response,
-                                           suggestedFilename: suggestedFilename,
-                                           isTemporary: isTemporary))
-
-                } else {
+                if self.shouldTriggerDownloadAction(for: navigationResponse) && !FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
+                    // Show alert to the file download
                     self.presentSaveToDownloadsAlert(with: downloadMetadata) {
                         callback(self.transfer(download,
                                                to: downloadManager,

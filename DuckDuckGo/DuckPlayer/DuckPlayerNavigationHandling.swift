@@ -56,6 +56,8 @@ protocol DuckPlayerNavigationHandling: AnyObject {
 }
 
 protocol DuckPlayerTabNavigationHandling: AnyObject {
+    var isNewTab: Bool { get }
     func openTab(for url: URL)
     func closeTab()
+    
 }

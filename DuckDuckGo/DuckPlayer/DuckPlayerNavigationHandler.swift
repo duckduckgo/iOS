@@ -254,7 +254,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         }
         
         // We want to prevent multiple simultaneous redirects
-        // This can be caused by Duplicate Nav events, and quick url changes
+        // This can be caused by Duplicate Nav events, and youtube's own redirects
         if let lastTimestamp = lastDuckPlayerRedirect {
             let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
             if timeSinceLastThrottle < lastDuckPlayerRedirectThrottleDuration {
@@ -269,14 +269,15 @@ final class DuckPlayerNavigationHandler: NSObject {
             return
         }
         
-        let isNewTab = duckPlayer.settings.openInNewTab ? "1" : "0"
-        let referrer = referrer.stringValue
+        let isNewTab = duckPlayer.settings.openInNewTab && duckPlayerMode == .enabled ? "1" : "0"
         let allowFirstVideo = duckPlayer.settings.allowFirstVideo ? "1" : "0"
+        let referrer = referrer.stringValue
+        
         
         var newURL = strippedURL
         var urlComponents = URLComponents(url: strippedURL, resolvingAgainstBaseURL: false)
         var queryItems = urlComponents?.queryItems ?? []
-                
+        
         queryItems.append(URLQueryItem(name: Constants.newTabParameter, value: isNewTab))
         queryItems.append(URLQueryItem(name: Constants.duckPlayerReferrerParameter, value: referrer))
         queryItems.append(URLQueryItem(name: Constants.allowFirstVideoParameter, value: allowFirstVideo))
@@ -289,12 +290,13 @@ final class DuckPlayerNavigationHandler: NSObject {
         
         Logger.duckPlayer.debug("DP: loadWithDuckPlayerParameters: \(newURL.absoluteString)")
         
+        // Only Open in new tab if enabled
         if (duckPlayer.settings.openInNewTab || forceNewTab) {
             tabNavigationHandler?.openTab(for: url)
-        } else {
-            webView.load(newRequest)
+            return
         }
         
+        webView.load(newRequest)
         
     }
     
@@ -369,17 +371,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         lastNavigationHandling = Date()
         
-        /*
-        // Check if should open in a new tab
-        if isOpenInNewTabEnabled,
-           let url = navigationAction.request.url,
-           let (videoID, _) = url.youtubeVideoParams,
-           getYoutubeURLFromOpenInYoutubeLink(url: url) == nil,
-           !isNewTab(url: url) {
-            openInNewTab(url: url)
-            return
-        }
-         */
+        let shouldOpenInNewTab = isOpenInNewTabEnabled && !(tabNavigationHandler?.isNewTab ?? false)
                 
         duckPlayer.settings.allowFirstVideo = false
 
@@ -406,7 +398,8 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
                let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
                 UIApplication.shared.open(youtubeAppURL)
-            } else {                
+            } else {
+                // Watch in YT videos always open in new tab
                 redirectToYouTubeVideo(url: newURL, webView: webView, forceNewTab: true)
             }
             return
@@ -421,7 +414,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                !url.hasWatchInYoutubeQueryParameter {
                 let newRequest = Self.makeDuckPlayerRequest(from: URLRequest(url: url))
                 
-                // The webview needs some time for state to propagate
+                // The webView needs some time for state to propagate
                 // Before performing the simulated request
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     self.performRequest(request: newRequest, webView: webView)
@@ -438,7 +431,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             if url.hasWatchInYoutubeQueryParameter {
                 redirectToYouTubeVideo(url: url, webView: webView)
             } else {
-                redirectToDuckPlayerVideo(url: url, webView: webView)
+                redirectToDuckPlayerVideo(url: url, webView: webView, forceNewTab: shouldOpenInNewTab)
             }
         }
     }

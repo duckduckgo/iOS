@@ -27,19 +27,8 @@ public protocol PixelFiring {
                      includedParameters: [Pixel.QueryParameters],
                      onComplete: @escaping (Error?) -> Void)
 
-    static func fire(pixel: Pixel.Event,
-                     error: Error?,
-                     includedParameters: [Pixel.QueryParameters],
-                     withAdditionalParameters params: [String: String],
-                     onComplete: @escaping (Error?) -> Void)
-
     static func fire(_ pixel: Pixel.Event,
                      withAdditionalParameters params: [String: String])
-
-    static func fire(pixelNamed pixelName: String,
-                     withAdditionalParameters params: [String: String],
-                     includedParameters: [Pixel.QueryParameters],
-                     onComplete: @escaping (Error?) -> Void)
 }
 
 extension Pixel: PixelFiring {
@@ -47,8 +36,8 @@ extension Pixel: PixelFiring {
                             withAdditionalParameters params: [String: String],
                             includedParameters: [Pixel.QueryParameters],
                             onComplete: @escaping (Error?) -> Void) {
-
-        Self.fire(pixel: pixel,
+        
+        Pixel.fire(pixel: pixel,
                    withAdditionalParameters: params,
                    includedParameters: includedParameters,
                    onComplete: onComplete)
@@ -56,17 +45,6 @@ extension Pixel: PixelFiring {
 
     public static func fire(_ pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String]) {
-        Self.fire(pixel: pixel, withAdditionalParameters: params)
-    }
-    
-    public static func fire(pixelNamed pixelName: String,
-                            withAdditionalParameters params: [String: String],
-                            includedParameters: [Pixel.QueryParameters],
-                            onComplete: @escaping (Error?) -> Void) {
-        Self.fire(pixelNamed: pixelName,
-                  withAdditionalParameters: params,
-                  allowedQueryReservedCharacters: nil,
-                  includedParameters: includedParameters,
-                  onComplete: onComplete)
+        Pixel.fire(pixel: pixel, withAdditionalParameters: params)
     }
 }

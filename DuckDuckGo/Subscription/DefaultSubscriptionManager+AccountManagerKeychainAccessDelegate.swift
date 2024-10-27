@@ -31,7 +31,6 @@ extension DefaultSubscriptionManager: AccountManagerKeychainAccessDelegate {
         ]
 
         DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
-                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                      withAdditionalParameters: parameters)
     }
 }

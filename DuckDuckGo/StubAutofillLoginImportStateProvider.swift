@@ -1,5 +1,5 @@
 //
-//  DailyPixelFiring.swift
+//  StubAutofillLoginImportStateProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,20 +18,18 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
-public protocol DailyPixelFiring {
-    static func fireDaily(_ pixel: Pixel.Event,
-                          withAdditionalParameters params: [String: String])
-    
-    static func fireDaily(_ pixel: Pixel.Event)
-}
+struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
+    public var isNewDDGUser: Bool = false
+    public var hasImportedLogins: Bool = false
+    var credentialsImportPromptPresentationCount: Int = 0
 
-extension DailyPixel: DailyPixelFiring {
-    public static func fireDaily(_ pixel: Pixel.Event, withAdditionalParameters params: [String: String]) {
-        fire(pixel: pixel, withAdditionalParameters: params)
+    var isAutofillEnabled: Bool {
+        AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled
     }
 
-    public static func fireDaily(_ pixel: Pixel.Event) {
-        fire(pixel: pixel)
+    func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
+        AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
     }
 }

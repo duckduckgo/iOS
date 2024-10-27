@@ -37,15 +37,13 @@ class BlankSnapshotViewController: UIViewController {
 
     var tabSwitcherButton: TabSwitcherButton!
     let appSettings: AppSettings
-    let voiceSearchHelper: VoiceSearchHelperProtocol
 
     var viewCoordinator: MainViewCoordinator!
 
     weak var delegate: BlankSnapshotViewRecoveringDelegate?
 
-    init(appSettings: AppSettings, voiceSearchHelper: VoiceSearchHelperProtocol) {
+    init(appSettings: AppSettings) {
         self.appSettings = appSettings
-        self.voiceSearchHelper = voiceSearchHelper
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,7 +56,7 @@ class BlankSnapshotViewController: UIViewController {
 
         tabSwitcherButton = TabSwitcherButton()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(view)
         if appSettings.currentAddressBarPosition.isBottom {
             viewCoordinator.moveAddressBarToPosition(.bottom)
             viewCoordinator.hideToolbarSeparator()

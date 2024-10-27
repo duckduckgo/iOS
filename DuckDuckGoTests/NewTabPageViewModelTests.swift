@@ -18,7 +18,6 @@
 //
 
 import XCTest
-@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageViewModelTests: XCTestCase {
@@ -69,7 +68,7 @@ final class NewTabPageViewModelTests: XCTestCase {
 
         sut.dismissIntroMessage()
 
-        XCTAssertEqual(Pixel.Event.newTabPageMessageDismissed.name, PixelFiringMock.lastPixelName)
+        XCTAssertEqual(.newTabPageMessageDismissed, PixelFiringMock.lastPixel)
     }
 
     func testFiresPixelWhenIntroMessageDisplayed() {
@@ -77,7 +76,7 @@ final class NewTabPageViewModelTests: XCTestCase {
 
         sut.introMessageDisplayed()
 
-        XCTAssertEqual(Pixel.Event.newTabPageMessageDisplayed.name, PixelFiringMock.lastPixelName)
+        XCTAssertEqual(.newTabPageMessageDisplayed, PixelFiringMock.lastPixel)
     }
 
     func testFiresPixelOnNewTabPageCustomize() {
@@ -85,6 +84,6 @@ final class NewTabPageViewModelTests: XCTestCase {
 
         sut.customizeNewTabPage()
 
-        XCTAssertEqual(Pixel.Event.newTabPageCustomize.name, PixelFiringMock.lastPixelName)
+        XCTAssertEqual(.newTabPageCustomize, PixelFiringMock.lastPixel)
     }
 }

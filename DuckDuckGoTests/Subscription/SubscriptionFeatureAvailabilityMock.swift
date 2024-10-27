@@ -21,10 +21,6 @@ import Foundation
 @testable import BrowserServicesKit
 
 public final class SubscriptionFeatureAvailabilityMock: SubscriptionFeatureAvailability {
-    static var enabled: SubscriptionFeatureAvailabilityMock {
-        return SubscriptionFeatureAvailabilityMock(isFeatureAvailable: true, isSubscriptionPurchaseAllowed: true, usesUnifiedFeedbackForm: true)
-    }
-
     public var isFeatureAvailable: Bool
     public var isSubscriptionPurchaseAllowed: Bool
     public var usesUnifiedFeedbackForm: Bool

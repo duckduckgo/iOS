@@ -41,7 +41,6 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
-    private let persistentPixel: PersistentPixelFiring
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Manager, Session, & Connection
@@ -119,9 +118,8 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
-    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore, persistentPixel: PersistentPixelFiring) {
+    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore) {
         self.tokenStore = tokenStore
-        self.persistentPixel = persistentPixel
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
         subscribeToConfigurationChanges()
@@ -130,33 +128,16 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     /// Starts the VPN connection used for Network Protection
     ///
     func start() async {
-        persistentPixel.fire(
-            pixel: .networkProtectionControllerStartAttempt,
-            error: nil,
-            includedParameters: [.appVersion, .atb],
-            withAdditionalParameters: [:],
-            onComplete: { _ in })
+        Pixel.fire(pixel: .networkProtectionControllerStartAttempt, includedParameters: [.appVersion, .atb])
 
         do {
             try await startWithError()
-
-            persistentPixel.fire(
-                pixel: .networkProtectionControllerStartSuccess,
-                error: nil,
-                includedParameters: [.appVersion, .atb],
-                withAdditionalParameters: [:],
-                onComplete: { _ in })
+            Pixel.fire(pixel: .networkProtectionControllerStartSuccess, includedParameters: [.appVersion, .atb])
         } catch {
             if case StartError.configSystemPermissionsDenied = error {
                 return
             }
-
-            persistentPixel.fire(
-                pixel: .networkProtectionControllerStartFailure,
-                error: error,
-                includedParameters: [.appVersion, .atb],
-                withAdditionalParameters: [:],
-                onComplete: { _ in })
+            Pixel.fire(pixel: .networkProtectionControllerStartFailure, error: error, includedParameters: [.appVersion, .atb])
 
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
@@ -184,14 +165,13 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         do {
             try await tunnelManager?.removeFromPreferences()
 
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved,
-                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                         withAdditionalParameters: [PixelParameters.reason: reason.rawValue])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemoved, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
         } catch {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed,
-                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                         error: error,
-                                         withAdditionalParameters: [PixelParameters.reason: reason.rawValue])
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionVPNConfigurationRemovalFailed, error: error, withAdditionalParameters: [
+                PixelParameters.reason: reason.rawValue
+            ])
         }
     }
 

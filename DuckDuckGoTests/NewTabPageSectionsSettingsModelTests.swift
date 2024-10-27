@@ -18,7 +18,6 @@
 //
 
 import XCTest
-@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageSectionsSettingsModelTests: XCTestCase {
@@ -36,7 +35,7 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
         setting?.isEnabled.wrappedValue = true
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeSectionOn("favorites").name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeSectionOn("favorites"))
     }
 
     func testFiresPixelWhenItemDisabled() {
@@ -48,7 +47,7 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
         setting?.isEnabled.wrappedValue = false
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeSectionOff("favorites").name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeSectionOff("favorites"))
     }
 
     func testFiresPixelWhenItemReordered() {
@@ -56,7 +55,7 @@ final class NewTabPageSectionsSettingsModelTests: XCTestCase {
 
         sut.moveItems(from: IndexSet(integer: 0), to: 1)
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageSectionReordered.name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageSectionReordered)
     }
 
     private func createSUT() -> NewTabPageSectionsSettingsModel {

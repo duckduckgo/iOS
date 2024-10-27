@@ -48,13 +48,13 @@ final class UsageSegmentationTests: XCTestCase {
         sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .appUse)
         XCTAssertEqual([installAtb, todayAtb], appUseAtbs)
         XCTAssertEqual([], searchAtbs)
-        XCTAssertNotNil(PixelFiringMock.lastPixelName)
+        XCTAssertNotNil(PixelFiringMock.lastPixel)
 
         // Then a search
         sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .search)
         XCTAssertEqual([installAtb, todayAtb], appUseAtbs)
         XCTAssertEqual([installAtb, todayAtb], searchAtbs)
-        XCTAssertNotNil(PixelFiringMock.lastPixelName)
+        XCTAssertNotNil(PixelFiringMock.lastPixel)
 
         // Then another search shouldn't change anything else
         sut.processATB(todayAtb, withInstallAtb: installAtb, andActivityType: .search)
@@ -74,7 +74,7 @@ final class UsageSegmentationTests: XCTestCase {
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: .search)
 
         XCTAssertEqual(searchAtbs, [installAtb, atb])
-        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastPixel)
 
     }
 
@@ -106,11 +106,11 @@ final class UsageSegmentationTests: XCTestCase {
         assertWhenNewATBReceivedWithInstallAtb_ThenBothStoredAndPixelFired(.search)
     }
 
-    func testWhenSearchActivityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+    func testWhenSearchActvityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
         assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.search)
     }
 
-    func testWhenAppActivityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
+    func testWhenAppActvityATBReceivedTwice_ThenNotStoredAndNoPixelFired() {
         assertWhenATBReceivedTwice_ThenNotStoredAndNoPixelFired(.appUse)
     }
 
@@ -123,7 +123,7 @@ final class UsageSegmentationTests: XCTestCase {
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
         XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb])
-        XCTAssertEqual(Pixel.Event.usageSegments.name, PixelFiringMock.lastPixelName, file: file, line: line)
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastPixel, file: file, line: line)
         XCTAssertEqual([], PixelFiringMock.lastPixelInfo?.includedParams)
     }
 
@@ -135,7 +135,7 @@ final class UsageSegmentationTests: XCTestCase {
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
         XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb, atb], file: file, line: line)
-        XCTAssertEqual(Pixel.Event.usageSegments.name, PixelFiringMock.lastPixelName, file: file, line: line)
+        XCTAssertEqual(Pixel.Event.usageSegments, PixelFiringMock.lastPixel, file: file, line: line)
         XCTAssertEqual([], PixelFiringMock.lastPixelInfo?.includedParams)
     }
 
@@ -154,7 +154,7 @@ final class UsageSegmentationTests: XCTestCase {
         sut.processATB(atb, withInstallAtb: installAtb, andActivityType: activityType)
 
         XCTAssertEqual(activityType == .appUse ? appUseAtbs : searchAtbs, [installAtb, atb], file: file, line: line)
-        XCTAssertNil(PixelFiringMock.lastPixelName, file: file, line: line)
+        XCTAssertNil(PixelFiringMock.lastPixel, file: file, line: line)
     }
 
     private func makeSubject() -> UsageSegmenting {

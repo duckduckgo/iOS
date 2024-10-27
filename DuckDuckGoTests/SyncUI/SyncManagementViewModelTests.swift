@@ -18,7 +18,6 @@
 //
 
 import XCTest
-import Combine
 @testable import SyncUI
 
 /// To be fleshed out when UI is settled
@@ -45,7 +44,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func waitForInvocation() {
         let expectation = expectation(description: "Inv")
-        let cancellable = monitor.didChange.dropFirst().sink { val in
+        let cancellable = monitor.$functionCalls.dropFirst().sink { val in
             print(val)
             expectation.fulfill()
         }
@@ -89,8 +88,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         // async functions selector description apparently contain 'WithCompletionHandler'
         monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1,
-            #selector(showSyncWithAnotherDevice).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
 
@@ -133,8 +131,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         // async functions selector description apparently contain 'WithCompletionHandler'
         monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1,
-            #selector(shareRecoveryPDF).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
 
@@ -167,8 +164,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         // async functions selector description apparently contain 'WithCompletionHandler'
         monitor.assert(#selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"), calls: 1)
         monitor.assertCalls([
-            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1,
-            #selector(showRecoverData).description: 1
+            #selector(authenticateUser).description.dropping(suffix: "WithCompletionHandler:"): 1
         ])
     }
     // MARK: Delegate functions
@@ -268,12 +264,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
 private class Monitor<T> {
 
-    public var didChange = PassthroughSubject<Void, Never>()
-    var functionCalls = [String: Int]() {
-        didSet {
-            didChange.send()
-        }
-    }
+    @Published var functionCalls = [String: Int]()
 
     /// Whatever is passed as function is used as the key, the same key should be used for assertions.
     ///  Use `String.cleaningFunctionName()` with `#function` but be aware that overloaded function names will not be tracked accurately.

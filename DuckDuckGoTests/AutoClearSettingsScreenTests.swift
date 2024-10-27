@@ -23,20 +23,35 @@ import XCTest
 
 class AutoClearSettingsScreenTests: XCTestCase {
     
+    var mockDependencyProvider: MockDependencyProvider!
+    
+    override func setUp() {
+        super.setUp()
+        
+        mockDependencyProvider = MockDependencyProvider()
+        AppDependencyProvider.shared = mockDependencyProvider
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        AppDependencyProvider.shared = AppDependencyProvider.makeTestingInstance()
+    }
+    
     func testWhenOpeningSettingsThenClearDataToggleIsSetBasedOnAppSettings() {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = []
-
-        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard(appSettings: appSettings) {
+        let appSettigns = AppUserDefaults()
+        appSettigns.autoClearAction = []
+        
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() {
             settingsController.loadViewIfNeeded()
             XCTAssertFalse(settingsController.clearDataToggle.isOn)
         } else {
             assertionFailure("Could not load View Controller")
         }
         
-        appSettings.autoClearAction = .clearData
-
-        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard(appSettings: appSettings) {
+        appSettigns.autoClearAction = .clearData
+        
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() {
             settingsController.loadViewIfNeeded()
             XCTAssert(settingsController.clearDataToggle.isOn)
         } else {
@@ -48,7 +63,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = []
         
-        guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard(appSettings: appSettings) else {
+        guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard() else {
                 assertionFailure("Could not load View Controller")
                 return
         }
@@ -70,11 +85,9 @@ class AutoClearSettingsScreenTests: XCTestCase {
 
 private extension AutoClearSettingsViewController {
     
-    static func loadFromStoryboard(appSettings: AppSettings) -> AutoClearSettingsViewController? {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController", creator: { coder in
-            return AutoClearSettingsViewController(appSettings: appSettings, coder: coder)
-        })
+    static func loadFromStoryboard() -> AutoClearSettingsViewController? {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
+        return controller as? AutoClearSettingsViewController
     }
     
 }

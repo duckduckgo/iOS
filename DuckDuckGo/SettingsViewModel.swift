@@ -39,13 +39,13 @@ final class SettingsViewModel: ObservableObject {
     private var legacyViewProvider: SettingsLegacyViewProvider
     private lazy var versionProvider: AppVersion = AppVersion.shared
     private let voiceSearchHelper: VoiceSearchHelperProtocol
+    private let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let syncPausedStateManager: any SyncPausedStateManaging
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var subscriptionSignOutObserver: Any?
     var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
         DefaultDuckPlayerContingencyHandler(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
@@ -362,8 +362,8 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil,
          legacyViewProvider: SettingsLegacyViewProvider,
          subscriptionManager: SubscriptionManager,
-         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
-         voiceSearchHelper: VoiceSearchHelperProtocol,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability,
+         voiceSearchHelper: VoiceSearchHelperProtocol = AppDependencyProvider.shared.voiceSearchHelper,
          variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
@@ -417,8 +417,8 @@ extension SettingsViewModel {
             version: versionProvider.versionAndBuildNumber,
             crashCollectionOptInStatus: appSettings.crashCollectionOptInStatus,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
-            voiceSearchEnabled: voiceSearchHelper.isVoiceSearchEnabled,
-            speechRecognitionAvailable: voiceSearchHelper.isSpeechRecognizerAvailable,
+            voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled,
+            speechRecognitionAvailable: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtectionConnected: false,
             subscription: SettingsState.defaults.subscription,
@@ -706,7 +706,7 @@ extension SettingsViewModel {
         }
 
         // Update visibility based on Feature flag
-        state.subscription.enabled = subscriptionFeatureAvailability.isFeatureAvailable
+        state.subscription.enabled = AppDependencyProvider.shared.subscriptionFeatureAvailability.isFeatureAvailable
 
         // Update if can purchase based on App Store product availability
         state.subscription.canPurchase = subscriptionManager.canPurchase

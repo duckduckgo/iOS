@@ -63,24 +63,11 @@ class PasswordGenerationPromptViewController: UIViewController {
         presentationController?.delegate = self
         installChildViewController(controller)
     }
-
-    /// This is to handle cases where a webpage may have also presented a context menu, which ends up getting dismissed instead of this sheet
-    private func dismissSheetWithRetry(attempts: Int = 2, useGeneratedPassword: Bool) {
-        dismiss(animated: true) { [weak self] in
-            if self?.presentingViewController != nil && attempts > 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self?.dismissSheetWithRetry(attempts: attempts - 1, useGeneratedPassword: useGeneratedPassword)
-                }
-            } else {
-                self?.completion?(useGeneratedPassword)
-            }
-        }
-    }
 }
 
 extension PasswordGenerationPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        Pixel.fire(pixel: .autofillLoginsPasswordGenerationPromptDismissed)
+            Pixel.fire(pixel: .autofillLoginsPasswordGenerationPromptDismissed)
 
         self.completion?(false)
     }
@@ -90,13 +77,17 @@ extension PasswordGenerationPromptViewController: PasswordGenerationPromptViewMo
     func passwordGenerationPromptViewModelDidSelect(_ viewModel: PasswordGenerationPromptViewModel) {
         Pixel.fire(pixel: .autofillLoginsPasswordGenerationPromptConfirmed)
 
-        dismissSheetWithRetry(useGeneratedPassword: true)
+        dismiss(animated: true) {
+            self.completion?(true)
+        }
     }
 
     func passwordGenerationPromptViewModelDidCancel(_ viewModel: PasswordGenerationPromptViewModel) {
         Pixel.fire(pixel: .autofillLoginsPasswordGenerationPromptDismissed)
 
-        dismissSheetWithRetry(useGeneratedPassword: false)
+        dismiss(animated: true) {
+            self.completion?(false)
+        }
     }
 
     func passwordGenerationPromptViewModelDidResizeContent(_ viewModel: PasswordGenerationPromptViewModel, contentHeight: CGFloat) {

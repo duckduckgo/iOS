@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Persistence
 
 /// A variant of pixel that is fired at most once per day.
 ///
@@ -38,11 +37,9 @@ public final class DailyPixel {
 
     }
 
-    public enum Constant {
+    private enum Constant {
 
         static let dailyPixelStorageIdentifier = "com.duckduckgo.daily.pixel.storage"
-        public static let dailyPixelSuffixes = (dailySuffix: "_daily", countSuffix: "_count")
-        public static let legacyDailyPixelSuffixes = (dailySuffix: "_d", countSuffix: "_c")
 
     }
 
@@ -55,8 +52,6 @@ public final class DailyPixel {
                             error: Swift.Error? = nil,
                             withAdditionalParameters params: [String: String] = [:],
                             includedParameters: [Pixel.QueryParameters] = [.appVersion],
-                            pixelFiring: PixelFiring.Type = Pixel.self,
-                            dailyPixelStore: KeyValueStoring = DailyPixel.storage,
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         var key: String = pixel.name
 
@@ -66,13 +61,13 @@ public final class DailyPixel {
             key.append(":\(createSortedStringOfValues(from: errorParams))")
         }
 
-        if !hasBeenFiredToday(forKey: key, dailyPixelStore: dailyPixelStore) {
-            pixelFiring.fire(pixel: pixel,
-                             error: error,
-                             includedParameters: includedParameters,
-                             withAdditionalParameters: params,
-                             onComplete: onComplete)
-            updatePixelLastFireDate(forKey: key, dailyPixelStore: dailyPixelStore)
+        if !hasBeenFiredToday(forKey: key, dailyPixelStorage: storage) {
+            Pixel.fire(pixel: pixel,
+                       error: error,
+                       includedParameters: includedParameters,
+                       withAdditionalParameters: params,
+                       onComplete: onComplete)
+            updatePixelLastFireDate(forKey: key)
         } else {
             onComplete(Error.alreadyFired)
         }
@@ -82,19 +77,16 @@ public final class DailyPixel {
     /// This means a pixel will get sent twice the first time it is called per-day, and subsequent calls that day will only send the `_c` variant.
     /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.
     public static func fireDailyAndCount(pixel: Pixel.Event,
-                                         pixelNameSuffixes: (dailySuffix: String, countSuffix: String) = Constant.dailyPixelSuffixes,
                                          error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
                                          includedParameters: [Pixel.QueryParameters] = [.appVersion],
-                                         pixelFiring: PixelFiring.Type = Pixel.self,
-                                         dailyPixelStore: KeyValueStoring = DailyPixel.storage,
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         let key: String = pixel.name
 
-        if !hasBeenFiredToday(forKey: key, dailyPixelStore: dailyPixelStore) {
-            pixelFiring.fire(
-                pixelNamed: pixel.name + pixelNameSuffixes.dailySuffix,
+        if !hasBeenFiredToday(forKey: key, dailyPixelStorage: storage) {
+            Pixel.fire(
+                pixelNamed: pixel.name + "_d",
                 withAdditionalParameters: params,
                 includedParameters: includedParameters,
                 onComplete: onDailyComplete
@@ -102,25 +94,25 @@ public final class DailyPixel {
         } else {
             onDailyComplete(Error.alreadyFired)
         }
-        updatePixelLastFireDate(forKey: key, dailyPixelStore: dailyPixelStore)
+        updatePixelLastFireDate(forKey: key)
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        pixelFiring.fire(
-            pixelNamed: pixel.name + pixelNameSuffixes.countSuffix,
+        Pixel.fire(
+            pixelNamed: pixel.name + "_c",
             withAdditionalParameters: newParams,
             includedParameters: includedParameters,
             onComplete: onCountComplete
         )
     }
 
-    private static func updatePixelLastFireDate(forKey key: String, dailyPixelStore: KeyValueStoring) {
-        dailyPixelStore.set(Date(), forKey: key)
+    private static func updatePixelLastFireDate(forKey key: String) {
+        storage.set(Date(), forKey: key)
     }
 
-    private static func hasBeenFiredToday(forKey key: String, dailyPixelStore: KeyValueStoring) -> Bool {
-        if let lastFireDate = dailyPixelStore.object(forKey: key) as? Date {
+    private static func hasBeenFiredToday(forKey key: String, dailyPixelStorage: UserDefaults) -> Bool {
+        if let lastFireDate = dailyPixelStorage.object(forKey: key) as? Date {
             return Date().isSameDay(lastFireDate)
         }
         return false

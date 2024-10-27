@@ -47,13 +47,19 @@ class PixelTests: XCTestCase {
         
         let date = Date(timeIntervalSince1970: 0)
         let now = Date(timeIntervalSince1970: 1)
-
-        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> HTTPStubsResponse in
-            XCTAssertEqual("1.0", request.url?.getParameter(named: "dur"))
-
+        
+        stub(condition: { request -> Bool in
+            if let url = request.url {
+                XCTAssertEqual("1.0", url.getParameter(named: "dur"))
+                return true
+            }
+            
+            XCTFail("Did not found param dur")
+            return true
+        }, response: { _ -> HTTPStubsResponse in
             expectation.fulfill()
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-        }
+        })
         
         let pixel = TimedPixel(.appLaunch, date: date)
         pixel.fire(now)
@@ -158,7 +164,7 @@ class PixelTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     func testPixelDebouncePreventsFiringWithinInterval() {

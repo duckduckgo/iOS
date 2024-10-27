@@ -140,7 +140,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         await model.onDidClose(.close)
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.remoteMessageDismissed.name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageDismissed)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
@@ -154,7 +154,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.action(isShare: false))
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.remoteMessageActionClicked.name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
@@ -168,7 +168,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.primaryAction(isShare: false))
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.remoteMessagePrimaryActionClicked.name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessagePrimaryActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
@@ -182,7 +182,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.secondaryAction(isShare: false))
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.remoteMessageSecondaryActionClicked.name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .remoteMessageSecondaryActionClicked)
         XCTAssertEqual(PixelFiringMock.lastParams, [PixelParameters.message: "foo"])
     }
 
@@ -197,7 +197,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
 
         await model.onDidClose(.close)
 
-        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
@@ -211,7 +211,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.action(isShare: false))
 
-        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
@@ -225,7 +225,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.primaryAction(isShare: false))
 
-        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 
@@ -239,7 +239,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
         let model = try XCTUnwrap(sut.homeMessageViewModels.first)
         await model.onDidClose(.secondaryAction(isShare: false))
 
-        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertNil(PixelFiringMock.lastPixel)
         XCTAssertNil(PixelFiringMock.lastParams)
     }
 

@@ -69,12 +69,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     public let usesUnifiedFeedbackForm: Bool
 
-    init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager) {
+    init(subscriptionManager: SubscriptionManager = AppDependencyProvider.shared.subscriptionManager,
+         subscriptionFeatureAvailability: SubscriptionFeatureAvailability = AppDependencyProvider.shared.subscriptionFeatureAvailability) {
         self.subscriptionManager = subscriptionManager
         let subscriptionFAQURL = subscriptionManager.url(for: .faq)
         let learnMoreURL = subscriptionFAQURL.appendingPathComponent("adding-email")
         self.state = State(faqURL: subscriptionFAQURL, learnMoreURL: learnMoreURL)
-        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated
+        self.usesUnifiedFeedbackForm = subscriptionManager.accountManager.isUserAuthenticated && subscriptionFeatureAvailability.usesUnifiedFeedbackForm
 
         setupNotificationObservers()
     }

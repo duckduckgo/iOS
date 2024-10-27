@@ -78,15 +78,10 @@ class SettingsLegacyViewProvider: ObservableObject {
     var autoConsent: UIViewController { instantiate("AutoconsentSettingsViewController", fromStoryboard: "Settings") }
     var unprotectedSites: UIViewController { instantiate("UnprotectedSites", fromStoryboard: "Settings") }
     var fireproofSites: UIViewController { instantiate("FireProofSites", fromStoryboard: "Settings") }
+    var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var autoclearData: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController", creator: { coder in
-            return AutoClearSettingsViewController(appSettings: self.appSettings, coder: coder)
-        })
-    }
-
+    
     @MainActor
     func syncSettings(source: String? = nil) -> SyncSettingsViewController {
         return SyncSettingsViewController(syncService: self.syncService,

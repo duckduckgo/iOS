@@ -30,8 +30,7 @@ class SwipeTabsCoordinator: NSObject {
     weak var coordinator: MainViewCoordinator!
     weak var tabPreviewsSource: TabPreviewsSource!
     weak var appSettings: AppSettings!
-    let voiceSearchHelper: VoiceSearchHelperProtocol
-
+    
     let selectTab: (Int) -> Void
     let newTab: () -> Void
     let onSwipeStarted: () -> Void
@@ -55,7 +54,6 @@ class SwipeTabsCoordinator: NSObject {
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
-         voiceSearchHelper: VoiceSearchHelperProtocol,
          selectTab: @escaping (Int) -> Void,
          newTab: @escaping () -> Void,
          onSwipeStarted: @escaping () -> Void) {
@@ -63,8 +61,7 @@ class SwipeTabsCoordinator: NSObject {
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
         self.appSettings = appSettings
-        self.voiceSearchHelper = voiceSearchHelper
-
+        
         self.selectTab = selectTab
         self.newTab = newTab
         self.onSwipeStarted = onSwipeStarted
@@ -310,7 +307,7 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar = coordinator.omniBar
         } else {
             // Strong reference while we use the omnibar
-            let omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
+            let omniBar = OmniBar.loadFromXib()
 
             cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false

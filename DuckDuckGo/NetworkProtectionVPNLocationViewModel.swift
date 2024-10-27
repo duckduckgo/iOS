@@ -55,13 +55,13 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     }
 
     func onNearestItemSelection() async {
-        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetNearest, pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetNearest)
         settings.selectedLocation = .nearest
         await reloadList()
     }
 
     func onCountryItemSelection(id: String, cityId: String? = nil) async {
-        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetCustom, pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetCustom)
         let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
         settings.selectedLocation = .location(location)
         await reloadList()
@@ -71,8 +71,7 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private func reloadList() async {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
         if list.isEmpty {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingNoLocations,
-                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingNoLocations)
         }
         let selectedLocation = self.settings.selectedLocation
         let isNearestSelected = selectedLocation == .nearest

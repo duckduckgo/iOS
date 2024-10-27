@@ -83,13 +83,8 @@ struct SubscriptionSettingsView: View {
                 NavigationLink(destination: SubscriptionContainerViewFactory.makeEmailFlow(
                     navigationCoordinator: subscriptionNavigationCoordinator,
                     subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                    subscriptionFeatureAvailability: settingsViewModel.subscriptionFeatureAvailability,
                     onDisappear: {
-                        Task {
-                            await viewModel.fetchAndUpdateAccountEmail(
-                                cachePolicy: .reloadIgnoringLocalCacheData,
-                                loadingIndicator: false)
-                        }
+                        Task { await viewModel.fetchAndUpdateAccountEmail(cachePolicy: .reloadIgnoringLocalCacheData, loadingIndicator: false) }
                     }),
                                isActive: $isShowingEmailView) {
                     if let email = viewModel.state.subscriptionEmail {

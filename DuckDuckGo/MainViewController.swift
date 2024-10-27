@@ -110,7 +110,6 @@ class MainViewController: UIViewController {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let statisticsStore: StatisticsStore
-    let voiceSearchHelper: VoiceSearchHelperProtocol
 
     @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
     private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
@@ -126,7 +125,6 @@ class MainViewController: UIViewController {
     private var vpnCancellables = Set<AnyCancellable>()
     private var feedbackCancellable: AnyCancellable?
 
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -197,9 +195,7 @@ class MainViewController: UIViewController {
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
-        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-        subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
-        voiceSearchHelper: VoiceSearchHelperProtocol
+        statisticsStore: StatisticsStore = StatisticsUserDefaults()
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -230,8 +226,6 @@ class MainViewController: UIViewController {
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.contextualOnboardingPixelReporter = contextualOnboardingPixelReporter
         self.statisticsStore = statisticsStore
-        self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
-        self.voiceSearchHelper = voiceSearchHelper
 
         super.init(nibName: nil, bundle: nil)
         
@@ -267,7 +261,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view, voiceSearchHelper: voiceSearchHelper)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
@@ -349,9 +343,8 @@ class MainViewController: UIViewController {
         
         swipeTabsCoordinator = SwipeTabsCoordinator(coordinator: viewCoordinator,
                                                     tabPreviewsSource: previewsSource,
-                                                    appSettings: appSettings,
-                                                    voiceSearchHelper: voiceSearchHelper) { [weak self] in
-
+                                                    appSettings: appSettings) { [weak self] in
+            
             guard $0 != self?.tabManager.model.currentIndex else { return }
             
             DailyPixel.fire(pixel: .swipeTabsUsedDaily)
@@ -1742,13 +1735,12 @@ extension MainViewController: BrowserChromeDelegate {
             self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
+
+            self.view.layoutIfNeeded()
         }
            
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
-                updateBlock()
-                self.view.layoutIfNeeded()
-            }
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
         } else {
             updateBlock()
         }

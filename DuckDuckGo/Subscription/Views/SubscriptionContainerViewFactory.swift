@@ -19,14 +19,12 @@
 
 import SwiftUI
 import Subscription
-import BrowserServicesKit
 
 enum SubscriptionContainerViewFactory {
 
     static func makeSubscribeFlow(origin: String?,
                                   navigationCoordinator: SubscriptionNavigationCoordinator,
                                   subscriptionManager: SubscriptionManager,
-                                  subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
                                   privacyProDataReporter: PrivacyProDataReporting?) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
@@ -46,7 +44,6 @@ enum SubscriptionContainerViewFactory {
             origin: origin,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                                 subscriptionAttributionOrigin: origin,
                                                                 appStorePurchaseFlow: appStorePurchaseFlow,
                                                                 appStoreRestoreFlow: appStoreRestoreFlow,
@@ -58,8 +55,7 @@ enum SubscriptionContainerViewFactory {
     }
 
     static func makeRestoreFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
-                                subscriptionManager: SubscriptionManager,
-                                subscriptionFeatureAvailability: SubscriptionFeatureAvailability) -> some View {
+                                subscriptionManager: SubscriptionManager) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                              subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
@@ -78,7 +74,6 @@ enum SubscriptionContainerViewFactory {
             origin: nil,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                                 subscriptionAttributionOrigin: nil,
                                                                 appStorePurchaseFlow: appStorePurchaseFlow,
                                                                 appStoreRestoreFlow: appStoreRestoreFlow,
@@ -90,7 +85,6 @@ enum SubscriptionContainerViewFactory {
 
     static func makeEmailFlow(navigationCoordinator: SubscriptionNavigationCoordinator,
                               subscriptionManager: SubscriptionManager,
-                              subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
                               onDisappear: @escaping () -> Void) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
                                                              storePurchaseManager: subscriptionManager.storePurchaseManager(),
@@ -109,7 +103,6 @@ enum SubscriptionContainerViewFactory {
             origin: nil,
             userScript: SubscriptionPagesUserScript(),
             subFeature: SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
-                                                                subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                                 subscriptionAttributionOrigin: nil,
                                                                 appStorePurchaseFlow: appStorePurchaseFlow,
                                                                 appStoreRestoreFlow: appStoreRestoreFlow,

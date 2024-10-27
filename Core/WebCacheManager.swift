@@ -82,29 +82,14 @@ public class WebCacheManager {
                       dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
-        var leftoverContainerIDs = [UUID]()
         if #available(iOS 17, *) {
-            let result = await containerBasedClearing(storeIdManager: dataStoreIdManager)
-            cookiesToUpdate += result.cookies
-            leftoverContainerIDs = result.leftoverContainerIDs
+            cookiesToUpdate += await containerBasedClearing(storeIdManager: dataStoreIdManager) ?? []
         }
 
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
-
-        // Attempt to clean up leftover stores again after a delay
-        // This should not be a problem as these containers are not supposed to be used anymore.
-        // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
-        if #available(iOS 17, *), !leftoverContainerIDs.isEmpty {
-            Task {
-                try? await Task.sleep(for: .seconds(3))
-                for uuid in leftoverContainerIDs {
-                    try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
-                }
-            }
-        }
     }
 
 }
@@ -128,27 +113,18 @@ extension WebCacheManager {
     }
 
     @available(iOS 17, *)
-    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> (cookies: [HTTPCookie],
-                                                                                       leftoverContainerIDs: [UUID]) {
+    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> [HTTPCookie]? {
         guard let containerId = storeIdManager.currentId else {
             storeIdManager.invalidateCurrentIdAndAllocateNew()
-            return ([], [])
+            return []
         }
         storeIdManager.invalidateCurrentIdAndAllocateNew()
 
-        var leftoverContainerIDs = [UUID]()
-
         var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
-        let cookies = await dataStore?.httpCookieStore.allCookies() ?? []
+        let cookies = await dataStore?.httpCookieStore.allCookies()
         dataStore = nil
 
         var uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-
-        // There may be a timing issue related to fetching current container, so append previous UUID as a precaution
-        if uuids.firstIndex(of: containerId) == nil {
-            uuids.append(containerId)
-        }
-
         if let newContainerID = storeIdManager.currentId,
             let newIdIndex = uuids.firstIndex(of: newContainerID) {
             assertionFailure("Attempted to cleanup current Data Store")
@@ -157,15 +133,11 @@ extension WebCacheManager {
 
         let previousLeftOversCount = max(0, uuids.count - 1) // -1 because one store is expected to be cleared
         for uuid in uuids {
-            do {
-                try await WKWebsiteDataStore.remove(forIdentifier: uuid)
-            } catch {
-                leftoverContainerIDs.append(uuid)
-            }
+            try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
         }
         await checkForLeftBehindDataStores(previousLeftOversCount: previousLeftOversCount)
 
-        return (cookies, leftoverContainerIDs)
+        return cookies
     }
 
     private func legacyDataClearing() async -> [HTTPCookie]? {

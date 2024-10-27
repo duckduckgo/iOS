@@ -20,7 +20,6 @@
 import XCTest
 import BrowserServicesKit
 
-@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
@@ -38,7 +37,7 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 
         passwordsSettings.isEnabled.wrappedValue = true
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeShortcutAdded("passwords").name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutAdded("passwords"))
     }
 
     func testFiresPixelWhenItemDisabled() throws {
@@ -50,7 +49,7 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 
         passwordsSettings.isEnabled.wrappedValue = false
 
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeShortcutRemoved("passwords").name)
+        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutRemoved("passwords"))
     }
 
     private func createSUT() -> NewTabPageShortcutsSettingsModel {

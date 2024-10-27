@@ -36,7 +36,11 @@ final class DuckPlayerNavigationHandler: NSObject {
     var lastWatchInYoutubeVideo: String?
        
     // Redirection Throttle
-    private var lastDuckPlayerRedirect: Date?
+    private var lastDuckPlayerRedirect: Date? {
+        didSet {
+            print("DP: lastDuckPlayerRedirect: \(lastDuckPlayerRedirect.debugDescription)")
+        }
+    }
     private let lastDuckPlayerRedirectThrottleDuration: TimeInterval = 1
     
     // Navigation URL Changing Throttle
@@ -578,10 +582,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Tasks performed as part of the initialization of TabViewController, when the handler
     // Is attached to it
     @MainActor
-    func handleDidFinishLoading(webView: WKWebView) {
-        
-        // Perform different resets after page loads
+    func handleDidFinishLoading(webView: WKWebView) {}
+    
+    // Tasks performed as part of the initialization of TabViewController, when the handler
+    // Is attached to it
+    @MainActor
+    func handleDidStartLoading(webView: WKWebView) {
+
         duckPlayer.settings.allowFirstVideo = false
+
     }
     
     // Get the duck:// URL youtube-no-cookie URL

@@ -79,6 +79,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     func handleGoBack(webView: WKWebView)
     func handleReload(webView: WKWebView)
     func handleAttach(webView: WKWebView)
+    func handleDidStartLoading(webView: WKWebView)
     func handleDidFinishLoading(webView: WKWebView)
     func getDuckURLFor(_ url: URL) -> URL
     func shouldCancelNavigation(navigationAction: WKNavigationAction, webView: WKWebView) -> Bool

@@ -389,6 +389,9 @@ class TabViewController: UIViewController {
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
         super.init(coder: aDecoder)
+        
+        // Assign itself as tabNavigationHandler for DuckPlayer
+        duckPlayerNavigationHandler?.tabNavigationHandler = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -584,7 +587,6 @@ class TabViewController: UIViewController {
                 if let handler = self?.duckPlayerNavigationHandler,
                     let webView = self?.webView {
                     handler.handleAttach(webView: webView)
-                    handler.tabNavigationHandler = self
                 }
             })
         }
@@ -1098,11 +1100,6 @@ class TabViewController: UIViewController {
         willMove(toParent: nil)
         removeFromParent()
         view.removeFromSuperview()
-        
-        // Cleanup DuckPlayer Handler
-        duckPlayerNavigationHandler?.duckPlayer.removeHostView()
-        duckPlayerNavigationHandler?.tabNavigationHandler = nil
-        duckPlayerNavigationHandler = nil
     }
 
     private func removeObservers() {
@@ -1308,6 +1305,8 @@ extension TabViewController: WKNavigationDelegate {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
         }
+        
+        duckPlayerNavigationHandler?.handleDidStartLoading(webView: webView)
     }
 
     func webView(_ webView: WKWebView,

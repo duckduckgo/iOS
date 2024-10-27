@@ -584,6 +584,7 @@ class TabViewController: UIViewController {
                 if let handler = self?.duckPlayerNavigationHandler,
                     let webView = self?.webView {
                     handler.handleAttach(webView: webView)
+                    handler.tabNavigationHandler = self
                 }
             })
         }
@@ -1814,9 +1815,6 @@ extension TabViewController: WKNavigationDelegate {
                 if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                     privacyProDataReporter.saveSearchCount()
-                    
-                    // Duck Player Search Experiment
-                    DuckPlayerLaunchExperiment(duckPlayerMode: duckPlayer?.settings.mode).fireSearchPixels()
                 }
 
                 self.delegate?.closeFindInPage(tab: self)

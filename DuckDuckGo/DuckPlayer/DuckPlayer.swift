@@ -92,6 +92,7 @@ protocol DuckPlayerProtocol: AnyObject {
     func initialSetupOverlay(params: Any, message: WKScriptMessage) async -> Encodable?
     
     func setHostViewController(_ vc: UIViewController)
+    func removeHostView()
 }
 
 final class DuckPlayer: DuckPlayerProtocol {
@@ -141,6 +142,12 @@ final class DuckPlayer: DuckPlayerProtocol {
     // info sheet directly
     public func setHostViewController(_ vc: UIViewController) {
         hostView = vc
+    }
+    
+    // Sets a presenting VC, so DuckPlayer can present the
+    // info sheet directly
+    public func removeHostView() {
+        hostView = nil
     }
     
     // MARK: - Common Message Handlers

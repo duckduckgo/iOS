@@ -598,15 +598,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     // Sets the DuckPlayerReferer based on URL and headers.  This is called from the NavigationDelegate
     // as part of decidePolicy for.  The Referrer is used mostly to firing the correct pixels
     func setReferrer(navigationAction: WKNavigationAction, webView: WKWebView) {
-                    
-        // If there is a SERP referer Header, use it
-        if let referrer = navigationAction.request.allHTTPHeaderFields?[Constants.refererHeader], referrer.contains(Constants.SERPURL) {
-            self.referrer = .serp
+        
+        let isNewTab = tabNavigationHandler?.isNewTab ?? false
+        
+        guard let url = navigationAction.request.url else {
             return
         }
         
-        // If this is a new tab (no history), but theres a URL Referrer parameter, use it
-        if webView.backListItemsCount() == 0, let url = navigationAction.request.url {
+        // If this is a new tab and theres a URL Referrer parameter, use it
+        if isNewTab {
             let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             let referrerParam = urlComponents?.queryItems?.first(where: { $0.name == Constants.duckPlayerReferrerParameter })?.value
             
@@ -620,31 +620,10 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             default:
                 break
             }
-            return
         }
-            
-            
-        // If this is a new tab (no history), but there's a DuckPlayer header, use it
-        if webView.backListItemsCount() == 0,
-           let headers = navigationAction.request.allHTTPHeaderFields,
-           let navigationSource = headers[Constants.duckPlayerReferrerParameter] {
-            
-            switch navigationSource {
-            case DuckPlayerReferrer.serp.stringValue:
-                referrer = .serp
-            case DuckPlayerReferrer.youtube.stringValue:
-                referrer = .youtube
-            case DuckPlayerReferrer.other.stringValue:
-                referrer = .other
-            default:
-                break
-            }
-            return
-        }
-        
-        // If There's no history, and the user arrived directly
-        // at Watch
-        if webView.backListItemsCount() == 0
+                
+        // If this is not a YoutubeWatch page, just use Other
+        if isNewTab
             && webView.url?.isYoutubeWatch ?? false || webView.url == nil
             && duckPlayerMode == .enabled {
             referrer = .other
@@ -659,15 +638,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return
         }
                         
-        // Otherwise, just set the header based on the URL
-        if let url = navigationAction.request.url {
-            
-            // We only need a referrer when DP is enabled
-            if url.isDuckPlayer && duckPlayerMode == .enabled {
-                referrer = .youtube
-                return
-            }
-        }
+        referrer = .youtube        
     }
 
     // Determine if navigation should be cancelled

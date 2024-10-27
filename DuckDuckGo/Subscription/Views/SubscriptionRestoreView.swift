@@ -176,7 +176,8 @@ struct SubscriptionRestoreView: View {
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                     getCellButton(buttonText: UserText.subscriptionActivateEmailButton,
                                   action: {
-                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart)
+                        DailyPixel.fireDailyAndCount(pixel: .privacyProRestorePurchaseEmailStart,
+                                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
                         DailyPixel.fire(pixel: .privacyProWelcomeAddDevice)
                         viewModel.showActivationFlow(true)
                     })

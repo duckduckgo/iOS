@@ -52,6 +52,7 @@ struct BookmarksDatabaseSetup {
                 let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
 
                 DailyPixel.fireDailyAndCount(pixel: .debugBookmarksValidationFailed,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              withAdditionalParameters: processedErrors.errorPixelParameters,
                                              includedParameters: [.appVersion])
             }
@@ -130,6 +131,7 @@ struct BookmarksDatabaseSetup {
             let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
 
             DailyPixel.fireDailyAndCount(pixel: .debugBookmarksPendingDeletionRepairError,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                          withAdditionalParameters: processedErrors.errorPixelParameters,
                                          includedParameters: [.appVersion])
         }

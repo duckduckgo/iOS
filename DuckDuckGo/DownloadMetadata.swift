@@ -32,7 +32,7 @@ struct DownloadMetadata {
         self.filename = filename
         self.expectedContentLength = response.expectedContentLength
         self.mimeTypeSource = response.mimeType ?? ""
-        self.mimeType = MIMEType(from: response.mimeType)
+        self.mimeType = MIMEType(from: response.mimeType, fileExtension: filename.pathExtension)
         self.url = url
     }
 }

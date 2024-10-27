@@ -87,6 +87,7 @@ import os.log
     private var autofillPixelReporter: AutofillPixelReporter?
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
+    private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle
@@ -103,6 +104,8 @@ import os.log
 
     private let launchOptionsHandler = LaunchOptionsHandler()
     private let onboardingPixelReporter = OnboardingPixelReporter()
+
+    private let voiceSearchHelper = VoiceSearchHelper()
 
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     override init() {
@@ -302,6 +305,10 @@ import os.log
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
+        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            purchasePlatform: .appStore)
+
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
@@ -315,7 +322,8 @@ import os.log
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings,
+                                                                     voiceSearchHelper: voiceSearchHelper)
             window?.makeKeyAndVisible()
 
             presentInsufficientDiskSpaceAlert()
@@ -336,7 +344,9 @@ import os.log
                                           variantManager: variantManager,
                                           contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                          voiceSearchHelper: voiceSearchHelper)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -353,7 +363,7 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
+        self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
@@ -564,6 +574,8 @@ import os.log
         Task {
             await privacyProDataReporter.saveWidgetAdded()
         }
+
+        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -822,7 +834,7 @@ import os.log
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings, voiceSearchHelper: voiceSearchHelper)
         overlay.delegate = self
 
         overlayWindow?.rootViewController = overlay

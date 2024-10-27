@@ -46,7 +46,11 @@ public final class PrivacyFeatures {
         }
 
         if dailyAndCount {
-            DailyPixel.fireDailyAndCount(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onCountComplete: onComplete)
+            DailyPixel.fireDailyAndCount(pixel: domainEvent,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         error: error,
+                                         withAdditionalParameters: parameters ?? [:],
+                                         onCountComplete: onComplete)
         } else {
             Pixel.fire(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
         }

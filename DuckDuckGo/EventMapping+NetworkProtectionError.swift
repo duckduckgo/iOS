@@ -102,6 +102,9 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelError = error
         }
 
-        DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
+        DailyPixel.fireDailyAndCount(pixel: pixelEvent,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                     error: pixelError,
+                                     withAdditionalParameters: params)
     }
 }

@@ -60,9 +60,9 @@ final class NetworkProtectionDNSSettingsViewModel: ObservableObject {
         /// Updating `dnsSettings` does an IPv4 conversion before actually commiting the change,
         /// so we do a final check to see which outcome the user ends up with
         if settings.dnsSettings.usesCustomDNS {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateCustom)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateCustom, pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         } else {
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateDefault)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionDNSUpdateDefault, pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
     }
 

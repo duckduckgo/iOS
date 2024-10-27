@@ -116,12 +116,14 @@ struct SettingsRootView: View {
             SubscriptionContainerViewFactory.makeSubscribeFlow(origin: origin,
                                                                navigationCoordinator: subscriptionNavigationCoordinator,
                                                                subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                               subscriptionFeatureAvailability: viewModel.subscriptionFeatureAvailability,
                                                                privacyProDataReporter: viewModel.privacyProDataReporter)
             .environmentObject(subscriptionNavigationCoordinator)
 
         case .restoreFlow:
             SubscriptionContainerViewFactory.makeEmailFlow(navigationCoordinator: subscriptionNavigationCoordinator,
                                                            subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                           subscriptionFeatureAvailability: viewModel.subscriptionFeatureAvailability,
                                                            onDisappear: {})
         case .duckPlayer:
             SettingsDuckPlayerView().environmentObject(viewModel)

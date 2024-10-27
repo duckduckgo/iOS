@@ -87,6 +87,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     var accountManager: AccountManager!
     var subscriptionManager: SubscriptionManager!
+    var subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled
 
     var feature: SubscriptionPagesUseSubscriptionFeature!
 
@@ -158,6 +159,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                          subscriptionEnvironment: subscriptionEnvironment)
 
         feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
+                                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                           subscriptionAttributionOrigin: nil,
                                                           appStorePurchaseFlow: appStorePurchaseFlow,
                                                           appStoreRestoreFlow: appStoreRestoreFlow,
@@ -168,8 +170,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         Pixel.isDryRun = true
         pixelsFired.removeAll()
         HTTPStubs.removeAllStubs()
-
-        AppDependencyProvider.shared = AppDependencyProvider.makeTestingInstance()
 
         subscriptionService = nil
         authService = nil
@@ -308,11 +308,18 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     func testGetSubscriptionOptionsReturnsEmptyOptionsWhenPurchaseNotAllowed() async throws {
         // Given
-        let mockDependencyProvider = MockDependencyProvider()
-        mockDependencyProvider.subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock(isFeatureAvailable: true,
-                                                                                                     isSubscriptionPurchaseAllowed: false,
-                                                                                                     usesUnifiedFeedbackForm: true)
-        AppDependencyProvider.shared = mockDependencyProvider
+        let subscriptionFeatureAvailabilityWithoutPurchaseAllowed = SubscriptionFeatureAvailabilityMock(
+            isFeatureAvailable: true,
+            isSubscriptionPurchaseAllowed: false,
+            usesUnifiedFeedbackForm: true
+        )
+
+        feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
+                                                          subscriptionFeatureAvailability: subscriptionFeatureAvailabilityWithoutPurchaseAllowed,
+                                                          subscriptionAttributionOrigin: nil,
+                                                          appStorePurchaseFlow: appStorePurchaseFlow,
+                                                          appStoreRestoreFlow: appStoreRestoreFlow,
+                                                          appStoreAccountManagementFlow: appStoreAccountManagementFlow)
 
         storePurchaseManager.subscriptionOptionsResult = Constants.subscriptionOptions
 

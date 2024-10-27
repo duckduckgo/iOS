@@ -68,7 +68,7 @@ enum DuckPlayerNavigationDirection {
     case back, forward
 }
 
-
+@MainActor
 protocol DuckPlayerNavigationHandling: AnyObject {
     var referrer: DuckPlayerReferrer { get set }
     var tabNavigationHandler: DuckPlayerTabNavigationHandling? { get set }

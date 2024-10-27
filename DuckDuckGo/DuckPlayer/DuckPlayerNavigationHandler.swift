@@ -125,10 +125,20 @@ final class DuckPlayerNavigationHandler: NSObject {
         return html
     }
     
+    @MainActor
     private func performNavigation(_ request: URLRequest, responseHTML: String, webView: WKWebView) {
+        
+        // If DuckPlayer is enabled, and we're watching a video in Youtube (temporarily)
+        // Any direct navigation to a duck:// URL should open in a new tab
+        if let url = webView.url, url.isYoutubeWatch && isOpenInNewTabEnabled && duckPlayerMode == .enabled {
+            self.redirectToDuckPlayerVideo(url: request.url, webView: webView)
+            return
+        }
+        // Otherwise, just load the simulated request
         webView.loadSimulatedRequest(request, responseHTML: responseHTML)
     }
     
+    @MainActor
     private func performRequest(request: URLRequest, webView: WKWebView) {
         let html = Self.makeHTMLFromTemplate()
         let duckPlayerRequest = Self.makeDuckPlayerRequest(from: request)
@@ -259,8 +269,7 @@ final class DuckPlayerNavigationHandler: NSObject {
                                               forceNewTab: Bool = false,
                                               allowFirstVideo: Bool = false) {
         
-        guard let url = request.url,
-              let (videoID, _) = url.youtubeVideoParams else {
+        guard let url = request.url else {
             return
         }
         
@@ -401,8 +410,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
 
         // Handle duck:// scheme URLs
-        if url.isDuckURLScheme,
-           let (videoID, _) = url.youtubeVideoParams {
+        if url.isDuckURLScheme {
 
             // Simulate DuckPlayer request if in enabled/ask mode and not redirected to YouTube
             if duckPlayerMode != .disabled,
@@ -545,7 +553,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 
         if let url = webView.url, url.isDuckPlayer,
             !url.isDuckURLScheme,
-            let (videoID, timestamp) = url.youtubeVideoParams,
             duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
             redirectToDuckPlayerVideo(url: url, webView: webView)
         } else {
@@ -604,8 +611,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         return URL.duckPlayer(youtubeVideoID, timestamp: timestamp)
     }
-    
-    
     
     // Sets the DuckPlayerReferer based on URL and headers.  This is called from the NavigationDelegate
     // as part of decidePolicy for.  The Referrer is used mostly to firing the correct pixels

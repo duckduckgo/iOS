@@ -258,7 +258,7 @@ struct NetworkProtectionStatusView: View {
         Section {
             if #available(iOS 17.0, *) {
                 geoswitchingTipView()
-                    .tipImageSize(Self.defaultImageSize))
+                    .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
             }
         }

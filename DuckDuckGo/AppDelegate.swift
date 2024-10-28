@@ -88,7 +88,7 @@ import os.log
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
-    private(set) var subscriptionCookieManager: SubscriptionCookieManaging!
+    private var subscriptionCookieManager: SubscriptionCookieManaging!
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: lifecycle

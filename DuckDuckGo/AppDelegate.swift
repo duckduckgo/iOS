@@ -489,8 +489,6 @@ import os.log
     }
 
     private func reportAdAttribution() {
-        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
-
         Task.detached(priority: .background) {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }

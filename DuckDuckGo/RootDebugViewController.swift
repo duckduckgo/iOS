@@ -47,9 +47,6 @@ class RootDebugViewController: UITableViewController {
         case newTabPageSections = 674
         case onboarding = 676
         case resetSyncPromoPrompts = 677
-        case resetDuckPlayerExperiment = 678
-        case overrideDuckPlayerExperiment = 679
-        case overrideDuckPlayerExperimentControl = 680
         case resetTipKit = 681
     }
 
@@ -191,17 +188,8 @@ class RootDebugViewController: UITableViewController {
                 let syncPromoPresenter = SyncPromoManager(syncService: sync)
                 syncPromoPresenter.resetPromos()
                 ActionMessageView.present(message: "Sync Promos reset")
-            case .resetDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().cleanup()
-                ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
             case .resetTipKit:
                 tipKitUIActionHandler?.resetTipKitTapped()
-            case .overrideDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().override()
-                ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
-            case .overrideDuckPlayerExperimentControl:
-                DuckPlayerLaunchExperiment().override(control: true)
-                ActionMessageView.present(message: "Overriding experiment.  You are now in the 'control' group.  Restart the app to complete")
             }
         }
     }

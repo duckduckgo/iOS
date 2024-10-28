@@ -22,6 +22,9 @@ import NetworkProtection
 import TipKit
 
 struct NetworkProtectionStatusView: View {
+
+    static let defaultImageSize = CGSize(width: 32, height: 32)
+
     @Environment(\.colorScheme) var colorScheme
 
     @ObservedObject
@@ -147,13 +150,13 @@ struct NetworkProtectionStatusView: View {
         Section {
             if #available(iOS 17.0, *) {
                 widgetTipView()
-                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
             }
 
             if #available(iOS 17.0, *) {
                 snoozeTipView()
-                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
             }
         }
@@ -255,7 +258,7 @@ struct NetworkProtectionStatusView: View {
         Section {
             if #available(iOS 17.0, *) {
                 geoswitchingTipView()
-                    .tipImageSize(CGSize(width: 32, height: 32))
+                    .tipImageSize(Self.defaultImageSize))
                     .padding(.horizontal, 3)
             }
         }

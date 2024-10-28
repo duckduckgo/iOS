@@ -1,5 +1,6 @@
 //
 //  TipKitController.swift
+//  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
@@ -44,7 +45,7 @@ final class TipKitController {
     }
 
     init(logger: Logger,
-                userDefaults: UserDefaults) {
+         userDefaults: UserDefaults) {
 
         self.logger = logger
         self.userDefaults = userDefaults

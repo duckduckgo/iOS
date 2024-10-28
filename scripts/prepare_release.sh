@@ -3,6 +3,7 @@
 set -eo pipefail
 
 mute=">/dev/null 2>&1"
+is_subsequent_release=0
 base_branch="main"
 build_number=0
 
@@ -78,24 +79,28 @@ read_command_line_arguments() {
 		print_usage_and_exit "💥 Error: Missing argument"
 	fi
 
+	shift 1
+
+	while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            -v)
+                mute=
+                ;;
+            -s|--subsequent)
+                is_subsequent_release=1
+                ;;
+            *)
+                print_usage_and_exit "💥 Error: Unknown option '$1'"
+                ;;
+        esac
+        shift
+    done
+
 	if [[ $input =~ $version_regexp ]]; then
 		process_release "$input"
 	else
 		process_hotfix "$input"
 	fi
-
-	shift 1
-
-	while getopts 'v' option; do
-		case "${option}" in
-			v)
-				mute=
-				;;
-			*)
-				print_usage_and_exit "💥 Error: Unknown option '${option}'"
-				;;
-		esac
-	done
 }
 
 process_release() { # expected input e.g. "1.72.0"
@@ -104,9 +109,17 @@ process_release() { # expected input e.g. "1.72.0"
 
 	echo "Processing version number: $version"
 
-	if release_branch_exists; then
-		is_subsequent_release=1
+	if [[ "$is_subsequent_release" -eq 1 ]]; then
+		# check if the release branch exists (it must exist for a subsequent release)
+		if ! release_branch_exists; then
+			die "💥 Error: Release branch does not exist for a subsequent release!"
+		fi
 		base_branch="$release_branch"
+	else
+		# check if the release branch does NOT exist (it must NOT exist for an initial release)
+		if release_branch_exists; then
+			die "💥 Error: Release branch already exists for an initial release!"
+		fi
 	fi
 }
 

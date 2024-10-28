@@ -1,5 +1,5 @@
 //
-//  StubAutofillLoginImportStateProvider.swift
+//  Logger+TipKit.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,18 +18,11 @@
 //
 
 import Foundation
-import BrowserServicesKit
+import os.log
 
-struct StubAutofillLoginImportStateProvider: AutofillLoginImportStateProvider {
-    public var isNewDDGUser: Bool = false
-    public var hasImportedLogins: Bool = false
-    var credentialsImportPromptPresentationCount: Int = 0
+extension Logger {
 
-    var isAutofillEnabled: Bool {
-        AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled
-    }
-
-    func hasNeverPromptWebsitesFor(_ domain: String) -> Bool {
-        AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
-    }
+    static var tipKit: Logger = {
+        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "TipKit")
+    }()
 }

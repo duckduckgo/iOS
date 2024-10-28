@@ -22,17 +22,19 @@ import UIKit
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
+    private let voiceSearchHelper: VoiceSearchHelperProtocol
 
     var superview: UIView {
         coordinator.superview
     }
 
-    private init(_ superview: UIView) {
+    private init(superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) {
         coordinator = MainViewCoordinator(superview: superview)
+        self.voiceSearchHelper = voiceSearchHelper
     }
 
-    static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
-        let factory = MainViewFactory(superview)
+    static func createViewHierarchy(_ superview: UIView, voiceSearchHelper: VoiceSearchHelperProtocol) -> MainViewCoordinator {
+        let factory = MainViewFactory(superview: superview, voiceSearchHelper: voiceSearchHelper)
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
@@ -70,7 +72,7 @@ extension MainViewFactory {
     }
 
     private func createOmniBar() {
-        coordinator.omniBar = OmniBar.loadFromXib()
+        coordinator.omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
         coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
     }
     

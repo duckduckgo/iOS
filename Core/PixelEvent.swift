@@ -832,6 +832,9 @@ extension Pixel {
         case duckplayerExperimentDailySearch
         case duckplayerExperimentWeeklySearch
         case duckplayerExperimentYoutubePageView
+
+        // MARK: WebView Error Page Shown
+        case webViewErrorPageShown
     }
 
 }
@@ -1659,6 +1662,8 @@ extension Pixel.Event {
         case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search_v2"
         case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view_v2"
             
+        // MARK: - WebView Error Page shown
+        case .webViewErrorPageShown: return "m_errorpageshown"
         }
     }
 }

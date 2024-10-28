@@ -30,7 +30,7 @@ class TextZoomEditorModel: ObservableObject {
 
     @Published var value: Int = 0 {
         didSet {
-            title = UserText.textZoomWithParcentSheetTitle(valueAsPercent)
+            title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
             storage.set(textZoomLevel: TextZoomLevel.allCases[value], forDomain: domain)
             NotificationCenter.default.post(
                 name: AppUserDefaults.Notifications.textSizeChange,

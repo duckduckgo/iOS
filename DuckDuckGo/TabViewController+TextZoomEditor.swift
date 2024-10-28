@@ -18,11 +18,12 @@
 //
 
 import UIKit
+import Common
 
 extension TabViewController {
 
     func showTextZoomAdjustment() {
-        guard let domain = webView.url?.host?.droppingWwwPrefix() else { return }
+        guard let domain = TLD().eTLDplus1(webView.url?.host) else { return }
         let controller = TextZoomController(
             domain: domain,
             storage: domainTextZoomStorage,
@@ -37,6 +38,7 @@ extension TabViewController {
         } else {
             controller.sheetPresentationController?.detents = [.medium()]
         }
+
         present(controller, animated: true)
     }
 

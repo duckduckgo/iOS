@@ -358,13 +358,10 @@ public struct UserText {
     }
     public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
     
-    public static func textZoomWithPercentMenuItem(_ percent: Int) -> String {
-        let message = NSLocalizedString("action.text-zoom-sheet-menu-item", value: "Zoom Text (%d%%)", comment: "Zoom text menu item showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56")
-        return message.format(arguments: percent)
-    }
+    public static let textZoomMenuItem = NSLocalizedString("action.text-zoom-sheet-menu-item", value: "Zoom", comment: "Text zoom menu item")
 
-    public static func textZoomWithParcentSheetTitle(_ percent: Int) -> String {
-        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Zoom (%d%%)", comment: "Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56")
+    public static func textZoomWithPercentSheetTitle(_ percent: Int) -> String {
+        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Zoom Text (%d%%)", comment: "Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56")
         return message.format(arguments: percent)
     }
 
@@ -1064,7 +1061,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
     public static let settingsFirebutton = NSLocalizedString("settings.firebutton", value: "Fire Button Animation", comment: "Settings screen cell text for fire button animation")
-    public static let settingsText = NSLocalizedString("settings.text.size", value: "Zoom Text", comment: "Settings screen cell text for text size")
+    public static let settingsText = NSLocalizedString("settings.text.size", value: "Default Zoom Text", comment: "Settings screen cell text for text size")
     public static let settingsAddressBar = NSLocalizedString("settings.address.bar", value: "Address Bar Position", comment: "Settings screen cell text for addess bar position")
     public static let settingsFullURL = NSLocalizedString("settings.address.full.url", value: "Show Full Site Address", comment: "Settings screen cell title for toggling full URL visibility in address bar")
 

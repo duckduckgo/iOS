@@ -13,11 +13,11 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
-/* Zoom text menu item showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56 */
-"action.text-zoom-sheet-menu-item" = "Zoom Text (%d%%)";
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
 
 /* Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56 */
-"action.text-zoom-sheet-title" = "Zoom (%d%%)";
+"action.text-zoom-sheet-title" = "Zoom Text (%d%%)";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
@@ -2356,7 +2356,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Zoom Text";
+"settings.text.size" = "Default Zoom Text";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Theme";

@@ -26,6 +26,7 @@ public enum DuckPlayerReferrer: String {
     case youtubeOverlay
     case serp
     case other
+    case undefined
 }
 
 extension DuckPlayerReferrer {
@@ -33,7 +34,7 @@ extension DuckPlayerReferrer {
     ///
     /// - Parameter string: The string representation of the referrer.
     init(string: String) {
-        self = DuckPlayerReferrer(rawValue: string) ?? .other
+        self = DuckPlayerReferrer(rawValue: string) ?? .undefined
     }
 }
 

@@ -304,7 +304,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         }
         
         // Other referrers
-        if referrer == .other {
+        if referrer == .other || referrer == .undefined {
             pixelFiring.fire(.duckPlayerViewFromOther, withAdditionalParameters: [:])
         }
         
@@ -766,6 +766,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Only if DuckPlayer is enabled
         guard isDuckPlayerFeatureEnabled else {
             return false
+        }
+        
+        let parameters = getDuckPlayerParameters(url: url)
+        
+        // If the YouTubeApp is installed, try prevent link hijacking
+        // by stopping navigation and just redirecting to the URL internally
+        if isYouTubeAppInstalled && duckPlayerMode == .alwaysAsk && url.isYoutubeWatch && parameters.referrer == .undefined {
+            //redirectToDuckPlayerVideo(url: url, webView: webView)
+            loadWithDuckPlayerParameters(URLRequest(url: url), referrer: .other, webView: webView)
+            return true
         }
         
         // Only account for in 'Always' mode

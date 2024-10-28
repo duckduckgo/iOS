@@ -412,7 +412,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let request = URLRequest(url: youtubeURL)
         let mockFrameInfo = MockFrameInfo(isMainFrame: true)
         let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
-        playerSettings.mode = .enabled        
+        playerSettings.mode = .enabled
         featureFlagger.isFeatureEnabled = true
 
         // Act

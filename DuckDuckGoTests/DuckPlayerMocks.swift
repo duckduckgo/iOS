@@ -50,7 +50,7 @@ class MockWebView: WKWebView {
     var loadedRequests: [URLRequest] = []
     var loadCallCount = 0
     
-    var loadCompletionHandler: (() -> Void)?    
+    var loadCompletionHandler: (() -> Void)?
 
     /// The current URL of the web view.
     private var _url: URL?

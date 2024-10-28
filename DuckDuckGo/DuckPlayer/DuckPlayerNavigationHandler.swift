@@ -293,12 +293,12 @@ final class DuckPlayerNavigationHandler: NSObject {
         // First daily unique user Duck Player view
         pixelFiring.fire(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayerMode.stringValue])
         
-        // Duck Player viewed with Always setting, referred from YouTube
+        // Duck Player viewed with Always setting, referred from YouTube (automatic)
         if (referrer == .youtube) && duckPlayerMode == .enabled {
             pixelFiring.fire(.duckPlayerViewFromYoutubeAutomatic, withAdditionalParameters: [:])
         }
         
-        // Duck Player viewed from SERP overlay
+        // Duck Player viewed from SERP
         if referrer == .serp && duckPlayerMode == .enabled {
             pixelFiring.fire(.duckPlayerViewFromSERP, withAdditionalParameters: [:])
         }
@@ -446,7 +446,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         return components.url
     }
     
-    /// Sets the referrer based on the current web view URL to aid in analytics and behavior.
+    /// Sets the referrer based on the current web view URL to aid in analytics.
     ///
     /// - Parameter webView: The `WKWebView` whose URL is used to determine the referrer.
     private func setReferrer(webView: WKWebView) {

@@ -28,8 +28,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
     private static let enabledString = "enabled"
     private static let alwaysAskString = "alwaysAsk"
     private static let neverString = "disabled"
-    
-    /// Provides a user-friendly description of the mode.
+        
     var description: String {
         switch self {
         case .enabled:
@@ -40,8 +39,7 @@ enum DuckPlayerMode: Equatable, Codable, CustomStringConvertible, CaseIterable {
             return UserText.duckPlayerDisabledLabel
         }
     }
-    
-    /// Returns the string value of the mode.
+        
     var stringValue: String {
         switch self {
         case .enabled:
@@ -82,7 +80,7 @@ protocol DuckPlayerSettings: AnyObject {
     /// Indicates if the "Always Ask" overlay has been hidden.
     var askModeOverlayHidden: Bool { get }
     
-    /// Flag to allow the first video to play without redirection.
+    /// Flag to allow the first video to play in Youtube
     var allowFirstVideo: Bool { get set }
     
     /// Determines if Duck Player should open videos in a new tab.
@@ -148,7 +146,7 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
         registerForNotificationChanges()
     }
     
-    /// Domains related to the Duck Player feature.
+    /// DuckPlayer features are only available in these domains
     public struct OriginDomains {
         static let duckduckgo = "duckduckgo.com"
         static let youtubeWWW = "www.youtube.com"

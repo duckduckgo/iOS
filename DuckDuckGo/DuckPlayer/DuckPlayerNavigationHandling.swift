@@ -21,13 +21,10 @@ import WebKit
 
 /// Represents the referrer source for the Duck Player.
 public enum DuckPlayerReferrer: String {
-    /// Navigated from YouTube.
+    
     case youtube
-    /// Navigated from a YouTube overlay.
     case youtubeOverlay
-    /// Navigated from the DuckDuckGo search results page (SERP).
     case serp
-    /// Navigated from any other source.
     case other
 }
 
@@ -53,9 +50,7 @@ enum DuckPlayerNavigationHandlerURLChangeResult {
         case duplicateNavigation
     }
 
-    /// The URL change was handled.
     case handled
-    /// The URL change was not handled, with a specific reason.
     case notHandled(HandlingResult)
 }
 
@@ -68,10 +63,13 @@ enum DuckPlayerNavigationDirection {
 @MainActor
 /// Protocol defining the navigation handling for Duck Player.
 protocol DuckPlayerNavigationHandling: AnyObject {
+
     /// The referrer of the Duck Player.
     var referrer: DuckPlayerReferrer { get set }
+    
     /// Delegate for handling tab navigation events.
     var tabNavigationHandler: DuckPlayerTabNavigationHandling? { get set }
+    
     /// The DuckPlayer instance used for handling video playback.
     var duckPlayer: DuckPlayerControlling { get }
     
@@ -144,13 +142,9 @@ protocol DuckPlayerTabNavigationHandling: AnyObject {
 
 /// Protocol defining a navigation action for Duck Player.
 protocol NavigationActionProtocol {
-    /// The request associated with the navigation action.
+    
     var request: URLRequest { get }
-    
-    /// Indicates whether the navigation targets the main frame.
     var isTargetingMainFrame: Bool { get }
-    
-    /// The type of navigation action.
     var navigationType: WKNavigationType { get }
 }
 

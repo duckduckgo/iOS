@@ -167,16 +167,12 @@ final class DuckPlayer: DuckPlayerControlling {
         static let featureNameKey = "featureName"
     }
     
-    /// The current Duck Player settings.
-    private(set) var settings: DuckPlayerSettings
     
-    /// The host view controller, if any.
+    private(set) var settings: DuckPlayerSettings
     private(set) weak var hostView: UIViewController?
     
-    /// Feature flag manager for enabling/disabling features.
     private var featureFlagger: FeatureFlagger
     
-    /// Localized strings for the current locale.
     private lazy var localeStrings: String? = {
         let languageCode = Locale.current.languageCode ?? Constants.defaultLocale
         if let localizedFile = ContentScopeScripts.Bundle.path(forResource: Constants.translationFile,

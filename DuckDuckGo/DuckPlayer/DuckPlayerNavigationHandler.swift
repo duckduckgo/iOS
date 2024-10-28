@@ -770,10 +770,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         let parameters = getDuckPlayerParameters(url: url)
         
-        // If the YouTubeApp is installed, try prevent link hijacking
+        // If the YouTubeApp is installed, (and DP is  try prevent link hijacking
         // by stopping navigation and just redirecting to the URL internally
-        if isYouTubeAppInstalled && duckPlayerMode == .alwaysAsk && url.isYoutubeWatch && parameters.referrer == .undefined {
-            //redirectToDuckPlayerVideo(url: url, webView: webView)
+        if isYouTubeAppInstalled &&
+            duckPlayerMode != .enabled &&
+            url.isYoutubeWatch
+            && parameters.referrer == .undefined {
             loadWithDuckPlayerParameters(URLRequest(url: url), referrer: .other, webView: webView)
             return true
         }
@@ -783,7 +785,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return false
         }
         
-        // Only account for in 'Always' mode
+        // Only account for in 'Duck Player' URL
         if url.isDuckPlayer {
             return false
         }
@@ -792,12 +794,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         if navigationAction.navigationType == .backForward {
             return false
         }
-        
-        // Only account for non Duck Player URLs
-        guard !url.isDuckURLScheme else {
-            return false
-        }
-        
+                
         // Ignore YouTube Watch URLs if allowFirst video is set
         if url.isYoutubeWatch && duckPlayer.settings.allowFirstVideo {
             return false

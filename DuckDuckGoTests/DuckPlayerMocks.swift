@@ -126,20 +126,37 @@ class MockWebView: WKWebView {
 class MockNavigationAction: WKNavigationAction {
     private let _request: URLRequest
     private let _navigationType: WKNavigationType
-    
-    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated ) {
+    private let _targetFrame: WKFrameInfo?
+
+    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated, targetFrame: WKFrameInfo? = nil) {
         self._request = request
         self._navigationType = navigationType
+        self._targetFrame = targetFrame
     }
-    
+
     override var request: URLRequest {
         return _request
     }
-    
+
     override var navigationType: WKNavigationType {
         return _navigationType
     }
-    
+
+    override var targetFrame: WKFrameInfo? {
+        return _targetFrame
+    }
+}
+
+class MockFrameInfo: WKFrameInfo {
+    private let _isMainFrame: Bool
+
+    init(isMainFrame: Bool) {
+        self._isMainFrame = isMainFrame
+    }
+
+    override var isMainFrame: Bool {
+        return _isMainFrame
+    }
 }
 
 final class MockDuckPlayerSettings: DuckPlayerSettings {

@@ -96,7 +96,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         handler.handleDuckNavigation(navigationAction3, webView: mockWebView)
 
         // Wait for a short time to allow any asynchronous processing
-        await Task.sleep(UInt64(0.1 * Double(NSEC_PER_SEC)))
+        try? await Task.sleep(nanoseconds: 100_000_000)
 
         // Assert
         XCTAssertEqual(mockWebView.loadCallCount, 1, "Expected only one request to be loaded")
@@ -121,7 +121,6 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
         // Assert
-        await Task.yield()
         // It should redirect to YouTube
         if let loadedRequest = mockWebView.lastLoadedRequest {
             XCTAssertEqual(loadedRequest.url?.host, "m.youtube.com")
@@ -212,7 +211,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let result1 = handler.handleURLChange(webView: mockWebView)
         
         // Wait less than one second before calling again
-        await Task.sleep(UInt64(0.5 * Double(NSEC_PER_SEC)))
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
         let result2 = handler.handleURLChange(webView: mockWebView)
 
@@ -306,7 +305,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
     }
     
     @MainActor
-    func testHandleDelegateNavigation_YouTubeURL_DuckPlayerEnabled_ReturnsTrue() async {
+    func testHandleDelegateNavigation_NotToMainFrame_ReturnsFalse() async {
         // Arrange
         let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
         let request = URLRequest(url: youtubeURL)
@@ -318,15 +317,66 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
 
         // Assert
-        XCTAssertFalse(shouldCancel, "Expected navigation to be cancelled as it's not mainframe navigation")
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as it's not mainframe navigation")
     }
-
+    
     @MainActor
-    func testHandleDelegateNavigation_NonYouTubeURL_ReturnsFalse() async {
+    func testHandleDelegateNavigation_With_DuckPlayerFeatureDisabled_ReturnsFalse() async {
         // Arrange
-        let nonYouTubeURL = URL(string: "https://www.example.com")!
-        let request = URLRequest(url: nonYouTubeURL)
-        let navigationAction = MockNavigationAction(request: request)
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        featureFlagger.isFeatureEnabled = false
+
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT be cancelled as DuckPlayer Feature is Disabled")
+    }
+    
+    
+    @MainActor
+    func testHandleDelegateNavigation_With_DuckPlayerDisabled_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .disabled
+
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as DuckPlayer is Disabled")
+    }
+    
+    @MainActor
+    func testHandleDelegateNavigation_With_DuckPlayerAlwaysAsk_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .alwaysAsk
+        featureFlagger.isFeatureEnabled = true
+
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation NOT to be cancelled as DuckPlayer is Disabled")
+    }
+    
+    @MainActor
+    func testHandleDelegateNavigation_WithBackForwardNavigation_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, navigationType: .backForward, targetFrame: mockFrameInfo)
         playerSettings.mode = .enabled
         featureFlagger.isFeatureEnabled = true
 
@@ -334,8 +384,51 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
 
         // Assert
-        XCTAssertFalse(shouldCancel, "Expected navigation not to be cancelled for non-YouTube URL")
+        XCTAssertFalse(shouldCancel, "Expected navigation to be cancelled as Nav is backForward")
     }
+    
+    @MainActor
+    func testHandleDelegateNavigation_WithAllowFirstVideo_ReturnsFalse() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .enabled
+        playerSettings.allowFirstVideo = true
+        featureFlagger.isFeatureEnabled = true
+
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertFalse(shouldCancel, "Expected navigation to be cancelled as it's first video")
+    }
+    
+    @MainActor
+    func testHandleDelegateNavigation_WithValidURL_ReturnsTrue() async {
+        // Arrange
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        let request = URLRequest(url: youtubeURL)
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: request, targetFrame: mockFrameInfo)
+        playerSettings.mode = .enabled        
+        featureFlagger.isFeatureEnabled = true
+
+        // Act
+        let shouldCancel = handler.handleDelegateNavigation(navigationAction: navigationAction, webView: mockWebView)
+
+        // Assert
+        XCTAssertTrue(shouldCancel, "Expected navigation to be cancelled as it's first video")
+        
+        if let url = mockWebView.lastLoadedRequest?.url {
+            XCTAssertTrue(url.isDuckPlayer, "Expected final URL to be a Duck URL")
+        } else {
+            XCTFail("No URL was loaded. Expecting a Duck Player Video")
+        }
+        
+    }
+    
 
     @MainActor
     func testHandleDelegateNavigation_YouTubeURL_DuckPlayerDisabled_ReturnsFalse() async {
@@ -383,5 +476,156 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
 
         // Assert
         XCTAssertFalse(shouldCancel, "Expected navigation not to be cancelled for DuckPlayer URL")
+    }
+    
+    // MARK: Pixel Tests
+    @MainActor
+    func testPixels_Are_Fired_WhenEnabled_And_Youtube_Navigation() {
+        
+        // Arrange
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Act
+        // Simulate A Youtube Search Page Navigation
+        mockWebView.setCurrentURL(URL(string: "https://www.youtube.com/search?metallica")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        mockWebView.setCurrentURL(URL(string: "https://m.youtube.com/search?metallica&someOtherParam")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        
+        // Simulate a DuckPlayer render
+        let duckPlayerURL = URL(string: "duck://player/I9J120SZT14")!
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL), targetFrame: mockFrameInfo)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
+        
+        // Assert
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
+            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
+            XCTAssertNil(firstPixel.includedParams)
+
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromYoutubeAutomatic.name)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
+    @MainActor
+    func testPixels_Are_Fired_WhenEnabled_And_SERP_Navigation() {
+        
+        // Arrange
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Act
+        // Simulate A Youtube Search Page Navigation
+        mockWebView.setCurrentURL(URL(string: "https://duckduckgo.com/?q=metallica&ia=web")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        mockWebView.setCurrentURL(URL(string: "https://duckduckgo.com/?t=h_&q=metallica&iax=videos&ia=videos")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        
+        // Simulate a DuckPlayer render
+        let duckPlayerURL = URL(string: "duck://player/I9J120SZT14")!
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL), targetFrame: mockFrameInfo)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
+        
+        // Assert
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
+            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
+            XCTAssertNil(firstPixel.includedParams)
+
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromSERP.name)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
+    @MainActor
+    func testPixels_Are_Fired_WhenEnabled_And_Other_Navigation() {
+        
+        // Arrange
+        let playerSettings = MockDuckPlayerSettings(appSettings: mockAppSettings, privacyConfigManager: mockPrivacyConfig)
+        playerSettings.mode = .enabled
+        let player = MockDuckPlayer(settings: playerSettings, featureFlagger: featureFlagger)
+        let handler = DuckPlayerNavigationHandler(duckPlayer: player, featureFlagger: featureFlagger, appSettings: mockAppSettings, pixelFiring: PixelFiringMock.self)
+        
+        // Act
+        // Simulate A Youtube Search Page Navigation
+        mockWebView.setCurrentURL(URL(string: "https://google.com/?q=metallica&ia=web")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        mockWebView.setCurrentURL(URL(string: "https://google.com/?t=h_&q=metallica&iax=videos&ia=videos")!)
+        handler.handleDidFinishLoading(webView: mockWebView)
+        
+        // Simulate a DuckPlayer render
+        let duckPlayerURL = URL(string: "duck://player/I9J120SZT14")!
+        let mockFrameInfo = MockFrameInfo(isMainFrame: true)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: duckPlayerURL), targetFrame: mockFrameInfo)
+        handler.handleDuckNavigation(navigationAction, webView: mockWebView)
+        
+        // Assert
+        let expectation = self.expectation(description: "Simulated Request Expectation")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            if PixelFiringMock.allPixelsFired.count != 2 {
+                XCTFail("Pixel count should be two, but was \(PixelFiringMock.allPixelsFired.count)")
+                return
+            }
+            
+            // Validate the first pixel
+            let firstPixel = PixelFiringMock.allPixelsFired[0]
+            XCTAssertEqual(firstPixel.pixelName, Pixel.Event.duckPlayerDailyUniqueView.name)
+            XCTAssertEqual(firstPixel.params, ["settings": "enabled"])
+            XCTAssertNil(firstPixel.includedParams)
+
+            // Validate the second pixel
+            let secondPixel = PixelFiringMock.allPixelsFired[1]
+            XCTAssertEqual(secondPixel.pixelName, Pixel.Event.duckPlayerViewFromOther.name)
+            XCTAssertEqual(secondPixel.params, [:])
+            XCTAssertNil(secondPixel.includedParams)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+
     }
 }

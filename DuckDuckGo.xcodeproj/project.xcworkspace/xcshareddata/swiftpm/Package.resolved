@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "fdf6f75d570a5ef6058efa881e11f9467627fbf4",
-        "version" : "200.2.1"
+        "branch" : "sabrina/update-css-dependency",
+        "revision" : "1f8bdb2b235f48aafb48fa88b8e3a9368d344390"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "1ed569676555d493c9c5575eaed22aa02569aac9",
-        "version" : "6.19.0"
+        "branch" : "pr-releases/pr-1059",
+        "revision" : "e0c0ef8a0a1a7869915d55bb838f80cd4f229308"
       }
     },
     {

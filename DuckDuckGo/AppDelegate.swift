@@ -354,7 +354,8 @@ import os.log
                                           contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability)
+                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                          subscriptionCookieManager: subscriptionCookieManager)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main

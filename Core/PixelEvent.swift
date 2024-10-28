@@ -788,6 +788,7 @@ extension Pixel {
         case duckPlayerViewFromSERP
         case duckPlayerViewFromOther
         case duckPlayerOverlayYoutubeImpressions
+        case duckPlayerLandscapeLayoutImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
         case duckPlayerSettingAlwaysSettings
@@ -1654,6 +1655,9 @@ extension Pixel.Event {
             
         // MARK: - WebView Error Page shown
         case .webViewErrorPageShown: return "m_errorpageshown"
+
+        // MARK: - DuckPlayer FE Application Telemetry
+        case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
         }
     }
 }

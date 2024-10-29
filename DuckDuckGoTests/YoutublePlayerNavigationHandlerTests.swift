@@ -138,7 +138,7 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
         let navigationAction = MockNavigationAction(request: URLRequest(url: openInYouTubeURL))
         playerSettings.mode = .enabled  // DuckPlayer mode is enabled
         featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]  // Feature is enabled
-
+        
         // Act
         handler.handleDuckNavigation(navigationAction, webView: mockWebView)
 
@@ -702,6 +702,37 @@ class DuckPlayerNavigationHandlerTests: XCTestCase {
 
     }
     
-    // MARK: Open in New Tab Tests
+    // MARK: Reload Operations
+    @MainActor
+    func testHandleDelegateNavigation_DuckPlayerURLReloads_DoesNotOpenInANewTab() async {
+        // Arrange
+        let duckPlayerURL = URL(string: "duck://player/abc123")!
+        playerSettings.mode = .enabled
+        playerSettings.openInNewTab = true
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+        mockWebView.setCurrentURL(duckPlayerURL)
+        
+        // Act
+        handler.handleReload(webView: mockWebView)
+
+        // Assert
+        XCTAssertNil(tabNavigator.openedURL, "No new tabs should open")
+    }
+    
+    @MainActor
+    func testHandleDelegateNavigation_YoutubeWatchURLWithAlwaysAsk_DoesNotOpenInANewTab() async {
+        // Arrange
+        let duckPlayerURL = URL(string: "https://www.youtube.com/watch?v=abc123")!
+        playerSettings.mode = .alwaysAsk
+        playerSettings.openInNewTab = true
+        featureFlagger.enabledFeatures = [.duckPlayer, .duckPlayerOpenInNewTab]
+        mockWebView.setCurrentURL(duckPlayerURL)
+        
+        // Act
+        handler.handleReload(webView: mockWebView)
+
+        // Assert
+        XCTAssertNil(tabNavigator.openedURL, "No new tabs should open")
+    }
     
 }

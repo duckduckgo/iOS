@@ -276,7 +276,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - allowFirstVideo: Hide DuckPlayer Overlay in the first loaded video
     ///   - disableNewTab: Ignore openInNewTab settings
     @MainActor
-    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true, disableNewTab: Bool = true) {
+    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true, disableNewTab: Bool = false) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
@@ -737,13 +737,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
             
         if url.isDuckPlayer, duckPlayerMode != .disabled {
-            //redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: false)
             redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)
             return
         }
         
         if url.isYoutubeWatch, duckPlayerMode == .alwaysAsk {
-            //redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: false)
             redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: true)
             return
         }

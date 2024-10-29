@@ -23,17 +23,25 @@ import Lottie
 struct AddToDockPromoView: View {
     private static let appIconFillKeyPath = "**.Backdrop.Fill 1.Color"
 
-    private let model = AddToDockPromoViewModel()
+    private var model = AddToDockPromoViewModel()
+
+    @State private var isAnimating = false
 
     var body: some View {
         LottieView(
             lottieFile: "add-to-dock-promo",
+            isAnimating: $isAnimating,
             animationImageProvider: model,
             valueProvider: .init(
                 provider: ColorValueProvider(model.color),
                 keypath: AnimationKeypath(keypath: Self.appIconFillKeyPath)
             )
         )
+        .onFirstAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isAnimating = true
+            }
+        }
     }
 }
 

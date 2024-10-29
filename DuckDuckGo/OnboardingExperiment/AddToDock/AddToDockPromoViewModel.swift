@@ -51,15 +51,15 @@ private extension LottieColor {
         case .red:
             self = LottieColor(r: 0.87, g: 0.34, b: 0.2, a: 1.0)
         case .yellow:
-            self = LottieColor(r: 0.850, g: 0.654, b: 0.235, a: 1.0)
+            self = LottieColor(r: 0.89, g: 0.64, b: 0.07, a: 1.0)
         case .green:
-            self = LottieColor(r: 0.419, g: 0.721, b: 0.352, a: 1.0)
+            self = LottieColor(r: 0.22, g: 0.62, b: 0.16, a: 1.0)
         case .blue:
-            self = LottieColor(r: 0.270, g: 0.407, b: 0.905, a: 1.0)
+            self = LottieColor(r: 0.22, g: 0.41, b: 0.94, a: 1.0)
         case .purple:
-            self = LottieColor(r: 0.310, g: 0.2, b: 0.639, a: 1.0)
+            self = LottieColor(r: 0.42, g: 0.31, b: 0.73, a: 1.0)
         case .black:
-            self = LottieColor(r: 0.133, g: 0.133, b: 0.133, a: 1.0)
+            self = LottieColor(r: 0, g: 0, b: 0, a: 1.0)
         }
     }
 

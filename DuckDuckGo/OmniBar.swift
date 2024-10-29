@@ -276,7 +276,7 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-        
+        customIconView.isHidden = true
         privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)

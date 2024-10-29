@@ -834,17 +834,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return false
         }
         
-        let parameters = getDuckPlayerParameters(url: url)
-        
-        // If the YouTubeApp is installed, (and DP is  try prevent link hijacking
-        // by stopping navigation and just redirecting to the URL internally
-        if isYouTubeAppInstalled &&
-            duckPlayerMode != .enabled &&
-            url.isYoutubeWatch
-            && parameters.referrer == .undefined {
-            loadWithDuckPlayerParameters(URLRequest(url: url), referrer: .other, webView: webView)
-            return true
-        }
+        let parameters = getDuckPlayerParameters(url: url)        
         
         // Only account for in 'Always' mode
         if duckPlayerMode == .disabled {

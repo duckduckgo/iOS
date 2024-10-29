@@ -820,7 +820,7 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
-        if let url = webView.url, url.isDuckPlayer {
+        if let handler = duckPlayerNavigationHandler {
             duckPlayerNavigationHandler?.handleReload(webView: webView)
         } else {
             webView.reload()
@@ -3111,6 +3111,7 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
                       didRequestNewTabForUrl: url,
                       openedByPage: true,
                       inheritingAttribution: adClickAttributionLogic.state)
+        
     }
     
     func closeTab() {

@@ -181,7 +181,10 @@ final class DuckPlayerNavigationHandler: NSObject {
             return
         }
         // Otherwise, just load the simulated request
-        webView.loadSimulatedRequest(request, responseHTML: responseHTML)
+        // New tabs require a short interval so the Omnibars dismissal propagates
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            webView.loadSimulatedRequest(request, responseHTML: responseHTML)
+        }
     }
     
     /// Handles the Duck Player request by generating HTML from the template and performing navigation.
@@ -253,14 +256,15 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - url: The URL of the video.
     ///   - webView: The `WKWebView` to load the content into.
     ///   - forceNewTab: Whether to force opening in a new tab.
+    ///   - disableNewTab: Ignore openInNewTab settings
     @MainActor
-    private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false) {
+    private func redirectToDuckPlayerVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, disableNewTab: Bool = false) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
         
         let duckPlayerURL = URL.duckPlayer(videoID)
-        self.loadWithDuckPlayerParameters(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView, forceNewTab: forceNewTab)
+        self.loadWithDuckPlayerParameters(URLRequest(url: duckPlayerURL), referrer: self.referrer, webView: webView, forceNewTab: forceNewTab, disableNewTab: disableNewTab)
     }
     
     /// Redirects to the YouTube video page, allowing the first video if necessary.
@@ -270,8 +274,9 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - webView: The `WKWebView` to load the content into.
     ///   - forceNewTab: Whether to force opening in a new tab.
     ///   - allowFirstVideo: Hide DuckPlayer Overlay in the first loaded video
+    ///   - disableNewTab: Ignore openInNewTab settings
     @MainActor
-    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true) {
+    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true, disableNewTab: Bool = true) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
@@ -284,7 +289,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         }
         
         // When redirecting to YouTube, we always allow the first video
-        loadWithDuckPlayerParameters(URLRequest(url: redirectURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab, allowFirstVideo: allowFirstVideo)
+        loadWithDuckPlayerParameters(URLRequest(url: redirectURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab, allowFirstVideo: allowFirstVideo, disableNewTab: disableNewTab)
     }
     
     
@@ -344,13 +349,15 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - request: The `URLRequest` to load.
     ///   - referrer: The referrer information.
     ///   - webView: The `WKWebView` to load the content into.
-    ///   - forceNewTab: Whether to force opening in a new tab.
+    ///   - forceNewTab: Whether to force opening in hana new tab.
     ///   - allowFirstVideo: Whether to allow the first video to play.
+    ///   - disableNewTab: Ignores Open in New tab settings
     private func loadWithDuckPlayerParameters(_ request: URLRequest,
                                               referrer: DuckPlayerReferrer,
                                               webView: WKWebView,
                                               forceNewTab: Bool = false,
-                                              allowFirstVideo: Bool = false) {
+                                              allowFirstVideo: Bool = false,
+                                              disableNewTab: Bool = false) {
         
         guard let url = request.url else {
             return
@@ -393,7 +400,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         newURL = urlComponents?.url ?? newURL
                 
         // Only Open in new tab if enabled
-        if isOpenInNewTabEnabled || forceNewTab {
+        if (isOpenInNewTabEnabled || forceNewTab) && !disableNewTab {
             tabNavigationHandler?.openTab(for: newURL)
         } else {
             webView.load(URLRequest(url: newURL))
@@ -716,7 +723,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     /// - Parameter webView: The `WKWebView` to reload.
     @MainActor
     func handleReload(webView: WKWebView) {
-               
+        
         // Reset DuckPlayer status
         duckPlayer.settings.allowFirstVideo = false
         
@@ -724,14 +731,23 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             webView.reload()
             return
         }
-                
-        if let url = webView.url, url.isDuckPlayer,
-            !url.isDuckURLScheme,
-            duckPlayerMode == .enabled || duckPlayerMode == .alwaysAsk {
-            redirectToDuckPlayerVideo(url: url, webView: webView)
-        } else {
-            webView.reload()
+        
+        guard let url = webView.url else {            
+            return
         }
+            
+        if url.isDuckPlayer, duckPlayerMode != .disabled {
+            redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: false)
+            return
+        }
+        
+        if url.isYoutubeWatch, duckPlayerMode == .alwaysAsk {
+            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: false)
+            return
+        }
+        
+        webView.reload()
+        
     }
     
     /// Initializes settings and potentially redirects when the handler is attached to a web view.
@@ -757,7 +773,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             redirectToYouTubeVideo(url: url, webView: webView)
         } else {
             referrer = parameters.referrer
-            redirectToDuckPlayerVideo(url: removeDuckPlayerParameters(from: url), webView: webView)
+            redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)
         }
     }
     

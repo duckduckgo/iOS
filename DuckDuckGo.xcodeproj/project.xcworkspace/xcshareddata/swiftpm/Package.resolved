@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "884a5eac964eeeb6d38780a6b90feaf5a5b3cfcf",
-        "version" : "201.0.1"
+        "branch" : "alessandro/onboarding-add-to-dock-promo",
+        "revision" : "f1c3290a61f8f744438ff0ca0fa3c965bac6c60c"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "c992041d16ec10d790e6204dce9abf9966d1363c",
-        "version" : "15.1.0"
+        "revision" : "945ac09a0189dc6736db617867fde193ea984b20",
+        "version" : "15.0.0"
       }
     },
     {

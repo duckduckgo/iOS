@@ -732,17 +732,19 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return
         }
         
-        guard let url = webView.url else {            
+        guard let url = webView.url else {
             return
         }
             
         if url.isDuckPlayer, duckPlayerMode != .disabled {
-            redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: false)
+            //redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: false)
+            redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)
             return
         }
         
         if url.isYoutubeWatch, duckPlayerMode == .alwaysAsk {
-            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: false)
+            //redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: false)
+            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false, disableNewTab: true)
             return
         }
         

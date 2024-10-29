@@ -24,7 +24,7 @@ import Suggestions
 
 class QuerySubmittedTests: XCTestCase {
     let mock = MockOmniBarDelegate()
-    let sut = OmniBar.loadFromXib()
+    let sut = OmniBar.loadFromXib(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true))
 
     override func setUp() {
         super.setUp()

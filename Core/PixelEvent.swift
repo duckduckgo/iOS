@@ -708,6 +708,11 @@ extension Pixel {
         case privacyProTransactionProgressNotHiddenAfter60s
         case privacyProSuccessfulSubscriptionAttribution
         case privacyProKeychainAccessError
+        case privacyProSubscriptionCookieMissingTokenOnSignIn
+        case privacyProSubscriptionCookieMissingCookieOnSignOut
+        case privacyProSubscriptionCookieRefreshedWithUpdate
+        case privacyProSubscriptionCookieRefreshedWithDelete
+        case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -827,6 +832,9 @@ extension Pixel {
         case duckplayerExperimentDailySearch
         case duckplayerExperimentWeeklySearch
         case duckplayerExperimentYoutubePageView
+
+        // MARK: WebView Error Page Shown
+        case webViewErrorPageShown
     }
 
 }
@@ -1517,6 +1525,11 @@ extension Pixel.Event {
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
         case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
         case .privacyProKeychainAccessError: return "m_privacy-pro_keychain_access_error"
+        case .privacyProSubscriptionCookieMissingTokenOnSignIn: return "m_privacy-pro_subscription-cookie-missing_token_on_sign_in"
+        case .privacyProSubscriptionCookieMissingCookieOnSignOut: return "m_privacy-pro_subscription-cookie-missing_cookie_on_sign_out"
+        case .privacyProSubscriptionCookieRefreshedWithUpdate: return "m_privacy-pro_subscription-cookie-refreshed_with_update"
+        case .privacyProSubscriptionCookieRefreshedWithDelete: return "m_privacy-pro_subscription-cookie-refreshed_with_delete"
+        case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
@@ -1649,6 +1662,8 @@ extension Pixel.Event {
         case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search_v2"
         case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view_v2"
             
+        // MARK: - WebView Error Page shown
+        case .webViewErrorPageShown: return "m_errorpageshown"
         }
     }
 }

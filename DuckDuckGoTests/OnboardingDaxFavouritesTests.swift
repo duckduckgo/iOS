@@ -26,6 +26,7 @@ import BrowserServicesKit
 import RemoteMessaging
 import Configuration
 import Core
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class OnboardingDaxFavouritesTests: XCTestCase {
@@ -76,7 +77,10 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: contextualOnboardingLogicMock,
             contextualOnboardingPixelReporter: OnboardingPixelReporterMock(),
-            tutorialSettings: tutorialSettingsMock
+            tutorialSettings: tutorialSettingsMock,
+            subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
+            voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+            subscriptionCookieManager: SubscriptionCookieManagerMock()
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

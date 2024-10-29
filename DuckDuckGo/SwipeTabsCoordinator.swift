@@ -30,7 +30,8 @@ class SwipeTabsCoordinator: NSObject {
     weak var coordinator: MainViewCoordinator!
     weak var tabPreviewsSource: TabPreviewsSource!
     weak var appSettings: AppSettings!
-    
+    let voiceSearchHelper: VoiceSearchHelperProtocol
+
     let selectTab: (Int) -> Void
     let newTab: () -> Void
     let onSwipeStarted: () -> Void
@@ -54,6 +55,7 @@ class SwipeTabsCoordinator: NSObject {
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
+         voiceSearchHelper: VoiceSearchHelperProtocol,
          selectTab: @escaping (Int) -> Void,
          newTab: @escaping () -> Void,
          onSwipeStarted: @escaping () -> Void) {
@@ -61,7 +63,8 @@ class SwipeTabsCoordinator: NSObject {
         self.coordinator = coordinator
         self.tabPreviewsSource = tabPreviewsSource
         self.appSettings = appSettings
-        
+        self.voiceSearchHelper = voiceSearchHelper
+
         self.selectTab = selectTab
         self.newTab = newTab
         self.onSwipeStarted = onSwipeStarted
@@ -307,12 +310,11 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             cell.omniBar = coordinator.omniBar
         } else {
             // Strong reference while we use the omnibar
-            let omniBar = OmniBar.loadFromXib()
+            let omniBar = OmniBar.loadFromXib(voiceSearchHelper: voiceSearchHelper)
 
             cell.omniBar = omniBar
             cell.omniBar?.translatesAutoresizingMaskIntoConstraints = false
-            cell.updateConstraints()
-            
+
             cell.omniBar?.showSeparator()
             if self.appSettings.currentAddressBarPosition.isBottom {
                 cell.omniBar?.moveSeparatorToTop()
@@ -327,7 +329,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
             }
 
         }
-        
+
+        cell.setNeedsUpdateConstraints()
+
         return cell
     }
     
@@ -340,7 +344,7 @@ class OmniBarCell: UICollectionViewCell {
             subviews.forEach { $0.removeFromSuperview() }
             if let omniBar {
                 addSubview(omniBar)
-                
+
                 NSLayoutConstraint.activate([
                     constrainView(omniBar, by: .leadingMargin),
                     constrainView(omniBar, by: .trailingMargin),
@@ -351,14 +355,14 @@ class OmniBarCell: UICollectionViewCell {
             }
         }
     }
-    
+
     override func updateConstraints() {
-        super.updateConstraints()
         let left = superview?.safeAreaInsets.left ?? 0
         let right = superview?.safeAreaInsets.right ?? 0
         omniBar?.updateOmniBarPadding(left: left, right: right)
+
+        super.updateConstraints()
     }
-    
 }
 
 extension TabsModel {

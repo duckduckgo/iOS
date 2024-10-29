@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1728900024972,
+    "version": 1730109523334,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -60,6 +60,11 @@
             },
             "hash": "b813ade8472a097ffbd43a3331116fe1"
         },
+        "aiChat": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
         "ampLinks": {
             "exceptions": [
                 {
@@ -88,6 +93,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -114,7 +122,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "fa5f86bac5946c528cd6bc7449a2718a"
+            "hash": "d9703d9553194bc54e66db1f2a4ec1f8"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -353,6 +361,9 @@
                     "domain": "speedweek.com"
                 },
                 {
+                    "domain": "la-becanerie.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -366,6 +377,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -393,7 +407,7 @@
                     }
                 }
             },
-            "hash": "ea2fef42c1666e9d9e4cabd49e57764d"
+            "hash": "8392e127a3bcaee5c2913df355a7d254"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -488,12 +502,15 @@
                         "steps": [
                             {
                                 "percent": 10
+                            },
+                            {
+                                "percent": 50
                             }
                         ]
                     }
                 }
             },
-            "hash": "75ff21cf9a4181783c06965edd6fe746"
+            "hash": "9de8e4b066aa23f7c20ca638ee0d9f1a"
         },
         "bookmarks": {
             "state": "enabled",
@@ -517,9 +534,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "37e0cf88badfc8b01b6394f0884502f6"
+            "hash": "3766f6af346d3fffdf1e8ffce682c66e"
         },
         "brokenSitePrompt": {
             "state": "enabled",
@@ -1223,6 +1243,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -1240,7 +1263,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "cb1f114a9e0314393b2a0f789cba163f"
+            "hash": "3973e9d924c9a054df7f5dffad1f1d19"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1258,6 +1281,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -1270,7 +1296,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "894fb86c1f058aee9db47cfcdf3637de"
+            "hash": "31a06101df1dc362bfcef2d7a6320f80"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1314,10 +1340,21 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "humana.com"
+                },
+                {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "96b2f778bab196aa424e9c859ddea778"
+            "hash": "980bf875526f3cc7892c001a7d2e5a74"
+        },
+        "contextualOnboarding": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "cookie": {
             "settings": {
@@ -1382,10 +1419,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "6b4d2cef180104c5c84f5687479b8492"
+            "hash": "cef2b67a9df0d36b0875e7b54d33a4d0"
         },
         "customUserAgent": {
             "settings": {
@@ -1402,6 +1442,10 @@
                     {
                         "domain": "xfinity.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2149"
+                    },
+                    {
+                        "domain": "ihg.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2383"
                     }
                 ],
                 "ddgDefaultSites": [
@@ -1422,13 +1466,16 @@
                     },
                     {
                         "domain": "xfinity.com"
+                    },
+                    {
+                        "domain": "ihg.com"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "2ed8c3ccd40db2d9dca1e7ecc4231045"
+            "hash": "e577ccb473bdb7ada49c4d3c6e79cf01"
         },
         "dbp": {
             "state": "disabled",
@@ -1456,7 +1503,7 @@
                     "state": "disabled"
                 },
                 "openInNewTab": {
-                    "state": "disabled"
+                    "state": "internal"
                 },
                 "enableDuckPlayer": {
                     "state": "enabled",
@@ -1549,7 +1596,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "7f82d68f07b3e2aaac1b89725c1d379e"
+            "hash": "c21895584fc5a38e4290c7941ec7d5f8"
         },
         "elementHiding": {
             "exceptions": [
@@ -1570,6 +1617,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -3527,6 +3577,23 @@
                         ]
                     },
                     {
+                        "domain": "mantan-web.jp",
+                        "rules": [
+                            {
+                                "selector": "center > div",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".ad-rec",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".conteiner__head",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "marketwatch.com",
                         "rules": [
                             {
@@ -4375,6 +4442,10 @@
                             {
                                 "selector": "[data-aa-adunit]",
                                 "type": "hide"
+                            },
+                            {
+                                "selector": "[data-adpath]",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -4868,7 +4939,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "91a3dbe67daa37762247c415766a2634"
+            "hash": "9518158b11d290809536a99f637f467e"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4886,10 +4957,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "a214254da3cc914ed5bfc0a2d893b589"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4916,9 +4990,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "7f042650922da2636492e77ed1101bce"
+            "hash": "008c61cd03c28287a7f86b598c37078b"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4939,10 +5016,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "enabled",
-            "hash": "fcc2138fa97c35ded544b39708fda919"
+            "hash": "d05606a02ffd6ce5e223bc26e748a203"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -5047,10 +5127,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "49a3d497835bf5715aaaa73f87dd974f"
+            "hash": "b0eef1a098ab8c6cc9d6da35a9cfb7ad"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -5116,10 +5199,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "enabled",
-            "hash": "cd4a8461973d1c1648dd20e6d1f532a7"
+            "hash": "25a38bd7ccbca83ce0899548608235a7"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5173,10 +5259,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "enabled",
-            "hash": "046340bb9287a20efed6189525ec5fed"
+            "hash": "c22a6e9f1c03693516589c47970d7a04"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -5203,10 +5292,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "enabled",
-            "hash": "14b7fe3d276b52109c59f0c71aee4f71"
+            "hash": "48b1d8e96ee94825378d12a8d5a66895"
         },
         "googleRejected": {
             "exceptions": [
@@ -5224,17 +5316,17 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "a214254da3cc914ed5bfc0a2d893b589"
         },
         "gpc": {
             "state": "enabled",
             "exceptions": [
-                {
-                    "domain": "allegiantair.com"
-                },
                 {
                     "domain": "boston.com"
                 },
@@ -5242,22 +5334,7 @@
                     "domain": "costco.com"
                 },
                 {
-                    "domain": "crunchyroll.com"
-                },
-                {
                     "domain": "espn.com"
-                },
-                {
-                    "domain": "eventbrite.com"
-                },
-                {
-                    "domain": "duluthtrading.com"
-                },
-                {
-                    "domain": "web.whatsapp.com"
-                },
-                {
-                    "domain": "verizon.com"
                 },
                 {
                     "domain": "chime.com"
@@ -5266,25 +5343,19 @@
                     "domain": "tirerack.com"
                 },
                 {
-                    "domain": "milesplit.live"
-                },
-                {
                     "domain": "dollargeneral.com"
                 },
                 {
-                    "domain": "monstergear.monsterenergy.com"
+                    "domain": "milesplit.live"
+                },
+                {
+                    "domain": "monsterenergy.com"
                 },
                 {
                     "domain": "npr.org"
                 },
                 {
                     "domain": "norton.com"
-                },
-                {
-                    "domain": "jcrew.com"
-                },
-                {
-                    "domain": "pgealerts.alerts.pge.com"
                 },
                 {
                     "domain": "marvel.com"
@@ -5299,10 +5370,10 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "oreillyauto.com"
+                    "domain": "instructure.com"
                 },
                 {
-                    "domain": "instructure.com"
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -5314,7 +5385,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "fb031f27a1e1c2b143505c4f2e7b3ba7"
+            "hash": "37630ab090682ee7d004120a42031281"
         },
         "harmfulApis": {
             "settings": {
@@ -5430,10 +5501,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "fb598c4167ff166d85dd49c701cc5579"
+            "hash": "f255e336420119584b7000846be6d456"
         },
         "history": {
             "state": "enabled",
@@ -5484,9 +5558,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "b47d255c6f836ecb7ae0b3e61cc2c025"
+            "hash": "7407fc43cbd260f9aaca7cb7dab15bf4"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5545,6 +5622,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -5555,7 +5635,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "d14f6e3a9aa4139ee1d517016b59691e"
+            "hash": "a1100eac5ecca0a11501df9f4dafa31a"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5602,10 +5682,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "82088db85ca7f64418fbfd57db25ade1"
+            "hash": "5646a778c1cb6ec6e9c0da2c7dbd4bdb"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5624,9 +5707,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "6792064606a5a72c5cd44addb4d40bda"
+            "hash": "60c3c3eed29e1e0c092fad8775483210"
         },
         "phishingDetection": {
             "state": "disabled",
@@ -5645,9 +5731,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "37e0cf88badfc8b01b6394f0884502f6"
+            "hash": "3766f6af346d3fffdf1e8ffce682c66e"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5764,10 +5853,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "138c3b2409f6b3bf967b804ab9bf2ce2"
+            "hash": "68eb25a9461b134838100eecb0271905"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -5791,12 +5883,15 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "baf19d9e0f506ed09f46c95b1849adee"
+            "hash": "13d2723b0c33943f086acb8c239e22e8"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5815,10 +5910,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {},
-            "hash": "dfede9f06b9e322e198736703d013d15"
+            "hash": "568cf394681d38683d1aeb8f0d0e6a7c"
         },
         "sendFullPackageInstallSource": {
             "state": "enabled",
@@ -5842,10 +5940,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+            "hash": "a214254da3cc914ed5bfc0a2d893b589"
         },
         "sslCertificates": {
             "state": "enabled",
@@ -7320,6 +7421,7 @@
                                     "bodyelectricvitality.com.au",
                                     "cosmicbook.news",
                                     "eatroyo.com",
+                                    "experian.com",
                                     "piedmontng.com",
                                     "thesimsresource.com",
                                     "tradersync.com",
@@ -8766,6 +8868,16 @@
                             }
                         ]
                     },
+                    "svonm.com": {
+                        "rules": [
+                            {
+                                "rule": "hgc-cf-cache-1.svonm.com",
+                                "domains": [
+                                    "t-online.de"
+                                ]
+                            }
+                        ]
+                    },
                     "taboola.com": {
                         "rules": [
                             {
@@ -9251,9 +9363,12 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "0692c3f8cc6179433b9f23f00c7dd0ac"
+            "hash": "434130223ee6493827d477d0171521da"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9277,10 +9392,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "763f56424b0827b5731927a043219912"
+            "hash": "a5c95510cb55fbe69cbff10e55a982dd"
         },
         "trackingCookies3p": {
             "settings": {
@@ -9301,10 +9419,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "82088db85ca7f64418fbfd57db25ade1"
+            "hash": "5646a778c1cb6ec6e9c0da2c7dbd4bdb"
         },
         "trackingParameters": {
             "exceptions": [
@@ -9328,6 +9449,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "settings": {
@@ -9360,7 +9484,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3805ecfb8a129f70a99e73a364b38f38"
+            "hash": "e530308726226930ff9a058fa064a39f"
         },
         "userAgentRotation": {
             "settings": {
@@ -9381,10 +9505,13 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "disabled",
-            "hash": "9225b8785d6973db37abde99d81d219c"
+            "hash": "dd373ef0993c7ca9d9fa949db6d6aca0"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -9415,6 +9542,9 @@
                 },
                 {
                     "domain": "instructure.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
                 }
             ],
             "state": "enabled",
@@ -9487,7 +9617,7 @@
                     }
                 ]
             },
-            "hash": "2853748f3ebb813d59f4db4a7bb13c83"
+            "hash": "ed17f6ff342f200305eb4bbe544efec0"
         },
         "webViewBlobDownload": {
             "exceptions": [],
@@ -9508,6 +9638,11 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsNewTabPageExperiment": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

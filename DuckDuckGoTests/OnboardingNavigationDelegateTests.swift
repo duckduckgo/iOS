@@ -26,6 +26,7 @@ import BrowserServicesKit
 import RemoteMessaging
 import Configuration
 import Combine
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 @testable import Core
 
@@ -74,7 +75,10 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             variantManager: MockVariantManager(),
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: ContextualOnboardingLogicMock(),
-            contextualOnboardingPixelReporter: onboardingPixelReporter)
+            contextualOnboardingPixelReporter: onboardingPixelReporter,
+            subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
+            voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+            subscriptionCookieManager: SubscriptionCookieManagerMock())
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

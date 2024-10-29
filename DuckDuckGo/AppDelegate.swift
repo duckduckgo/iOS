@@ -87,7 +87,13 @@ import os.log
     private var autofillPixelReporter: AutofillPixelReporter?
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
+    private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
+    private var subscriptionCookieManager: SubscriptionCookieManaging!
     var privacyProDataReporter: PrivacyProDataReporting!
+
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
     // MARK: lifecycle
 
@@ -104,6 +110,8 @@ import os.log
     private let launchOptionsHandler = LaunchOptionsHandler()
     private let onboardingPixelReporter = OnboardingPixelReporter()
 
+    private let voiceSearchHelper = VoiceSearchHelper()
+
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
     override init() {
         super.init()
@@ -115,7 +123,7 @@ import os.log
         }
     }
 
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 #if targetEnvironment(simulator)
@@ -302,6 +310,21 @@ import os.log
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
+        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            purchasePlatform: .appStore)
+        
+        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+            
+            return WKWebsiteDataStore.current().httpCookieStore
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
@@ -315,7 +338,8 @@ import os.log
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings,
+                                                                     voiceSearchHelper: voiceSearchHelper)
             window?.makeKeyAndVisible()
 
             presentInsufficientDiskSpaceAlert()
@@ -336,7 +360,10 @@ import os.log
                                           variantManager: variantManager,
                                           contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          subscriptionCookieManager: subscriptionCookieManager)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -353,7 +380,7 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
+        self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
@@ -383,6 +410,8 @@ import os.log
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false
         }
+
+        tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
     }
@@ -558,12 +587,18 @@ import os.log
             }
         }
 
+        Task { @MainActor in
+            await subscriptionCookieManager.refreshSubscriptionCookie()
+        }
+
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
         Task {
             await privacyProDataReporter.saveWidgetAdded()
         }
+
+        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -822,7 +857,7 @@ import os.log
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings, voiceSearchHelper: voiceSearchHelper)
         overlay.delegate = self
 
         overlayWindow?.rootViewController = overlay

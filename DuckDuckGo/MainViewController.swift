@@ -2643,6 +2643,7 @@ extension MainViewController: AutoClearWorker {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        self.forgetTextZoom()
         await historyManager.removeAllHistory()
 
         self.clearInProgress = false
@@ -2664,7 +2665,6 @@ extension MainViewController: AutoClearWorker {
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             self.stopAllOngoingDownloads()
-            self.forgetTextZoom()
             self.forgetTabs()
             await self.forgetData()
             Instruments.shared.endTimedEvent(for: spid)

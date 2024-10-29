@@ -229,7 +229,7 @@ struct OnboardingFinalDialog: View {
         VStack {
             if canShowAddToDockTutorial {
                 OnboardingCTAButton(
-                    title: "Show Me How",
+                    title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
                     action: {
                         showAddToDockTutorial = true
                     }
@@ -322,7 +322,7 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("Final Dialog - Add to Dock Tutorial") {
-    OnboardingFinalDialog(message: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", canShowAddToDockTutorial: true, dismissAction: { _ in })
+    OnboardingFinalDialog(message: UserText.AddToDockOnboarding.EndOfJourney.message, canShowAddToDockTutorial: true, dismissAction: { _ in })
         .padding()
 }
 

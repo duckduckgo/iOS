@@ -183,7 +183,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
         let message = if onboardingManager.isAddToDockEnabled {
-            "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing."
+            UserText.AddToDockOnboarding.EndOfJourney.message
         } else {
             onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
         }

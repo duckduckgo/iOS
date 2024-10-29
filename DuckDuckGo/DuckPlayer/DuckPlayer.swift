@@ -392,10 +392,34 @@ final class DuckPlayer: DuckPlayerControlling {
             return
         }
         guard let feature = messageData.featureName else { return }
-        let event: Pixel.Event = feature == FeatureName.page.rawValue ? .duckPlayerSettingAlwaysDuckPlayer : .duckPlayerSettingAlwaysDuckPlayer
-        if userValues.duckPlayerMode == .enabled {
-            Pixel.fire(pixel: event)
+        
+        // Get the webView URL
+        let webView = message.webView
+        guard let webView = message.webView, let url = webView.url else {
+            return
         }
+        
+        let isSERP = url.isDuckDuckGoSearch
+            
+        var event: Pixel.Event
+        if isSERP  {
+            switch userValues.duckPlayerMode {
+            case .enabled:
+                event = .duckPlayerSettingsAlwaysOverlaySERP
+            default:
+                event = .duckPlayerSettingsNeverOverlaySERP
+            }
+        } else {
+            switch userValues.duckPlayerMode {
+            case .enabled:
+                event = .duckPlayerSettingsAlwaysOverlayYoutube
+            default:
+                event = .duckPlayerSettingsNeverOverlayYoutube
+            }
+        }
+
+        Pixel.fire(pixel: event)
+        
        
     }
     

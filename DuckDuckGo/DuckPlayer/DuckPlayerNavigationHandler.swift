@@ -203,7 +203,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     
     /// Determines if "Open in New Tab" for Duck Player is enabled in the settings.
     private var isOpenInNewTabEnabled: Bool {
-        featureFlagger.isFeatureOn(.duckPlayer) && featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) && duckPlayer.settings.openInNewTab
+        featureFlagger.isFeatureOn(.duckPlayer) && featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab) && duckPlayer.settings.openInNewTab && duckPlayerMode != .disabled
     }
     
     /// Retrieves the current mode of Duck Player based on feature flags and user settings.
@@ -269,8 +269,9 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - url: The URL of the video.
     ///   - webView: The `WKWebView` to load the content into.
     ///   - forceNewTab: Whether to force opening in a new tab.
+    ///   - allowFirstVideo: Hide DuckPlayer Overlay in the first loaded video
     @MainActor
-    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false) {
+    private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true) {
         
         guard let url,
               let (videoID, _) = url.youtubeVideoParams else { return }
@@ -283,7 +284,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         }
         
         // When redirecting to YouTube, we always allow the first video
-        loadWithDuckPlayerParameters(URLRequest(url: redirectURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab, allowFirstVideo: true)
+        loadWithDuckPlayerParameters(URLRequest(url: redirectURL), referrer: referrer, webView: webView, forceNewTab: forceNewTab, allowFirstVideo: allowFirstVideo)
     }
     
     
@@ -446,6 +447,25 @@ final class DuckPlayerNavigationHandler: NSObject {
         return components.url
     }
     
+    /// Determines if a URL is a DuckPlayer redirect based on its parameters
+    ///
+    /// - Parameter url: To check
+    /// - Returns: True | False
+    private func isDuckPlayerRedirect(url: URL) -> Bool {
+        
+        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = urlComponents.queryItems else {
+            return false
+        }
+        
+        let referrerValue = queryItems.first(where: { $0.name == Constants.duckPlayerReferrerParameter })?.value
+        let allowFirstVideoValue = queryItems.first(where: { $0.name == Constants.allowFirstVideoParameter })?.value
+        let isNewTabValue = queryItems.first(where: { $0.name == Constants.newTabParameter })?.value
+        let youtubeEmbedURI = queryItems.first(where: { $0.name == Constants.youtubeEmbedURI })?.value
+        
+        return referrerValue != nil || allowFirstVideoValue != nil || isNewTabValue != nil || youtubeEmbedURI != nil
+    }
+    
     /// Sets the referrer based on the current web view URL to aid in analytics.
     ///
     /// - Parameter webView: The `WKWebView` whose URL is used to determine the referrer.
@@ -466,6 +486,28 @@ final class DuckPlayerNavigationHandler: NSObject {
             break
         }
                 
+    }
+    
+    /// Determines if the current tab is a new tab based on the targetFrame request and other params
+    ///
+    /// - Parameter navigationAction: The `WKNavigationAction` used to determine the tab type.
+    private func isNewTab(_ navigationAction: WKNavigationAction) -> Bool {
+        
+        guard let request = navigationAction.targetFrame?.safeRequest,
+              let url = request.url else {
+            return false
+        }
+        
+        // Always return false if open in new tab is disabled
+        guard isOpenInNewTabEnabled else { return false }
+        
+        // If the target frame is duckPlayer itself or there's no URL
+        // we're at a new tab
+        if url.isDuckPlayer || url.isEmpty {
+            return true
+        }
+        
+        return false
     }
     
 }
@@ -492,8 +534,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         lastNavigationHandling = Date()
-        
-        let shouldOpenInNewTab = isOpenInNewTabEnabled && !(tabNavigationHandler?.isNewTab ?? false)
 
         guard let url = navigationAction.request.url else { return }
 
@@ -522,10 +562,20 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             }
             return
         }
+        
+        // Determine navigation type
+        let shouldOpenInNewTab = isOpenInNewTabEnabled && !isNewTab(navigationAction)
 
-        // Handle duck:// scheme URLs
+        // Handle duck:// scheme URLs (Or direct navigation to duck player)
         if url.isDuckURLScheme {
-
+            
+            // If should be opened in a new tab, and it's not a DuckPlayer URL, it means this
+            // is a direct duck:// navigation, so we need to properly redirect to a duckPlayer version
+            if shouldOpenInNewTab && !isDuckPlayerRedirect(url: url) {
+                redirectToDuckPlayerVideo(url: url, webView: webView, forceNewTab: true)
+                return
+            }
+            
             // Simulate DuckPlayer request if in enabled/ask mode and not redirected to YouTube
             if duckPlayerMode != .disabled,
                !url.hasWatchInYoutubeQueryParameter {
@@ -781,7 +831,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Only account for in 'Always' mode
-        if duckPlayerMode != .enabled {
+        if duckPlayerMode == .disabled {
             return false
         }
         
@@ -799,10 +849,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         if url.isYoutubeWatch && duckPlayer.settings.allowFirstVideo {
             return false
         }
-                
-        // Redirect any other Watch Navigation to Duck Player
-        if url.isYoutubeWatch {
+        
+        // Redirect to Duck Player if enabled
+        if url.isYoutubeWatch && duckPlayerMode == .enabled && !isDuckPlayerRedirect(url: url) {
             redirectToDuckPlayerVideo(url: url, webView: webView)
+            return true
+        }
+        
+        // Redirect to Youtube + DuckPlayer Overlay if Ask Mode
+        if url.isYoutubeWatch && duckPlayerMode == .alwaysAsk && !isDuckPlayerRedirect(url: url) {
+            redirectToYouTubeVideo(url: url, webView: webView, allowFirstVideo: false)
             return true
         }
         

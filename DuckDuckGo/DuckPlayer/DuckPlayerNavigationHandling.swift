@@ -129,10 +129,7 @@ protocol DuckPlayerNavigationHandling: AnyObject {
 
 /// Protocol defining the tab navigation handling for Duck Player.
 protocol DuckPlayerTabNavigationHandling: AnyObject {
-    /// Indicates whether the current tab is a new tab.
-    var isNewTab: Bool { get }
-    
-    /// Opens a new tab for the specified URL.
+        /// Opens a new tab for the specified URL.
     ///
     /// - Parameter url: The URL to open in a new tab.
     func openTab(for url: URL)

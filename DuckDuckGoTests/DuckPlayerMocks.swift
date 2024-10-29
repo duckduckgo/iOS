@@ -232,11 +232,19 @@ final class MockDuckPlayer: DuckPlayerControlling {
     }
 }
 
-final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
-    var isFeatureEnabled: Bool = true
+enum MockFeatureFlag: Hashable {
+    case duckPlayer, duckPlayerOpenInNewTab
+}
 
-    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
-        return isFeatureEnabled
+final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
+    var enabledFeatures: Set<MockFeatureFlag> = []
+
+    func isFeatureOn(_ feature: MockFeatureFlag) -> Bool {
+        return enabledFeatures.contains(feature)
+    }
+
+    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: FeatureFlagSourceProviding {
+        return !enabledFeatures.isEmpty
     }
 }
 
@@ -245,12 +253,10 @@ final class MockDuckPlayerStorage: DuckPlayerStorage {
 }
 
 final class MockDuckPlayerTabNavigator: DuckPlayerTabNavigationHandling {
-    var isNewTab: Bool = false
     var openedURL: URL?
     var closeTabCalled = false
 
-    func openTab(for url: URL) {
-        isNewTab = true
+    func openTab(for url: URL) {    
         openedURL = url
     }
 

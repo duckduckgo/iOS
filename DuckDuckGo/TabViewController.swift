@@ -3106,10 +3106,6 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
 // This Protocol allows DuckPlayerHandler access tabs
 extension TabViewController: DuckPlayerTabNavigationHandling {
     
-    var isNewTab: Bool {
-        openingTab != nil ? true : false
-    }
-    
     func openTab(for url: URL) {
         delegate?.tab(self,
                       didRequestNewTabForUrl: url,

@@ -131,9 +131,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
         let tokensPolicy: TokensCachePolicy = cachePolicy == .returnCacheDataDontLoad ? .local : .localValid
 
         await subscriptionManager.refreshAccount()
-        if let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .local) {
+        if let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .local) {
             DispatchQueue.main.async {
-                self.state.subscriptionEmail = tokensContainer.decodedAccessToken.email
+                self.state.subscriptionEmail = tokenContainer.decodedAccessToken.email
                 if loadingIndicator { self.displayEmailLoader(true) }
             }
             return true
@@ -269,10 +269,10 @@ final class SubscriptionSettingsViewModel: ObservableObject {
          
     private func manageStripeSubscription() async {
         Logger.subscription.log("Managing Stripe Subscription")
-        guard let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .localValid) else { return }
+        guard let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .localValid) else { return }
         do {
             // Get Stripe Customer Portal URL and update the model
-            let serviceResponse = try await subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: tokensContainer.accessToken, externalID: tokensContainer.decodedAccessToken.externalID)
+            let serviceResponse = try await subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: tokenContainer.accessToken, externalID: tokenContainer.decodedAccessToken.externalID)
             guard let url = URL(string: serviceResponse.customerPortalUrl) else { return }
             if let existingModel = state.stripeViewModel {
                 existingModel.url = url

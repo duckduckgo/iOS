@@ -457,17 +457,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                             authService: authService)
 
         apiService.authorizationRefresherCallback = { _ in
-            guard let tokensContainer = keychainManager.tokensContainer else {
+            guard let tokenContainer = keychainManager.tokenContainer else {
                 throw OAuthClientError.internalError("Missing refresh token")
             }
 
-            if tokensContainer.decodedAccessToken.isExpired() {
+            if tokenContainer.decodedAccessToken.isExpired() {
                 Logger.OAuth.debug("Refreshing tokens")
-                let tokens = try await authClient.refreshTokens()
+                let tokens = try await authClient.getTokens(policy: .localForceRefresh)
                 return tokens.accessToken
             } else {
                 Logger.general.debug("Trying to refresh valid token, using the old one")
-                return tokensContainer.accessToken
+                return tokenContainer.accessToken
             }
         }
         let storePurchaseManager = DefaultStorePurchaseManager()
@@ -480,7 +480,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         self.subscriptionManager = subscriptionManager
         let accessTokenProvider: () -> String? = {
             return {
-                authClient.currentTokensContainer?.accessToken
+                authClient.currentTokenContainer?.accessToken
             }
         }()
         let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)

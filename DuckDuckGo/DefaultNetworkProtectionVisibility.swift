@@ -35,7 +35,7 @@ struct DefaultNetworkProtectionVisibility: NetworkProtectionFeatureVisibility {
     }
 
     var token: String? {
-        return oAuthClient.currentTokensContainer?.accessToken
+        return oAuthClient.currentTokenContainer?.accessToken
     }
 
     func shouldShowVPNShortcut() -> Bool {

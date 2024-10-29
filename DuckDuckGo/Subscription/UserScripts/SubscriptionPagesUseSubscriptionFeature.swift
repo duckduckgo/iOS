@@ -193,7 +193,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     /// Returns the auth token
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         do {
-            let accessToken = try await subscriptionManager.getTokensContainer(policy: .createIfNeeded).accessToken
+            let accessToken = try await subscriptionManager.getTokenContainer(policy: .createIfNeeded).accessToken
             return [Constants.token: accessToken]
         } catch {
             Logger.subscription.fault("Failed to fetch token: \(error)")
@@ -378,7 +378,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         do {
-            let accessToken = try await subscriptionManager.getTokensContainer(policy: .localValid).accessToken
+            let accessToken = try await subscriptionManager.getTokenContainer(policy: .localValid).accessToken
             return [Constants.token: accessToken]
         } catch {
             Logger.subscription.fault("Failed to fetch token: \(error)")

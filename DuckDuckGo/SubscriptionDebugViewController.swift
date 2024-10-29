@@ -270,13 +270,13 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func showAccountDetails() {
         Task {
-            let tokensContainer = try? await subscriptionManager.getTokensContainer(policy: .local)
-            let authenticated = tokensContainer != nil
+            let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .local)
+            let authenticated = tokenContainer != nil
             let title = authenticated ? "Authenticated" : "Not Authenticated"
             let message = authenticated ?
             ["Service Environment: \(subscriptionManager.currentEnvironment.serviceEnvironment)",
-             "AuthToken: \(tokensContainer?.accessToken ?? "")",
-             "Email: \(tokensContainer?.decodedAccessToken.email ?? "")"].joined(separator: "\n") : nil
+             "AuthToken: \(tokenContainer?.accessToken ?? "")",
+             "Email: \(tokenContainer?.decodedAccessToken.email ?? "")"].joined(separator: "\n") : nil
             DispatchQueue.main.async {
                 self.showAlert(title: title, message: message)
             }
@@ -323,8 +323,8 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func validateToken() {
         Task {
             do {
-                let tokensContainer = try await subscriptionManager.getTokensContainer(policy: .localValid)
-                showAlert(title: "Token details", message: "\(tokensContainer.debugDescription)")
+                let tokenContainer = try await subscriptionManager.getTokenContainer(policy: .localValid)
+                showAlert(title: "Token details", message: "\(tokenContainer.debugDescription)")
             } catch OAuthClientError.missingTokens {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
             } catch {
@@ -336,8 +336,8 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func getSubscriptionDetails() {
         Task {
             do {
-                let tokensContainer = try await subscriptionManager.getTokensContainer(policy: .localValid)
-                let subscription = try await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: tokensContainer.accessToken,
+                let tokenContainer = try await subscriptionManager.getTokenContainer(policy: .localValid)
+                let subscription = try await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: tokenContainer.accessToken,
                                                                                                              cachePolicy: .reloadIgnoringLocalCacheData)
                 showAlert(title: "Subscription info", message: "\(subscription)")
 
@@ -352,8 +352,8 @@ final class SubscriptionDebugViewController: UITableViewController {
     private func checkEntitlements() {
         Task {
             do {
-                let tokensContainer = try await subscriptionManager.getTokensContainer(policy: .localValid)
-                showAlert(title: "Available Entitlements", message: tokensContainer.decodedAccessToken.subscriptionEntitlements.debugDescription)
+                let tokenContainer = try await subscriptionManager.getTokenContainer(policy: .localValid)
+                showAlert(title: "Available Entitlements", message: tokenContainer.decodedAccessToken.subscriptionEntitlements.debugDescription)
             } catch OAuthClientError.missingTokens {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
             } catch {

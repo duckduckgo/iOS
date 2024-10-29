@@ -120,17 +120,17 @@ final class AppDependencyProvider: DependencyProvider {
         self.privacyProInfoProvider = authClient
 
         apiService.authorizationRefresherCallback = { _ in
-            guard let tokensContainer = keychainManager.tokensContainer else {
+            guard let tokenContainer = keychainManager.tokenContainer else {
                 throw OAuthClientError.internalError("Missing refresh token")
             }
 
-            if tokensContainer.decodedAccessToken.isExpired() {
+            if tokenContainer.decodedAccessToken.isExpired() {
                 Logger.OAuth.debug("Refreshing tokens")
-                let tokens = try await authClient.refreshTokens()
+                let tokens = try await authClient.getTokens(policy: .localForceRefresh)
                 return tokens.accessToken
             } else {
                 Logger.general.debug("Trying to refresh valid token, using the old one")
-                return tokensContainer.accessToken
+                return tokenContainer.accessToken
             }
         }
         let storePurchaseManager = DefaultStorePurchaseManager()
@@ -144,7 +144,7 @@ final class AppDependencyProvider: DependencyProvider {
         self.subscriptionManager = subscriptionManager
         let accessTokenProvider: () -> String? = {
             return {
-                authClient.currentTokensContainer?.accessToken
+                authClient.currentTokenContainer?.accessToken
             }
         }()
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
@@ -158,9 +158,9 @@ final class AppDependencyProvider: DependencyProvider {
 extension DefaultOAuthClient: PrivacyProInfoProvider {
     
     var hasVPNEntitlements: Bool {
-        guard let tokensContainer = tokensStorage.tokensContainer else {
+        guard let tokenContainer = tokensStorage.tokenContainer else {
             return false
         }
-        return tokensContainer.decodedAccessToken.hasEntitlement(.networkProtection)
+        return tokenContainer.decodedAccessToken.hasEntitlement(.networkProtection)
     }
 }

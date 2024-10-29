@@ -182,18 +182,20 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        // TODO: Update views
-        if onboardingManager.isAddToDockEnabled {
-            Logger.onboarding.debug("Present Contextual Final Dialog with Add To Dock updates")
+        let message = if onboardingManager.isAddToDockEnabled {
+            "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing."
         } else {
-            Logger.onboarding.debug("Present Contextual Final Dialog without Add To Dock updates")
+            onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
         }
 
-        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
-
-        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in
+        return OnboardingFinalDialog(message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
             delegate?.didTapDismissContextualOnboardingAction()
-            self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            if isDismissedFromAddToDock {
+                Logger.onboarding.debug("Dismissed from add to dock")
+            } else {
+                Logger.onboarding.debug("Dismissed from end of Journey")
+                self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            }
         })
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

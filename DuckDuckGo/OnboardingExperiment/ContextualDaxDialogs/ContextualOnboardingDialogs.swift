@@ -185,45 +185,94 @@ struct OnboardingTrackersDoneDialog: View {
 
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-    let message: String
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
     
-    let highFiveAction: () -> Void
+    let message: String
+    let canShowAddToDockTutorial: Bool
+    let dismissAction: (_ fromAddToDock: Bool) -> Void
+
+    @State private var showAddToDockTutorial = false
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             DaxDialogView(logoPosition: .left) {
-                ContextualDaxDialogContent(
-                    title: title,
-                    titleFont: Font(UIFont.daxTitle3()),
-                    message: NSAttributedString(string: message),
-                    customActionView: AnyView(
-                        OnboardingCTAButton(
-                            title: cta,
-                            action: highFiveAction
-                        )
+                if showAddToDockTutorial {
+                    OnboardingAddToDockTutorialContent {
+                        dismissAction(true)
+                    }
+                } else {
+                    ContextualDaxDialogContent(
+                        title: title,
+                        titleFont: Font(UIFont.daxTitle3()),
+                        message: NSAttributedString(string: message),
+                        customView: AnyView(customView),
+                        customActionView: AnyView(customActionView)
                     )
-                )
+                }
             }
             .padding()
+        }
+    }
+
+    @ViewBuilder
+    private var customView: some View {
+        if canShowAddToDockTutorial {
+            AddToDockPromoView()
+                .padding(.vertical)
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private var customActionView: some View {
+        VStack {
+            if canShowAddToDockTutorial {
+                OnboardingCTAButton(
+                    title: "Show Me How",
+                    action: {
+                        showAddToDockTutorial = true
+                    }
+                )
+            }
+            OnboardingCTAButton(
+                title: cta,
+                buttonStyle: canShowAddToDockTutorial ? .ghost : .primary,
+                action: {
+                    dismissAction(false)
+                }
+            )
         }
     }
 }
 
 struct OnboardingCTAButton: View {
+    enum ButtonStyle {
+        case primary
+        case ghost
+    }
+
     let title: String
+    var buttonStyle: ButtonStyle = .primary
     let action: () -> Void
 
+
     var body: some View {
-        Button(action: action) {
+        let button = Button(action: action) {
             Text(title)
         }
-        .buttonStyle(PrimaryButtonStyle(compact: true))
+
+        switch buttonStyle {
+        case .primary:
+            button.buttonStyle(PrimaryButtonStyle(compact: true))
+        case .ghost:
+            button.buttonStyle(GhostButtonStyle())
+        }
     }
 
 }
 
-struct OnboardingAddToDockDialog: View {
+struct OnboardingAddToDockTutorialContent: View {
     let title = UserText.AddToDockOnboarding.Tutorial.title
     let message = UserText.AddToDockOnboarding.Tutorial.message
     let cta = UserText.AddToDockOnboarding.Buttons.dismiss
@@ -231,15 +280,10 @@ struct OnboardingAddToDockDialog: View {
     let dismissAction: () -> Void
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            DaxDialogView(logoPosition: .top) {
-                AddToDockTutorialView(
-                    title: title,
-                    message: message,
-                    action: dismissAction)
-            }
-            .padding()
-        }
+        AddToDockTutorialView(
+            title: title,
+            message: message,
+            action: dismissAction)
     }
 }
 
@@ -272,8 +316,13 @@ struct OnboardingAddToDockDialog: View {
         .padding()
 }
 
-#Preview("Final Dialog") {
-    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, highFiveAction: {})
+#Preview("Final Dialog - No Add to Dock Tutorial") {
+    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, canShowAddToDockTutorial: false, dismissAction: { _ in })
+        .padding()
+}
+
+#Preview("Final Dialog - Add to Dock Tutorial") {
+    OnboardingFinalDialog(message: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", canShowAddToDockTutorial: true, dismissAction: { _ in })
         .padding()
 }
 
@@ -292,11 +341,11 @@ struct OnboardingAddToDockDialog: View {
 }
 
 #Preview("Add To Dock Tutorial - Light") {
-    OnboardingAddToDockDialog(dismissAction: {})
+    OnboardingAddToDockTutorialContent(dismissAction: {})
         .preferredColorScheme(.light)
 }
 
 #Preview("Add To Dock Tutorial - Dark") {
-    OnboardingAddToDockDialog(dismissAction: {})
+    OnboardingAddToDockTutorialContent(dismissAction: {})
         .preferredColorScheme(.dark)
 }

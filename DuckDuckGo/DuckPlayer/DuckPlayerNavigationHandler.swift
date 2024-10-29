@@ -43,6 +43,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     
     /// Pixel firing utility for analytics.
     var pixelFiring: PixelFiring.Type
+    let dailyPixelFiring: DailyPixelFiring.Type
     
     /// Keeps track of the last YouTube video watched.
     var lastWatchInYoutubeVideo: String?
@@ -105,16 +106,19 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///   - featureFlagger: The feature flag manager.
     ///   - appSettings: The application settings.
     ///   - pixelFiring: The pixel firing utility for analytics.
+    ///   - dailyPixelFiring: The daily pixel firing utility for analytics.
     ///   - tabNavigationHandler: The tab navigation handler delegate.
     init(duckPlayer: DuckPlayerControlling = DuckPlayer(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          appSettings: AppSettings,
          pixelFiring: PixelFiring.Type = Pixel.self,
+         dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self,
          tabNavigationHandler: DuckPlayerTabNavigationHandling? = nil) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
         self.pixelFiring = pixelFiring
+        self.dailyPixelFiring = dailyPixelFiring
         self.tabNavigationHandler = tabNavigationHandler
     }
     
@@ -294,10 +298,10 @@ final class DuckPlayerNavigationHandler: NSObject {
     
     
     /// Fires analytics pixels when Duck Player is viewed, based on referrer and settings.
-    private func fireDuckPlayerPixels() {
-        
+    private func fireDuckPlayerPixels(webView: WKWebView) {
+                
         // First daily unique user Duck Player view
-        pixelFiring.fire(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayerMode.stringValue])
+        dailyPixelFiring.fireDaily(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayerMode.stringValue])        
         
         // Duck Player viewed with Always setting, referred from YouTube (automatic)
         if (referrer == .youtube) && duckPlayerMode == .enabled {
@@ -305,7 +309,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         }
         
         // Duck Player viewed from SERP
-        if referrer == .serp && duckPlayerMode == .enabled {
+        if referrer == .serp {
             pixelFiring.fire(.duckPlayerViewFromSERP, withAdditionalParameters: [:])
         }
         
@@ -477,22 +481,51 @@ final class DuckPlayerNavigationHandler: NSObject {
     ///
     /// - Parameter webView: The `WKWebView` whose URL is used to determine the referrer.
     private func setReferrer(webView: WKWebView) {
+        
+        // Make sure we are NOT DuckPlayer
+        guard let url = webView.url, !url.isDuckPlayer else { return }
                 
-        guard let url = webView.url else { return }
-
-        switch true {
-        case url.isDuckPlayer:
-            break
-        case url.isDuckDuckGoSearch:
-            referrer = .serp
-        case url.isYoutubeWatch where duckPlayerMode != .enabled:
-            referrer = .youtubeOverlay
-        case url.isYoutube:
-            referrer = .youtube
-        default:
-            break
+        // First, try to use the back Item
+        var backItems = webView.backForwardList.backList.reversed()
+        
+        // Ignore any previous URL that's duckPlayer or youtube-no-cookie
+        if let backItemURL = backItems.first?.url, url.isDuckPlayer {
+            backItems = webView.backForwardList.backList.dropLast().reversed()
         }
-                
+        
+        // If the current URL is DuckPlayer, use the previous history item
+        guard let referrerURL = url.isDuckPlayer ? backItems.first?.url : url else {
+            return
+        }
+        
+        // SERP as a referrer
+        if referrerURL.isDuckDuckGoSearch {
+            referrer = .serp
+            return
+        }
+        
+        // Set to Youtube for "Watch in Youtube videos"
+        if referrerURL.isYoutubeWatch && duckPlayerMode == .enabled && duckPlayer.settings.allowFirstVideo {
+            referrer = .youtube
+            return
+        }
+        
+        // Set to Overlay for Always ask
+        if referrerURL.isYoutubeWatch && duckPlayerMode == .alwaysAsk {
+            referrer = .youtubeOverlay
+            return
+        }
+        
+        // Any Other Youtube URL or other referrer
+        if referrerURL.isYoutube {
+            referrer = .youtube
+            return
+        } else {
+            referrer = .other
+        }
+        
+        
+
     }
     
     /// Determines if the current tab is a new tab based on the targetFrame request and other params
@@ -592,7 +625,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 // Before performing the simulated request
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     self.performRequest(request: newRequest, webView: webView)
-                    self.fireDuckPlayerPixels()
+                    self.fireDuckPlayerPixels(webView: webView)
                 }
             } else {
                 redirectToYouTubeVideo(url: url, webView: webView)
@@ -625,6 +658,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 return .notHandled(.duplicateNavigation)
             }
         }
+        
+        // Update the Referrer based on the first URL change detected
+        setReferrer(webView: webView)
         
         // We don't want YouTube redirects happening while default navigation is happening
         // This can be caused by Duplicate Nav events, and quick URL changes
@@ -781,17 +817,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     ///
     /// - Parameter webView: The `WKWebView` that finished loading.
     @MainActor
-    func handleDidFinishLoading(webView: WKWebView) {
-                
-        setReferrer(webView: webView)
-    }
+    func handleDidFinishLoading(webView: WKWebView) {}
     
     /// Resets settings when the web view starts loading a new page.
     ///
     /// - Parameter webView: The `WKWebView` that started loading.
     @MainActor
     func handleDidStartLoading(webView: WKWebView) {
-
+        
+        setReferrer(webView: webView)
         duckPlayer.settings.allowFirstVideo = false
 
     }

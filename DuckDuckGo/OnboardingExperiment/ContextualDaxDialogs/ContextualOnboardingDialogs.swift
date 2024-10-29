@@ -224,9 +224,9 @@ struct OnboardingCTAButton: View {
 }
 
 struct OnboardingAddToDockDialog: View {
-    let title = "Adding me to your Dock is easy."
-    let message = "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!"
-    let cta = "Start Browsing"
+    let title = UserText.AddToDockOnboarding.Tutorial.title
+    let message = UserText.AddToDockOnboarding.Tutorial.message
+    let cta = UserText.AddToDockOnboarding.Buttons.dismiss
 
     let dismissAction: () -> Void
 

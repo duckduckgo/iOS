@@ -81,7 +81,7 @@ struct AddToDockTutorialView: View {
                 }
             
             Button(action: action) {
-                Text(verbatim: "Start Browsing")
+                Text(UserText.AddToDockOnboarding.Buttons.dismiss)
             }
             .buttonStyle(PrimaryButtonStyle())
             .visibility(showContent ? .visible : .invisible)
@@ -108,8 +108,8 @@ struct AddToDockTutorial_Previews: PreviewProvider {
 
         var body: some View {
             AddToDockTutorialView(
-                title: "Adding me to your Dock is easy.",
-                message: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!",
+                title: UserText.AddToDockOnboarding.Tutorial.title,
+                message: UserText.AddToDockOnboarding.Tutorial.message,
                 action: {}
             )
             .padding()

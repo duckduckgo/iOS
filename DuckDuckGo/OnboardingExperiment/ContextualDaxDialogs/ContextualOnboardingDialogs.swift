@@ -300,19 +300,3 @@ struct OnboardingAddToDockDialog: View {
     OnboardingAddToDockDialog(dismissAction: {})
         .preferredColorScheme(.dark)
 }
-
-//struct OnboardingAddToDockDialog_Previews: PreviewProvider {
-//
-//    struct AddToDockPreview: View {
-//
-//        var body: some View {
-//            OnboardingAddToDockDialog(dismissAction: {})
-//        }
-//
-//    }
-//
-//    static var previews: some View {
-//        AddToDockPreview()
-//            .preferredColorScheme(.light)
-//   }
-//}

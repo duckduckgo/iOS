@@ -1415,7 +1415,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     public enum AddToDockOnboarding {
         public enum Buttons {
-            static let addToDuckTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button on the last screen of the onboarding, it will show the Add to Duck tutorial.")
+            static let addToDockTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock.")
             static let dismiss = NSLocalizedString("contextual.onboarding.addToDock.buttons.dismiss", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
         }
 

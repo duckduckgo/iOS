@@ -817,7 +817,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     ///
     /// - Parameter webView: The `WKWebView` that finished loading.
     @MainActor
-    func handleDidFinishLoading(webView: WKWebView) {}
+    func handleDidFinishLoading(webView: WKWebView) {
+        
+        // Reset allowFirstVideo
+        duckPlayer.settings.allowFirstVideo = false
+        
+    }
     
     /// Resets settings when the web view starts loading a new page.
     ///
@@ -826,8 +831,15 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleDidStartLoading(webView: WKWebView) {
         
         setReferrer(webView: webView)
-        duckPlayer.settings.allowFirstVideo = false
-
+        
+        // Automatically reset allowFirstVideo after loading starts
+        // This is a fallback as the WKNavigation Delegate does not
+        // Always fires finishLoading (For JS Navigation) which
+        // triggers handleDidFinishLoading
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.duckPlayer.settings.allowFirstVideo = false
+        }
+    
     }
     
     /// Converts a standard YouTube URL to its Duck Player equivalent if applicable.

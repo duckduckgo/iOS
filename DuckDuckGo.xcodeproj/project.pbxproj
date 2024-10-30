@@ -297,7 +297,7 @@
 		6F03CB052C32EFCC004179A8 /* MockPixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB032C32EFA8004179A8 /* MockPixelFiring.swift */; };
 		6F03CB072C32F173004179A8 /* PixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB062C32F173004179A8 /* PixelFiring.swift */; };
 		6F03CB092C32F331004179A8 /* PixelFiringAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F03CB082C32F331004179A8 /* PixelFiringAsync.swift */; };
-		6F04224C2CD2A33B00729FA6 /* StorageInconsistencyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F98573F2CD2933B001BE9A0 /* StorageInconsistencyMonitor.swift */; };
+		6F04224D2CD2A3AD00729FA6 /* StorageInconsistencyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F98573F2CD2933B001BE9A0 /* StorageInconsistencyMonitor.swift */; };
 		6F0FEF6B2C516D540090CDE4 /* NewTabPageSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FEF6A2C516D540090CDE4 /* NewTabPageSettingsStorage.swift */; };
 		6F0FEF6D2C52639E0090CDE4 /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0FEF6C2C52639E0090CDE4 /* ReorderableForEach.swift */; };
 		6F35379E2C4AAF2E009F8717 /* NewTabPageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F35379D2C4AAF2E009F8717 /* NewTabPageSettingsView.swift */; };
@@ -3873,14 +3873,6 @@
 			name = Tooltip;
 			sourceTree = "<group>";
 		};
-		6F9857402CD2933B001BE9A0 /* StorageInconsistencyMonitor */ = {
-			isa = PBXGroup;
-			children = (
-				6F98573F2CD2933B001BE9A0 /* StorageInconsistencyMonitor.swift */,
-			);
-			path = StorageInconsistencyMonitor;
-			sourceTree = "<group>";
-		};
 		6F9FFE2B2C57AE4200A238BE /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -4261,7 +4253,6 @@
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
 				3151F0E827357F8F00226F58 /* VoiceSearch */,
 				4B6484F427FD1E390050A7A1 /* Waitlist */,
-				6F9857402CD2933B001BE9A0 /* StorageInconsistencyMonitor */,
 			);
 			path = DuckDuckGo;
 			sourceTree = "<group>";
@@ -5922,6 +5913,7 @@
 		F143C3191E4A99DD00CFDE3A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				6F98573F2CD2933B001BE9A0 /* StorageInconsistencyMonitor.swift */,
 				6F9857332CD27F98001BE9A0 /* BoolFileMarker.swift */,
 				9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */,
 				B603974829C19F6F00902A34 /* Assertions.swift */,
@@ -7537,7 +7529,6 @@
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */,
 				9F9A92342C86B42B001D036D /* AppIconPicker.swift in Sources */,
-				6F04224C2CD2A33B00729FA6 /* StorageInconsistencyMonitor.swift in Sources */,
 				CB825C962C071C9300BCC586 /* AlertViewPresenter.swift in Sources */,
 				1EE7C299294227EC0026C8CB /* AutoconsentSettingsViewController.swift in Sources */,
 				1E8AD1D527C2E22900ABA377 /* DownloadsListSectionViewModel.swift in Sources */,
@@ -8328,6 +8319,7 @@
 				CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */,
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
 				98B000532915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift in Sources */,
+				6F04224D2CD2A3AD00729FA6 /* StorageInconsistencyMonitor.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
 				9FEA22322C3270BD006B03BF /* TimerInterface.swift in Sources */,
 				1E4DCF4C27B6A4CB00961E25 /* URLFileExtension.swift in Sources */,

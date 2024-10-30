@@ -18,22 +18,25 @@
 //
 
 import UIKit
-import Core
 
-struct StorageInconsistencyMonitor {
-    func didBecomeActive() {
-        if !UIApplication.shared.isProtectedDataAvailable {
+public struct StorageInconsistencyMonitor {
+    public init() { }
+
+    public func didBecomeActive(isProtectedDataAvailable: Bool) {
+        if !isProtectedDataAvailable {
             Pixel.fire(pixel: .protectedDataUnavailableWhenBecomeActive)
         }
     }
 
-    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
-        if hasFileMarker != hasInstallStatistics {
-            Pixel.fire(pixel: .statisticsLoaderATBStateMismatch,
-                       parameters: [
-                        "userDefaults": hasInstallStatistics,
-                        "fileFlag": hasFileMarker
-                       ])
+    public func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
+        if hasFileMarker == true && hasInstallStatistics == false {
+            Pixel.fire(pixel: .statisticsLoaderATBStateMismatch)
+        }
+    }
+
+    public func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
+        if hasFileMarker == true && hasCompletedFlag == false {
+            Pixel.fire(pixel: .adAttributionReportStateMismatch)
         }
     }
 }

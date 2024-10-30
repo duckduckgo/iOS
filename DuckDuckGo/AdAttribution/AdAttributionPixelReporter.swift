@@ -31,6 +31,19 @@ final actor AdAttributionPixelReporter {
     private let pixelFiring: PixelFiringAsync.Type
     private var isSendingAttribution: Bool = false
 
+    private let attributionReportSuccessfulFileMarker = BoolFileMarker(name: .isAttrbutionReportSuccessful)
+
+    private var shouldReport: Bool {
+        get async {
+            if let attributionReportSuccessfulFileMarker {
+                // If marker is present then report only if data consistent
+                return await !fetcherStorage.wasAttributionReportSuccessful && !attributionReportSuccessfulFileMarker.isPresent
+            } else {
+                return await fetcherStorage.wasAttributionReportSuccessful
+            }
+        }
+    }
+
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
          pixelFiring: PixelFiringAsync.Type = Pixel.self) {
@@ -41,7 +54,9 @@ final actor AdAttributionPixelReporter {
 
     @discardableResult
     func reportAttributionIfNeeded() async -> Bool {
-        guard await fetcherStorage.wasAttributionReportSuccessful == false else {
+        await checkStorageConsistency()
+
+        guard await shouldReport else {
             return false
         }
 
@@ -69,12 +84,34 @@ final actor AdAttributionPixelReporter {
                 }
             }
 
-            await fetcherStorage.markAttributionReportSuccessful()
+            await markAttributionReportSuccessful()
 
             return true
         }
 
         return false
+    }
+
+    private func markAttributionReportSuccessful() async {
+        await fetcherStorage.markAttributionReportSuccessful()
+        attributionReportSuccessfulFileMarker?.mark()
+    }
+
+    private func checkStorageConsistency() async {
+
+        guard let attributionReportSuccessfulFileMarker else { return }
+
+        let wasAttributionReportSuccessful = await fetcherStorage.wasAttributionReportSuccessful
+
+        StorageInconsistencyMonitor().addAttributionReporter(
+            hasFileMarker: attributionReportSuccessfulFileMarker.isPresent,
+            hasCompletedFlag: wasAttributionReportSuccessful
+        )
+
+        // Synchronize file marker with current state (in case we have updated from previous version)
+        if wasAttributionReportSuccessful && !attributionReportSuccessfulFileMarker.isPresent {
+            attributionReportSuccessfulFileMarker.mark()
+        }
     }
 
     private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String) -> [String: String] {
@@ -92,4 +129,8 @@ final actor AdAttributionPixelReporter {
 
         return params
     }
+}
+
+private extension BoolFileMarker.Name {
+    static let isAttrbutionReportSuccessful = BoolFileMarker.Name(rawValue: "ad-attribution-successful")
 }

@@ -839,6 +839,7 @@ extension Pixel {
         // MARK: UserDefaults incositency monitoring
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
+        case adAttributionReportStateMismatch
     }
 
 }
@@ -1672,6 +1673,7 @@ extension Pixel.Event {
         // MARK: UserDefaults incositency monitoring
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
+        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
         }
     }
 }

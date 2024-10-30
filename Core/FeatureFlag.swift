@@ -42,6 +42,7 @@ public enum FeatureFlag: String {
     case syncPromotionBookmarks
     case syncPromotionPasswords
     case onboardingHighlights
+    case onboardingAddToDock
     case autofillSurveys
     case autcompleteTabs
 
@@ -93,6 +94,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
+            return .internalOnly
+        case .onboardingAddToDock:
             return .internalOnly
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))

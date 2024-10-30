@@ -27,21 +27,6 @@ import os.log
 
 final class HomePageConfiguration: HomePageMessagesConfiguration {
     
-    enum Component: Equatable {
-        case navigationBarSearch(fixed: Bool)
-        case favorites
-        case homeMessage
-    }
-
-    func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
-        let fixed = favoritesViewModel.favorites.count == 0
-        return [
-            .navigationBarSearch(fixed: fixed),
-            .homeMessage,
-            .favorites
-        ]
-    }
-    
     // MARK: - Messages
     
     private var homeMessageStorage: HomeMessageStorage

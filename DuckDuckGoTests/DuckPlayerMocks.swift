@@ -186,6 +186,11 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
 
 final class MockDuckPlayer: DuckPlayerControlling {
     
+    func telemetryEvent(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
+        nil
+    }
+    
+    
     var hostView: UIViewController?
     
     func openDuckPlayerSettings(params: Any, message: WKScriptMessage) async -> (any Encodable)? {

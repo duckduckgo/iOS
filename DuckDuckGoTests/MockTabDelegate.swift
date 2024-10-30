@@ -24,6 +24,8 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Core
 import Persistence
+import Subscription
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class MockTabDelegate: TabDelegate {
@@ -134,7 +136,8 @@ extension TabViewController {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: contextualOnboardingPixelReporter,
             urlCredentialCreator: MockCredentialCreator(),
-            featureFlagger: featureFlagger
+            featureFlagger: featureFlagger,
+            subscriptionCookieManager: SubscriptionCookieManagerMock()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

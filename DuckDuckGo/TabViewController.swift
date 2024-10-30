@@ -41,6 +41,7 @@ import NetworkProtection
 import Onboarding
 import os.log
 import Navigation
+import Subscription
 
 class TabViewController: UIViewController {
 
@@ -92,6 +93,7 @@ class TabViewController: UIViewController {
     let appSettings: AppSettings
 
     var featureFlagger: FeatureFlagger
+    let subscriptionCookieManager: SubscriptionCookieManaging
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
     private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
@@ -321,7 +323,8 @@ class TabViewController: UIViewController {
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                                   featureFlagger: FeatureFlagger) -> TabViewController {
+                                   featureFlagger: FeatureFlagger,
+                                   subscriptionCookieManager: SubscriptionCookieManaging) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -336,7 +339,8 @@ class TabViewController: UIViewController {
                               contextualOnboardingLogic: contextualOnboardingLogic,
                               onboardingPixelReporter: onboardingPixelReporter,
                               urlCredentialCreator: urlCredentialCreator,
-                              featureFlagger: featureFlagger
+                              featureFlagger: featureFlagger,
+                              subscriptionCookieManager: subscriptionCookieManager
             )
         })
         return controller
@@ -369,7 +373,8 @@ class TabViewController: UIViewController {
                    contextualOnboardingLogic: ContextualOnboardingLogic,
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                   featureFlagger: FeatureFlagger) {
+                   featureFlagger: FeatureFlagger,
+                   subscriptionCookieManager: SubscriptionCookieManaging) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -388,6 +393,7 @@ class TabViewController: UIViewController {
         self.onboardingPixelReporter = onboardingPixelReporter
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
+        self.subscriptionCookieManager = subscriptionCookieManager
         super.init(coder: aDecoder)
         
         // Assign itself as tabNavigationHandler for DuckPlayer
@@ -639,6 +645,8 @@ class TabViewController: UIViewController {
             await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
+            subscriptionCookieManager.resetLastRefreshDate()
+            await subscriptionCookieManager.refreshSubscriptionCookie()
             doLoad()
         }
     }

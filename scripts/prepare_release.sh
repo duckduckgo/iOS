@@ -255,7 +255,7 @@ main() {
 	read_command_line_arguments "$@"
 	checkout_base_branch
 
-	if [[ $is_subsequent_release ]]; then
+	if [[ "$is_subsequent_release" -eq 1 ]]; then
 		create_build_branch
 	elif [[ $is_hotfix ]]; then
 		create_build_branch

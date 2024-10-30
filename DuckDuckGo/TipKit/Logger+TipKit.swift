@@ -1,5 +1,5 @@
 //
-//  HomePageDependencies.swift
+//  Logger+TipKit.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,20 +18,11 @@
 //
 
 import Foundation
-import Bookmarks
-import DDGSync
-import Core
-import BrowserServicesKit
+import os.log
 
-struct HomePageDependencies {
-    let homePageConfiguration: HomePageConfiguration
-    let model: Tab
-    let favoritesViewModel: FavoritesListInteracting
-    let appSettings: AppSettings
-    let syncService: DDGSyncing
-    let syncDataProviders: SyncDataProviders
-    let privacyProDataReporter: PrivacyProDataReporting
-    let variantManager: VariantManager
-    let newTabDialogFactory: any NewTabDaxDialogProvider
-    let newTabDialogTypeProvider: NewTabDialogSpecProvider
+extension Logger {
+
+    static var tipKit: Logger = {
+        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "TipKit")
+    }()
 }

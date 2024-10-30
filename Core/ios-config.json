@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1729265730687,
+    "version": 1730109523334,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -361,6 +361,9 @@
                     "domain": "speedweek.com"
                 },
                 {
+                    "domain": "la-becanerie.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -404,7 +407,7 @@
                     }
                 }
             },
-            "hash": "fba0eeeda60051f6354cf5d26c1e1a63"
+            "hash": "8392e127a3bcaee5c2913df355a7d254"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -499,12 +502,15 @@
                         "steps": [
                             {
                                 "percent": 10
+                            },
+                            {
+                                "percent": 50
                             }
                         ]
                     }
                 }
             },
-            "hash": "75ff21cf9a4181783c06965edd6fe746"
+            "hash": "9de8e4b066aa23f7c20ca638ee0d9f1a"
         },
         "bookmarks": {
             "state": "enabled",
@@ -1334,13 +1340,21 @@
                     "domain": "flexmls.com"
                 },
                 {
+                    "domain": "humana.com"
+                },
+                {
                     "domain": "instructure.com"
                 },
                 {
                     "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "b4eff737bff7f262ceb567b735e1cc41"
+            "hash": "980bf875526f3cc7892c001a7d2e5a74"
+        },
+        "contextualOnboarding": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "cookie": {
             "settings": {
@@ -1428,6 +1442,10 @@
                     {
                         "domain": "xfinity.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2149"
+                    },
+                    {
+                        "domain": "ihg.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2383"
                     }
                 ],
                 "ddgDefaultSites": [
@@ -1448,13 +1466,16 @@
                     },
                     {
                         "domain": "xfinity.com"
+                    },
+                    {
+                        "domain": "ihg.com"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "2ed8c3ccd40db2d9dca1e7ecc4231045"
+            "hash": "e577ccb473bdb7ada49c4d3c6e79cf01"
         },
         "dbp": {
             "state": "disabled",
@@ -1482,7 +1503,7 @@
                     "state": "disabled"
                 },
                 "openInNewTab": {
-                    "state": "disabled"
+                    "state": "internal"
                 },
                 "enableDuckPlayer": {
                     "state": "enabled",
@@ -1575,7 +1596,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "7f82d68f07b3e2aaac1b89725c1d379e"
+            "hash": "c21895584fc5a38e4290c7941ec7d5f8"
         },
         "elementHiding": {
             "exceptions": [
@@ -5325,6 +5346,9 @@
                     "domain": "dollargeneral.com"
                 },
                 {
+                    "domain": "milesplit.live"
+                },
+                {
                     "domain": "monsterenergy.com"
                 },
                 {
@@ -5361,7 +5385,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "be142a65e913cf958af67e2cd5dd8cc4"
+            "hash": "37630ab090682ee7d004120a42031281"
         },
         "harmfulApis": {
             "settings": {
@@ -8844,6 +8868,16 @@
                             }
                         ]
                     },
+                    "svonm.com": {
+                        "rules": [
+                            {
+                                "rule": "hgc-cf-cache-1.svonm.com",
+                                "domains": [
+                                    "t-online.de"
+                                ]
+                            }
+                        ]
+                    },
                     "taboola.com": {
                         "rules": [
                             {
@@ -9334,7 +9368,7 @@
                     "domain": "centerwellpharmacy.com"
                 }
             ],
-            "hash": "e61f68717bcb4a465182a7ddb7d5cc4d"
+            "hash": "434130223ee6493827d477d0171521da"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9604,6 +9638,11 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsNewTabPageExperiment": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

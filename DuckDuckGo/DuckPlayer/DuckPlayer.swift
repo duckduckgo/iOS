@@ -399,27 +399,29 @@ final class DuckPlayer: DuckPlayerControlling {
             return
         }
         
+        // Based on the URL, determine which pixels to fire
         let isSERP = url.isDuckDuckGoSearch
             
-        var event: Pixel.Event
-        if isSERP  {
+        // Assume we are in the SERP Overlay
+        if isSERP {
             switch userValues.duckPlayerMode {
             case .enabled:
-                event = .duckPlayerSettingsAlwaysOverlaySERP
-            default:
-                event = .duckPlayerSettingsNeverOverlaySERP
+                Pixel.fire(pixel: .duckPlayerSettingsAlwaysOverlaySERP)
+            case .disabled:
+                Pixel.fire(pixel: .duckPlayerSettingsNeverOverlaySERP)
+            default: break
             }
+        
+            // Assume we are in the Youtube Overlay
         } else {
             switch userValues.duckPlayerMode {
             case .enabled:
-                event = .duckPlayerSettingsAlwaysOverlayYoutube
-            default:
-                event = .duckPlayerSettingsNeverOverlayYoutube
+                Pixel.fire(pixel: .duckPlayerSettingsAlwaysOverlayYoutube)
+            case .disabled:
+                Pixel.fire(pixel: .duckPlayerSettingsNeverOverlayYoutube)
+            default: break
             }
         }
-
-        Pixel.fire(pixel: event)
-        
        
     }
     

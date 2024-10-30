@@ -185,10 +185,10 @@ struct OnboardingTrackersDoneDialog: View {
 
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
 
     let logoPosition: DaxDialogLogoPosition
     let message: String
+    let cta: String
     let canShowAddToDockTutorial: Bool
     let dismissAction: (_ fromAddToDock: Bool) -> Void
 
@@ -322,6 +322,7 @@ struct OnboardingAddToDockTutorialContent: View {
     OnboardingFinalDialog(
         logoPosition: .top,
         message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+        cta: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton,
         canShowAddToDockTutorial: false,
         dismissAction: { _ in }
     )
@@ -332,6 +333,7 @@ struct OnboardingAddToDockTutorialContent: View {
     OnboardingFinalDialog(
         logoPosition: .left,
         message: UserText.AddToDockOnboarding.EndOfJourney.message,
+        cta: UserText.AddToDockOnboarding.Buttons.dismiss,
         canShowAddToDockTutorial: true,
         dismissAction: { _ in }
     )

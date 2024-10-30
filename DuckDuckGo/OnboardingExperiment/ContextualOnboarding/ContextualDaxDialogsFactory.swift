@@ -182,13 +182,16 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        let message = if onboardingManager.isAddToDockEnabled {
-            UserText.AddToDockOnboarding.EndOfJourney.message
+        let (message, cta) = if onboardingManager.isAddToDockEnabled {
+            (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
         } else {
-            onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
         }
 
-        return OnboardingFinalDialog(logoPosition: .left, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
+        return OnboardingFinalDialog(logoPosition: .left, message: message, cta: cta, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
             delegate?.didTapDismissContextualOnboardingAction()
             if isDismissedFromAddToDock {
                 Logger.onboarding.debug("Dismissed from add to dock")

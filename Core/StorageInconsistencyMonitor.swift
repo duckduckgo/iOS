@@ -25,18 +25,21 @@ public struct StorageInconsistencyMonitor {
     public func didBecomeActive(isProtectedDataAvailable: Bool) {
         if !isProtectedDataAvailable {
             Pixel.fire(pixel: .protectedDataUnavailableWhenBecomeActive)
+            assertionFailure("This is unexpected state, debug if possible")
         }
     }
 
     public func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
         if hasFileMarker == true && hasInstallStatistics == false {
             Pixel.fire(pixel: .statisticsLoaderATBStateMismatch)
+            assertionFailure("This is unexpected state, debug if possible")
         }
     }
 
     public func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
         if hasFileMarker == true && hasCompletedFlag == false {
             Pixel.fire(pixel: .adAttributionReportStateMismatch)
+            assertionFailure("This is unexpected state, debug if possible")
         }
     }
 }

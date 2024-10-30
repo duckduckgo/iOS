@@ -223,6 +223,26 @@ struct OnboardingCTAButton: View {
 
 }
 
+struct OnboardingAddToDockDialog: View {
+    let title = UserText.AddToDockOnboarding.Tutorial.title
+    let message = UserText.AddToDockOnboarding.Tutorial.message
+    let cta = UserText.AddToDockOnboarding.Buttons.dismiss
+
+    let dismissAction: () -> Void
+
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            DaxDialogView(logoPosition: .top) {
+                AddToDockTutorialView(
+                    title: title,
+                    message: message,
+                    action: dismissAction)
+            }
+            .padding()
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("Try Search") {
@@ -269,4 +289,14 @@ struct OnboardingCTAButton: View {
         blockedTrackersCTAAction: { }
     )
     .padding()
+}
+
+#Preview("Add To Dock Tutorial - Light") {
+    OnboardingAddToDockDialog(dismissAction: {})
+        .preferredColorScheme(.light)
+}
+
+#Preview("Add To Dock Tutorial - Dark") {
+    OnboardingAddToDockDialog(dismissAction: {})
+        .preferredColorScheme(.dark)
 }

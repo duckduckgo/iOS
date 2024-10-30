@@ -1412,4 +1412,20 @@ But if you *do* want a peek under the hood, you can find more information about 
             public static let skip = NSLocalizedString("onboarding.highlights.fireDialog.cta.skip", value: "Skip", comment: "The title of the fire button CTA to skip erasing the data.")
         }
     }
+
+    public enum AddToDockOnboarding {
+        public enum Buttons {
+            static let addToDockTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock.")
+            static let dismiss = NSLocalizedString("contextual.onboarding.addToDock.buttons.dismiss", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+        }
+
+        public enum EndOfJourney {
+            static let message = NSLocalizedString("contextual.onboarding.addToDock.endOfJourney.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding to the browser app.")
+        }
+
+        public enum Tutorial {
+            static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+        }
+    }
 }

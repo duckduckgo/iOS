@@ -22,6 +22,7 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+    var defaultTextZoomLevel: DuckDuckGo.TextZoomLevel = .percent100
 
     var recentlyVisitedSites: Bool = false
 

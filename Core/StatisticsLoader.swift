@@ -34,20 +34,23 @@ public class StatisticsLoader {
     private let usageSegmentation: UsageSegmenting
     private let parser = AtbParser()
     private let atbPresenceFileMarker = BoolFileMarker(name: .isATBPresent)
+    private let inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-         usageSegmentation: UsageSegmenting = UsageSegmentation()) {
+         usageSegmentation: UsageSegmenting = UsageSegmentation(),
+         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.usageSegmentation = usageSegmentation
+        self.inconsistencyMonitoring = inconsistencyMonitoring
     }
 
     public func load(completion: @escaping Completion = {}) {
         let hasFileMarker = atbPresenceFileMarker?.isPresent ?? false
         let hasInstallStatistics = statisticsStore.hasInstallStatistics
 
-        StorageInconsistencyMonitor().statisticsDidLoad(hasFileMarker: hasFileMarker, hasInstallStatistics: hasInstallStatistics)
+        inconsistencyMonitoring.statisticsDidLoad(hasFileMarker: hasFileMarker, hasInstallStatistics: hasInstallStatistics)
 
         if hasInstallStatistics {
             // Synchronize file marker with current state

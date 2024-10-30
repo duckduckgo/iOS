@@ -160,7 +160,8 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     private func createSUT() -> AdAttributionPixelReporter {
         AdAttributionPixelReporter(fetcherStorage: fetcherStorage,
                                    attributionFetcher: attributionFetcher,
-                                   pixelFiring: PixelFiringMock.self)
+                                   pixelFiring: PixelFiringMock.self,
+                                   inconsistencyMonitoring: MockAdAttributionReporterInconsistencyMonitoring())
     }
 }
 
@@ -176,6 +177,12 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     var fetchResponse: (String, AdServicesAttributionResponse)?
     func fetch() async -> (String, AdServicesAttributionResponse)? {
         fetchResponse
+    }
+}
+
+struct MockAdAttributionReporterInconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring {
+    func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
+
     }
 }
 

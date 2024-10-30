@@ -31,6 +31,7 @@ final actor AdAttributionPixelReporter {
     private let pixelFiring: PixelFiringAsync.Type
     private var isSendingAttribution: Bool = false
 
+    private let inconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring
     private let attributionReportSuccessfulFileMarker = BoolFileMarker(name: .isAttrbutionReportSuccessful)
 
     private var shouldReport: Bool {
@@ -46,10 +47,12 @@ final actor AdAttributionPixelReporter {
 
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
-         pixelFiring: PixelFiringAsync.Type = Pixel.self) {
+         pixelFiring: PixelFiringAsync.Type = Pixel.self,
+         inconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring = StorageInconsistencyMonitor()) {
         self.fetcherStorage = fetcherStorage
         self.attributionFetcher = attributionFetcher
         self.pixelFiring = pixelFiring
+        self.inconsistencyMonitoring = inconsistencyMonitoring
     }
 
     @discardableResult
@@ -103,7 +106,7 @@ final actor AdAttributionPixelReporter {
 
         let wasAttributionReportSuccessful = await fetcherStorage.wasAttributionReportSuccessful
 
-        StorageInconsistencyMonitor().addAttributionReporter(
+        inconsistencyMonitoring.addAttributionReporter(
             hasFileMarker: attributionReportSuccessfulFileMarker.isPresent,
             hasCompletedFlag: wasAttributionReportSuccessful
         )

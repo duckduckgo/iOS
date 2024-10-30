@@ -19,7 +19,19 @@
 
 import UIKit
 
-public struct StorageInconsistencyMonitor {
+public protocol AppActivationInconsistencyMonitoring {
+    func didBecomeActive(isProtectedDataAvailable: Bool)
+}
+public protocol StatisticsStoreInconsistencyMonitoring {
+    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool)
+}
+
+public protocol AdAttributionReporterInconsistencyMonitoring {
+    func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool)
+}
+
+public struct StorageInconsistencyMonitor: AppActivationInconsistencyMonitoring & StatisticsStoreInconsistencyMonitoring & AdAttributionReporterInconsistencyMonitoring {
+
     public init() { }
 
     public func didBecomeActive(isProtectedDataAvailable: Bool) {

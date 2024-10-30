@@ -26,4 +26,14 @@ struct StorageInconsistencyMonitor {
             Pixel.fire(pixel: .protectedDataUnavailableWhenBecomeActive)
         }
     }
+
+    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
+        if hasFileMarker != hasInstallStatistics {
+            Pixel.fire(pixel: .statisticsLoaderATBStateMismatch,
+                       parameters: [
+                        "userDefaults": hasInstallStatistics,
+                        "fileFlag": hasFileMarker
+                       ])
+        }
+    }
 }

@@ -156,7 +156,9 @@ extension TabViewController {
             entries.append(entry)
         }
 
-        entries.append(self.buildZoomLevelEntry(forLink: link))
+        if !isPad {
+            entries.append(self.buildZoomLevelEntry(forLink: link))
+        }
 
         let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
         let image = self.tabModel.isDesktop ? UIImage(named: "Device-Mobile-16")! : UIImage(named: "Device-Desktop-16")!

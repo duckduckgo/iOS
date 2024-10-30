@@ -30,9 +30,11 @@ struct SettingsAccessibilityView: View {
         List {
             Section {
                 // Text Size
-                SettingsPickerCellView(label: UserText.settingsText,
-                                       options: TextZoomLevel.allCases,
-                                       selectedOption: viewModel.textZoomLevelBinding)
+                if viewModel.state.textSize.enabled {
+                    SettingsPickerCellView(label: UserText.settingsText,
+                                           options: TextZoomLevel.allCases,
+                                           selectedOption: viewModel.textZoomLevelBinding)
+                }
             }
 
             Section(footer: Text(UserText.voiceSearchFooter)) {

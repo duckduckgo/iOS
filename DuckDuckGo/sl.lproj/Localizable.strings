@@ -596,9 +596,6 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želite shraniti to geslo?";
 
-/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
-"autofill.save-login.not-now.CTA" = "Ne zdaj";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "S funkcijo DuckDuckGo Passwords & Autofill varno shranite geslo v napravo.";
 

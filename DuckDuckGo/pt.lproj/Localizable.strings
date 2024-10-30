@@ -596,9 +596,6 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Guardar esta palavra-passe?";
 
-/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
-"autofill.save-login.not-now.CTA" = "Agora não";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Guarda a tua palavra-passe com segurança no dispositivo com a funcionalidade Palavras-passe e preenchimento automático do DuckDuckGo.";
 

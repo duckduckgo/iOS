@@ -310,9 +310,12 @@ extension NewTabPageViewController {
 
         guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
 
-        let onDismiss = {
+        let onDismiss = { [weak self] in
+            guard let self else { return }
             dialogProvider.dismiss()
             self.dismissHostingController(didFinishNTPOnboarding: true)
+            // Make the address bar first responder after closing the new tap page final dialog.
+            self.launchNewSearch()
         }
         let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
         let hostingController = UIHostingController(rootView: daxDialogView)

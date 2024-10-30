@@ -41,6 +41,7 @@ protocol ContextualOnboardingLogic {
     var shouldShowPrivacyButtonPulse: Bool { get }
     var isShowingSearchSuggestions: Bool { get }
     var isShowingSitesSuggestions: Bool { get }
+    var isShowingAddToDockDialog: Bool { get }
 
     func setSearchMessageSeen()
     func setFireEducationMessageSeen()
@@ -211,6 +212,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private var settings: DaxDialogsSettings
     private var entityProviding: EntityProviding
     private let variantManager: VariantManager
+    private let addToDockManager: OnboardingAddToDockManaging
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
     
@@ -222,10 +224,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
          entityProviding: EntityProviding,
-         variantManager: VariantManager = DefaultVariantManager()) {
+         variantManager: VariantManager = DefaultVariantManager(),
+         onboardingManager: OnboardingAddToDockManaging = OnboardingManager()
+    ) {
         self.settings = settings
         self.entityProviding = entityProviding
         self.variantManager = variantManager
+        self.addToDockManager = onboardingManager
     }
 
     private var isNewOnboarding: Bool {
@@ -274,6 +279,11 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     var isShowingSitesSuggestions: Bool {
         guard isNewOnboarding else { return false }
         return lastShownDaxDialogType.flatMap(BrowsingSpec.SpecType.init(rawValue:)) == .visitWebsite || currentHomeSpec == .subsequent
+    }
+
+    var isShowingAddToDockDialog: Bool {
+        guard isNewOnboarding else { return false }
+        return currentHomeSpec == .final && addToDockManager.isAddToDockEnabled
     }
 
     var isEnabled: Bool {
@@ -733,6 +743,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private func clearOnboardingBrowsingData() {
         removeLastShownDaxDialog()
         removeLastVisitedOnboardingWebsite()
+        currentHomeSpec = nil
     }
 }
 

@@ -287,13 +287,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
-
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
-            setTransactionStatus(.idle)
         case .failure(let error):
             Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription, privacy: .public)")
             setTransactionError(.missingEntitlements)
         }
+        setTransactionStatus(.idle)
         return nil
     }
 

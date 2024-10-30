@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "e5946eee6af859690cc1cc5e51daef3c8368981b",
-        "version" : "201.0.0"
+        "branch" : "sam/vpn-clean-up",
+        "revision" : "24783ae7153feadefab62ab590fe90cf38516f5a"
       }
     },
     {

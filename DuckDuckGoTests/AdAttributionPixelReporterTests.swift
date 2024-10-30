@@ -27,20 +27,22 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     private var attributionFetcher: AdAttributionFetcherMock!
     private var fetcherStorage: AdAttributionReporterStorageMock!
     private var featureFlagger: MockFeatureFlagger!
+    private var privacyConfigurationManager: PrivacyConfigurationManagerMock!
 
     override func setUpWithError() throws {
         attributionFetcher = AdAttributionFetcherMock()
         fetcherStorage = AdAttributionReporterStorageMock()
         featureFlagger = MockFeatureFlagger()
+        privacyConfigurationManager = PrivacyConfigurationManagerMock()
 
         featureFlagger.enabledFeatureFlags.append(.adAttributionReporting)
-        featureFlagger.enabledFeatureFlags.append(.adAttributionReportingIncludeToken)
     }
 
     override func tearDownWithError() throws {
         attributionFetcher = nil
         fetcherStorage = nil
         featureFlagger = nil
+        privacyConfigurationManager = nil
 
         PixelFiringMock.tearDown()
     }
@@ -79,6 +81,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     func testPixelAttributesNaming() async throws {
         let sut = createSUT()
         attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
+        (privacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.settings[.adAttributionReporting] = ["includeToken": true]
 
         await sut.reportAttributionIfNeeded()
 
@@ -177,7 +180,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertFalse(attributionFetcher.wasFetchCalled)
     }
 
-    func testDoesNotIncludeTokenWhenSubfeatureDisabled() async throws {
+    func testDoesNotIncludeTokenWhenSettingMissing() async throws {
         let sut = createSUT()
         attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
         featureFlagger.enabledFeatureFlags = [.adAttributionReporting]
@@ -189,10 +192,25 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertNil(pixelAttributes["attribution_token"])
     }
 
+    func testIncludesTokenWhenSettingEnabled() async throws {
+        let sut = createSUT()
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
+        featureFlagger.enabledFeatureFlags = [.adAttributionReporting]
+
+        (privacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.settings[.adAttributionReporting] = ["includeToken": true]
+
+        await sut.reportAttributionIfNeeded()
+
+        let pixelAttributes = try XCTUnwrap(PixelFiringMock.lastParams)
+
+        XCTAssertNotNil(pixelAttributes["attribution_token"])
+    }
+
     private func createSUT() -> AdAttributionPixelReporter {
         AdAttributionPixelReporter(fetcherStorage: fetcherStorage,
                                    attributionFetcher: attributionFetcher,
                                    featureFlagger: featureFlagger,
+                                   privacyConfigurationManager: privacyConfigurationManager,
                                    pixelFiring: PixelFiringMock.self)
     }
 }

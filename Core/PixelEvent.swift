@@ -80,6 +80,7 @@ extension Pixel {
         case browsingMenuCopy
         case browsingMenuPrint
         case browsingMenuFindInPage
+        case browsingMenuZoom
         case browsingMenuDisableProtection
         case browsingMenuEnableProtection
         case browsingMenuReportBrokenSite
@@ -206,7 +207,9 @@ extension Pixel {
         case bookmarkExportFailure
 
         case textSizeSettingsChanged
-        
+        case zoomChangedOnPage
+        case zoomChangedOnPageDaily
+
         case downloadStarted
         case downloadStartedDueToUnhandledMIMEType
         case downloadTriedToPresentPreviewWithoutTab
@@ -896,6 +899,7 @@ extension Pixel.Event {
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuFindInPage: return "mb_fp"
+        case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
         case .browsingMenuEnableProtection: return "mb_wlr"
         case .browsingMenuReportBrokenSite: return "mb_rb"
@@ -1024,7 +1028,9 @@ extension Pixel.Event {
         case .bookmarkExportFailure: return "m_be_e"
 
         case .textSizeSettingsChanged: return "m_text_size_settings_changed"
-            
+        case .zoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
+        case .zoomChangedOnPage: return "m_menu_page_zoom_changed"
+
         case .downloadStarted: return "m_download_started"
         case .downloadStartedDueToUnhandledMIMEType: return "m_download_started_due_to_unhandled_mime_type"
         case .downloadTriedToPresentPreviewWithoutTab: return "m_download_tried_to_present_preview_without_tab"

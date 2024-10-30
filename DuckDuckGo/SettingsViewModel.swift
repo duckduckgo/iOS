@@ -263,6 +263,7 @@ final class SettingsViewModel: ObservableObject {
             set: { newValue in
                 self.appSettings.defaultTextZoomLevel = newValue
                 self.state.textSize.level = newValue
+                Pixel.fire(pixel: .settingsAccessiblityTextSize)
             }
         )
     }

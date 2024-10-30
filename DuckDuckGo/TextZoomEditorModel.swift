@@ -18,11 +18,13 @@
 //
 
 import SwiftUI
+import Core
 
 class TextZoomEditorModel: ObservableObject {
 
     let domain: String
     let storage: DomainTextZoomStoring
+    let initialValue: TextZoomLevel
 
     var valueAsPercent: Int {
         TextZoomLevel.allCases[value].rawValue
@@ -30,11 +32,7 @@ class TextZoomEditorModel: ObservableObject {
 
     @Published var value: Int = 0 {
         didSet {
-            title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
-            storage.set(textZoomLevel: TextZoomLevel.allCases[value], forDomain: domain)
-            NotificationCenter.default.post(
-                name: AppUserDefaults.Notifications.textSizeChange,
-                object: nil)
+            valueWasSet()
         }
     }
 
@@ -43,8 +41,8 @@ class TextZoomEditorModel: ObservableObject {
     init(domain: String, storage: DomainTextZoomStoring, defaultTextZoom: TextZoomLevel) {
         self.domain = domain
         self.storage = storage
-        let percent = (storage.textZoomLevelForDomain(domain) ?? defaultTextZoom)
-        value = TextZoomLevel.allCases.firstIndex(of: percent) ?? 0
+        self.initialValue = (storage.textZoomLevelForDomain(domain) ?? defaultTextZoom)
+        value = TextZoomLevel.allCases.firstIndex(of: initialValue) ?? 0
     }
 
     func increment() {
@@ -53,6 +51,23 @@ class TextZoomEditorModel: ObservableObject {
 
     func decrement() {
         value = max(0, value - 1)
+    }
+
+    private func valueWasSet() {
+        title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
+        storage.set(textZoomLevel: TextZoomLevel.allCases[value], forDomain: domain)
+        NotificationCenter.default.post(
+            name: AppUserDefaults.Notifications.textSizeChange,
+            object: nil)
+        DailyPixel.fire(pixel: .zoomChangedOnPageDaily)
+    }
+
+    func onDismiss() {
+        guard initialValue.rawValue != TextZoomLevel.allCases[value].rawValue else { return }
+        Pixel.fire(.zoomChangedOnPage, withAdditionalParameters: [
+            "text_size_initial": String(initialValue.rawValue),
+            "text_size_updated": String(TextZoomLevel.allCases[value].rawValue),
+        ])
     }
 
 }

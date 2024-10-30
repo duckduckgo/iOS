@@ -33,6 +33,7 @@ struct TextZoomEditorView: View {
                 .frame(alignment: .center)
 
             Button {
+                model.onDismiss()
                 dismiss()
             } label: {
                 Text(UserText.navigationTitleDone)

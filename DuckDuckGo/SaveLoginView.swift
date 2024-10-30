@@ -196,7 +196,7 @@ struct SaveLoginView: View {
                                         action: viewModel.save)
             switch layoutType {
             case .newUser:
-                AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNotNowCTA,
+                AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNoThanksCTA,
                                              action: viewModel.cancelButtonPressed)
             default:
                 AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNeverPromptCTA,

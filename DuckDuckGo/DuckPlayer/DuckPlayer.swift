@@ -76,6 +76,51 @@ public struct UIValues: Codable {
     let allowFirstVideo: Bool
 }
 
+// Wrapper to allow sibling properties on each event in the future.
+struct TelemetryEvent: Decodable {
+    let attributes: Attributes
+}
+
+// This is the first example of a new telemetry event
+struct ImpressionAttributes: Decodable {
+    enum Layout: String, Decodable {
+        case landscape = "landscape-layout"
+    }
+
+    let name: String
+    let value: Layout
+}
+
+// Designed to represent the discriminated union used by the FE (where all events are schema-driven)
+enum Attributes: Decodable {
+
+    // more events can be added here later, without needing a new handler
+    case impression(ImpressionAttributes)
+
+    private enum CodingKeys: String, CodingKey {
+        case name
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let name = try container.decode(String.self, forKey: .name)
+
+        switch name {
+        case "impression":
+            let attributes = try ImpressionAttributes(from: decoder)
+            self = .impression(attributes)
+
+        default:
+            throw DecodingError.dataCorruptedError(
+                forKey: .name,
+                in: container,
+                debugDescription: "Unknown name value: \(name)"
+            )
+        }
+    }
+}
+
+
 /// Protocol defining the Duck Player functionality.
 protocol DuckPlayerControlling: AnyObject {
     
@@ -128,6 +173,13 @@ protocol DuckPlayerControlling: AnyObject {
     ///   - params: Parameters from the web content.
     ///   - message: The script message containing the parameters.
     func openDuckPlayerInfo(params: Any, message: WKScriptMessage) async -> Encodable?
+    
+    /// Sends a telemetry event from the FE.
+    ///
+    /// - Parameters:
+    ///   - params: Parameters from the web content.
+    ///   - message: The script message containing the parameters.
+    func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable?
     
     /// Performs initial setup for the player.
     ///
@@ -309,6 +361,28 @@ final class DuckPlayer: DuckPlayerControlling {
         )
         return nil
     }
+    
+    /// Sends a telemetry event from the FE.
+    ///
+    /// - Parameters:
+    ///   - params: Parameters from the web content.
+    ///   - message: The script message containing the parameters.
+    @MainActor
+        public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
+            guard let event: TelemetryEvent = DecodableHelper.decode(from: params) else {
+                return nil
+            }
+
+            switch event.attributes {
+            case .impression(let attrs):
+                switch attrs.value {
+                case .landscape:
+                    Pixel.fire(pixel: .duckPlayerLandscapeLayoutImpressions)
+                }
+            }
+
+            return nil
+        }
     
     /// Opens Duck Player information modal.
     ///

@@ -186,7 +186,8 @@ struct OnboardingTrackersDoneDialog: View {
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
     let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
-    
+
+    let logoPosition: DaxDialogLogoPosition
     let message: String
     let canShowAddToDockTutorial: Bool
     let dismissAction: (_ fromAddToDock: Bool) -> Void
@@ -195,7 +196,7 @@ struct OnboardingFinalDialog: View {
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            DaxDialogView(logoPosition: .left) {
+            DaxDialogView(logoPosition: logoPosition) {
                 if showAddToDockTutorial {
                     OnboardingAddToDockTutorialContent {
                         dismissAction(true)
@@ -218,6 +219,7 @@ struct OnboardingFinalDialog: View {
     private var customView: some View {
         if canShowAddToDockTutorial {
             AddToDockPromoView()
+                .aspectRatio(contentMode: .fill)
                 .padding(.vertical)
         } else {
             EmptyView()
@@ -317,13 +319,23 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("Final Dialog - No Add to Dock Tutorial") {
-    OnboardingFinalDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage, canShowAddToDockTutorial: false, dismissAction: { _ in })
-        .padding()
+    OnboardingFinalDialog(
+        logoPosition: .top,
+        message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+        canShowAddToDockTutorial: false,
+        dismissAction: { _ in }
+    )
+    .padding()
 }
 
 #Preview("Final Dialog - Add to Dock Tutorial") {
-    OnboardingFinalDialog(message: UserText.AddToDockOnboarding.EndOfJourney.message, canShowAddToDockTutorial: true, dismissAction: { _ in })
-        .padding()
+    OnboardingFinalDialog(
+        logoPosition: .left,
+        message: UserText.AddToDockOnboarding.EndOfJourney.message,
+        canShowAddToDockTutorial: true,
+        dismissAction: { _ in }
+    )
+    .padding()
 }
 
 #Preview("Trackers Dialog") {

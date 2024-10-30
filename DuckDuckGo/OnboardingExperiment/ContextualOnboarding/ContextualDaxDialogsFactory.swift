@@ -188,7 +188,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
         }
 
-        return OnboardingFinalDialog(message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
+        return OnboardingFinalDialog(logoPosition: .left, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
             delegate?.didTapDismissContextualOnboardingAction()
             if isDismissedFromAddToDock {
                 Logger.onboarding.debug("Dismissed from add to dock")

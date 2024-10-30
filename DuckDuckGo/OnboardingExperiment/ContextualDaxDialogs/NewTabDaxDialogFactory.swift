@@ -106,7 +106,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         }
 
         return FadeInView {
-            OnboardingFinalDialog(message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled) { [weak self] isDismissedFromAddToDock in
+            OnboardingFinalDialog(logoPosition: .top, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled) { [weak self] isDismissedFromAddToDock in
                 if isDismissedFromAddToDock {
                     Logger.onboarding.debug("Dismissed from add to dock")
                 } else {

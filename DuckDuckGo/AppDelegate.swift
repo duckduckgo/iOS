@@ -88,7 +88,12 @@ import os.log
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
+    private var subscriptionCookieManager: SubscriptionCookieManaging!
     var privacyProDataReporter: PrivacyProDataReporting!
+
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
     // MARK: lifecycle
 
@@ -118,7 +123,7 @@ import os.log
         }
     }
 
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 #if targetEnvironment(simulator)
@@ -308,6 +313,17 @@ import os.log
         subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
+        
+        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+            
+            return WKWebsiteDataStore.current().httpCookieStore
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
@@ -347,7 +363,8 @@ import os.log
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
-                                          featureFlagger: AppDependencyProvider.shared.featureFlagger)
+                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          subscriptionCookieManager: subscriptionCookieManager)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -394,6 +411,8 @@ import os.log
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
             didCrashDuringCrashHandlersSetUp = false
         }
+
+        tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
     }
@@ -567,6 +586,10 @@ import os.log
             if isSubscriptionActive {
                 DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
+        }
+
+        Task { @MainActor in
+            await subscriptionCookieManager.refreshSubscriptionCookie()
         }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)

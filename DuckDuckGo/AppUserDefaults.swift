@@ -431,10 +431,12 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .duckPlayerOpenInNewTab, defaultValue: true)
     var duckPlayerOpenInNewTab: Bool
-    
 
     @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
     var onboardingHighlightsEnabled: Bool
+
+    @UserDefaultsWrapper(key: .debugOnboardingAddToDockEnabledKey, defaultValue: false)
+    var onboardingAddToDockEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

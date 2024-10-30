@@ -123,6 +123,7 @@ class MainViewController: UIViewController {
     private var feedbackCancellable: AnyCancellable?
 
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
+    private let subscriptionCookieManager: SubscriptionCookieManaging
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -201,7 +202,8 @@ class MainViewController: UIViewController {
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
         domainTextZoomStorage: DomainTextZoomStoring = DomainTextZoomStorage(),
-        preserveLogins: PreserveLogins = .shared
+        preserveLogins: PreserveLogins = .shared,
+        subscriptionCookieManager: SubscriptionCookieManaging
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -215,18 +217,18 @@ class MainViewController: UIViewController {
 
         self.previewsSource = previewsSource
 
-        self.tabManager = TabManager(
-            model: tabsModel,
-            previewsSource: previewsSource,
-            bookmarksDatabase: bookmarksDatabase,
-            historyManager: historyManager,
-            syncService: syncService,
-            privacyProDataReporter: privacyProDataReporter,
-            contextualOnboardingPresenter: contextualOnboardingPresenter,
-            contextualOnboardingLogic: contextualOnboardingLogic,
-            onboardingPixelReporter: contextualOnboardingPixelReporter,
-            featureFlagger: featureFlagger,
-            domainTextZoomStorage: domainTextZoomStorage)
+        self.tabManager = TabManager(model: tabsModel,
+                                     previewsSource: previewsSource,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     historyManager: historyManager,
+                                     syncService: syncService,
+                                     privacyProDataReporter: privacyProDataReporter,
+                                     contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                     contextualOnboardingLogic: contextualOnboardingLogic,
+                                     onboardingPixelReporter: contextualOnboardingPixelReporter,
+                                     featureFlagger: featureFlagger,
+                                     domainTextZoomStorage: domainTextZoomStorage,
+                                     subscriptionCookieManager: subscriptionCookieManager)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -239,6 +241,7 @@ class MainViewController: UIViewController {
         self.voiceSearchHelper = voiceSearchHelper
         self.domainTextZoomStorage = domainTextZoomStorage
         self.preserveLogins = preserveLogins
+        self.subscriptionCookieManager = subscriptionCookieManager
 
         super.init(nibName: nil, bundle: nil)
         

@@ -50,6 +50,7 @@ class RootDebugViewController: UITableViewController {
         case resetDuckPlayerExperiment = 678
         case overrideDuckPlayerExperiment = 679
         case overrideDuckPlayerExperimentControl = 680
+        case resetTipKit = 681
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -64,6 +65,7 @@ class RootDebugViewController: UITableViewController {
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
     var tabManager: TabManager?
+    private var tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling?
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
@@ -72,24 +74,29 @@ class RootDebugViewController: UITableViewController {
           sync: DDGSyncing,
           bookmarksDatabase: CoreDataDatabase,
           internalUserDecider: InternalUserDecider,
-          tabManager: TabManager) {
+          tabManager: TabManager,
+          tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling = TipKitDebugOptionsUIActionHandler()) {
 
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
         self.tabManager = tabManager
+        self.tipKitUIActionHandler = tipKitUIActionHandler
+
         super.init(coder: coder)
-    }
-        
-    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager) {
-        self.sync = sync
-        self.bookmarksDatabase = bookmarksDatabase
-        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
-        self.tabManager = tabManager
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager, tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling = TipKitDebugOptionsUIActionHandler()) {
+
+        self.sync = sync
+        self.bookmarksDatabase = bookmarksDatabase
+        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
+        self.tipKitUIActionHandler = tipKitUIActionHandler
     }
 
     @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder) -> ImageCacheDebugViewController? {
@@ -187,6 +194,8 @@ class RootDebugViewController: UITableViewController {
             case .resetDuckPlayerExperiment:
                 DuckPlayerLaunchExperiment().cleanup()
                 ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
+            case .resetTipKit:
+                tipKitUIActionHandler?.resetTipKitTapped()
             case .overrideDuckPlayerExperiment:
                 DuckPlayerLaunchExperiment().override()
                 ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")

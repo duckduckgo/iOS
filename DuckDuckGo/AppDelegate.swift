@@ -518,6 +518,7 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        StorageInconsistencyMonitor().didBecomeActive()
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 

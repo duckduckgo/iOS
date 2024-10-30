@@ -835,6 +835,9 @@ extension Pixel {
 
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
+
+        // MARK: UserDefaults incositency monitoring
+        case protectedDataUnavailableWhenBecomeActive
     }
 
 }
@@ -1664,6 +1667,9 @@ extension Pixel.Event {
             
         // MARK: - WebView Error Page shown
         case .webViewErrorPageShown: return "m_errorpageshown"
+
+        // MARK: UserDefaults incositency monitoring
+        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         }
     }
 }

@@ -770,7 +770,7 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.addToDock.buttons.dismiss" = "Start Browsing";
 
-/* Button on the last screen of the onboarding, it will show the Add to Duck tutorial. */
+/* Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock. */
 "contextual.onboarding.addToDock.buttons.tutorial" = "Show Me How";
 
 /* Message of the last screen of the onboarding to the browser app. */

@@ -88,7 +88,8 @@ import os.log
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
-    private var subscriptionCookieManager: SubscriptionCookieManaging!
+    // Temporary disable, see: https://app.asana.com/0/0/1208249142369975/1208659372053914/f
+//    private var subscriptionCookieManager: SubscriptionCookieManaging!
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: - Feature specific app event handlers
@@ -314,16 +315,17 @@ import os.log
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
         
-        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                              currentCookieStore: { [weak self] in
-            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
-                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
-                // eventually the subscription cookie will be refreshed on opening the first tab
-                return nil
-            }
-            
-            return WKWebsiteDataStore.current().httpCookieStore
-        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+        // Temporary disable, see: https://app.asana.com/0/0/1208249142369975/1208659372053914/f
+//        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+//                                                              currentCookieStore: { [weak self] in
+//            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+//                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+//                // eventually the subscription cookie will be refreshed on opening the first tab
+//                return nil
+//            }
+//            
+//            return WKWebsiteDataStore.current().httpCookieStore
+//        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
@@ -362,8 +364,7 @@ import os.log
                                           contextualOnboardingLogic: daxDialogs,
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
-                                          voiceSearchHelper: voiceSearchHelper,
-                                          subscriptionCookieManager: subscriptionCookieManager)
+                                          voiceSearchHelper: voiceSearchHelper)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -587,9 +588,10 @@ import os.log
             }
         }
 
-        Task { @MainActor in
-            await subscriptionCookieManager.refreshSubscriptionCookie()
-        }
+        // Temporary disable, see: https://app.asana.com/0/0/1208249142369975/1208659372053914/f
+//        Task { @MainActor in
+//            await subscriptionCookieManager.refreshSubscriptionCookie()
+//        }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()

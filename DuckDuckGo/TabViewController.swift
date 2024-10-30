@@ -93,7 +93,6 @@ class TabViewController: UIViewController {
     let appSettings: AppSettings
 
     var featureFlagger: FeatureFlagger
-    let subscriptionCookieManager: SubscriptionCookieManaging
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
     private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
@@ -323,8 +322,7 @@ class TabViewController: UIViewController {
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                                   featureFlagger: FeatureFlagger,
-                                   subscriptionCookieManager: SubscriptionCookieManaging) -> TabViewController {
+                                   featureFlagger: FeatureFlagger) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -339,8 +337,7 @@ class TabViewController: UIViewController {
                               contextualOnboardingLogic: contextualOnboardingLogic,
                               onboardingPixelReporter: onboardingPixelReporter,
                               urlCredentialCreator: urlCredentialCreator,
-                              featureFlagger: featureFlagger,
-                              subscriptionCookieManager: subscriptionCookieManager
+                              featureFlagger: featureFlagger
             )
         })
         return controller
@@ -373,8 +370,7 @@ class TabViewController: UIViewController {
                    contextualOnboardingLogic: ContextualOnboardingLogic,
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
-                   featureFlagger: FeatureFlagger,
-                   subscriptionCookieManager: SubscriptionCookieManaging) {
+                   featureFlagger: FeatureFlagger) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -393,7 +389,6 @@ class TabViewController: UIViewController {
         self.onboardingPixelReporter = onboardingPixelReporter
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
-        self.subscriptionCookieManager = subscriptionCookieManager
         super.init(coder: aDecoder)
     }
 
@@ -642,8 +637,9 @@ class TabViewController: UIViewController {
             await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
-            subscriptionCookieManager.resetLastRefreshDate()
-            await subscriptionCookieManager.refreshSubscriptionCookie()
+            // Temporary disable, see: https://app.asana.com/0/0/1208249142369975/1208659372053914/f
+//            subscriptionCookieManager.resetLastRefreshDate()
+//            await subscriptionCookieManager.refreshSubscriptionCookie()
             doLoad()
         }
     }

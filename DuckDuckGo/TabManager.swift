@@ -42,7 +42,6 @@ class TabManager {
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
-    private let subscriptionCookieManager: SubscriptionCookieManaging
 
     weak var delegate: TabDelegate?
 
@@ -59,8 +58,7 @@ class TabManager {
          privacyProDataReporter: PrivacyProDataReporting,
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
          contextualOnboardingLogic: ContextualOnboardingLogic,
-         onboardingPixelReporter: OnboardingPixelReporting,
-         subscriptionCookieManager: SubscriptionCookieManaging) {
+         onboardingPixelReporter: OnboardingPixelReporting) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -71,7 +69,6 @@ class TabManager {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
-        self.subscriptionCookieManager = subscriptionCookieManager
         registerForNotifications()
     }
 
@@ -93,8 +90,7 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -172,8 +168,7 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,

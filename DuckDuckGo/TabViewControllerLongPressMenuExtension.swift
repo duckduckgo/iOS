@@ -111,8 +111,7 @@ extension TabViewController {
                                                                  contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                                  contextualOnboardingLogic: contextualOnboardingLogic,
                                                                  onboardingPixelReporter: onboardingPixelReporter,
-                                                                 featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                                                 subscriptionCookieManager: subscriptionCookieManager)
+                                                                 featureFlagger: AppDependencyProvider.shared.featureFlagger)
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)

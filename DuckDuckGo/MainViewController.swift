@@ -123,7 +123,6 @@ class MainViewController: UIViewController {
     private var feedbackCancellable: AnyCancellable?
 
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
-    private let subscriptionCookieManager: SubscriptionCookieManaging
     let privacyProDataReporter: PrivacyProDataReporting
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -196,8 +195,7 @@ class MainViewController: UIViewController {
         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
-        voiceSearchHelper: VoiceSearchHelperProtocol,
-        subscriptionCookieManager: SubscriptionCookieManaging
+        voiceSearchHelper: VoiceSearchHelperProtocol
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -219,8 +217,7 @@ class MainViewController: UIViewController {
                                      privacyProDataReporter: privacyProDataReporter,
                                      contextualOnboardingPresenter: contextualOnboardingPresenter,
                                      contextualOnboardingLogic: contextualOnboardingLogic,
-                                     onboardingPixelReporter: contextualOnboardingPixelReporter,
-                                     subscriptionCookieManager: subscriptionCookieManager)
+                                     onboardingPixelReporter: contextualOnboardingPixelReporter)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -231,7 +228,6 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
-        self.subscriptionCookieManager = subscriptionCookieManager
 
         super.init(nibName: nil, bundle: nil)
         

@@ -725,6 +725,7 @@
 		9F69331D2C5A191400CD6A5D /* MockTutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */; };
 		9F69331F2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */; };
 		9F6933212C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */; };
+		9F72FE272CD223A000BA35F5 /* add-to-dock-promo.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F72FE262CD223A000BA35F5 /* add-to-dock-promo.json */; };
 		9F7CFF762C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF752C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift */; };
 		9F7CFF782C86E3E10012833E /* OnboardingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */; };
 		9F7CFF7D2C89B69A0012833E /* AppIconPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */; };
@@ -737,7 +738,6 @@
 		9F8E0F312CCA6390001EA7C5 /* AddToDockTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E0F302CCA6390001EA7C5 /* AddToDockTutorialView.swift */; };
 		9F8E0F332CCA642D001EA7C5 /* VideoPlayerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E0F322CCA642D001EA7C5 /* VideoPlayerViewModelTests.swift */; };
 		9F8E0F382CCFAA8A001EA7C5 /* AddToDockPromoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E0F372CCFAA8A001EA7C5 /* AddToDockPromoView.swift */; };
-		9F8E0F3A2CCFAAE8001EA7C5 /* add-to-dock-promo.json in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E0F392CCFAAE8001EA7C5 /* add-to-dock-promo.json */; };
 		9F8E0F3D2CCFD072001EA7C5 /* AddToDockPromoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E0F3C2CCFD071001EA7C5 /* AddToDockPromoViewModel.swift */; };
 		9F8FE9492BAE50E50071E372 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FE9482BAE50E50071E372 /* Lottie */; };
 		9F96F73B2C9144D5009E45D5 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 9F96F73A2C9144D5009E45D5 /* Onboarding */; };
@@ -2524,6 +2524,7 @@
 		9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTutorialSettings.swift; sourceTree = "<group>"; };
 		9F69331E2C5B1D0C00CD6A5D /* OnFirstAppearViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppearViewModifier.swift; sourceTree = "<group>"; };
 		9F6933202C5B9A5B00CD6A5D /* OnboardingHostingControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHostingControllerMock.swift; sourceTree = "<group>"; };
+		9F72FE262CD223A000BA35F5 /* add-to-dock-promo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "add-to-dock-promo.json"; sourceTree = "<group>"; };
 		9F7CFF752C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AppIconPickerContent.swift"; sourceTree = "<group>"; };
 		9F7CFF772C86E3E10012833E /* OnboardingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerTests.swift; sourceTree = "<group>"; };
 		9F7CFF7C2C89B69A0012833E /* AppIconPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPickerViewModelTests.swift; sourceTree = "<group>"; };
@@ -2536,7 +2537,6 @@
 		9F8E0F302CCA6390001EA7C5 /* AddToDockTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockTutorialView.swift; sourceTree = "<group>"; };
 		9F8E0F322CCA642D001EA7C5 /* VideoPlayerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModelTests.swift; sourceTree = "<group>"; };
 		9F8E0F372CCFAA8A001EA7C5 /* AddToDockPromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoView.swift; sourceTree = "<group>"; };
-		9F8E0F392CCFAAE8001EA7C5 /* add-to-dock-promo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "add-to-dock-promo.json"; sourceTree = "<group>"; };
 		9F8E0F3C2CCFD071001EA7C5 /* AddToDockPromoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDockPromoViewModel.swift; sourceTree = "<group>"; };
 		9F96F73E2C914C57009E45D5 /* OnboardingGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGradient.swift; sourceTree = "<group>"; };
 		9F9A922D2C86A56B001D036D /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
@@ -4821,8 +4821,8 @@
 		9F8E0F3B2CCFD050001EA7C5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F72FE262CD223A000BA35F5 /* add-to-dock-promo.json */,
 				9F8E0F292CCA5C9D001EA7C5 /* add-to-dock-demo.mp4 */,
-				9F8E0F392CCFAAE8001EA7C5 /* add-to-dock-promo.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -7078,7 +7078,7 @@
 				AA4D6ABF23DE4D15007E8790 /* AppIconYellow40x40@3x.png in Resources */,
 				AA4D6A8F23DE49A5007E8790 /* AppIconBlack29x29@3x.png in Resources */,
 				AA4D6AA523DE4CC4007E8790 /* AppIconBlue29x29@3x.png in Resources */,
-				9F8E0F3A2CCFAAE8001EA7C5 /* add-to-dock-promo.json in Resources */,
+				9F72FE272CD223A000BA35F5 /* add-to-dock-promo.json in Resources */,
 				1EEF124C2850A93F003DDE57 /* Trackers.xcassets in Resources */,
 				AA4D6ACF23DE4D27007E8790 /* AppIconPurple76x76@2x.png in Resources */,
 				4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */,

@@ -35,6 +35,10 @@ extension TabViewController {
             controller.sheetPresentationController?.detents = [.custom(resolver: { _ in
                 return 152
             })]
+
+            controller.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
+            controller.sheetPresentationController?.prefersEdgeAttachedInCompactHeight = true
+            controller.sheetPresentationController?.widthFollowsPreferredContentSizeWhenEdgeAttached = true
         } else {
             controller.sheetPresentationController?.detents = [.medium()]
         }

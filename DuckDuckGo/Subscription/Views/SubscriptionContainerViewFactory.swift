@@ -32,10 +32,8 @@ enum SubscriptionContainerViewFactory {
                                   privacyProDataReporter: PrivacyProDataReporting?) -> some View {
 
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager())
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
-                                                               subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
 
@@ -58,10 +56,8 @@ enum SubscriptionContainerViewFactory {
                                 subscriptionManager: SubscriptionManager,
                                 subscriptionFeatureAvailability: SubscriptionFeatureAvailability) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager())
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
-                                                               subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         let subscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
@@ -82,10 +78,8 @@ enum SubscriptionContainerViewFactory {
                               subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
                               onDisappear: @escaping () -> Void) -> some View {
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager())
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
-                                                               subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
                                                                storePurchaseManager: subscriptionManager.storePurchaseManager(),
                                                                appStoreRestoreFlow: appStoreRestoreFlow)
         let viewModel = SubscriptionContainerViewModel(

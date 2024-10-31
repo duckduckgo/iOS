@@ -276,11 +276,9 @@ final class SubscriptionSettingsViewModel: ObservableObject {
          
     private func manageStripeSubscription() async {
         Logger.subscription.log("Managing Stripe Subscription")
-        guard let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .localValid) else { return }
         do {
             // Get Stripe Customer Portal URL and update the model
-            let serviceResponse = try await subscriptionManager.subscriptionEndpointService.getCustomerPortalURL(accessToken: tokenContainer.accessToken, externalID: tokenContainer.decodedAccessToken.externalID)
-            guard let url = URL(string: serviceResponse.customerPortalUrl) else { return }
+            let url = try await subscriptionManager.getCustomerPortalURL()
             if let existingModel = state.stripeViewModel {
                 existingModel.url = url
             } else {

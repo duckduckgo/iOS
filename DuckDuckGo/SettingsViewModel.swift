@@ -765,8 +765,7 @@ extension SettingsViewModel {
         DispatchQueue.main.async { self.state.subscription.isRestoring = true }
 
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService)
+                                                             storePurchaseManager: subscriptionManager.storePurchaseManager())
         let result = await appStoreRestoreFlow.restoreAccountFromPastPurchase()
         switch result {
         case .success:

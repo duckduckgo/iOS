@@ -25,19 +25,19 @@ import SubscriptionTestingUtilities
 final class SubscriptionFlowViewModelTests: XCTestCase {
     private var sut: SubscriptionFlowViewModel!
     
-    let subscriptionManager: SubscriptionManager = {
-        let accountManager = AccountManagerMock()
-        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
-        let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
-        let storePurchaseManager = DefaultStorePurchaseManager()
-        return SubscriptionManagerMock(accountManager: accountManager,
-                                       subscriptionEndpointService: subscriptionService,
-                                       authEndpointService: authService,
-                                       storePurchaseManager: storePurchaseManager,
-                                       currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
-                                                                                   purchasePlatform: .appStore),
-                                       canPurchase: true)
-    }()
+    let subscriptionManager = SubscriptionManagerMock()
+//        let accountManager = AccountManagerMock()
+//        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
+//        let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
+//        let storePurchaseManager = DefaultStorePurchaseManager()
+//        return SubscriptionManagerMock(accountManager: accountManager,
+//                                       subscriptionEndpointService: subscriptionService,
+//                                       authEndpointService: authService,
+//                                       storePurchaseManager: storePurchaseManager,
+//                                       currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
+//                                                                                   purchasePlatform: .appStore),
+//                                       canPurchase: true)
+//    }()
 
     let subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled
 
@@ -46,26 +46,19 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
-                                                             authEndpointService: subscriptionManager.authEndpointService)
-        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
-                                                               storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                               accountManager: subscriptionManager.accountManager,
-                                                               appStoreRestoreFlow: appStoreRestoreFlow,
-                                                               authEndpointService: subscriptionManager.authEndpointService)
-        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(authEndpointService: subscriptionManager.authEndpointService,
-                                                                                 storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                                                 accountManager: subscriptionManager.accountManager)
-
+        let storePurchaseManager = DefaultStorePurchaseManager()
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
+                                                             storePurchaseManager: storePurchaseManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               storePurchaseManager: storePurchaseManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+        subscriptionManager.resultURL = SubscriptionURL.purchase.subscriptionURL(environment: .production)
         // WHEN
         sut = .init(origin: origin, userScript: .init(), subFeature: .init(subscriptionManager: subscriptionManager,
                                                                            subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                                            subscriptionAttributionOrigin: nil,
                                                                            appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                           appStoreRestoreFlow: appStoreRestoreFlow,
-                                                                           appStoreAccountManagementFlow: appStoreAccountManagementFlow),
+                                                                           appStoreRestoreFlow: appStoreRestoreFlow),
                     subscriptionManager: subscriptionManager)
         
         // THEN
@@ -73,26 +66,19 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
     }
     
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
-        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(accountManager: subscriptionManager.accountManager,
-                                                             storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                             subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
-                                                             authEndpointService: subscriptionManager.authEndpointService)
-        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionEndpointService: subscriptionManager.subscriptionEndpointService,
-                                                               storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                               accountManager: subscriptionManager.accountManager,
-                                                               appStoreRestoreFlow: appStoreRestoreFlow,
-                                                               authEndpointService: subscriptionManager.authEndpointService)
-        let appStoreAccountManagementFlow = DefaultAppStoreAccountManagementFlow(authEndpointService: subscriptionManager.authEndpointService,
-                                                                                 storePurchaseManager: subscriptionManager.storePurchaseManager(),
-                                                                                 accountManager: subscriptionManager.accountManager)
-
+        let storePurchaseManager = DefaultStorePurchaseManager()
+        let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
+                                                             storePurchaseManager: storePurchaseManager)
+        let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
+                                                               storePurchaseManager: storePurchaseManager,
+                                                               appStoreRestoreFlow: appStoreRestoreFlow)
+        subscriptionManager.resultURL = SubscriptionURL.purchase.subscriptionURL(environment: .production)
         // WHEN
         sut = .init(origin: nil, userScript: .init(), subFeature: .init(subscriptionManager: subscriptionManager,
                                                                         subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                                         subscriptionAttributionOrigin: nil,
                                                                         appStorePurchaseFlow: appStorePurchaseFlow,
-                                                                        appStoreRestoreFlow: appStoreRestoreFlow,
-                                                                        appStoreAccountManagementFlow: appStoreAccountManagementFlow),
+                                                                        appStoreRestoreFlow: appStoreRestoreFlow),
                     subscriptionManager: subscriptionManager)
         
         // THEN

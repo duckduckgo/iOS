@@ -308,7 +308,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.subscriptionEndpointService.clearSubscription()
+        subscriptionManager.clearSubscriptionCache()
 
         let authToken = subscriptionValues.token
         do {

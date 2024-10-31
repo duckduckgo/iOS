@@ -1,0 +1,49 @@
+//
+//  PageRefreshMonitor.swift
+//  DuckDuckGo
+//
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import Foundation
+import Core
+import Common
+import PageRefreshMonitor
+
+final class PageRefreshStore: PageRefreshStoring {
+
+    @UserDefaultsWrapper(key: .didRefreshTimestamp, defaultValue: .distantPast)
+    var didRefreshTimestamp: Date?
+
+    @UserDefaultsWrapper(key: .didDoubleRefreshTimestamp, defaultValue: .distantPast)
+    var didDoubleRefreshTimestamp: Date?
+
+    @UserDefaultsWrapper(key: .didRefreshCounter, defaultValue: 0)
+    var didRefreshCounter: Int
+
+}
+
+final class AppPageRefreshMonitor {
+
+    static let eventMapping = EventMapping<PageRefreshPattern> { event, _, _, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .twiceWithin12Seconds: domainEvent = .pageRefreshTwiceWithin12Seconds
+        case .threeTimesWithin20Seconds: domainEvent = .pageRefreshThreeTimesWithin20Seconds
+        }
+        Pixel.fire(pixel: domainEvent)
+    }
+
+}

@@ -36,6 +36,8 @@ import SwiftUI
 import NetworkProtection
 import Onboarding
 import os.log
+import PageRefreshMonitor
+import BrokenSitePrompt
 
 class MainViewController: UIViewController {
     
@@ -300,7 +302,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForUserBehaviorEvents()
+        registerForPageRefreshPatterns()
         registerForSyncFeatureFlagsUpdates()
 
         decorate()
@@ -496,11 +498,11 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForUserBehaviorEvents() {
+    private func registerForPageRefreshPatterns() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(attemptToShowBrokenSitePrompt(_:)),
-            name: .userBehaviorDidMatchBrokenSiteCriteria,
+            name: .pageRefreshDidMatchBrokenSiteCriteria,
             object: nil)
     }
 
@@ -1097,7 +1099,7 @@ class MainViewController: UIViewController {
 
     private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
         guard brokenSitePromptViewHostingController != nil,
-                let event = brokenSitePromptEvent?.rawValue else { return }
+              let pattern = pageRefreshPattern?.rawValue else { return }
         brokenSitePromptViewHostingController = nil
         hideNotification()
     }
@@ -1342,12 +1344,13 @@ class MainViewController: UIViewController {
     }
 
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
-    private var brokenSitePromptEvent: UserBehaviorEvent?
-    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter()
+    private var pageRefreshPattern: PageRefreshPattern?
+    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                       store: BrokenSitePromptLimiterStore())
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard brokenSitePromptLimiter.shouldShowToast(),
-            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
+            let pattern = notification.userInfo?[PageRefreshPattern.Key.pattern] as? PageRefreshPattern,
             let url = currentTab?.url, !url.isDuckDuckGo,
             notificationView == nil,
             !isPad,
@@ -1357,18 +1360,19 @@ class MainViewController: UIViewController {
         // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
         brokenSitePromptLimiter.didShowToast()
         DispatchQueue.main.async {
-            self.showBrokenSitePrompt(after: event)
+            self.showBrokenSitePrompt(after: pattern)
         }
     }
 
-    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
-        let host = makeBrokenSitePromptViewHostingController(event: event)
+    private func showBrokenSitePrompt(after pattern: PageRefreshPattern) {
+        let host = makeBrokenSitePromptViewHostingController(pattern: pattern)
         brokenSitePromptViewHostingController = host
-        brokenSitePromptEvent = event
+        pageRefreshPattern = pattern
+        Pixel.fire(pixel: .siteNotWorkingShown)
         showNotification(with: host.view)
     }
 
-    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+    private func makeBrokenSitePromptViewHostingController(pattern: PageRefreshPattern) -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             Task { @MainActor in
                 self?.hideNotification()
@@ -1377,10 +1381,11 @@ class MainViewController: UIViewController {
             }
         }, onDidSubmit: { [weak self] in
             Task { @MainActor in
-                self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+                self?.segueToReportBrokenSite(entryPoint: .prompt(pattern.rawValue))
                 self?.hideNotification()
                 self?.brokenSitePromptLimiter.didOpenReport()
                 self?.brokenSitePromptViewHostingController = nil
+                Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken)
             }
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)

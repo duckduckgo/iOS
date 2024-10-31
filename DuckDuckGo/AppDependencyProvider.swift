@@ -26,6 +26,7 @@ import Subscription
 import Common
 import NetworkProtection
 import RemoteMessaging
+import PageRefreshMonitor
 
 protocol DependencyProvider {
 
@@ -39,7 +40,7 @@ protocol DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
-    var userBehaviorMonitor: UserBehaviorMonitor { get }
+    var pageRefreshMonitor: PageRefreshMonitor { get }
     var subscriptionManager: SubscriptionManager { get }
     var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
@@ -72,7 +73,8 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()
 
-    let userBehaviorMonitor = UserBehaviorMonitor()
+    let pageRefreshMonitor = PageRefreshMonitor(eventMapping: AppPageRefreshMonitor.eventMapping,
+                                                store: PageRefreshStore())
 
     // Subscription
     let subscriptionManager: SubscriptionManager

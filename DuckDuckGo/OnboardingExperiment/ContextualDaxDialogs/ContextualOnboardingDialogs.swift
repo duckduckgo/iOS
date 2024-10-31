@@ -206,6 +206,7 @@ struct OnboardingFinalDialog: View {
                         title: title,
                         titleFont: Font(UIFont.daxTitle3()),
                         message: NSAttributedString(string: message),
+                        messageFont: Font.system(size: 16),
                         customView: AnyView(customView),
                         customActionView: AnyView(customActionView)
                     )

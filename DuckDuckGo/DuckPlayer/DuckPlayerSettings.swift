@@ -173,7 +173,11 @@ final class DuckPlayerSettingsDefault: DuckPlayerSettings {
     }
     
     /// Flag to allow the first video to play without redirection.
-    var allowFirstVideo: Bool = false
+    var allowFirstVideo: Bool = false {
+        didSet {
+            print("DP: Allow first video: \(allowFirstVideo)")
+        }
+    }
     
     /// Determines if Duck Player should open videos in a new tab.
     var openInNewTab: Bool {

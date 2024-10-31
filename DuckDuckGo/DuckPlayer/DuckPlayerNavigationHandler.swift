@@ -793,7 +793,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     func handleAttach(webView: WKWebView) {
         
         // Reset referrer and initial settings
-        duckPlayer.settings.allowFirstVideo = false
         referrer = .other
         
         // Ensure feature and mode are enabled
@@ -836,7 +835,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // This is a fallback as the WKNavigation Delegate does not
         // Always fires finishLoading (For JS Navigation) which
         // triggers handleDidFinishLoading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.duckPlayer.settings.allowFirstVideo = false
         }
     

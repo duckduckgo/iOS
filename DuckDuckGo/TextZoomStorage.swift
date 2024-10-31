@@ -24,6 +24,7 @@ import Common
 protocol TextZoomStoring {
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel?
     func set(textZoomLevel: TextZoomLevel, forDomain domain: String)
+    func removeTextZoomLevel(forDomain domain: String)
     func resetTextZoomLevels(excludingDomains: [String])
 }
 
@@ -41,6 +42,10 @@ class TextZoomStorage: TextZoomStoring {
     
     func set(textZoomLevel: TextZoomLevel, forDomain domain: String) {
         textZoomLevels[domain] = textZoomLevel.rawValue
+    }
+
+    func removeTextZoomLevel(forDomain domain: String) {
+        textZoomLevels.removeValue(forKey: domain)
     }
 
     func resetTextZoomLevels(excludingDomains: [String]) {

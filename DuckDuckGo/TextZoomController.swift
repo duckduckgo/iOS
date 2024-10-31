@@ -22,12 +22,12 @@ import SwiftUI
 
 class TextZoomController: UIHostingController<TextZoomEditorView> {
 
-    let storage: TextZoomStoring
+    let coordinator: TextZoomCoordinating
     let model: TextZoomEditorModel
 
-    @MainActor init(domain: String, storage: TextZoomStoring, defaultTextZoom: TextZoomLevel) {
-        self.storage = storage
-        self.model = TextZoomEditorModel(domain: domain, storage: storage, defaultTextZoom: defaultTextZoom)
+    @MainActor init(domain: String, coordinator: TextZoomCoordinating, defaultTextZoom: TextZoomLevel) {
+        self.coordinator = coordinator
+        self.model = TextZoomEditorModel(domain: domain, coordinator: coordinator, defaultTextZoom: defaultTextZoom)
         super.init(rootView: TextZoomEditorView(model: model))
     }
 

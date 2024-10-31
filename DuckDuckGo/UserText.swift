@@ -361,7 +361,12 @@ public struct UserText {
     public static let textZoomMenuItem = NSLocalizedString("action.text-zoom-sheet-menu-item", value: "Zoom", comment: "Text zoom menu item")
 
     public static func textZoomWithPercentSheetTitle(_ percent: Int) -> String {
-        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Zoom Text (%d%%)", comment: "Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56")
+        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Zoom Text (%d%%)", comment: "Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
+        return message.format(arguments: percent)
+    }
+
+    public static func textZoomWithPercentForMenuItem(_ percent: Int) -> String {
+        let message = NSLocalizedString("action.text-zoom-menu-item", value: "Zoom (%d%%)", comment: "Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
         return message.format(arguments: percent)
     }
 

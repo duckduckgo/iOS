@@ -23,7 +23,7 @@ import Core
 class TextZoomEditorModel: ObservableObject {
 
     let domain: String
-    let storage: TextZoomStoring
+    let coordinator: TextZoomCoordinating
     let initialValue: TextZoomLevel
 
     var valueAsPercent: Int {
@@ -38,10 +38,10 @@ class TextZoomEditorModel: ObservableObject {
 
     @Published var title: String = ""
 
-    init(domain: String, storage: TextZoomStoring, defaultTextZoom: TextZoomLevel) {
+    init(domain: String, coordinator: TextZoomCoordinating, defaultTextZoom: TextZoomLevel) {
         self.domain = domain
-        self.storage = storage
-        self.initialValue = (storage.textZoomLevelForDomain(domain) ?? defaultTextZoom)
+        self.coordinator = coordinator
+        self.initialValue = coordinator.textZoomLevel(forHost: domain)
         value = TextZoomLevel.allCases.firstIndex(of: initialValue) ?? 0
     }
 
@@ -55,7 +55,7 @@ class TextZoomEditorModel: ObservableObject {
 
     private func valueWasSet() {
         title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
-        storage.set(textZoomLevel: TextZoomLevel.allCases[value], forDomain: domain)
+        coordinator.set(textZoomLevel: TextZoomLevel.allCases[value], forHost: domain)
         NotificationCenter.default.post(
             name: AppUserDefaults.Notifications.textSizeChange,
             object: nil)
@@ -67,7 +67,7 @@ class TextZoomEditorModel: ObservableObject {
         Pixel.fire(.zoomChangedOnPage, withAdditionalParameters: [
             PixelParameters.textSizeInitial: String(initialValue.rawValue),
             PixelParameters.textSizeUpdated: String(TextZoomLevel.allCases[value].rawValue),
-        ])
+        ])        
     }
 
 }

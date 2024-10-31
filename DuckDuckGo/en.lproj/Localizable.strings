@@ -13,10 +13,13 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
 /* Text zoom menu item */
 "action.text-zoom-sheet-menu-item" = "Zoom";
 
-/* Zoom text sheet title showing currently set zoom level as a percent. '%d' represets the number that will be used, e.g. 56 */
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
 "action.text-zoom-sheet-title" = "Zoom Text (%d%%)";
 
 /* Add action - button shown in alert */

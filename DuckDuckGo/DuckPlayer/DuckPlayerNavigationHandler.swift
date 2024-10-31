@@ -282,8 +282,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     @MainActor
     private func redirectToYouTubeVideo(url: URL?, webView: WKWebView, forceNewTab: Bool = false, allowFirstVideo: Bool = true, disableNewTab: Bool = false) {
         
-        guard let url,
-              let (videoID, _) = url.youtubeVideoParams else { return }
+        guard let url else { return }
         
         var redirectURL = url
         
@@ -489,7 +488,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         var backItems = webView.backForwardList.backList.reversed()
         
         // Ignore any previous URL that's duckPlayer or youtube-no-cookie
-        if let backItemURL = backItems.first?.url, url.isDuckPlayer {
+        if let _ = backItems.first?.url, url.isDuckPlayer {
             backItems = webView.backForwardList.backList.dropLast().reversed()
         }
         
@@ -883,9 +882,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard isDuckPlayerFeatureEnabled else {
             return false
         }
-        
-        let parameters = getDuckPlayerParameters(url: url)
-        
+                
         // Only account for in 'Always' mode
         if duckPlayerMode == .disabled {
             return false

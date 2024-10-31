@@ -301,7 +301,7 @@ final class DuckPlayerNavigationHandler: NSObject {
     private func fireDuckPlayerPixels(webView: WKWebView) {
                 
         // First daily unique user Duck Player view
-        dailyPixelFiring.fireDaily(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayerMode.stringValue])        
+        dailyPixelFiring.fireDaily(.duckPlayerDailyUniqueView, withAdditionalParameters: ["settings": duckPlayerMode.stringValue])
         
         // Duck Player viewed with Always setting, referred from YouTube (automatic)
         if (referrer == .youtube) && duckPlayerMode == .enabled {
@@ -524,8 +524,6 @@ final class DuckPlayerNavigationHandler: NSObject {
             referrer = .other
         }
         
-        
-
     }
     
     /// Determines if the current tab is a new tab based on the targetFrame request and other params
@@ -550,6 +548,33 @@ final class DuckPlayerNavigationHandler: NSObject {
         return false
     }
     
+    /// // Handle "open in YouTube" links (duck://player/openInYoutube)
+    ///
+    /// - Parameter url: The `URL` used to determine the tab type.
+    /// - Parameter webView: The `WebView` used for navigation/redirection
+    @MainActor
+    private func handleOpenInYoutubeLink(url: URL, webView: WKWebView) {
+        
+        // Handle "open in YouTube" links (duck://player/openInYoutube)
+        guard let (videoID, _) = url.youtubeVideoParams else {
+            return
+        }
+        
+        // Fire a Pixel for Open in YouTube
+        self.fireOpenInYoutubePixel()
+        
+        // Attempt to open in YouTube app or load in webView
+        if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
+           let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
+            UIApplication.shared.open(youtubeAppURL)
+        } else {
+            // Watch in YT videos always open in new tab
+            redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
+        }
+    
+    
+    }
+    
 }
 
 extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
@@ -561,22 +586,18 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     ///   - webView: The `WKWebView` where navigation is occurring.
     @MainActor
     func handleDuckNavigation(_ navigationAction: WKNavigationAction, webView: WKWebView) {
-        
-        Logger.duckPlayer.debug("Handling Navigation for \(webView.url?.absoluteString ?? "")")
-        
+                
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick URL changes
-        if let lastTimestamp = lastNavigationHandling {
-            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
-            if timeSinceLastThrottle < lastNavigationHandlingThrottleDuration {
-                return
-            }
+        if let lastTimestamp = lastNavigationHandling,
+           Date().timeIntervalSince(lastTimestamp) < lastNavigationHandlingThrottleDuration {
+            return
         }
         
         lastNavigationHandling = Date()
 
         guard let url = navigationAction.request.url else { return }
-
+        
         // Redirect to YouTube if DuckPlayer is disabled
         guard duckPlayerMode != .disabled else {
             if let (videoID, _) = url.youtubeVideoParams {
@@ -586,26 +607,14 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         }
         
         // Handle "open in YouTube" links (duck://player/openInYoutube)
-        if let newURL = getYoutubeURLFromOpenInYoutubeLink(url: url),
-           let (videoID, _) = newURL.youtubeVideoParams {
-            
-            // Fire a Pixel for Open in YouTube
-            self.fireOpenInYoutubePixel()
-            
-            // Attempt to open in YouTube app or load in webView
-            if appSettings.allowUniversalLinks, isYouTubeAppInstalled,
-               let youtubeAppURL = URL(string: "\(Constants.youtubeScheme)\(videoID)") {
-                UIApplication.shared.open(youtubeAppURL)
-            } else {
-                // Watch in YT videos always open in new tab
-                redirectToYouTubeVideo(url: newURL, webView: webView, forceNewTab: true)
-            }
+        if let openInYouTubeURL = getYoutubeURLFromOpenInYoutubeLink(url: url) {
+           handleOpenInYoutubeLink(url: openInYouTubeURL, webView: webView)
             return
         }
         
         // Determine navigation type
         let shouldOpenInNewTab = isOpenInNewTabEnabled && !isNewTab(navigationAction)
-
+        
         // Handle duck:// scheme URLs (Or direct navigation to duck player)
         if url.isDuckURLScheme {
             
@@ -652,11 +661,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick URL changes
-        if let lastTimestamp = lastURLChangeHandling {
-            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
-            if timeSinceLastThrottle < lastURLChangeHandlingThrottleDuration {
-                return .notHandled(.duplicateNavigation)
-            }
+        if let lastTimestamp = lastURLChangeHandling,
+           Date().timeIntervalSince(lastTimestamp) < lastURLChangeHandlingThrottleDuration {
+            return .notHandled(.duplicateNavigation)
         }
         
         // Update the Referrer based on the first URL change detected
@@ -664,11 +671,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // We don't want YouTube redirects happening while default navigation is happening
         // This can be caused by Duplicate Nav events, and quick URL changes
-        if let lastTimestamp = lastNavigationHandling {
-            let timeSinceLastThrottle = Date().timeIntervalSince(lastTimestamp)
-            if timeSinceLastThrottle < lastNavigationHandlingThrottleDuration {
-                return .notHandled(.duplicateNavigation)
-            }
+        if let lastTimestamp = lastNavigationHandling,
+           Date().timeIntervalSince(lastTimestamp) < lastNavigationHandlingThrottleDuration {
+            return .notHandled(.duplicateNavigation)
         }
         
         // Check if DuckPlayer feature is enabled
@@ -879,7 +884,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
             return false
         }
         
-        let parameters = getDuckPlayerParameters(url: url)        
+        let parameters = getDuckPlayerParameters(url: url)
         
         // Only account for in 'Always' mode
         if duckPlayerMode == .disabled {

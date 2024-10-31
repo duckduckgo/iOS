@@ -1100,6 +1100,52 @@ final class DaxDialog: XCTestCase {
         XCTAssertTrue(result)
     }
 
+    // MARK: - States
+
+    func testWhenIsShowingAddToDockDialogCalledAndHomeSpecIsFinalAndAddToDockIsEnabledThenReturnTrue() {
+        // GIVEN
+        let onboardingManagerMock = OnboardingManagerMock()
+        onboardingManagerMock.isAddToDockEnabled = true
+        settings.fireMessageExperimentShown = true
+        let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
+        _ = sut.nextHomeScreenMessageNew()
+
+        // WHEN
+        let result = sut.isShowingAddToDockDialog
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsShowingAddToDockDialogCalledAndHomeSpecIsNotFinalThenReturnFalse() {
+        // GIVEN
+        let onboardingManagerMock = OnboardingManagerMock()
+        onboardingManagerMock.isAddToDockEnabled = true
+        let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
+        _ = sut.nextHomeScreenMessageNew()
+
+        // WHEN
+        let result = sut.isShowingAddToDockDialog
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenIsShowingAddToDockDialogCalledAndHomeSpeciIsFinalAndAddToDockIsNotEnabledReturnFalse() {
+        // GIVEN
+        let onboardingManagerMock = OnboardingManagerMock()
+        onboardingManagerMock.isAddToDockEnabled = false
+        settings.fireMessageExperimentShown = true
+        let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
+        _ = sut.nextHomeScreenMessageNew()
+
+        // WHEN
+        let result = sut.isShowingAddToDockDialog
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,
@@ -1123,11 +1169,11 @@ final class DaxDialog: XCTestCase {
                            protectionStatus: protectionStatus)
     }
 
-    private func makeExperimentSUT(settings: DaxDialogsSettings) -> DaxDialogs {
+    private func makeExperimentSUT(settings: DaxDialogsSettings, onboardingManager: OnboardingAddToDockManaging = OnboardingManagerMock()) -> DaxDialogs {
         var mockVariantManager = MockVariantManager()
         mockVariantManager.isSupportedBlock = { feature in
             feature == .contextualDaxDialogs
         }
-        return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager)
+        return DaxDialogs(settings: settings, entityProviding: entityProvider, variantManager: mockVariantManager, onboardingManager: onboardingManager)
     }
 }

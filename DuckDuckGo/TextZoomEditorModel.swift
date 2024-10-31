@@ -65,8 +65,8 @@ class TextZoomEditorModel: ObservableObject {
     func onDismiss() {
         guard initialValue.rawValue != TextZoomLevel.allCases[value].rawValue else { return }
         Pixel.fire(.zoomChangedOnPage, withAdditionalParameters: [
-            "text_size_initial": String(initialValue.rawValue),
-            "text_size_updated": String(TextZoomLevel.allCases[value].rawValue),
+            PixelParameters.textSizeInitial: String(initialValue.rawValue),
+            PixelParameters.textSizeUpdated: String(TextZoomLevel.allCases[value].rawValue),
         ])
     }
 

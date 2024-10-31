@@ -78,6 +78,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             contextualOnboardingPixelReporter: onboardingPixelReporter,
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+            featureFlagger: MockFeatureFlagger(),
             subscriptionCookieManager: SubscriptionCookieManagerMock())
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

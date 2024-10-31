@@ -364,7 +364,8 @@ import os.log
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                          subscriptionCookieManager: subscriptionCookieManager)
+                                          subscriptionCookieManager: subscriptionCookieManager,
+                                          textZoomCoordinator: makeTextZoomCoordinator())
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -415,6 +416,15 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+        let provider = AppDependencyProvider.shared
+        let storage = TextZoomStorage()
+
+        return TextZoomCoordinator(appSettings: provider.appSettings,
+                                   storage: storage,
+                                   featureFlagger: provider.featureFlagger)
     }
 
     private func makeHistoryManager() -> HistoryManaging {

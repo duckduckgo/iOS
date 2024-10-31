@@ -1,5 +1,5 @@
 //
-//  DomainTextZoomStorage.swift
+//  TextZoomStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,13 +21,13 @@ import Foundation
 import Core
 import Common
 
-protocol DomainTextZoomStoring {
+protocol TextZoomStoring {
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel?
     func set(textZoomLevel: TextZoomLevel, forDomain domain: String)
     func resetTextZoomLevels(excludingDomains: [String])
 }
 
-class DomainTextZoomStorage: DomainTextZoomStoring {
+class TextZoomStorage: TextZoomStoring {
 
     @UserDefaultsWrapper(key: .domainTextZoomStorage, defaultValue: [:])
     var textZoomLevels: [String: Int]

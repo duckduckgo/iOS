@@ -175,7 +175,7 @@ class MainViewController: UIViewController {
     }
     
     let preserveLogins: PreserveLogins
-    let domainTextZoomStorage: DomainTextZoomStoring
+    let textZoomCoordinator: TextZoomCoordinator
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
@@ -201,9 +201,9 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        domainTextZoomStorage: DomainTextZoomStoring = DomainTextZoomStorage(),
         preserveLogins: PreserveLogins = .shared,
-        subscriptionCookieManager: SubscriptionCookieManaging
+        subscriptionCookieManager: SubscriptionCookieManaging,
+        textZoomCoordinator: TextZoomCoordinator
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -227,8 +227,9 @@ class MainViewController: UIViewController {
                                      contextualOnboardingLogic: contextualOnboardingLogic,
                                      onboardingPixelReporter: contextualOnboardingPixelReporter,
                                      featureFlagger: featureFlagger,
-                                     domainTextZoomStorage: domainTextZoomStorage,
-                                     subscriptionCookieManager: subscriptionCookieManager)
+                                     subscriptionCookieManager: subscriptionCookieManager,
+                                     appSettings: appSettings,
+                                     textZoomCoordinator: textZoomCoordinator)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -239,9 +240,9 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
-        self.domainTextZoomStorage = domainTextZoomStorage
         self.preserveLogins = preserveLogins
         self.subscriptionCookieManager = subscriptionCookieManager
+        self.textZoomCoordinator = textZoomCoordinator
 
         super.init(nibName: nil, bundle: nil)
         
@@ -2726,7 +2727,8 @@ extension MainViewController: AutoClearWorker {
 
     private func forgetTextZoom() {
         let allowedDomains = preserveLogins.allowedDomains
-        domainTextZoomStorage.resetTextZoomLevels(excludingDomains: allowedDomains)
+        // TODO call a function instead
+        textZoomCoordinator.storage.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 
 }

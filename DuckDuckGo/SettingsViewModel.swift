@@ -43,6 +43,8 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
+    let textZoomCoordinator: TextZoomCoordinator
+
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
@@ -383,7 +385,8 @@ final class SettingsViewModel: ObservableObject {
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging,
-         privacyProDataReporter: PrivacyProDataReporting) {
+         privacyProDataReporter: PrivacyProDataReporting,
+         textZoomCoordinator: TextZoomCoordinator) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -394,6 +397,7 @@ final class SettingsViewModel: ObservableObject {
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
+        self.textZoomCoordinator = textZoomCoordinator
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
@@ -418,7 +422,7 @@ extension SettingsViewModel {
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
-            textSize: SettingsState.TextZoom(enabled: !isPad, level: appSettings.defaultTextZoomLevel),
+            textSize: SettingsState.TextZoom(enabled: textZoomCoordinator.isEnabled, level: appSettings.defaultTextZoomLevel),
             addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,

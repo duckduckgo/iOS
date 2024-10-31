@@ -50,11 +50,9 @@ final class UserScripts: UserScriptsProvider {
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
-    private(set) var textSizeUserScript: TextSizeUserScript
     private(set) var debugScript = DebugUserScript()
 
     init(with sourceProvider: ScriptSourceProviding, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
-        textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: appSettings.defaultTextZoomLevel.rawValue)
 
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
@@ -81,7 +79,6 @@ final class UserScripts: UserScriptsProvider {
 
     lazy var userScripts: [UserScript] = [
         debugScript,
-        textSizeUserScript,
         autoconsentUserScript,
         findInPageScript,
         navigatorPatchScript,

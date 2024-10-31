@@ -43,8 +43,9 @@ class TabManager {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
     private let featureFlagger: FeatureFlagger
-    private let domainTextZoomStorage: DomainTextZoomStoring
+    private let textZoomCoordinator: TextZoomCoordinator
     private let subscriptionCookieManager: SubscriptionCookieManaging
+    private let appSettings: AppSettings
 
     weak var delegate: TabDelegate?
 
@@ -63,8 +64,9 @@ class TabManager {
          contextualOnboardingLogic: ContextualOnboardingLogic,
          onboardingPixelReporter: OnboardingPixelReporting,
          featureFlagger: FeatureFlagger,
-         domainTextZoomStorage: DomainTextZoomStoring,
-         subscriptionCookieManager: SubscriptionCookieManaging) {
+         subscriptionCookieManager: SubscriptionCookieManaging,
+         appSettings: AppSettings,
+         textZoomCoordinator: TextZoomCoordinator) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -76,8 +78,9 @@ class TabManager {
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
         self.featureFlagger = featureFlagger
-        self.domainTextZoomStorage = domainTextZoomStorage
         self.subscriptionCookieManager = subscriptionCookieManager
+        self.appSettings = appSettings
+        self.textZoomCoordinator = textZoomCoordinator
         registerForNotifications()
     }
 
@@ -101,8 +104,8 @@ class TabManager {
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
                                                               featureFlagger: featureFlagger,
-                                                              domainTextZoomStorage: domainTextZoomStorage,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -181,8 +184,8 @@ class TabManager {
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
                                                               featureFlagger: featureFlagger,
-                                                              domainTextZoomStorage: domainTextZoomStorage,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
@@ -365,4 +368,5 @@ extension TabManager {
             TabPreviewsCleanup.shared.startCleanup(with: model, source: previewsSource)
         }
     }
+
 }

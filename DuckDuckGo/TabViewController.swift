@@ -189,8 +189,6 @@ class TabViewController: UIViewController {
     var failedURL: URL?
     var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
     var isSpecialErrorPageVisible: Bool = false
-
-    let domainTextZoomStorage: DomainTextZoomStoring
     let syncService: DDGSyncing
 
     private let daxDialogsDebouncer = Debouncer(mode: .common)
@@ -325,8 +323,9 @@ class TabViewController: UIViewController {
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                                    featureFlagger: FeatureFlagger,
-                                   domainTextZoomStorage: DomainTextZoomStoring,
-                                   subscriptionCookieManager: SubscriptionCookieManaging) -> TabViewController {
+                                   subscriptionCookieManager: SubscriptionCookieManaging,
+                                   textZoomCoordinator: TextZoomCoordinating) -> TabViewController {
+
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
@@ -342,8 +341,8 @@ class TabViewController: UIViewController {
                               onboardingPixelReporter: onboardingPixelReporter,
                               urlCredentialCreator: urlCredentialCreator,
                               featureFlagger: featureFlagger,
-                              domainTextZoomStorage: domainTextZoomStorage,
-                              subscriptionCookieManager: subscriptionCookieManager
+                              subscriptionCookieManager: subscriptionCookieManager,
+                              textZoomCoordinator: textZoomCoordinator
             )
         })
         return controller
@@ -362,6 +361,7 @@ class TabViewController: UIViewController {
     let contextualOnboardingPresenter: ContextualOnboardingPresenting
     let contextualOnboardingLogic: ContextualOnboardingLogic
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
+    let textZoomCoordinator: TextZoomCoordinating
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -377,8 +377,8 @@ class TabViewController: UIViewController {
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
-                   domainTextZoomStorage: DomainTextZoomStoring,
-                   subscriptionCookieManager: SubscriptionCookieManaging) {
+                   subscriptionCookieManager: SubscriptionCookieManaging,
+                   textZoomCoordinator: TextZoomCoordinating) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -397,8 +397,9 @@ class TabViewController: UIViewController {
         self.onboardingPixelReporter = onboardingPixelReporter
         self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
-        self.domainTextZoomStorage = domainTextZoomStorage
         self.subscriptionCookieManager = subscriptionCookieManager
+        self.textZoomCoordinator = textZoomCoordinator
+
         super.init(coder: aDecoder)
     }
 
@@ -979,12 +980,7 @@ class TabViewController: UIViewController {
     }
 
     @objc func onTextSizeChange() {
-        let domain = TLD().eTLDplus1(webView.url?.host) ?? ""
-        // If the webview returns no host then there won't be a setting for a blank string anyway.
-        let level = domainTextZoomStorage.textZoomLevelForDomain(domain)
-            // And if there's no setting for whatever domain is passed in, use the app default
-            ?? appSettings.defaultTextZoomLevel
-        webView.adjustTextSize(level.rawValue)
+        textZoomCoordinator.onTextZoomChange(applyToWebView: webView)
     }
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
@@ -2166,7 +2162,7 @@ extension TabViewController {
      */
     private func setupOrClearTemporaryDownload(for response: URLResponse) -> WKNavigationResponsePolicy? {
         let downloadManager = AppDependencyProvider.shared.downloadManager
-        guard let url = response.url,
+        guard response.url != nil,
               let downloadMetaData = downloadManager.downloadMetaData(for: response),
               !downloadMetaData.mimeType.isHTML
         else {
@@ -2541,7 +2537,6 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.autofillUserScript.vaultDelegate = vaultManager
         userScripts.faviconScript.delegate = faviconUpdater
         userScripts.printingUserScript.delegate = self
-        userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.defaultTextZoomLevel.rawValue
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
         userScripts.specialErrorPageUserScript?.delegate = self

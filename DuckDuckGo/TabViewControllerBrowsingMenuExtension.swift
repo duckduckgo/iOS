@@ -156,8 +156,8 @@ extension TabViewController {
             entries.append(entry)
         }
 
-        if !isPad {
-            entries.append(self.buildZoomLevelEntry(forLink: link))
+        if let entry = textZoomCoordinator.makeBrowsingMenuEntry(forLink: link, inController: self, forWebView: self.webView) {
+            entries.append(entry)
         }
 
         let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
@@ -169,15 +169,6 @@ extension TabViewController {
         entries.append(self.buildFindInPageEntry(forLink: link))
                 
         return entries
-    }
-
-    private func buildZoomLevelEntry(forLink link: Link) -> BrowsingMenuEntry {
-        return BrowsingMenuEntry.regular(name: UserText.textZoomMenuItem,
-                                         image: UIImage(named: "Type-Size-16")!,
-                                         showNotificationDot: false) { [weak self] in
-            self?.showTextZoomAdjustment()
-            Pixel.fire(pixel: .browsingMenuZoom)
-        }
     }
 
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {

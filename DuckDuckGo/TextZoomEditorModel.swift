@@ -23,7 +23,7 @@ import Core
 class TextZoomEditorModel: ObservableObject {
 
     let domain: String
-    let storage: DomainTextZoomStoring
+    let storage: TextZoomStoring
     let initialValue: TextZoomLevel
 
     var valueAsPercent: Int {
@@ -38,7 +38,7 @@ class TextZoomEditorModel: ObservableObject {
 
     @Published var title: String = ""
 
-    init(domain: String, storage: DomainTextZoomStoring, defaultTextZoom: TextZoomLevel) {
+    init(domain: String, storage: TextZoomStoring, defaultTextZoom: TextZoomLevel) {
         self.domain = domain
         self.storage = storage
         self.initialValue = (storage.textZoomLevelForDomain(domain) ?? defaultTextZoom)

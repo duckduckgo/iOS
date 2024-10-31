@@ -35,26 +35,48 @@ struct LottieView: UIViewRepresentable {
         case withIntro(LoopWithIntroTiming)
     }
 
+    struct ValueProvider {
+        let provider: AnyValueProvider
+        let keypath: AnimationKeypath
+    }
+
     let delay: TimeInterval
     var isAnimating: Binding<Bool>
     private let loopMode: LoopMode
+    private let animationImageProvider: AnimationImageProvider?
+    private let valueProvider: ValueProvider?
 
     let animationName: String
     let animation: LottieAnimation?
     let animationView = LottieAnimationView()
 
-    init(lottieFile: String, delay: TimeInterval = 0, loopMode: LoopMode = .mode(.playOnce), isAnimating: Binding<Bool> = .constant(true)) {
+    init(
+        lottieFile: String,
+        delay: TimeInterval = 0,
+        loopMode: LoopMode = .mode(.playOnce),
+        isAnimating: Binding<Bool> = .constant(true),
+        animationImageProvider: AnimationImageProvider? = nil,
+        valueProvider: ValueProvider? = nil
+    ) {
         self.animationName = lottieFile
         self.animation = LottieAnimation.named(lottieFile)
         self.delay = delay
         self.isAnimating = isAnimating
         self.loopMode = loopMode
+        self.animationImageProvider = animationImageProvider
+        self.valueProvider = valueProvider
     }
 
     func makeUIView(context: Context) -> some LottieAnimationView {
         animationView.animation = animation
         animationView.contentMode = .scaleAspectFit
         animationView.clipsToBounds = false
+        if let animationImageProvider {
+            animationView.imageProvider = animationImageProvider
+        }
+        if let valueProvider {
+            animationView.setValueProvider(valueProvider.provider, keypath: valueProvider.keypath)
+        }
 
         switch loopMode {
         case .mode(let lottieLoopMode): animationView.loopMode = lottieLoopMode

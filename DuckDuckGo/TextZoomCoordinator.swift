@@ -25,17 +25,23 @@ import Core
 
 protocol TextZoomCoordinating {
 
+    /// Based on .textZoom feature flag
     var isEnabled: Bool { get }
+
+    /// Storeage for setting and domain specific values
     var storage: TextZoomStoring { get }
 
+    // MARK: Applying the text zoom
+    func onWebViewCreated(applyToWebView webView: WKWebView)
     func onNavigationCommitted(applyToWebView webView: WKWebView)
-    func onShowTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView)
     func onTextZoomChange(applyToWebView webView: WKWebView)
+
+    // MARK: Support operations for the UI
+    func onShowTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView)
     func makeBrowsingMenuEntry(forLink: Link, inController controller: UIViewController, forWebView webView: WKWebView) -> BrowsingMenuEntry?
 
 }
 
-// TODO validate wikipedia which had a hardcoded exception
 final class TextZoomCoordinator: TextZoomCoordinating {
 
     let appSettings: AppSettings
@@ -43,7 +49,8 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     let featureFlagger: FeatureFlagger
 
     var isEnabled: Bool {
-        featureFlagger.isFeatureOn(.textZoom)
+        // TODO featureFlagger.isFeatureOn(.textZoom)
+        true
     }
 
     init(appSettings: AppSettings, storage: TextZoomStoring, featureFlagger: FeatureFlagger) {
@@ -52,12 +59,19 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         self.featureFlagger = featureFlagger
     }
 
+    func onWebViewCreated(applyToWebView webView: WKWebView) {
+        applyTextZoom(webView)
+    }
+
     func onNavigationCommitted(applyToWebView webView: WKWebView) {
-        guard isEnabled else { return }
-        // TODO logic from textsize.js
+        applyTextZoom(webView)
     }
 
     func onTextZoomChange(applyToWebView webView: WKWebView) {
+        applyTextZoom(webView)
+    }
+
+    private func applyTextZoom(_ webView: WKWebView) {
         guard isEnabled else { return }
 
         let domain = TLD().eTLDplus1(webView.url?.host) ?? ""
@@ -65,7 +79,11 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         let level = storage.textZoomLevelForDomain(domain)
             // And if there's no setting for whatever domain is passed in, use the app default
             ?? appSettings.defaultTextZoomLevel
-        webView.applyViewScale(CGFloat(level.rawValue) / 100)
+
+        let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 1.0)
+        let viewScale = CGFloat(level.rawValue) / 100 * dynamicTypeScalePercentage
+
+        webView.applyViewScale(viewScale)
     }
 
     @MainActor
@@ -92,7 +110,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
             zoomController.sheetPresentationController?.detents = [.medium()]
         }
 
-        zoomController.present(controller, animated: true)
+        controller.present(zoomController, animated: true)
     }
 
     func makeBrowsingMenuEntry(forLink: Link,
@@ -114,7 +132,12 @@ final class TextZoomCoordinator: TextZoomCoordinating {
 extension WKWebView {
 
     func applyViewScale(_ scale: CGFloat) {
-        // TODO
+        let key = "viewScale"
+        guard responds(to: NSSelectorFromString("_\(key)")) else {
+            assertionFailure("viewScale API has changed")
+            return
+        }
+        setValue(scale, forKey: key)
     }
 
 }

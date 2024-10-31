@@ -537,6 +537,7 @@ class TabViewController: UIViewController {
         } else {
             webView = WKWebView(frame: view.bounds, configuration: configuration)
         }
+        textZoomCoordinator.onWebViewCreated(applyToWebView: webView)
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -1307,6 +1308,7 @@ extension TabViewController: WKNavigationDelegate {
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
+        textZoomCoordinator.onNavigationCommitted(applyToWebView: webView)
     }
 
     private func onWebpageDidStartLoading(httpsForced: Bool) {

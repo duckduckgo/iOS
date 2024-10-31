@@ -80,6 +80,7 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             tutorialSettings: tutorialSettingsMock,
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+            featureFlagger: MockFeatureFlagger(),
             subscriptionCookieManager: SubscriptionCookieManagerMock()
         )
         let window = UIWindow(frame: UIScreen.main.bounds)

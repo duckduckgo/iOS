@@ -76,7 +76,7 @@ class HomeRowInstructionsViewController: UIViewController {
     private func addVideo() {
         let movieURL: URL
 
-        movieURL = Bundle.main.url(forResource: "ios13-home-row", withExtension: "mp4")!
+        movieURL = Bundle.main.url(forResource: "add-to-dock-demo", withExtension: "mp4")!
 
         player = AVPlayer(url: movieURL)
         _ = try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)

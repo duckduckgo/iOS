@@ -88,8 +88,8 @@ class FingerprintUITest: XCTestCase {
         }
         
         let tablesQuery = app.tables
-        _ = tablesQuery.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25)
-        tablesQuery.staticTexts["DuckDuckGo — Privacy, simplified."].swipeLeft()
+        _ = tablesQuery.staticTexts["DuckDuckGo — Your protection, our priority."].waitForExistence(timeout: 25)
+        tablesQuery.staticTexts["DuckDuckGo — Your protection, our priority."].swipeLeft()
         tablesQuery.buttons["Delete"].tap()
         app.navigationBars["Bookmarks"].buttons["Done"].tap()
     }
@@ -110,8 +110,8 @@ class FingerprintUITest: XCTestCase {
         let bookmarksToolbarButtons = app.toolbars.buttons
         _ = bookmarksToolbarButtons["Edit"].waitForExistence(timeout: 25)
         bookmarksToolbarButtons["Edit"].tap()
-        if app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25) {
-            app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        if app.tables.staticTexts["DuckDuckGo — Your protection, our priority."].waitForExistence(timeout: 25) {
+            app.staticTexts["DuckDuckGo — Your protection, our priority."].tap()
         } else {
             XCTFail("Could not find bookmark")
         }
@@ -146,8 +146,8 @@ class FingerprintUITest: XCTestCase {
         } else {
             XCTFail("Bookmarks button missing")
         }
-        if app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25) {
-            app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        if app.tables.staticTexts["DuckDuckGo — Your protection, our priority."].waitForExistence(timeout: 25) {
+            app.staticTexts["DuckDuckGo — Your protection, our priority."].tap()
         } else {
             XCTFail("Could not find bookmark")
         }

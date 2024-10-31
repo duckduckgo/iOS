@@ -89,7 +89,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         case loadFromPreferencesFailed(Error)
         case saveToPreferencesFailed(Error)
         case startVPNFailed(Error)
-        case fetchAuthTokenFailed(Error)
+        case fetchAuthTokenFailed
         case configSystemPermissionsDenied(Error)
 
         public var errorCode: Int {
@@ -106,13 +106,13 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         public var errorUserInfo: [String: Any] {
             switch self {
             case
-                    .simulateControllerFailureError:
+                    .simulateControllerFailureError,
+                    .fetchAuthTokenFailed:
                 return [:]
             case
                     .loadFromPreferencesFailed(let error),
                     .saveToPreferencesFailed(let error),
                     .startVPNFailed(let error),
-                    .fetchAuthTokenFailed(let error),
                     .configSystemPermissionsDenied(let error):
                 return [NSUnderlyingErrorKey: error]
             }
@@ -256,10 +256,11 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
-        do {
-            options["authToken"] = try tokenStore.fetchToken() as NSString?
-        } catch {
-            throw StartError.fetchAuthTokenFailed(error)
+
+        if let token = tokenStore.fetchToken() as NSString? {
+            options["authToken"] = token
+        } else {
+            throw StartError.fetchAuthTokenFailed
         }
         options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString

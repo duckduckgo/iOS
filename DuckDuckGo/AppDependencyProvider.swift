@@ -111,16 +111,20 @@ final class AppDependencyProvider: DependencyProvider {
         let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
-        let keychainManager = SubscriptionKeychainManager()
-        let legacyAccountStorage = AccountKeychainStorage()
-        let authClient = DefaultOAuthClient(tokensStorage: keychainManager,
+
+        // keychain storage
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let legacyAccountStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+
+        let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,
                                             legacyTokenStorage: legacyAccountStorage,
                                             authService: authService)
 
         self.privacyProInfoProvider = authClient
 
         apiService.authorizationRefresherCallback = { _ in
-            guard let tokenContainer = keychainManager.tokenContainer else {
+            guard let tokenContainer = tokenStorage.tokenContainer else {
                 throw OAuthClientError.internalError("Missing refresh token")
             }
 
@@ -142,12 +146,13 @@ final class AppDependencyProvider: DependencyProvider {
                                                              subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionEnvironment: subscriptionEnvironment)
         self.subscriptionManager = subscriptionManager
-        let accessTokenProvider: () -> String? = {
-            return {
-                authClient.currentTokenContainer?.accessToken
+        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: {
+            guard let token = subscriptionManager.getTokenContainerSynchronously(policy: .localValid)?.accessToken else {
+                Logger.networkProtection.error("NetworkProtectionKeychainTokenStore failed to provide token")
+                return nil
             }
-        }()
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+            return token
+        })
         networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore,
                                                                               persistentPixel: persistentPixel)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
@@ -158,7 +163,7 @@ final class AppDependencyProvider: DependencyProvider {
 extension DefaultOAuthClient: PrivacyProInfoProvider {
     
     var hasVPNEntitlements: Bool {
-        guard let tokenContainer = tokensStorage.tokenContainer else {
+        guard let tokenContainer = tokenStorage.tokenContainer else {
             return false
         }
         return tokenContainer.decodedAccessToken.hasEntitlement(.networkProtection)

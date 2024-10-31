@@ -289,7 +289,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
         case .failure(let error):
-            Logger.subscription.error("App store complete subscription purchase error: \(error.localizedDescription, privacy: .public)")
+            Logger.subscription.error("App store complete subscription purchase error: \(error, privacy: .public)")
             setTransactionError(.missingEntitlements)
         }
         setTransactionStatus(.idle)
@@ -297,7 +297,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-
+        Logger.subscription.log("Setting Subscription")
         // Note: This is called by the web FE when a subscription is retrieved, `params` contains an auth token V1 that will need to be exchanged for a V2. This is a temporary workaround until the FE fully supports v2 auth.
 
         guard let subscriptionValues: SubscriptionValues = CodableHelper.decode(from: params) else {
@@ -324,6 +324,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func activateSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.log("Activating Subscription")
         Pixel.fire(pixel: .privacyProRestorePurchaseOfferPageEntry, debounce: 2)
         onActivateSubscription?()
         return nil
@@ -349,6 +350,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async -> Encodable? {
+        Logger.subscription.log("Back to settings")
 //        guard let accessToken = accountManager.accessToken else {
 //            Logger.subscription.error("Missing access token")
 //            return nil

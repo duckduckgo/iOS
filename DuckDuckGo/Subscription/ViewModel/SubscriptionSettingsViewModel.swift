@@ -128,10 +128,17 @@ final class SubscriptionSettingsViewModel: ObservableObject {
 
     func fetchAndUpdateAccountEmail(cachePolicy: SubscriptionCachePolicy = .returnCacheDataElseLoad, loadingIndicator: Bool) async -> Bool {
         Logger.subscription.log("Fetch and update account email")
-        let tokensPolicy: TokensCachePolicy = cachePolicy == .returnCacheDataDontLoad ? .local : .localValid
+        var tokensPolicy: TokensCachePolicy = .local
+        switch cachePolicy {
+        case .reloadIgnoringLocalCacheData:
+            tokensPolicy = .localForceRefresh
+        case .returnCacheDataElseLoad:
+            tokensPolicy = .localValid
+        case .returnCacheDataDontLoad:
+            tokensPolicy = .local
+        }
 
-        await subscriptionManager.refreshAccount()
-        if let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .local) {
+        if let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: tokensPolicy) {
             DispatchQueue.main.async {
                 self.state.subscriptionEmail = tokenContainer.decodedAccessToken.email
                 if loadingIndicator { self.displayEmailLoader(true) }

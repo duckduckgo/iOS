@@ -53,6 +53,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
     private let subscriptionManager: any SubscriptionManager
+    private let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
@@ -450,14 +451,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
-        let keychainManager = SubscriptionKeychainManager()
-        let legacyAccountStorage = AccountKeychainStorage()
-        let authClient = DefaultOAuthClient(tokensStorage: keychainManager,
+
+        // keychain storage
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let legacyAccountStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+
+        let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,
                                             legacyTokenStorage: legacyAccountStorage,
                                             authService: authService)
 
         apiService.authorizationRefresherCallback = { _ in
-            guard let tokenContainer = keychainManager.tokenContainer else {
+            guard let tokenContainer = tokenStorage.tokenContainer else {
                 throw OAuthClientError.internalError("Missing refresh token")
             }
 
@@ -478,12 +483,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionEnvironment: subscriptionEnvironment)
         self.subscriptionManager = subscriptionManager
-        let accessTokenProvider: () -> String? = {
-            return {
-                authClient.currentTokenContainer?.accessToken
-            }
-        }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
 
@@ -494,13 +493,21 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         )
         notificationsPresenter.requestAuthorization()
 
+        self.networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: {
+            guard let token = subscriptionManager.getTokenContainerSynchronously(policy: .localValid)?.accessToken else {
+                Logger.networkProtection.error("NetworkProtectionKeychainTokenStore failed to provide token")
+                return nil
+            }
+            return token
+        })
+
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                    wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
-                   tokenStore: tokenStore,
+                   tokenStore: self.networkProtectionKeychainTokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
@@ -559,7 +566,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private func entitlementCheck() async -> Result<Bool, Error> {
-        let hasEntitlement = subscriptionManager.entitlements.contains(.networkProtection)
+        let hasEntitlement = self.subscriptionManager.entitlements.contains(.networkProtection)
         return .success(hasEntitlement)
     }
 }

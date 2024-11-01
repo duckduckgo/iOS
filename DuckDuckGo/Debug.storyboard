@@ -374,15 +374,6 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Reset Sync Promo Prompts"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="678" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ajp-XH-WpX">
-                                        <rect key="frame" x="0.0" y="1197" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ajp-XH-WpX" id="LgO-a7-V2e">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <listContentConfiguration key="contentConfiguration" text="Reset DuckPlayer Experiment"/>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="681" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="P8T-MX-2lM">
                                         <rect key="frame" x="0.0" y="1241.5" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -391,24 +382,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Reset TipKit"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="679" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3Wr-bL-05W">
-                                        <rect key="frame" x="0.0" y="1286" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Wr-bL-05W" id="p3u-Ha-HC0">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <listContentConfiguration key="contentConfiguration" text="Override DuckPlayer Experiment (Experiment)"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="680" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wJb-r7-5v2">
-                                        <rect key="frame" x="0.0" y="1330.5" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wJb-r7-5v2" id="SuR-3B-SU9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <listContentConfiguration key="contentConfiguration" text="Override DuckPlayer Experiment (Control)"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -759,7 +732,6 @@
             <objects>
                 <navigationController id="fgi-g1-scz" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cGh-0v-FMV">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

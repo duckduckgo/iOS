@@ -30,12 +30,10 @@ public final class SubscriptionCookieManageEventPixelMapping: EventMapping<Subsc
                 switch event {
                 case .errorHandlingAccountDidSignInTokenIsMissing:
                     return .privacyProSubscriptionCookieMissingTokenOnSignIn
-                case .errorHandlingAccountDidSignOutCookieIsMissing:
-                    return .privacyProSubscriptionCookieMissingCookieOnSignOut
-                case .subscriptionCookieRefreshedWithUpdate:
-                    return .privacyProSubscriptionCookieRefreshedWithUpdate
-                case .subscriptionCookieRefreshedWithDelete:
-                    return .privacyProSubscriptionCookieRefreshedWithDelete
+                case .subscriptionCookieRefreshedWithAccessToken:
+                    return .privacyProSubscriptionCookieRefreshedWithAccessToken
+                case .subscriptionCookieRefreshedWithEmptyValue:
+                    return .privacyProSubscriptionCookieRefreshedWithEmptyValue
                 case .failedToSetSubscriptionCookie:
                     return .privacyProSubscriptionCookieFailedToSetSubscriptionCookie
                 }

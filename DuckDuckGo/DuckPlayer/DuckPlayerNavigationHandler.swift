@@ -488,7 +488,7 @@ final class DuckPlayerNavigationHandler: NSObject {
         var backItems = webView.backForwardList.backList.reversed()
         
         // Ignore any previous URL that's duckPlayer or youtube-no-cookie
-        if let _ = backItems.first?.url, url.isDuckPlayer {
+        if backItems.first?.url != nil, url.isDuckPlayer {
             backItems = webView.backForwardList.backList.dropLast().reversed()
         }
         

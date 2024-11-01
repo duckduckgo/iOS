@@ -261,7 +261,7 @@ final class MockDuckPlayerTabNavigator: DuckPlayerTabNavigationHandling {
     var openedURL: URL?
     var closeTabCalled = false
 
-    func openTab(for url: URL) {    
+    func openTab(for url: URL) {
         openedURL = url
     }
 

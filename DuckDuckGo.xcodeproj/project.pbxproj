@@ -530,7 +530,7 @@
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
 		85AFA1212B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AFA1202B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift */; };
-		85B49AFD2CD392ED007FAA2A /* MockDomainTextZoomStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B49AFC2CD392ED007FAA2A /* MockDomainTextZoomStorage.swift */; };
+		85B49AFD2CD392ED007FAA2A /* MockTextZoomCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B49AFC2CD392ED007FAA2A /* MockTextZoomCoordinator.swift */; };
 		85B9814E2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9814D2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift */; };
 		85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
@@ -1831,7 +1831,7 @@
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		85AFA1202B45D14F0028A504 /* BookmarksMigrationAssertionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksMigrationAssertionTests.swift; sourceTree = "<group>"; };
-		85B49AFC2CD392ED007FAA2A /* MockDomainTextZoomStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDomainTextZoomStorage.swift; sourceTree = "<group>"; };
+		85B49AFC2CD392ED007FAA2A /* MockTextZoomCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextZoomCoordinator.swift; sourceTree = "<group>"; };
 		85B9814D2B5EB618009AC9A6 /* SwipeTabsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTabsCoordinator.swift; sourceTree = "<group>"; };
 		85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHomeCell.swift; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
@@ -6039,7 +6039,7 @@
 				9F69331C2C5A191400CD6A5D /* MockTutorialSettings.swift */,
 				852409302C78030D00CB28FC /* MockUsageSegmentation.swift */,
 				4B27FBB72C93F53B007E21A7 /* MockPersistentPixel.swift */,
-				85B49AFC2CD392ED007FAA2A /* MockDomainTextZoomStorage.swift */,
+				85B49AFC2CD392ED007FAA2A /* MockTextZoomCoordinator.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -7967,7 +7967,7 @@
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
 				564DE4572C4150E600D23241 /* NewTabPageControllerDaxDialogTests.swift in Sources */,
 				C14882E327F20D9A00D59F0C /* BookmarksExporterTests.swift in Sources */,
-				85B49AFD2CD392ED007FAA2A /* MockDomainTextZoomStorage.swift in Sources */,
+				85B49AFD2CD392ED007FAA2A /* MockTextZoomCoordinator.swift in Sources */,
 				85C29708247BDD060063A335 /* DaxDialogsBrowsingSpecTests.swift in Sources */,
 				9FE05CF12C36468A00D9046B /* OnboardingPixelReporterTests.swift in Sources */,
 				9FDEC7B42C8FD62F00C7A692 /* OnboardingAddressBarPositionPickerViewModelTests.swift in Sources */,

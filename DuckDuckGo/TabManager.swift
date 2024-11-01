@@ -43,7 +43,7 @@ class TabManager {
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
     private let featureFlagger: FeatureFlagger
-    private let textZoomCoordinator: TextZoomCoordinator
+    private let textZoomCoordinator: TextZoomCoordinating
     private let subscriptionCookieManager: SubscriptionCookieManaging
     private let appSettings: AppSettings
 
@@ -66,7 +66,7 @@ class TabManager {
          featureFlagger: FeatureFlagger,
          subscriptionCookieManager: SubscriptionCookieManaging,
          appSettings: AppSettings,
-         textZoomCoordinator: TextZoomCoordinator) {
+         textZoomCoordinator: TextZoomCoordinating) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase

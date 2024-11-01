@@ -37,6 +37,9 @@ protocol TextZoomCoordinating {
     /// If the level matches the global default then this specific level for the host is forgotten.
     func set(textZoomLevel level: TextZoomLevel, forHost host: String?)
 
+    /// Reset, ie 'forget', the saved zoom levels for all domains except the ones specified.
+    func resetTextZoomLevels(excludingDomains: [String])
+
     /// Applies appropriate text zoom to webview on creation,. Does nothing if feature is disabled.
     func onWebViewCreated(applyToWebView webView: WKWebView)
 
@@ -87,6 +90,10 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         } else {
             storage.set(textZoomLevel: level, forDomain: domain)
         }
+    }
+
+    func resetTextZoomLevels(excludingDomains domains: [String]) {
+        storage.resetTextZoomLevels(excludingDomains: domains)
     }
 
     func onWebViewCreated(applyToWebView webView: WKWebView) {

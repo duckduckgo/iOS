@@ -175,7 +175,7 @@ class MainViewController: UIViewController {
     }
     
     let preserveLogins: PreserveLogins
-    let textZoomCoordinator: TextZoomCoordinator
+    let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
@@ -203,7 +203,7 @@ class MainViewController: UIViewController {
         featureFlagger: FeatureFlagger,
         preserveLogins: PreserveLogins = .shared,
         subscriptionCookieManager: SubscriptionCookieManaging,
-        textZoomCoordinator: TextZoomCoordinator
+        textZoomCoordinator: TextZoomCoordinating
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -2727,8 +2727,7 @@ extension MainViewController: AutoClearWorker {
 
     private func forgetTextZoom() {
         let allowedDomains = preserveLogins.allowedDomains
-        // TODO call a function instead
-        textZoomCoordinator.storage.resetTextZoomLevels(excludingDomains: allowedDomains)
+        textZoomCoordinator.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 
 }

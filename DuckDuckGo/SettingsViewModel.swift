@@ -43,7 +43,7 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
-    let textZoomCoordinator: TextZoomCoordinator
+    let textZoomCoordinator: TextZoomCoordinating
 
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
@@ -386,7 +386,7 @@ final class SettingsViewModel: ObservableObject {
          historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging,
          privacyProDataReporter: PrivacyProDataReporting,
-         textZoomCoordinator: TextZoomCoordinator) {
+         textZoomCoordinator: TextZoomCoordinating) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider

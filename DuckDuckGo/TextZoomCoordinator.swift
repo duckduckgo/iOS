@@ -65,8 +65,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     let featureFlagger: FeatureFlagger
 
     var isEnabled: Bool {
-        // TODO featureFlagger.isFeatureOn(.textZoom)
-        true
+        featureFlagger.isFeatureOn(.textZoom)
     }
 
     init(appSettings: AppSettings, storage: TextZoomStoring, featureFlagger: FeatureFlagger) {

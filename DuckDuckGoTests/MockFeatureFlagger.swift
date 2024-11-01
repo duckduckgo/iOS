@@ -22,7 +22,10 @@ import Core
 
 final class MockFeatureFlagger: FeatureFlagger {
     var enabledFeatureFlags: [FeatureFlag] = []
-    var enabledFeatureFlag: FeatureFlag?
+
+    init(enabledFeatureFlags: [FeatureFlag] = []) {
+        self.enabledFeatureFlags = enabledFeatureFlags
+    }
 
     func isFeatureOn<F>(forProvider provider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
         guard let flag = provider as? FeatureFlag else {

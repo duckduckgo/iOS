@@ -22,7 +22,10 @@ import NetworkProtection
 
 struct VPNFeedbackFormCategoryView: View {
     @Environment(\.dismiss) private var dismiss
-    let collector = DefaultVPNMetadataCollector(statusObserver: AppDependencyProvider.shared.connectionObserver)
+    let collector = DefaultVPNMetadataCollector(
+        statusObserver: AppDependencyProvider.shared.connectionObserver,
+        serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver
+    )
 
     var body: some View {
         VStack {

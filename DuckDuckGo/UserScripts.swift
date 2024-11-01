@@ -36,7 +36,7 @@ final class UserScripts: UserScriptsProvider {
     let autoconsentUserScript: AutoconsentUserScript
     
     var specialPages: SpecialPagesUserScript?
-    var duckPlayer: DuckPlayerProtocol? {
+    var duckPlayer: DuckPlayerControlling? {
         didSet {
             initializeDuckPlayer()
         }

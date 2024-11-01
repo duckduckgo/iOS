@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "e5946eee6af859690cc1cc5e51daef3c8368981b",
-        "version" : "201.0.0"
+        "branch" : "michal/update-subs-cookie",
+        "revision" : "9506581ae99273681073f9993fc6d881d3edaa7f"
       }
     },
     {

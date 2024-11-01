@@ -275,7 +275,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         case .malformedErrorDetected(let error):
-            DailyPixel.fire(pixel: .networkProtectionMalformedErrorDetected, error: error)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionMalformedErrorDetected,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         error: error)
         }
     }
 

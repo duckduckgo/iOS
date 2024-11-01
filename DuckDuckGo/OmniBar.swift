@@ -384,8 +384,8 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
-        UIView.animate(withDuration: 0.0) {
-            self.layoutIfNeeded()
+        UIView.animate(withDuration: 0.0) { [weak self] in
+            self?.layoutIfNeeded()
         }
         
     }

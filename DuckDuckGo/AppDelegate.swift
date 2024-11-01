@@ -89,6 +89,7 @@ import os.log
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
     private var subscriptionCookieManager: SubscriptionCookieManaging!
+    private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
     var privacyProDataReporter: PrivacyProDataReporting!
 
     // MARK: - Feature specific app event handlers
@@ -313,17 +314,8 @@ import os.log
         subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
-        
-        subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                              currentCookieStore: { [weak self] in
-            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
-                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
-                // eventually the subscription cookie will be refreshed on opening the first tab
-                return nil
-            }
-            
-            return WKWebsiteDataStore.current().httpCookieStore
-        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+
+        subscriptionCookieManager = makeSubscriptionCookieManager()
 
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
@@ -414,6 +406,46 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
+        let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+
+            return WKWebsiteDataStore.current().httpCookieStore
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+
+
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+
+        // Enable subscriptionCookieManager if feature flag is present
+        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
+            subscriptionCookieManager.enableSettingSubscriptionCookie()
+        }
+
+        // Keep track of feature flag changes
+        subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .sink { [weak self, weak privacyConfigurationManager] in
+                guard let self, let privacyConfigurationManager else { return }
+
+                let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
+
+                Task { [weak self] in
+                    if isEnabled {
+                        self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
+                        await self?.subscriptionCookieManager.refreshSubscriptionCookie()
+                    } else {
+                        await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
+                    }
+                }
+            }
+
+        return subscriptionCookieManager
     }
 
     private func makeHistoryManager() -> HistoryManaging {

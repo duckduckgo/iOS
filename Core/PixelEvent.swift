@@ -710,8 +710,8 @@ extension Pixel {
         case privacyProKeychainAccessError
         case privacyProSubscriptionCookieMissingTokenOnSignIn
         case privacyProSubscriptionCookieMissingCookieOnSignOut
-        case privacyProSubscriptionCookieRefreshedWithUpdate
-        case privacyProSubscriptionCookieRefreshedWithDelete
+        case privacyProSubscriptionCookieRefreshedWithAccessToken
+        case privacyProSubscriptionCookieRefreshedWithEmptyValue
         case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
 
         // MARK: Pixel Experiment
@@ -1527,8 +1527,8 @@ extension Pixel.Event {
         case .privacyProKeychainAccessError: return "m_privacy-pro_keychain_access_error"
         case .privacyProSubscriptionCookieMissingTokenOnSignIn: return "m_privacy-pro_subscription-cookie-missing_token_on_sign_in"
         case .privacyProSubscriptionCookieMissingCookieOnSignOut: return "m_privacy-pro_subscription-cookie-missing_cookie_on_sign_out"
-        case .privacyProSubscriptionCookieRefreshedWithUpdate: return "m_privacy-pro_subscription-cookie-refreshed_with_update"
-        case .privacyProSubscriptionCookieRefreshedWithDelete: return "m_privacy-pro_subscription-cookie-refreshed_with_delete"
+        case .privacyProSubscriptionCookieRefreshedWithAccessToken: return "m_privacy-pro_subscription-cookie-refreshed_with_access_token"
+        case .privacyProSubscriptionCookieRefreshedWithEmptyValue: return "m_privacy-pro_subscription-cookie-refreshed_with_empty_value"
         case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
 
         // MARK: Pixel Experiment

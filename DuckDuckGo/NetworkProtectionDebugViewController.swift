@@ -667,9 +667,11 @@ shouldShowVPNShortcut: \(vpnVisibility.shouldShowVPNShortcut() ? "YES" : "NO")
             if let subscriptionOverrideEnabled = defaults.subscriptionOverrideEnabled {
                 if subscriptionOverrideEnabled {
                     defaults.subscriptionOverrideEnabled = false
-                    AppDependencyProvider.shared.subscriptionManager.signOut()
+                    Task {
+                        await AppDependencyProvider.shared.subscriptionManager.signOut()
+                    }
                 } else {
-                    defaults.resetsubscriptionOverrideEnabled()
+                    defaults.resetSubscriptionOverrideEnabled()
                 }
             } else {
                 defaults.subscriptionOverrideEnabled = true

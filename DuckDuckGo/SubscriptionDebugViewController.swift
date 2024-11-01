@@ -264,8 +264,10 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
 
     private func clearAuthData() {
-        subscriptionManager.signOut()
-        showAlert(title: "Data cleared!")
+        Task {
+            await subscriptionManager.signOut()
+            showAlert(title: "Data cleared!")
+        }
     }
     
     private func showAccountDetails() {
@@ -370,20 +372,22 @@ final class SubscriptionDebugViewController: UITableViewController {
         newSubscriptionEnvironment.serviceEnvironment = environment
 
         if newSubscriptionEnvironment.serviceEnvironment != currentSubscriptionEnvironment.serviceEnvironment {
-            subscriptionManager.signOut()
-
-            // Save Subscription environment
-            DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
-
-            // The VPN environment is forced to match the subscription environment
-            let settings = AppDependencyProvider.shared.vpnSettings
-            switch newSubscriptionEnvironment.serviceEnvironment {
-            case .production:
-                settings.selectedEnvironment = .production
-            case .staging:
-                settings.selectedEnvironment = .staging
+            Task {
+                await subscriptionManager.signOut()
+                
+                // Save Subscription environment
+                DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
+                
+                // The VPN environment is forced to match the subscription environment
+                let settings = AppDependencyProvider.shared.vpnSettings
+                switch newSubscriptionEnvironment.serviceEnvironment {
+                case .production:
+                    settings.selectedEnvironment = .production
+                case .staging:
+                    settings.selectedEnvironment = .staging
+                }
+                NetworkProtectionLocationListCompositeRepository.clearCache()
             }
-            NetworkProtectionLocationListCompositeRepository.clearCache()
         }
     }
 }

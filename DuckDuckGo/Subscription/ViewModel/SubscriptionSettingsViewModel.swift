@@ -202,10 +202,13 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     func removeSubscription() {
         Logger.subscription.log("Remove subscription")
-        subscriptionManager.signOut()
-        _ = ActionMessageView()
-        ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
-                                  presentationLocation: .withoutBottomBar)
+
+        Task {
+            await subscriptionManager.signOut()
+            _ = await ActionMessageView()
+            await ActionMessageView.present(message: UserText.subscriptionRemovalConfirmation,
+                                      presentationLocation: .withoutBottomBar)
+        }
     }
     
     func displayGoogleView(_ value: Bool) {

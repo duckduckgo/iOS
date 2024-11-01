@@ -295,6 +295,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
         case .failure(let error):
             Logger.subscription.error("App store complete subscription purchase error: \(error, privacy: .public)")
+
+            await subscriptionManager.signOut()
+
             setTransactionStatus(.idle)
             setTransactionError(.missingEntitlements)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
@@ -313,7 +316,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.signOut()
+        await subscriptionManager.signOut()
 
         let authToken = subscriptionValues.token
         do {

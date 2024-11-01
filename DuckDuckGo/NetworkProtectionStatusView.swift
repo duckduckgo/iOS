@@ -19,11 +19,61 @@
 
 import SwiftUI
 import NetworkProtection
+import TipKit
 
 struct NetworkProtectionStatusView: View {
+
+    static let defaultImageSize = CGSize(width: 32, height: 32)
+
     @Environment(\.colorScheme) var colorScheme
 
-    @StateObject public var statusModel: NetworkProtectionStatusViewModel
+    @ObservedObject
+    public var statusModel: NetworkProtectionStatusViewModel
+
+    // MARK: - Tips
+
+    let geoswitchingTip: VPNGeoswitchingTip = {
+        let tip = VPNGeoswitchingTip()
+
+        if #available(iOS 17.0, *) {
+            if tip.shouldDisplay {
+                Task {
+                    for await status in tip.statusUpdates {
+                        if case .invalidated = status {
+                            await VPNSnoozeTip.geolocationTipDismissedEvent.donate()
+                            await VPNAddWidgetTip.geolocationTipDismissedEvent.donate()
+                        }
+                    }
+                }
+            }
+        }
+
+        return tip
+    }()
+
+    let snoozeTip: VPNSnoozeTip = {
+        let tip = VPNSnoozeTip()
+
+        if #available(iOS 17.0, *) {
+            if tip.shouldDisplay {
+                Task {
+                    for await status in tip.statusUpdates {
+                        if case .invalidated = status {
+                            await VPNAddWidgetTip.snoozeTipDismissedEvent.donate()
+                        }
+                    }
+                }
+            }
+        }
+
+        return tip
+    }()
+
+    let widgetTip: VPNAddWidgetTip = {
+        VPNAddWidgetTip()
+    }()
+
+    // MARK: - View
 
     var body: some View {
         List {
@@ -35,6 +85,7 @@ struct NetworkProtectionStatusView: View {
             }
 
             toggle()
+
             locationDetails()
 
             if statusModel.isNetPEnabled && statusModel.hasServerInfo && !statusModel.isSnoozing {
@@ -51,6 +102,9 @@ struct NetworkProtectionStatusView: View {
                 .animation(.easeOut, value: statusModel.shouldShowError)
         })
         .applyInsetGroupedListStyle()
+        .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
+            widgetEducationSheet()
+        }
     }
 
     @ViewBuilder
@@ -86,10 +140,26 @@ struct NetworkProtectionStatusView: View {
             .padding([.top, .bottom], 2)
 
             snooze()
+
         } header: {
             header()
         }
         .increaseHeaderProminence()
+        .listRowBackground(Color(designSystemColor: .surface))
+
+        Section {
+            if #available(iOS 17.0, *) {
+                widgetTipView()
+                    .tipImageSize(Self.defaultImageSize)
+                    .padding(.horizontal, 3)
+            }
+
+            if #available(iOS 17.0, *) {
+                snoozeTipView()
+                    .tipImageSize(Self.defaultImageSize)
+                    .padding(.horizontal, 3)
+            }
+        }
         .listRowBackground(Color(designSystemColor: .surface))
     }
 
@@ -151,8 +221,8 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func locationDetails() -> some View {
-        if !statusModel.isSnoozing, let location = statusModel.location {
-            Section {
+        Section {
+            if !statusModel.isSnoozing, let location = statusModel.location {
                 var locationAttributedString: AttributedString {
                     var attributedString = AttributedString(
                         statusModel.preferredLocation.isNearest ? "\(location) \(UserText.netPVPNLocationNearest)" : location
@@ -164,16 +234,10 @@ struct NetworkProtectionStatusView: View {
                     return attributedString
                 }
 
-                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                NavigationLink(destination: locationView()) {
                     NetworkProtectionLocationItemView(title: locationAttributedString, imageName: nil)
                 }
-            } header: {
-                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
-                    .foregroundColor(.init(designSystemColor: .textSecondary))
-            }
-            .listRowBackground(Color(designSystemColor: .surface))
-        } else {
-            Section {
+            } else {
                 let imageName = statusModel.preferredLocation.isNearest ? "VPNLocation" : nil
                 var nearestLocationAttributedString: AttributedString {
                     var attributedString = AttributedString(statusModel.preferredLocation.title)
@@ -181,15 +245,32 @@ struct NetworkProtectionStatusView: View {
                     return attributedString
                 }
 
-                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                NavigationLink(destination: locationView()) {
                     NetworkProtectionLocationItemView(title: nearestLocationAttributedString, imageName: imageName)
                 }
-            } header: {
-                Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
-                    .foregroundColor(.init(designSystemColor: .textSecondary))
             }
-            .listRowBackground(Color(designSystemColor: .surface))
+        } header: {
+            Text(statusModel.isNetPEnabled ? UserText.vpnLocationConnected : UserText.vpnLocationSelected)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
         }
+        .listRowBackground(Color(designSystemColor: .surface))
+
+        Section {
+            if #available(iOS 17.0, *) {
+                geoswitchingTipView()
+                    .tipImageSize(Self.defaultImageSize)
+                    .padding(.horizontal, 3)
+            }
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
+    }
+
+    @ViewBuilder
+    private func locationView() -> some View {
+        NetworkProtectionVPNLocationView()
+            .onAppear {
+                statusModel.handleUserOpenedVPNLocations()
+            }
     }
 
     @ViewBuilder
@@ -266,6 +347,61 @@ struct NetworkProtectionStatusView: View {
             ),
             isAnimating: $statusModel.isNetPEnabled
         )
+    }
+
+    // MARK: - Tips
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func geoswitchingTipView() -> some View {
+        if statusModel.canShowTips {
+
+            TipView(geoswitchingTip)
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func snoozeTipView() -> some View {
+        if statusModel.canShowTips,
+           statusModel.hasServerInfo {
+
+            TipView(snoozeTip, action: statusModel.snoozeActionHandler(action:))
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
+        }
+    }
+
+    @available(iOS 17.0, *)
+    @ViewBuilder
+    private func widgetTipView() -> some View {
+        if statusModel.canShowTips,
+           !statusModel.isNetPEnabled && !statusModel.isSnoozing {
+
+            TipView(widgetTip, action: statusModel.widgetActionHandler(action:))
+                .removeGroupedListStyleInsets()
+                .tipCornerRadius(0)
+                .tipBackground(Color(designSystemColor: .surface))
+        }
+    }
+
+    // MARK: - Sheets
+
+    private func widgetEducationSheet() -> some View {
+        NavigationView {
+            WidgetEducationView()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(UserText.navigationTitleDone) {
+                            statusModel.showAddWidgetEducationView = false
+                        }
+                    }
+                }
+        }
     }
 }
 

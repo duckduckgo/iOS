@@ -708,6 +708,11 @@ extension Pixel {
         case privacyProTransactionProgressNotHiddenAfter60s
         case privacyProSuccessfulSubscriptionAttribution
         case privacyProKeychainAccessError
+        case privacyProSubscriptionCookieMissingTokenOnSignIn
+        case privacyProSubscriptionCookieMissingCookieOnSignOut
+        case privacyProSubscriptionCookieRefreshedWithUpdate
+        case privacyProSubscriptionCookieRefreshedWithDelete
+        case privacyProSubscriptionCookieFailedToSetSubscriptionCookie
 
         // MARK: Pixel Experiment
         case pixelExperimentEnrollment
@@ -788,11 +793,16 @@ extension Pixel {
         case duckPlayerViewFromSERP
         case duckPlayerViewFromOther
         case duckPlayerOverlayYoutubeImpressions
+        case duckPlayerLandscapeLayoutImpressions
         case duckPlayerOverlayYoutubeWatchHere
         case duckPlayerSettingAlwaysDuckPlayer
         case duckPlayerSettingAlwaysSettings
         case duckPlayerSettingNeverSettings
         case duckPlayerSettingBackToDefault
+        case duckPlayerSettingsAlwaysOverlaySERP
+        case duckPlayerSettingsAlwaysOverlayYoutube
+        case duckPlayerSettingsNeverOverlaySERP
+        case duckPlayerSettingsNeverOverlayYoutube
         case duckPlayerWatchOnYoutube
         case duckPlayerSettingAlwaysOverlayYoutube
         case duckPlayerSettingNeverOverlayYoutube
@@ -820,13 +830,9 @@ extension Pixel {
         case pproFeedbackSubcategoryScreenShow(source: String, reportType: String, category: String)
         case pproFeedbackSubmitScreenShow(source: String, reportType: String, category: String, subcategory: String)
         case pproFeedbackSubmitScreenFAQClick(source: String, reportType: String, category: String, subcategory: String)
-        
-        // MARK: DuckPlayer Pixel Experiment
-        case duckplayerExperimentCohortAssign
-        case duckplayerExperimentSearch
-        case duckplayerExperimentDailySearch
-        case duckplayerExperimentWeeklySearch
-        case duckplayerExperimentYoutubePageView
+
+        // MARK: WebView Error Page Shown
+        case webViewErrorPageShown
     }
 
 }
@@ -1517,6 +1523,11 @@ extension Pixel.Event {
         case .privacyProTransactionProgressNotHiddenAfter60s: return "m_privacy-pro_progress_not_hidden_after_60s"
         case .privacyProSuccessfulSubscriptionAttribution: return "m_subscribe"
         case .privacyProKeychainAccessError: return "m_privacy-pro_keychain_access_error"
+        case .privacyProSubscriptionCookieMissingTokenOnSignIn: return "m_privacy-pro_subscription-cookie-missing_token_on_sign_in"
+        case .privacyProSubscriptionCookieMissingCookieOnSignOut: return "m_privacy-pro_subscription-cookie-missing_cookie_on_sign_out"
+        case .privacyProSubscriptionCookieRefreshedWithUpdate: return "m_privacy-pro_subscription-cookie-refreshed_with_update"
+        case .privacyProSubscriptionCookieRefreshedWithDelete: return "m_privacy-pro_subscription-cookie-refreshed_with_delete"
+        case .privacyProSubscriptionCookieFailedToSetSubscriptionCookie: return "m_privacy-pro_subscription-cookie-failed_to_set_subscription_cookie"
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
@@ -1609,6 +1620,10 @@ extension Pixel.Event {
         case .duckPlayerViewFromOther: return "duckplayer_view-from_other"
         case .duckPlayerSettingAlwaysSettings: return "duckplayer_setting_always_settings"
         case .duckPlayerSettingAlwaysDuckPlayer: return "duckplayer_setting_always_duck-player"
+        case .duckPlayerSettingsAlwaysOverlaySERP: return "duckplayer_setting_always_overlay_serp"
+        case .duckPlayerSettingsAlwaysOverlayYoutube: return "duckplayer_setting_always_overlay_youtube"
+        case .duckPlayerSettingsNeverOverlaySERP: return "duckplayer_setting_never_overlay_serp"
+        case .duckPlayerSettingsNeverOverlayYoutube: return "duckplayer_setting_never_overlay_youtube"
         case .duckPlayerOverlayYoutubeImpressions: return "duckplayer_overlay_youtube_impressions"
         case .duckPlayerOverlayYoutubeWatchHere: return "duckplayer_overlay_youtube_watch_here"
         case .duckPlayerSettingNeverSettings: return "duckplayer_setting_never_settings"
@@ -1642,13 +1657,11 @@ extension Pixel.Event {
         case .pproFeedbackSubmitScreenShow: return "m_ppro_feedback_submit-screen_show"
         case .pproFeedbackSubmitScreenFAQClick: return "m_ppro_feedback_submit-screen-faq_click"
             
-        // MARK: Duckplayer experiment
-        case .duckplayerExperimentCohortAssign: return "duckplayer_experiment_cohort_assign_v2"
-        case .duckplayerExperimentSearch: return "duckplayer_experiment_search_v2"
-        case .duckplayerExperimentDailySearch: return "duckplayer_experiment_daily_search_v2"
-        case .duckplayerExperimentWeeklySearch: return "duckplayer_experiment_weekly_search_v2"
-        case .duckplayerExperimentYoutubePageView: return "duckplayer_experiment_youtube_page_view_v2"
-            
+        // MARK: - WebView Error Page shown
+        case .webViewErrorPageShown: return "m_errorpageshown"
+
+        // MARK: - DuckPlayer FE Application Telemetry
+        case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
         }
     }
 }

@@ -24,7 +24,7 @@ import Combine
 
 final class YoutubePlayerUserScript: NSObject, Subfeature {
     
-    var duckPlayer: DuckPlayerProtocol
+    var duckPlayer: DuckPlayerControlling
     private var cancellables = Set<AnyCancellable>()
     
     struct Constants {
@@ -37,9 +37,10 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
         static let initialSetup = "initialSetup"
         static let openSettings = "openSettings"
         static let openInfo = "openInfo"
+        static let telemetryEvent = "telemetryEvent"
     }
     
-    init(duckPlayer: DuckPlayerProtocol) {
+    init(duckPlayer: DuckPlayerControlling) {
         self.duckPlayer = duckPlayer
         super.init()
         subscribeToDuckPlayerMode()
@@ -79,6 +80,8 @@ final class YoutubePlayerUserScript: NSObject, Subfeature {
             return duckPlayer.openDuckPlayerSettings
         case Handlers.openInfo:
             return duckPlayer.openDuckPlayerInfo
+        case Handlers.telemetryEvent:
+            return duckPlayer.telemetryEvent
         default:
             assertionFailure("YoutubePlayerUserScript: Failed to parse User Script message: \(methodName)")
             return nil

@@ -1582,7 +1582,7 @@ class MainViewController: UIViewController {
         Task {
             let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
 
-            guard let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .localValid),
+            guard let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .local),
                   tokenContainer.decodedAccessToken.hasEntitlement(.networkProtection) == false else { return }
 
             if await networkProtectionTunnelController.isInstalled {

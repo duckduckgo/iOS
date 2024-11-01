@@ -698,6 +698,7 @@ extension SettingsViewModel {
 
     @MainActor
     private func setupSubscriptionEnvironment() async {
+        Logger.subscription.log("Setting up Subscription Environment")
         // If there's cached data use it by default
         if let cachedSubscription = subscriptionStateCache.get() {
             state.subscription = cachedSubscription
@@ -719,21 +720,22 @@ extension SettingsViewModel {
             }
 
             let subscription = try await subscriptionManager.currentSubscription(refresh: true)
+            Logger.subscription.log("Subscription loaded: \(subscription.debugDescription, privacy: .public)")
             state.subscription.subscriptionExist = true
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
-
-            // Check entitlements and update state
             state.subscription.entitlements = subscriptionManager.entitlements
-        } catch SubscriptionEndpointServiceError.noData {
+        } catch SubscriptionEndpointServiceError.noData, OAuthClientError.missingTokens {
             // Auth successful but no Subscription is available
             Logger.subscription.log("Subscription not present")
+
             state.subscription.subscriptionExist = false
+            state.subscription.platform = .unknown
             state.subscription.hasActiveSubscription = false
             state.subscription.entitlements = []
         } catch {
             // Generic error, we don't update the cached data
-            Logger.subscription.error("Failed to load Subscription: \(error, privacy: .public)")
+            Logger.subscription.debug("Failed to load Subscription: \(error, privacy: .public)")
         }
 
         // Sync Cache

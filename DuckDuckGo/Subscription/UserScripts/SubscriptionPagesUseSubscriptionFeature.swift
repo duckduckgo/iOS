@@ -141,7 +141,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
 
-        Logger.subscription.log("WebView handler: \(methodName)")
+        Logger.subscription.debug("WebView handler: \(methodName)")
         switch methodName {
         case Handlers.getSubscription: return getSubscription
         case Handlers.setSubscription: return setSubscription
@@ -193,20 +193,22 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     /// Returns the auth token
     func getSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
         do {
-            let accessToken = try await subscriptionManager.getTokenContainer(policy: .createIfNeeded).accessToken
+            let accessToken = try await subscriptionManager.getTokenContainer(policy: .localValid).accessToken
             return [Constants.token: accessToken]
         } catch {
-            Logger.subscription.fault("Failed to fetch token: \(error)")
-            return Constants.empty
+            Logger.subscription.debug("No subscription available: \(error)")
+            return [Constants.token: Constants.empty]
         }
     }
     
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async -> Encodable? {
         resetSubscriptionFlow()
         if let subscriptionOptions = await subscriptionManager.storePurchaseManager().subscriptionOptions() {
+            Logger.subscription.debug("Subscription options retrieved: \(String(describing: subscriptionOptions), privacy: .public)")
             if subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
+                Logger.subscription.log("Subscription purchase not allowed")
                 return SubscriptionOptions.empty
             }
         } else {
@@ -283,21 +285,24 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         switch await appStorePurchaseFlow.completeSubscriptionPurchase(with: purchaseTransactionJWS) {
         case .success:
             Logger.subscription.log("Subscription purchase completed successfully")
+
             DailyPixel.fireDailyAndCount(pixel: .privacyProPurchaseSuccess,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             UniquePixel.fire(pixel: .privacyProSubscriptionActivated)
             Pixel.fireAttribution(pixel: .privacyProSuccessfulSubscriptionAttribution, origin: subscriptionAttributionOrigin, privacyProDataReporter: privacyProDataReporter)
+
+            setTransactionStatus(.idle)
             await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
         case .failure(let error):
             Logger.subscription.error("App store complete subscription purchase error: \(error, privacy: .public)")
+            setTransactionStatus(.idle)
             setTransactionError(.missingEntitlements)
+            await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate.completed)
         }
-        setTransactionStatus(.idle)
         return nil
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async -> Encodable? {
-        Logger.subscription.log("Setting Subscription")
         // Note: This is called by the web FE when a subscription is retrieved, `params` contains an auth token V1 that will need to be exchanged for a V2. This is a temporary workaround until the FE fully supports v2 auth.
 
         guard let subscriptionValues: SubscriptionValues = CodableHelper.decode(from: params) else {
@@ -308,7 +313,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
 
         // Clear subscription Cache
-        subscriptionManager.clearSubscriptionCache()
+        subscriptionManager.signOut()
 
         let authToken = subscriptionValues.token
         do {
@@ -372,7 +377,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 //            setTransactionError(.generalError)
 //        }
 //        return nil
-        await subscriptionManager.refreshAccount()
+        _ = try? await subscriptionManager.getTokenContainer(policy: .localForceRefresh)
         onBackToSettings?()
         return nil
     }
@@ -382,7 +387,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             let accessToken = try await subscriptionManager.getTokenContainer(policy: .localValid).accessToken
             return [Constants.token: accessToken]
         } catch {
-            Logger.subscription.fault("Failed to fetch token: \(error)")
+            Logger.subscription.debug("No access token available: \(error)")
             return [String: String]()
         }
     }

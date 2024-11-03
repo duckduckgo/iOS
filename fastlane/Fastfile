@@ -221,7 +221,7 @@ lane :upload_metadata do |options|
   deliver(common_deliver_arguments.merge(options).merge({
     skip_binary_upload: true,
     skip_metadata: false,
-    version_check_wait_retry_limit: 0
+    version_check_wait_retry_limit: 1
   }))
 end
 

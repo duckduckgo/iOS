@@ -50,8 +50,11 @@ final class AppIconPickerViewModel: ObservableObject {
     }
 }
 
-protocol AppIconManaging {
+protocol AppIconProviding {
     var appIcon: AppIcon { get }
+}
+
+protocol AppIconManaging: AppIconProviding {
     func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)?)
 }
 

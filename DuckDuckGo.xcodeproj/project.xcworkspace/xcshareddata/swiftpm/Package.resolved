@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/validate-errors-before-throwing-them-to-the-os",
-        "revision" : "a853f3ac5450bd515c4974808c7d91949f0ee6f5"
+        "revision" : "45261df2963fc89094e169f9f2d0d9aa098093f3",
+        "version" : "203.0.0"
       }
     },
     {

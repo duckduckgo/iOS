@@ -125,8 +125,9 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     // MARK: - Enforce Routes
 
     private var enforceRoutes: Bool {
-        featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
-        && settings.enforceRoutes
+        //featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
+        //&& settings.enforceRoutes
+        settings.enforceRoutes
     }
 
     // MARK: - Initializers
@@ -354,8 +355,11 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // always-on
             protocolConfiguration.disconnectOnSleep = false
 
-            // kill switch (limited to internal users currently)
+            // Enforce routes
             protocolConfiguration.enforceRoutes = enforceRoutes
+
+            // We will control excluded networks through includedRoutes / excludedRoutes
+            protocolConfiguration.excludeLocalNetworks = false
 
             #if DEBUG
             if #available(iOS 17.4, *) {

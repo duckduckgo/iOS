@@ -39,7 +39,12 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
         self.settings.notifyStatusChanges
     }
 
-    @Published public var excludeLocalNetworks: Bool = true
+    @Published public var excludeLocalNetworks: Bool = true {
+        didSet {
+            settings.excludeLocalNetworks = excludeLocalNetworks
+        }
+    }
+
     @Published public var usesCustomDNS = false
     @Published public var dnsServers: String = UserText.vpnSettingDNSServerDefaultValue
 
@@ -75,10 +80,6 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
 
     func didToggleAlerts(to enabled: Bool) {
         settings.notifyStatusChanges = enabled
-    }
-
-    func toggleExcludeLocalNetworks() {
-        settings.excludeLocalNetworks.toggle()
     }
 
     private static func localizedString(forRegionCode: String) -> String {

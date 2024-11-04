@@ -198,7 +198,7 @@ struct OnboardingFinalDialog: View {
         ScrollView(.vertical, showsIndicators: false) {
             DaxDialogView(logoPosition: logoPosition) {
                 if showAddToDockTutorial {
-                    OnboardingAddToDockTutorialContent {
+                    OnboardingAddToDockTutorialContent(cta:  UserText.AddToDockOnboarding.Buttons.dismiss) {
                         dismissAction(true)
                     }
                 } else {
@@ -278,15 +278,17 @@ struct OnboardingCTAButton: View {
 struct OnboardingAddToDockTutorialContent: View {
     let title = UserText.AddToDockOnboarding.Tutorial.title
     let message = UserText.AddToDockOnboarding.Tutorial.message
-    let cta = UserText.AddToDockOnboarding.Buttons.dismiss
 
+    let cta: String
     let dismissAction: () -> Void
 
     var body: some View {
         AddToDockTutorialView(
             title: title,
             message: message,
-            action: dismissAction)
+            cta: cta,
+            action: dismissAction
+        )
     }
 }
 
@@ -356,11 +358,11 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("Add To Dock Tutorial - Light") {
-    OnboardingAddToDockTutorialContent(dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta:  UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
         .preferredColorScheme(.light)
 }
 
 #Preview("Add To Dock Tutorial - Dark") {
-    OnboardingAddToDockTutorialContent(dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta:  UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
         .preferredColorScheme(.dark)
 }

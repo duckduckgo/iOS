@@ -1068,7 +1068,7 @@
 "duckplayer.settings.open-new-tab-label" = "Open Duck Player in a new tab";
 
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Open Videos in Duck Player";
+"duckplayer.settings.open-videos-in" = "Open YouTube Videos in Duck Player";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";

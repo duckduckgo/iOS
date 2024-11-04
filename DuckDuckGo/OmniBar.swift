@@ -263,6 +263,7 @@ class OmniBar: UIView {
         
         let icon = PrivacyIconLogic.privacyIcon(for: url)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        customIconView.isHidden = true
     }
     
     public func updatePrivacyIcon(for privacyInfo: PrivacyInfo?) {
@@ -275,11 +276,11 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-
-        customIconView.isHidden = true
+        
         privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        customIconView.isHidden = true
     }
     
     // Support static custom icons, for things like internal pages, for example

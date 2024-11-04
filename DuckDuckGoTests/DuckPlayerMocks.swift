@@ -44,51 +44,118 @@ class MockWKNavigationDelegate: NSObject, WKNavigationDelegate {
 }
 
 class MockWebView: WKWebView {
-    var didStopLoadingCalled = false
-    var lastLoadedRequest: URLRequest?
-    var lastResponseHTML: String?
-    var goToCalledWith: WKBackForwardListItem?
-    var canGoBackMock = false
-    var currentURL: URL?
+
     
+    var lastLoadedRequest: URLRequest?
+    var loadedRequests: [URLRequest] = []
+    var loadCallCount = 0
+    
+    var loadCompletionHandler: (() -> Void)?
+
+    /// The current URL of the web view.
     private var _url: URL?
     override var url: URL? {
-        return currentURL
+        return _url
     }
-    
+
+    /// Sets the current URL of the web view.
     func setCurrentURL(_ url: URL) {
-        self.currentURL = url
+        self._url = url
     }
-    
+
+    /// A simulated history stack to support navigation methods like `goBack()`.
+    var historyStack: [URL] = []
+
+    /// Indicates whether the `stopLoading()` method was called.
+    var didStopLoadingCalled = false
+
+    // MARK: - Overridden Methods
+
+    override func load(_ request: URLRequest) -> WKNavigation? {
+        lastLoadedRequest = request
+        loadedRequests.append(request)
+        loadCallCount += 1
+
+        // Simulate asynchronous loading
+        DispatchQueue.main.async {
+            self.loadCompletionHandler?()
+        }
+
+        return nil
+    }
+
+    override func reload() -> WKNavigation? {
+        // Simulate reload behavior if needed
+        return nil
+    }
+
+    override func goBack() -> WKNavigation? {
+        if historyStack.count > 1 {
+            // Remove the current page
+            historyStack.removeLast()
+            // Set the URL to the previous page
+            setCurrentURL(historyStack.last!)
+        }
+        return nil
+    }
+
     override func stopLoading() {
         didStopLoadingCalled = true
     }
-    
-    override func load(_ request: URLRequest) -> WKNavigation? {
-        lastLoadedRequest = request
-        return nil
+
+    // MARK: - Additional Helper Methods (if needed)
+
+    /// Simulates navigating to a new URL.
+    func navigate(to url: URL) {
+        historyStack.append(url)
+        setCurrentURL(url)
     }
-    
-    override func reload() -> WKNavigation? {
-        return nil
+
+    /// Resets the web view's state.
+    func reset() {
+        lastLoadedRequest = nil
+        loadedRequests.removeAll()
+        loadCallCount = 0
+        didStopLoadingCalled = false
+        historyStack.removeAll()
+        _url = nil
+        loadCompletionHandler = nil
     }
 }
 
 class MockNavigationAction: WKNavigationAction {
     private let _request: URLRequest
     private let _navigationType: WKNavigationType
-    
-    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated ) {
+    private let _targetFrame: WKFrameInfo?
+
+    init(request: URLRequest, navigationType: WKNavigationType = .linkActivated, targetFrame: WKFrameInfo? = nil) {
         self._request = request
         self._navigationType = navigationType
+        self._targetFrame = targetFrame
     }
-    
+
     override var request: URLRequest {
         return _request
     }
-    
+
     override var navigationType: WKNavigationType {
         return _navigationType
+    }
+
+    override var targetFrame: WKFrameInfo? {
+        return _targetFrame
+    }
+}
+
+class MockFrameInfo: WKFrameInfo {
+    private let _isMainFrame: Bool
+
+    init(isMainFrame: Bool) {
+        self._isMainFrame = isMainFrame
+    }
+
+    override var isMainFrame: Bool {
+        return _isMainFrame
     }
 }
 
@@ -102,6 +169,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     var mode: DuckPlayerMode = .disabled
     var askModeOverlayHidden: Bool = false
     var allowFirstVideo: Bool = false
+    var openInNewTab: Bool = false
     
     init(appSettings: AppSettings = AppSettingsMock(), privacyConfigManager: any BrowserServicesKit.PrivacyConfigurationManaging) {}
     func triggerNotification() {}
@@ -116,7 +184,7 @@ final class MockDuckPlayerSettings: DuckPlayerSettings {
     
 }
 
-final class MockDuckPlayer: DuckPlayerProtocol {
+final class MockDuckPlayer: DuckPlayerControlling {
     
     func telemetryEvent(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
@@ -134,6 +202,7 @@ final class MockDuckPlayer: DuckPlayerProtocol {
     }
     
     func setHostViewController(_ vc: UIViewController) {}
+    func removeHostView() {}
     
     func initialSetupPlayer(params: Any, message: WKScriptMessage) async -> (any Encodable)? {
         nil
@@ -168,13 +237,35 @@ final class MockDuckPlayer: DuckPlayerProtocol {
     }
 }
 
+enum MockFeatureFlag: Hashable {
+    case duckPlayer, duckPlayerOpenInNewTab
+}
+
 final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
-    func isFeatureOn<F>(forProvider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
-        return true
+    var enabledFeatures: Set<MockFeatureFlag> = []
+
+    func isFeatureOn(_ feature: MockFeatureFlag) -> Bool {
+        return enabledFeatures.contains(feature)
     }
-    
+
+    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: FeatureFlagSourceProviding {
+        return !enabledFeatures.isEmpty
+    }
 }
 
 final class MockDuckPlayerStorage: DuckPlayerStorage {
     var userInteractedWithDuckPlayer: Bool = false
+}
+
+final class MockDuckPlayerTabNavigator: DuckPlayerTabNavigationHandling {
+    var openedURL: URL?
+    var closeTabCalled = false
+
+    func openTab(for url: URL) {
+        openedURL = url
+    }
+
+    func closeTab() {
+        closeTabCalled = true
+    }
 }

@@ -22,6 +22,7 @@ import UIKit
 public protocol AppActivationInconsistencyMonitoring {
     func didBecomeActive(isProtectedDataAvailable: Bool)
 }
+
 public protocol StatisticsStoreInconsistencyMonitoring {
     func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool)
 }

@@ -101,7 +101,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         // Then
         let finalDialog = find(OnboardingFinalDialog.self, in: host)
         XCTAssertNotNil(finalDialog)
-        finalDialog?.highFiveAction()
+        finalDialog?.dismissAction(false)
         XCTAssertTrue(onDismissedRun)
         wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(contextualOnboardingLogicMock.didCallsetFinalOnboardingDialogSeen)
@@ -157,7 +157,7 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         XCTAssertFalse(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)
 
         // WHEN
-        finalDialog.highFiveAction()
+        finalDialog.dismissAction(false)
 
         // THEN
         XCTAssertTrue(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)

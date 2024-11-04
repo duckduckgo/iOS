@@ -112,7 +112,7 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
-         serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+         serverInfoObserver: ConnectionServerInfoObserver,// ConnectionServerInfoObserverThroughSession(),
          privacyProInfoProvider: PrivacyProInfoProvider = AppDependencyProvider.shared.privacyProInfoProvider,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
@@ -282,7 +282,10 @@ extension VPNMetadata: UnifiedFeedbackMetadata {}
 
 extension DefaultVPNMetadataCollector: UnifiedMetadataCollector {
     convenience init() {
-        self.init(statusObserver: AppDependencyProvider.shared.connectionObserver)
+        self.init(
+            statusObserver: AppDependencyProvider.shared.connectionObserver,
+            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver
+        )
     }
 
     func collectMetadata() async -> VPNMetadata? {

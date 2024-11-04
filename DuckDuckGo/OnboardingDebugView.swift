@@ -22,6 +22,7 @@ import SwiftUI
 struct OnboardingDebugView: View {
 
     @StateObject private var viewModel = OnboardingDebugViewModel()
+    @State private var isShowingRestDaxDialogsAlert = false
 
     private let newOnboardingIntroStartAction: () -> Void
 
@@ -63,6 +64,18 @@ struct OnboardingDebugView: View {
             }
 
             Section {
+                Button(action: {
+                    viewModel.resetDaxDialogs()
+                    isShowingRestDaxDialogsAlert = true
+                }, label: {
+                    Text(verbatim: "Reset Dax Dialogs State")
+                })
+                .alert(isPresented: $isShowingRestDaxDialogsAlert, content: {
+                    Alert(title: Text(verbatim: "Dax Dialogs reset"), dismissButton: .cancel())
+                })
+            }
+
+            Section {
                 Button(action: newOnboardingIntroStartAction, label: {
                     let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
                     Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
@@ -86,13 +99,29 @@ final class OnboardingDebugViewModel: ObservableObject {
     }
 
     private let manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging
+    private var settings: DaxDialogsSettings
 
-    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager()) {
+    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager(), settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
         self.manager = manager
+        self.settings = settings
         isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
         onboardingAddToDockLocalFlagState = manager.addToDockLocalFlagState
     }
 
+    func resetDaxDialogs() {
+        settings.isDismissed = false
+        settings.homeScreenMessagesSeen = 0
+        settings.browsingAfterSearchShown = false
+        settings.browsingWithTrackersShown = false
+        settings.browsingWithoutTrackersShown = false
+        settings.browsingMajorTrackingSiteShown = false
+        settings.fireMessageExperimentShown = false
+        settings.fireButtonPulseDateShown = nil
+        settings.privacyButtonPulseShown = false
+        settings.browsingFinalDialogShown = false
+        settings.lastVisitedOnboardingWebsiteURLPath = nil
+        settings.lastShownContextualOnboardingDialogType = nil
+    }
 }
 
 #Preview {

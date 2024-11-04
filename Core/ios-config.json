@@ -5648,6 +5648,9 @@
                 },
                 "userTips": {
                     "state": "enabled"
+                },
+                "enforceRoutes": {
+                    "state": "enabled"
                 }
             },
             "exceptions": [],

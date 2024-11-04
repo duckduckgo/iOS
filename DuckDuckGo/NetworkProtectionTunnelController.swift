@@ -125,9 +125,19 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     // MARK: - Enforce Routes
 
     private var enforceRoutes: Bool {
-        //featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
-        //&& settings.enforceRoutes
-        settings.enforceRoutes
+        guard featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes) else {
+            return false
+        }
+
+        /// Even though there's a remote feature flag, we still want to allow internal users to disable enforceRoutes
+        /// manually in case they have trouble.  To achieve this we force the setting to ON once, but otherwise
+        /// allow the internal user to disable it again.
+        if !settings.enforceRoutesForceEnabledOnce {
+            settings.enforceRoutesForceEnabledOnce = true
+            settings.enforceRoutes = true
+        }
+
+        return settings.enforceRoutes
     }
 
     // MARK: - Initializers

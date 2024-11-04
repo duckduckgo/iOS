@@ -1105,7 +1105,7 @@ final class DaxDialog: XCTestCase {
     func testWhenIsShowingAddToDockDialogCalledAndHomeSpecIsFinalAndAddToDockIsEnabledThenReturnTrue() {
         // GIVEN
         let onboardingManagerMock = OnboardingManagerMock()
-        onboardingManagerMock.isAddToDockEnabled = true
+        onboardingManagerMock.addToDockEnabledState = .contextual
         settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
         _ = sut.nextHomeScreenMessageNew()
@@ -1120,7 +1120,7 @@ final class DaxDialog: XCTestCase {
     func testWhenIsShowingAddToDockDialogCalledAndHomeSpecIsNotFinalThenReturnFalse() {
         // GIVEN
         let onboardingManagerMock = OnboardingManagerMock()
-        onboardingManagerMock.isAddToDockEnabled = true
+        onboardingManagerMock.addToDockEnabledState = .contextual
         let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
         _ = sut.nextHomeScreenMessageNew()
 
@@ -1134,7 +1134,7 @@ final class DaxDialog: XCTestCase {
     func testWhenIsShowingAddToDockDialogCalledAndHomeSpeciIsFinalAndAddToDockIsNotEnabledReturnFalse() {
         // GIVEN
         let onboardingManagerMock = OnboardingManagerMock()
-        onboardingManagerMock.isAddToDockEnabled = false
+        onboardingManagerMock.addToDockEnabledState = .disabled
         settings.fireMessageExperimentShown = true
         let sut = makeExperimentSUT(settings: settings, onboardingManager: onboardingManagerMock)
         _ = sut.nextHomeScreenMessageNew()

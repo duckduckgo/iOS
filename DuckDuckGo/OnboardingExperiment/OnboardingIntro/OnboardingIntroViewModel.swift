@@ -52,7 +52,7 @@ final class OnboardingIntroViewModel: ObservableObject {
         self.appIconProvider = appIconProvider
         self.addressBarPositionProvider = addressBarPositionProvider
 
-        introSteps = if onboardingManager.isOnboardingHighlightsEnabled && onboardingManager.isAddToDockEnabled {
+        introSteps = if onboardingManager.isOnboardingHighlightsEnabled && onboardingManager.addToDockEnabledState == .intro {
             isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsAddToDockIphoneFlow
         } else if onboardingManager.isOnboardingHighlightsEnabled {
             isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
@@ -148,7 +148,7 @@ private extension OnboardingIntroViewModel {
     }
 
     func handleSetDefaultBrowserAction() {
-        if onboardingManager.isAddToDockEnabled && onboardingManager.isOnboardingHighlightsEnabled {
+        if onboardingManager.addToDockEnabledState == .intro && onboardingManager.isOnboardingHighlightsEnabled {
             state = makeViewState(for: .addToDockPromo)
         } else if onboardingManager.isOnboardingHighlightsEnabled {
             state = makeViewState(for: .appIconSelection)

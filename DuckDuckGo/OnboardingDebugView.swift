@@ -45,8 +45,13 @@ struct OnboardingDebugView: View {
             }
 
             Section {
-                Toggle(
-                    isOn: $viewModel.isOnboardingAddToDockLocalFlagEnabled,
+                Picker(
+                    selection: $viewModel.onboardingAddToDockLocalFlagState,
+                    content: {
+                        ForEach(OnboardingAddToDockState.allCases) { state in
+                            Text(verbatim: state.description).tag(state)
+                        }
+                    },
                     label: {
                         Text(verbatim: "Onboarding Add to Dock local setting enabled")
                     }
@@ -74,9 +79,9 @@ final class OnboardingDebugViewModel: ObservableObject {
         }
     }
 
-    @Published var isOnboardingAddToDockLocalFlagEnabled: Bool {
+    @Published var onboardingAddToDockLocalFlagState: OnboardingAddToDockState {
         didSet {
-            manager.isAddToDockLocalFlagEnabled = isOnboardingAddToDockLocalFlagEnabled
+            manager.addToDockLocalFlagState = onboardingAddToDockLocalFlagState
         }
     }
 
@@ -85,11 +90,17 @@ final class OnboardingDebugViewModel: ObservableObject {
     init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager()) {
         self.manager = manager
         isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
-        isOnboardingAddToDockLocalFlagEnabled = manager.isAddToDockLocalFlagEnabled
+        onboardingAddToDockLocalFlagState = manager.addToDockLocalFlagState
     }
 
 }
 
 #Preview {
     OnboardingDebugView(onNewOnboardingIntroStartAction: {})
+}
+
+extension OnboardingAddToDockState: Identifiable {
+    var id: OnboardingAddToDockState {
+        self
+    }
 }

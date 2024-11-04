@@ -283,7 +283,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
 
     var isShowingAddToDockDialog: Bool {
         guard isNewOnboarding else { return false }
-        return currentHomeSpec == .final && addToDockManager.isAddToDockEnabled
+        return currentHomeSpec == .final && addToDockManager.addToDockEnabledState == .contextual
     }
 
     var isEnabled: Bool {

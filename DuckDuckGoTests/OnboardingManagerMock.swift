@@ -22,5 +22,5 @@ import Foundation
 
 final class OnboardingManagerMock: OnboardingHighlightsManaging, OnboardingAddToDockManaging {
     var isOnboardingHighlightsEnabled: Bool = false
-    var isAddToDockEnabled: Bool = false
+    var addToDockEnabledState: OnboardingAddToDockState = .disabled
 }

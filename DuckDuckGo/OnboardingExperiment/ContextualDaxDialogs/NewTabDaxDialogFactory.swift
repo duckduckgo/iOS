@@ -99,7 +99,9 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        let (message, cta) = if onboardingManager.isAddToDockEnabled {
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
+
+        let (message, cta) = if shouldShowAddToDock {
             (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
         } else {
             (
@@ -109,7 +111,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         }
 
         return FadeInView {
-            OnboardingFinalDialog(logoPosition: .top, message: message, cta: cta, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled) { [weak self] isDismissedFromAddToDock in
+            OnboardingFinalDialog(logoPosition: .top, message: message, cta: cta, canShowAddToDockTutorial: shouldShowAddToDock) { [weak self] isDismissedFromAddToDock in
                 if isDismissedFromAddToDock {
                     Logger.onboarding.debug("Dismissed from add to dock")
                 } else {

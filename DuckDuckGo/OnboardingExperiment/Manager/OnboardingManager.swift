@@ -20,6 +20,23 @@
 import BrowserServicesKit
 import Core
 
+enum OnboardingAddToDockState: String, Equatable, CaseIterable, CustomStringConvertible {
+    case disabled
+    case intro
+    case contextual
+
+    var description: String {
+        switch self {
+        case .disabled:
+            "Disabled"
+        case .intro:
+            "Onboarding Intro"
+        case .contextual:
+            "Dax Dialogs"
+        }
+    }
+}
+
 final class OnboardingManager {
     private var appDefaults: AppDebugSettings
     private let featureFlagger: FeatureFlagger
@@ -75,27 +92,33 @@ extension OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsD
 // MARK: - Add to Dock
 
 protocol OnboardingAddToDockManaging: AnyObject {
-    var isAddToDockEnabled: Bool { get }
+    var addToDockEnabledState: OnboardingAddToDockState { get }
 }
 
 protocol OnboardingAddToDockDebugging: AnyObject {
-    var isAddToDockLocalFlagEnabled: Bool { get set }
+    var addToDockLocalFlagState: OnboardingAddToDockState { get set }
     var isAddToDockFeatureFlagEnabled: Bool { get }
 }
 
 extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDebugging {
 
-    var isAddToDockEnabled: Bool {
-        // TODO: Add variant condition once the experiment is setup
-        isIphone && isAddToDockLocalFlagEnabled && isAddToDockFeatureFlagEnabled
+    var addToDockEnabledState: OnboardingAddToDockState {
+        // TODO: Add variant condition OR local conditions
+        if isAddToDockFeatureFlagEnabled && isIphone && addToDockLocalFlagState == .contextual {
+            return .contextual
+        } else if isAddToDockFeatureFlagEnabled && isIphone && addToDockLocalFlagState == .intro {
+            return .intro
+        } else {
+            return .disabled
+        }
     }
 
-    var isAddToDockLocalFlagEnabled: Bool {
+    var addToDockLocalFlagState: OnboardingAddToDockState {
         get {
-            appDefaults.onboardingAddToDockEnabled
+            appDefaults.onboardingAddToDockState
         }
         set {
-            appDefaults.onboardingAddToDockEnabled = newValue
+            appDefaults.onboardingAddToDockState = newValue
         }
     }
 

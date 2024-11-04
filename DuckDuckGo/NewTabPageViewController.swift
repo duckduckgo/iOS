@@ -215,7 +215,10 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     }
 
     func dismiss() {
-
+        delegate = nil
+        chromeDelegate = nil
+        removeFromParent()
+        view.removeFromSuperview()
     }
 
     func showNextDaxDialog() {

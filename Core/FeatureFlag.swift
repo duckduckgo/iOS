@@ -42,8 +42,10 @@ public enum FeatureFlag: String {
     case syncPromotionBookmarks
     case syncPromotionPasswords
     case onboardingHighlights
+    case onboardingAddToDock
     case autofillSurveys
     case autcompleteTabs
+    case adAttributionReporting
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
@@ -97,6 +99,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
             return .internalOnly
+        case .onboardingAddToDock:
+            return .internalOnly
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
         case .autcompleteTabs:
@@ -105,6 +109,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
         case .networkProtectionEnforceRoutes:
             return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
+        case .adAttributionReporting:
+            return .remoteReleasable(.feature(.adAttributionReporting))
         }
     }
 }

@@ -202,7 +202,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         XCTAssertFalse(delegate.didCallDidTapDismissContextualOnboardingAction)
 
         // WHEN
-        view.highFiveAction()
+        view.dismissAction(false)
 
         // THEN
         XCTAssertTrue(delegate.didCallDidTapDismissContextualOnboardingAction)
@@ -330,7 +330,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         XCTAssertFalse(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)
 
         // WHEN
-        view.highFiveAction()
+        view.dismissAction(false)
 
         // THEN
         XCTAssertTrue(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)

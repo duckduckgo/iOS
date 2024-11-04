@@ -19,28 +19,37 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 final actor AdAttributionPixelReporter {
-
-    static let isAdAttributionReportingEnabled = false
-
+    
     static var shared = AdAttributionPixelReporter()
 
     private var fetcherStorage: AdAttributionReporterStorage
     private let attributionFetcher: AdAttributionFetcher
+    private let featureFlagger: FeatureFlagger
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let pixelFiring: PixelFiringAsync.Type
     private var isSendingAttribution: Bool = false
 
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          pixelFiring: PixelFiringAsync.Type = Pixel.self) {
         self.fetcherStorage = fetcherStorage
         self.attributionFetcher = attributionFetcher
         self.pixelFiring = pixelFiring
+        self.featureFlagger = featureFlagger
+        self.privacyConfigurationManager = privacyConfigurationManager
     }
 
     @discardableResult
     func reportAttributionIfNeeded() async -> Bool {
+        guard featureFlagger.isFeatureOn(.adAttributionReporting) else {
+            return false
+        }
+
         guard await fetcherStorage.wasAttributionReportSuccessful == false else {
             return false
         }
@@ -57,7 +66,8 @@ final actor AdAttributionPixelReporter {
 
         if let (token, attributionData) = await self.attributionFetcher.fetch() {
             if attributionData.attribution {
-                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: token)
+                let settings = AdAttributionReporterSettings(privacyConfigurationManager.privacyConfig)
+                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: settings.includeToken ? token : nil)
                 do {
                     try await pixelFiring.fire(
                         pixel: .appleAdAttribution,
@@ -77,7 +87,7 @@ final actor AdAttributionPixelReporter {
         return false
     }
 
-    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String) -> [String: String] {
+    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String?) -> [String: String] {
         var params: [String: String] = [:]
 
         params[PixelParameters.adAttributionAdGroupID] = attribution.adGroupId.map(String.init)
@@ -91,5 +101,19 @@ final actor AdAttributionPixelReporter {
         params[PixelParameters.adAttributionToken] = attributionToken
 
         return params
+    }
+}
+
+private struct AdAttributionReporterSettings {
+    var includeToken: Bool
+
+    init(_ configuration: PrivacyConfiguration) {
+        let featureSettings = configuration.settings(for: .adAttributionReporting)
+
+        self.includeToken = featureSettings[Key.includeToken] as? Bool ?? false
+    }
+
+    private enum Key {
+        static let includeToken = "includeToken"
     }
 }

@@ -88,7 +88,13 @@ import os.log
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
     private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
+    private var subscriptionCookieManager: SubscriptionCookieManaging!
+    private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
     var privacyProDataReporter: PrivacyProDataReporting!
+
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
     // MARK: lifecycle
 
@@ -309,6 +315,8 @@ import os.log
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
 
+        subscriptionCookieManager = makeSubscriptionCookieManager()
+
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
@@ -346,7 +354,8 @@ import os.log
                                           contextualOnboardingLogic: daxDialogs,
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
-                                          voiceSearchHelper: voiceSearchHelper)
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          subscriptionCookieManager: subscriptionCookieManager)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -394,7 +403,49 @@ import os.log
             didCrashDuringCrashHandlersSetUp = false
         }
 
+        tipKitAppEventsHandler.appDidFinishLaunching()
+
         return true
+    }
+
+    private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
+        let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+
+            return WKWebsiteDataStore.current().httpCookieStore
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+
+
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+
+        // Enable subscriptionCookieManager if feature flag is present
+        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
+            subscriptionCookieManager.enableSettingSubscriptionCookie()
+        }
+
+        // Keep track of feature flag changes
+        subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .sink { [weak self, weak privacyConfigurationManager] in
+                guard let self, let privacyConfigurationManager else { return }
+
+                let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
+
+                Task { [weak self] in
+                    if isEnabled {
+                        self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
+                        await self?.subscriptionCookieManager.refreshSubscriptionCookie()
+                    } else {
+                        await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
+                    }
+                }
+            }
+
+        return subscriptionCookieManager
     }
 
     private func makeHistoryManager() -> HistoryManaging {
@@ -489,8 +540,6 @@ import os.log
     }
 
     private func reportAdAttribution() {
-        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
-
         Task.detached(priority: .background) {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
@@ -566,6 +615,10 @@ import os.log
             if isSubscriptionActive {
                 DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
+        }
+
+        Task { @MainActor in
+            await subscriptionCookieManager.refreshSubscriptionCookie()
         }
 
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)

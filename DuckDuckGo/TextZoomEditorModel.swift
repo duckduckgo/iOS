@@ -67,7 +67,7 @@ class TextZoomEditorModel: ObservableObject {
         Pixel.fire(.zoomChangedOnPage, withAdditionalParameters: [
             PixelParameters.textSizeInitial: String(initialValue.rawValue),
             PixelParameters.textSizeUpdated: String(TextZoomLevel.allCases[value].rawValue),
-        ])        
+        ])
     }
 
 }

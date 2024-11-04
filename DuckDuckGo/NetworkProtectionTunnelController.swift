@@ -134,6 +134,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         /// allow the internal user to disable it again.
         if !settings.enforceRoutesForceEnabledOnce {
             settings.enforceRoutesForceEnabledOnce = true
+            settings.excludeLocalNetworks = true
             settings.enforceRoutes = true
         }
 

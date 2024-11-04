@@ -60,6 +60,17 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
+    func testDoesNotReportIfOnlyFileMarkerIsPresent() async throws {
+        let sut = createSUT()
+        fileMarker.mark()
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
+
+        let result = await sut.reportAttributionIfNeeded()
+
+        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertFalse(result)
+    }
+
     func testReportsOnce() async {
         let sut = createSUT()
         attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))

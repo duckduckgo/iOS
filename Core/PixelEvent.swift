@@ -460,6 +460,8 @@ extension Pixel {
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
         case networkProtectionConfigurationPixelTest
 
+        case networkProtectionMalformedErrorDetected
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -1262,6 +1264,8 @@ extension Pixel.Event {
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
         case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
+
+        case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
 
             // MARK: remote messaging pixels
             

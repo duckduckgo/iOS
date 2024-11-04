@@ -1,5 +1,5 @@
 //
-//  PageRefreshMonitor.swift
+//  PageRefreshStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -19,7 +19,6 @@
 
 import Foundation
 import Core
-import Common
 import PageRefreshMonitor
 
 final class PageRefreshStore: PageRefreshStoring {
@@ -32,18 +31,5 @@ final class PageRefreshStore: PageRefreshStoring {
 
     @UserDefaultsWrapper(key: .didRefreshCounter, defaultValue: 0)
     var didRefreshCounter: Int
-
-}
-
-final class AppPageRefreshMonitor {
-
-    static let eventMapping = EventMapping<PageRefreshPattern> { event, _, _, _ in
-        let domainEvent: Pixel.Event
-        switch event {
-        case .twiceWithin12Seconds: domainEvent = .pageRefreshTwiceWithin12Seconds
-        case .threeTimesWithin20Seconds: domainEvent = .pageRefreshThreeTimesWithin20Seconds
-        }
-        Pixel.fire(pixel: domainEvent)
-    }
 
 }

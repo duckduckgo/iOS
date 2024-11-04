@@ -25,13 +25,9 @@ import Core
 
 final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
-    private let syncService: DDGSyncing
-    private let syncBookmarksAdapter: SyncBookmarksAdapter
     private let variantManager: VariantManager
     private let newTabDialogFactory: any NewTabDaxDialogProvider
     private let newTabDialogTypeProvider: NewTabDialogSpecProvider
-
-    private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
     private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
@@ -53,8 +49,6 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     init(tab: Tab,
          isNewTabPageCustomizationEnabled: Bool,
          interactionModel: FavoritesListInteracting,
-         syncService: DDGSyncing,
-         syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil,
          variantManager: VariantManager,
@@ -63,8 +57,6 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
          faviconLoader: FavoritesFaviconLoading) {
 
         self.associatedTab = tab
-        self.syncService = syncService
-        self.syncBookmarksAdapter = syncBookmarksAdapter
         self.variantManager = variantManager
         self.newTabDialogFactory = newTabDialogFactory
         self.newTabDialogTypeProvider = newTabDialogTypeProvider
@@ -145,7 +137,8 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     private func assignFavoriteModelActions() {
         favoritesModel.onFaviconMissing = { [weak self] in
             guard let self else { return }
-            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+
+            delegate?.newTabPageDidRequestFaviconsFetcherOnboarding(self)
         }
 
         favoritesModel.onFavoriteURLSelected = { [weak self] url in

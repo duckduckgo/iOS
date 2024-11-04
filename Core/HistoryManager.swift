@@ -145,6 +145,10 @@ class NullHistoryCoordinator: HistoryCoordinating {
         completion()
     }
 
+    func removeUrlEntry(_ url: URL, completion: (((any Error)?) -> Void)?) {
+        completion?(nil)
+    }
+
 }
 
 public class HistoryDatabase {

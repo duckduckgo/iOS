@@ -46,6 +46,7 @@ public enum FeatureFlag: String {
     case autofillSurveys
     case autcompleteTabs
     case textZoom
+    case adAttributionReporting
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
@@ -106,6 +107,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
         case .textZoom:
             return .remoteReleasable(.feature(.textZoom))
+        case .adAttributionReporting:
+            return .remoteReleasable(.feature(.adAttributionReporting))
         }
     }
 }

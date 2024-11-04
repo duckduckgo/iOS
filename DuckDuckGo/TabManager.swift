@@ -37,7 +37,7 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-    private var duckPlayer: DuckPlayerProtocol
+    private var duckPlayer: DuckPlayerControlling
     private var privacyProDataReporter: PrivacyProDataReporting
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic

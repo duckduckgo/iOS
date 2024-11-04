@@ -99,21 +99,22 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        // TODO: Update views
-        if onboardingManager.isAddToDockEnabled {
-            Logger.onboarding.debug("Present Final Dialog with Add To Dock updates")
+        let message = if onboardingManager.isAddToDockEnabled {
+            UserText.AddToDockOnboarding.EndOfJourney.message
         } else {
-            Logger.onboarding.debug("Present Final Dialog without Add To Dock updates")
+            onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
         }
 
-        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
-
         return FadeInView {
-            OnboardingFinalDialog(message: message, highFiveAction: { [weak self] in
-                self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            OnboardingFinalDialog(logoPosition: .top, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled) { [weak self] isDismissedFromAddToDock in
+                if isDismissedFromAddToDock {
+                    Logger.onboarding.debug("Dismissed from add to dock")
+                } else {
+                    Logger.onboarding.debug("Dismissed from end of Journey")
+                    self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                }
                 onDismiss()
-            })
-            .onboardingDaxDialogStyle()
+            }
         }
         .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in

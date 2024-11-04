@@ -87,18 +87,38 @@ class BarsAnimator {
     }
 
     private func transitioningAndScrolling(in scrollView: UIScrollView) {
-        let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
+        
+        // On iOS 18 we end up in a loop after setBarsVisibility.
+        // It seems to trigger a new didScrollEvent when rendering some PDF files
+        // That causes an infinite loop.
+        // Are viewDidScroll calls happening more often for PDF's on iOS 18?
+        // Adding a debouncer while we investigate further
+        // https://app.asana.com/0/1204099484721401/1208671955053442/f
+        let debounceDelay: TimeInterval = 0.01
+        struct Debounce {
+            static var workItem: DispatchWorkItem?
+        }
+        Debounce.workItem?.cancel()
 
-        if ratio == 1.0 {
-            barsState = .hidden
-        } else if ratio == 0 {
-            barsState = .revealed
-        } else if transitionProgress == ratio {
-            return
+        Debounce.workItem = DispatchWorkItem { [weak self] in
+            guard let self = self else { return }
+
+            let ratio = self.calculateTransitionRatio(for: scrollView.contentOffset.y)
+
+            if ratio == 1.0 {
+                self.barsState = .hidden
+            } else if ratio == 0 {
+                self.barsState = .revealed
+            } else if self.transitionProgress == ratio {
+                return
+            }
+
+            self.delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+            self.transitionProgress = ratio
         }
 
-        delegate?.setBarsVisibility(1.0 - ratio, animated: false)
-        transitionProgress = ratio
+        // Schedule the work item
+        DispatchQueue.main.asyncAfter(deadline: .now() + debounceDelay, execute: Debounce.workItem!)
     }
 
     private func hiddenAndScrolling(in scrollView: UIScrollView) {

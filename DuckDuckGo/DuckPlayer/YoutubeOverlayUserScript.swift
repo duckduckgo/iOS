@@ -28,7 +28,7 @@ import DuckPlayer
 
 final class YoutubeOverlayUserScript: NSObject, Subfeature {
         
-    var duckPlayer: DuckPlayerProtocol
+    var duckPlayer: DuckPlayerControlling
     private var cancellables = Set<AnyCancellable>()
     var statisticsStore: StatisticsStore
     private var duckPlayerStorage: DuckPlayerStorage
@@ -36,7 +36,7 @@ final class YoutubeOverlayUserScript: NSObject, Subfeature {
         static let featureName = "duckPlayer"
     }
     
-    init(duckPlayer: DuckPlayerProtocol,
+    init(duckPlayer: DuckPlayerControlling,
          statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          duckPlayerStorage: DuckPlayerStorage = DefaultDuckPlayerStorage()) {
         self.duckPlayer = duckPlayer

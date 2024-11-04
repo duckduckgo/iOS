@@ -28,7 +28,7 @@ struct SettingsAccessibilityView: View {
 
     var body: some View {
         List {
-            Section {
+            Section(footer: Text(UserText.textSizeDescription)) {
                 // Text Size
                 if viewModel.state.textSize.enabled {
                     SettingsPickerCellView(label: UserText.settingsText,

@@ -330,7 +330,7 @@ public struct UserText {
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
     public static let voiceSearchFooterOld = NSLocalizedString("voiceSearch.footer.note.old", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
-    public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.", comment: "Description text for the text size adjustment setting")
+    public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Automatically apply this zoom level across all websites.", comment: "Description text for the text size adjustment setting")
     public static func textSizeFooter(for percentage: String) -> String {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
         return message.format(arguments: percentage)

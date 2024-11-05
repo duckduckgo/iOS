@@ -1962,6 +1962,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onAbortPressed() {
+        Pixel.fire(pixel: .stopPageLoad)
         stopLoading()
     }
 

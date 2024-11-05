@@ -835,6 +835,14 @@ extension Pixel {
 
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
+        
+        // MARK: - DuckPlayer Overlay Navigation
+        case duckPlayerYouTubeOverlayNavigationBack
+        case duckPlayerYouTubeOverlayNavigationRefresh
+        case duckPlayerYouTubeNavigationWithinYouTube
+        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
+        case duckPlayerYouTubeOverlayNavigationClosed
+        case duckPlayerYouTubeNavigationIdle30
     }
 
 }
@@ -1666,6 +1674,16 @@ extension Pixel.Event {
 
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
+                        
+        // MARK: - DuckPlayer Overlay Navigation
+        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
+        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
+        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
+        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
+        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
+        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+            
+            
         }
     }
 }

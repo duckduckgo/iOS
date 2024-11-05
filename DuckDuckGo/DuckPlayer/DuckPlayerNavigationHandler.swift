@@ -32,6 +32,9 @@ final class DuckPlayerNavigationHandler: NSObject {
     /// The DuckPlayer instance used for handling video playback.
     var duckPlayer: DuckPlayerControlling
     
+    /// The DuckPlayerOverlayPixelFiring instance used for handling overlay pixel firing.
+    var duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring?
+    
     /// Indicates where the DuckPlayer was referred from (e.g., YouTube, SERP).
     var referrer: DuckPlayerReferrer = .other
     
@@ -113,13 +116,15 @@ final class DuckPlayerNavigationHandler: NSObject {
          appSettings: AppSettings,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self,
-         tabNavigationHandler: DuckPlayerTabNavigationHandling? = nil) {
+         tabNavigationHandler: DuckPlayerTabNavigationHandling? = nil,
+         duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? = nil) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
         self.pixelFiring = pixelFiring
         self.dailyPixelFiring = dailyPixelFiring
         self.tabNavigationHandler = tabNavigationHandler
+        self.duckPlayerOverlayUsagePixels = duckPlayerOverlayUsagePixels
     }
     
     /// Returns the file path for the Duck Player HTML template.
@@ -657,6 +662,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     /// - Returns: A result indicating whether the URL change was handled.
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
+        
+        // Track overlayUsagePixels
+        duckPlayerOverlayUsagePixels?.registerNavigation(url: webView.url)
         
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick URL changes

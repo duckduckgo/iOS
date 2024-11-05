@@ -128,6 +128,7 @@ class MainViewController: UIViewController {
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
+    private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -795,8 +796,6 @@ class MainViewController: UIViewController {
         let controller = NewTabPageViewController(tab: tabModel,
                                                   isNewTabPageCustomizationEnabled: homeTabManager.isNewTabPageSectionsEnabled,
                                                   interactionModel: favoritesViewModel,
-                                                  syncService: syncService,
-                                                  syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                   homePageMessagesConfiguration: homePageConfiguration,
                                                   privacyProDataReporting: privacyProDataReporter,
                                                   variantManager: variantManager,
@@ -2171,6 +2170,10 @@ extension MainViewController: NewTabPageControllerDelegate {
 
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
+    }
+
+    func newTabPageDidRequestFaviconsFetcherOnboarding(_ controller: NewTabPageViewController) {
+        faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
     }
 }
 

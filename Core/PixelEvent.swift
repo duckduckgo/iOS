@@ -624,6 +624,7 @@ extension Pixel {
         case syncRemoveDeviceError
         case syncDeleteAccountError
         case syncLoginExistingAccountError
+        case syncSecureStorageReadError
 
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
@@ -1432,6 +1433,7 @@ extension Pixel.Event {
         case .syncRemoveDeviceError: return "m_d_sync_remove_device_error"
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
+        case .syncSecureStorageReadError: return "m_d_sync_secure_storage_error"
 
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"

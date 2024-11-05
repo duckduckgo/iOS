@@ -194,9 +194,15 @@ struct SaveLoginView: View {
         VStack(spacing: Const.Size.ctaVerticalSpacing) {
             AutofillViews.PrimaryButton(title: confirmButton,
                                         action: viewModel.save)
+            switch layoutType {
+            case .newUser:
+                AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNoThanksCTA,
+                                             action: viewModel.cancelButtonPressed)
+            default:
+                AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNeverPromptCTA,
+                                             action: viewModel.neverPrompt)
+            }
 
-            AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNeverPromptCTA,
-                                         action: viewModel.neverPrompt)
         }
     }
 

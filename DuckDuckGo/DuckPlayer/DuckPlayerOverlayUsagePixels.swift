@@ -34,7 +34,7 @@ protocol DuckPlayerOverlayPixelFiring {
     
 }
 
-class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
+final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
 
     var pixelFiring: PixelFiring.Type
     var navigationHistory: [URL] = []

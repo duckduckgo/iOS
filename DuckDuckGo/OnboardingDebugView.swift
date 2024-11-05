@@ -22,7 +22,7 @@ import SwiftUI
 struct OnboardingDebugView: View {
 
     @StateObject private var viewModel = OnboardingDebugViewModel()
-    @State private var isShowingRestDaxDialogsAlert = false
+    @State private var isShowingResetDaxDialogsAlert = false
 
     private let newOnboardingIntroStartAction: () -> Void
 
@@ -66,11 +66,11 @@ struct OnboardingDebugView: View {
             Section {
                 Button(action: {
                     viewModel.resetDaxDialogs()
-                    isShowingRestDaxDialogsAlert = true
+                    isShowingResetDaxDialogsAlert = true
                 }, label: {
                     Text(verbatim: "Reset Dax Dialogs State")
                 })
-                .alert(isPresented: $isShowingRestDaxDialogsAlert, content: {
+                .alert(isPresented: $isShowingResetDaxDialogsAlert, content: {
                     Alert(title: Text(verbatim: "Dax Dialogs reset"), dismissButton: .cancel())
                 })
             }

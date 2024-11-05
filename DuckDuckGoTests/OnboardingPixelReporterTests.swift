@@ -401,4 +401,74 @@ final class OnboardingPixelReporterTests: XCTestCase {
         XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion])
     }
 
+    // MARK: Add To Dock Experiment
+
+    func testWhenTrackAddToDockPromoImpressionsIsCalledThenOnboardingAddToDockPromoImpressionsPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingAddToDockPromoImpressionsUnique
+        XCTAssertFalse(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingUniquePixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackAddToDockPromoImpression()
+
+        // THEN
+        XCTAssertTrue(OnboardingUniquePixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingUniquePixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackAddToDockPromoShowTutorialCTAActionIsCalledThenOnboardingAddToDockPromoShowTutorialCTAPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingAddToDockPromoShowTutorialCTATapped
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackAddToDockPromoShowTutorialCTAAction()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackAddToDockPromoDismissCTAActionThenOnboardingAddToDockPromoDismissCTAPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingAddToDockPromoDismissCTATapped
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackAddToDockPromoDismissCTAAction()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
+    func testWhenTrackAddToDockTutorialDismissCTAActionIsCalledThenonboardingAddToDockTutorialDismissCTAPixelFires() {
+        // GIVEN
+        let expectedPixel = Pixel.Event.onboardingAddToDockTutorialDismissCTATapped
+        XCTAssertFalse(OnboardingPixelFireMock.didCallFire)
+        XCTAssertNil(OnboardingPixelFireMock.capturedPixelEvent)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [])
+
+        // WHEN
+        sut.trackAddToDockTutorialDismissCTAAction()
+
+        // THEN
+        XCTAssertTrue(OnboardingPixelFireMock.didCallFire)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedPixelEvent, expectedPixel)
+        XCTAssertEqual(expectedPixel.name, expectedPixel.name)
+        XCTAssertEqual(OnboardingPixelFireMock.capturedIncludeParameters, [.appVersion, .atb])
+    }
+
 }

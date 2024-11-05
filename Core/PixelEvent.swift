@@ -1729,6 +1729,7 @@ extension Pixel.Event {
         
         case tabClosed = "tab_closed"
         case appQuit = "app_quit"
+        case appBackgrounded = "app_backgrounded"
         case success
         
     }

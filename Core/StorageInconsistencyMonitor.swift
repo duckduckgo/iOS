@@ -20,21 +20,27 @@
 import UIKit
 
 public protocol AppActivationInconsistencyMonitoring {
+    /// See `StorageInconsistencyMonitor` for details
     func didBecomeActive(isProtectedDataAvailable: Bool)
 }
 
 public protocol StatisticsStoreInconsistencyMonitoring {
+    /// See `StorageInconsistencyMonitor` for details
     func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool)
 }
 
 public protocol AdAttributionReporterInconsistencyMonitoring {
+    /// See `StorageInconsistencyMonitor` for details
     func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool)
 }
 
+/// Takes care of reporting inconsistency in storage availability and/or state.
+/// See https://app.asana.com/0/481882893211075/1208618515043198/f for details.
 public struct StorageInconsistencyMonitor: AppActivationInconsistencyMonitoring & StatisticsStoreInconsistencyMonitoring & AdAttributionReporterInconsistencyMonitoring {
 
     public init() { }
 
+    /// Reports a pixel if data is not available while app is active
     public func didBecomeActive(isProtectedDataAvailable: Bool) {
         if !isProtectedDataAvailable {
             Pixel.fire(pixel: .protectedDataUnavailableWhenBecomeActive)
@@ -42,6 +48,7 @@ public struct StorageInconsistencyMonitor: AppActivationInconsistencyMonitoring 
         }
     }
 
+    /// Reports a pixel if file marker exists but installStatistics are missing
     public func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
         if hasFileMarker == true && hasInstallStatistics == false {
             Pixel.fire(pixel: .statisticsLoaderATBStateMismatch)
@@ -49,6 +56,7 @@ public struct StorageInconsistencyMonitor: AppActivationInconsistencyMonitoring 
         }
     }
 
+    /// Reports a pixel if file marker exists but completion flag is false
     public func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
         if hasFileMarker == true && hasCompletedFlag == false {
             Pixel.fire(pixel: .adAttributionReportStateMismatch)

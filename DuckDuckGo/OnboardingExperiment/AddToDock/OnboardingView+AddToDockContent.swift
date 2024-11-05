@@ -32,12 +32,6 @@ extension OnboardingView {
 
         @State private var showAddToDockTutorial = false
 
-        private let title = "Want to add me to your Dock?"
-        private let message = "I can paddle into the Dock and perch there until you need me."
-        private let nextCTA = "Skip"
-        private let tutotialShowCTA = UserText.AddToDockOnboarding.Buttons.addToDockTutorial
-        private let tutorialDismissCTA = "Got It"
-
         private var animateTitle: Binding<Bool>
         private var animateMessage: Binding<Bool>
         private var showContent: Binding<Bool>
@@ -57,14 +51,14 @@ extension OnboardingView {
 
         var body: some View {
             if showAddToDockTutorial {
-                OnboardingAddToDockTutorialContent(cta: tutorialDismissCTA) {
+                OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Intro.tutorialDismissCTA) {
                     dismissAction(true)
                 }
             } else {
                 ContextualDaxDialogContent(
-                    title: title,
+                    title: UserText.AddToDockOnboarding.Intro.title,
                     titleFont: Font(UIFont.daxTitle3()),
-                    message: NSAttributedString(string: message),
+                    message: NSAttributedString(string: UserText.AddToDockOnboarding.Intro.message),
                     messageFont: Font.system(size: 16),
                     customView: AnyView(addToDockPromoView),
                     customActionView: AnyView(customActionView)
@@ -81,14 +75,14 @@ extension OnboardingView {
         private var customActionView: some View {
             VStack {
                 OnboardingCTAButton(
-                    title: tutotialShowCTA,
+                    title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
                     action: {
                         showAddToDockTutorial = true
                     }
                 )
 
                 OnboardingCTAButton(
-                    title: nextCTA,
+                    title: UserText.AddToDockOnboarding.Intro.skipCTA,
                     buttonStyle: .ghost,
                     action: {
                         dismissAction(false)

@@ -1427,5 +1427,12 @@ But if you *do* want a peek under the hood, you can find more information about 
             static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
             static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
         }
+
+        public enum Intro {
+            static let title = NSLocalizedString("onboarding.addToDock.title", value: "Want to add me to your Dock?", comment: "The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("onboarding.addToDock.message", value: "I can paddle into the Dock and perch there until you need me.", comment: "The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
+            static let skipCTA = NSLocalizedString("onboarding.addToDock.cta", value: "Skip", comment: "The title of the dialog button CTA to skip adding the DDB browser icon to the dock.")
+            static let tutorialDismissCTA =  NSLocalizedString("onboarding.addToDock.tutorial.cta", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step.")
+        }
     }
 }

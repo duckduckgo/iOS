@@ -34,8 +34,8 @@ class AtbServerTests: XCTestCase {
         super.setUp()
 
         store = MockStatisticsStore()
-        loader = StatisticsLoader(statisticsStore: store)
-        
+        loader = StatisticsLoader(statisticsStore: store, inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring())
+
     }
      
     func testExtiCall() {
@@ -129,4 +129,10 @@ class MockStatisticsStore: StatisticsStore {
     var searchRetentionAtb: String?
 
     var variant: String?
+}
+
+private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring {
+    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
+
+    }
 }

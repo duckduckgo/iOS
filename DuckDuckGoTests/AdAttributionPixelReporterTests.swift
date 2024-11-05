@@ -29,6 +29,8 @@ final class AdAttributionPixelReporterTests: XCTestCase {
     private var featureFlagger: MockFeatureFlagger!
     private var privacyConfigurationManager: PrivacyConfigurationManagerMock!
 
+    private let fileMarker = BoolFileMarker(name: .init(rawValue: "ad-attribution-successful"))!
+
     override func setUpWithError() throws {
         attributionFetcher = AdAttributionFetcherMock()
         fetcherStorage = AdAttributionReporterStorageMock()
@@ -36,6 +38,7 @@ final class AdAttributionPixelReporterTests: XCTestCase {
         privacyConfigurationManager = PrivacyConfigurationManagerMock()
 
         featureFlagger.enabledFeatureFlags.append(.adAttributionReporting)
+        fileMarker.unmark()
     }
 
     override func tearDownWithError() throws {
@@ -55,6 +58,17 @@ final class AdAttributionPixelReporterTests: XCTestCase {
 
         XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.appleAdAttribution.name)
         XCTAssertTrue(result)
+    }
+
+    func testDoesNotReportIfOnlyFileMarkerIsPresent() async throws {
+        let sut = createSUT()
+        fileMarker.mark()
+        attributionFetcher.fetchResponse = ("example", AdServicesAttributionResponse(attribution: true))
+
+        let result = await sut.reportAttributionIfNeeded()
+
+        XCTAssertNil(PixelFiringMock.lastPixelName)
+        XCTAssertFalse(result)
     }
 
     func testReportsOnce() async {
@@ -211,7 +225,8 @@ final class AdAttributionPixelReporterTests: XCTestCase {
                                    attributionFetcher: attributionFetcher,
                                    featureFlagger: featureFlagger,
                                    privacyConfigurationManager: privacyConfigurationManager,
-                                   pixelFiring: PixelFiringMock.self)
+                                   pixelFiring: PixelFiringMock.self,
+                                   inconsistencyMonitoring: MockAdAttributionReporterInconsistencyMonitoring())
     }
 }
 
@@ -230,6 +245,12 @@ class AdAttributionFetcherMock: AdAttributionFetcher {
     func fetch() async -> (String, AdServicesAttributionResponse)? {
         wasFetchCalled = true
         return fetchResponse
+    }
+}
+
+struct MockAdAttributionReporterInconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring {
+    func addAttributionReporter(hasFileMarker: Bool, hasCompletedFlag: Bool) {
+
     }
 }
 

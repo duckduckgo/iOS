@@ -81,15 +81,15 @@ final class NewTabPageSettingsModel<SettingItem: NewTabPageSettingsStorageItem, 
     private func populateSettings() {
         let allItemsOrder = settingsStorage.itemsOrder
         filteredItemsOrder = allItemsOrder.filter(visibilityFilter)
-
+        
         itemsSettings = filteredItemsOrder.compactMap { item in
             return NTPSetting(item: item,
-                       isEnabled: Binding(get: {
-                self.settingsStorage.isEnabled(item)
-            }, set: { newValue in
-                self.onItemEnabled?(item, newValue)
-                self.settingsStorage.setItem(item, enabled: newValue)
-                self.updatePublishedValues()
+                              isEnabled: Binding(get: { [weak self] in
+                self?.settingsStorage.isEnabled(item) ?? false
+            }, set: { [weak self] newValue in
+                self?.onItemEnabled?(item, newValue)
+                self?.settingsStorage.setItem(item, enabled: newValue)
+                self?.updatePublishedValues()
             }))
         }
 

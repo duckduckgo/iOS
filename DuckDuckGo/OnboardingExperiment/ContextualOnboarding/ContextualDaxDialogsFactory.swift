@@ -182,18 +182,25 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        // TODO: Update views
-        if onboardingManager.isAddToDockEnabled {
-            Logger.onboarding.debug("Present Contextual Final Dialog with Add To Dock updates")
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
+
+        let (message, cta) = if shouldShowAddToDock {
+            (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
         } else {
-            Logger.onboarding.debug("Present Contextual Final Dialog without Add To Dock updates")
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
         }
 
-        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
-
-        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in
+        return OnboardingFinalDialog(logoPosition: .left, message: message, cta: cta, canShowAddToDockTutorial: shouldShowAddToDock, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
             delegate?.didTapDismissContextualOnboardingAction()
-            self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            if isDismissedFromAddToDock {
+                Logger.onboarding.debug("Dismissed from add to dock")
+            } else {
+                Logger.onboarding.debug("Dismissed from end of Journey")
+                self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            }
         })
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

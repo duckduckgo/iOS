@@ -99,21 +99,27 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        // TODO: Update views
-        if onboardingManager.isAddToDockEnabled {
-            Logger.onboarding.debug("Present Final Dialog with Add To Dock updates")
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
+
+        let (message, cta) = if shouldShowAddToDock {
+            (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
         } else {
-            Logger.onboarding.debug("Present Final Dialog without Add To Dock updates")
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ?  UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
         }
 
-        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
-
         return FadeInView {
-            OnboardingFinalDialog(message: message, highFiveAction: { [weak self] in
-                self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            OnboardingFinalDialog(logoPosition: .top, message: message, cta: cta, canShowAddToDockTutorial: shouldShowAddToDock) { [weak self] isDismissedFromAddToDock in
+                if isDismissedFromAddToDock {
+                    Logger.onboarding.debug("Dismissed from add to dock")
+                } else {
+                    Logger.onboarding.debug("Dismissed from end of Journey")
+                    self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                }
                 onDismiss()
-            })
-            .onboardingDaxDialogStyle()
+            }
         }
         .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in

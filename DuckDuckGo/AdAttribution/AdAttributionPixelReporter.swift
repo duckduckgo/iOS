@@ -19,29 +19,56 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 final actor AdAttributionPixelReporter {
-
-    static let isAdAttributionReportingEnabled = false
-
+    
     static var shared = AdAttributionPixelReporter()
 
     private var fetcherStorage: AdAttributionReporterStorage
     private let attributionFetcher: AdAttributionFetcher
+    private let featureFlagger: FeatureFlagger
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let pixelFiring: PixelFiringAsync.Type
     private var isSendingAttribution: Bool = false
 
+    private let inconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring
+    private let attributionReportSuccessfulFileMarker = BoolFileMarker(name: .isAttrbutionReportSuccessful)
+
+    private var shouldReport: Bool {
+        get async {
+            if let attributionReportSuccessfulFileMarker {
+                // If marker is present then report only if data consistent
+                return await !fetcherStorage.wasAttributionReportSuccessful && !attributionReportSuccessfulFileMarker.isPresent
+            } else {
+                return await fetcherStorage.wasAttributionReportSuccessful
+            }
+        }
+    }
+
     init(fetcherStorage: AdAttributionReporterStorage = UserDefaultsAdAttributionReporterStorage(),
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
-         pixelFiring: PixelFiringAsync.Type = Pixel.self) {
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         pixelFiring: PixelFiringAsync.Type = Pixel.self,
+         inconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring = StorageInconsistencyMonitor()) {
         self.fetcherStorage = fetcherStorage
         self.attributionFetcher = attributionFetcher
+        self.featureFlagger = featureFlagger
+        self.privacyConfigurationManager = privacyConfigurationManager
         self.pixelFiring = pixelFiring
+        self.inconsistencyMonitoring = inconsistencyMonitoring
     }
 
     @discardableResult
     func reportAttributionIfNeeded() async -> Bool {
-        guard await fetcherStorage.wasAttributionReportSuccessful == false else {
+        guard featureFlagger.isFeatureOn(.adAttributionReporting) else {
+            return false
+        }
+
+        await checkStorageConsistency()
+
+        guard await shouldReport else {
             return false
         }
 
@@ -57,7 +84,8 @@ final actor AdAttributionPixelReporter {
 
         if let (token, attributionData) = await self.attributionFetcher.fetch() {
             if attributionData.attribution {
-                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: token)
+                let settings = AdAttributionReporterSettings(privacyConfigurationManager.privacyConfig)
+                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: settings.includeToken ? token : nil)
                 do {
                     try await pixelFiring.fire(
                         pixel: .appleAdAttribution,
@@ -69,7 +97,7 @@ final actor AdAttributionPixelReporter {
                 }
             }
 
-            await fetcherStorage.markAttributionReportSuccessful()
+            await markAttributionReportSuccessful()
 
             return true
         }
@@ -77,7 +105,29 @@ final actor AdAttributionPixelReporter {
         return false
     }
 
-    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String) -> [String: String] {
+    private func markAttributionReportSuccessful() async {
+        await fetcherStorage.markAttributionReportSuccessful()
+        attributionReportSuccessfulFileMarker?.mark()
+    }
+
+    private func checkStorageConsistency() async {
+
+        guard let attributionReportSuccessfulFileMarker else { return }
+
+        let wasAttributionReportSuccessful = await fetcherStorage.wasAttributionReportSuccessful
+
+        inconsistencyMonitoring.addAttributionReporter(
+            hasFileMarker: attributionReportSuccessfulFileMarker.isPresent,
+            hasCompletedFlag: wasAttributionReportSuccessful
+        )
+
+        // Synchronize file marker with current state (in case we have updated from previous version)
+        if wasAttributionReportSuccessful && !attributionReportSuccessfulFileMarker.isPresent {
+            attributionReportSuccessfulFileMarker.mark()
+        }
+    }
+
+    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String?) -> [String: String] {
         var params: [String: String] = [:]
 
         params[PixelParameters.adAttributionAdGroupID] = attribution.adGroupId.map(String.init)
@@ -91,5 +141,23 @@ final actor AdAttributionPixelReporter {
         params[PixelParameters.adAttributionToken] = attributionToken
 
         return params
+    }
+}
+
+private extension BoolFileMarker.Name {
+    static let isAttrbutionReportSuccessful = BoolFileMarker.Name(rawValue: "ad-attribution-successful")
+}
+
+private struct AdAttributionReporterSettings {
+    var includeToken: Bool
+
+    init(_ configuration: PrivacyConfiguration) {
+        let featureSettings = configuration.settings(for: .adAttributionReporting)
+
+        self.includeToken = featureSettings[Key.includeToken] as? Bool ?? false
+    }
+
+    private enum Key {
+        static let includeToken = "includeToken"
     }
 }

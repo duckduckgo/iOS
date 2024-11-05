@@ -10,6 +10,7 @@
 	<array>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 		<string>com.duckduckgo.app.remoteMessageRefresh</string>
+		<string>com.duckduckgo.app.backgroundTokenRefresh</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

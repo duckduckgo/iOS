@@ -91,6 +91,7 @@ import os.log
     private var subscriptionCookieManager: SubscriptionCookieManaging!
     private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
     var privacyProDataReporter: PrivacyProDataReporting!
+    private var tokenBackgroundRefreshTask: TokenBackgroundRefreshTask?
 
     // MARK: - Feature specific app event handlers
 
@@ -373,6 +374,9 @@ import os.log
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
+
+        tokenBackgroundRefreshTask = TokenBackgroundRefreshTask(subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+        tokenBackgroundRefreshTask?.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -738,6 +742,7 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        tokenBackgroundRefreshTask?.scheduleTask()
     }
 
     private func suspendSync() {

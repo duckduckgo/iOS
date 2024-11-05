@@ -482,10 +482,17 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let storePurchaseManager = DefaultStorePurchaseManager()
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
                                                                              baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let pixelHandler: SubscriptionManager.PixelHandler = { type in
+            switch type {
+            case .deadToken:
+                Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            }
+        }
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()

@@ -141,10 +141,17 @@ final class AppDependencyProvider: DependencyProvider {
         
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
                                                                              baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let pixelHandler: SubscriptionManager.PixelHandler = { type in
+            switch type {
+            case .deadToken:
+                Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            }
+        }
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: {
             guard let token = subscriptionManager.getTokenContainerSynchronously(policy: .localValid)?.accessToken else {

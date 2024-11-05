@@ -100,7 +100,7 @@ public class SyncErrorHandler: EventMapping<SyncError> {
                 Pixel.fire(pixel: .syncFailedToLoadAccount, error: error)
             case .failedToSetupEngine:
                 Pixel.fire(pixel: .syncFailedToSetupEngine, error: error)
-            case .failedToReadSecureStore(let status):
+            case .failedToReadSecureStore:
                 Pixel.fire(pixel: .syncSecureStorageReadError, error: error)
             default:
                 // Should this be so generic?

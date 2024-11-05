@@ -28,6 +28,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
     private var delegate: ContextualOnboardingDelegateMock!
     private var settingsMock: ContextualOnboardingSettingsMock!
     private var pixelReporterMock: OnboardingPixelReporterMock!
+    private var onboardingManagerMock: OnboardingManagerMock!
     private var window: UIWindow!
 
     override func setUpWithError() throws {
@@ -35,10 +36,12 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         delegate = ContextualOnboardingDelegateMock()
         settingsMock = ContextualOnboardingSettingsMock()
         pixelReporterMock = OnboardingPixelReporterMock()
+        onboardingManagerMock = OnboardingManagerMock()
         sut = ExperimentContextualDaxDialogsFactory(
             contextualOnboardingLogic: ContextualOnboardingLogicMock(),
             contextualOnboardingSettings: settingsMock,
-            contextualOnboardingPixelReporter: pixelReporterMock
+            contextualOnboardingPixelReporter: pixelReporterMock,
+            onboardingManager: onboardingManagerMock
         )
         window = UIWindow(frame: UIScreen.main.bounds)
         window.makeKeyAndVisible()
@@ -50,6 +53,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
         delegate = nil
         settingsMock = nil
         pixelReporterMock = nil
+        onboardingManagerMock = nil
         sut = nil
         try super.tearDownWithError()
     }
@@ -334,6 +338,36 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
 
         // THEN
         XCTAssertTrue(pixelReporterMock.didCallTrackEndOfJourneyDialogDismiss)
+    }
+
+    // MARK: - Add To Dock
+
+    func testWhenEndOfJourneyDialogAndAddToDockIsContextualThenReturnExpectedCopy() throws {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.final
+        onboardingManagerMock.addToDockEnabledState = .contextual
+        let dialog = sut.makeView(for: spec, delegate: delegate, onSizeUpdate: {})
+
+        // WHEN
+        let result = try XCTUnwrap(find(OnboardingFinalDialog.self, in: dialog))
+
+        // THEN
+        XCTAssertEqual(result.message, UserText.AddToDockOnboarding.EndOfJourney.message)
+        XCTAssertEqual(result.cta, UserText.AddToDockOnboarding.Buttons.dismiss)
+    }
+
+    func testWhenEndOfJourneyDialogAndAddToDockIsContextualThenCanShowAddToDockTutorialIsTrue() throws {
+        // GIVEN
+        let spec = DaxDialogs.BrowsingSpec.final
+        onboardingManagerMock.addToDockEnabledState = .contextual
+        let dialog = sut.makeView(for: spec, delegate: delegate, onSizeUpdate: {})
+        let view = try XCTUnwrap(find(OnboardingFinalDialog.self, in: dialog))
+
+        // WHEN
+        let result = view.canShowAddToDockTutorial
+
+        // THEN
+        XCTAssertTrue(result)
     }
 }
 

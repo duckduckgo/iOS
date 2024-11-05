@@ -190,6 +190,7 @@ struct OnboardingFinalDialog: View {
     let message: String
     let cta: String
     let canShowAddToDockTutorial: Bool
+    let showAddToDockTutorialAction: () -> Void
     let dismissAction: (_ fromAddToDock: Bool) -> Void
 
     @State private var showAddToDockTutorial = false
@@ -234,6 +235,7 @@ struct OnboardingFinalDialog: View {
                 OnboardingCTAButton(
                     title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
                     action: {
+                        showAddToDockTutorialAction()
                         showAddToDockTutorial = true
                     }
                 )
@@ -327,6 +329,7 @@ struct OnboardingAddToDockTutorialContent: View {
         message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
         cta: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton,
         canShowAddToDockTutorial: false,
+        showAddToDockTutorialAction: {},
         dismissAction: { _ in }
     )
     .padding()
@@ -338,6 +341,7 @@ struct OnboardingAddToDockTutorialContent: View {
         message: UserText.AddToDockOnboarding.EndOfJourney.message,
         cta: UserText.AddToDockOnboarding.Buttons.dismiss,
         canShowAddToDockTutorial: true,
+        showAddToDockTutorialAction: {},
         dismissAction: { _ in }
     )
     .padding()

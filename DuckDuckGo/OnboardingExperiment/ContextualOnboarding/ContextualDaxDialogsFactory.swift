@@ -193,18 +193,32 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             )
         }
 
-        return OnboardingFinalDialog(logoPosition: .left, message: message, cta: cta, canShowAddToDockTutorial: shouldShowAddToDock, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
-            delegate?.didTapDismissContextualOnboardingAction()
-            if isDismissedFromAddToDock {
-                Logger.onboarding.debug("Dismissed from add to dock")
-            } else {
-                Logger.onboarding.debug("Dismissed from end of Journey")
-                self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+        return OnboardingFinalDialog(
+            logoPosition: .left,
+            message: message,
+            cta: cta,
+            canShowAddToDockTutorial: shouldShowAddToDock,
+            showAddToDockTutorialAction: { [weak self] in
+                self?.contextualOnboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+            },
+            dismissAction: { [weak delegate, weak self] isDismissedFromAddToDockTutorial in
+                delegate?.didTapDismissContextualOnboardingAction()
+                if isDismissedFromAddToDockTutorial {
+                    self?.contextualOnboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+                } else {
+                    self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                    if shouldShowAddToDock {
+                        self?.contextualOnboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                    }
+                }
             }
-        })
+        )
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.contextualOnboardingPixelReporter.trackScreenImpression(event: pixelName)
+            if shouldShowAddToDock {
+                self?.contextualOnboardingPixelReporter.trackAddToDockPromoImpression()
+            }
         }
     }
 

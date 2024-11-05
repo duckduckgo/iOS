@@ -111,20 +111,34 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         }
 
         return FadeInView {
-            OnboardingFinalDialog(logoPosition: .top, message: message, cta: cta, canShowAddToDockTutorial: shouldShowAddToDock) { [weak self] isDismissedFromAddToDock in
-                if isDismissedFromAddToDock {
-                    Logger.onboarding.debug("Dismissed from add to dock")
-                } else {
-                    Logger.onboarding.debug("Dismissed from end of Journey")
-                    self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+            OnboardingFinalDialog(
+                logoPosition: .top,
+                message: message,
+                cta: cta,
+                canShowAddToDockTutorial: shouldShowAddToDock,
+                showAddToDockTutorialAction: { [weak self] in
+                    self?.onboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+                },
+                dismissAction: { [weak self] isDismissedFromAddToDockTutorial in
+                    if isDismissedFromAddToDockTutorial {
+                        self?.onboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+                    } else {
+                        self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                        if shouldShowAddToDock {
+                            self?.onboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                        }
+                    }
+                    onDismiss()
                 }
-                onDismiss()
-            }
+            )
         }
         .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)
+            if shouldShowAddToDock {
+                self?.onboardingPixelReporter.trackAddToDockPromoImpression()
+            }
         }
     }
 }

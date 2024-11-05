@@ -314,7 +314,7 @@ extension NewTabPageViewController {
             guard let self else { return }
             dialogProvider.dismiss()
             self.dismissHostingController(didFinishNTPOnboarding: true)
-            // Make the address bar first responder after closing the new tap page final dialog.
+            // Make the address bar first responder after closing the new tab page final dialog.
             self.launchNewSearch()
         }
         let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))

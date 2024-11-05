@@ -104,13 +104,9 @@ extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDeb
 
     var addToDockEnabledState: OnboardingAddToDockState {
         // TODO: Add variant condition OR local conditions
-        if isAddToDockFeatureFlagEnabled && isIphone && addToDockLocalFlagState == .contextual {
-            return .contextual
-        } else if isAddToDockFeatureFlagEnabled && isIphone && addToDockLocalFlagState == .intro {
-            return .intro
-        } else {
-            return .disabled
-        }
+        guard isAddToDockFeatureFlagEnabled && isIphone else { return .disabled }
+
+        return addToDockLocalFlagState
     }
 
     var addToDockLocalFlagState: OnboardingAddToDockState {

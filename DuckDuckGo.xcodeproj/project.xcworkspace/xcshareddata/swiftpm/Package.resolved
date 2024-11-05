@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/css-update",
-        "revision" : "2b5f881ef22b2f9d74c95145527f2a4daf71b01e"
+        "revision" : "64a5d8d1e19951fe397305a14e521713fb0eaa49",
+        "version" : "203.3.0"
       }
     },
     {

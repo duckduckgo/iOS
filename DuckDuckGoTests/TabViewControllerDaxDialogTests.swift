@@ -242,6 +242,7 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     var shouldShowPrivacyButtonPulse: Bool = false
     var isShowingSearchSuggestions: Bool = false
     var isShowingSitesSuggestions: Bool = false
+    var isShowingAddToDockDialog: Bool = false
 
     func setFireEducationMessageSeen() {
         didCallSetFireEducationMessageSeen = true

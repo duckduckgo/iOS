@@ -1,1 +1,2 @@
+- Videos in Duck Player now open in a new tab by default, making it easier to navigate between YouTube and Duck Player. This setting can also be turned off in Settings > Duck Player.
 - Bug fixes and other improvements.

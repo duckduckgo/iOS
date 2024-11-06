@@ -274,6 +274,7 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
             Task {
                 await historyManager.deleteHistoryForURL(url)
                 Pixel.fire(pixel: .autocompleteSwipeToDelete)
+                DailyPixel.fireDaily(.autocompleteSwipeToDeleteDaily)
                 requestSuggestions(query: self.query)
             }
         default:

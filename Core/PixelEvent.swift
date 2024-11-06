@@ -466,7 +466,6 @@ extension Pixel {
         case networkProtectionVPNConfigurationRemovalFailed
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
-        case networkProtectionConfigurationPixelTest
 
         case networkProtectionMalformedErrorDetected
 
@@ -1279,7 +1278,6 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
-        case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
 
         case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
 

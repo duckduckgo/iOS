@@ -540,8 +540,6 @@ import os.log
     }
 
     private func reportAdAttribution() {
-        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
-
         Task.detached(priority: .background) {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
@@ -550,6 +548,7 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 

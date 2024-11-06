@@ -185,11 +185,12 @@ struct OnboardingTrackersDoneDialog: View {
 
 struct OnboardingFinalDialog: View {
     let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
 
     let logoPosition: DaxDialogLogoPosition
     let message: String
+    let cta: String
     let canShowAddToDockTutorial: Bool
+    let showAddToDockTutorialAction: () -> Void
     let dismissAction: (_ fromAddToDock: Bool) -> Void
 
     @State private var showAddToDockTutorial = false
@@ -198,7 +199,7 @@ struct OnboardingFinalDialog: View {
         ScrollView(.vertical, showsIndicators: false) {
             DaxDialogView(logoPosition: logoPosition) {
                 if showAddToDockTutorial {
-                    OnboardingAddToDockTutorialContent {
+                    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss) {
                         dismissAction(true)
                     }
                 } else {
@@ -206,6 +207,7 @@ struct OnboardingFinalDialog: View {
                         title: title,
                         titleFont: Font(UIFont.daxTitle3()),
                         message: NSAttributedString(string: message),
+                        messageFont: Font.system(size: 16),
                         customView: AnyView(customView),
                         customActionView: AnyView(customActionView)
                     )
@@ -233,6 +235,7 @@ struct OnboardingFinalDialog: View {
                 OnboardingCTAButton(
                     title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
                     action: {
+                        showAddToDockTutorialAction()
                         showAddToDockTutorial = true
                     }
                 )
@@ -277,15 +280,17 @@ struct OnboardingCTAButton: View {
 struct OnboardingAddToDockTutorialContent: View {
     let title = UserText.AddToDockOnboarding.Tutorial.title
     let message = UserText.AddToDockOnboarding.Tutorial.message
-    let cta = UserText.AddToDockOnboarding.Buttons.dismiss
 
+    let cta: String
     let dismissAction: () -> Void
 
     var body: some View {
         AddToDockTutorialView(
             title: title,
             message: message,
-            action: dismissAction)
+            cta: cta,
+            action: dismissAction
+        )
     }
 }
 
@@ -322,7 +327,9 @@ struct OnboardingAddToDockTutorialContent: View {
     OnboardingFinalDialog(
         logoPosition: .top,
         message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+        cta: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton,
         canShowAddToDockTutorial: false,
+        showAddToDockTutorialAction: {},
         dismissAction: { _ in }
     )
     .padding()
@@ -332,7 +339,9 @@ struct OnboardingAddToDockTutorialContent: View {
     OnboardingFinalDialog(
         logoPosition: .left,
         message: UserText.AddToDockOnboarding.EndOfJourney.message,
+        cta: UserText.AddToDockOnboarding.Buttons.dismiss,
         canShowAddToDockTutorial: true,
+        showAddToDockTutorialAction: {},
         dismissAction: { _ in }
     )
     .padding()
@@ -353,11 +362,11 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("Add To Dock Tutorial - Light") {
-    OnboardingAddToDockTutorialContent(dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
         .preferredColorScheme(.light)
 }
 
 #Preview("Add To Dock Tutorial - Dark") {
-    OnboardingAddToDockTutorialContent(dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
         .preferredColorScheme(.dark)
 }

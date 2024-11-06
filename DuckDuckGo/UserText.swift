@@ -419,6 +419,7 @@ public struct UserText {
     public static let autofillOnboardingKeyFeaturesSecureStorageDescription = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description", value: "Passwords are encrypted, stored on device, and locked with Face ID or passcode.", comment: "Description of autofill onboarding prompt's secure storage feature")
     public static let autofillOnboardingKeyFeaturesSyncTitle = NSLocalizedString("autofill.onboarding.key-features.sync.title", value: "Sync between devices", comment: "Title of autofill onboarding prompt's sync feature")
     public static let autofillOnboardingKeyFeaturesSyncDescription = NSLocalizedString("autofill.onboarding.key-features.sync.description", value: "End-to-end encrypted and easy to set up when you’re ready.", comment: "Description of autofill onboarding prompt's sync feature")
+    public static let autofillSaveLoginNoThanksCTA = NSLocalizedString("autofill.save-login.no-thanks.CTA", value: "No Thanks", comment: "CTA displayed on modal asking if the user wants to dismiss the save login action for now")
 
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
@@ -1426,6 +1427,13 @@ But if you *do* want a peek under the hood, you can find more information about 
         public enum Tutorial {
             static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
             static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+        }
+
+        public enum Intro {
+            static let title = NSLocalizedString("onboarding.addToDock.title", value: "Want to add me to your Dock?", comment: "The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("onboarding.addToDock.message", value: "I can paddle into the Dock and perch there until you need me.", comment: "The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
+            static let skipCTA = NSLocalizedString("onboarding.addToDock.cta", value: "Skip", comment: "The title of the dialog button CTA to skip adding the DDB browser icon to the dock.")
+            static let tutorialDismissCTA =  NSLocalizedString("onboarding.addToDock.tutorial.cta", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step.")
         }
     }
 }

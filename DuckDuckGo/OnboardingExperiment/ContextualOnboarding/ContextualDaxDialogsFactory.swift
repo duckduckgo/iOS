@@ -182,24 +182,47 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        let message = if onboardingManager.isAddToDockEnabled {
-            UserText.AddToDockOnboarding.EndOfJourney.message
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
+
+        let (message, cta) = if shouldShowAddToDock {
+            (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
         } else {
-            onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
         }
 
-        return OnboardingFinalDialog(logoPosition: .left, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled, dismissAction: { [weak delegate, weak self] isDismissedFromAddToDock in
+        let showAddToDockTutorialAction: () -> Void = { [weak self] in
+            self?.contextualOnboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+        }
+
+        let dismissAction = { [weak delegate, weak self] isDismissedFromAddToDockTutorial in
             delegate?.didTapDismissContextualOnboardingAction()
-            if isDismissedFromAddToDock {
-                Logger.onboarding.debug("Dismissed from add to dock")
+            if isDismissedFromAddToDockTutorial {
+                self?.contextualOnboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
             } else {
-                Logger.onboarding.debug("Dismissed from end of Journey")
                 self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                if shouldShowAddToDock {
+                    self?.contextualOnboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                }
             }
-        })
+        }
+
+        return OnboardingFinalDialog(
+            logoPosition: .left,
+            message: message,
+            cta: cta,
+            canShowAddToDockTutorial: shouldShowAddToDock,
+            showAddToDockTutorialAction: showAddToDockTutorialAction,
+            dismissAction: dismissAction
+        )
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.contextualOnboardingPixelReporter.trackScreenImpression(event: pixelName)
+            if shouldShowAddToDock {
+                self?.contextualOnboardingPixelReporter.trackAddToDockPromoImpression()
+            }
         }
     }
 

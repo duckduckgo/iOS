@@ -316,9 +316,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelError = eventError
             case .failedToParseRegisteredServersResponse:
                 pixelEvent = .networkProtectionClientFailedToParseRegisteredServersResponse
-            case .failedToEncodeRedeemRequest, .invalidInviteCode, .failedToRedeemInviteCode, .failedToParseRedeemResponse:
-                pixelEvent = .networkProtectionUnhandledError
-                // Should never be sent from the extension
             case .invalidAuthToken:
                 pixelEvent = .networkProtectionClientInvalidAuthToken
             case .serverListInconsistency:
@@ -366,8 +363,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
-            case .failedToRetrieveAuthToken:
-                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:

@@ -428,7 +428,7 @@
 "autofill.logins.empty-view.button.title" = "Şifreleri İçe Aktar";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle.first.paragraph" = "Kayıtlı parolaları başka bir tarayıcıdan DuckDuckGo&apos;ya aktarabilirsiniz.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Kayıtlı parolaları başka bir tarayıcıdan DuckDuckGo'ya aktarabilirsiniz.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Henüz şifre kaydedilmedi";
@@ -471,6 +471,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Şifreleri ara";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Parolalar şifrelenir. Onları sizden başka kimse göremez. Biz bile.";
 
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Parolalar şifrelenir. Onları sizden başka kimse göremez. Biz bile. [Daha Fazla Bilgi](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
@@ -595,6 +598,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Bu parola kaydedilsin mi?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Hayır Teşekkürler";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "DuckDuckGo Parolalar ve Otomatik Doldurma ile parolanızı cihazınızda güvenle saklayın.";

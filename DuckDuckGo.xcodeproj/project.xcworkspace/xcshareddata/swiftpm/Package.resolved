@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/remove-test-rollout-pixel",
-        "revision" : "40b7a3763ed74ab080d5a9480e2e5a3512e75408"
+        "revision" : "1d228b8fde43e7ab5f28e7a511f440676e6b05a8",
+        "version" : "205.0.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "48fee2508995d4ac02d18b3d55424adedcb4ce4f",
-        "version" : "6.28.0"
+        "revision" : "6cab7bdb584653a5dc007cc1ae827ec41c5a91bc",
+        "version" : "6.29.0"
       }
     },
     {

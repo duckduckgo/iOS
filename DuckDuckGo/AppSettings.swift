@@ -87,5 +87,5 @@ protocol AppSettings: AnyObject, AppDebugSettings {
 
 protocol AppDebugSettings {
     var onboardingHighlightsEnabled: Bool { get set }
-    var onboardingAddToDockEnabled: Bool { get set }
+    var onboardingAddToDockState: OnboardingAddToDockState { get set }
 }

@@ -1974,8 +1974,8 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true, inheritingAttribution: adClickAttributionLogic.state)
-            completion(.cancel)
+            // Continue loading as WKUIDelegate callback will handle opening a new tab in TabViewController.webView(_:createWebViewWith:for:windowFeatures:)
+            completion(.allow)
             return
         }
 

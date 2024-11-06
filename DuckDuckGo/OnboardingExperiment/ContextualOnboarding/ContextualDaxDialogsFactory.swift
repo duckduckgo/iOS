@@ -193,25 +193,29 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             )
         }
 
+        let showAddToDockTutorialAction: () -> Void = { [weak self] in
+            self?.contextualOnboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+        }
+
+        let dismissAction = { [weak delegate, weak self] isDismissedFromAddToDockTutorial in
+            delegate?.didTapDismissContextualOnboardingAction()
+            if isDismissedFromAddToDockTutorial {
+                self?.contextualOnboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+            } else {
+                self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                if shouldShowAddToDock {
+                    self?.contextualOnboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                }
+            }
+        }
+
         return OnboardingFinalDialog(
             logoPosition: .left,
             message: message,
             cta: cta,
             canShowAddToDockTutorial: shouldShowAddToDock,
-            showAddToDockTutorialAction: { [weak self] in
-                self?.contextualOnboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
-            },
-            dismissAction: { [weak delegate, weak self] isDismissedFromAddToDockTutorial in
-                delegate?.didTapDismissContextualOnboardingAction()
-                if isDismissedFromAddToDockTutorial {
-                    self?.contextualOnboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
-                } else {
-                    self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
-                    if shouldShowAddToDock {
-                        self?.contextualOnboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
-                    }
-                }
-            }
+            showAddToDockTutorialAction: showAddToDockTutorialAction,
+            dismissAction: dismissAction
         )
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()

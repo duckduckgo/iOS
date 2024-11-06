@@ -110,26 +110,30 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             )
         }
 
+        let showAddToDockTutorialAction: () -> Void = { [weak self] in
+            self?.onboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+        }
+
+        let dismissAction = { [weak self] isDismissedFromAddToDockTutorial in
+            if isDismissedFromAddToDockTutorial {
+                self?.onboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+            } else {
+                self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                if shouldShowAddToDock {
+                    self?.onboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                }
+            }
+            onDismiss()
+        }
+
         return FadeInView {
             OnboardingFinalDialog(
                 logoPosition: .top,
                 message: message,
                 cta: cta,
                 canShowAddToDockTutorial: shouldShowAddToDock,
-                showAddToDockTutorialAction: { [weak self] in
-                    self?.onboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
-                },
-                dismissAction: { [weak self] isDismissedFromAddToDockTutorial in
-                    if isDismissedFromAddToDockTutorial {
-                        self?.onboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
-                    } else {
-                        self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
-                        if shouldShowAddToDock {
-                            self?.onboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
-                        }
-                    }
-                    onDismiss()
-                }
+                showAddToDockTutorialAction: showAddToDockTutorialAction,
+                dismissAction: dismissAction
             )
         }
         .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))

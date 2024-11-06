@@ -508,7 +508,6 @@
 		85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */; };
 		858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D02469BCDE00C36F8A /* DaxDialogs.swift */; };
 		858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D22469BFAD00C36F8A /* DaxDialogTests.swift */; };
-		858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */; };
 		858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858650DA246B111900C36F8A /* DaxOnboarding.xcassets */; };
 		8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8586A10C24CBA7070049720E /* FindInPageActivity.swift */; };
 		8586A10E24CBAF5B0049720E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
@@ -1813,7 +1812,6 @@
 		85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTrayViewController.swift; sourceTree = "<group>"; };
 		858650D02469BCDE00C36F8A /* DaxDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogs.swift; sourceTree = "<group>"; };
 		858650D22469BFAD00C36F8A /* DaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxDialogTests.swift; sourceTree = "<group>"; };
-		858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaxOnboardingViewController.swift; sourceTree = "<group>"; };
 		858650DA246B111900C36F8A /* DaxOnboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DaxOnboarding.xcassets; sourceTree = "<group>"; };
 		8586A10C24CBA7070049720E /* FindInPageActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageActivity.swift; sourceTree = "<group>"; };
 		8586A10F24CCCD040049720E /* TabsBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsBarViewController.swift; sourceTree = "<group>"; };
@@ -4433,7 +4431,6 @@
 				984147CB24F02E9E00362052 /* DaxOnboarding.storyboard */,
 				858650D02469BCDE00C36F8A /* DaxDialogs.swift */,
 				858650DA246B111900C36F8A /* DaxOnboarding.xcassets */,
-				858650D8246B0D3C00C36F8A /* DaxOnboardingViewController.swift */,
 				8524CC93246C5C8900E59D45 /* DaxDialogViewController.swift */,
 				8524CC99246DA81700E59D45 /* FullscreenDaxDialogViewController.swift */,
 				F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */,
@@ -7751,7 +7748,6 @@
 				9FF7E9862C23D10300902BE5 /* BrowsersComparisonChart.swift in Sources */,
 				6F64AA532C47E92600CF4489 /* FavoritesFaviconLoader.swift in Sources */,
 				4B274F602AFEAECC003F0745 /* NetworkProtectionWidgetRefreshModel.swift in Sources */,
-				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				312E5746283BB04A00C18FA0 /* AutofillEmptySearchView.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */,

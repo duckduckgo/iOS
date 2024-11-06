@@ -624,6 +624,7 @@ extension Pixel {
         case syncRemoveDeviceError
         case syncDeleteAccountError
         case syncLoginExistingAccountError
+        case syncSecureStorageReadError
 
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
@@ -835,6 +836,11 @@ extension Pixel {
 
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
+
+        // MARK: UserDefaults incositency monitoring
+        case protectedDataUnavailableWhenBecomeActive
+        case statisticsLoaderATBStateMismatch
+        case adAttributionReportStateMismatch
     }
 
 }
@@ -1432,6 +1438,7 @@ extension Pixel.Event {
         case .syncRemoveDeviceError: return "m_d_sync_remove_device_error"
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
+        case .syncSecureStorageReadError: return "m_d_sync_secure_storage_error"
 
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
@@ -1666,6 +1673,11 @@ extension Pixel.Event {
 
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
+
+        // MARK: UserDefaults incositency monitoring
+        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
+        case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
+        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
         }
     }
 }
@@ -1717,6 +1729,7 @@ extension Pixel.Event {
         
         case tabClosed = "tab_closed"
         case appQuit = "app_quit"
+        case appBackgrounded = "app_backgrounded"
         case success
         
     }

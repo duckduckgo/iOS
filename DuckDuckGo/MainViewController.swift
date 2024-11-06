@@ -128,6 +128,7 @@ class MainViewController: UIViewController {
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
+    private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -795,8 +796,6 @@ class MainViewController: UIViewController {
         let controller = NewTabPageViewController(tab: tabModel,
                                                   isNewTabPageCustomizationEnabled: homeTabManager.isNewTabPageSectionsEnabled,
                                                   interactionModel: favoritesViewModel,
-                                                  syncService: syncService,
-                                                  syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                   homePageMessagesConfiguration: homePageConfiguration,
                                                   privacyProDataReporting: privacyProDataReporter,
                                                   variantManager: variantManager,
@@ -2172,6 +2171,10 @@ extension MainViewController: NewTabPageControllerDelegate {
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
     }
+
+    func newTabPageDidRequestFaviconsFetcherOnboarding(_ controller: NewTabPageViewController) {
+        faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+    }
 }
 
 extension MainViewController: NewTabPageControllerShortcutsDelegate {
@@ -2672,7 +2675,7 @@ extension MainViewController: AutoClearWorker {
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.newTabPageViewController?.showNextDaxDialog()
-            } else if KeyboardSettings().onNewTab {
+            } else if KeyboardSettings().onNewTab && !self.contextualOnboardingLogic.isShowingAddToDockDialog { // If we're showing the Add to Dock dialog prevent address bar to become first responder. We want to make sure the user focues on the Add to Dock instructions.
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
                 }

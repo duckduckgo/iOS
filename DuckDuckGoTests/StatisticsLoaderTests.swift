@@ -34,7 +34,9 @@ class StatisticsLoaderTests: XCTestCase {
         
         mockStatisticsStore = MockStatisticsStore()
         mockUsageSegmentation = MockUsageSegmentation()
-        testee = StatisticsLoader(statisticsStore: mockStatisticsStore, usageSegmentation: mockUsageSegmentation)
+        testee = StatisticsLoader(statisticsStore: mockStatisticsStore,
+                                  usageSegmentation: mockUsageSegmentation,
+                                  inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring())
     }
 
     override func tearDown() {
@@ -303,4 +305,10 @@ class StatisticsLoaderTests: XCTestCase {
         }
     }
 
+}
+
+private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring {
+    func statisticsDidLoad(hasFileMarker: Bool, hasInstallStatistics: Bool) {
+
+    }
 }

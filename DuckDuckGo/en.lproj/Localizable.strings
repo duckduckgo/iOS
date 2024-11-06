@@ -593,6 +593,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Save this password?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "No Thanks";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Securely store your password on device with DuckDuckGo Passwords & Autofill.";
 
@@ -1855,6 +1858,18 @@ https://duckduckgo.com/mac";
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
+
+/* The title of the dialog button CTA to skip adding the DDB browser icon to the dock. */
+"onboarding.addToDock.cta" = "Skip";
+
+/* The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock. */
+"onboarding.addToDock.message" = "I can paddle into the Dock and perch there until you need me.";
+
+/* The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock. */
+"onboarding.addToDock.title" = "Want to add me to your Dock?";
+
+/* Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step. */
+"onboarding.addToDock.tutorial.cta" = "Got It";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";

@@ -41,6 +41,11 @@ final class RulesCompilationMonitor {
                                                selector: #selector(applicationWillTerminate(_:)),
                                                name: UIApplication.willTerminateNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
     }
 
     /// Called when a Tab is going  to wait for Content Blocking Rules compilation
@@ -88,6 +93,18 @@ final class RulesCompilationMonitor {
 
         reportWaitTime(CACurrentMediaTime() - waitStart, result: .appQuit)
     }
+    
+    /// If App is going into the background while the rules are still being compiled, report the time so that we
+    /// do not continue to count the time in background
+    @objc func applicationDidEnterBackground() {
+        guard !didReport,
+              !waiters.isEmpty,
+         let waitStart = waitStart
+        else { return }
+
+        reportWaitTime(CACurrentMediaTime() - waitStart, result: .appBackgrounded)
+    }
+    
 
     private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) {
         didReport = true

@@ -479,28 +479,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
+    deinit {
+        memoryPressureSource?.cancel()
+        memoryPressureSource = nil
+    }
+
+    private var memoryPressureSource: DispatchSourceMemoryPressure?
+    private let memoryPressureQueue = DispatchQueue(label: "com.duckduckgo.mobile.ios.NetworkExtension.memoryPressure")
+
     private func startMonitoringMemoryPressureEvents() {
-        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: memoryPressureQueue)
 
-        let queue = DispatchQueue.init(label: "com.duckduckgo.mobile.ios.alpha.NetworkExtension.memoryPressure")
-        queue.async {
-            source.setEventHandler {
-                let event: DispatchSource.MemoryPressureEvent  = source.mask
-                print(event)
-                switch event {
-                case DispatchSource.MemoryPressureEvent.normal:
-                    break
-                case DispatchSource.MemoryPressureEvent.warning:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
-                case DispatchSource.MemoryPressureEvent.critical:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
-                default:
-                    break
-                }
+        source.setEventHandler { [weak source] in
+            guard let source else { return }
 
+            let event = source.data
+
+            if event.contains(.warning) {
+                Logger.networkProtectionMemory.warning("Received memory pressure warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
+            } else if event.contains(.critical) {
+                Logger.networkProtectionMemory.warning("Received memory pressure critical warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
             }
-            source.resume()
         }
+
+        self.memoryPressureSource = source
+        source.activate()
     }
 
     private func observeServerChanges() {

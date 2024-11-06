@@ -472,6 +472,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Cerca password";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Le password sono crittografate. Nessuno tranne te può vederle, nemmeno noi.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Le password sono crittografate. Nessuno tranne te può vederle, nemmeno noi. [Scopri di più](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +598,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Salvare questa password?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "No, grazie";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Memorizza in modo sicuro la tua password sul dispositivo con DuckDuckGo Passwords & Autofill.";

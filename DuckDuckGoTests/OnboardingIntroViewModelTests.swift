@@ -475,4 +475,34 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.title)
     }
 
+    // MARK: - Add To Dock
+
+    func testWhenSetDefaultBrowserActionIsCalledAndIsHighlightsIphoneFlowThenViewStateChangesToAddToDockPromoDialogAndProgressIs2Of4() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingPixelReporterMock(), onboardingManager: onboardingManager, isIpad: false, urlOpener: MockURLOpener())
+        XCTAssertEqual(sut.state, .landing)
+
+        // WHEN
+        sut.setDefaultBrowserAction()
+
+        // THEN
+        XCTAssertEqual(sut.state, .onboarding(.init(type: .addToDockPromoDialog, step: .init(currentStep: 2, totalSteps: 4))))
+    }
+
+    func testWhenAddtoDockContinueActionIsCalledAndIsHighlightsIphoneFlowThenThenViewStateChangesToChooseAppIconAndProgressIs3of4() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingPixelReporterMock(), onboardingManager: onboardingManager, isIpad: false)
+        XCTAssertEqual(sut.state, .landing)
+
+        // WHEN
+        sut.addToDockContinueAction()
+
+        // THEN
+        XCTAssertEqual(sut.state, .onboarding(.init(type: .chooseAppIconDialog, step: .init(currentStep: 3, totalSteps: 4))))
+    }
+
 }

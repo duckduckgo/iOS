@@ -33,17 +33,29 @@ public class StatisticsLoader {
     private let returnUserMeasurement: ReturnUserMeasurement
     private let usageSegmentation: UsageSegmenting
     private let parser = AtbParser()
+    private let atbPresenceFileMarker = BoolFileMarker(name: .isATBPresent)
+    private let inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
-         usageSegmentation: UsageSegmenting = UsageSegmentation()) {
+         usageSegmentation: UsageSegmenting = UsageSegmentation(),
+         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.usageSegmentation = usageSegmentation
+        self.inconsistencyMonitoring = inconsistencyMonitoring
     }
 
     public func load(completion: @escaping Completion = {}) {
-        if statisticsStore.hasInstallStatistics {
+        let hasFileMarker = atbPresenceFileMarker?.isPresent ?? false
+        let hasInstallStatistics = statisticsStore.hasInstallStatistics
+
+        inconsistencyMonitoring.statisticsDidLoad(hasFileMarker: hasFileMarker, hasInstallStatistics: hasInstallStatistics)
+
+        if hasInstallStatistics {
+            // Synchronize file marker with current state
+            createATBFileMarker()
+
             completion()
             return
         }
@@ -85,8 +97,13 @@ public class StatisticsLoader {
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
+            self.createATBFileMarker()
             completion()
         }
+    }
+
+    private func createATBFileMarker() {
+        atbPresenceFileMarker?.mark()
     }
 
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
@@ -168,4 +185,8 @@ public class StatisticsLoader {
     private func updateUsageSegmentationAfterInstall(activityType: UsageActivityType) {
         processUsageSegmentation(atb: nil, activityType: activityType)
     }
+}
+
+private extension BoolFileMarker.Name {
+    static let isATBPresent = BoolFileMarker.Name(rawValue: "atb-present")
 }

@@ -27,7 +27,7 @@ tags:
       - scroll
       - assertVisible: Email Protection
       - tapOn: Email Protection
-- assertVisible: Email privacy, simplified.
+- assertVisible: Email privacy, protected.
 - assertVisible:
     id: searchEntry
 - tapOn: 

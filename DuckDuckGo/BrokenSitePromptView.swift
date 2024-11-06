@@ -39,7 +39,7 @@ struct BrokenSitePromptView: View {
                     Button(UserText.siteNotWorkingDismiss, action: viewModel.onDidDismiss)
                         .buttonStyle(GhostButtonStyle())
                         .fixedSize()
-                    Button(UserText.siteNotWorkingWebsiteIsBroken, action: viewModel.onDidSubmit)
+                    Button(UserText.siteNotWorkingReportBrokenSite, action: viewModel.onDidSubmit)
                         .buttonStyle(PrimaryButtonStyle(compact: true))
                         .fixedSize()
                 }

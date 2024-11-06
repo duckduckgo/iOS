@@ -622,7 +622,7 @@ class TabViewController: UIViewController {
             delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
             if let url = webView.url {
-                AppDependencyProvider.shared.pageRefreshMonitor.handleRefreshAction(for: url)
+                AppDependencyProvider.shared.pageRefreshMonitor.register(for: url)
             }
         }, for: .valueChanged)
 
@@ -2476,7 +2476,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
         refreshCountSinceLoad += 1
         if let url {
-            AppDependencyProvider.shared.pageRefreshMonitor.handleRefreshAction(for: url)
+            AppDependencyProvider.shared.pageRefreshMonitor.register(for: url)
         }
     }
 

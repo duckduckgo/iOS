@@ -23,13 +23,7 @@ import PageRefreshMonitor
 
 final class PageRefreshStore: PageRefreshStoring {
 
-    @UserDefaultsWrapper(key: .didRefreshTimestamp, defaultValue: .distantPast)
-    var didRefreshTimestamp: Date?
-
-    @UserDefaultsWrapper(key: .didDoubleRefreshTimestamp, defaultValue: .distantPast)
-    var didDoubleRefreshTimestamp: Date?
-
-    @UserDefaultsWrapper(key: .didRefreshCounter, defaultValue: 0)
-    var didRefreshCounter: Int
+    @UserDefaultsWrapper(key: .refreshTimestamps, defaultValue: [])
+    var refreshTimestamps: [Date]
 
 }

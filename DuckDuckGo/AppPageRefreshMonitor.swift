@@ -21,15 +21,10 @@ import Core
 import Common
 import PageRefreshMonitor
 
-final class AppPageRefreshMonitor {
+extension PageRefreshMonitor {
 
-    static let eventMapping = EventMapping<PageRefreshPattern> { event, _, _, _ in
-        let domainEvent: Pixel.Event
-        switch event {
-        case .twiceWithin12Seconds: domainEvent = .pageRefreshTwiceWithin12Seconds
-        case .threeTimesWithin20Seconds: domainEvent = .pageRefreshThreeTimesWithin20Seconds
-        }
-        Pixel.fire(pixel: domainEvent)
+    static let onDidDetectRefreshPattern: () -> Void = {
+        Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
     }
 
 }

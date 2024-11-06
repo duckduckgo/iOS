@@ -73,7 +73,7 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()
 
-    let pageRefreshMonitor = PageRefreshMonitor(eventMapping: AppPageRefreshMonitor.eventMapping,
+    let pageRefreshMonitor = PageRefreshMonitor(onDidDetectRefreshPattern: PageRefreshMonitor.onDidDetectRefreshPattern,
                                                 store: PageRefreshStore())
 
     // Subscription

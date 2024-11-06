@@ -143,6 +143,8 @@ extension Pixel {
         
         case brokenSiteReport
         
+        // MARK: - Onboarding
+
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
@@ -172,6 +174,15 @@ extension Pixel {
         case daxDialogsEndOfJourneyTabUnique
         case daxDialogsEndOfJourneyNewTabUnique
         case daxDialogsEndOfJourneyDismissed
+
+        // MARK: - Onboarding Add To Dock
+
+        case onboardingAddToDockPromoImpressionsUnique
+        case onboardingAddToDockPromoShowTutorialCTATapped
+        case onboardingAddToDockPromoDismissCTATapped
+        case onboardingAddToDockTutorialDismissCTATapped
+
+        // MARK: - Onboarding Add To Dock
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -1003,6 +1014,11 @@ extension Pixel.Event {
         case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
         case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
         case .daxDialogsEndOfJourneyDismissed: return "m_dx_end_dialog_dismissed"
+
+        case .onboardingAddToDockPromoImpressionsUnique: return "m_onboarding_add_to_dock_promo_impressions_unique"
+        case .onboardingAddToDockPromoShowTutorialCTATapped: return "m_onboarding_add_to_dock_promo_show_tutorial_button_tapped"
+        case .onboardingAddToDockPromoDismissCTATapped: return "m_onboarding_add_to_dock_promo_dismiss_button_tapped"
+        case .onboardingAddToDockTutorialDismissCTATapped: return "m_onboarding_add_to_dock_tutorial_dismiss_button_tapped"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"

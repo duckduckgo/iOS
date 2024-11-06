@@ -35,17 +35,20 @@ extension OnboardingView {
         private var animateTitle: Binding<Bool>
         private var animateMessage: Binding<Bool>
         private var showContent: Binding<Bool>
+        private let showTutorialAction: () -> Void
         private let dismissAction: (_ fromAddToDock: Bool) -> Void
 
         init(
             animateTitle: Binding<Bool> = .constant(true),
             animateMessage: Binding<Bool> = .constant(true),
             showContent: Binding<Bool> = .constant(false),
+            showTutorialAction: @escaping () -> Void,
             dismissAction: @escaping (_ fromAddToDock: Bool) -> Void
         ) {
             self.animateTitle = animateTitle
             self.animateMessage = animateMessage
             self.showContent = showContent
+            self.showTutorialAction = showTutorialAction
             self.dismissAction = dismissAction
         }
 
@@ -77,6 +80,7 @@ extension OnboardingView {
                 OnboardingCTAButton(
                     title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
                     action: {
+                        showTutorialAction()
                         showAddToDockTutorial = true
                     }
                 )

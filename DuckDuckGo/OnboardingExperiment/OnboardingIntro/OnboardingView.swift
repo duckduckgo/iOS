@@ -159,8 +159,14 @@ struct OnboardingView: View {
     }
 
     private var addToDockPromoView: some View {
-        AddToDockPromoContent(dismissAction: { _ in model.addToDockContinueAction()
-        })
+        AddToDockPromoContent(
+            showTutorialAction: {
+                model.addtoDockShowTutorialAction()
+            },
+            dismissAction: { fromAddToDockTutorial in
+                model.addToDockContinueAction(isShowingAddToDockTutorial: fromAddToDockTutorial)
+            }
+        )
     }
 
     private var appIconPickerView: some View {

@@ -185,7 +185,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
 
         let (message, cta) = if shouldShowAddToDock {
-            (UserText.AddToDockOnboarding.EndOfJourney.message, UserText.AddToDockOnboarding.Buttons.dismiss)
+            (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
         } else {
             (
                 onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,

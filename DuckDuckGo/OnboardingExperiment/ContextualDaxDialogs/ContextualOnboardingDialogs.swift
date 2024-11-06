@@ -184,8 +184,6 @@ struct OnboardingTrackersDoneDialog: View {
 }
 
 struct OnboardingFinalDialog: View {
-    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle
-
     let logoPosition: DaxDialogLogoPosition
     let message: String
     let cta: String
@@ -198,12 +196,12 @@ struct OnboardingFinalDialog: View {
         ScrollView(.vertical, showsIndicators: false) {
             DaxDialogView(logoPosition: logoPosition) {
                 if showAddToDockTutorial {
-                    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss) {
+                    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.startBrowsing) {
                         dismissAction(true)
                     }
                 } else {
                     ContextualDaxDialogContent(
-                        title: title,
+                        title: canShowAddToDockTutorial ? UserText.AddToDockOnboarding.Promo.title : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle,
                         titleFont: Font(UIFont.daxTitle3()),
                         message: NSAttributedString(string: message),
                         messageFont: Font.system(size: 16),
@@ -232,7 +230,7 @@ struct OnboardingFinalDialog: View {
         VStack {
             if canShowAddToDockTutorial {
                 OnboardingCTAButton(
-                    title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
+                    title: UserText.AddToDockOnboarding.Buttons.tutorial,
                     action: {
                         showAddToDockTutorial = true
                     }
@@ -335,8 +333,8 @@ struct OnboardingAddToDockTutorialContent: View {
 #Preview("Final Dialog - Add to Dock Tutorial") {
     OnboardingFinalDialog(
         logoPosition: .left,
-        message: UserText.AddToDockOnboarding.EndOfJourney.message,
-        cta: UserText.AddToDockOnboarding.Buttons.dismiss,
+        message: UserText.AddToDockOnboarding.Promo.contextualMessage,
+        cta: UserText.AddToDockOnboarding.Buttons.startBrowsing,
         canShowAddToDockTutorial: true,
         dismissAction: { _ in }
     )
@@ -358,11 +356,11 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("Add To Dock Tutorial - Light") {
-    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.startBrowsing, dismissAction: {})
         .preferredColorScheme(.light)
 }
 
 #Preview("Add To Dock Tutorial - Dark") {
-    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.dismiss, dismissAction: {})
+    OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.startBrowsing, dismissAction: {})
         .preferredColorScheme(.dark)
 }

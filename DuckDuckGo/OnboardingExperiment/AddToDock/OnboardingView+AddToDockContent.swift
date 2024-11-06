@@ -51,14 +51,14 @@ extension OnboardingView {
 
         var body: some View {
             if showAddToDockTutorial {
-                OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Intro.tutorialDismissCTA) {
+                OnboardingAddToDockTutorialContent(cta: UserText.AddToDockOnboarding.Buttons.gotIt) {
                     dismissAction(true)
                 }
             } else {
                 ContextualDaxDialogContent(
-                    title: UserText.AddToDockOnboarding.Intro.title,
+                    title: UserText.AddToDockOnboarding.Promo.title,
                     titleFont: Font(UIFont.daxTitle3()),
-                    message: NSAttributedString(string: UserText.AddToDockOnboarding.Intro.message),
+                    message: NSAttributedString(string: UserText.AddToDockOnboarding.Promo.introMessage),
                     messageFont: Font.system(size: 16),
                     customView: AnyView(addToDockPromoView),
                     customActionView: AnyView(customActionView)
@@ -75,14 +75,14 @@ extension OnboardingView {
         private var customActionView: some View {
             VStack {
                 OnboardingCTAButton(
-                    title: UserText.AddToDockOnboarding.Buttons.addToDockTutorial,
+                    title: UserText.AddToDockOnboarding.Buttons.tutorial,
                     action: {
                         showAddToDockTutorial = true
                     }
                 )
 
                 OnboardingCTAButton(
-                    title: UserText.AddToDockOnboarding.Intro.skipCTA,
+                    title: UserText.AddToDockOnboarding.Buttons.skip,
                     buttonStyle: .ghost,
                     action: {
                         dismissAction(false)

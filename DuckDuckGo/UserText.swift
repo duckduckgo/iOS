@@ -1415,25 +1415,22 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
 
     public enum AddToDockOnboarding {
-        public enum Buttons {
-            static let addToDockTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock.")
-            static let dismiss = NSLocalizedString("contextual.onboarding.addToDock.buttons.dismiss", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
-        }
-
-        public enum EndOfJourney {
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.endOfJourney.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding to the browser app.")
+        public enum Promo {
+            static let title = NSLocalizedString("contextual.onboarding.addToDock.promo.title", value: "Add me to your Dock!", comment: "The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let introMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.intro.message", value: "I’ll nest in easy reach for all your daily browsing.", comment: "The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let contextualMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.contextual.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock.")
         }
 
         public enum Tutorial {
             static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find the DuckDuckGo icon on your Home Screen. Then press and drag it into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
         }
 
-        public enum Intro {
-            static let title = NSLocalizedString("onboarding.addToDock.title", value: "Want to add me to your Dock?", comment: "The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
-            static let message = NSLocalizedString("onboarding.addToDock.message", value: "I can paddle into the Dock and perch there until you need me.", comment: "The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
-            static let skipCTA = NSLocalizedString("onboarding.addToDock.cta", value: "Skip", comment: "The title of the dialog button CTA to skip adding the DDB browser icon to the dock.")
-            static let tutorialDismissCTA =  NSLocalizedString("onboarding.addToDock.tutorial.cta", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step.")
+        public enum Buttons {
+            static let tutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock.")
+            static let startBrowsing = NSLocalizedString("contextual.onboarding.addToDock.buttons.startBrowsing", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let skip = NSLocalizedString("contextual.onboarding.addToDock.buttons.skip", value: "Skip", comment: "Button to continue the onboarding process")
+            static let gotIt =  NSLocalizedString("onboarding.addToDock.buttons.gotIt", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding.")
         }
     }
 }

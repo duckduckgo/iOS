@@ -50,7 +50,7 @@ public enum FeatureFlag: String {
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
 
-    /// /// https://app.asana.com/0/72649045549333/1208617860225199/f
+    /// https://app.asana.com/0/72649045549333/1208617860225199/f
     case networkProtectionEnforceRoutes
 }
 

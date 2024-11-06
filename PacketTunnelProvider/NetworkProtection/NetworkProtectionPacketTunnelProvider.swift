@@ -485,7 +485,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     private var memoryPressureSource: DispatchSourceMemoryPressure?
-    private let memoryPressureQueue = DispatchQueue.init(label: "com.duckduckgo.mobile.ios.NetworkExtension.memoryPressure")
+    private let memoryPressureQueue = DispatchQueue(label: "com.duckduckgo.mobile.ios.NetworkExtension.memoryPressure")
 
     private func startMonitoringMemoryPressureEvents() {
         let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: memoryPressureQueue)

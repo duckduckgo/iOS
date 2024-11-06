@@ -120,18 +120,13 @@ final class ConfigurationManager: DefaultConfigurationManager {
         var tasks = [Configuration: Task<(), Swift.Error>]()
         tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet, isDebug: isDebug) }
         tasks[.surrogates] = Task { try await fetcher.fetch(.surrogates, isDebug: isDebug) }
-        tasks[.privacyConfiguration] = Task {
-            try await fetcher.fetch(.privacyConfiguration, isDebug: isDebug)
-        }
+        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration, isDebug: isDebug) }
 
         for (configuration, task) in tasks {
             do {
                 try await task.value
                 didFetchAnyTrackerBlockingDependencies = true
             } catch {
-                if configuration == .privacyConfiguration {
-                    print("asD")
-                }
                 Logger.general.error("Did not apply update to \(configuration.rawValue, privacy: .public): \(error.localizedDescription, privacy: .public)")
             }
         }

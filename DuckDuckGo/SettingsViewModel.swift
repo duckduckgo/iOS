@@ -423,7 +423,7 @@ extension SettingsViewModel {
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
             textSize: SettingsState.TextZoom(enabled: textZoomCoordinator.isEnabled, level: appSettings.defaultTextZoomLevel),
-            addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
+            addressBar: SettingsState.AddressBar(enabled: true, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
@@ -795,7 +795,7 @@ extension SettingsViewModel {
                                                                   object: nil,
                                                                   queue: .main, using: { [weak self] _ in
             guard let self = self else { return }
-            self.state.textSize = SettingsState.TextZoom(enabled: !isPad, level: self.appSettings.defaultTextZoomLevel)
+            self.state.textSize = SettingsState.TextZoom(enabled: true, level: self.appSettings.defaultTextZoomLevel)
         })
     }
     

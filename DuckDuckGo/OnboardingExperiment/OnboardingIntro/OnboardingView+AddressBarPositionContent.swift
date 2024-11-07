@@ -23,7 +23,6 @@ import Onboarding
 
 private enum Metrics {
     static let titleFont = Font.system(size: 20, weight: .semibold)
-    static let messageFont = Font.system(size: 16)
 }
 
 extension OnboardingView {

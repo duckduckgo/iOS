@@ -22,8 +22,7 @@ import Core
 import Onboarding
 @testable import DuckDuckGo
 
-final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingDaxDialogsReporting {
-    
+final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, OnboardingSiteSuggestionsPixelReporting, OnboardingSearchSuggestionsPixelReporting, OnboardingCustomInteractionPixelReporting, OnboardingDaxDialogsReporting, OnboardingAddToDockReporting {
     private(set) var didCallTrackOnboardingIntroImpression = false
     private(set) var didCallTrackBrowserComparisonImpression = false
     private(set) var didCallTrackChooseBrowserCTAAction = false
@@ -45,6 +44,11 @@ final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, Onboardi
     private(set) var capturedScreenImpression: Pixel.Event?
     private(set) var didCallTrackPrivacyDashboardOpenedForFirstTime = false
     private(set) var didCallTrackEndOfJourneyDialogDismiss = false
+
+    private(set) var didCallTrackAddToDockPromoImpression = false
+    private(set) var didCallTrackAddToDockPromoShowTutorialCTAAction = false
+    private(set) var didCallTrackAddToDockPromoDismissCTAAction = false
+    private(set) var didCallTrackAddToDockTutorialDismissCTAAction = false
 
     func trackOnboardingIntroImpression() {
         didCallTrackOnboardingIntroImpression = true
@@ -105,5 +109,21 @@ final class OnboardingPixelReporterMock: OnboardingIntroPixelReporting, Onboardi
 
     func trackPrivacyDashboardOpenedForFirstTime() {
         didCallTrackPrivacyDashboardOpenedForFirstTime = true
+    }
+
+    func trackAddToDockPromoImpression() {
+        didCallTrackAddToDockPromoImpression = true
+    }
+
+    func trackAddToDockPromoShowTutorialCTAAction() {
+        didCallTrackAddToDockPromoShowTutorialCTAAction = true
+    }
+
+    func trackAddToDockPromoDismissCTAAction() {
+        didCallTrackAddToDockPromoDismissCTAAction = true
+    }
+
+    func trackAddToDockTutorialDismissCTAAction() {
+        didCallTrackAddToDockTutorialDismissCTAAction = true
     }
 }

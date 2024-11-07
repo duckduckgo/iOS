@@ -2394,14 +2394,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Dismiss button */
 "site.not.working.dismiss" = "Dismiss";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Report Broken Site";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "This helps us improve the browser.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Site not working? Let DuckDuckGo know.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website Is Broken";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";

@@ -99,27 +99,50 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {
-        let message = if onboardingManager.isAddToDockEnabled {
-            UserText.AddToDockOnboarding.EndOfJourney.message
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
+
+        let (message, cta) = if shouldShowAddToDock {
+            (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
         } else {
-            onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ?  UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
+        }
+
+        let showAddToDockTutorialAction: () -> Void = { [weak self] in
+            self?.onboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+        }
+
+        let dismissAction = { [weak self] isDismissedFromAddToDockTutorial in
+            if isDismissedFromAddToDockTutorial {
+                self?.onboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+            } else {
+                self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                if shouldShowAddToDock {
+                    self?.onboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                }
+            }
+            onDismiss()
         }
 
         return FadeInView {
-            OnboardingFinalDialog(logoPosition: .top, message: message, canShowAddToDockTutorial: onboardingManager.isAddToDockEnabled) { [weak self] isDismissedFromAddToDock in
-                if isDismissedFromAddToDock {
-                    Logger.onboarding.debug("Dismissed from add to dock")
-                } else {
-                    Logger.onboarding.debug("Dismissed from end of Journey")
-                    self?.onboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
-                }
-                onDismiss()
-            }
+            OnboardingFinalDialog(
+                logoPosition: .top,
+                message: message,
+                cta: cta,
+                canShowAddToDockTutorial: shouldShowAddToDock,
+                showAddToDockTutorialAction: showAddToDockTutorialAction,
+                dismissAction: dismissAction
+            )
         }
         .onboardingContextualBackgroundStyle(background: .illustratedGradient(gradientType))
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.onboardingPixelReporter.trackScreenImpression(event: .daxDialogsEndOfJourneyNewTabUnique)
+            if shouldShowAddToDock {
+                self?.onboardingPixelReporter.trackAddToDockPromoImpression()
+            }
         }
     }
 }

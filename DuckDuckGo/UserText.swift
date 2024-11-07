@@ -419,6 +419,7 @@ public struct UserText {
     public static let autofillOnboardingKeyFeaturesSecureStorageDescription = NSLocalizedString("autofill.onboarding.key-features.secure-storage.description", value: "Passwords are encrypted, stored on device, and locked with Face ID or passcode.", comment: "Description of autofill onboarding prompt's secure storage feature")
     public static let autofillOnboardingKeyFeaturesSyncTitle = NSLocalizedString("autofill.onboarding.key-features.sync.title", value: "Sync between devices", comment: "Title of autofill onboarding prompt's sync feature")
     public static let autofillOnboardingKeyFeaturesSyncDescription = NSLocalizedString("autofill.onboarding.key-features.sync.description", value: "End-to-end encrypted and easy to set up when you’re ready.", comment: "Description of autofill onboarding prompt's sync feature")
+    public static let autofillSaveLoginNoThanksCTA = NSLocalizedString("autofill.save-login.no-thanks.CTA", value: "No Thanks", comment: "CTA displayed on modal asking if the user wants to dismiss the save login action for now")
 
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
@@ -1414,18 +1415,22 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
 
     public enum AddToDockOnboarding {
-        public enum Buttons {
-            static let addToDockTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock.")
-            static let dismiss = NSLocalizedString("contextual.onboarding.addToDock.buttons.dismiss", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
-        }
-
-        public enum EndOfJourney {
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.endOfJourney.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding to the browser app.")
+        public enum Promo {
+            static let title = NSLocalizedString("contextual.onboarding.addToDock.promo.title", value: "Add me to your Dock!", comment: "The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let introMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.intro.message", value: "I’ll nest in easy reach for all your daily browsing.", comment: "The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let contextualMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.contextual.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock.")
         }
 
         public enum Tutorial {
             static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find the DuckDuckGo icon on your Home Screen. Then press and drag it into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+        }
+
+        public enum Buttons {
+            static let tutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock.")
+            static let startBrowsing = NSLocalizedString("contextual.onboarding.addToDock.buttons.startBrowsing", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let skip = NSLocalizedString("contextual.onboarding.addToDock.buttons.skip", value: "Skip", comment: "Button to continue the onboarding process")
+            static let gotIt =  NSLocalizedString("onboarding.addToDock.buttons.gotIt", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding.")
         }
     }
 }

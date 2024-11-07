@@ -95,6 +95,6 @@ class AppSettingsMock: AppSettings {
     var newTabPageIntroMessageSeenCount: Int = 0
 
     var onboardingHighlightsEnabled: Bool = false
-    var onboardingAddToDockEnabled: Bool = false
-    
+    var onboardingAddToDockState: OnboardingAddToDockState = .disabled
+
 }

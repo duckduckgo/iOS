@@ -84,6 +84,7 @@ public class AppUserDefaults: AppSettings {
     private struct DebugKeys {
         static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
         static let autofillDebugScriptEnabledKey = "com.duckduckgo.ios.debug.autofillDebugScriptEnabled"
+        static let onboardingAddToDockStateKey = "com.duckduckgo.ios.debug.onboardingAddToDockState"
     }
 
     private var userDefaults: UserDefaults? {
@@ -422,8 +423,15 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
     var onboardingHighlightsEnabled: Bool
 
-    @UserDefaultsWrapper(key: .debugOnboardingAddToDockEnabledKey, defaultValue: false)
-    var onboardingAddToDockEnabled: Bool
+    var onboardingAddToDockState: OnboardingAddToDockState {
+        get {
+            guard let rawValue = userDefaults?.string(forKey: DebugKeys.onboardingAddToDockStateKey) else { return .disabled }
+            return OnboardingAddToDockState(rawValue: rawValue) ?? .disabled
+        }
+        set {
+            userDefaults?.set(newValue.rawValue, forKey: DebugKeys.onboardingAddToDockStateKey)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

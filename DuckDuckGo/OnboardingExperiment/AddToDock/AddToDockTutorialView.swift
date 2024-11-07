@@ -32,6 +32,7 @@ struct AddToDockTutorialView: View {
 
     private let title: String
     private let message: String
+    private let cta: String
     private let action: () -> Void
 
     @State private var animateTitle = true
@@ -44,10 +45,12 @@ struct AddToDockTutorialView: View {
     init(
         title: String,
         message: String,
+        cta: String,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.message = message
+        self.cta = cta
         self.action = action
     }
 
@@ -81,7 +84,7 @@ struct AddToDockTutorialView: View {
                 }
             
             Button(action: action) {
-                Text(UserText.AddToDockOnboarding.Buttons.dismiss)
+                Text(cta)
             }
             .buttonStyle(PrimaryButtonStyle())
             .visibility(showContent ? .visible : .invisible)
@@ -110,6 +113,7 @@ struct AddToDockTutorial_Previews: PreviewProvider {
             AddToDockTutorialView(
                 title: UserText.AddToDockOnboarding.Tutorial.title,
                 message: UserText.AddToDockOnboarding.Tutorial.message,
+                cta: UserText.AddToDockOnboarding.Buttons.startBrowsing,
                 action: {}
             )
             .padding()

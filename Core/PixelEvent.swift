@@ -1692,7 +1692,7 @@ extension Pixel.Event {
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
 
         // MARK: Browsing
-        case .stopPageLoad: return "m_stop_page_load"
+        case .stopPageLoad: return "m_stop-page-load"
 
         }
     }

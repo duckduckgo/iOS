@@ -60,7 +60,10 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
 
     private lazy var openTabs: [BrowserTab] = {
         tabsModel.tabs.compactMap {
-            guard let url = $0.link?.url else { return nil }
+            guard let url = $0.link?.url,
+                  tabsModel.currentTab != $0
+            else { return nil }
+
             return OpenTab(title: $0.link?.displayTitle ?? "", url: url)
         }
     }()

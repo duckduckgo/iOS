@@ -330,7 +330,7 @@ public struct UserText {
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
     public static let voiceSearchFooterOld = NSLocalizedString("voiceSearch.footer.note.old", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
-    public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Automatically apply this zoom level across all websites.", comment: "Description text for the text size adjustment setting")
+    public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Increase or decrease text size across all sites.", comment: "Description text for the text size adjustment setting")
     public static func textSizeFooter(for percentage: String) -> String {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
         return message.format(arguments: percentage)
@@ -361,7 +361,7 @@ public struct UserText {
     public static let textZoomMenuItem = NSLocalizedString("action.text-zoom-sheet-menu-item", value: "Zoom", comment: "Text zoom menu item")
 
     public static func textZoomWithPercentSheetTitle(_ percent: Int) -> String {
-        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Zoom Text (%d%%)", comment: "Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
+        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Text Zoom (%d%%)", comment: "Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
         return message.format(arguments: percent)
     }
 
@@ -1066,7 +1066,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
     public static let settingsFirebutton = NSLocalizedString("settings.firebutton", value: "Fire Button Animation", comment: "Settings screen cell text for fire button animation")
-    public static let settingsText = NSLocalizedString("settings.text.size", value: "Default Zoom Text", comment: "Settings screen cell text for text size")
+    public static let settingsText = NSLocalizedString("settings.text.size", value: "Default Text Zoom", comment: "Settings screen cell text for text size")
     public static let settingsAddressBar = NSLocalizedString("settings.address.bar", value: "Address Bar Position", comment: "Settings screen cell text for addess bar position")
     public static let settingsFullURL = NSLocalizedString("settings.address.full.url", value: "Show Full Site Address", comment: "Settings screen cell title for toggling full URL visibility in address bar")
 

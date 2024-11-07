@@ -31,6 +31,7 @@ struct TextZoomEditorView: View {
             Text(model.title)
                 .font(Font(uiFont: .daxHeadline()))
                 .frame(alignment: .center)
+                .foregroundStyle(Color(designSystemColor: .textPrimary))
 
             Button {
                 model.onDismiss()
@@ -42,6 +43,7 @@ struct TextZoomEditorView: View {
             .buttonStyle(.plain)
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .trailing)
+            .foregroundStyle(Color(designSystemColor: .textPrimary))
         }
         .padding(.horizontal, 16)
         .frame(height: 56)

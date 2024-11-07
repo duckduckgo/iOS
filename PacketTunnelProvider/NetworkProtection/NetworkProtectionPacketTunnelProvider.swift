@@ -57,7 +57,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
-    private var configuationSubscription: AnyCancellable?
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -332,9 +331,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelError = eventError
             case .failedToParseRegisteredServersResponse:
                 pixelEvent = .networkProtectionClientFailedToParseRegisteredServersResponse
-            case .failedToEncodeRedeemRequest, .invalidInviteCode, .failedToRedeemInviteCode, .failedToParseRedeemResponse:
-                pixelEvent = .networkProtectionUnhandledError
-                // Should never be sent from the extension
             case .invalidAuthToken:
                 pixelEvent = .networkProtectionClientInvalidAuthToken
             case .serverListInconsistency:
@@ -382,8 +378,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
-            case .failedToRetrieveAuthToken:
-                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:
@@ -427,13 +421,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
         // Load cached config (if any)
         privacyConfigurationManager.reload(etag: configurationStore.loadEtag(for: .privacyConfiguration), data: configurationStore.loadData(for: .privacyConfiguration))
-
-        configuationSubscription = privacyConfigurationManager.updatesPublisher
-            .sink {
-                if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest) {
-                    DailyPixel.fire(pixel: .networkProtectionConfigurationPixelTest)
-                }
-            }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default
@@ -534,28 +521,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
+    deinit {
+        memoryPressureSource?.cancel()
+        memoryPressureSource = nil
+    }
+
+    private var memoryPressureSource: DispatchSourceMemoryPressure?
+    private let memoryPressureQueue = DispatchQueue(label: "com.duckduckgo.mobile.ios.NetworkExtension.memoryPressure")
+
     private func startMonitoringMemoryPressureEvents() {
-        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: memoryPressureQueue)
 
-        let queue = DispatchQueue.init(label: "com.duckduckgo.mobile.ios.alpha.NetworkExtension.memoryPressure")
-        queue.async {
-            source.setEventHandler {
-                let event: DispatchSource.MemoryPressureEvent  = source.mask
-                print(event)
-                switch event {
-                case DispatchSource.MemoryPressureEvent.normal:
-                    break
-                case DispatchSource.MemoryPressureEvent.warning:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
-                case DispatchSource.MemoryPressureEvent.critical:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
-                default:
-                    break
-                }
+        source.setEventHandler { [weak source] in
+            guard let source else { return }
 
+            let event = source.data
+
+            if event.contains(.warning) {
+                Logger.networkProtectionMemory.warning("Received memory pressure warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
+            } else if event.contains(.critical) {
+                Logger.networkProtectionMemory.warning("Received memory pressure critical warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
             }
-            source.resume()
         }
+
+        self.memoryPressureSource = source
+        source.activate()
     }
 
     private func observeServerChanges() {

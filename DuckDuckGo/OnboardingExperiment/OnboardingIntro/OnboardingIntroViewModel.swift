@@ -30,7 +30,7 @@ final class OnboardingIntroViewModel: ObservableObject {
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
-    private let pixelReporter: OnboardingIntroPixelReporting
+    private let pixelReporter: OnboardingIntroPixelReporting & OnboardingAddToDockReporting
     private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
     private let isIpad: Bool
     private let urlOpener: URLOpener
@@ -38,7 +38,7 @@ final class OnboardingIntroViewModel: ObservableObject {
     private let addressBarPositionProvider: () -> AddressBarPosition
 
     init(
-        pixelReporter: OnboardingIntroPixelReporting,
+        pixelReporter: OnboardingIntroPixelReporting & OnboardingAddToDockReporting,
         onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager(),
         isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
         urlOpener: URLOpener = UIApplication.shared,
@@ -87,8 +87,17 @@ final class OnboardingIntroViewModel: ObservableObject {
         handleSetDefaultBrowserAction()
     }
 
-    func addToDockContinueAction() {
+    func addToDockContinueAction(isShowingAddToDockTutorial: Bool) {
         state = makeViewState(for: .appIconSelection)
+        if isShowingAddToDockTutorial {
+            pixelReporter.trackAddToDockTutorialDismissCTAAction()
+        } else {
+            pixelReporter.trackAddToDockPromoDismissCTAAction()
+        }
+    }
+
+    func addtoDockShowTutorialAction() {
+        pixelReporter.trackAddToDockPromoShowTutorialCTAAction()
     }
 
     func appIconPickerContinueAction() {
@@ -150,6 +159,7 @@ private extension OnboardingIntroViewModel {
     func handleSetDefaultBrowserAction() {
         if onboardingManager.addToDockEnabledState == .intro && onboardingManager.isOnboardingHighlightsEnabled {
             state = makeViewState(for: .addToDockPromo)
+            pixelReporter.trackAddToDockPromoImpression()
         } else if onboardingManager.isOnboardingHighlightsEnabled {
             state = makeViewState(for: .appIconSelection)
             pixelReporter.trackChooseAppIconImpression()

@@ -89,11 +89,11 @@ jobs:
 
     - name: Install Maestro
       run: |
-        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
 
     - name: End to End tests
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} -e ONBOARDING_COMPLETED=true --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=17 --include-tags=${{ matrix.test-tag }} DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=17 --include-tags=${{ matrix.test-tag }} DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
   notify-failure:
     name: Notify on failure

@@ -70,7 +70,7 @@ class OmniBar: UIView {
     @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: (any OmniBarState)!
+    fileprivate var state: OmniBarState!
 
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()

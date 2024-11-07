@@ -1948,8 +1948,8 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func performCancel() {
-        omniBar.cancel()
         dismissOmniBar()
+        omniBar.cancel()
         hideSuggestionTray()
         self.showMenuHighlighterIfNeeded()
     }

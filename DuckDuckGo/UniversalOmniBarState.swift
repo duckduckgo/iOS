@@ -22,7 +22,7 @@ import Core
 
 enum UniversalOmniBarState {
     struct EditingSuspendedState: OmniBarState {
-        let baseState: any OmniBarState
+        let baseState: OmniBarState
 
         var hasLargeWidth: Bool { baseState.hasLargeWidth }
         var showBackButton: Bool { baseState.showBackButton }

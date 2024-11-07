@@ -23,7 +23,7 @@ class SearchFieldContainerView: UIView {
     
     @IBOutlet var textFieldOffset: NSLayoutConstraint!
     
-    func adjustTextFieldOffset(for state: any OmniBarState) {
+    func adjustTextFieldOffset(for state: OmniBarState) {
         let offset: CGFloat
         
         if state.showPrivacyIcon {

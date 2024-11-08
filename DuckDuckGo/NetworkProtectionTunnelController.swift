@@ -199,6 +199,16 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         tunnelManager.connection.stopVPNTunnel()
     }
 
+    func command(_ command: VPNCommand) async throws {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession(),
+            activeSession.status == .connected else {
+
+            return
+        }
+
+        try? await activeSession.sendProviderRequest(.command(command))
+    }
+
     func removeVPN(reason: VPNConfigurationRemovalReason) async {
         do {
             try await tunnelManager?.removeFromPreferences()

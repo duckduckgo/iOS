@@ -371,7 +371,6 @@
 		7B1604EC2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1604EB2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift */; };
 		7B1604EE2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1604ED2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift */; };
 		7B8E0EC62CC81B4900B2B722 /* TipKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */; };
-		7B8FDD2B2CDD98EC00720907 /* VPNCommander.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FDD2A2CDD98EC00720907 /* VPNCommander.swift */; };
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BDBAD0E2CBFB3F1000379B7 /* VPN.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */; };
@@ -1670,7 +1669,6 @@
 		7B1604EB2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TipKitController+ConvenienceInitializers.swift"; sourceTree = "<group>"; };
 		7B1604ED2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitDebugOptionsUIActionHandling.swift; sourceTree = "<group>"; };
 		7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitController.swift; sourceTree = "<group>"; };
-		7B8FDD2A2CDD98EC00720907 /* VPNCommander.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNCommander.swift; sourceTree = "<group>"; };
 		7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNActivationDateStore.swift; sourceTree = "<group>"; };
 		7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VPN.xcassets; sourceTree = "<group>"; };
 		7BF78E012CA2CC3E0026A1FC /* TipKitAppEventHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitAppEventHandling.swift; sourceTree = "<group>"; };
@@ -4007,14 +4005,6 @@
 			name = AdAttribution;
 			sourceTree = "<group>";
 		};
-		7B8FDD292CDD98D500720907 /* IPC */ = {
-			isa = PBXGroup;
-			children = (
-				7B8FDD2A2CDD98EC00720907 /* VPNCommander.swift */,
-			);
-			path = IPC;
-			sourceTree = "<group>";
-		};
 		7BF78E002CA2CC100026A1FC /* TipKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -5609,7 +5599,6 @@
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
-				7B8FDD292CDD98D500720907 /* IPC */,
 				7BFD5FD32C9DA235000FF959 /* TipKit */,
 				4BD96E072C4DCCD1003BC32C /* LiveActivity */,
 				4B37E04E2B928C91009E81CA /* Resources */,
@@ -7766,7 +7755,6 @@
 				312E5746283BB04A00C18FA0 /* AutofillEmptySearchView.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */,
-				7B8FDD2B2CDD98EC00720907 /* VPNCommander.swift in Sources */,
 				C1F341C52A6924000032057B /* EmailAddressPromptView.swift in Sources */,
 				316931D727BD10BB0095F5ED /* SaveToDownloadsAlert.swift in Sources */,
 				6F35379E2C4AAF2E009F8717 /* NewTabPageSettingsView.swift in Sources */,
@@ -10998,7 +10986,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = f05ad5ee4cc36cf719ea94c23395d0e57e975698;
+				revision = 0dead1bd202a7e77014e0982a439a1d42324977e;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

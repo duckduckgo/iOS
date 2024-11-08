@@ -29,7 +29,7 @@ enum NetworkProtectionNotificationsViewKind: Equatable {
 }
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
-    private let commander: VPNCommander
+    private let controller: TunnelController
     private let settings: VPNSettings
     private var cancellables: Set<AnyCancellable> = []
 
@@ -52,7 +52,7 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
                 // We need to allow some time for the setting to propagate
                 // But ultimately this should actually be a user choice
                 try await Task.sleep(interval: 0.1)
-                try await commander.restartAdapter()
+                try await controller.command(.restartAdapter)
             }
         }
     }
@@ -61,10 +61,10 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
     @Published public var dnsServers: String = UserText.vpnSettingDNSServerDefaultValue
 
     init(notificationsAuthorization: NotificationsAuthorizationControlling,
-         commander: VPNCommander = .init(),
+         controller: TunnelController,
          settings: VPNSettings) {
 
-        self.commander = commander
+        self.controller = controller
         self.excludeLocalNetworks = settings.excludeLocalNetworks
         self.settings = settings
         self.notificationsAuthorization = notificationsAuthorization

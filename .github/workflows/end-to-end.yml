@@ -42,7 +42,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 16,OS=18.0" \
+          -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           -skipMacroValidation \

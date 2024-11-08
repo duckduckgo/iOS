@@ -30,13 +30,10 @@ appId: com.duckduckgo.mobile.ios
 # Validate search widget
 - longPressOn:
     point: 50%,50%
-- tapOn: "Edit"
 - tapOn: "Add Widget"
 - tapOn: "Search Widgets"
 - inputText: "DuckDuck"
-# iOS accessibility is broken for the widget selection screen, so use screen coordinates instead
-- tapOn:
-    point: 100,250
+- tapOn: "DuckDuckGo"
 - tapOn: " Add Widget"
 - tapOn: "Done"
 - tapOn: "DuckDuckGo"
@@ -51,13 +48,10 @@ appId: com.duckduckgo.mobile.ios
 - pressKey: HOME
 - longPressOn:
     point: 50%,50%
-- tapOn: "Edit"
 - tapOn: "Add Widget"
 - tapOn: "Search Widgets"
 - inputText: "DuckDuck"
-# iOS accessibility is broken for the widget selection screen, so use screen coordinates instead
-- tapOn:
-    point: 100,250
+- tapOn: "DuckDuckGo"
 - assertVisible: "Search"
 - swipe:  
     start: 90%, 50%

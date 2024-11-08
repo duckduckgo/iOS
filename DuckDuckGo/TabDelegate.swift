@@ -50,6 +50,9 @@ protocol TabDelegate: AnyObject {
     func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?)
 
     func tabDidRequestReportBrokenSite(tab: TabViewController)
+    func tabDidRequestAIChatFullScreen(tab: TabViewController)
+    func tabDidRequestAIChatModal(tab: TabViewController)
+    func tabDidRequestGPT(tab: TabViewController)
 
     func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void)
 

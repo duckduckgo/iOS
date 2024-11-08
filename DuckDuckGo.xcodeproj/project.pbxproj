@@ -168,6 +168,7 @@
 		316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316931D827BD22A80095F5ED /* DownloadActionMessageViewHelper.swift */; };
 		3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170048127A9504F00C03F35 /* DownloadMocks.swift */; };
 		317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */; };
+		317F2FBB2CDE59850019592C /* AIChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F2FBA2CDE597B0019592C /* AIChatViewController.swift */; };
 		317F5F982C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */; };
 		31860A5B2C57ED2D005561F5 /* DuckPlayerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
@@ -1481,6 +1482,7 @@
 		3170048127A9504F00C03F35 /* DownloadMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMocks.swift; sourceTree = "<group>"; };
 		317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncatorTests.swift; sourceTree = "<group>"; };
 		31794BFF2821DFB600F18633 /* DuckUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DuckUI; sourceTree = "<group>"; };
+		317F2FBA2CDE597B0019592C /* AIChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatViewController.swift; sourceTree = "<group>"; };
 		317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackStorage.swift; sourceTree = "<group>"; };
 		31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckPlayerStorage.swift; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
@@ -1640,9 +1642,9 @@
 		6FBF0F8A2BD7C0A900136CF0 /* AllProtectedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProtectedCell.swift; sourceTree = "<group>"; };
 		6FD0C41E2C5BF097000561C9 /* NewTabPageIntroMessageSetupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageIntroMessageSetupTests.swift; sourceTree = "<group>"; };
 		6FD0C4202C5BF774000561C9 /* NewTabPageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageViewModelTests.swift; sourceTree = "<group>"; };
-		6FD1BAE12B87A107000C475C /* AdAttributionPixelReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionPixelReporter.swift; path = AdAttribution/AdAttributionPixelReporter.swift; sourceTree = "<group>"; };
-		6FD1BAE22B87A107000C475C /* AdAttributionReporterStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionReporterStorage.swift; path = AdAttribution/AdAttributionReporterStorage.swift; sourceTree = "<group>"; };
-		6FD1BAE32B87A107000C475C /* AdAttributionFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionFetcher.swift; path = AdAttribution/AdAttributionFetcher.swift; sourceTree = "<group>"; };
+		6FD1BAE12B87A107000C475C /* AdAttributionPixelReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionPixelReporter.swift; path = ../AdAttribution/AdAttributionPixelReporter.swift; sourceTree = "<group>"; };
+		6FD1BAE22B87A107000C475C /* AdAttributionReporterStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionReporterStorage.swift; path = ../AdAttribution/AdAttributionReporterStorage.swift; sourceTree = "<group>"; };
+		6FD1BAE32B87A107000C475C /* AdAttributionFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdAttributionFetcher.swift; path = ../AdAttribution/AdAttributionFetcher.swift; sourceTree = "<group>"; };
 		6FD3AEE12B8DFBB80060FCCC /* AdAttributionPixelReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdAttributionPixelReporterTests.swift; sourceTree = "<group>"; };
 		6FD3F80E2C3EF4F000DA5797 /* DeviceOrientationEnvironmentValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOrientationEnvironmentValue.swift; sourceTree = "<group>"; };
 		6FD3F8122C3EFDA200DA5797 /* FavoritesPreviewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPreviewDataSource.swift; sourceTree = "<group>"; };
@@ -3581,6 +3583,15 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		317F2FB92CDE59720019592C /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				317F2FBA2CDE597B0019592C /* AIChatViewController.swift */,
+				6FD1BAE02B87A0E8000C475C /* AdAttribution */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
 		31951E9328230D8900CAF535 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -4213,7 +4224,7 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				6FD1BAE02B87A0E8000C475C /* AdAttribution */,
+				317F2FB92CDE59720019592C /* AIChat */,
 				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				9817C9C121EF58BA00884F65 /* AutoClear */,
@@ -7809,6 +7820,7 @@
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
 				373608902ABB1E6C00629E7F /* FavoritesDisplayModeStorage.swift in Sources */,
+				317F2FBB2CDE59850019592C /* AIChatViewController.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				4B0F3F502B9BFF2100392892 /* NetworkProtectionFAQView.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,

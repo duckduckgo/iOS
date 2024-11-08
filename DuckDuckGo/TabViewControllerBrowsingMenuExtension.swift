@@ -39,30 +39,17 @@ extension TabViewController {
             self?.onNewTabAction()
         }))
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
-            guard let self = self else { return }
-            guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
-            Pixel.fire(pixel: .browsingMenuShare)
-            self.onShareAction(forLink: self.link!, fromView: menu)
+        entries.append(BrowsingMenuEntry.regular(name: "GPT", image: UIImage(named: "Share-24")!, action: { [weak self] in
+            self?.openGPT()
+
         }))
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
-            guard let strongSelf = self else { return }
-            if !strongSelf.isError, let url = strongSelf.webView.url {
-                strongSelf.onCopyAction(forUrl: url)
-            } else if let text = self?.chromeDelegate?.omniBar.textField.text {
-                strongSelf.onCopyAction(for: text)
-            }
-
-            Pixel.fire(pixel: .browsingMenuCopy)
-            let addressBarBottom = strongSelf.appSettings.currentAddressBarPosition.isBottom
-            ActionMessageView.present(message: UserText.actionCopyMessage,
-                                      presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
+        entries.append(BrowsingMenuEntry.regular(name: "Modal", image: UIImage(named: "Copy-24")!, action: { [weak self] in
+            self?.openAIChatTabModal()
         }))
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
-            Pixel.fire(pixel: .browsingMenuPrint)
-            self?.print()
+        entries.append(BrowsingMenuEntry.regular(name: "Full", image: UIImage(named: "Print-24")!, action: { [weak self] in
+            self?.openAIChatTabFullScreen()
         }))
 
         return entries
@@ -166,7 +153,19 @@ extension TabViewController {
                 
         return entries
     }
-    
+
+    private func openAIChatTabFullScreen() {
+        delegate?.tabDidRequestAIChatFullScreen(tab: self)
+    }
+
+    private func openAIChatTabModal() {
+        delegate?.tabDidRequestAIChatModal(tab: self)
+    }
+
+    private func openGPT() {
+        delegate?.tabDidRequestGPT(tab: self)
+    }
+
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
         guard let domain = link.url.host, !link.url.isDuckDuckGo else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)

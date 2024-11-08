@@ -671,7 +671,6 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case pageRefreshTwiceWithin12Seconds
         case pageRefreshThreeTimesWithin20Seconds
 
         case siteNotWorkingShown
@@ -1498,7 +1497,6 @@ extension Pixel.Event {
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
         // MARK: - Page refresh toasts
-        case .pageRefreshTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
         case .pageRefreshThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
 
         case .siteNotWorkingShown: return "m_site-not-working_shown"

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "jacek/new-breakage-form",
-        "revision" : "9f5a4af0c16522251d3f578aba61099afab3b254"
+        "branch" : "mgurgel/improved-breakage-form-pixel",
+        "revision" : "89cdcdc2e18e8a4df5ee69c48b1b2ace828ae929"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "branch" : "pr-releases/pr-196",
-        "revision" : "1c355be4c27d067b8f3b7435274865a02d949f52"
+        "branch" : "pr-releases/pr-302",
+        "revision" : "05d04de7505117b32949b2007e5a56ba2d39469b"
       }
     },
     {

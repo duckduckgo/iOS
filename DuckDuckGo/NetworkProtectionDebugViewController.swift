@@ -64,7 +64,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     enum DebugFeatureRows: Int, CaseIterable {
         case toggleAlwaysOn
         case enforceRoutes
-        case resetEnforceRoutesForceEnable
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -334,14 +333,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             } else {
                 cell.accessoryType = .checkmark
             }
-        case .resetEnforceRoutesForceEnable:
-            cell.textLabel?.text = "Reset force-enable for Enforce Routes"
-
-            if AppDependencyProvider.shared.vpnSettings.enforceRoutesForceEnabledOnce {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
         default:
             break
         }
@@ -354,10 +345,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             tableView.reloadRows(at: [indexPath], with: .none)
         case .enforceRoutes:
             AppDependencyProvider.shared.vpnSettings.enforceRoutes.toggle()
-            tableView.reloadRows(at: [indexPath], with: .none)
-        case .resetEnforceRoutesForceEnable:
-            AppDependencyProvider.shared.vpnSettings.enforceRoutesForceEnabledOnce = false
-            ActionMessageView.present(message: "Next time you start the VPN enforce routes will be enabled if the feature flag is enabled for you")
             tableView.reloadRows(at: [indexPath], with: .none)
         default:
             break

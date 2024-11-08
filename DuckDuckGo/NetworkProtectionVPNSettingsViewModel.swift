@@ -29,6 +29,7 @@ enum NetworkProtectionNotificationsViewKind: Equatable {
 }
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
+    private let commander: VPNCommander
     private let settings: VPNSettings
     private var cancellables: Set<AnyCancellable> = []
 
@@ -39,16 +40,32 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
         self.settings.notifyStatusChanges
     }
 
-    @Published public var excludeLocalNetworks: Bool = true {
+    @Published public var excludeLocalNetworks: Bool {
         didSet {
+            guard oldValue != excludeLocalNetworks else {
+                return
+            }
+
             settings.excludeLocalNetworks = excludeLocalNetworks
+
+            Task {
+                // We need to allow some time for the setting to propagate
+                // But ultimately this should actually be a user choice
+                try await Task.sleep(interval: 0.1)
+                try await commander.restartAdapter()
+            }
         }
     }
 
     @Published public var usesCustomDNS = false
     @Published public var dnsServers: String = UserText.vpnSettingDNSServerDefaultValue
 
-    init(notificationsAuthorization: NotificationsAuthorizationControlling, settings: VPNSettings) {
+    init(notificationsAuthorization: NotificationsAuthorizationControlling,
+         commander: VPNCommander = .init(),
+         settings: VPNSettings) {
+
+        self.commander = commander
+        self.excludeLocalNetworks = settings.excludeLocalNetworks
         self.settings = settings
         self.notificationsAuthorization = notificationsAuthorization
         

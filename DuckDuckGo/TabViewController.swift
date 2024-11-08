@@ -1611,6 +1611,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        Logger.general.debug("didFailNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         webpageDidFailToLoad()
@@ -1632,6 +1633,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        Logger.general.debug("didFailProvisionalNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
@@ -1644,7 +1646,7 @@ extension TabViewController: WKNavigationDelegate {
         if error.code == 102 && error.domain == "WebKitErrorDomain" {
             return
         }
-        
+
         if let url = url,
            let domain = url.host,
            error.code == Constants.frameLoadInterruptedErrorCode {
@@ -1653,6 +1655,15 @@ extension TabViewController: WKNavigationDelegate {
 
             // Reset the URL, e.g if opened externally
             self.url = webView.url
+        }
+
+        // Bail out before showing error when navigation was cancelled by the user
+        if error.code == NSURLErrorCancelled && error.domain == NSURLErrorDomain {
+            webpageDidFailToLoad()
+
+            // Reset url to current one, as navigation was not successful
+            self.url = webView.url
+            return
         }
 
         // wait before showing errors in case they recover automatically

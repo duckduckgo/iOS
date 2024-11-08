@@ -113,7 +113,7 @@ struct AddToDockTutorial_Previews: PreviewProvider {
             AddToDockTutorialView(
                 title: UserText.AddToDockOnboarding.Tutorial.title,
                 message: UserText.AddToDockOnboarding.Tutorial.message,
-                cta: UserText.AddToDockOnboarding.Buttons.dismiss,
+                cta: UserText.AddToDockOnboarding.Buttons.startBrowsing,
                 action: {}
             )
             .padding()

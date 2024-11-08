@@ -183,8 +183,8 @@ class ContextualOnboardingNewTabDialogFactoryTests: XCTestCase {
         let result = try XCTUnwrap(find(OnboardingFinalDialog.self, in: dialog))
 
         // THEN
-        XCTAssertEqual(result.message, UserText.AddToDockOnboarding.EndOfJourney.message)
-        XCTAssertEqual(result.cta, UserText.AddToDockOnboarding.Buttons.dismiss)
+        XCTAssertEqual(result.message, UserText.AddToDockOnboarding.Promo.contextualMessage)
+        XCTAssertEqual(result.cta, UserText.AddToDockOnboarding.Buttons.startBrowsing)
     }
 
     func testWhenEndOfJourneyDialogAndAddToDockIsContextualThenCanShowAddToDockTutorialIsTrue() throws {

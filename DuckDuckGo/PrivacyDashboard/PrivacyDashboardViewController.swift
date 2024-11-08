@@ -88,17 +88,11 @@ final class PrivacyDashboardViewController: UIViewController {
           contentBlockingManager: ContentBlockerRulesManager,
           breakageAdditionalInfo: BreakageAdditionalInfo?) {
 
-        var variant: PrivacyDashboardVariant {
-            let isExperimentEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .brokenSiteReportExperiment)
-            return PrivacyDashboardVariant.control
-        }
-
         let toggleReportingConfiguration = ToggleReportingConfiguration(privacyConfigurationManager: privacyConfigurationManager)
         let toggleReportingFeature = ToggleReportingFeature(toggleReportingConfiguration: toggleReportingConfiguration)
         let toggleReportingManager = ToggleReportingManager(feature: toggleReportingFeature)
         privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo,
                                                                 entryPoint: entryPoint,
-                                                                variant: variant,
                                                                 toggleReportingManager: toggleReportingManager,
                                                                 eventMapping: privacyDashboardEvents)
         self.privacyConfigurationManager = privacyConfigurationManager

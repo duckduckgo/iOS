@@ -1170,6 +1170,7 @@ class TabViewController: UIViewController {
 
     func stopLoading() {
         webView.stopLoading()
+        hideProgressIndicator()
     }
 
     private func cleanUpBeforeClosing() {

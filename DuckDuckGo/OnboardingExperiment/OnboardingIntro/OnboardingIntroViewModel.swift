@@ -28,7 +28,13 @@ final class OnboardingIntroViewModel: ObservableObject {
     let copy: Copy
     let gradientType: OnboardingGradientType
     var onCompletingOnboardingIntro: (() -> Void)?
-    private var introSteps: [OnboardingIntroStep]
+    private let introSteps: [OnboardingIntroStep]
+    private var currentStep: OnboardingIntroStep {
+        didSet {
+            state = makeViewState(for: currentStep)
+            trackCurrentDialogImpression()
+        }
+    }
 
     private let pixelReporter: OnboardingIntroPixelReporting & OnboardingAddToDockReporting
     private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
@@ -62,54 +68,52 @@ final class OnboardingIntroViewModel: ObservableObject {
 
         copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
         gradientType = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+
+        currentStep = introSteps.first ?? .landing
+        state = makeViewState(for: currentStep)
     }
 
     func onAppear() {
-        state = makeViewState(for: .introDialog)
-        pixelReporter.trackOnboardingIntroImpression()
+        nextStep()
     }
 
     func startOnboardingAction() {
-        state = makeViewState(for: .browserComparison)
-        pixelReporter.trackBrowserComparisonImpression()
+        nextStep()
     }
 
     func setDefaultBrowserAction() {
+        pixelReporter.trackChooseBrowserCTAAction()
+
         if let url = URL(string: UIApplication.openSettingsURLString) {
             urlOpener.open(url)
         }
-        pixelReporter.trackChooseBrowserCTAAction()
-
-        handleSetDefaultBrowserAction()
+        nextStep()
     }
 
     func cancelSetDefaultBrowserAction() {
-        handleSetDefaultBrowserAction()
-    }
+        nextStep()
 
-    func addToDockContinueAction(isShowingAddToDockTutorial: Bool) {
-        state = makeViewState(for: .appIconSelection)
-        if isShowingAddToDockTutorial {
-            pixelReporter.trackAddToDockTutorialDismissCTAAction()
-        } else {
-            pixelReporter.trackAddToDockPromoDismissCTAAction()
+        if currentStep == .addToDockPromo {
+            pixelReporter.trackAddToDockPromoImpression()
+        } else if currentStep == .appIconSelection {
+            pixelReporter.trackChooseAppIconImpression()
         }
     }
 
     func addtoDockShowTutorialAction() {
+        // This is a substep so no need to change view state
         pixelReporter.trackAddToDockPromoShowTutorialCTAAction()
     }
 
+    func addToDockContinueAction(isShowingAddToDockTutorial: Bool) {
+        nextStep()
+    }
+
     func appIconPickerContinueAction() {
+        nextStep()
+
         if appIconProvider() != .defaultAppIcon {
             pixelReporter.trackChooseCustomAppIconColor()
-        }
-
-        if isIpad {
-            onCompletingOnboardingIntro?()
-        } else {
-            state = makeViewState(for: .addressBarPositionSelection)
-            pixelReporter.trackAddressBarPositionSelectionImpression()
         }
     }
 
@@ -117,7 +121,7 @@ final class OnboardingIntroViewModel: ObservableObject {
         if addressBarPositionProvider() == .bottom {
             pixelReporter.trackChooseBottomAddressBarPosition()
         }
-        onCompletingOnboardingIntro?()
+        nextStep()
     }
 
 }
@@ -125,6 +129,23 @@ final class OnboardingIntroViewModel: ObservableObject {
 // MARK: - Private
 
 private extension OnboardingIntroViewModel {
+
+    func nextStep() {
+        guard
+            let currentStepIndex = introSteps.firstIndex(of: currentStep),
+            introSteps.indices.contains(currentStepIndex),
+            let nextStep = introSteps[safe: currentStepIndex+1]
+        else {
+            dismiss()
+            return
+        }
+
+        currentStep = nextStep
+    }
+
+    func dismiss() {
+        onCompletingOnboardingIntro?()
+    }
 
     func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
         
@@ -136,11 +157,14 @@ private extension OnboardingIntroViewModel {
                 return .hidden
             }
 
-            // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
-            return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
+            // Remove .landing from the count of the current step
+            // Remove .landing and .startOnboardingDialog from the count of total steps since we don't show the progress for that step.
+            return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex - 1, totalSteps: introSteps.count - 2)
         }
 
         let viewState = switch introStep {
+        case .landing:
+            OnboardingView.ViewState.landing
         case .introDialog:
             OnboardingView.ViewState.onboarding(.init(type: .startOnboardingDialog, step: .hidden))
         case .browserComparison:
@@ -156,15 +180,20 @@ private extension OnboardingIntroViewModel {
         return viewState
     }
 
-    func handleSetDefaultBrowserAction() {
-        if onboardingManager.addToDockEnabledState == .intro && onboardingManager.isOnboardingHighlightsEnabled {
-            state = makeViewState(for: .addToDockPromo)
-            pixelReporter.trackAddToDockPromoImpression()
-        } else if onboardingManager.isOnboardingHighlightsEnabled {
-            state = makeViewState(for: .appIconSelection)
+    func trackCurrentDialogImpression() {
+        switch currentStep {
+        case .landing:
+            break
+        case .introDialog:
+            pixelReporter.trackOnboardingIntroImpression()
+        case .browserComparison:
+            pixelReporter.trackBrowserComparisonImpression()
+        case .appIconSelection:
             pixelReporter.trackChooseAppIconImpression()
-        } else {
-            onCompletingOnboardingIntro?()
+        case .addressBarPositionSelection:
+            pixelReporter.trackAddressBarPositionSelectionImpression()
+        case .addToDockPromo:
+            pixelReporter.trackAddToDockPromoImpression()
         }
     }
 
@@ -173,14 +202,15 @@ private extension OnboardingIntroViewModel {
 // MARK: - OnboardingIntroStep
 
 private enum OnboardingIntroStep {
+    case landing
     case introDialog
     case browserComparison
     case appIconSelection
     case addressBarPositionSelection
     case addToDockPromo
 
-    static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
-    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
-    static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
-    static let highlightsAddToDockIphoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .addToDockPromo, .appIconSelection, .addressBarPositionSelection]
+    static let defaultFlow: [OnboardingIntroStep] = [.landing, .introDialog, .browserComparison]
+    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.landing, .introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let highlightsIPadFlow: [OnboardingIntroStep] = [.landing, .introDialog, .browserComparison, .appIconSelection]
+    static let highlightsAddToDockIphoneFlow: [OnboardingIntroStep] = [.landing, .introDialog, .browserComparison, .addToDockPromo, .appIconSelection, .addressBarPositionSelection]
 }

@@ -58,7 +58,8 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         CachedBookmarks(bookmarksDatabase)
     }()
 
-    private lazy var openTabs: [BrowserTab] = {
+    /// Specifically open tabs that do not have the same URL as the current tab so that we avoid shown them in the results.
+    private lazy var candidateOpenTabs: [BrowserTab] = {
         tabsModel.tabs.compactMap {
             guard let url = $0.link?.url,
                   tabsModel.currentTab?.link?.url != $0.link?.url
@@ -306,7 +307,7 @@ extension AutocompleteViewController: SuggestionLoadingDataSource {
 
     func openTabs(for suggestionLoading: any SuggestionLoading) -> [BrowserTab] {
         if featureFlagger.isFeatureOn(.autcompleteTabs) {
-            return openTabs
+            return candidateOpenTabs
         }
         return []
     }

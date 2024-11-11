@@ -24,14 +24,7 @@ protocol DuckPlayerOverlayPixelFiring {
     var pixelFiring: PixelFiring.Type { get set }
     var navigationHistory: [URL] { get set }
     
-    func registerNavigation(url: URL?)
-    func navigationBack(duckPlayerMode: DuckPlayerMode)
-    func navigationReload(duckPlayerMode: DuckPlayerMode)
-    func navigationWithinYoutube(duckPlayerMode: DuckPlayerMode)
-    func navigationOutsideYoutube(duckPlayerMode: DuckPlayerMode)
-    func navigationClosed(duckPlayerMode: DuckPlayerMode)
-    func overlayIdle(duckPlayerMode: DuckPlayerMode)
-    
+    func handleNavigationAndFirePixels(url: URL?, duckPlayerMode: DuckPlayerMode)
 }
 
 final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
@@ -55,69 +48,56 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
         idleTimer = nil
     }
 
-    func registerNavigation(url: URL?) {
+    func handleNavigationAndFirePixels(url: URL?, duckPlayerMode: DuckPlayerMode) {
         guard let url = url else { return }
-        navigationHistory.append(url)
-        
+        let comparisonURL = url.forComparison()
+
+        // Only append the URL if it's different from the last entry in normalized form
+        navigationHistory.append(comparisonURL)
+
+        // DuckPlayer is in Ask Mode, there's navigation history, and last URL is a YouTube Watch Video
+        guard duckPlayerMode == .alwaysAsk,
+              navigationHistory.count > 1,
+              let currentURL = navigationHistory.last,
+              let previousURL = navigationHistory.dropLast().last,
+              previousURL.isYoutubeWatch else { return }
+
+        var isReload = false
+        // Check for a reload condition: when current videoID is the same as Previous
+        if let currentVideoID = currentURL.youtubeVideoParams?.videoID,
+           let previousVideoID = previousURL.youtubeVideoParams?.videoID {
+            isReload = currentVideoID == previousVideoID
+        }
+
+        // Fire the reload pixel if this is a reload navigation
+        if isReload {
+            pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationRefresh, withAdditionalParameters: [:])
+        } else {
+            // Determine if it’s a back navigation by looking further back in history
+            let isBackNavigation = navigationHistory.count > 2 &&
+                                   navigationHistory[navigationHistory.count - 3].forComparison() == currentURL.forComparison()
+
+            // Fire the appropriate pixel based on navigation type
+            if isBackNavigation {
+                pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationBack, withAdditionalParameters: [:])
+            } else if previousURL.isYoutubeWatch && currentURL.isYoutube {
+                // Forward navigation within YouTube (including non-video URLs)
+                pixelFiring.fire(.duckPlayerYouTubeNavigationWithinYouTube, withAdditionalParameters: [:])
+            } else if previousURL.isYoutubeWatch && !currentURL.isYoutube {
+                // Navigation outside YouTube
+                pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationOutsideYoutube, withAdditionalParameters: [:])
+            }
+        }
+
+        // Refined truncation logic:
+        if let lastOccurrenceIndex = (0..<navigationHistory.count - 1).last(where: { navigationHistory[$0].forComparison() == comparisonURL }) {
+            // Truncate history to keep only up to the last occurrence of the current URL in normalized form
+            navigationHistory = Array(navigationHistory.prefix(upTo: lastOccurrenceIndex + 1))
+        }
+
         // Cancel and reset the idle timer whenever a new navigation occurs
         resetIdleTimer()
     }
 
-    func navigationBack(duckPlayerMode: DuckPlayerMode) {
-        guard duckPlayerMode == .alwaysAsk,
-              let lastURL = navigationHistory.last,
-              lastURL.isYoutubeWatch else { return }
 
-        pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationBack, withAdditionalParameters: [:])
-    }
-
-    func navigationReload(duckPlayerMode: DuckPlayerMode) {
-        guard duckPlayerMode == .alwaysAsk,
-              let lastURL = navigationHistory.last,
-              lastURL.isYoutubeWatch else { return }
-
-        pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationRefresh, withAdditionalParameters: [:])
-    }
-
-    func navigationWithinYoutube(duckPlayerMode: DuckPlayerMode) {
-        guard duckPlayerMode == .alwaysAsk,
-              navigationHistory.count > 1,
-              let currentURL = navigationHistory.last,
-              let previousURL = navigationHistory.dropLast().last,
-              previousURL.isYoutubeWatch,
-              currentURL.isYoutube else { return }
-
-        pixelFiring.fire(.duckPlayerYouTubeNavigationWithinYouTube, withAdditionalParameters: [:])
-    }
-
-    func navigationOutsideYoutube(duckPlayerMode: DuckPlayerMode) {
-        guard duckPlayerMode == .alwaysAsk,
-              navigationHistory.count > 1,
-              let currentURL = navigationHistory.last,
-              let previousURL = navigationHistory.dropLast().last,
-              previousURL.isYoutubeWatch,
-              !currentURL.isYoutube else { return }
-
-        pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationOutsideYoutube, withAdditionalParameters: [:])
-    }
-
-    func navigationClosed(duckPlayerMode: DuckPlayerMode) {
-        
-        guard duckPlayerMode == .alwaysAsk,
-              let lastURL = navigationHistory.last,
-              lastURL.isYoutubeWatch else { return }
-        
-        pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationClosed, withAdditionalParameters: [:])
-        
-    }
-
-    func overlayIdle(duckPlayerMode: DuckPlayerMode) {
-        guard duckPlayerMode == .alwaysAsk,
-              let lastURL = navigationHistory.last,
-              lastURL.isYoutubeWatch else { return }
-
-        idleTimer = Timer.scheduledTimer(withTimeInterval: idleTimeInterval, repeats: false) { [weak self] _ in
-            self?.pixelFiring.fire(.duckPlayerYouTubeNavigationIdle30, withAdditionalParameters: [:])
-        }
-    }
 }

@@ -117,7 +117,7 @@ final class DuckPlayerNavigationHandler: NSObject {
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self,
          tabNavigationHandler: DuckPlayerTabNavigationHandling? = nil,
-         duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? = nil) {
+         duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? = DuckPlayerOverlayUsagePixels()) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
@@ -575,9 +575,7 @@ final class DuckPlayerNavigationHandler: NSObject {
             // Watch in YT videos always open in new tab
             redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
         }
-    
-    
-    }
+    }    
     
 }
 
@@ -663,9 +661,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
-        // Track overlayUsagePixels
-        duckPlayerOverlayUsagePixels?.registerNavigation(url: webView.url)
-        
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick URL changes
         if let lastTimestamp = lastURLChangeHandling,
@@ -675,6 +670,11 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Update the Referrer based on the first URL change detected
         setReferrer(webView: webView)
+        
+        // Overlay Usage Pixel handling
+        if let url = webView.url {
+            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
+        }
         
         // We don't want YouTube redirects happening while default navigation is happening
         // This can be caused by Duplicate Nav events, and quick URL changes
@@ -735,7 +735,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleGoBack(webView: WKWebView) {
                 
-        guard isDuckPlayerFeatureEnabled else {
+        guard let url = webView.url, url.isDuckPlayer, isDuckPlayerFeatureEnabled else {
             webView.goBack()
             return
         }
@@ -783,7 +783,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard let url = webView.url else {
             return
         }
-            
+                    
         if url.isDuckPlayer, duckPlayerMode != .disabled {
             redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)
             return

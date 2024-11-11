@@ -60,7 +60,6 @@ final class AutocompleteSuggestionsDataSourceTests: XCTestCase {
     func testWhenSuggestTabsFeatureIsDisable_ThenNoTabsReturned() {
         let dataSource = makeDataSource(tabsEnabled: false)
 
-        // Current tab is the last one added, which has two tabs with the same URL, so only 2 of the 4 will be returned.
         let result = dataSource.openTabs(for: MockSuggestionLoading())
         XCTAssertTrue(result.isEmpty)
     }

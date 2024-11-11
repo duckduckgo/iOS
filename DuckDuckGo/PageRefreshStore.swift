@@ -1,5 +1,5 @@
 //
-//  OnboardingManagerMock.swift
+//  PageRefreshStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,9 +18,12 @@
 //
 
 import Foundation
-@testable import DuckDuckGo
+import Core
+import PageRefreshMonitor
 
-final class OnboardingManagerMock: OnboardingHighlightsManaging, OnboardingAddToDockManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
-    var addToDockEnabledState: OnboardingAddToDockState = .disabled
+final class PageRefreshStore: PageRefreshStoring {
+
+    @UserDefaultsWrapper(key: .refreshTimestamps, defaultValue: [])
+    var refreshTimestamps: [Date]
+
 }

@@ -143,9 +143,7 @@ public struct UserDefaultsWrapper<T> {
 
         case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
 
-        case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
-        case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
-        case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
+        case refreshTimestamps = "com.duckduckgo.ios.pageRefreshMonitor.refreshTimestamps"
         case lastBrokenSiteToastShownDate = "com.duckduckgo.ios.userBehavior.lastBrokenSiteToastShownDate"
         case toastDismissStreakCounter = "com.duckduckgo.ios.userBehavior.toastDismissStreakCounter"
 
@@ -171,7 +169,6 @@ public struct UserDefaultsWrapper<T> {
         // Debug keys
         case debugNewTabPageSectionsEnabledKey = "com.duckduckgo.ios.debug.newTabPageSectionsEnabled"
         case debugOnboardingHighlightsEnabledKey = "com.duckduckgo.ios.debug.onboardingHighlightsEnabled"
-        case debugOnboardingAddToDockEnabledKey = "com.duckduckgo.ios.debug.onboardingAddToDockEnabled"
 
         // Duck Player Pixel Experiment
         case duckPlayerPixelExperimentInstalled = "com.duckduckgo.ios.duckplayer.pixel.experiment.installed.v2"

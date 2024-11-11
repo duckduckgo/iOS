@@ -472,6 +472,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje lozinki";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi. [Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +598,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li spremiti ovu lozinku?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Ne, hvala";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Sigurno pohrani svoju lozinku na uređaj pomoću usluge automatskog popunjavanja DuckDuckGo Passwords & Autofill.";
@@ -2247,14 +2253,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Odbaci";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Prijavi neispravno web-mjesto";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Ovo nam pomaže da poboljšamo preglednik.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Web-mjesto ne funkcionira? Javi DuckDuckGou.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Web-mjesto nije ispravno";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";

@@ -472,6 +472,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Търсене на пароли";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Паролите са криптирани. Никой освен Вас не може да ги види, дори ние.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Паролите са криптирани. Никой освен Вас не може да ги види, дори ние. [Научете повече](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +598,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Запазване на тази парола?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Не, благодаря";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "С DuckDuckGo Passwords & Autofill можете да съхранявате паролата по сигурен начин на устройството.";
@@ -2249,14 +2255,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Отказване";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Подаване на сигнал за повреден сайт";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Това ни помага да подобрим браузъра.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Сайтът не работи ли? Уведомете DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Уебсайтът е повреден";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";

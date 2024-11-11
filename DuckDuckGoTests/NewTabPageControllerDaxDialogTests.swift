@@ -38,14 +38,7 @@ final class NewTabPageControllerDaxDialogTests: XCTestCase {
         variantManager = CapturingVariantManager()
         dialogFactory = CapturingNewTabDaxDialogProvider()
         specProvider = MockNewTabDialogSpecProvider()
-        let dataProviders = SyncDataProviders(
-            bookmarksDatabase: db,
-            secureVaultFactory: AutofillSecureVaultFactory,
-            secureVaultErrorReporter: SecureVaultReporter(),
-            settingHandlers: [],
-            favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
-        )
+
         let remoteMessagingClient = RemoteMessagingClient(
             bookmarksDatabase: db,
             appSettings: AppSettingsMock(),
@@ -60,8 +53,6 @@ final class NewTabPageControllerDaxDialogTests: XCTestCase {
             tab: Tab(),
             isNewTabPageCustomizationEnabled: false,
             interactionModel: MockFavoritesListInteracting(),
-            syncService: MockDDGSyncing(authState: .active, isSyncInProgress: false),
-            syncBookmarksAdapter: dataProviders.bookmarksAdapter,
             homePageMessagesConfiguration: homePageConfiguration,
             variantManager: variantManager,
             newTabDialogFactory: dialogFactory,

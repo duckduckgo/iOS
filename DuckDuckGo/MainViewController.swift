@@ -36,6 +36,8 @@ import SwiftUI
 import NetworkProtection
 import Onboarding
 import os.log
+import PageRefreshMonitor
+import BrokenSitePrompt
 
 class MainViewController: UIViewController {
     
@@ -128,6 +130,7 @@ class MainViewController: UIViewController {
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var faviconLoader: FavoritesFaviconLoading = FavoritesFaviconLoader()
+    private lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -311,7 +314,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForUserBehaviorEvents()
+        registerForPageRefreshPatterns()
         registerForSyncFeatureFlagsUpdates()
 
         decorate()
@@ -507,11 +510,11 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForUserBehaviorEvents() {
+    private func registerForPageRefreshPatterns() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(attemptToShowBrokenSitePrompt(_:)),
-            name: .userBehaviorDidMatchBrokenSiteCriteria,
+            name: .pageRefreshMonitorDidDetectRefreshPattern,
             object: nil)
     }
 
@@ -806,8 +809,6 @@ class MainViewController: UIViewController {
         let controller = NewTabPageViewController(tab: tabModel,
                                                   isNewTabPageCustomizationEnabled: homeTabManager.isNewTabPageSectionsEnabled,
                                                   interactionModel: favoritesViewModel,
-                                                  syncService: syncService,
-                                                  syncBookmarksAdapter: syncDataProviders.bookmarksAdapter,
                                                   homePageMessagesConfiguration: homePageConfiguration,
                                                   privacyProDataReporting: privacyProDataReporter,
                                                   variantManager: variantManager,
@@ -1107,8 +1108,7 @@ class MainViewController: UIViewController {
     }
 
     private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
-        guard brokenSitePromptViewHostingController != nil,
-                let event = brokenSitePromptEvent?.rawValue else { return }
+        guard brokenSitePromptViewHostingController != nil else { return }
         brokenSitePromptViewHostingController = nil
         hideNotification()
     }
@@ -1353,12 +1353,11 @@ class MainViewController: UIViewController {
     }
 
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
-    private var brokenSitePromptEvent: UserBehaviorEvent?
-    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter()
+    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                       store: BrokenSitePromptLimiterStore())
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard brokenSitePromptLimiter.shouldShowToast(),
-            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
             let url = currentTab?.url, !url.isDuckDuckGo,
             notificationView == nil,
             !isPad,
@@ -1368,18 +1367,18 @@ class MainViewController: UIViewController {
         // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
         brokenSitePromptLimiter.didShowToast()
         DispatchQueue.main.async {
-            self.showBrokenSitePrompt(after: event)
+            self.showBrokenSitePrompt()
         }
     }
 
-    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
-        let host = makeBrokenSitePromptViewHostingController(event: event)
+    private func showBrokenSitePrompt() {
+        let host = makeBrokenSitePromptViewHostingController()
         brokenSitePromptViewHostingController = host
-        brokenSitePromptEvent = event
+        Pixel.fire(pixel: .siteNotWorkingShown)
         showNotification(with: host.view)
     }
 
-    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+    private func makeBrokenSitePromptViewHostingController() -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             Task { @MainActor in
                 self?.hideNotification()
@@ -1388,10 +1387,11 @@ class MainViewController: UIViewController {
             }
         }, onDidSubmit: { [weak self] in
             Task { @MainActor in
-                self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+                self?.segueToReportBrokenSite(entryPoint: .prompt)
                 self?.hideNotification()
                 self?.brokenSitePromptLimiter.didOpenReport()
                 self?.brokenSitePromptViewHostingController = nil
+                Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken)
             }
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
@@ -2183,6 +2183,10 @@ extension MainViewController: NewTabPageControllerDelegate {
     func newTabPageDidDeleteFavorite(_ controller: NewTabPageViewController, favorite: BookmarkEntity) {
         // no-op for now
     }
+
+    func newTabPageDidRequestFaviconsFetcherOnboarding(_ controller: NewTabPageViewController) {
+        faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+    }
 }
 
 extension MainViewController: NewTabPageControllerShortcutsDelegate {
@@ -2684,7 +2688,7 @@ extension MainViewController: AutoClearWorker {
             // Ideally this should happen once data clearing has finished AND the animation is finished
             if showNextDaxDialog {
                 self.newTabPageViewController?.showNextDaxDialog()
-            } else if KeyboardSettings().onNewTab {
+            } else if KeyboardSettings().onNewTab && !self.contextualOnboardingLogic.isShowingAddToDockDialog { // If we're showing the Add to Dock dialog prevent address bar to become first responder. We want to make sure the user focues on the Add to Dock instructions.
                 let showKeyboardAfterFireButton = DispatchWorkItem {
                     self.enterSearch()
                 }

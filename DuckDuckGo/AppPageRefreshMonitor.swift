@@ -1,5 +1,5 @@
 //
-//  OnboardingManagerMock.swift
+//  AppPageRefreshMonitor.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,10 +17,14 @@
 //  limitations under the License.
 //
 
-import Foundation
-@testable import DuckDuckGo
+import Core
+import Common
+import PageRefreshMonitor
 
-final class OnboardingManagerMock: OnboardingHighlightsManaging, OnboardingAddToDockManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
-    var addToDockEnabledState: OnboardingAddToDockState = .disabled
+extension PageRefreshMonitor {
+
+    static let onDidDetectRefreshPattern: () -> Void = {
+        Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
+    }
+
 }

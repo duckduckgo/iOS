@@ -138,12 +138,15 @@ extension Pixel {
         case autocompleteDisplayedLocalHistory
         case autocompleteDisplayedOpenedTab
         case autocompleteSwipeToDelete
+        case autocompleteSwipeToDeleteDaily
 
         case feedbackPositive
         case feedbackNegativePrefix(category: String)
         
         case brokenSiteReport
         
+        // MARK: - Onboarding
+
         case onboardingIntroShownUnique
         case onboardingIntroComparisonChartShownUnique
         case onboardingIntroChooseBrowserCTAPressed
@@ -173,6 +176,15 @@ extension Pixel {
         case daxDialogsEndOfJourneyTabUnique
         case daxDialogsEndOfJourneyNewTabUnique
         case daxDialogsEndOfJourneyDismissed
+
+        // MARK: - Onboarding Add To Dock
+
+        case onboardingAddToDockPromoImpressionsUnique
+        case onboardingAddToDockPromoShowTutorialCTATapped
+        case onboardingAddToDockPromoDismissCTATapped
+        case onboardingAddToDockTutorialDismissCTATapped
+
+        // MARK: - Onboarding Add To Dock
 
         case widgetsOnboardingCTAPressed
         case widgetsOnboardingDeclineOptionPressed
@@ -403,10 +415,6 @@ extension Pixel {
         case networkProtectionClientFailedToParseRegisteredServersResponse
         case networkProtectionClientFailedToFetchLocations
         case networkProtectionClientFailedToParseLocationsResponse
-        case networkProtectionClientFailedToEncodeRedeemRequest
-        case networkProtectionClientInvalidInviteCode
-        case networkProtectionClientFailedToRedeemInviteCode
-        case networkProtectionClientFailedToParseRedeemResponse
         case networkProtectionClientInvalidAuthToken
         
         case networkProtectionKeychainErrorFailedToCastKeychainValueToData
@@ -461,7 +469,6 @@ extension Pixel {
         case networkProtectionVPNConfigurationRemovalFailed
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
-        case networkProtectionConfigurationPixelTest
 
         case networkProtectionMalformedErrorDetected
 
@@ -627,6 +634,7 @@ extension Pixel {
         case syncRemoveDeviceError
         case syncDeleteAccountError
         case syncLoginExistingAccountError
+        case syncSecureStorageReadError
 
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
@@ -666,8 +674,10 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwiceWithin12Seconds
-        case userBehaviorReloadThreeTimesWithin20Seconds
+        case pageRefreshThreeTimesWithin20Seconds
+
+        case siteNotWorkingShown
+        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -838,6 +848,19 @@ extension Pixel {
 
         // MARK: WebView Error Page Shown
         case webViewErrorPageShown
+
+        // MARK: UserDefaults incositency monitoring
+        case protectedDataUnavailableWhenBecomeActive
+        case statisticsLoaderATBStateMismatch
+        case adAttributionReportStateMismatch
+        
+        // MARK: - DuckPlayer Overlay Navigation
+        case duckPlayerYouTubeOverlayNavigationBack
+        case duckPlayerYouTubeOverlayNavigationRefresh
+        case duckPlayerYouTubeNavigationWithinYouTube
+        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
+        case duckPlayerYouTubeOverlayNavigationClosed
+        case duckPlayerYouTubeNavigationIdle30
     }
 
 }
@@ -966,6 +989,7 @@ extension Pixel.Event {
         case .autocompleteDisplayedLocalHistory: return "m_autocomplete_display_local_history"
         case .autocompleteDisplayedOpenedTab: return "m_autocomplete_display_switch_to_tab"
         case .autocompleteSwipeToDelete: return "m_autocomplete_result_deleted"
+        case .autocompleteSwipeToDeleteDaily: return "m_autocomplete_result_deleted_daily"
 
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
@@ -1001,6 +1025,11 @@ extension Pixel.Event {
         case .daxDialogsEndOfJourneyTabUnique: return "m_dx_end_tab_unique"
         case .daxDialogsEndOfJourneyNewTabUnique: return "m_dx_end_new_tab_unique"
         case .daxDialogsEndOfJourneyDismissed: return "m_dx_end_dialog_dismissed"
+
+        case .onboardingAddToDockPromoImpressionsUnique: return "m_onboarding_add_to_dock_promo_impressions_unique"
+        case .onboardingAddToDockPromoShowTutorialCTATapped: return "m_onboarding_add_to_dock_promo_show_tutorial_button_tapped"
+        case .onboardingAddToDockPromoDismissCTATapped: return "m_onboarding_add_to_dock_promo_dismiss_button_tapped"
+        case .onboardingAddToDockTutorialDismissCTATapped: return "m_onboarding_add_to_dock_tutorial_dismiss_button_tapped"
 
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"
@@ -1221,10 +1250,6 @@ extension Pixel.Event {
         case .networkProtectionClientFailedToFetchLocations: return "m_netp_backend_api_error_failed_to_fetch_locations"
         case .networkProtectionClientFailedToParseLocationsResponse:
             return "m_netp_backend_api_error_parsing_locations_response_failed"
-        case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
-        case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
-        case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
-        case .networkProtectionClientFailedToParseRedeemResponse: return "m_netp_backend_api_error_parsing_redeem_response_failed"
         case .networkProtectionClientInvalidAuthToken: return "m_netp_backend_api_error_invalid_auth_token"
         case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
@@ -1269,7 +1294,6 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
-        case .networkProtectionConfigurationPixelTest: return "m_netp_vpn_configuration_pixel_test"
 
         case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
 
@@ -1438,6 +1462,7 @@ extension Pixel.Event {
         case .syncRemoveDeviceError: return "m_d_sync_remove_device_error"
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
+        case .syncSecureStorageReadError: return "m_d_sync_secure_storage_error"
 
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
@@ -1485,9 +1510,11 @@ extension Pixel.Event {
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-        // MARK: - User behavior
-        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
-        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        // MARK: - Page refresh toasts
+        case .pageRefreshThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+
+        case .siteNotWorkingShown: return "m_site-not-working_shown"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
@@ -1672,6 +1699,21 @@ extension Pixel.Event {
 
         // MARK: - DuckPlayer FE Application Telemetry
         case .duckPlayerLandscapeLayoutImpressions: return "duckplayer_landscape_layout_impressions"
+
+        // MARK: UserDefaults incositency monitoring
+        case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
+        case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
+        case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+                        
+        // MARK: - DuckPlayer Overlay Navigation
+        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
+        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
+        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
+        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
+        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
+        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+            
+            
         }
     }
 }
@@ -1723,6 +1765,7 @@ extension Pixel.Event {
         
         case tabClosed = "tab_closed"
         case appQuit = "app_quit"
+        case appBackgrounded = "app_backgrounded"
         case success
         
     }

@@ -1,5 +1,5 @@
 //
-//  OnboardingManagerMock.swift
+//  BrokenSitePromptLimiterStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,9 +18,15 @@
 //
 
 import Foundation
-@testable import DuckDuckGo
+import BrokenSitePrompt
+import Core
 
-final class OnboardingManagerMock: OnboardingHighlightsManaging, OnboardingAddToDockManaging {
-    var isOnboardingHighlightsEnabled: Bool = false
-    var addToDockEnabledState: OnboardingAddToDockState = .disabled
+final class BrokenSitePromptLimiterStore: BrokenSitePromptLimiterStoring {
+
+    @UserDefaultsWrapper(key: .lastBrokenSiteToastShownDate, defaultValue: .distantPast)
+    var lastToastShownDate: Date
+
+    @UserDefaultsWrapper(key: .toastDismissStreakCounter, defaultValue: 0)
+    var toastDismissStreakCounter: Int
+
 }

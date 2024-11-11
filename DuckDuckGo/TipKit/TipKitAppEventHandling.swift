@@ -44,10 +44,10 @@ struct TipKitAppEventHandler: TipKitAppEventHandling {
             // for more information
             logger.log("TipKit is temporarily disabled.")
 
-            //controller.configureTipKit([
+            // controller.configureTipKit([
             //    .displayFrequency(.immediate),
             //    .datastoreLocation(.applicationDefault)
-            //])
+            // ])
         } else {
             logger.log("TipKit initialization skipped: iOS 17.0 or later is required.")
         }

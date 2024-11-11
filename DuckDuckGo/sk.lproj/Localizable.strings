@@ -2253,14 +2253,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Odmietnuť";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Nahlásiť nefunkčnú stránku";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Toto nám pomáha vylepšiť prehliadač.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Stránka nefunguje? Oznámte to DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Webová stránka je nefunkčná";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odoslať správu";

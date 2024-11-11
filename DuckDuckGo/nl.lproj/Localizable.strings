@@ -2253,14 +2253,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Negeren";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Defecte website melden";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Hiermee kunnen we de browser verbeteren.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Werkt de site niet? Laat het DuckDuckGo weten.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "De website werkt niet";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";

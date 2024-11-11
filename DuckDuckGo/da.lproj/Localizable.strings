@@ -2253,14 +2253,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Afvis";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Rapporter ødelagt websted";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Det hjælper os med at forbedre browseren.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Virker webstedet ikke? Fortæl DuckDuckGo det.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Hvilket websted er ødelagt?";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Indsend rapport";

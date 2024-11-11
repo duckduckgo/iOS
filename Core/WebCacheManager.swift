@@ -84,12 +84,16 @@ public class WebCacheManager {
         var cookiesToUpdate = [HTTPCookie]()
         var leftoverContainerIDs = [UUID]()
         if #available(iOS 17, *) {
+            print("DEBUG: Getting data to clear...")
             let result = await containerBasedClearing(storeIdManager: dataStoreIdManager)
             cookiesToUpdate += result.cookies
             leftoverContainerIDs = result.leftoverContainerIDs
+
+            print("DEBUG: Got data to clear: \(cookiesToUpdate), containers: \(leftoverContainerIDs)")
         }
 
         // Perform legacy clearing to migrate to new container
+        print("DEBUG: Performing legacy data clearing")
         cookiesToUpdate += await legacyDataClearing() ?? []
 
         cookieStorage.updateCookies(cookiesToUpdate, keepingPreservedLogins: logins)
@@ -99,12 +103,16 @@ public class WebCacheManager {
         // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
         if #available(iOS 17, *), !leftoverContainerIDs.isEmpty {
             Task {
+                print("DEBUG: Sleeping for 3 seconds")
                 try? await Task.sleep(for: .seconds(3))
                 for uuid in leftoverContainerIDs {
+                    print("DEBUG: Data store is removing container")
                     try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
                 }
             }
         }
+
+        print("DEBUG: Clearing complete!")
     }
 
 }
@@ -173,6 +181,7 @@ extension WebCacheManager {
         let dataStore = WKWebsiteDataStore.default()
         let startTime = CACurrentMediaTime()
 
+        print("DEBUG: WebCacheManager is getting cookies")
         let cookies = await dataStore.httpCookieStore.allCookies()
         var types = WKWebsiteDataStore.allWebsiteDataTypes()
         types.insert("_WKWebsiteDataTypeMediaKeys")
@@ -184,6 +193,7 @@ extension WebCacheManager {
         types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
         types.insert("_WKWebsiteDataTypeAlternativeServices")
 
+        print("DEBUG: WebCacheManager is removing data")
         await dataStore.removeData(ofTypes: types, modifiedSince: .distantPast)
 
         self.removeObservationsData()

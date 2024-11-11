@@ -764,17 +764,26 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Yes";
 
-/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
-"contextual.onboarding.addToDock.buttons.dismiss" = "Start Browsing";
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Skip";
 
-/* Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock. */
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Start Browsing";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
 "contextual.onboarding.addToDock.buttons.tutorial" = "Show Me How";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.addToDock.endOfJourney.message" = "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.";
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "I’ll nest in easy reach for all your daily browsing.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Add me to your Dock!";
 
 /* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
-"contextual.onboarding.addToDock.tutorial.message" = "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!";
+"contextual.onboarding.addToDock.tutorial.message" = "Find the DuckDuckGo icon on your Home Screen. Then press and drag it into place. That’s it!";
 
 /* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
 "contextual.onboarding.addToDock.tutorial.title" = "Adding me to your Dock is easy.";
@@ -1859,17 +1868,8 @@ https://duckduckgo.com/mac";
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
-/* The title of the dialog button CTA to skip adding the DDB browser icon to the dock. */
-"onboarding.addToDock.cta" = "Skip";
-
-/* The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock. */
-"onboarding.addToDock.message" = "I can paddle into the Dock and perch there until you need me.";
-
-/* The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock. */
-"onboarding.addToDock.title" = "Want to add me to your Dock?";
-
-/* Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step. */
-"onboarding.addToDock.tutorial.cta" = "Got It";
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Got It";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";
@@ -2409,14 +2409,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Dismiss button */
 "site.not.working.dismiss" = "Dismiss";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Report Broken Site";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "This helps us improve the browser.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Site not working? Let DuckDuckGo know.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website Is Broken";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";

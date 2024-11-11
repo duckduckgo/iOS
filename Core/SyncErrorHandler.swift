@@ -102,6 +102,10 @@ public class SyncErrorHandler: EventMapping<SyncError> {
                 Pixel.fire(pixel: .syncFailedToSetupEngine, error: error)
             case .failedToReadSecureStore:
                 Pixel.fire(pixel: .syncSecureStorageReadError, error: error)
+            case .failedToDecodeSecureStoreData(let error):
+                Pixel.fire(pixel: .syncSecureStorageDecodingError, error: error)
+            case .accountRemoved(let reason):
+                Pixel.fire(pixel: .syncAccountRemoved(reason: reason.rawValue), error: error)
             default:
                 // Should this be so generic?
                 let domainEvent = Pixel.Event.syncSentUnauthenticatedRequest

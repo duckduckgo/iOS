@@ -1014,6 +1014,8 @@
 		D69FBF762B28BE3600B505F1 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */; };
 		D6ACEA322BBD55BF008FADDF /* TabURLInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6ACEA312BBD55BF008FADDF /* TabURLInterceptor.swift */; };
 		D6B67A122C332B6E002122EB /* DuckPlayerMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */; };
+		D6B9E8D22CDA4420002B640C /* DuckPlayerOverlayUsagePixels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E8D12CDA4418002B640C /* DuckPlayerOverlayUsagePixels.swift */; };
+		D6B9E8D42CDA8375002B640C /* DuckPlayerOverlayUsagePixelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E8D32CDA8369002B640C /* DuckPlayerOverlayUsagePixelsTests.swift */; };
 		D6BC8ACB2C5AA3860025375B /* DuckPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = D6BC8ACA2C5AA3860025375B /* DuckPlayer */; };
 		D6BFCB5F2B7524AA0051FF81 /* SubscriptionPIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */; };
 		D6BFCB612B7525160051FF81 /* SubscriptionPIRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */; };
@@ -2823,6 +2825,8 @@
 		D69FBF752B28BE3600B505F1 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
 		D6ACEA312BBD55BF008FADDF /* TabURLInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabURLInterceptor.swift; sourceTree = "<group>"; };
 		D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerMocks.swift; sourceTree = "<group>"; };
+		D6B9E8D12CDA4418002B640C /* DuckPlayerOverlayUsagePixels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerOverlayUsagePixels.swift; sourceTree = "<group>"; };
+		D6B9E8D32CDA8369002B640C /* DuckPlayerOverlayUsagePixelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckPlayerOverlayUsagePixelsTests.swift; sourceTree = "<group>"; };
 		D6BFCB5E2B7524AA0051FF81 /* SubscriptionPIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRView.swift; sourceTree = "<group>"; };
 		D6BFCB602B7525160051FF81 /* SubscriptionPIRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPIRViewModel.swift; sourceTree = "<group>"; };
 		D6D95CE22B6D9F8800960317 /* AsyncHeadlessWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncHeadlessWebViewModel.swift; sourceTree = "<group>"; };
@@ -5324,6 +5328,7 @@
 		D62EC3B72C24695800FC9D04 /* DuckPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				D6B9E8D32CDA8369002B640C /* DuckPlayerOverlayUsagePixelsTests.swift */,
 				D6B67A112C332B6E002122EB /* DuckPlayerMocks.swift */,
 				D62EC3BB2C2470E000FC9D04 /* DuckPlayerTests.swift */,
 				D62EC3B82C246A5600FC9D04 /* YoutublePlayerNavigationHandlerTests.swift */,
@@ -5342,6 +5347,7 @@
 				D63FF8892C1B21C2006DE24D /* DuckPlayerNavigationHandler.swift */,
 				D63FF8942C1B67E8006DE24D /* YoutubeOverlayUserScript.swift */,
 				D63FF8932C1B67E8006DE24D /* YoutubePlayerUserScript.swift */,
+				D6B9E8D12CDA4418002B640C /* DuckPlayerOverlayUsagePixels.swift */,
 				31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */,
 			);
 			path = DuckPlayer;
@@ -7471,6 +7477,7 @@
 				D670E5BB2BB6A75300941A42 /* SubscriptionNavigationCoordinator.swift in Sources */,
 				6F9FFE262C579BCD00A238BE /* NewTabPageShortcutsSettingsStorage.swift in Sources */,
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
+				D6B9E8D22CDA4420002B640C /* DuckPlayerOverlayUsagePixels.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,
 				D63677F52BBDB1C300605BA5 /* DaxLogoNavbarTitle.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
@@ -8001,6 +8008,7 @@
 				5694372B2BE3F2D900C0881B /* SyncErrorHandlerTests.swift in Sources */,
 				4B27FBB52C927435007E21A7 /* PersistentPixelTests.swift in Sources */,
 				987130C7294AAB9F00AB05E0 /* MenuBookmarksViewModelTests.swift in Sources */,
+				D6B9E8D42CDA8375002B640C /* DuckPlayerOverlayUsagePixelsTests.swift in Sources */,
 				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				9F1623092C9D14F10093C4FC /* DefaultVariantManagerOnboardingTests.swift in Sources */,
 				31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */,

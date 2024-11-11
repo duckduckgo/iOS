@@ -850,6 +850,14 @@ extension Pixel {
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
         case adAttributionReportStateMismatch
+        
+        // MARK: - DuckPlayer Overlay Navigation
+        case duckPlayerYouTubeOverlayNavigationBack
+        case duckPlayerYouTubeOverlayNavigationRefresh
+        case duckPlayerYouTubeNavigationWithinYouTube
+        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
+        case duckPlayerYouTubeOverlayNavigationClosed
+        case duckPlayerYouTubeNavigationIdle30
     }
 
 }
@@ -1690,6 +1698,16 @@ extension Pixel.Event {
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+                        
+        // MARK: - DuckPlayer Overlay Navigation
+        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
+        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
+        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
+        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
+        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
+        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+            
+            
         }
     }
 }

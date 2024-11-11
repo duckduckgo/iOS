@@ -2,7 +2,7 @@ name: PR Checks
 
 on:
   push:
-    branches: [ main, "release/**" ]
+    branches: [ main, "release/**", "sam/unit-test-experimentation" ]
   pull_request:
 
 jobs:

@@ -64,17 +64,23 @@ final class FireButtonReferenceTests: XCTestCase {
         let cookieStorage = CookieStorage()
 
         for test in referenceTests {
+            print("DEBUG: Starting reference test: \(test.name)")
+
             let cookie = try XCTUnwrap(cookie(for: test))
 
             let warmup = DataStoreWarmup()
+            print("DEBUG: Warning up: \(test.name)")
             await warmup.ensureReady(applicationState: .unknown)
 
             let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+
+            print("DEBUG: Setting cookie: \(test.name)")
             await cookieStore.setCookie(cookie)
             
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
-            
+
+            print("DEBUG: Clearing data: \(test.name)")
             await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
@@ -87,6 +93,8 @@ final class FireButtonReferenceTests: XCTestCase {
             
             // Reset cache
             cookieStorage.cookies = []
+
+            print("DEBUG: Test complete: \(test.name)")
         }
 
     }

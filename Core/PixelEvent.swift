@@ -671,8 +671,10 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwiceWithin12Seconds
-        case userBehaviorReloadThreeTimesWithin20Seconds
+        case pageRefreshThreeTimesWithin20Seconds
+
+        case siteNotWorkingShown
+        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -848,6 +850,14 @@ extension Pixel {
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
         case adAttributionReportStateMismatch
+        
+        // MARK: - DuckPlayer Overlay Navigation
+        case duckPlayerYouTubeOverlayNavigationBack
+        case duckPlayerYouTubeOverlayNavigationRefresh
+        case duckPlayerYouTubeNavigationWithinYouTube
+        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
+        case duckPlayerYouTubeOverlayNavigationClosed
+        case duckPlayerYouTubeNavigationIdle30
     }
 
 }
@@ -1494,9 +1504,11 @@ extension Pixel.Event {
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-        // MARK: - User behavior
-        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
-        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        // MARK: - Page refresh toasts
+        case .pageRefreshThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+
+        case .siteNotWorkingShown: return "m_site-not-working_shown"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
@@ -1686,6 +1698,16 @@ extension Pixel.Event {
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+                        
+        // MARK: - DuckPlayer Overlay Navigation
+        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
+        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
+        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
+        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
+        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
+        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+            
+            
         }
     }
 }

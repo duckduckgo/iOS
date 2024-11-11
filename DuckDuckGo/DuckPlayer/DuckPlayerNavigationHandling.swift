@@ -74,6 +74,9 @@ protocol DuckPlayerNavigationHandling: AnyObject {
     /// The DuckPlayer instance used for handling video playback.
     var duckPlayer: DuckPlayerControlling { get }
     
+    /// DuckPlayerOverlayUsagePixels instance used for handling pixel firing.
+    var duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? { get }
+    
     /// Handles URL changes in the web view.
     ///
     /// - Parameter webView: The web view where the URL change occurred.

@@ -867,7 +867,7 @@ class TabViewController: UIViewController {
         }
 
         if webView.canGoBack {
-            webView.goBack()            
+            webView.goBack()
             chromeDelegate?.omniBar.resignFirstResponder()
             return
         }

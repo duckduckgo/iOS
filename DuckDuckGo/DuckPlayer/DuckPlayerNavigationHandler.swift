@@ -575,7 +575,7 @@ final class DuckPlayerNavigationHandler: NSObject {
             // Watch in YT videos always open in new tab
             redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
         }
-    }    
+    }
     
 }
 
@@ -671,16 +671,16 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Update the Referrer based on the first URL change detected
         setReferrer(webView: webView)
         
-        // Overlay Usage Pixel handling
-        if let url = webView.url {
-            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
-        }
-        
         // We don't want YouTube redirects happening while default navigation is happening
         // This can be caused by Duplicate Nav events, and quick URL changes
         if let lastTimestamp = lastNavigationHandling,
            Date().timeIntervalSince(lastTimestamp) < lastNavigationHandlingThrottleDuration {
             return .notHandled(.duplicateNavigation)
+        }
+        
+        // Overlay Usage Pixel handling
+        if let url = webView.url {
+            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
         }
         
         // Check if DuckPlayer feature is enabled

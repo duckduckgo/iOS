@@ -89,9 +89,8 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
             }
         }
 
-        // Refined truncation logic:
+        // Truncation logic: Remove all URLs up to the last occurrence of the current URL in normalized form
         if let lastOccurrenceIndex = (0..<navigationHistory.count - 1).last(where: { navigationHistory[$0].forComparison() == comparisonURL }) {
-            // Truncate history to keep only up to the last occurrence of the current URL in normalized form
             navigationHistory = Array(navigationHistory.prefix(upTo: lastOccurrenceIndex + 1))
         }
 

@@ -57,7 +57,7 @@ struct SettingsState {
     var appTheme: ThemeName
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
-    var textSize: TextZoom
+    var textZoom: TextZoom
     var addressBar: AddressBar
     var showsFullURL: Bool
 
@@ -107,7 +107,7 @@ struct SettingsState {
             appTheme: .systemDefault,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
-            textSize: TextZoom(enabled: false, level: .percent100),
+            textZoom: TextZoom(enabled: false, level: .percent100),
             addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,

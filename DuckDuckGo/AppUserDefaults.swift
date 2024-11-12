@@ -27,7 +27,7 @@ public class AppUserDefaults: AppSettings {
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
-        public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
+        public static let textZoomChange = Notification.Name("com.duckduckgo.app.TextZoomChange")
         public static let favoritesDisplayModeChange = Notification.Name("com.duckduckgo.app.FavoritesDisplayModeChange")
         public static let syncPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
         public static let syncCredentialsPausedStateChanged = SyncCredentialsAdapter.syncCredentialsPausedStateChanged
@@ -235,19 +235,19 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
-    private var textSize: Int {
+    @UserDefaultsWrapper(key: .textZoom, defaultValue: 100)
+    private var textZoom: Int {
         didSet {
-            NotificationCenter.default.post(name: Notifications.textSizeChange, object: textSize)
+            NotificationCenter.default.post(name: Notifications.textZoomChange, object: textZoom)
         }
     }
 
     var defaultTextZoomLevel: TextZoomLevel {
         get {
-            return TextZoomLevel(rawValue: textSize) ?? .percent100
+            return TextZoomLevel(rawValue: textZoom) ?? .percent100
         }
         set {
-            textSize = newValue.rawValue
+            textZoom = newValue.rawValue
         }
     }
 

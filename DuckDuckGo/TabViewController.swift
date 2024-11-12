@@ -416,7 +416,7 @@ class TabViewController: UIViewController {
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initAttributionLogic()
         decorate()
-        addTextSizeObserver()
+        addTextZoomObserver()
         subscribeToEmailProtectionSignOutNotification()
         registerForDownloadsNotifications()
         registerForAddressBarLocationNotifications()
@@ -954,10 +954,10 @@ class TabViewController: UIViewController {
                                        breakageAdditionalInfo: makeBreakageAdditionalInfo())
     }
     
-    private func addTextSizeObserver() {
+    private func addTextZoomObserver() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onTextSizeChange),
-                                               name: AppUserDefaults.Notifications.textSizeChange,
+                                               selector: #selector(onTextZoomChange),
+                                               name: AppUserDefaults.Notifications.textZoomChange,
                                                object: nil)
     }
 
@@ -970,7 +970,7 @@ class TabViewController: UIViewController {
             }
     }
 
-    @objc func onTextSizeChange() {
+    @objc func onTextZoomChange() {
         textZoomCoordinator.onTextZoomChange(applyToWebView: webView)
     }
 
@@ -1428,7 +1428,7 @@ extension TabViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentlyLoadedURL = webView.url
-        onTextSizeChange()
+        onTextZoomChange()
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
         adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()

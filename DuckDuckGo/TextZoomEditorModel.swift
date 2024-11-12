@@ -57,7 +57,7 @@ class TextZoomEditorModel: ObservableObject {
         title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
         coordinator.set(textZoomLevel: TextZoomLevel.allCases[value], forHost: domain)
         NotificationCenter.default.post(
-            name: AppUserDefaults.Notifications.textSizeChange,
+            name: AppUserDefaults.Notifications.textZoomChange,
             object: nil)
         DailyPixel.fire(pixel: .zoomChangedOnPageDaily)
     }
@@ -65,8 +65,8 @@ class TextZoomEditorModel: ObservableObject {
     func onDismiss() {
         guard initialValue.rawValue != TextZoomLevel.allCases[value].rawValue else { return }
         Pixel.fire(.zoomChangedOnPage, withAdditionalParameters: [
-            PixelParameters.textSizeInitial: String(initialValue.rawValue),
-            PixelParameters.textSizeUpdated: String(TextZoomLevel.allCases[value].rawValue),
+            PixelParameters.textZoomInitial: String(initialValue.rawValue),
+            PixelParameters.textZoomUpdated: String(TextZoomLevel.allCases[value].rawValue),
         ])
     }
 

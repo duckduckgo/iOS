@@ -28,8 +28,8 @@ struct SettingsAccessibilityView: View {
 
     var body: some View {
         List {
-            if viewModel.state.textSize.enabled {
-                Section(footer: Text(UserText.textSizeDescription)) {
+            if viewModel.state.textZoom.enabled {
+                Section(footer: Text(UserText.textZoomDescription)) {
                     // Text Size
                     SettingsPickerCellView(label: UserText.settingsText,
                                            options: TextZoomLevel.allCases,

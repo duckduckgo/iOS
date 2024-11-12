@@ -26,7 +26,7 @@ struct ShortcutsView: View {
     let proxy: GeometryProxy?
 
     var body: some View {
-        NewTabPageGridView(geometry: proxy) { _ in
+        NewTabPageGridView(geometry: proxy, isUsingDynamicSpacing: true) { _ in
             ForEach(shortcuts) { shortcut in
                 Button {
                     model.openShortcut(shortcut)

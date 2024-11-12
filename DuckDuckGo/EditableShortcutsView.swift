@@ -28,7 +28,7 @@ struct EditableShortcutsView: View {
     private let haptics = UIImpactFeedbackGenerator()
 
     var body: some View {
-        NewTabPageGridView(geometry: geometry) { _ in
+        NewTabPageGridView(geometry: geometry, isUsingDynamicSpacing: true) { _ in
             ReorderableForEach(model.itemsSettings, id: \.item.id, isReorderingEnabled: true) { setting in
                 let isEnabled = model.enabledItems.contains(setting.item)
                 Button {

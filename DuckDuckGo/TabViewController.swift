@@ -2574,6 +2574,19 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
+        let blockedImage = UIImageView(image: UIImage(systemName: "hand.raised.fill"))
+        blockedImage.frame.origin = CGPoint(x: view.frame.size.width - 30, y: view.frame.size.height)
+        view.addSubview(blockedImage)
+        UIView.animate(withDuration: 3.0) {
+            blockedImage.frame.origin = CGPoint(x: self.view.frame.size.width - 30, y: self.view.frame.size.height / 2)
+        }
+
+        UIView.animate(withDuration: 0.3, delay: 2.0) {
+            blockedImage.alpha = 0.0
+        } completion: { _ in
+            blockedImage.removeFromSuperview()
+        }
+
         privacyInfo?.trackerInfo.addDetectedTracker(tracker, onPageWithURL: url)
     }
 }

@@ -91,8 +91,19 @@ enum NewTabPageGrid {
             let usesWideLayout = isLandscape || sizeClass == .regular
             return usesWideLayout ? ColumnCount.regular : ColumnCount.compact
         } else {
-            return UIDevice.current.userInterfaceIdiom == .pad ? ColumnCount.iPadStaticLayout : ColumnCount.compact
+            return staticGridColumnsCount(for: sizeClass)
         }
+    }
+
+    static func staticGridWidth(for sizeClass: UserInterfaceSizeClass?) -> CGFloat {
+        let columnsCount = CGFloat(staticGridColumnsCount(for: sizeClass))
+        return columnsCount * Item.edgeSize + (columnsCount - 1) * Item.staticSpacing
+    }
+
+    private static func staticGridColumnsCount(for sizeClass: UserInterfaceSizeClass?) -> Int {
+        let isPad = UIDevice.current.userInterfaceIdiom == .pad
+
+        return isPad && sizeClass == .regular ? ColumnCount.staticWideLayout : ColumnCount.compact
     }
 
     enum Item {
@@ -104,7 +115,7 @@ private extension NewTabPageGrid {
     enum ColumnCount {
         static let compact = 4
         static let regular = 6
-        static let iPadStaticLayout = 5
+        static let staticWideLayout = 5
     }
 }
 

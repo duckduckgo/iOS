@@ -2574,11 +2574,18 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
+        let isAdvertising = "Advertising" == tracker.category
+        let xOffset: CGFloat = isAdvertising ? 60 : 30
         let blockedImage = UIImageView(image: UIImage(systemName: "hand.raised.fill"))
-        blockedImage.frame.origin = CGPoint(x: view.frame.size.width - 30, y: view.frame.size.height)
+        blockedImage.frame.origin = CGPoint(x: view.frame.size.width - xOffset, y: view.frame.size.height)
+
+        if isAdvertising {
+            blockedImage.tintColor = .red60
+        }
+
         view.addSubview(blockedImage)
         UIView.animate(withDuration: 3.0) {
-            blockedImage.frame.origin = CGPoint(x: self.view.frame.size.width - 30, y: self.view.frame.size.height / 2)
+            blockedImage.frame.origin = CGPoint(x: self.view.frame.size.width - xOffset, y: self.view.frame.size.height / 2)
         }
 
         UIView.animate(withDuration: 0.3, delay: 2.0) {

@@ -219,8 +219,8 @@ extension Pixel {
         case bookmarkExportFailure
 
         case textZoomSettingsChanged
-        case zoomChangedOnPage
-        case zoomChangedOnPageDaily
+        case textZoomChangedOnPage
+        case textZoomChangedOnPageDaily
 
         case downloadStarted
         case downloadStartedDueToUnhandledMIMEType
@@ -1058,8 +1058,8 @@ extension Pixel.Event {
 
         // Text size is the legacy name
         case .textZoomSettingsChanged: return "m_text_size_settings_changed"
-        case .zoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
-        case .zoomChangedOnPage: return "m_menu_page_zoom_changed"
+        case .textZoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
+        case .textZoomChangedOnPage: return "m_menu_page_zoom_changed"
 
         case .downloadStarted: return "m_download_started"
         case .downloadStartedDueToUnhandledMIMEType: return "m_download_started_due_to_unhandled_mime_type"

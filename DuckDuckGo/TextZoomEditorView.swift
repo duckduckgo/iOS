@@ -88,7 +88,7 @@ struct TextZoomEditorView: View {
             slider()
             Spacer()
         }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(designSystemColor: .background))
     }
 

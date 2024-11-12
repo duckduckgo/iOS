@@ -24,14 +24,15 @@ struct NewTabPageGridView<Content: View>: View {
     @Environment(\.isLandscapeOrientation) var isLandscape
 
     let geometry: GeometryProxy?
+    let isUsingDynamicSpacing: Bool
     @ViewBuilder var content: (_ columnsCount: Int) -> Content
 
     @State private var width: CGFloat = .zero
 
     var body: some View {
-        let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
+        let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape, isDynamic: isUsingDynamicSpacing)
 
-        LazyVGrid(columns: flexibleColumns(columnsCount, width: width), spacing: 24, content: {
+        LazyVGrid(columns: createColumns(columnsCount), spacing: 24, content: {
             content(columnsCount)
         })
         .frame(maxWidth: .infinity)
@@ -41,12 +42,14 @@ struct NewTabPageGridView<Content: View>: View {
             return geometry[anchor].width
         })
         .onPreferenceChange(FramePreferenceKey.self, perform: { value in
-            width = value
+            if isUsingDynamicSpacing {
+                width = value
+            }
         })
         .padding(0)
     }
 
-    private func flexibleColumns(_ count: Int, width: CGFloat) -> [GridItem] {
+    private func flexibleColumns(_ count: Int) -> [GridItem] {
         let spacing: CGFloat?
         if width != .zero {
             let columnsWidth = NewTabPageGrid.Item.edgeSize * Double(count)
@@ -62,6 +65,17 @@ struct NewTabPageGridView<Content: View>: View {
                                          alignment: .top),
                      count: count)
     }
+
+    private func staticColumns(_ count: Int) -> [GridItem] {
+        return Array(repeating: GridItem(.fixed(NewTabPageGrid.Item.edgeSize),
+                                         spacing: NewTabPageGrid.Item.staticSpacing,
+                                         alignment: .top),
+                     count: count)
+    }
+
+    private func createColumns(_ count: Int) -> [GridItem] {
+        isUsingDynamicSpacing ? flexibleColumns(count) : staticColumns(count)
+    }
 }
 
 private struct FramePreferenceKey: PreferenceKey {
@@ -72,17 +86,28 @@ private struct FramePreferenceKey: PreferenceKey {
 }
 
 enum NewTabPageGrid {
-    enum ColumnCount {
-        static let compact = 4
-        static let regular = 6
+    static func columnsCount(for sizeClass: UserInterfaceSizeClass?, isLandscape: Bool, isDynamic: Bool) -> Int {
+        if isDynamic {
+            let usesWideLayout = isLandscape || sizeClass == .regular
+            return usesWideLayout ? ColumnCount.regular : ColumnCount.compact
+        } else {
+            return UIDevice.current.userInterfaceIdiom == .pad ? ColumnCount.iPadStaticLayout : ColumnCount.compact
+        }
     }
 
     enum Item {
         static let edgeSize = 64.0
     }
+}
 
-    static func columnsCount(for sizeClass: UserInterfaceSizeClass?, isLandscape: Bool) -> Int {
-        let usesWideLayout = isLandscape || sizeClass == .regular
-        return usesWideLayout ? ColumnCount.regular : ColumnCount.compact
+private extension NewTabPageGrid {
+    enum ColumnCount {
+        static let compact = 4
+        static let regular = 6
+        static let iPadStaticLayout = 5
     }
+}
+
+private extension NewTabPageGrid.Item {
+    static let staticSpacing = 32.0
 }

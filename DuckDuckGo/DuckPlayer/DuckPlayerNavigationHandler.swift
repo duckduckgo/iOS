@@ -117,7 +117,7 @@ final class DuckPlayerNavigationHandler: NSObject {
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self,
          tabNavigationHandler: DuckPlayerTabNavigationHandling? = nil,
-         duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? = nil) {
+         duckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring? = DuckPlayerOverlayUsagePixels()) {
         self.duckPlayer = duckPlayer
         self.featureFlagger = featureFlagger
         self.appSettings = appSettings
@@ -575,8 +575,6 @@ final class DuckPlayerNavigationHandler: NSObject {
             // Watch in YT videos always open in new tab
             redirectToYouTubeVideo(url: url, webView: webView, forceNewTab: true)
         }
-    
-    
     }
     
 }
@@ -638,7 +636,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 // Before performing the simulated request
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     self.performRequest(request: newRequest, webView: webView)
+                    self.duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: self.duckPlayerMode)
                     self.fireDuckPlayerPixels(webView: webView)
+                    
                 }
             } else {
                 redirectToYouTubeVideo(url: url, webView: webView)
@@ -663,9 +663,6 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleURLChange(webView: WKWebView) -> DuckPlayerNavigationHandlerURLChangeResult {
         
-        // Track overlayUsagePixels
-        duckPlayerOverlayUsagePixels?.registerNavigation(url: webView.url)
-        
         // We want to prevent multiple simultaneous redirects
         // This can be caused by Duplicate Nav events, and quick URL changes
         if let lastTimestamp = lastURLChangeHandling,
@@ -681,6 +678,12 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         if let lastTimestamp = lastNavigationHandling,
            Date().timeIntervalSince(lastTimestamp) < lastNavigationHandlingThrottleDuration {
             return .notHandled(.duplicateNavigation)
+        }
+        
+        // Overlay Usage Pixel handling
+        if let url = webView.url {
+            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
+            lastURLChangeHandling = Date()
         }
         
         // Check if DuckPlayer feature is enabled
@@ -735,7 +738,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
     @MainActor
     func handleGoBack(webView: WKWebView) {
                 
-        guard isDuckPlayerFeatureEnabled else {
+        guard let url = webView.url, url.isDuckPlayer, isDuckPlayerFeatureEnabled else {
             webView.goBack()
             return
         }
@@ -783,7 +786,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard let url = webView.url else {
             return
         }
-            
+                    
         if url.isDuckPlayer, duckPlayerMode != .disabled {
             redirectToDuckPlayerVideo(url: url, webView: webView, disableNewTab: true)
             return
@@ -832,6 +835,17 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         
         // Reset allowFirstVideo
         duckPlayer.settings.allowFirstVideo = false
+        
+        // Overlay Usage Pixel handling for Direct Navigation
+        if let url = webView.url, !url.isYoutube {
+            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
+        }
+        // Reset Overlay Last Fired pixel after the page is loaded
+        // A delay is required as Youtube sometimes performs an extra redirect on load
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.duckPlayerOverlayUsagePixels?.lastFiredPixel = nil
+        }
+        
         
     }
     
@@ -890,7 +904,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard isDuckPlayerFeatureEnabled else {
             return false
         }
-                
+        
         // Only account for in 'Always' mode
         if duckPlayerMode == .disabled {
             return false

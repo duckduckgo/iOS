@@ -821,7 +821,6 @@ class TabViewController: UIViewController {
     }
     
     private func hideProgressIndicator() {
-        Swift.print("** Hide progress indicator")
         progressWorker.didFinishLoading()
         webView.scrollView.refreshControl?.endRefreshing()
     }

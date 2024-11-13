@@ -1095,7 +1095,7 @@ class MainViewController: UIViewController {
     }
 
     private func updateOmniBarLoadingState() {
-        if currentTab?.webView.isLoading == true {
+        if currentTab?.isLoading == true {
             omniBar.startLoading()
         } else {
             omniBar.stopLoading()

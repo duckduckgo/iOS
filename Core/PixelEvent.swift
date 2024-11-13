@@ -852,6 +852,9 @@ extension Pixel {
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
         case adAttributionReportStateMismatch
+
+        // MARK: Browsing
+        case stopPageLoad
         
         // MARK: - DuckPlayer Overlay Navigation
         case duckPlayerYouTubeOverlayNavigationBack
@@ -1702,6 +1705,9 @@ extension Pixel.Event {
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+
+        // MARK: Browsing
+        case .stopPageLoad: return "m_stop-page-load"
                         
         // MARK: - DuckPlayer Overlay Navigation
         case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
@@ -1710,8 +1716,7 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
-            
-            
+
         }
     }
 }

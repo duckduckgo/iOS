@@ -125,6 +125,9 @@ final class MockOmniBarDelegate: OmniBarDelegate {
 
     // MARK: - Unused methods
 
+    func onAbortPressed() {
+    }
+
     func onEditingEnd() -> OmniBarEditingEndResult {
         return .dismissed
     }

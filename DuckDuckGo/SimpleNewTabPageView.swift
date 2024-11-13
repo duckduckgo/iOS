@@ -81,7 +81,7 @@ private extension SimpleNewTabPageView {
 
                     favoritesSectionView(proxy: proxy)
                 }
-                .padding(Metrics.largePadding)
+                .padding(sectionsViewPadding(in: proxy))
             }
             .withScrollKeyboardDismiss()
         }
@@ -99,7 +99,7 @@ private extension SimpleNewTabPageView {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .padding(Metrics.largePadding)
+        .padding(Metrics.regularPadding)
     }
 
     private var messagesSectionView: some View {
@@ -114,6 +114,11 @@ private extension SimpleNewTabPageView {
         FavoritesView(model: favoritesViewModel,
                       isAddingFavorite: .constant(false),
                       geometry: proxy)
+    }
+
+    private func sectionsViewPadding(in geometry: GeometryProxy) -> CGFloat {
+        let requiredWidth = NewTabPageGrid.staticGridWidth(for: horizontalSizeClass) + Metrics.regularPadding
+        return geometry.frame(in: .local).width >= requiredWidth ? Metrics.regularPadding : Metrics.smallPadding
     }
 }
 
@@ -130,8 +135,8 @@ private extension View {
 
 private struct Metrics {
 
-    static let regularPadding = 16.0
-    static let largePadding = 24.0
+    static let smallPadding = 12.0
+    static let regularPadding = 24.0
     static let sectionSpacing = 32.0
     static let nonGridSectionTopPadding = -8.0
 

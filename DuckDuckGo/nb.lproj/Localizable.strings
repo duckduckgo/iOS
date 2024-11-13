@@ -770,6 +770,30 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
 
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Hopp over";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Begynn å surfe";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Vis meg hvordan";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Husk at hver gang du surfer med meg, klippes vingene på en slesk annonse.\n\nSå ha meg i docken din for daglig surfing.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Jeg ligger rede til å nettsurfe med deg hver dag.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Legg meg til i docken din!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Finn DuckDuckGo-ikonet på startskjermen. Trykk på det og dra det dit du vil ha det. Det er det hele!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Det er enkelt å legge meg til i docken din.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
@@ -1783,6 +1807,9 @@
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Popup-vindu skjult";
+
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Den er grei";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Velg nettleseren din";

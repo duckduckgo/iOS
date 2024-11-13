@@ -54,7 +54,7 @@ public enum FeatureFlag: String {
     case networkProtectionEnforceRoutes
 }
 
-extension FeatureFlag: FeatureFlagProtocol {
+extension FeatureFlag: FeatureFlagDescribing {
     public var supportsLocalOverriding: Bool {
         false
     }

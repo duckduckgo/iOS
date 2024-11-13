@@ -251,7 +251,7 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
         return enabledFeatures.contains(feature)
     }
 
-    func isFeatureOn<Flag: FeatureFlagProtocol>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
+    func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         return !enabledFeatures.isEmpty
     }
 }

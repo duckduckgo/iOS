@@ -26,7 +26,7 @@ final class MockFeatureFlagger: FeatureFlagger {
 
     var enabledFeatureFlags: [FeatureFlag] = []
 
-    func isFeatureOn<Flag: FeatureFlagProtocol>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
+    func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         guard let flag = featureFlag as? FeatureFlag else {
             return false
         }

@@ -207,6 +207,9 @@ extension Pixel {
         case bookmarkAddFavoriteBySwipe
         case bookmarkDeletedFromBookmark
 
+        case bookmarksUIFavoritesAction
+        case bookmarksUIFavoritesManage
+
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -964,6 +967,9 @@ extension Pixel.Event {
         case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
         case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
         case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
+
+        case .bookmarksUIFavoritesAction: return "m_bookmarks_ui_favorites_action_daily"
+        case .bookmarksUIFavoritesManage: return "m_bookmarks_ui_favorites_manage_daily"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"

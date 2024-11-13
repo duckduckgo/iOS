@@ -683,6 +683,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Overlay Usage Pixel handling
         if let url = webView.url {
             duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
+            lastURLChangeHandling = Date()
         }
         
         // Check if DuckPlayer feature is enabled
@@ -835,6 +836,17 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         // Reset allowFirstVideo
         duckPlayer.settings.allowFirstVideo = false
         
+        // Overlay Usage Pixel handling for Direct Navigation
+        if let url = webView.url, !url.isYoutube {
+            duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: duckPlayerMode)
+        }
+        // Reset Overlay Last Fired pixel after the page is loaded
+        // A delay is required as Youtube sometimes performs an extra redirect on load
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.duckPlayerOverlayUsagePixels?.lastFiredPixel = nil
+        }
+        
+        
     }
     
     /// Resets settings when the web view starts loading a new page.
@@ -892,7 +904,7 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
         guard isDuckPlayerFeatureEnabled else {
             return false
         }
-                
+        
         // Only account for in 'Always' mode
         if duckPlayerMode == .disabled {
             return false

@@ -23,6 +23,7 @@ protocol DuckPlayerOverlayPixelFiring {
     
     var pixelFiring: PixelFiring.Type { get set }
     var navigationHistory: [URL] { get set }
+    var lastFiredPixel: Pixel.Event? { get set }
     
     func handleNavigationAndFirePixels(url: URL?, duckPlayerMode: DuckPlayerMode)
 }
@@ -31,6 +32,7 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
 
     var pixelFiring: PixelFiring.Type
     var navigationHistory: [URL] = []
+    var lastFiredPixel: Pixel.Event?
 
     private var idleTimer: Timer?
     private var idleTimeInterval: TimeInterval
@@ -40,12 +42,6 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
          timeoutInterval: TimeInterval = 30.0) {
         self.pixelFiring = pixelFiring
         self.idleTimeInterval = timeoutInterval
-    }
-
-    // Method to reset the idle timer
-    private func resetIdleTimer() {
-        idleTimer?.invalidate()
-        idleTimer = nil
     }
 
     func handleNavigationAndFirePixels(url: URL?, duckPlayerMode: DuckPlayerMode) {
@@ -72,7 +68,7 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
 
         // Fire the reload pixel if this is a reload navigation
         if isReload {
-            pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationRefresh, withAdditionalParameters: [:])
+            firePixel(.duckPlayerYouTubeOverlayNavigationRefresh)
         } else {
             // Determine if it’s a back navigation by looking further back in history
             let isBackNavigation = navigationHistory.count > 2 &&
@@ -80,23 +76,31 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
 
             // Fire the appropriate pixel based on navigation type
             if isBackNavigation {
-                pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationBack, withAdditionalParameters: [:])
+                firePixel(.duckPlayerYouTubeOverlayNavigationBack)
             } else if previousURL.isYoutubeWatch && currentURL.isYoutube {
                 // Forward navigation within YouTube (including non-video URLs)
-                pixelFiring.fire(.duckPlayerYouTubeNavigationWithinYouTube, withAdditionalParameters: [:])
+                firePixel(.duckPlayerYouTubeNavigationWithinYouTube)
             } else if previousURL.isYoutubeWatch && !currentURL.isYoutube && !currentURL.isDuckPlayer {
                 // Navigation outside YouTube
-                pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationOutsideYoutube, withAdditionalParameters: [:])
+                firePixel(.duckPlayerYouTubeOverlayNavigationOutsideYoutube)
+                navigationHistory.removeAll()
             }
         }
 
         // Truncation logic: Remove all URLs up to the last occurrence of the current URL in normalized form
-        if let lastOccurrenceIndex = (0..<navigationHistory.count - 1).last(where: { navigationHistory[$0].forComparison() == comparisonURL }) {
-            navigationHistory = Array(navigationHistory.prefix(upTo: lastOccurrenceIndex + 1))
+        if navigationHistory.count > 0 {
+            if let lastOccurrenceIndex = (0..<navigationHistory.count - 1).last(where: { navigationHistory[$0].forComparison() == comparisonURL }) {
+                navigationHistory = Array(navigationHistory.prefix(upTo: lastOccurrenceIndex + 1))
+            }
         }
-
-        // Cancel and reset the idle timer whenever a new navigation occurs
-        resetIdleTimer()
+    }
+    
+    private func firePixel(_ pixel: Pixel.Event) {
+        if lastFiredPixel == .duckPlayerYouTubeOverlayNavigationRefresh && pixel == .duckPlayerYouTubeOverlayNavigationRefresh {
+            return
+        }
+        lastFiredPixel = pixel
+        pixelFiring.fire(pixel, withAdditionalParameters: [:])
     }
 
 

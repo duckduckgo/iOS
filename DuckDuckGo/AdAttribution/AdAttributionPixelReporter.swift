@@ -29,6 +29,7 @@ final actor AdAttributionPixelReporter {
     private let attributionFetcher: AdAttributionFetcher
     private let featureFlagger: FeatureFlagger
     private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let variantManager: VariantManager
     private let pixelFiring: PixelFiringAsync.Type
     private var isSendingAttribution: Bool = false
 
@@ -50,12 +51,14 @@ final actor AdAttributionPixelReporter {
          attributionFetcher: AdAttributionFetcher = DefaultAdAttributionFetcher(),
          featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         variantManager: VariantManager = AppDependencyProvider.shared.variantManager,
          pixelFiring: PixelFiringAsync.Type = Pixel.self,
          inconsistencyMonitoring: AdAttributionReporterInconsistencyMonitoring = StorageInconsistencyMonitor()) {
         self.fetcherStorage = fetcherStorage
         self.attributionFetcher = attributionFetcher
         self.featureFlagger = featureFlagger
         self.privacyConfigurationManager = privacyConfigurationManager
+        self.variantManager = variantManager
         self.pixelFiring = pixelFiring
         self.inconsistencyMonitoring = inconsistencyMonitoring
     }
@@ -85,12 +88,14 @@ final actor AdAttributionPixelReporter {
         if let (token, attributionData) = await self.attributionFetcher.fetch() {
             if attributionData.attribution {
                 let settings = AdAttributionReporterSettings(privacyConfigurationManager.privacyConfig)
-                let parameters = self.pixelParametersForAttribution(attributionData, attributionToken: settings.includeToken ? token : nil)
+                let token = settings.includeToken ? token : nil
+                let isReinstall = variantManager.isIndicatingReturningUser
+                let parameters = self.pixelParametersForAttribution(attributionData, isReinstall: isReinstall, attributionToken: token)
                 do {
                     try await pixelFiring.fire(
                         pixel: .appleAdAttribution,
                         withAdditionalParameters: parameters,
-                        includedParameters: [.appVersion, .atb]
+                        includedParameters: [.appVersion]
                     )
                 } catch {
                     return false
@@ -127,7 +132,7 @@ final actor AdAttributionPixelReporter {
         }
     }
 
-    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, attributionToken: String?) -> [String: String] {
+    private func pixelParametersForAttribution(_ attribution: AdServicesAttributionResponse, isReinstall: Bool, attributionToken: String?) -> [String: String] {
         var params: [String: String] = [:]
 
         params[PixelParameters.adAttributionAdGroupID] = attribution.adGroupId.map(String.init)
@@ -139,6 +144,7 @@ final actor AdAttributionPixelReporter {
         params[PixelParameters.adAttributionKeywordID] = attribution.keywordId.map(String.init)
         params[PixelParameters.adAttributionAdID] = attribution.adId.map(String.init)
         params[PixelParameters.adAttributionToken] = attributionToken
+        params[PixelParameters.adAttributionIsReinstall] = isReinstall ? "1" : "0"
 
         return params
     }
@@ -159,5 +165,11 @@ private struct AdAttributionReporterSettings {
 
     private enum Key {
         static let includeToken = "includeToken"
+    }
+}
+
+private extension VariantManager {
+    var isIndicatingReturningUser: Bool {
+        currentVariant?.name == VariantIOS.returningUser.name
     }
 }

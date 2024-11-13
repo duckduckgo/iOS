@@ -24,41 +24,6 @@ import BrowserServicesKit
 
 final class DefaultVariantManagerOnboardingTests: XCTestCase {
 
-    // MARK: - Is New Intro Flow
-
-    func testWhenIsNewIntroFlow_AndFeatureIsNewOnboardingIntro_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntro])
-
-        // WHEN
-        let result = sut.isNewIntroFlow
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenIsNewIntroFlow_AndFeaturesContainNewOnboardingIntroHighlights_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntroHighlights])
-
-        // WHEN
-        let result = sut.isNewIntroFlow
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenIsNewIntroFlow_AndFeaturesDoNotContainNewOnboardingIntroOrNewOnboardingIntroHighlights_ThenReturnFalse() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.contextualDaxDialogs])
-
-        // WHEN
-        let result = sut.isNewIntroFlow
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
     // MARK: - Is Onboarding Highlights
 
     func testWhenIsOnboardingHighlights_AndFeaturesContainOnboardingHighlights_ThenReturnTrue() {

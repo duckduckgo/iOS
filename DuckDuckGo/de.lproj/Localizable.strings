@@ -770,6 +770,30 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
 
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Überspringen";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Mit dem Browsen beginnen";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Anleitung";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Hinweis: Jedes Mal, wenn du mit mir browst, verliert eine aufdringliche Werbung ihren Schrecken.\n\nBehalte mich also zum täglichen Browsen in deinem Dock.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Ich niste in leicht erreichbarer Nähe für dein tägliches Browsen.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Füge mich zu deinem Dock hinzu!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Suche auf deinem Startbildschirm das DuckDuckGo-Symbol. Klicke es an und ziehe es dann an die richtige Stelle. Das war es schon!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Es ist ganz einfach, mich zu deinem Dock hinzuzufügen.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
@@ -1784,6 +1808,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up ausgeblendet";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Verstanden";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Wähle deinen Browser";
 
@@ -2253,14 +2280,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Verwerfen";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Fehlerhafte Website melden";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Das hilft uns, den Browser zu verbessern.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Webseite funktioniert nicht? Sag DuckDuckGo Bescheid.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website ist fehlerhaft";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Bericht senden";

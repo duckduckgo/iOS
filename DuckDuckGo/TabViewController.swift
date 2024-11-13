@@ -629,7 +629,9 @@ class TabViewController: UIViewController {
             reload()
             delegate?.tabDidRequestRefresh(tab: self)
             Pixel.fire(pixel: .pullToRefresh)
-            AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
+            if let url = webView.url {
+                AppDependencyProvider.shared.pageRefreshMonitor.register(for: url)
+            }
         }, for: .valueChanged)
 
         refreshControl.backgroundColor = .systemBackground
@@ -2506,7 +2508,9 @@ extension TabViewController: UIGestureRecognizerDelegate {
         }
 
         refreshCountSinceLoad += 1
-        AppDependencyProvider.shared.userBehaviorMonitor.handleRefreshAction()
+        if let url {
+            AppDependencyProvider.shared.pageRefreshMonitor.register(for: url)
+        }
     }
 
 }

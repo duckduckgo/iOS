@@ -65,7 +65,8 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
         var isReload = false
         // Check for a reload condition: when current videoID is the same as Previous
         if let currentVideoID = currentURL.youtubeVideoParams?.videoID,
-           let previousVideoID = previousURL.youtubeVideoParams?.videoID {
+           let previousVideoID = previousURL.youtubeVideoParams?.videoID,
+           !previousURL.isDuckPlayer, !currentURL.isDuckPlayer {
             isReload = currentVideoID == previousVideoID
         }
 
@@ -83,7 +84,7 @@ final class DuckPlayerOverlayUsagePixels: DuckPlayerOverlayPixelFiring {
             } else if previousURL.isYoutubeWatch && currentURL.isYoutube {
                 // Forward navigation within YouTube (including non-video URLs)
                 pixelFiring.fire(.duckPlayerYouTubeNavigationWithinYouTube, withAdditionalParameters: [:])
-            } else if previousURL.isYoutubeWatch && !currentURL.isYoutube {
+            } else if previousURL.isYoutubeWatch && !currentURL.isYoutube && !currentURL.isDuckPlayer {
                 // Navigation outside YouTube
                 pixelFiring.fire(.duckPlayerYouTubeOverlayNavigationOutsideYoutube, withAdditionalParameters: [:])
             }

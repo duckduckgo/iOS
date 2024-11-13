@@ -636,7 +636,9 @@ extension DuckPlayerNavigationHandler: DuckPlayerNavigationHandling {
                 // Before performing the simulated request
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     self.performRequest(request: newRequest, webView: webView)
+                    self.duckPlayerOverlayUsagePixels?.handleNavigationAndFirePixels(url: url, duckPlayerMode: self.duckPlayerMode)
                     self.fireDuckPlayerPixels(webView: webView)
+                    
                 }
             } else {
                 redirectToYouTubeVideo(url: url, webView: webView)

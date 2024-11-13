@@ -40,36 +40,34 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
-    private let historyManager: HistoryManaging
-    var historyCoordinator: HistoryCoordinating {
-        historyManager.historyCoordinator
-    }
-
-    private let bookmarksDatabase: CoreDataDatabase
     private let appSettings: AppSettings
     private let model: AutocompleteViewModel
-
-    private var task: URLSessionDataTask?
 
     @Published private var query = ""
     private var queryDebounceCancellable: AnyCancellable?
 
-    private lazy var cachedBookmarks: CachedBookmarks = {
-        CachedBookmarks(bookmarksDatabase)
-    }()
-
-    private lazy var openTabs: [BrowserTab] = {
-        tabsModel.tabs.compactMap {
-            guard let url = $0.link?.url else { return nil }
-            return OpenTab(title: $0.link?.displayTitle ?? "", url: url)
-        }
-    }()
-
     private var lastResults: SuggestionResult?
     private var loader: SuggestionLoader?
     private var historyMessageManager: HistoryMessageManager
-    private var tabsModel: TabsModel
     private var featureFlagger: FeatureFlagger
+    private let historyManager: HistoryManaging
+    private let bookmarksDatabase: CoreDataDatabase
+    private let tabsModel: TabsModel
+
+    private var task: URLSessionDataTask?
+
+    lazy var dataSource: AutocompleteSuggestionsDataSource = {
+        return AutocompleteSuggestionsDataSource(
+            historyManager: historyManager,
+            bookmarksDatabase: bookmarksDatabase,
+            featureFlagger: featureFlagger,
+            tabsModel: tabsModel) { [weak self] request, completion in
+                self?.task = Self.session.dataTask(with: request) { data, _, error in
+                    completion(data, error)
+                }
+                self?.task?.resume()
+        }
+    }()
 
     init(historyManager: HistoryManaging,
          bookmarksDatabase: CoreDataDatabase,
@@ -81,6 +79,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         self.tabsModel = tabsModel
         self.historyManager = historyManager
         self.bookmarksDatabase = bookmarksDatabase
+
         self.appSettings = appSettings
         self.historyMessageManager = historyMessageManager
         self.featureFlagger = featureFlagger
@@ -191,7 +190,7 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
             return url
         })
 
-        loader?.getSuggestions(query: query, usingDataSource: self) { [weak self] result, error in
+        loader?.getSuggestions(query: query, usingDataSource: dataSource) { [weak self] result, error in
             guard let self, error == nil else { return }
             let updatedResults = result ?? .empty
             self.lastResults = updatedResults
@@ -281,47 +280,6 @@ extension AutocompleteViewController: AutocompleteViewModelDelegate {
             assertionFailure("Only history items can be deleted")
         }
     }
-}
-
-extension AutocompleteViewController: SuggestionLoadingDataSource {
-
-    var platform: Platform {
-        .mobile
-    }
-
-    func history(for suggestionLoading: Suggestions.SuggestionLoading) -> [HistorySuggestion] {
-        return historyCoordinator.history ?? []
-    }
-
-    func bookmarks(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.Bookmark] {
-        return cachedBookmarks.all
-    }
-
-    func internalPages(for suggestionLoading: Suggestions.SuggestionLoading) -> [Suggestions.InternalPage] {
-        return []
-    }
-
-    func openTabs(for suggestionLoading: any SuggestionLoading) -> [BrowserTab] {
-        if featureFlagger.isFeatureOn(.autcompleteTabs) {
-            return openTabs
-        }
-        return []
-    }
-
-    func suggestionLoading(_ suggestionLoading: Suggestions.SuggestionLoading, suggestionDataFromUrl url: URL, withParameters parameters: [String: String], completion: @escaping (Data?, Error?) -> Void) {
-        var queryURL = url
-        parameters.forEach {
-            queryURL = queryURL.appendingParameter(name: $0.key, value: $0.value)
-        }
-
-        var request = URLRequest.developerInitiated(queryURL)
-        request.allHTTPHeaderFields = APIRequest.Headers().httpHeaders
-        task = Self.session.dataTask(with: request) { data, _, error in
-            completion(data, error)
-        }
-        task?.resume()
-    }
-
 }
 
 private extension SuggestionResult {

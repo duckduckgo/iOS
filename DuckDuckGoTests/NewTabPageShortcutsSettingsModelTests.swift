@@ -67,7 +67,10 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 }
 
 private final class AlwaysTrueFeatureFlagger: FeatureFlagger {
-    func isFeatureOn<F>(forProvider: F) -> Bool where F: FeatureFlagSourceProviding {
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
+    var localOverrides: FeatureFlagLocalOverriding?
+
+    func isFeatureOn<Flag: FeatureFlagProtocol>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         true
     }
 }

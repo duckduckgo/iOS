@@ -242,13 +242,16 @@ enum MockFeatureFlag: Hashable {
 }
 
 final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
+    var localOverrides: FeatureFlagLocalOverriding?
+
     var enabledFeatures: Set<MockFeatureFlag> = []
 
     func isFeatureOn(_ feature: MockFeatureFlag) -> Bool {
         return enabledFeatures.contains(feature)
     }
 
-    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: FeatureFlagSourceProviding {
+    func isFeatureOn<Flag: FeatureFlagProtocol>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         return !enabledFeatures.isEmpty
     }
 }

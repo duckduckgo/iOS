@@ -66,7 +66,12 @@ class TabViewController: UIViewController {
     private let instrumentation = TabInstrumentation()
 
     var isLinkPreview = false
-    
+
+    // A workaround for an issue when in some cases webview reports `isLoading == true` when it was stoppped.
+    var isLoading: Bool {
+        webView.isLoading && !wasLoadingStoppedExternally
+    }
+
     var openedByPage = false
     weak var openingTab: TabViewController? {
         didSet {
@@ -162,6 +167,9 @@ class TabViewController: UIViewController {
 
     // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
     private var fireWoFollowUp = false
+
+    // Indicates if there was an external call to stop loading current request. Resets on new load request, refresh and failures.
+    private var wasLoadingStoppedExternally = false
 
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
@@ -660,6 +668,7 @@ class TabViewController: UIViewController {
     }
 
     public func load(url: URL) {
+        wasLoadingStoppedExternally = false
         webView.stopLoading()
         dismissJSAlertIfNeeded()
 
@@ -828,6 +837,7 @@ class TabViewController: UIViewController {
     }
 
     public func reload() {
+        wasLoadingStoppedExternally = false
         updateContentMode()
         cachedRuntimeConfigurationForDomain = [:]
         if let handler = duckPlayerNavigationHandler {
@@ -835,6 +845,7 @@ class TabViewController: UIViewController {
         } else {
             webView.reload()
         }
+        delegate?.tabLoadingStateDidChange(tab: self)
         privacyDashboard?.dismiss(animated: true)
     }
     
@@ -1166,6 +1177,14 @@ class TabViewController: UIViewController {
     
     func onCopyAction(for text: String) {
         UIPasteboard.general.string = text
+    }
+
+    func stopLoading() {
+        webView.stopLoading()
+        wasLoadingStoppedExternally = true
+
+        hideProgressIndicator()
+        delegate?.tabLoadingStateDidChange(tab: self)
     }
 
     private func cleanUpBeforeClosing() {
@@ -1606,6 +1625,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        Logger.general.debug("didFailNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         webpageDidFailToLoad()
@@ -1617,6 +1637,9 @@ extension TabViewController: WKNavigationDelegate {
 
     private func webpageDidFailToLoad() {
         Logger.general.debug("webpageLoading failed")
+
+        wasLoadingStoppedExternally = false
+
         if isError {
             showBars(animated: true)
             privacyInfo = nil
@@ -1627,6 +1650,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        Logger.general.debug("didFailProvisionalNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
@@ -1639,7 +1663,7 @@ extension TabViewController: WKNavigationDelegate {
         if error.code == 102 && error.domain == "WebKitErrorDomain" {
             return
         }
-        
+
         if let url = url,
            let domain = url.host,
            error.code == Constants.frameLoadInterruptedErrorCode {
@@ -1648,6 +1672,15 @@ extension TabViewController: WKNavigationDelegate {
 
             // Reset the URL, e.g if opened externally
             self.url = webView.url
+        }
+
+        // Bail out before showing error when navigation was cancelled by the user
+        if error.code == NSURLErrorCancelled && error.domain == NSURLErrorDomain {
+            webpageDidFailToLoad()
+
+            // Reset url to current one, as navigation was not successful
+            self.url = webView.url
+            return
         }
 
         // wait before showing errors in case they recover automatically

@@ -53,7 +53,6 @@ class SettingsLegacyViewProvider: ObservableObject {
         case addToDock,
              sync,
              logins,
-             textSize,
              appIcon,
              gpc,
              autoconsent,
@@ -72,7 +71,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     
     // Legacy UIKit Views (Pushed unmodified)
     var addToDock: UIViewController { instantiate( "instructions", fromStoryboard: "HomeRow") }
-    var textSettings: UIViewController { return instantiate("TextSize", fromStoryboard: "Settings") }
     var appIcon: UIViewController { instantiate("AppIcon", fromStoryboard: "Settings") }
     var gpc: UIViewController { instantiate("DoNotSell", fromStoryboard: "Settings") }
     var autoConsent: UIViewController { instantiate("AutoconsentSettingsViewController", fromStoryboard: "Settings") }

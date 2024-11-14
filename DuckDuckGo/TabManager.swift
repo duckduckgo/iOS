@@ -42,7 +42,10 @@ class TabManager {
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
+    private let featureFlagger: FeatureFlagger
+    private let textZoomCoordinator: TextZoomCoordinating
     private let subscriptionCookieManager: SubscriptionCookieManaging
+    private let appSettings: AppSettings
 
     weak var delegate: TabDelegate?
 
@@ -60,7 +63,10 @@ class TabManager {
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
          contextualOnboardingLogic: ContextualOnboardingLogic,
          onboardingPixelReporter: OnboardingPixelReporting,
-         subscriptionCookieManager: SubscriptionCookieManaging) {
+         featureFlagger: FeatureFlagger,
+         subscriptionCookieManager: SubscriptionCookieManaging,
+         appSettings: AppSettings,
+         textZoomCoordinator: TextZoomCoordinating) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -71,7 +77,10 @@ class TabManager {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.featureFlagger = featureFlagger
         self.subscriptionCookieManager = subscriptionCookieManager
+        self.appSettings = appSettings
+        self.textZoomCoordinator = textZoomCoordinator
         registerForNotifications()
     }
 
@@ -84,6 +93,7 @@ class TabManager {
     @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
+
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
@@ -93,8 +103,9 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              featureFlagger: featureFlagger,
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -172,8 +183,9 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                                              subscriptionCookieManager: subscriptionCookieManager)
+                                                              featureFlagger: featureFlagger,
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
@@ -356,4 +368,5 @@ extension TabManager {
             TabPreviewsCleanup.shared.startCleanup(with: model, source: previewsSource)
         }
     }
+
 }

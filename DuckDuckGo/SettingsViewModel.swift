@@ -43,6 +43,8 @@ final class SettingsViewModel: ObservableObject {
     var emailManager: EmailManager { EmailManager() }
     private let historyManager: HistoryManaging
     let privacyProDataReporter: PrivacyProDataReporting?
+    let textZoomCoordinator: TextZoomCoordinating
+
     // Subscription Dependencies
     private let subscriptionManager: SubscriptionManager
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
@@ -63,7 +65,8 @@ final class SettingsViewModel: ObservableObject {
     
     // App Data State Notification Observer
     private var appDataClearingObserver: Any?
-    
+    private var textZoomObserver: Any?
+
     // Closures to interact with legacy view controllers through the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
@@ -77,7 +80,7 @@ final class SettingsViewModel: ObservableObject {
     enum Features {
         case sync
         case autofillAccessCredentialManagement
-        case textSize
+        case zoomLevel
         case voiceSearch
         case addressbarPosition
         case speechRecognition
@@ -256,6 +259,20 @@ final class SettingsViewModel: ObservableObject {
         )
     }
 
+    var textZoomLevelBinding: Binding<TextZoomLevel> {
+        Binding<TextZoomLevel>(
+            get: { self.state.textZoom.level },
+            set: { newValue in
+                Pixel.fire(.settingsAccessiblityTextZoom, withAdditionalParameters: [
+                    PixelParameters.textZoomInitial: String(self.appSettings.defaultTextZoomLevel.rawValue),
+                    PixelParameters.textZoomUpdated: String(newValue.rawValue),
+                ])
+                self.appSettings.defaultTextZoomLevel = newValue
+                self.state.textZoom.level = newValue
+            }
+        )
+    }
+
     var duckPlayerModeBinding: Binding<DuckPlayerMode> {
         Binding<DuckPlayerMode>(
             get: {
@@ -368,7 +385,8 @@ final class SettingsViewModel: ObservableObject {
          deepLink: SettingsDeepLinkSection? = nil,
          historyManager: HistoryManaging,
          syncPausedStateManager: any SyncPausedStateManaging,
-         privacyProDataReporter: PrivacyProDataReporting) {
+         privacyProDataReporter: PrivacyProDataReporting,
+         textZoomCoordinator: TextZoomCoordinating) {
 
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
@@ -379,6 +397,7 @@ final class SettingsViewModel: ObservableObject {
         self.historyManager = historyManager
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
+        self.textZoomCoordinator = textZoomCoordinator
 
         setupNotificationObservers()
         updateRecentlyVisitedSitesVisibility()
@@ -387,6 +406,7 @@ final class SettingsViewModel: ObservableObject {
     deinit {
         subscriptionSignOutObserver = nil
         appDataClearingObserver = nil
+        textZoomObserver = nil
     }
 }
 
@@ -402,7 +422,7 @@ extension SettingsViewModel {
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
-            textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
+            textZoom: SettingsState.TextZoom(enabled: textZoomCoordinator.isEnabled, level: appSettings.defaultTextZoomLevel),
             addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,
@@ -605,10 +625,6 @@ extension SettingsViewModel {
             pushViewController(legacyViewProvider.loginSettings(delegate: self,
                                                             selectedAccount: state.activeWebsiteAccount))
 
-        case .textSize:
-            firePixel(.settingsAccessiblityTextSize)
-            pushViewController(legacyViewProvider.textSettings)
-
         case .gpc:
             firePixel(.settingsDoNotSellShown)
             pushViewController(legacyViewProvider.gpc)
@@ -771,6 +787,12 @@ extension SettingsViewModel {
             self?.state.autoclearDataEnabled = (AutoClearSettingsModel(settings: settings) != nil)
         }
         
+        textZoomObserver = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.textZoomChange,
+                                                                  object: nil,
+                                                                  queue: .main, using: { [weak self] _ in
+            guard let self = self else { return }
+            self.state.textZoom = SettingsState.TextZoom(enabled: true, level: self.appSettings.defaultTextZoomLevel)
+        })
     }
     
     func restoreAccountPurchase() async {

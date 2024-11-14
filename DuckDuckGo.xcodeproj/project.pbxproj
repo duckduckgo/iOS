@@ -617,6 +617,7 @@
 		9825F9DB293F2E8700F220F2 /* BookmarksTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9825F9DA293F2E8700F220F2 /* BookmarksTestData.swift */; };
 		982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982686AC2600C0850011A8D6 /* ActionMessageView.swift */; };
 		982686B92600C0960011A8D6 /* ActionMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982686B82600C0960011A8D6 /* ActionMessageView.xib */; };
+		982995A22CE64DC1004126D2 /* WebViewWarmupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9853D6F72CE6434D0044326C /* WebViewWarmupHelper.swift */; };
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */; };
@@ -2026,6 +2027,7 @@
 		9852CD8D251EABCC001A1575 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9852CD90251EABCC001A1575 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9852CD91251EABCC001A1575 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9853D6F72CE6434D0044326C /* WebViewWarmupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWarmupHelper.swift; sourceTree = "<group>"; };
 		9856A1982933D2EB00ACB44F /* BookmarksModelsErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksModelsErrorHandling.swift; sourceTree = "<group>"; };
 		985892512260B1B200EEB31B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		9858AF7B251EAC0300025687 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5759,6 +5761,7 @@
 				31B1FA86286EFC5C00CA3C1C /* XCTestCaseExtension.swift */,
 				EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */,
 				9F4CC5232C4A4F0D006A96EB /* SwiftUITestUtilities.swift */,
+				9853D6F72CE6434D0044326C /* WebViewWarmupHelper.swift */,
 			);
 			name = TestUtils;
 			sourceTree = "<group>";
@@ -8077,6 +8080,7 @@
 				6F03CB052C32EFCC004179A8 /* MockPixelFiring.swift in Sources */,
 				987130C4294AAB9F00AB05E0 /* FavoriteListViewModelTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
+				982995A22CE64DC1004126D2 /* WebViewWarmupHelper.swift in Sources */,
 				310E79BD2949CAA5007C49E8 /* FireButtonReferenceTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
 				31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */,

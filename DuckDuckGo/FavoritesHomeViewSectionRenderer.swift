@@ -274,7 +274,7 @@ class FavoritesHomeViewSectionRenderer {
               let dragItem = coordinator.items.first?.dragItem,
               let sourcePath = coordinator.items.first?.sourceIndexPath,
               let destinationPath = coordinator.destinationIndexPath,
-              let cell = self.collectionView(collectionView, cellForItemAt: sourcePath) as? FavoriteHomeCell,
+              let cell = collectionView.cellForItem(at: sourcePath) as? FavoriteHomeCell,
               let favorite = cell.favorite
         else { return }
 
@@ -291,7 +291,7 @@ class FavoritesHomeViewSectionRenderer {
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return [] }
 
         if let size = cell.iconImage.image?.size.width, size <= 32 {
             cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor

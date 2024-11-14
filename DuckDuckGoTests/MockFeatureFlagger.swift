@@ -21,11 +21,13 @@ import BrowserServicesKit
 import Core
 
 final class MockFeatureFlagger: FeatureFlagger {
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
+    var localOverrides: FeatureFlagLocalOverriding?
 
     var enabledFeatureFlags: [FeatureFlag] = []
 
-    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
-        guard let flag = provider as? FeatureFlag else {
+    func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
+        guard let flag = featureFlag as? FeatureFlag else {
             return false
         }
         guard enabledFeatureFlags.contains(flag) else {

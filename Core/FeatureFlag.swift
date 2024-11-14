@@ -54,7 +54,11 @@ public enum FeatureFlag: String {
     case networkProtectionEnforceRoutes
 }
 
-extension FeatureFlag: FeatureFlagSourceProviding {
+extension FeatureFlag: FeatureFlagDescribing {
+    public var supportsLocalOverriding: Bool {
+        false
+    }
+
     public var source: FeatureFlagSource {
         switch self {
         case .debugMenu:
@@ -117,6 +121,6 @@ extension FeatureFlag: FeatureFlagSourceProviding {
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
-        return isFeatureOn(forProvider: featureFlag)
+        return isFeatureOn(for: featureFlag)
     }
 }

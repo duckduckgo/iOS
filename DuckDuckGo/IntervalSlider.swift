@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class IntervalSlider: UISlider {
     
@@ -40,14 +41,8 @@ class IntervalSlider: UISlider {
         
         let thumbRect = thumbRect(forBounds: rect, trackRect: trackRect, value: 1.0)
         let thumbOffset = Darwin.round(thumbRect.width/2) - 3
-        
-        let newTrackRect = trackRect.inset(by: UIEdgeInsets(top: 0.0, left: thumbOffset, bottom: 0.0, right: thumbOffset))
-                        
-        let color: UIColor = UIColor.cornflowerBlue
-        let bpath: UIBezierPath = UIBezierPath(rect: newTrackRect)
 
-        color.set()
-        bpath.fill()
+        let newTrackRect = trackRect.inset(by: UIEdgeInsets(top: 0.0, left: thumbOffset, bottom: 0.0, right: thumbOffset))
 
         guard steps.count > 1 else { return }
         for i in 0...steps.count-1 {
@@ -58,8 +53,13 @@ class IntervalSlider: UISlider {
                                   width: Constants.markWidth, height: Constants.markHeight)
             
             let markPath: UIBezierPath = UIBezierPath(roundedRect: markRect, cornerRadius: Constants.markCornerRadius)
-            color.set()
-        
+
+            if Int(self.value) >= i {
+                minimumTrackTintColor?.set()
+            } else {
+                maximumTrackTintColor?.set()
+            }
+
             markPath.fill()
         }
     }
@@ -73,4 +73,48 @@ class IntervalSlider: UISlider {
         set {}
     }
 
+}
+
+struct IntervalSliderRepresentable: UIViewRepresentable {
+
+    @Binding var value: Int
+
+    let steps: [Int]
+
+    func makeUIView(context: Context) -> IntervalSlider {
+        let slider = IntervalSlider(frame: .zero)
+        slider.minimumTrackTintColor = UIColor(designSystemColor: .accent)
+        slider.maximumTrackTintColor = UIColor.systemGray3
+        slider.steps = steps
+        slider.minimumValue = Float(0)
+        slider.maximumValue = Float(steps.count - 1)
+        slider.addTarget(context.coordinator, action: #selector(Coordinator.valueChanged(_:)), for: .valueChanged)
+        return slider
+    }
+
+    func updateUIView(_ uiView: IntervalSlider, context: Context) {
+        uiView.value = Float(value)
+        uiView.setNeedsDisplay()
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject {
+        var parent: IntervalSliderRepresentable
+
+        init(_ parent: IntervalSliderRepresentable) {
+            self.parent = parent
+        }
+
+        @objc func valueChanged(_ sender: IntervalSlider) {
+            let roundedValue = round(sender.value)
+            sender.value = roundedValue
+            if Int(roundedValue) != parent.value {
+                parent.value = Int(roundedValue)
+                sender.setNeedsDisplay()
+            }
+        }
+    }
 }

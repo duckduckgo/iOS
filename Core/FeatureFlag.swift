@@ -45,6 +45,7 @@ public enum FeatureFlag: String {
     case onboardingAddToDock
     case autofillSurveys
     case autcompleteTabs
+    case textZoom
     case adAttributionReporting
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
@@ -111,6 +112,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.autocompleteTabs))
         case .networkProtectionUserTips:
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
+        case .textZoom:
+            return .remoteReleasable(.feature(.textZoom))
         case .networkProtectionEnforceRoutes:
             return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:

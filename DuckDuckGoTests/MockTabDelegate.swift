@@ -137,7 +137,8 @@ extension TabViewController {
             onboardingPixelReporter: contextualOnboardingPixelReporter,
             urlCredentialCreator: MockCredentialCreator(),
             featureFlagger: featureFlagger,
-            subscriptionCookieManager: SubscriptionCookieManagerMock()
+            subscriptionCookieManager: SubscriptionCookieManagerMock(),
+            textZoomCoordinator: MockTextZoomCoordinator()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

@@ -75,7 +75,9 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
-        case textSize = "com.duckduckgo.ios.textSize"
+
+        // Text size is the legacy name and this key is still in use
+        case textZoom = "com.duckduckgo.ios.textSize"
 
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
@@ -178,6 +180,9 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired.v2"
         case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered.v2"
         case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override.v2"
+
+        // Domain specific text zoom
+        case domainTextZoomStorage = "com.duckduckgo.ios.domainTextZoomStorage"
 
         // TipKit
         case resetTipKitOnNextLaunch = "com.duckduckgo.ios.tipKit.resetOnNextLaunch"

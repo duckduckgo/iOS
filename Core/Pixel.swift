@@ -86,8 +86,9 @@ public struct PixelParameters {
     public static let count = "count"
     public static let source = "source"
 
-    public static let textSizeInitial = "text_size_initial"
-    public static let textSizeUpdated = "text_size_updated"
+    // Text size is the legacy name
+    public static let textZoomInitial = "text_size_initial"
+    public static let textZoomUpdated = "text_size_updated"
 
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"

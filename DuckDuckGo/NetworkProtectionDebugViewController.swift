@@ -63,6 +63,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     enum DebugFeatureRows: Int, CaseIterable {
         case toggleAlwaysOn
+        case enforceRoutes
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -320,6 +321,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             } else {
                 cell.accessoryType = .checkmark
             }
+        case .enforceRoutes:
+            cell.textLabel?.text = "Enforce Routes"
+
+            if !AppDependencyProvider.shared.vpnSettings.enforceRoutes {
+                cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .checkmark
+            }
         default:
             break
         }
@@ -329,6 +338,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         switch DebugFeatureRows(rawValue: indexPath.row) {
         case .toggleAlwaysOn:
             debugFeatures.alwaysOnDisabled.toggle()
+            tableView.reloadRows(at: [indexPath], with: .none)
+        case .enforceRoutes:
+            AppDependencyProvider.shared.vpnSettings.enforceRoutes.toggle()
             tableView.reloadRows(at: [indexPath], with: .none)
         default:
             break

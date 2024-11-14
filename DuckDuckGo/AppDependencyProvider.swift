@@ -28,6 +28,7 @@ import NetworkProtection
 import RemoteMessaging
 import Networking
 import os.log
+import PageRefreshMonitor
 
 protocol DependencyProvider {
 
@@ -41,9 +42,9 @@ protocol DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
-    var userBehaviorMonitor: UserBehaviorMonitor { get }
     var subscriptionManager: any SubscriptionManager { get }
     var privacyProInfoProvider: any PrivacyProInfoProvider { get }
+    var pageRefreshMonitor: PageRefreshMonitor { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
@@ -74,7 +75,8 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()
 
-    let userBehaviorMonitor = UserBehaviorMonitor()
+    let pageRefreshMonitor = PageRefreshMonitor(onDidDetectRefreshPattern: PageRefreshMonitor.onDidDetectRefreshPattern,
+                                                store: PageRefreshStore())
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -161,7 +163,9 @@ final class AppDependencyProvider: DependencyProvider {
             return token
         })
         networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore,
-                                                                              persistentPixel: persistentPixel)
+                                                                              featureFlagger: featureFlagger,
+                                                                              persistentPixel: persistentPixel,
+                                                                              settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   oAuthClient: authClient)
     }

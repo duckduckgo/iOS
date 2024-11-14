@@ -66,6 +66,9 @@
                   Identifier = "AutoconsentMessageProtocolTests/testEval()">
                </Test>
                <Test
+                  Identifier = "FireButtonReferenceTests/testClearDataUsingLegacyContainer()">
+               </Test>
+               <Test
                   Identifier = "SyncSettingsViewControllerErrorTests/test_WhenAccountRemoved_ErrorHandlerSyncDidTurnOffCalled()">
                </Test>
                <Test

@@ -36,6 +36,8 @@ import SwiftUI
 import NetworkProtection
 import Onboarding
 import os.log
+import PageRefreshMonitor
+import BrokenSitePrompt
 
 class MainViewController: UIViewController {
     
@@ -301,7 +303,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
-        registerForUserBehaviorEvents()
+        registerForPageRefreshPatterns()
         registerForSyncFeatureFlagsUpdates()
 
         decorate()
@@ -497,11 +499,11 @@ class MainViewController: UIViewController {
         keyboardShowing = false
     }
 
-    private func registerForUserBehaviorEvents() {
+    private func registerForPageRefreshPatterns() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(attemptToShowBrokenSitePrompt(_:)),
-            name: .userBehaviorDidMatchBrokenSiteCriteria,
+            name: .pageRefreshMonitorDidDetectRefreshPattern,
             object: nil)
     }
 
@@ -948,6 +950,10 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
+    func stopLoading() {
+        currentTab?.stopLoading()
+    }
+
     func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
@@ -1070,6 +1076,8 @@ class MainViewController: UIViewController {
     }
 
     private func refreshOmniBar() {
+        updateOmniBarLoadingState()
+
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
             return
@@ -1084,8 +1092,16 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-            
+
         viewCoordinator.omniBar.startBrowsing()
+    }
+
+    private func updateOmniBarLoadingState() {
+        if currentTab?.isLoading == true {
+            omniBar.startLoading()
+        } else {
+            omniBar.stopLoading()
+        }
     }
 
     func dismissOmniBar() {
@@ -1095,8 +1111,7 @@ class MainViewController: UIViewController {
     }
 
     private func hideNotificationBarIfBrokenSitePromptShown(afterRefresh: Bool = false) {
-        guard brokenSitePromptViewHostingController != nil,
-                let event = brokenSitePromptEvent?.rawValue else { return }
+        guard brokenSitePromptViewHostingController != nil else { return }
         brokenSitePromptViewHostingController = nil
         hideNotification()
     }
@@ -1341,12 +1356,11 @@ class MainViewController: UIViewController {
     }
 
     private var brokenSitePromptViewHostingController: UIHostingController<BrokenSitePromptView>?
-    private var brokenSitePromptEvent: UserBehaviorEvent?
-    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter()
+    lazy private var brokenSitePromptLimiter = BrokenSitePromptLimiter(privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                       store: BrokenSitePromptLimiterStore())
 
     @objc func attemptToShowBrokenSitePrompt(_ notification: Notification) {
         guard brokenSitePromptLimiter.shouldShowToast(),
-            let event = notification.userInfo?[UserBehaviorEvent.Key.event] as? UserBehaviorEvent,
             let url = currentTab?.url, !url.isDuckDuckGo,
             notificationView == nil,
             !isPad,
@@ -1356,18 +1370,18 @@ class MainViewController: UIViewController {
         // We're using async to ensure the view dismissal happens on the first runloop after a refresh. This prevents the scenario where the view briefly appears and then immediately disappears after a refresh.
         brokenSitePromptLimiter.didShowToast()
         DispatchQueue.main.async {
-            self.showBrokenSitePrompt(after: event)
+            self.showBrokenSitePrompt()
         }
     }
 
-    private func showBrokenSitePrompt(after event: UserBehaviorEvent) {
-        let host = makeBrokenSitePromptViewHostingController(event: event)
+    private func showBrokenSitePrompt() {
+        let host = makeBrokenSitePromptViewHostingController()
         brokenSitePromptViewHostingController = host
-        brokenSitePromptEvent = event
+        Pixel.fire(pixel: .siteNotWorkingShown)
         showNotification(with: host.view)
     }
 
-    private func makeBrokenSitePromptViewHostingController(event: UserBehaviorEvent) -> UIHostingController<BrokenSitePromptView> {
+    private func makeBrokenSitePromptViewHostingController() -> UIHostingController<BrokenSitePromptView> {
         let viewModel = BrokenSitePromptViewModel(onDidDismiss: { [weak self] in
             Task { @MainActor in
                 self?.hideNotification()
@@ -1376,10 +1390,11 @@ class MainViewController: UIViewController {
             }
         }, onDidSubmit: { [weak self] in
             Task { @MainActor in
-                self?.segueToReportBrokenSite(entryPoint: .prompt(event.rawValue))
+                self?.segueToReportBrokenSite(entryPoint: .prompt)
                 self?.hideNotification()
                 self?.brokenSitePromptLimiter.didOpenReport()
                 self?.brokenSitePromptViewHostingController = nil
+                Pixel.fire(pixel: .siteNotWorkingWebsiteIsBroken)
             }
         })
         return UIHostingController(rootView: BrokenSitePromptView(viewModel: viewModel), ignoreSafeArea: true)
@@ -1947,6 +1962,11 @@ extension MainViewController: OmniBarDelegate {
                                  serp: .addressBarCancelPressedOnSERP,
                                  website: .addressBarCancelPressedOnWebsite)
         performCancel()
+    }
+
+    func onAbortPressed() {
+        Pixel.fire(pixel: .stopPageLoad)
+        stopLoading()
     }
 
     func onClearPressed() {

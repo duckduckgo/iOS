@@ -1,5 +1,5 @@
 //
-//  DefaultVariantManager+Onboarding.swift
+//  AppPageRefreshMonitor.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,17 +17,14 @@
 //  limitations under the License.
 //
 
-import Foundation
-import BrowserServicesKit
+import Core
+import Common
+import PageRefreshMonitor
 
-extension VariantManager {
+extension PageRefreshMonitor {
 
-    var isOnboardingHighlightsExperiment: Bool {
-        isSupported(feature: .newOnboardingIntroHighlights)
-    }
-
-    var isContextualDaxDialogsEnabled: Bool {
-        isSupported(feature: .contextualDaxDialogs)
+    static let onDidDetectRefreshPattern: () -> Void = {
+        Pixel.fire(pixel: .pageRefreshThreeTimesWithin20Seconds)
     }
 
 }

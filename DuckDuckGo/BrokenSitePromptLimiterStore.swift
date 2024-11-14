@@ -1,5 +1,5 @@
 //
-//  DefaultVariantManager+Onboarding.swift
+//  BrokenSitePromptLimiterStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,16 +18,15 @@
 //
 
 import Foundation
-import BrowserServicesKit
+import BrokenSitePrompt
+import Core
 
-extension VariantManager {
+final class BrokenSitePromptLimiterStore: BrokenSitePromptLimiterStoring {
 
-    var isOnboardingHighlightsExperiment: Bool {
-        isSupported(feature: .newOnboardingIntroHighlights)
-    }
+    @UserDefaultsWrapper(key: .lastBrokenSiteToastShownDate, defaultValue: .distantPast)
+    var lastToastShownDate: Date
 
-    var isContextualDaxDialogsEnabled: Bool {
-        isSupported(feature: .contextualDaxDialogs)
-    }
+    @UserDefaultsWrapper(key: .toastDismissStreakCounter, defaultValue: 0)
+    var toastDismissStreakCounter: Int
 
 }

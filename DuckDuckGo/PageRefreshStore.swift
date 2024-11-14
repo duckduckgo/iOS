@@ -1,5 +1,5 @@
 //
-//  DefaultVariantManager+Onboarding.swift
+//  PageRefreshStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,16 +18,12 @@
 //
 
 import Foundation
-import BrowserServicesKit
+import Core
+import PageRefreshMonitor
 
-extension VariantManager {
+final class PageRefreshStore: PageRefreshStoring {
 
-    var isOnboardingHighlightsExperiment: Bool {
-        isSupported(feature: .newOnboardingIntroHighlights)
-    }
-
-    var isContextualDaxDialogsEnabled: Bool {
-        isSupported(feature: .contextualDaxDialogs)
-    }
+    @UserDefaultsWrapper(key: .refreshTimestamps, defaultValue: [])
+    var refreshTimestamps: [Date]
 
 }

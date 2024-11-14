@@ -80,6 +80,7 @@ extension Pixel {
         case browsingMenuCopy
         case browsingMenuPrint
         case browsingMenuFindInPage
+        case browsingMenuZoom
         case browsingMenuDisableProtection
         case browsingMenuEnableProtection
         case browsingMenuReportBrokenSite
@@ -207,6 +208,9 @@ extension Pixel {
         case bookmarkAddFavoriteBySwipe
         case bookmarkDeletedFromBookmark
 
+        case bookmarksUIFavoritesAction
+        case bookmarksUIFavoritesManage
+
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -217,8 +221,10 @@ extension Pixel {
         case bookmarkExportSuccess
         case bookmarkExportFailure
 
-        case textSizeSettingsChanged
-        
+        case textZoomSettingsChanged
+        case textZoomChangedOnPage
+        case textZoomChangedOnPageDaily
+
         case downloadStarted
         case downloadStartedDueToUnhandledMIMEType
         case downloadTriedToPresentPreviewWithoutTab
@@ -745,7 +751,7 @@ extension Pixel {
         case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
-        case settingsAccessiblityTextSize
+        case settingsAccessiblityTextZoom
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -852,6 +858,9 @@ extension Pixel {
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
         case adAttributionReportStateMismatch
+
+        // MARK: Browsing
+        case stopPageLoad
         
         // MARK: - DuckPlayer Overlay Navigation
         case duckPlayerYouTubeOverlayNavigationBack
@@ -921,6 +930,7 @@ extension Pixel.Event {
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuFindInPage: return "mb_fp"
+        case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
         case .browsingMenuEnableProtection: return "mb_wlr"
         case .browsingMenuReportBrokenSite: return "mb_rb"
@@ -964,6 +974,9 @@ extension Pixel.Event {
         case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
         case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
         case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
+
+        case .bookmarksUIFavoritesAction: return "m_bookmarks_ui_favorites_action_daily"
+        case .bookmarksUIFavoritesManage: return "m_bookmarks_ui_favorites_manage_daily"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"
@@ -1054,8 +1067,11 @@ extension Pixel.Event {
         case .bookmarkExportSuccess: return "m_be_a"
         case .bookmarkExportFailure: return "m_be_e"
 
-        case .textSizeSettingsChanged: return "m_text_size_settings_changed"
-            
+        // Text size is the legacy name
+        case .textZoomSettingsChanged: return "m_text_size_settings_changed"
+        case .textZoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
+        case .textZoomChangedOnPage: return "m_menu_page_zoom_changed"
+
         case .downloadStarted: return "m_download_started"
         case .downloadStartedDueToUnhandledMIMEType: return "m_download_started_due_to_unhandled_mime_type"
         case .downloadTriedToPresentPreviewWithoutTab: return "m_download_tried_to_present_preview_without_tab"
@@ -1581,7 +1597,9 @@ extension Pixel.Event {
         case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
-        case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"
+
+        // legacy name is text size
+        case .settingsAccessiblityTextZoom: return "m_settings_accessiblity_text_size"
 
         // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
@@ -1702,6 +1720,9 @@ extension Pixel.Event {
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+
+        // MARK: Browsing
+        case .stopPageLoad: return "m_stop-page-load"
                         
         // MARK: - DuckPlayer Overlay Navigation
         case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
@@ -1710,8 +1731,7 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
-            
-            
+
         }
     }
 }

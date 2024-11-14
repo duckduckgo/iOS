@@ -27,201 +27,104 @@ class DuckPlayerOverlayUsagePixelsTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Initialize DuckPlayerOverlayUsagePixels with a shorter timeoutInterval for testing
         PixelFiringMock.tearDown()
         duckPlayerOverlayPixels = DuckPlayerOverlayUsagePixels(pixelFiring: PixelFiringMock.self, timeoutInterval: 3.0)
     }
 
     override func tearDown() {
-        // Clean up after each test
         PixelFiringMock.tearDown()
         duckPlayerOverlayPixels = nil
         super.tearDown()
     }
-
-    func testRegisterNavigationAddsURLToHistory() {
-        // Arrange
-        let testURL = URL(string: "https://www.example.com")!
-
-        // Act
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Assert
-        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory.count, 1)
-        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory.first, testURL)
+    
+    // Test: Registering navigation appends URL to history
+    func testRegisterNavigationAppendsURLToHistory() {
+        let testURL1 = URL(string: "https://www.youtube.com/watch?v=example1")!
+        let testURL2 = URL(string: "https://www.youtube.com/playlist?list=PL-gbSnmxoBbmDnoFdZY5OsSuU6kqs_07a")!
+        let testURL3 = URL(string: "https://www.example.com")!
+        
+        // Simulate navigation actions
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL1, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL2, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL3, duckPlayerMode: .alwaysAsk)
+        
+        // Verify the URLs are appended in order
+        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory.count, 3)
+        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory[0], testURL1.forComparison())
+        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory[1], testURL2.forComparison())
+        XCTAssertEqual(duckPlayerOverlayPixels.navigationHistory[2], testURL3.forComparison())
     }
 
-    func testRegisterNavigationWithNilURLDoesNotAddToHistory() {
-        // Act
-        duckPlayerOverlayPixels.registerNavigation(url: nil)
-
-        // Assert
-        XCTAssertTrue(duckPlayerOverlayPixels.navigationHistory.isEmpty, "Navigation history should remain empty when registering a nil URL.")
-    }
-
-    func testNavigationBackFiresPixelWhenConditionsMet() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationBack(duckPlayerMode: .alwaysAsk)
-
-        // Assert
+    // Test: Back navigation triggers duckPlayerYouTubeOverlayNavigationBack pixel
+    func testBackNavigationTriggersBackPixel() {
+        let firstURL = URL(string: "https://www.youtube.com/watch?v=example1")!
+        let secondURL = URL(string: "https://www.youtube.com/watch?v=example2")!
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: firstURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: secondURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: firstURL, duckPlayerMode: .alwaysAsk) // Simulates back navigation
+        
         XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationBack.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when conditions are met for navigationBack.")
+        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired on back navigation.")
     }
 
-    func testNavigationBackDoesNotFirePixelWhenConditionsNotMet() {
-        // Act
-        duckPlayerOverlayPixels.navigationBack(duckPlayerMode: .enabled)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired when conditions are not met for navigationBack.")
-    }
-
-    func testNavigationReloadFiresPixelWhenConditionsMet() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationReload(duckPlayerMode: .alwaysAsk)
-
-        // Assert
+    // Test: Reload navigation triggers duckPlayerYouTubeOverlayNavigationRefresh pixel
+    func testReloadNavigationTriggersRefreshPixel() {
+        let testURL = URL(string: "https://www.youtube.com/watch?v=XTWWSS")!
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL, duckPlayerMode: .alwaysAsk) // Simulates reload navigation
+        
         XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationRefresh.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when conditions are met for navigationReload.")
+        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired on reload navigation.")
     }
 
-    func testNavigationReloadDoesNotFirePixelWhenConditionsNotMet() {
-        // Act
-        duckPlayerOverlayPixels.navigationReload(duckPlayerMode: .enabled)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired when conditions are not met for navigationReload.")
-    }
-
-    func testNavigationWithinYoutubeFiresPixelWhenConditionsMet() {
-        // Arrange
-        let previousURL = URL(string: "https://www.youtube.com/watch?v=example1")!
-        let currentURL = URL(string: "https://www.youtube.com/watch?v=example2")!
-        duckPlayerOverlayPixels.registerNavigation(url: previousURL)
-        duckPlayerOverlayPixels.registerNavigation(url: currentURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationWithinYoutube(duckPlayerMode: .alwaysAsk)
-
-        // Assert
+    // Test: Forward navigation to various YouTube URLs triggers duckPlayerYouTubeNavigationWithinYouTube pixel
+    func testNavigateWithinYoutubeTriggersWithinYouTubePixel() {
+        let videoURL = URL(string: "https://www.youtube.com/watch?v=example1")!
+        let playlistURL = URL(string: "https://www.youtube.com/playlist?list=PL-gbSnmxoBbmDnoFdZY5OsSuU6kqs_07a")!
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: videoURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: playlistURL, duckPlayerMode: .alwaysAsk)
+        
         XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeNavigationWithinYouTube.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when conditions are met for navigationWithinYoutube.")
+        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when navigating within YouTube to a non-video URL.")
     }
 
-    func testNavigationWithinYoutubeDoesNotFirePixelWhenConditionsNotMet() {
-        // Arrange
-        let testURL = URL(string: "https://www.example.com")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationWithinYoutube(duckPlayerMode: .alwaysAsk)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired when conditions are not met for navigationWithinYoutube.")
-    }
-
-    func testNavigationOutsideYoutubeFiresPixelWhenConditionsMet() {
-        // Arrange
-        let previousURL = URL(string: "https://www.youtube.com/watch?v=example1")!
-        let currentURL = URL(string: "https://www.example.com")!
-        duckPlayerOverlayPixels.registerNavigation(url: previousURL)
-        duckPlayerOverlayPixels.registerNavigation(url: currentURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationOutsideYoutube(duckPlayerMode: .alwaysAsk)
-
-        // Assert
+    // Test: Navigating outside YouTube triggers duckPlayerYouTubeOverlayNavigationOutsideYoutube pixel
+    func testNavigateOutsideYoutubeTriggersOutsideYouTubePixel() {
+        let youtubeURL = URL(string: "https://www.youtube.com/watch?v=example1")!
+        let outsideURL = URL(string: "https://www.example.com")!
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: youtubeURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: outsideURL, duckPlayerMode: .alwaysAsk)
+        
         XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationOutsideYoutube.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when conditions are met for navigationOutsideYoutube.")
+        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when navigating outside YouTube.")
     }
 
-    func testNavigationOutsideYoutubeDoesNotFirePixelWhenConditionsNotMet() {
-        // Arrange
+    // Negative Test: Back navigation does not trigger within YouTube or outside YouTube pixel
+    func testBackNavigationDoesNotTriggerWithinOrOutsideYouTubePixel() {
+        let firstURL = URL(string: "https://www.youtube.com/watch?v=example1")!
+        let secondURL = URL(string: "https://www.youtube.com/watch?v=example2")!
+        let backURL = URL(string: "https://www.youtube.com/watch?v=example1")!
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: firstURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: secondURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: backURL, duckPlayerMode: .alwaysAsk) // Simulates back navigation
+        
+        XCTAssertNotEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeNavigationWithinYouTube.name, "Within YouTube pixel should not fire on back navigation.")
+        XCTAssertNotEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationOutsideYoutube.name, "Outside YouTube pixel should not fire on back navigation.")
+    }
+
+    // Negative Test: Reload navigation does not trigger within YouTube or outside YouTube pixel
+    func testReloadNavigationDoesNotTriggerWithinOrOutsideYouTubePixel() {
         let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationOutsideYoutube(duckPlayerMode: .alwaysAsk)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired when conditions are not met for navigationOutsideYoutube.")
-    }
-
-    func testOverlayIdleStartsTimerAndFiresPixelAfter3Seconds() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.overlayIdle(duckPlayerMode: .alwaysAsk)
-
-        // Simulate waiting for 3 seconds
-        let expectation = XCTestExpectation(description: "Wait for the pixel to be fired after 3 seconds.")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: 5)
-
-        // Assert
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeNavigationIdle30.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired after 3 seconds of inactivity.")
-    }
-
-    func testOverlayIdleDoesNotFirePixelWhenNavigationHistoryIsNotYouTubeWatch() {
-        // Arrange
-        let testURL = URL(string: "https://www.example.com")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.overlayIdle(duckPlayerMode: .alwaysAsk)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired if the last URL is not a YouTube watch URL.")
-    }
-
-    func testOverlayIdleDoesNotStartTimerIfModeIsNotAlwaysAsk() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.overlayIdle(duckPlayerMode: .enabled)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired if the mode is not .alwaysAsk.")
-    }
-    
-    func testNavigationClosedFiresPixelWhenConditionsMet() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com/watch?v=example")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationClosed(duckPlayerMode: .alwaysAsk)
-
-        // Assert
-        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationClosed.name)
-        XCTAssertNotNil(PixelFiringMock.lastPixelInfo, "Pixel should be fired when conditions are met for navigationReload.")
-    }
-    
-    func testNavigationClosedDoesNotFirePixelWhenConditionsNotMet() {
-        // Arrange
-        let testURL = URL(string: "https://www.youtube.com")!
-        duckPlayerOverlayPixels.registerNavigation(url: testURL)
-
-        // Act
-        duckPlayerOverlayPixels.navigationClosed(duckPlayerMode: .enabled)
-
-        // Assert
-        XCTAssertNil(PixelFiringMock.lastPixelName, "Pixel should not be fired when conditions are not met for navigationClosed.")
+        
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL, duckPlayerMode: .alwaysAsk)
+        duckPlayerOverlayPixels.handleNavigationAndFirePixels(url: testURL, duckPlayerMode: .alwaysAsk) // Simulates reload navigation
+        
+        XCTAssertNotEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeNavigationWithinYouTube.name, "Within YouTube pixel should not fire on reload.")
+        XCTAssertNotEqual(PixelFiringMock.lastPixelName, Pixel.Event.duckPlayerYouTubeOverlayNavigationOutsideYoutube.name, "Outside YouTube pixel should not fire on reload.")
     }
 }

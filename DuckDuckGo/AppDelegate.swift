@@ -355,7 +355,9 @@ import os.log
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
-                                          subscriptionCookieManager: subscriptionCookieManager)
+                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          subscriptionCookieManager: subscriptionCookieManager,
+                                          textZoomCoordinator: makeTextZoomCoordinator())
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -406,6 +408,15 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+        let provider = AppDependencyProvider.shared
+        let storage = TextZoomStorage()
+
+        return TextZoomCoordinator(appSettings: provider.appSettings,
+                                   storage: storage,
+                                   featureFlagger: provider.featureFlagger)
     }
 
     private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {

@@ -177,6 +177,9 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
+    let preserveLogins: PreserveLogins
+    let textZoomCoordinator: TextZoomCoordinating
+
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
@@ -200,7 +203,10 @@ class MainViewController: UIViewController {
         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
-        subscriptionCookieManager: SubscriptionCookieManaging
+        featureFlagger: FeatureFlagger,
+        preserveLogins: PreserveLogins = .shared,
+        subscriptionCookieManager: SubscriptionCookieManaging,
+        textZoomCoordinator: TextZoomCoordinating
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -223,7 +229,10 @@ class MainViewController: UIViewController {
                                      contextualOnboardingPresenter: contextualOnboardingPresenter,
                                      contextualOnboardingLogic: contextualOnboardingLogic,
                                      onboardingPixelReporter: contextualOnboardingPixelReporter,
-                                     subscriptionCookieManager: subscriptionCookieManager)
+                                     featureFlagger: featureFlagger,
+                                     subscriptionCookieManager: subscriptionCookieManager,
+                                     appSettings: appSettings,
+                                     textZoomCoordinator: textZoomCoordinator)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -234,7 +243,9 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
+        self.preserveLogins = preserveLogins
         self.subscriptionCookieManager = subscriptionCookieManager
+        self.textZoomCoordinator = textZoomCoordinator
 
         super.init(nibName: nil, bundle: nil)
         
@@ -950,6 +961,10 @@ class MainViewController: UIViewController {
         loadUrl(url)
     }
 
+    func stopLoading() {
+        currentTab?.stopLoading()
+    }
+
     func loadUrl(_ url: URL, fromExternalLink: Bool = false) {
         prepareTabForRequest {
             self.currentTab?.load(url: url)
@@ -1072,6 +1087,8 @@ class MainViewController: UIViewController {
     }
 
     private func refreshOmniBar() {
+        updateOmniBarLoadingState()
+
         guard let tab = currentTab, tab.link != nil else {
             viewCoordinator.omniBar.stopBrowsing()
             return
@@ -1086,8 +1103,16 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-            
+
         viewCoordinator.omniBar.startBrowsing()
+    }
+
+    private func updateOmniBarLoadingState() {
+        if currentTab?.isLoading == true {
+            omniBar.startLoading()
+        } else {
+            omniBar.stopLoading()
+        }
     }
 
     func dismissOmniBar() {
@@ -1948,6 +1973,11 @@ extension MainViewController: OmniBarDelegate {
         performCancel()
     }
 
+    func onAbortPressed() {
+        Pixel.fire(pixel: .stopPageLoad)
+        stopLoading()
+    }
+
     func onClearPressed() {
         fireControllerAwarePixel(ntp: .addressBarClearPressedOnNTP,
                                  serp: .addressBarClearPressedOnSERP,
@@ -2640,6 +2670,7 @@ extension MainViewController: AutoClearWorker {
             self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
 
+        self.forgetTextZoom()
         await historyManager.removeAllHistory()
 
         self.clearInProgress = false
@@ -2715,6 +2746,11 @@ extension MainViewController: AutoClearWorker {
     private func dismissPrivacyDashboardButtonPulse() {
         DaxDialogs.shared.setPrivacyButtonPulseSeen()
         viewCoordinator.omniBar.dismissOnboardingPrivacyIconAnimation()
+    }
+
+    private func forgetTextZoom() {
+        let allowedDomains = preserveLogins.allowedDomains
+        textZoomCoordinator.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 
 }

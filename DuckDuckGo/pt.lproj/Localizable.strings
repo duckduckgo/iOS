@@ -770,6 +770,30 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Sim";
 
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Ignorar";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Iniciar a navegação";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Mostrar-me como";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Lembra-te: sempre que navegas comigo, um anúncio assustador perde as suas asas.\n\nPor isso, mantém-me na tua Dock para navegares diariamente.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Vou estar num lugar de fácil acesso para toda a tua navegação diária.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Adiciona-me à tua Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Encontra o ícone do DuckDuckGo no ecrã inicial. Em seguida, prime e arrasta-o para o lugar certo. É só isto!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Adicionar-me à tua Dock é fácil.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
@@ -1783,6 +1807,9 @@
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up ocultado";
+
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Entendi";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Escolhe o teu navegador";

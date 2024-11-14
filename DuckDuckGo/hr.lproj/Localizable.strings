@@ -770,6 +770,30 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Da";
 
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Započni pretraživanje";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Pokaži mi kako";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Zapamti: svaki put kad pregledavaš sa mnom, grozna reklama gubi krila.\n\nZato me zadrži u svom Docku za svakodnevno pregledavanje.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Bit ću ti na dohvat ruke za svo tvoje svakodnevno pregledavanje.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Dodaj me na svoj Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Pronađi ikonu DuckDuckGo na početnom zaslonu. Zatim je pritisni i povuci na mjesto. I to je sve!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Dodavanje mene na tvoj Dock je jednostavno.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
@@ -1783,6 +1807,9 @@
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skočni prozor je sakriven";
+
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Shvatio/la sam";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Odaberi preglednik";

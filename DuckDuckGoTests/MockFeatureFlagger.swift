@@ -21,6 +21,7 @@ import BrowserServicesKit
 import Core
 
 final class MockFeatureFlagger: FeatureFlagger {
+
     var enabledFeatureFlags: [FeatureFlag] = []
 
     init(enabledFeatureFlags: [FeatureFlag] = []) {

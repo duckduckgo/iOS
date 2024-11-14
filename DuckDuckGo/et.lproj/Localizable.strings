@@ -770,6 +770,30 @@
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Jah";
 
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Jäta vahele";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Alusta sirvimist";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Näita mulle, kuidas";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Pea meeles, iga kord, kui minuga sirvid, kaotab salakaval reklaam oma tiivad.\n\nNii et hoia mind igapäevaselt sirvides oma Dockis.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Olen hõlpsasti ligipääsetav kogu teie igapäevase sirvimise vältel.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Lisa mind oma Docki!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Leia oma avakuvalt DuckDuckGo ikoon. Seejärel vajuta ja lohista see oma kohale. See on kõik!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Minu lisamine teie Docki on lihtne.";
+
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
 
@@ -1783,6 +1807,9 @@
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Hüpikaken on peidetud";
+
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Sain aru";
 
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Vali oma brauser";

@@ -17,9 +17,10 @@
 //  limitations under the License.
 //
 
-import Foundation
+import BrowserServicesKit
 import Combine
 import Core
+import Foundation
 import NetworkExtension
 import NetworkProtection
 import Subscription
@@ -34,6 +35,7 @@ enum VPNConfigurationRemovalReason: String {
 final class NetworkProtectionTunnelController: TunnelController, TunnelSessionProvider {
     static var shouldSimulateFailure: Bool = false
 
+    private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore: NetworkProtectionKeychainTokenStore
@@ -42,6 +44,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let notificationCenter: NotificationCenter = .default
     private var previousStatus: NEVPNStatus = .invalid
     private let persistentPixel: PersistentPixelFiring
+    private let settings: VPNSettings
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Manager, Session, & Connection
@@ -119,9 +122,25 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
     }
 
-    init(accountManager: AccountManager, tokenStore: NetworkProtectionKeychainTokenStore, persistentPixel: PersistentPixelFiring) {
-        self.tokenStore = tokenStore
+    // MARK: - Enforce Routes
+
+    private var enforceRoutes: Bool {
+        featureFlagger.isFeatureOn(.networkProtectionEnforceRoutes)
+    }
+
+    // MARK: - Initializers
+
+    init(accountManager: AccountManager,
+         tokenStore: NetworkProtectionKeychainTokenStore,
+         featureFlagger: FeatureFlagger,
+         persistentPixel: PersistentPixelFiring,
+         settings: VPNSettings) {
+
+        self.featureFlagger = featureFlagger
         self.persistentPixel = persistentPixel
+        self.settings = settings
+        self.tokenStore = tokenStore
+
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
         subscribeToConfigurationChanges()
@@ -178,6 +197,16 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
 
         tunnelManager.connection.stopVPNTunnel()
+    }
+
+    func command(_ command: VPNCommand) async throws {
+        guard let activeSession = await AppDependencyProvider.shared.networkProtectionTunnelController.activeSession(),
+            activeSession.status == .connected else {
+
+            return
+        }
+
+        try? await activeSession.sendProviderRequest(.command(command))
     }
 
     func removeVPN(reason: VPNConfigurationRemovalReason) async {
@@ -293,6 +322,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         return tunnelManager
     }
 
+    @MainActor
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
         setup(tunnelManager)
 
@@ -319,6 +349,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     /// Setups the tunnel manager if it's not set up already.
     ///
+    @MainActor
     private func setup(_ tunnelManager: NETunnelProviderManager) {
         tunnelManager.localizedDescription = "DuckDuckGo VPN"
         tunnelManager.isEnabled = true
@@ -327,8 +358,23 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             let protocolConfiguration = NETunnelProviderProtocol()
             protocolConfiguration.serverAddress = "127.0.0.1" // Dummy address... the NetP service will take care of grabbing a real server
 
+            protocolConfiguration.providerConfiguration = [:]
+
             // always-on
             protocolConfiguration.disconnectOnSleep = false
+
+            // Enforce routes
+            protocolConfiguration.enforceRoutes = enforceRoutes
+
+            // We will control excluded networks through includedRoutes / excludedRoutes
+            protocolConfiguration.excludeLocalNetworks = false
+
+            #if DEBUG
+            if #available(iOS 17.4, *) {
+                // This is useful to ensure debugging is never blocked by the VPN
+                protocolConfiguration.excludeDeviceCommunication = true
+            }
+            #endif
 
             return protocolConfiguration
         }()

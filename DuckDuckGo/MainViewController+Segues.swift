@@ -33,19 +33,8 @@ extension MainViewController {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
 
-        var controller: (Onboarding & UIViewController)?
-
-        if DefaultVariantManager().isNewIntroFlow {
-            controller = OnboardingIntroViewController(onboardingPixelReporter: contextualOnboardingPixelReporter)
-        } else {
-            let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
-            controller = storyboard.instantiateInitialViewController(creator: { coder in
-                DaxOnboardingViewController(coder: coder, pixelReporting: self.contextualOnboardingPixelReporter)
-            })
-        }
-        
-        controller?.delegate = self
-        guard let controller else { return assertionFailure() }
+        let controller = OnboardingIntroViewController(onboardingPixelReporter: contextualOnboardingPixelReporter)
+        controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: false)
     }

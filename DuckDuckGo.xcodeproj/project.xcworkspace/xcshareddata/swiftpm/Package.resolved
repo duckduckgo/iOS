@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/speculative-password-import-prompt-crash-fix",
-        "revision" : "1c165275201d28ecc8fe1bd6c9d1a755652eaad8"
+        "revision" : "16a1f44f24fd492a87fc28571cac87022c1b740b",
+        "version" : "209.1.2"
       }
     },
     {

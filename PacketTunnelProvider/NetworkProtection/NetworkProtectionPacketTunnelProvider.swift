@@ -395,6 +395,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+#if DEBUG
+        Pixel.isDryRun = true
+#endif
+
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)

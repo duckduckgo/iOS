@@ -42,7 +42,7 @@ final class NewTabPageControllerPixelTests: XCTestCase {
 
         sut.viewDidAppear(false)
 
-        let count = PixelFiringMock.allPixelsFired.count { $0.pixelName == Pixel.Event.homeScreenShown.name }
+        let count = PixelFiringMock.allPixelsFired.filter { $0.pixelName == Pixel.Event.homeScreenShown.name }.count
 
         XCTAssertEqual(count, 1)
     }
@@ -68,7 +68,7 @@ final class NewTabPageControllerPixelTests: XCTestCase {
 
         sut.viewDidAppear(false)
 
-        let count = PixelFiringMock.allPixelsFired.count { $0.pixelName == Pixel.Event.homeScreenShown.name }
+        let count = PixelFiringMock.allPixelsFired.filter { $0.pixelName == Pixel.Event.homeScreenShown.name }.count
 
         XCTAssertEqual(count, 0)
     }

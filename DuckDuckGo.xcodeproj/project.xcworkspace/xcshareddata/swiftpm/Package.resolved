@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "07af4d672e003cc247e28a01b9fe3e77abaf49f9",
-        "version" : "210.0.2"
+        "branch" : "sabrina/add-experiment-logic",
+        "revision" : "c30f0b41a66e4716242f7bf4a385d3f22783f847"
       }
     },
     {

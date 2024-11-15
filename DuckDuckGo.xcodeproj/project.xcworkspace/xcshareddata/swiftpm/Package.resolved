@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "07af4d672e003cc247e28a01b9fe3e77abaf49f9",
-        "version" : "210.0.2"
+        "branch" : "sam/delay-shutting-down-vpn-when-encountering-error",
+        "revision" : "69d5dbc93b2e781a42806e91a56c1697db504194"
       }
     },
     {

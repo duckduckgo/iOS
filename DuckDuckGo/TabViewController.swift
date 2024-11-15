@@ -370,6 +370,7 @@ class TabViewController: UIViewController {
     let contextualOnboardingLogic: ContextualOnboardingLogic
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
+    let threatProtectionNavigationHandler: ThreatProtectionNavigationHandling
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -386,7 +387,8 @@ class TabViewController: UIViewController {
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
-                   textZoomCoordinator: TextZoomCoordinating) {
+                   textZoomCoordinator: TextZoomCoordinating,
+                   threatProtectionNavigationHandler: ThreatProtectionNavigationHandling = ThreatProtectionNavigationHandler()) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -407,6 +409,7 @@ class TabViewController: UIViewController {
         self.featureFlagger = featureFlagger
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.threatProtectionNavigationHandler = threatProtectionNavigationHandler
 
         super.init(coder: aDecoder)
         
@@ -1752,131 +1755,142 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
-        
-        if let url = navigationAction.request.url {
-            if !tabURLInterceptor.allowsNavigatingTo(url: url) {
-                decisionHandler(.cancel)
-                // If there is history or a page loaded keep the tab open
-                if self.currentlyLoadedURL != nil {
-                    refresh()
-                } else {
-                    delegate?.tabDidRequestClose(self)
-                }
-                return
-            }
-        }
-        
-        // Ask DuckPlayer to handle navigation if possible
-        if let handler = duckPlayerNavigationHandler {
-                                    
-            if handler.handleDelegateNavigation(navigationAction: navigationAction, webView: webView) {
+        Swift.print("~~~Navigation Action: ", navigationAction)
+        Task { @MainActor in
+            if case let .handled(model) = await threatProtectionNavigationHandler.handleThreatProtectionNavigation(for: navigationAction, webView: webView) {
+                Swift.print("~~~URL: ", model.url)
+                failedURL = model.url
+                errorData = model.error
+                loadSpecialErrorPage(url: model.url)
+                privacyInfo?.isPhishing = true
                 decisionHandler(.cancel)
                 return
             }
-        }
-        
-        if let url = navigationAction.request.url,
-           !url.isDuckDuckGoSearch,
-           true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
-               guard let self = self else {
-                   decisionHandler(.cancel)
-                   return
-               }
-               self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
-           }) {
-            // will wait for Content Blocking to load and re-call on completion
-            return
-        }
-        
 
-        didGoBackForward = (navigationAction.navigationType == .backForward)
-
-        if navigationAction.navigationType != .reload && navigationAction.navigationType != .other {
-            // Ignore .other actions because refresh can cause a redirect
-            // This is also handled in loadRequest(_:)
-            refreshCountSinceLoad = 0
-        }
-
-        if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
-            delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
-        }
-
-        // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
-        // which would skip link rewrites.
-        if navigationAction.navigationType != .backForward,
-           navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isDuckDuckGoSearch ?? false) {
-            let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
-                                                                           navigationAction: navigationAction,
-                                                                           onStartExtracting: { showProgressIndicator() },
-                                                                           onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newRequest, _ in
-                guard let self = self else { return }
-                self.load(urlRequest: newRequest)
-            },
-                                                                           policyDecisionHandler: decisionHandler)
-
-            if didRewriteLink {
-                return
-            }
-        }
-
-        if navigationAction.isTargetingMainFrame(),
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
-           navigationAction.navigationType != .backForward,
-           let newRequest = referrerTrimming.trimReferrer(forNavigation: navigationAction,
-                                                          originUrl: webView.url ?? navigationAction.sourceFrame.webView?.url) {
-            decisionHandler(.cancel)
-            load(urlRequest: newRequest)
-            return
-        }
-
-        if navigationAction.isTargetingMainFrame(),
-           !navigationAction.isSameDocumentNavigation,
-           !navigationAction.shouldDownload,
-           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
-           navigationAction.navigationType != .backForward,
-           let request = requestForDoNotSell(basedOn: navigationAction.request) {
-
-            decisionHandler(.cancel)
-            load(urlRequest: request)
-            return
-        }
-
-        if navigationAction.navigationType == .linkActivated,
-           let url = navigationAction.request.url,
-           let modifierFlags = delegate?.tabWillRequestNewTab(self) {
-
-            if modifierFlags.contains(.command) {
-                if modifierFlags.contains(.shift) {
+            if let url = navigationAction.request.url {
+                if !tabURLInterceptor.allowsNavigatingTo(url: url) {
                     decisionHandler(.cancel)
-                    delegate?.tab(self,
-                                  didRequestNewTabForUrl: url,
-                                  openedByPage: false,
-                                  inheritingAttribution: adClickAttributionLogic.state)
-                    return
-                } else {
-                    decisionHandler(.cancel)
-                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
+                    // If there is history or a page loaded keep the tab open
+                    if self.currentlyLoadedURL != nil {
+                        refresh()
+                    } else {
+                        delegate?.tabDidRequestClose(self)
+                    }
                     return
                 }
             }
-        }
 
-        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let self = self,
+            // Ask DuckPlayer to handle navigation if possible
+            if let handler = duckPlayerNavigationHandler {
+
+                if handler.handleDelegateNavigation(navigationAction: navigationAction, webView: webView) {
+                    decisionHandler(.cancel)
+                    return
+                }
+            }
+
+            if let url = navigationAction.request.url,
+               !url.isDuckDuckGoSearch,
+               true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
+                   guard let self = self else {
+                       decisionHandler(.cancel)
+                       return
+                   }
+                   self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
+               }) {
+                // will wait for Content Blocking to load and re-call on completion
+                return
+            }
+
+
+            didGoBackForward = (navigationAction.navigationType == .backForward)
+
+            if navigationAction.navigationType != .reload && navigationAction.navigationType != .other {
+                // Ignore .other actions because refresh can cause a redirect
+                // This is also handled in loadRequest(_:)
+                refreshCountSinceLoad = 0
+            }
+
+            if navigationAction.navigationType != .reload, webView.url != navigationAction.request.mainDocumentURL {
+                delegate?.tabDidRequestNavigationToDifferentSite(tab: self)
+            }
+
+            // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
+            // which would skip link rewrites.
+            if navigationAction.navigationType != .backForward,
+               navigationAction.isTargetingMainFrame(),
+               !(navigationAction.request.url?.isDuckDuckGoSearch ?? false) {
+                let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+                                                                               navigationAction: navigationAction,
+                                                                               onStartExtracting: { showProgressIndicator() },
+                                                                               onFinishExtracting: { },
+                                                                               onLinkRewrite: { [weak self] newRequest, _ in
+                    guard let self = self else { return }
+                    self.load(urlRequest: newRequest)
+                },
+                                                                               policyDecisionHandler: decisionHandler)
+
+                if didRewriteLink {
+                    return
+                }
+            }
+
+            if navigationAction.isTargetingMainFrame(),
+               !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+               navigationAction.navigationType != .backForward,
+               let newRequest = referrerTrimming.trimReferrer(forNavigation: navigationAction,
+                                                              originUrl: webView.url ?? navigationAction.sourceFrame.webView?.url) {
+                decisionHandler(.cancel)
+                load(urlRequest: newRequest)
+                return
+            }
+
+            if navigationAction.isTargetingMainFrame(),
+               !navigationAction.isSameDocumentNavigation,
+               !navigationAction.shouldDownload,
+               !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+               navigationAction.navigationType != .backForward,
+               let request = requestForDoNotSell(basedOn: navigationAction.request) {
+
+                decisionHandler(.cancel)
+                load(urlRequest: request)
+                return
+            }
+
+            if navigationAction.navigationType == .linkActivated,
                let url = navigationAction.request.url,
-               decision != .cancel,
-               navigationAction.isTargetingMainFrame() {
-                if url.isDuckDuckGoSearch {
-                    StatisticsLoader.shared.refreshSearchRetentionAtb()
-                    privacyProDataReporter.saveSearchCount()
-                }
+               let modifierFlags = delegate?.tabWillRequestNewTab(self) {
 
-                self.delegate?.closeFindInPage(tab: self)
+                if modifierFlags.contains(.command) {
+                    if modifierFlags.contains(.shift) {
+                        decisionHandler(.cancel)
+                        delegate?.tab(self,
+                                      didRequestNewTabForUrl: url,
+                                      openedByPage: false,
+                                      inheritingAttribution: adClickAttributionLogic.state)
+                        return
+                    } else {
+                        decisionHandler(.cancel)
+                        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
+                        return
+                    }
+                }
             }
-            decisionHandler(decision)
+
+            decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+                if let self = self,
+                   let url = navigationAction.request.url,
+                   decision != .cancel,
+                   navigationAction.isTargetingMainFrame() {
+                    if url.isDuckDuckGoSearch {
+                        StatisticsLoader.shared.refreshSearchRetentionAtb()
+                        privacyProDataReporter.saveSearchCount()
+                    }
+
+                    self.delegate?.closeFindInPage(tab: self)
+                }
+                decisionHandler(decision)
+            }
         }
     }
     // swiftlint:enable cyclomatic_complexity

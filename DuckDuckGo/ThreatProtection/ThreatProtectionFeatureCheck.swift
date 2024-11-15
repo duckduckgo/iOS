@@ -21,11 +21,17 @@ import Foundation
 import BrowserServicesKit
 import Core
 
+protocol ThreatProtectionSettingsChecking {
+    var isThreatProtectionSettingsEnabled: Bool { get }
+}
+
 protocol ThreatProtectionFeatureChecking {
     var isThreatProtectionEnabled: Bool { get }
 
     func isThreatProtectionEnabled(forDomain domain: String?) -> Bool
 }
+
+typealias ThreatProtectionFeatureChecker = ThreatProtectionFeatureChecking & ThreatProtectionSettingsChecking
 
 final class ThreatProtectionFeatureCheck {
     private let featureFlagger: FeatureFlagger
@@ -52,4 +58,14 @@ extension ThreatProtectionFeatureCheck: ThreatProtectionFeatureChecking {
         privacyConfigManager.privacyConfig.isFeature(.phishingDetection, enabledForDomain: domain) && isThreatProtectionEnabled
     }
 
+}
+
+// MARK: - ThreatProtectionSettingsChecking
+
+extension ThreatProtectionFeatureCheck: ThreatProtectionSettingsChecking {
+
+    var isThreatProtectionSettingsEnabled: Bool {
+        featureFlagger.isFeatureOn(.threatDetectionPreferences)
+    }
+    
 }

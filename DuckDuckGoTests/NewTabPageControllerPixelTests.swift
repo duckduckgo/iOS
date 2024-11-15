@@ -20,7 +20,7 @@
 import XCTest
 import Core
 @testable import DuckDuckGo
-import SwiftUICore
+import SwiftUI
 
 final class NewTabPageControllerPixelTests: XCTestCase {
 

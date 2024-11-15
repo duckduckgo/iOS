@@ -53,6 +53,12 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/72649045549333/1208617860225199/f
     case networkProtectionEnforceRoutes
+
+    // Phising and Malware Protection https://app.asana.com/0/1163321984198618/1207149365636877
+    /// When this flag is enabled, the app will show an error web page to the user, informing them that they are attempting to visit a potentially malicious website.
+    case threatDetectionErrorPage
+    /// When this flag is enabled, it shows a toggle in the App settings, allowing the user o enable or disable the threat detection feature
+    case threatDetectionPreferences
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -118,6 +124,10 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
+        case .threatDetectionErrorPage:
+            return .remoteDevelopment(.subfeature(PhishingDetectionSubfeature.allowErrorPage))
+        case .threatDetectionPreferences:
+            return .remoteDevelopment(.subfeature(PhishingDetectionSubfeature.allowPreferencesToggle))
         }
     }
 }

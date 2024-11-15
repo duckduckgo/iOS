@@ -23,7 +23,7 @@
 "action.text-zoom-menu-item" = "Powiększenie (%d%%)";
 
 /* Text zoom menu item */
-"action.text-zoom-sheet-menu-item" = "Zoom";
+"action.text-zoom-sheet-menu-item" = "Powiększenie";
 
 /* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
 "action.text-zoom-sheet-title" = "Powiększenie tekstu (%d%%)";

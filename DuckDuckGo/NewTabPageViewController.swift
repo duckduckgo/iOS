@@ -42,6 +42,8 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     private weak var daxDialogViewController: DaxDialogViewController?
     private var daxDialogHeightConstraint: NSLayoutConstraint?
 
+    private let pixelFiring: PixelFiring.Type
+
     var isDaxDialogVisible: Bool {
         daxDialogViewController?.view.isHidden == false
     }
@@ -54,12 +56,14 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
          variantManager: VariantManager,
          newTabDialogFactory: any NewTabDaxDialogProvider,
          newTabDialogTypeProvider: NewTabDialogSpecProvider,
-         faviconLoader: FavoritesFaviconLoading) {
+         faviconLoader: FavoritesFaviconLoading,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
 
         self.associatedTab = tab
         self.variantManager = variantManager
         self.newTabDialogFactory = newTabDialogFactory
         self.newTabDialogTypeProvider = newTabDialogTypeProvider
+        self.pixelFiring = pixelFiring
 
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
@@ -96,14 +100,20 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        view.backgroundColor = UIColor(designSystemColor: .background)
+
+        // If there's no tab switcher then this will be true, if there is a tabswitcher then only allow the
+        // stuff below to happen if it's being dismissed
+        guard presentedViewController?.isBeingDismissed ?? true else {
+            return
+        }
+
         associatedTab.viewed = true
 
         presentNextDaxDialog()
 
-        Pixel.fire(pixel: .homeScreenShown)
+        pixelFiring.fire(.homeScreenShown, withAdditionalParameters: [:])
         sendDailyDisplayPixel()
-
-        view.backgroundColor = UIColor(designSystemColor: .background)
     }
 
     private func setUpDaxDialog() {

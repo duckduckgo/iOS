@@ -24,11 +24,11 @@ import Combine
 class MockPrivacyConfiguration: PrivacyConfiguration {
 
     var isSubfeatureKeyEnabled: ((any PrivacySubfeature, AppVersionProvider) -> Bool)?
-    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
+    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, cohortID: CohortID?, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
         isSubfeatureKeyEnabled?(subfeature, versionProvider) ?? false
     }
 
-    func stateFor(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> PrivacyConfigurationFeatureState {
+    func stateFor(_ subfeature: any PrivacySubfeature, cohortID: CohortID?, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> PrivacyConfigurationFeatureState {
         if isSubfeatureKeyEnabled?(subfeature, versionProvider) == true {
             return .enabled
         }

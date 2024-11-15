@@ -56,12 +56,12 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
     }
 
     var enabledSubfeaturesForVersions: [String: Set<String>] = [:]
-    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
+    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, cohortID: CohortID?, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
         return enabledSubfeaturesForVersions[subfeature.rawValue]?.contains(versionProvider.appVersion() ?? "") ?? false
     }
 
-    func stateFor(_ subfeature: any PrivacySubfeature, versionProvider: BrowserServicesKit.AppVersionProvider, randomizer: (Range<Double>) -> Double) -> BrowserServicesKit.PrivacyConfigurationFeatureState {
-        if isSubfeatureEnabled(subfeature, versionProvider: versionProvider, randomizer: randomizer) {
+    func stateFor(_ subfeature: any PrivacySubfeature, cohortID: CohortID?, versionProvider: BrowserServicesKit.AppVersionProvider, randomizer: (Range<Double>) -> Double) -> BrowserServicesKit.PrivacyConfigurationFeatureState {
+        if isSubfeatureEnabled(subfeature, cohortID: cohortID, versionProvider: versionProvider, randomizer: randomizer) {
             return .enabled
         }
         return .disabled(.disabledInConfig) // this is not used in platform tests, so mocking this poorly for now

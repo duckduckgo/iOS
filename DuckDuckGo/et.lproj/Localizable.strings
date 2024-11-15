@@ -23,7 +23,7 @@
 "action.text-zoom-menu-item" = "Suurendus (%d%%)";
 
 /* Text zoom menu item */
-"action.text-zoom-sheet-menu-item" = "Suumi";
+"action.text-zoom-sheet-menu-item" = "Suurendus";
 
 /* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
 "action.text-zoom-sheet-title" = "Teksti suumimine (%d%%)";

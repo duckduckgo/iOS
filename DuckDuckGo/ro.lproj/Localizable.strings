@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zoom text (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sincronizare și copiere de rezervă";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Dimensiune text";
+"settings.text.size" = "Zoom text implicit";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Temă";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Comutator între file";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Alege dimensiunea preferată a textului. Site-urile pe care le vizitezi în DuckDuckGo se vor adapta la aceasta.";
+"textSize.description" = "Mărește sau micșorează dimensiunea textului pe toate site-urile.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Dimensiune text - %@";

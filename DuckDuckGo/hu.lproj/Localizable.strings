@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Nagyítás (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Nagyítás";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Szöveg nagyítása (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Szinkronizálás és biztonsági mentés";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Szövegméret";
+"settings.text.size" = "Alapértelmezett szövegnagyítás";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Kinézet";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Lapváltó";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Válaszd ki a kívánt szövegméretet. A DuckDuckGo ennek használatával jeleníti meg a webhelyeket.";
+"textSize.description" = "Növeld vagy csökkentsd a szöveg méretét az összes webhelyen.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Szövegméret: %@";

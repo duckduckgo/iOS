@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "U redu";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zumiranje (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zumiranje";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zumiranje teksta (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sinkronizacija i sigurnosno kopiranje";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Veličina teksta";
+"settings.text.size" = "Zadano zumiranje teksta";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Mjenjač kartica";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Odaberite željenu veličinu teksta. Web stranice koje pregledavate u DuckDuckGou prilagodit će se ovoj postavci.";
+"textSize.description" = "Povećajte ili smanjite veličinu teksta na svim web-mjestima.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Veličina teksta: %@";

@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "V REDU";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Povečava (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Povečava";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Povečava besedila (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sinhronizacija in varnostno kopiranje";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Velikost besedila";
+"settings.text.size" = "Privzeta povečava besedila";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Preklopi med zavihki";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Izberite želeno velikost besedila. Spletna mesta, ki se prikazujejo v iskalniku DuckDuckGo, se temu prilagodijo.";
+"textSize.description" = "Povečajte ali zmanjšajte velikost besedila na vseh spletnih mestih.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Velikost besedila - %@";

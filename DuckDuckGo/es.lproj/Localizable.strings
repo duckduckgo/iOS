@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "De acuerdo";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zoom de texto (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Añadir";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sincronización y copia de seguridad";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Tamaño del texto";
+"settings.text.size" = "Zoom de texto predeterminado";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Cambiar pestañas";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Elige tu tamaño de texto preferido. Los sitios web que veas en DuckDuckGo se ajustarán a él.";
+"textSize.description" = "Aumenta o disminuye el tamaño del texto en todos los sitios.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Tamaño del texto - %@";

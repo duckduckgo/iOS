@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "Εντάξει";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Ζουμ (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Ζουμ";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Ζουμ κειμένου (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Συγχρονισμός και δημιουργία αντιγράφων ασφαλείας";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Μέγεθος κειμένου";
+"settings.text.size" = "Προεπιλεγμένο ζουμ κειμένου";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Θέμα";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Εναλλαγή καρτελών";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Επιλέξτε το προτιμώμενο μέγεθος κειμένου. Οι ιστότοποι που βλέπετε στο DuckDuckGo θα προσαρμοστούν σε αυτό.";
+"textSize.description" = "Αυξήστε ή μειώστε το μέγεθος του κειμένου σε όλους τους ιστότοπους.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Μέγεθος κειμένου - %@";

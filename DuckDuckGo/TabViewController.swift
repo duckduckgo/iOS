@@ -191,12 +191,7 @@ class TabViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
 
     private let certificateTrustEvaluator: CertificateTrustEvaluating
-    private let urlCredentialCreator: URLCredentialCreating
-    private var shouldBypassSSLError = false
-    var errorData: SpecialErrorData?
-    private var failedURL: URL?
     private var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
-    private var isSpecialErrorPageVisible: Bool = false
     let syncService: DDGSyncing
 
     private let daxDialogsDebouncer = Debouncer(mode: .common)
@@ -329,7 +324,6 @@ class TabViewController: UIViewController {
                                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                                    contextualOnboardingLogic: ContextualOnboardingLogic,
                                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
-                                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                                    featureFlagger: FeatureFlagger,
                                    subscriptionCookieManager: SubscriptionCookieManaging,
                                    textZoomCoordinator: TextZoomCoordinating) -> TabViewController {
@@ -347,7 +341,6 @@ class TabViewController: UIViewController {
                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                               contextualOnboardingLogic: contextualOnboardingLogic,
                               onboardingPixelReporter: onboardingPixelReporter,
-                              urlCredentialCreator: urlCredentialCreator,
                               featureFlagger: featureFlagger,
                               subscriptionCookieManager: subscriptionCookieManager,
                               textZoomCoordinator: textZoomCoordinator
@@ -371,6 +364,7 @@ class TabViewController: UIViewController {
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
     let threatProtectionNavigationHandler: ThreatProtectionNavigationHandling
+    let specialErrorPageNavigationHandler: SpecialErrorPageNavigationHandling
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -384,11 +378,11 @@ class TabViewController: UIViewController {
                    contextualOnboardingPresenter: ContextualOnboardingPresenting,
                    contextualOnboardingLogic: ContextualOnboardingLogic,
                    onboardingPixelReporter: OnboardingCustomInteractionPixelReporting,
-                   urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
-                   threatProtectionNavigationHandler: ThreatProtectionNavigationHandling = ThreatProtectionNavigationHandler()) {
+                   threatProtectionNavigationHandler: ThreatProtectionNavigationHandling = ThreatProtectionNavigationHandler(),
+                   specialErrorPageNavigationHandler: SpecialErrorPageNavigationHandling = SpecialErrorPageNavigationHandler()) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -405,16 +399,19 @@ class TabViewController: UIViewController {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
-        self.urlCredentialCreator = urlCredentialCreator
         self.featureFlagger = featureFlagger
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
         self.threatProtectionNavigationHandler = threatProtectionNavigationHandler
+        self.specialErrorPageNavigationHandler = specialErrorPageNavigationHandler
 
         super.init(coder: aDecoder)
         
         // Assign itself as tabNavigationHandler for DuckPlayer
         duckPlayerNavigationHandler?.tabNavigationHandler = self
+
+        // Assign itself as specialErrorPageNavigationDelegate for SpecialErrorPages
+        specialErrorPageNavigationHandler.delegate  = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -552,6 +549,7 @@ class TabViewController: UIViewController {
             webView = WKWebView(frame: view.bounds, configuration: configuration)
         }
         textZoomCoordinator.onWebViewCreated(applyToWebView: webView)
+        specialErrorPageNavigationHandler.attachWebView(webView)
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -1046,12 +1044,13 @@ class TabViewController: UIViewController {
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host),
+                                      isPhishing: true,
                                       shouldCheckServerTrust: shouldCheckServerTrust)
         let isValid = certificateTrustEvaluator.evaluateCertificateTrust(trust: webView.serverTrust)
         if let isValid {
             privacyInfo.serverTrust = isValid ? webView.serverTrust : nil
         }
-        privacyInfo.isSpecialErrorPageVisible = isSpecialErrorPageVisible
+        privacyInfo.isSpecialErrorPageVisible = specialErrorPageNavigationHandler.isSpecialErrorPageVisible
 
         previousPrivacyInfosByURL[url] = privacyInfo
         
@@ -1266,7 +1265,7 @@ extension TabViewController: WKNavigationDelegate {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-            handleServerTrustChallenge(challenge, completionHandler: completionHandler)
+            specialErrorPageNavigationHandler.handleWebView(webView, didReceive: challenge, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
         }
@@ -1295,17 +1294,6 @@ extension TabViewController: WKNavigationDelegate {
         })
 
         delegate?.tab(self, didRequestPresentingAlert: alert)
-    }
-
-    private func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge,
-                                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        guard shouldBypassSSLError,
-              let credential = urlCredentialCreator.urlCredentialFrom(trust: challenge.protectionSpace.serverTrust) else {
-            completionHandler(.performDefaultHandling, nil)
-            return
-        }
-        shouldBypassSSLError = false
-        completionHandler(.useCredential, credential)
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -1472,10 +1460,8 @@ extension TabViewController: WKNavigationDelegate {
                                          includedParameters: [.appVersion, .atb])
         }
 
-        specialErrorPageUserScript?.isEnabled = webView.url == failedURL
-        if webView.url != failedURL {
-            isSpecialErrorPageVisible = false
-        }
+        specialErrorPageUserScript?.isEnabled = specialErrorPageNavigationHandler.shouldEnableSpecialErrorPage()
+        specialErrorPageNavigationHandler.handleWebView(webView, didFinish: navigation)
     }
 
     private var specialErrorPageUserScript: SpecialErrorPageUserScript? {
@@ -1700,31 +1686,7 @@ extension TabViewController: WKNavigationDelegate {
             self.showErrorNow()
         }
 
-        loadSpecialErrorPageIfNeeded(error: error)
-    }
-
-    private func loadSpecialErrorPageIfNeeded(error: NSError) {
-        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
-              error.code == NSURLErrorServerCertificateUntrusted,
-              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
-              let failedURL = error.failedUrl else {
-            return
-        }
-        let tld = storageCache.tld
-        let errorType = SSLErrorType.forErrorCode(Int(errorCode))
-        self.failedURL = failedURL
-        errorData = SpecialErrorData(kind: .ssl,
-                                     errorType: errorType.rawValue,
-                                     domain: failedURL.host,
-                                     eTldPlus1: tld.eTLDplus1(failedURL.host))
-        loadSpecialErrorPage(url: failedURL)
-        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.rawParameter))
-    }
-
-    private func loadSpecialErrorPage(url: URL) {
-        let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
-        webView?.loadSimulatedRequest(URLRequest(url: url), responseHTML: html)
-        isSpecialErrorPageVisible = true
+        specialErrorPageNavigationHandler.handleWebView(webView, didFailProvisionalNavigation: navigation, withError: error)
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -1757,18 +1719,12 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         Swift.print("~~~DECIDE POLICY FOR: ", String(describing: navigationAction.request.url))
 //navigationAction.navigationType == .backForward
-        // "http://privacy-test-pages.site/security/badware/phishing.html"
-        // "https://www.google.com/"
         Task { @MainActor in
             if
                 let url = navigationAction.request.url,
-                    case let .handled(model) = await threatProtectionNavigationHandler.handleThreatProtectionNavigation(for: navigationAction, webView: webView),
-                    //errorData != model.error,
-                    url != failedURL {
+                url != specialErrorPageNavigationHandler.failedURL,
+                await specialErrorPageNavigationHandler.handleThreatProtectionNavigation(for: navigationAction, webView: webView) {
                 Swift.print("~~~BLOCKING URL: ", String(describing: url))
-                failedURL = url
-                errorData = model.error
-                loadSpecialErrorPage(url: model.url)
                 privacyInfo?.isPhishing = true
                 decisionHandler(.cancel)
                 return
@@ -1858,7 +1814,7 @@ extension TabViewController: WKNavigationDelegate {
                !navigationAction.shouldDownload,
                !(navigationAction.request.url?.isCustomURLScheme() ?? false),
                navigationAction.navigationType != .backForward,
-               errorData == nil,
+               specialErrorPageNavigationHandler.errorData == nil,
                let request = requestForDoNotSell(basedOn: navigationAction.request) {
 
                 decisionHandler(.cancel)
@@ -2578,7 +2534,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.printingUserScript.delegate = self
         userScripts.loginFormDetectionScript?.delegate = self
         userScripts.autoconsentUserScript.delegate = self
-        userScripts.specialErrorPageUserScript?.delegate = self
+        userScripts.specialErrorPageUserScript?.delegate = specialErrorPageNavigationHandler
 
         // Setup DuckPlayer
         userScripts.duckPlayer = duckPlayerNavigationHandler?.duckPlayer
@@ -3155,26 +3111,10 @@ extension UserContentController {
 
 }
 
-extension TabViewController: SpecialErrorPageUserScriptDelegate {
+extension TabViewController: SpecialErrorPageNavigationDelegate {
 
-    func leaveSite() {
-        Pixel.fire(pixel: .certificateWarningLeaveClicked)
-        guard webView?.canGoBack == true else {
-            delegate?.tabDidRequestClose(self)
-            return
-        }
-        _ = webView?.goBack()
-    }
-
-    func visitSite() {
-        Pixel.fire(pixel: .certificateWarningProceedClicked)
-        isSpecialErrorPageVisible = false
-        shouldBypassSSLError = true
-        _ = webView.reload()
-    }
-
-    func advancedInfoPresented() {
-        Pixel.fire(pixel: .certificateWarningAdvancedClicked)
+    func closeTabUponLeavingSpecialErrorPage() {
+        delegate?.tabDidRequestClose(self)
     }
 
 }

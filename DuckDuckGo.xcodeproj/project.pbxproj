@@ -727,6 +727,7 @@
 		9F42B1462CE772AF0021A328 /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9F42B1452CE772AF0021A328 /* PixelKit */; };
 		9F42B1512CE7C0E90021A328 /* ThreatProtectionFeatureCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42B14F2CE7C0E90021A328 /* ThreatProtectionFeatureCheckTests.swift */; };
 		9F42B1522CE7C0E90021A328 /* ThreatProtectionFeatureCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42B14F2CE7C0E90021A328 /* ThreatProtectionFeatureCheckTests.swift */; };
+		9F42B1542CEA1E7B0021A328 /* SpecialErrorPageNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42B1532CEA1E7B0021A328 /* SpecialErrorPageNavigationHandler.swift */; };
 		9F46BEF82CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */; };
 		9F4CC5152C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */; };
 		9F4CC5172C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */; };
@@ -2548,6 +2549,7 @@
 		9F42B13F2CE75B7B0021A328 /* ThreatProtectionFeatureCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatProtectionFeatureCheck.swift; sourceTree = "<group>"; };
 		9F42B1412CE765F60021A328 /* ThreatProtectionEventMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatProtectionEventMapper.swift; sourceTree = "<group>"; };
 		9F42B14F2CE7C0E90021A328 /* ThreatProtectionFeatureCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatProtectionFeatureCheckTests.swift; sourceTree = "<group>"; };
+		9F42B1532CEA1E7B0021A328 /* SpecialErrorPageNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageNavigationHandler.swift; sourceTree = "<group>"; };
 		9F46BEF72CD8D7490092E0EF /* OnboardingView+AddToDockContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingView+AddToDockContent.swift"; sourceTree = "<group>"; };
 		9F4CC5142C47AD08006A96EB /* ContextualOnboardingPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualOnboardingPresenterMock.swift; sourceTree = "<group>"; };
 		9F4CC5162C48B8D4006A96EB /* TabViewControllerDaxDialogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerDaxDialogTests.swift; sourceTree = "<group>"; };
@@ -4981,6 +4983,7 @@
 				9F42B13F2CE75B7B0021A328 /* ThreatProtectionFeatureCheck.swift */,
 				9FDC06F42CE749C9002006C7 /* ThreatProtectionNavigationHandler.swift */,
 				9F42B1412CE765F60021A328 /* ThreatProtectionEventMapper.swift */,
+				9F42B1532CEA1E7B0021A328 /* SpecialErrorPageNavigationHandler.swift */,
 			);
 			path = ThreatProtection;
 			sourceTree = "<group>";
@@ -7498,6 +7501,7 @@
 				D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */,
 				7BFD5FD72C9DB9D7000FF959 /* VPNGeoswitchingTip.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
+				9F42B1542CEA1E7B0021A328 /* SpecialErrorPageNavigationHandler.swift in Sources */,
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				C1CDA3162AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift in Sources */,
 				D668D9272B6937D2008E2FF2 /* SubscriptionITPViewModel.swift in Sources */,

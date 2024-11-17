@@ -51,11 +51,11 @@ final class ThreatProtectionFeatureCheck {
 extension ThreatProtectionFeatureCheck: ThreatProtectionFeatureChecking {
 
     var isThreatProtectionEnabled: Bool {
-        featureFlagger.isFeatureOn(.threatDetectionErrorPage)
+        true//featureFlagger.isFeatureOn(.threatDetectionErrorPage)
     }
 
     func isThreatProtectionEnabled(forDomain domain: String?) -> Bool {
-        privacyConfigManager.privacyConfig.isFeature(.phishingDetection, enabledForDomain: domain) && isThreatProtectionEnabled
+        true//privacyConfigManager.privacyConfig.isFeature(.phishingDetection, enabledForDomain: domain) && isThreatProtectionEnabled
     }
 
 }

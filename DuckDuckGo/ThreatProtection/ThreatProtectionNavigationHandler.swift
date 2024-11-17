@@ -88,6 +88,24 @@ extension ThreatProtectionNavigationHandler: ThreatProtectionNavigationHandling 
 
 }
 
+// MARK: - SpecialErrorPageActionHandler
+
+extension ThreatProtectionNavigationHandler: SpecialErrorPageActionHandler {
+
+    func visitSite() {
+
+    }
+    
+    func leaveSite() {
+
+    }
+    
+    func advancedInfoPresented() {
+
+    }
+    
+}
+
 // MARK: - Private
 
 private extension ThreatProtectionNavigationHandler {

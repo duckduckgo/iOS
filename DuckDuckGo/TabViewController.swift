@@ -194,9 +194,9 @@ class TabViewController: UIViewController {
     private let urlCredentialCreator: URLCredentialCreating
     private var shouldBypassSSLError = false
     var errorData: SpecialErrorData?
-    var failedURL: URL?
-    var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
-    var isSpecialErrorPageVisible: Bool = false
+    private var failedURL: URL?
+    private var storedSpecialErrorPageUserScript: SpecialErrorPageUserScript?
+    private var isSpecialErrorPageVisible: Bool = false
     let syncService: DDGSyncing
 
     private let daxDialogsDebouncer = Debouncer(mode: .common)
@@ -1478,7 +1478,7 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
-    var specialErrorPageUserScript: SpecialErrorPageUserScript? {
+    private var specialErrorPageUserScript: SpecialErrorPageUserScript? {
         get {
             return storedSpecialErrorPageUserScript ?? userScripts?.specialErrorPageUserScript
         }

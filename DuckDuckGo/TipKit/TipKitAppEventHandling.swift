@@ -39,10 +39,15 @@ struct TipKitAppEventHandler: TipKitAppEventHandling {
 
     func appDidFinishLaunching() {
         if #available(iOS 17.0, *) {
-            controller.configureTipKit([
-                .displayFrequency(.immediate),
-                .datastoreLocation(.applicationDefault)
-            ])
+            // TipKit is temporarily disabled.
+            // See https://app.asana.com/0/inbox/1203108348814444/1208724397684354/1208739407931826
+            // for more information
+            logger.log("TipKit is temporarily disabled.")
+
+            // controller.configureTipKit([
+            //    .displayFrequency(.immediate),
+            //    .datastoreLocation(.applicationDefault)
+            // ])
         } else {
             logger.log("TipKit initialization skipped: iOS 17.0 or later is required.")
         }

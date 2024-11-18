@@ -246,6 +246,12 @@ private struct IssueDescriptionFormView: View {
                                                    text: $viewModel.feedbackFormText,
                                                    focusState: $isTextEditorFocused,
                                                    scrollViewProxy: scrollView)
+                        Text(UserText.pproFeedbackFormEmailLabel)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        TextField(UserText.pproFeedbackFormEmailPlaceholder, text: $viewModel.userEmail)
+                            .textFieldStyle(.roundedBorder)
                         footer()
                             .padding(.horizontal, 4)
                     }

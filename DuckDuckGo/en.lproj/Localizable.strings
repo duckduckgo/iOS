@@ -1994,6 +1994,12 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "Provide an email if you’d like us to contact you about this issue (we may not be able to respond to all issues):";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "Email (optional)";
+
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
 "ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
 

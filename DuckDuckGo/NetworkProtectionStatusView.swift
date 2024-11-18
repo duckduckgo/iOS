@@ -20,6 +20,7 @@
 import SwiftUI
 import NetworkProtection
 import TipKit
+import Networking
 
 struct NetworkProtectionStatusView: View {
 
@@ -309,7 +310,10 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
-        let viewModel = UnifiedFeedbackFormViewModel(vpnMetadataCollector: DefaultVPNMetadataCollector(), source: .vpn)
+        let viewModel = UnifiedFeedbackFormViewModel(accountManager: AppDependencyProvider.shared.accountManager,
+                                                     apiService: DefaultAPIService(),
+                                                     vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                     source: .vpn)
 
         Section {
             NavigationLink(UserText.netPVPNSettingsFAQ, destination: LazyView(NetworkProtectionFAQView()))

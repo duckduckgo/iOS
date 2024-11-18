@@ -89,13 +89,13 @@ class ImageCacheDebugViewController: UITableViewController {
     }
 
     private func loadAllFireproofFavicons() {
-        guard let cacheUrl = Favicons.CacheType.fireproof.cacheLocation() else { return }
+        guard let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return }
         let fireproofCacheUrl = cacheUrl.appendingPathComponent(Constants.fireproofCachePath)
         fireproofFavicons = loadFaviconImages(from: fireproofCacheUrl)
     }
 
     private func loadAllTabFavicons() {
-        guard let cacheUrl = Favicons.CacheType.tabs.cacheLocation() else { return }
+        guard let cacheUrl = FaviconsCacheType.tabs.cacheLocation() else { return }
         let tabCacheUrl = cacheUrl.appendingPathComponent(Constants.tabsCachePath)
         tabFavicons = loadFaviconImages(from: tabCacheUrl)
     }

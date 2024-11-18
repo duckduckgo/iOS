@@ -27,7 +27,7 @@ struct FaviconsHelper {
     private static let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     
     static func loadFaviconSync(forDomain domain: String?,
-                                usingCache cacheType: Favicons.CacheType,
+                                usingCache cacheType: FaviconsCacheType,
                                 useFakeFavicon: Bool,
                                 preferredFakeFaviconLetters: String? = nil) -> (image: UIImage?, isFake: Bool) {
 
@@ -90,7 +90,7 @@ struct FaviconsHelper {
     }
 
     static func loadFaviconSync(forDomain domain: String?,
-                                usingCache cacheType: Favicons.CacheType,
+                                usingCache cacheType: FaviconsCacheType,
                                 useFakeFavicon: Bool,
                                 preferredFakeFaviconLetters: String? = nil,
                                 completion: ((UIImage?, Bool) -> Void)? = nil) {

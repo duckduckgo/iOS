@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "GERAI";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Padidinimas (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Padidinti";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Teksto mastelio keitimas (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sinchronizuoti ir kurti atsarginę kopiją";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Teksto dydis";
+"settings.text.size" = "Numatytasis teksto mastelio keitimas";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Skirtukų perjungiklis";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Pasirinkite norimą teksto dydį. „DuckDuckGo“ rodomos svetainės atitiks šį nustatymą.";
+"textSize.description" = "Padidinti arba sumažinti teksto dydį visose svetainėse.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Teksto dydis – %@";

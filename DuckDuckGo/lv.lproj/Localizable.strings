@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "Labi";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Tālummaiņa (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Tālummaiņa";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Teksta tālummaiņa (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Sinhronizācija un dublēšana";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Burtu izmērs";
+"settings.text.size" = "Noklusējuma teksta tālummaiņa";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Motīvs";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Ciļņu pārslēdzējs";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Izvēlies burtu izmēru. Vietnes tavā DuckDuckGo tam pielāgosies.";
+"textSize.description" = "Palielini vai samazini teksta lielumu visās vietnēs.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Burtu izmērs — %@";

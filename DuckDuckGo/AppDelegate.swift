@@ -138,7 +138,7 @@ import os.log
         }
 #endif
 
-#if DEBUG && !ALPHA
+#if DEBUG
         Pixel.isDryRun = true
 #else
         Pixel.isDryRun = false

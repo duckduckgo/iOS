@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "ОК";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Мащабиране (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Мащабиране";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Мащабиране на текста (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
@@ -2253,7 +2262,7 @@
 "settings.sync" = "Синхронизиране и архивиране";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Размер на текста";
+"settings.text.size" = "Мащабиране на текста по подразбиране";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Тема";
@@ -2601,7 +2610,7 @@
 "tab.switcher.accessibility.label" = "Превключване на раздели";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Изберете предпочитания размер на текста. Уебсайтът, който разглеждате в DuckDuckGo, ще се регулира спрямо него.";
+"textSize.description" = "Увеличете или намалете размера на текста във всички сайтове.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Размер на текста - %@";

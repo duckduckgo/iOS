@@ -250,7 +250,7 @@ final class NewTabPageMessagesModelTests: XCTestCase {
     }
 }
 
-private class HomePageMessagesConfigurationMock: HomePageMessagesConfiguration {
+class HomePageMessagesConfigurationMock: HomePageMessagesConfiguration {
     var homeMessages: [HomeMessage]
 
     init(homeMessages: [HomeMessage]) {

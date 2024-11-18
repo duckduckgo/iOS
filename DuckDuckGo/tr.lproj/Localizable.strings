@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "Tamam";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Yakınlaştır (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Yakınlaştır";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Metin Yakınlaştırma (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Senkronizasyon ve Yedekleme";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Metin Boyutu";
+"settings.text.size" = "Varsayılan Metin Yakınlaştırma";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Sekme Değiştirici";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Tercih ettiğiniz metin boyutunu seçin. DuckDuckGo'da görüntülediğiniz web siteleri bu boyuta ayarlanır.";
+"textSize.description" = "Tüm sitelerde metin boyutunu artırın veya azaltın.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Metin Boyutu - %@";

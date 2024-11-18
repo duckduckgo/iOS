@@ -108,6 +108,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
                 .background(.clear)
                 .frame(width: NewTabPageGrid.Item.edgeSize)
             })
+            .buttonStyle(.plain)
         case .addFavorite:
             Button(action: {
                 isAddingFavorite = true

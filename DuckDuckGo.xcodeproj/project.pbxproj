@@ -528,6 +528,7 @@
 		8598D2E22CEB98B500C45685 /* FaviconRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */; };
 		8598D2E32CEB98B500C45685 /* FaviconUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */; };
 		8598D2E42CEB98B500C45685 /* FaviconSourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187524BF6164004373D2 /* FaviconSourcesProvider.swift */; };
+		8598D2E62CEBAA1F00C45685 /* MockFaviconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598D2E52CEBAA1B00C45685 /* MockFaviconStore.swift */; };
 		8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */; };
 		8599690F29D2F1C100DBF9FA /* DDGSync in Frameworks */ = {isa = PBXBuildFile; productRef = 8599690E29D2F1C100DBF9FA /* DDGSync */; };
 		859DB8132CE6263C001F7210 /* TextZoomStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859DB80D2CE6263B001F7210 /* TextZoomStorage.swift */; };
@@ -1839,6 +1840,7 @@
 		8596C30C2B7EB1800058EF90 /* DataStoreWarmup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreWarmup.swift; sourceTree = "<group>"; };
 		8598D2DB2CEB93A600C45685 /* FaviconsCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconsCacheType.swift; sourceTree = "<group>"; };
 		8598D2DD2CEB97BE00C45685 /* FaviconHasher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconHasher.swift; sourceTree = "<group>"; };
+		8598D2E52CEBAA1B00C45685 /* MockFaviconStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFaviconStore.swift; sourceTree = "<group>"; };
 		8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsTests.swift; sourceTree = "<group>"; };
 		859DB80D2CE6263B001F7210 /* TextZoomStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextZoomStorage.swift; sourceTree = "<group>"; };
 		859DB80E2CE6263B001F7210 /* TextZoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextZoomController.swift; sourceTree = "<group>"; };
@@ -6072,6 +6074,7 @@
 		F17669A91E412A17003D3222 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				8598D2E52CEBAA1B00C45685 /* MockFaviconStore.swift */,
 				9F4CC51A2C48C0C7006A96EB /* MockTabDelegate.swift */,
 				C14882E927F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift */,
 				C158AC7A297AB5DC0008723A /* MockSecureVault.swift */,
@@ -8037,6 +8040,7 @@
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
 				9FCFCD802C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift in Sources */,
 				983C52E72C2C0ACB007B5747 /* BookmarkStateRepairTests.swift in Sources */,
+				8598D2E62CEBAA1F00C45685 /* MockFaviconStore.swift in Sources */,
 				31C138AC27A403CB00FFD4B2 /* DownloadManagerTests.swift in Sources */,
 				BDE219EA2C457B46005D5884 /* PrivacyProDataReporterTests.swift in Sources */,
 				EEFE9C732A603CE9005B0A26 /* NetworkProtectionStatusViewModelTests.swift in Sources */,

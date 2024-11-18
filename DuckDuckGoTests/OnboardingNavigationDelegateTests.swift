@@ -220,12 +220,3 @@ class MockRemoteMessagingAvailabilityProviding: RemoteMessagingAvailabilityProvi
         .eraseToAnyPublisher()
 
 }
-
-class MockFaviconStore: FaviconStoring {
-    func hasFavicon(for domain: String) -> Bool {
-        return false
-    }
-    
-    func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
-    }
-}

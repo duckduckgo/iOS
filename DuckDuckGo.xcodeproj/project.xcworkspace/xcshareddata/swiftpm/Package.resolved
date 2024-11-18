@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "07af4d672e003cc247e28a01b9fe3e77abaf49f9",
-        "version" : "210.0.2"
+        "branch" : "sam/avoid-disabling-vpn-after-reboot",
+        "revision" : "62da8be0cc8e9d082433e5f888e1d0368ba0ed5d"
       }
     },
     {

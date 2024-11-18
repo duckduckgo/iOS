@@ -44,7 +44,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
+            syncErrorHandler: SyncErrorHandler(),
+            faviconStoring: MockFaviconStore()
         )
         
         let remoteMessagingClient = RemoteMessagingClient(
@@ -218,4 +219,13 @@ class MockRemoteMessagingAvailabilityProviding: RemoteMessagingAvailabilityProvi
     var isRemoteMessagingAvailablePublisher: AnyPublisher<Bool, Never> = Just(false)
         .eraseToAnyPublisher()
 
+}
+
+class MockFaviconStore: FaviconStoring {
+    func hasFavicon(for domain: String) -> Bool {
+        return false
+    }
+    
+    func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
+    }
 }

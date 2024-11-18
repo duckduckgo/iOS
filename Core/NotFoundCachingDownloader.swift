@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import Kingfisher
 
 class NotFoundCachingDownloader: ImageDownloader {
@@ -46,7 +47,7 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
 
     func noFaviconsFound(forDomain domain: String) {
-        guard let hashedKey = CoreFaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return }
+        guard let hashedKey = FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
 
@@ -56,7 +57,7 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
 
     func shouldDownload(forDomain domain: String, referenceDate: Date = Date()) -> Bool {
-        guard let hashedKey = CoreFaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return false }
+        guard let hashedKey = FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return false }
         if let cacheAddTime = notFoundCache[hashedKey],
             referenceDate.timeIntervalSince1970 - cacheAddTime < Self.expiry {
             return false

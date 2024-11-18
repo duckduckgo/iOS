@@ -272,7 +272,8 @@ import os.log
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-            syncErrorHandler: syncErrorHandler
+            syncErrorHandler: syncErrorHandler,
+            faviconStoring: Favicons.shared
         )
 
         let syncService = DDGSync(

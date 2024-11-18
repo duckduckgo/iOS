@@ -20,6 +20,7 @@
 import XCTest
 
 @testable import Core
+@testable import DuckDuckGo
 
 class NotFoundCachingDownloaderTests: XCTestCase {
 

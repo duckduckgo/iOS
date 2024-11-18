@@ -24,6 +24,7 @@ import UIKit
 import LinkPresentation
 import WidgetKit
 import os.log
+import Core
 
 public class Favicons {
 
@@ -359,7 +360,7 @@ public class Favicons {
     }
 
     public func defaultResource(forDomain domain: String?) -> KF.ImageResource? {
-        return CoreFaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
+        return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 
     public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: FaviconsCacheType) -> KingfisherOptionsInfo? {

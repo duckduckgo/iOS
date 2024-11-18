@@ -11034,8 +11034,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sam/avoid-disabling-vpn-after-reboot";
-				kind = branch;
+				kind = exactVersion;
+				version = 210.0.3;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

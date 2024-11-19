@@ -20,6 +20,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import BrowserServicesKit
 
 enum CrashCollectionOptInStatus: String {
     case undetermined, optedIn, optedOut
@@ -35,10 +36,14 @@ final class CrashCollectionOnboardingViewController: UIHostingController<CrashCo
 }
 
 final class CrashCollectionOnboarding: NSObject {
+    
+    private var featureFlagger: FeatureFlagger
 
-    init(appSettings: AppSettings) {
+    init(appSettings: AppSettings,
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.appSettings = appSettings
         self.viewModel = CrashCollectionOnboardingViewModel(appSettings: appSettings)
+        self.featureFlagger = featureFlagger
         super.init()
     }
     
@@ -50,11 +55,17 @@ final class CrashCollectionOnboarding: NSObject {
     func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
         
-        if appSettings.crashCollectionOptInStatus == .optedIn &&
-            appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
-            debugPrint("Resettting crash report opt in status from \(appSettings.crashCollectionOptInStatus) to .undetermined")
-            appSettings.crashCollectionOptInStatus = .undetermined
-            appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
+#if DEBUG
+        appSettings.crashCollectionShouldRevertOptedInStatusTrigger = 0
+#endif
+        
+        if featureFlagger.isFeatureOn(.crashReportOptInStatusResetting) {
+            if appSettings.crashCollectionOptInStatus == .optedIn &&
+                appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
+                debugPrint("Resettting crash report opt in status from \(appSettings.crashCollectionOptInStatus) to .undetermined")
+                appSettings.crashCollectionOptInStatus = .undetermined
+                appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
+            }
         }
         
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {

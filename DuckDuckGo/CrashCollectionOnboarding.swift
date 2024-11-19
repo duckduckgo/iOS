@@ -50,10 +50,6 @@ final class CrashCollectionOnboarding: NSObject {
     func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
         
-#if DEBUG
-        appSettings.crashCollectionShouldRevertOptedInStatusTrigger = 0
-#endif
-        
         if appSettings.crashCollectionOptInStatus == .optedIn &&
             appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
             debugPrint("Resettting crash report opt in status from \(appSettings.crashCollectionOptInStatus) to .undetermined")

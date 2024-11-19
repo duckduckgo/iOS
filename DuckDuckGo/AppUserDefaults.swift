@@ -75,6 +75,7 @@ public class AppUserDefaults: AppSettings {
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
+        static let crashCollectionShouldRevertOptedInStatusTrigger = "com.duckduckgo.ios.crashCollectionShouldRevertOptedInStatusTrigger"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
@@ -396,6 +397,19 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.crashCollectionOptInStatus)
+        }
+    }
+    
+    var crashCollectionShouldRevertOptedInStatusTrigger: Int {
+        get {
+            if let resetTrigger = userDefaults?.integer(forKey: Keys.crashCollectionShouldRevertOptedInStatusTrigger) {
+                return resetTrigger
+            } else {
+                return 0
+            }
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.crashCollectionShouldRevertOptedInStatusTrigger)
         }
     }
     

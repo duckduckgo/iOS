@@ -41,10 +41,26 @@ final class CrashCollectionOnboarding: NSObject {
         self.viewModel = CrashCollectionOnboardingViewModel(appSettings: appSettings)
         super.init()
     }
+    
+    // If the user's crash report opt in status should be reset to unknown upon next release,
+    // increment this value by 1
+    private let crashCollectionShouldRevertOptedInStatusTriggerTargetValue: Int = 1
 
     @MainActor
     func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
+        
+#if DEBUG
+        appSettings.crashCollectionShouldRevertOptedInStatusTrigger = 0
+#endif
+        
+        if appSettings.crashCollectionOptInStatus == .optedIn &&
+            appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
+            debugPrint("Resettting crash report opt in status from \(appSettings.crashCollectionOptInStatus) to .undetermined")
+            appSettings.crashCollectionOptInStatus = .undetermined
+            appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
+        }
+        
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {
             if appSettings.crashCollectionOptInStatus == .optedIn {
                 sendReport()

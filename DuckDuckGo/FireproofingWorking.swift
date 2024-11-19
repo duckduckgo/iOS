@@ -1,5 +1,5 @@
 //
-//  PreserveLoginsWorker.swift
+//  FireproofingWorking.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-struct PreserveLoginsWorker {
+struct FireproofingWorking {
 
     private struct Constants {
         static let timeForAutofillToBlockFireproofPrompt = 10.0
@@ -73,7 +73,7 @@ struct PreserveLoginsWorker {
 
     private func promptToFireproof(_ domain: String) {
         guard let controller = controller else { return }
-        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
+        FireproofingAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
             self.addDomain(domain)
         }
     }
@@ -82,14 +82,14 @@ struct PreserveLoginsWorker {
         guard let controller = controller else { return }
         fireproofing.addToAllowed(domain: domain)
         Favicons.shared.loadFavicon(forDomain: domain, intoCache: .fireproof, fromCache: .tabs)
-        PreserveLoginsAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
+        FireproofingAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
 
     private func removeDomain(_ domain: String) {
         guard let controller = controller else { return }
         fireproofing.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
-        PreserveLoginsAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
+        FireproofingAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
 
 }

@@ -120,7 +120,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         }
     }
 
-    func testWhenPreserveLoginsNotificationSentThenUserScriptsAreRebuild() {
+    func testWhenFireproffingNotificationSentThenUserScriptsAreRebuild() {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
 

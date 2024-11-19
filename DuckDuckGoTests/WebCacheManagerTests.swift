@@ -41,19 +41,19 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testEnsureIdAllocatedAfterClearing() async throws {
-        let logins = MockFireproofing(domains: [])
+        let fireproofing = MockFireproofing(domains: [])
         let storage = CookieStorage()
 
         let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
         XCTAssertNil(inMemoryDataStoreIdManager.currentId)
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
 
         XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
         let oldId = inMemoryDataStoreIdManager.currentId?.uuidString
         XCTAssertNotNil(oldId)
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
 
         XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
         XCTAssertNotEqual(inMemoryDataStoreIdManager.currentId?.uuidString, oldId)
@@ -62,7 +62,7 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
-        let logins = MockFireproofing(domains: [
+        let fireproofing = MockFireproofing(domains: [
             "mobile.twitter.com"
         ])
 
@@ -82,7 +82,7 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(5, loadedCount)
 
         let cookieStore = CookieStorage()
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
@@ -113,7 +113,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-        let logins = MockFireproofing(domains: [
+        let fireproofing = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -130,7 +130,7 @@ class WebCacheManagerTests: XCTestCase {
         let cookieStorage = CookieStorage()
         
         await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
-                                           logins: logins,
+                                           fireproofing: fireproofing,
                                            dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
         let cookies = await defaultStore.httpCookieStore.allCookies()
 
@@ -150,7 +150,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
-        let logins = MockFireproofing(domains: [
+        let fireproofing = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -161,7 +161,7 @@ class WebCacheManagerTests: XCTestCase {
         let storage = CookieStorage()
         storage.isConsumed = true
         
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         XCTAssertEqual(storage.cookies.count, 2)
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
@@ -170,7 +170,7 @@ class WebCacheManagerTests: XCTestCase {
     
     @MainActor
     func testWhenClearedThenCookiesForLoginsAreRetained() async {
-        let logins = MockFireproofing(domains: [
+        let fireproofing = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -188,7 +188,7 @@ class WebCacheManagerTests: XCTestCase {
 
         let cookieStore = CookieStorage()
         
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)

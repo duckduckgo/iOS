@@ -120,7 +120,7 @@ public class CookieStorageTests: XCTestCase {
 
     }
     
-    func testWhenUpdatedThenNoLongerPreservedDomainsAreCleared() {
+    func testWhenUpdatedThenNoLongerFireproofedDomainsAreCleared() {
         storage.updateCookies([
             make("test.com", name: "x", value: "1"),
             make("example.com", name: "x", value: "1"),

@@ -1,5 +1,5 @@
 //
-//  PreserveLoginsSettingsViewController.swift
+//  FireproofingSettingsViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import UIKit
 import Core
 import WebKit
 
-class PreserveLoginsSettingsViewController: UITableViewController {
+class FireproofingSettingsViewController: UITableViewController {
     
     enum Section: Int, CaseIterable {
         case info
@@ -117,7 +117,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section) {
         case .some(.domainList):
-            return UserText.preserveLoginsListTitle
+            return UserText.fireproofingListTitle
         
         default:
             return nil
@@ -127,7 +127,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch Section(rawValue: section) {
         case .some(.info):
-            return UserText.preserveLoginsListFooter
+            return UserText.fireproofingListFooter
         
         default:
             return nil
@@ -174,7 +174,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     func createSwitchCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? FireproofingSwitchCell else {
             fatalError("Cell should be dequeued")
         }
         cell.label.textColor = theme.tableCellTextColor
@@ -187,7 +187,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     func createDomainCell(forTableView tableView: UITableView, withTheme theme: Theme, forIndex index: Int) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? FireproofingDomainCell else {
             fatalError("Cell should be dequeued")
         }
         cell.label.textColor = theme.tableCellTextColor
@@ -213,7 +213,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     func clearAll() {
         guard !model.isEmpty else { return }
         
-        PreserveLoginsAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
+        FireproofingAlert.showClearAllAlert(usingController: self, cancelled: { [weak self] in
             self?.refreshModel()
         }, confirmed: { [weak self] in
             Task { @MainActor in
@@ -233,7 +233,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
 }
 
-extension PreserveLoginsSettingsViewController {
+extension FireproofingSettingsViewController {
 
     private func decorate() {
         let theme = ThemeManager.shared.currentTheme
@@ -247,12 +247,12 @@ extension PreserveLoginsSettingsViewController {
 
 }
 
-class PreserveLoginsSwitchCell: UITableViewCell {
+class FireproofingSwitchCell: UITableViewCell {
 
     @IBOutlet weak var toggle: UISwitch!
     @IBOutlet weak var label: UILabel!
 
-    weak var controller: PreserveLoginsSettingsViewController!
+    weak var controller: FireproofingSettingsViewController!
     var fireproofing: Fireproofing?
 
     @IBAction func onToggle() {
@@ -261,7 +261,7 @@ class PreserveLoginsSwitchCell: UITableViewCell {
 
 }
 
-class PreserveLoginDomainCell: UITableViewCell {
+class FireproofingDomainCell: UITableViewCell {
 
     @IBOutlet weak var faviconImage: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -270,7 +270,7 @@ class PreserveLoginDomainCell: UITableViewCell {
 
 private extension IndexPath {
     
-    func isInSection(section: PreserveLoginsSettingsViewController.Section) -> Bool {
+    func isInSection(section: FireproofingSettingsViewController.Section) -> Bool {
         return self.section == section.rawValue
     }
     

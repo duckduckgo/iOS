@@ -29,15 +29,15 @@ class UserDefaultsFireproofingTests: XCTestCase {
     }
     
     func testWhenAllowedDomainsContainsFireproofedDomainThenReturnsTrue() {
-        let logins = UserDefaultsFireproofing()
-        XCTAssertFalse(logins.isAllowed(fireproofDomain: "example.com"))
-        logins.addToAllowed(domain: "example.com")
-        XCTAssertTrue(logins.isAllowed(fireproofDomain: "example.com"))
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertFalse(fireproofing.isAllowed(fireproofDomain: "example.com"))
+        fireproofing.addToAllowed(domain: "example.com")
+        XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "example.com"))
     }
     
     func testWhenNewThenAllowedDomainsIsEmpty() {
-        let logins = UserDefaultsFireproofing()
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertTrue(fireproofing.allowedDomains.isEmpty)
     }
 
 }

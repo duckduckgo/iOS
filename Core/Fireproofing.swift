@@ -1,5 +1,5 @@
 //
-//  PreserveLogins.swift
+//  Fireproofing.swift
 //  Core
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -29,7 +29,7 @@ public protocol Fireproofing {
     func addToAllowed(domain: String)
     func remove(domain: String)
     func clearAll()
-    
+
 }
 
 public class UserDefaultsFireproofing: Fireproofing {
@@ -40,10 +40,10 @@ public class UserDefaultsFireproofing: Fireproofing {
         public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
     }
 
-    @UserDefaultsWrapper(key: .preserveLoginsAllowedDomains, defaultValue: [])
+    @UserDefaultsWrapper(key: .fireproofingAllowedDomains, defaultValue: [])
     private(set) public var allowedDomains: [String]
 
-    @UserDefaultsWrapper(key: .preserveLoginsDetectionEnabled, defaultValue: false)
+    @UserDefaultsWrapper(key: .fireproofingDetectionEnabled, defaultValue: false)
     public var loginDetectionEnabled: Bool {
         didSet {
             NotificationCenter.default.post(name: Notifications.loginDetectionStateChanged, object: nil)

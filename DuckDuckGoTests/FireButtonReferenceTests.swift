@@ -75,7 +75,7 @@ final class FireButtonReferenceTests: XCTestCase {
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
             
-            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 

@@ -78,7 +78,7 @@ public class WebCacheManager {
     }
 
     public func clear(cookieStorage: CookieStorage = CookieStorage(),
-                      logins: Fireproofing = UserDefaultsFireproofing.shared,
+                      fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
                       dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
         var cookiesToUpdate = [HTTPCookie]()
@@ -92,7 +92,7 @@ public class WebCacheManager {
         // Perform legacy clearing to migrate to new container
         cookiesToUpdate += await legacyDataClearing() ?? []
 
-        cookieStorage.updateCookies(cookiesToUpdate, preservingFireproofedDomains: logins)
+        cookieStorage.updateCookies(cookiesToUpdate, preservingFireproofedDomains: fireproofing)
 
         // Attempt to clean up leftover stores again after a delay
         // This should not be a problem as these containers are not supposed to be used anymore.

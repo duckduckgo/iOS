@@ -19,13 +19,26 @@
 
 import Foundation
 
-public class PreserveLogins {
+public protocol Fireproofing {
+
+    var loginDetectionEnabled: Bool { get set }
+    var allowedDomains: [String] { get }
+
+    func isAllowed(cookieDomain: String) -> Bool
+    func isAllowed(fireproofDomain domain: String) -> Bool
+    func addToAllowed(domain: String)
+    func remove(domain: String)
+    func clearAll()
+    
+}
+
+public class UserDefaultsFireproofing: Fireproofing {
+
+    public static let shared: Fireproofing = UserDefaultsFireproofing()
 
     public struct Notifications {
         public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
     }
-
-    public static let shared = PreserveLogins()
 
     @UserDefaultsWrapper(key: .preserveLoginsAllowedDomains, defaultValue: [])
     private(set) public var allowedDomains: [String]

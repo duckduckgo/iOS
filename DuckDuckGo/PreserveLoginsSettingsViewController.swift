@@ -35,7 +35,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
 
     var model = [String]()
     private var shouldShowRemoveAll = false
-    
+
+    // TODO inject this
+    private let fireproofing: Fireproofing = UserDefaultsFireproofing.shared
+
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshModel()
@@ -144,7 +147,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         guard editingStyle == .delete else { return }
         
         let domain = model.remove(at: indexPath.row)
-        PreserveLogins.shared.remove(domain: domain)
+        fireproofing.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
 
         if self.model.isEmpty {
@@ -176,7 +179,8 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
-        cell.toggle.isOn = PreserveLogins.shared.loginDetectionEnabled
+        cell.toggle.isOn = fireproofing.loginDetectionEnabled
+        cell.fireproofing = fireproofing
         cell.controller = self
         cell.decorate(with: theme)
         return cell
@@ -214,7 +218,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }, confirmed: { [weak self] in
             Task { @MainActor in
                 await WebCacheManager.shared.removeCookies(forDomains: self?.model ?? [], dataStore: WKWebsiteDataStore.current())
-                PreserveLogins.shared.clearAll()
+                self?.fireproofing.clearAll()
                 self?.refreshModel()
                 self?.endEditing()
             }
@@ -222,7 +226,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     }
     
     func refreshModel() {
-        model = PreserveLogins.shared.allowedDomains.sorted(by: { (lhs, rhs) -> Bool in
+        model = fireproofing.allowedDomains.sorted(by: { (lhs, rhs) -> Bool in
             return lhs.droppingWwwPrefix() < rhs.droppingWwwPrefix()
         })
         tableView.reloadData()
@@ -249,9 +253,10 @@ class PreserveLoginsSwitchCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
 
     weak var controller: PreserveLoginsSettingsViewController!
+    var fireproofing: Fireproofing?
 
     @IBAction func onToggle() {
-        PreserveLogins.shared.loginDetectionEnabled = toggle.isOn
+        fireproofing?.loginDetectionEnabled = toggle.isOn
     }
 
 }

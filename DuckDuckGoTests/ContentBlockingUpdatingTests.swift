@@ -141,7 +141,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         withExtendedLifetime(c) {
             waitForExpectations(timeout: 1, handler: nil)
             e2 = expectation(description: "should rebuild user scripts")
-            NotificationCenter.default.post(name: PreserveLogins.Notifications.loginDetectionStateChanged, object: nil)
+            NotificationCenter.default.post(name: UserDefaultsFireproofing.Notifications.loginDetectionStateChanged, object: nil)
             waitForExpectations(timeout: 1, handler: nil)
         }
     }

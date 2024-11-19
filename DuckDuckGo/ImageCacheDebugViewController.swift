@@ -49,6 +49,7 @@ class ImageCacheDebugViewController: UITableViewController {
     private let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
 
     private let bookmarksContext: NSManagedObjectContext
+    private let fireproofing: Fireproofing
 
     private var fireproofFavicons = [String: UIImage]()
     private var tabFavicons = [String: UIImage]()
@@ -59,9 +60,11 @@ class ImageCacheDebugViewController: UITableViewController {
     private var tabs = [String: String]()
 
     init?(coder: NSCoder,
-          bookmarksDatabase: CoreDataDatabase) {
+          bookmarksDatabase: CoreDataDatabase,
+          fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
 
         bookmarksContext = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        self.fireproofing = fireproofing
         super.init(coder: coder)
     }
 
@@ -141,8 +144,8 @@ class ImageCacheDebugViewController: UITableViewController {
     }
 
     private func loadAllFireproofSites() {
-        let preservedLoginSites = PreserveLogins.shared.allowedDomains
-        for site in preservedLoginSites {
+        let allowedDomains = fireproofing.allowedDomains
+        for site in allowedDomains {
             if let imageResource = Favicons.shared.defaultResource(forDomain: site) {
                 fireproofSites[imageResource.cacheKey] = site
             }

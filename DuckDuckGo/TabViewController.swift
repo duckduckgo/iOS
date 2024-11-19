@@ -370,6 +370,7 @@ class TabViewController: UIViewController {
     let contextualOnboardingLogic: ContextualOnboardingLogic
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
+    let fireproofing: Fireproofing
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -386,7 +387,8 @@ class TabViewController: UIViewController {
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
-                   textZoomCoordinator: TextZoomCoordinating) {
+                   textZoomCoordinator: TextZoomCoordinating,
+                   fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -407,6 +409,7 @@ class TabViewController: UIViewController {
         self.featureFlagger = featureFlagger
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.fireproofing = fireproofing
 
         super.init(coder: aDecoder)
         
@@ -421,7 +424,7 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        preserveLoginsWorker = PreserveLoginsWorker(controller: self)
+        preserveLoginsWorker = PreserveLoginsWorker(controller: self, fireproofing: fireproofing)
         initAttributionLogic()
         decorate()
         addTextZoomObserver()
@@ -2569,7 +2572,7 @@ extension TabViewController: UserContentControllerDelegate {
         
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
-            PreserveLogins.Notifications.loginDetectionStateChanged,
+            UserDefaultsFireproofing.Notifications.loginDetectionStateChanged,
             AppUserDefaults.Notifications.doNotSellStatusChange
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true

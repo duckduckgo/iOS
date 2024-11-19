@@ -41,7 +41,7 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testEnsureIdAllocatedAfterClearing() async throws {
-        let logins = MockPreservedLogins(domains: [])
+        let logins = MockFireproofing(domains: [])
         let storage = CookieStorage()
 
         let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
@@ -62,7 +62,7 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
-        let logins = MockPreservedLogins(domains: [
+        let logins = MockFireproofing(domains: [
             "mobile.twitter.com"
         ])
 
@@ -113,7 +113,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
+        let logins = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -150,7 +150,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
+        let logins = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -170,7 +170,7 @@ class WebCacheManagerTests: XCTestCase {
     
     @MainActor
     func testWhenClearedThenCookiesForLoginsAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
+        let logins = MockFireproofing(domains: [
             "www.example.com"
         ])
 
@@ -205,18 +205,36 @@ class WebCacheManagerTests: XCTestCase {
             
     // MARK: Mocks
     
-    class MockPreservedLogins: PreserveLogins {
+    class MockFireproofing: Fireproofing {
+
+        var loginDetectionEnabled: Bool = true
+
+        func isAllowed(cookieDomain: String) -> Bool {
+            return true
+        }
         
+        func isAllowed(fireproofDomain domain: String) -> Bool {
+            return true
+        }
+        
+        func addToAllowed(domain: String) {
+        }
+        
+        func remove(domain: String) {
+        }
+        
+        func clearAll() {
+        }
+
         let domains: [String]
         
-        override var allowedDomains: [String] {
+        var allowedDomains: [String] {
             return domains
         }
         
         init(domains: [String]) {
             self.domains = domains
         }
-        
     }
     
 }

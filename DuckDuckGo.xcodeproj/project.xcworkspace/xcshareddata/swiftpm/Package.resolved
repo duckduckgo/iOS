@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "11-14-css_adding_a_new_messagesecret_properties_for_injected_scripts",
-        "revision" : "e52b8c7c20e2f4c16781f694a3d596dc8df4d201"
+        "revision" : "e424222d12d754fc9b973c6c2cfdeb00940d354f"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "53fd1a0f8d91fcf475d9220f810141007300dffd",
-        "version" : "7.1.1"
+        "revision" : "757bbbae1e2afbb421caee9bfca04ee5c56c3af8",
+        "version" : "7.2.0"
       }
     },
     {

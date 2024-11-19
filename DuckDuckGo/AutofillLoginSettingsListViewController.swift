@@ -228,6 +228,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.viewDidLoad()
         title = UserText.autofillLoginListTitle
         extendedLayoutIncludesOpaqueBars = true
+        navigationController?.presentationController?.delegate = self
         setupCancellables()
         installSubviews()
         installConstraints()
@@ -447,6 +448,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
             openSearch = false
         }
+    }
+
+    private func dismissSearchIfRequired() {
+        guard searchController.isActive else { return }
+        searchController.dismiss(animated: false)
     }
 
     private func presentDeleteConfirmation(for title: String, domain: String) {
@@ -1123,6 +1129,16 @@ extension AutofillLoginSettingsListViewController: UISearchBarDelegate {
         viewModel.filterData(with: "")
         tableView.reloadData()
     }
+}
+
+// MARK: UIAdaptivePresentationControllerDelegate
+
+extension AutofillLoginSettingsListViewController: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        dismissSearchIfRequired()
+    }
+
 }
 
 // MARK: Keyboard

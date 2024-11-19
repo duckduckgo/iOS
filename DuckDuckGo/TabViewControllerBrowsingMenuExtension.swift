@@ -156,6 +156,10 @@ extension TabViewController {
             entries.append(entry)
         }
 
+        if let entry = textZoomCoordinator.makeBrowsingMenuEntry(forLink: link, inController: self, forWebView: self.webView) {
+            entries.append(entry)
+        }
+
         let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
         let image = self.tabModel.isDesktop ? UIImage(named: "Device-Mobile-16")! : UIImage(named: "Device-Desktop-16")!
         entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
@@ -166,7 +170,7 @@ extension TabViewController {
                 
         return entries
     }
-    
+
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
         guard let domain = link.url.host, !link.url.isDuckDuckGo else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)

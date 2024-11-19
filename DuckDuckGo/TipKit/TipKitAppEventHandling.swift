@@ -18,6 +18,7 @@
 //
 
 import Core
+import BrowserServicesKit
 import Foundation
 import os.log
 
@@ -28,17 +29,25 @@ protocol TipKitAppEventHandling {
 struct TipKitAppEventHandler: TipKitAppEventHandling {
 
     private let controller: TipKitController
+    private let featureFlagger: FeatureFlagger
     private let logger: Logger
 
     init(controller: TipKitController = .make(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          logger: Logger = .tipKit) {
 
         self.controller = controller
+        self.featureFlagger = featureFlagger
         self.logger = logger
     }
 
     func appDidFinishLaunching() {
-        if #available(iOS 17.0, *) {
+        guard featureFlagger.isFeatureOn(.networkProtectionUserTips) else {
+            logger.log("TipKit disabled by remote feature flag.")
+            return
+        }
+
+        if #available(iOS 18.0, *) {
             controller.configureTipKit([
                 .displayFrequency(.immediate),
                 .datastoreLocation(.applicationDefault)

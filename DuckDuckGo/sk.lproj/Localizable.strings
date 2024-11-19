@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zväčšenie (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zväčšenie";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zväčšenie textu (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Pridať";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Synchronizácia a zálohovanie";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Veľkosť textu";
+"settings.text.size" = "Predvolené zväčšenie textu";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Motív";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Prepínač kariet";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Vyberte si preferovanú veľkosť textu. Webové stránky zobrazené v DuckDuckGo sa tomu prispôsobia.";
+"textSize.description" = "Zväčšite alebo zmenšite veľkosť textu na všetkých stránkach.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Veľkosť textu - %@";

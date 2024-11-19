@@ -301,7 +301,8 @@ extension MainViewController {
                                                   deepLink: deepLinkTarget,
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager,
-                                                  privacyProDataReporter: privacyProDataReporter)
+                                                  privacyProDataReporter: privacyProDataReporter,
+                                                  textZoomCoordinator: textZoomCoordinator)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,

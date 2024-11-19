@@ -13,6 +13,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Text Zoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -2374,7 +2383,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Text Size";
+"settings.text.size" = "Default Text Zoom";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Theme";
@@ -2728,7 +2737,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "tab.switcher.accessibility.label" = "Tab Switcher";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.";
+"textSize.description" = "Increase or decrease text size across all sites.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Text Size - %@";

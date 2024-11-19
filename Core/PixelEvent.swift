@@ -80,6 +80,7 @@ extension Pixel {
         case browsingMenuCopy
         case browsingMenuPrint
         case browsingMenuFindInPage
+        case browsingMenuZoom
         case browsingMenuDisableProtection
         case browsingMenuEnableProtection
         case browsingMenuReportBrokenSite
@@ -220,8 +221,10 @@ extension Pixel {
         case bookmarkExportSuccess
         case bookmarkExportFailure
 
-        case textSizeSettingsChanged
-        
+        case textZoomSettingsChanged
+        case textZoomChangedOnPage
+        case textZoomChangedOnPageDaily
+
         case downloadStarted
         case downloadStartedDueToUnhandledMIMEType
         case downloadTriedToPresentPreviewWithoutTab
@@ -749,7 +752,7 @@ extension Pixel {
         case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
-        case settingsAccessiblityTextSize
+        case settingsAccessiblityTextZoom
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -928,6 +931,7 @@ extension Pixel.Event {
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuFindInPage: return "mb_fp"
+        case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
         case .browsingMenuEnableProtection: return "mb_wlr"
         case .browsingMenuReportBrokenSite: return "mb_rb"
@@ -1064,8 +1068,11 @@ extension Pixel.Event {
         case .bookmarkExportSuccess: return "m_be_a"
         case .bookmarkExportFailure: return "m_be_e"
 
-        case .textSizeSettingsChanged: return "m_text_size_settings_changed"
-            
+        // Text size is the legacy name
+        case .textZoomSettingsChanged: return "m_text_size_settings_changed"
+        case .textZoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
+        case .textZoomChangedOnPage: return "m_menu_page_zoom_changed"
+
         case .downloadStarted: return "m_download_started"
         case .downloadStartedDueToUnhandledMIMEType: return "m_download_started_due_to_unhandled_mime_type"
         case .downloadTriedToPresentPreviewWithoutTab: return "m_download_tried_to_present_preview_without_tab"
@@ -1592,7 +1599,9 @@ extension Pixel.Event {
         case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
-        case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"
+
+        // legacy name is text size
+        case .settingsAccessiblityTextZoom: return "m_settings_accessiblity_text_size"
 
         // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"

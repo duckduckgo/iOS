@@ -55,10 +55,6 @@ final class CrashCollectionOnboarding: NSObject {
     func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
         
-#if DEBUG
-        appSettings.crashCollectionShouldRevertOptedInStatusTrigger = 0
-#endif
-        
         if featureFlagger.isFeatureOn(.crashReportOptInStatusResetting) {
             if appSettings.crashCollectionOptInStatus == .optedIn &&
                 appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {

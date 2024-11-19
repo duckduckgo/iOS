@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "11-14-css_adding_a_new_messagesecret_properties_for_injected_scripts",
-        "revision" : "e424222d12d754fc9b973c6c2cfdeb00940d354f"
+        "revision" : "7033b0d6f166ac8152cff602f1a1301641f4da60",
+        "version" : "211.0.0"
       }
     },
     {

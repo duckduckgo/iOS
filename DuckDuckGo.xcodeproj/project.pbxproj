@@ -11035,8 +11035,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "11-14-css_adding_a_new_messagesecret_properties_for_injected_scripts";
-				kind = branch;
+				kind = exactVersion;
+				version = 211.0.0;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

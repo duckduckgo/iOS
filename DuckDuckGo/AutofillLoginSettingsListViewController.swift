@@ -811,11 +811,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: AutofillBreakageReportTableViewCell.self, for: indexPath)
         let contentView = AutofillBreakageReportCellContentView(onReport: { [weak self] in
 
-            guard let alert = self?.viewModel.createBreakageReporterAlert() else {
+            guard let self = self, let alert = self.viewModel.createBreakageReporterAlert() else {
                 return
             }
 
-            self?.present(controller: alert, fromView: tableView)
+            self.present(controller: alert, fromView: self.tableView)
 
             Pixel.fire(pixel: .autofillLoginsReportConfirmationPromptDisplayed)
         })

@@ -68,6 +68,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
         messageSecret = Self.generateSessionKey()
         contentScopeProperties = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
                                                         sessionKey: sessionKey,
+                                                        messageSecret: messageSecret,
                                                         featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         autofillSourceProvider = Self.makeAutofillSource(privacyConfigurationManager: privacyConfigurationManager,
                                                          properties: contentScopeProperties)

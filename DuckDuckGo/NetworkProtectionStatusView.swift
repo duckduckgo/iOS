@@ -256,7 +256,7 @@ struct NetworkProtectionStatusView: View {
         .listRowBackground(Color(designSystemColor: .surface))
 
         Section {
-            if #available(iOS 17.8, *) {
+            if #available(iOS 18.0, *) {
                 geoswitchingTipView()
                     .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)

@@ -43,7 +43,6 @@ protocol DependencyProvider {
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
     var subscriptionManager: any SubscriptionManager { get }
-    var privacyProInfoProvider: any PrivacyProInfoProvider { get }
     var pageRefreshMonitor: PageRefreshMonitor { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
     var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
@@ -80,7 +79,6 @@ final class AppDependencyProvider: DependencyProvider {
 
     // Subscription
     let subscriptionManager: SubscriptionManager
-    let privacyProInfoProvider: any PrivacyProInfoProvider
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
     let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     let networkProtectionTunnelController: NetworkProtectionTunnelController
@@ -122,8 +120,6 @@ final class AppDependencyProvider: DependencyProvider {
         let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,
                                             legacyTokenStorage: legacyAccountStorage,
                                             authService: authService)
-
-        self.privacyProInfoProvider = authClient
 
         apiService.authorizationRefresherCallback = { _ in
             guard let tokenContainer = tokenStorage.tokenContainer else {
@@ -168,15 +164,5 @@ final class AppDependencyProvider: DependencyProvider {
                                                                               settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   oAuthClient: authClient)
-    }
-}
-
-extension DefaultOAuthClient: PrivacyProInfoProvider {
-    
-    var hasVPNEntitlements: Bool {
-        guard let tokenContainer = tokenStorage.tokenContainer else {
-            return false
-        }
-        return tokenContainer.decodedAccessToken.hasEntitlement(.networkProtection)
     }
 }

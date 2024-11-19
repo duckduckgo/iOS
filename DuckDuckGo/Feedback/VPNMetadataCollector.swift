@@ -99,26 +99,21 @@ protocol VPNMetadataCollector {
     func collectVPNMetadata() async -> VPNMetadata
 }
 
-protocol PrivacyProInfoProvider {
-    var isUserAuthenticated: Bool { get }
-    var hasVPNEntitlements: Bool { get }
-}
-
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let privacyProInfoProvider: PrivacyProInfoProvider
+    private let subscriptionManager: any SubscriptionManager
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
          serverInfoObserver: ConnectionServerInfoObserver,// ConnectionServerInfoObserverThroughSession(),
-         privacyProInfoProvider: PrivacyProInfoProvider = AppDependencyProvider.shared.privacyProInfoProvider,
+         subscriptionManager: any SubscriptionManager = AppDependencyProvider.shared.subscriptionManager,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.privacyProInfoProvider = privacyProInfoProvider
+        self.subscriptionManager = subscriptionManager
         self.settings = settings
         self.defaults = defaults
     }
@@ -247,10 +242,9 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() async -> VPNMetadata.PrivacyProInfo {
-//        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
         return .init(
-            hasPrivacyProAccount: privacyProInfoProvider.isUserAuthenticated,
-            hasVPNEntitlement: privacyProInfoProvider.hasVPNEntitlements
+            hasPrivacyProAccount: subscriptionManager.isUserAuthenticated,
+            hasVPNEntitlement: subscriptionManager.isEntitlementActive(.networkProtection)
         )
     }
 

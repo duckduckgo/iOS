@@ -247,11 +247,23 @@ private struct IssueDescriptionFormView: View {
                                                    focusState: $isTextEditorFocused,
                                                    scrollViewProxy: scrollView)
                         Text(UserText.pproFeedbackFormEmailLabel)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(nil)
-                            .fixedSize(horizontal: false, vertical: true)
+                            .font(.caption)
+                            .textCase(.uppercase)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 2)
                         TextField(UserText.pproFeedbackFormEmailPlaceholder, text: $viewModel.userEmail)
-                            .textFieldStyle(.roundedBorder)
+                            .font(.body)
+                            .foregroundColor(.primary)
+                            .padding(EdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4))
+                            .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                            .background(
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8.0)
+                                        .stroke(Color(designSystemColor: .surface), lineWidth: 0.4)
+                                    RoundedRectangle(cornerRadius: 8.0)
+                                        .fill(Color(designSystemColor: .surface))
+                                }
+                            )
                         footer()
                             .padding(.horizontal, 4)
                     }

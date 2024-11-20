@@ -118,6 +118,15 @@ public final class ContentBlocking {
 
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
+            
+        case .contentBlockingLookupRulesSucceeded:
+            domainEvent = .contentBlockingLookupRulesSucceeded
+            
+        case .contentBlockingFetchRulesSucceeded:
+            domainEvent = .contentBlockingFetchRulesSucceeded
+            
+        case .contentBlockingLookupAndFetchFailed:
+            domainEvent = .contentBlockingLookupAndFetchFailed
         }
 
         if let error = error {

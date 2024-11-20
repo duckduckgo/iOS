@@ -66,13 +66,8 @@ final class PrivacyDashboardViewController: UIViewController {
         let domainEvent: Pixel.Event
         switch event {
         case .showReportBrokenSite: domainEvent = .privacyDashboardReportBrokenSite
-
-        case .breakageCategorySelected: domainEvent = .reportBrokenSiteBreakageCategorySelected
-        case .overallCategorySelected: domainEvent = .reportBrokenSiteOverallCategorySelected
         case .reportBrokenSiteShown: domainEvent = .reportBrokenSiteShown
         case .reportBrokenSiteSent: domainEvent = .reportBrokenSiteSent
-        case .skipToggleStep: domainEvent = .reportBrokenSiteSkipToggleStep
-        case .toggleProtectionOff: domainEvent = .reportBrokenSiteToggleProtectionOff
         }
         if let parameters {
             Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters)
@@ -244,7 +239,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     func privacyDashboardControllerDidRequestShowGeneralFeedback(_ privacyDashboardController: PrivacyDashboardController) {
         guard let mainViewController = presentingViewController as? MainViewController else { return }
         dismiss(animated: true) {
-            mainViewController.segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: true)
+            mainViewController.segueToNegativeFeedbackForm()
         }
     }
 

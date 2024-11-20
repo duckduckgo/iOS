@@ -349,11 +349,17 @@ private struct IssueDescriptionFormView: View {
 }
 
 private struct IssueDescriptionTextEditor: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let label: String
     let placeholder: String
     let text: Binding<String>
     let focusState: FocusState<Bool>.Binding
     let scrollViewProxy: ScrollViewProxy
+
+    private var editorBackgroundColor: Color {
+        colorScheme == .light ? Color(designSystemColor: .surface) : Color(uiColor: UIColor(hex: "1C1C1E"))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -365,7 +371,7 @@ private struct IssueDescriptionTextEditor: View {
             TextEditorWithPlaceholder(text: text, placeholder: placeholder)
                 .font(.body)
                 .foregroundColor(.primary)
-                .background(Color(designSystemColor: .panel))
+                .background(editorBackgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
                 .frame(height: 100)
                 .fixedSize(horizontal: false, vertical: true)
@@ -411,6 +417,7 @@ private struct TextEditorWithPlaceholder: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: text)
+                .padding(.horizontal, 12)
             if text.wrappedValue.isEmpty {
                 Text(placeholder)
                     .foregroundColor(.secondary)

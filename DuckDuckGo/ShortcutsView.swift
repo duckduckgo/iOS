@@ -33,6 +33,7 @@ struct ShortcutsView: View {
                 } label: {
                     ShortcutItemView(shortcut: shortcut, accessoryType: nil)
                 }
+                .buttonStyle(.plain)
             }
         }
     }

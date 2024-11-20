@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "Okay";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Tekst-zoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
 
@@ -2251,7 +2260,7 @@
 "settings.sync" = "Synkronisering og sikkerhedskopiering";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Tekststørrelse";
+"settings.text.size" = "Standard tekstzoom";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2599,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Faneskifter";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Vælg din foretrukne tekststørrelse. Websteder, som du ser i DuckDuckGo, tilpasser sig denne.";
+"textSize.description" = "Forøg eller formindsk tekststørrelsen på tværs af alle websteder.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Tekststørrelse - %@";

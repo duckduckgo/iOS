@@ -32,6 +32,7 @@ protocol ScriptSourceProviding {
     var autofillSourceProvider: AutofillUserScriptSourceProvider { get }
     var contentScopeProperties: ContentScopeProperties { get }
     var sessionKey: String { get }
+    var messageSecret: String { get }
 
 }
 
@@ -45,6 +46,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     let autofillSourceProvider: AutofillUserScriptSourceProvider
     let contentScopeProperties: ContentScopeProperties
     let sessionKey: String
+    let messageSecret: String
 
     let privacyConfigurationManager: PrivacyConfigurationManaging
     let contentBlockingManager: ContentBlockerRulesManagerProtocol
@@ -63,8 +65,10 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
         surrogatesConfig = Self.buildSurrogatesConfig(contentBlockingManager: contentBlockingManager,
                                                       privacyConfigurationManager: privacyConfigurationManager)
         sessionKey = Self.generateSessionKey()
+        messageSecret = Self.generateSessionKey()
         contentScopeProperties = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
                                                         sessionKey: sessionKey,
+                                                        messageSecret: messageSecret,
                                                         featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         autofillSourceProvider = Self.makeAutofillSource(privacyConfigurationManager: privacyConfigurationManager,
                                                          properties: contentScopeProperties)

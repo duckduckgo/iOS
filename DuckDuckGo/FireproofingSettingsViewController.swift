@@ -36,9 +36,17 @@ class FireproofingSettingsViewController: UITableViewController {
     var model = [String]()
     private var shouldShowRemoveAll = false
 
-    // TODO inject this
-    private let fireproofing: Fireproofing = UserDefaultsFireproofing.shared
+    private let fireproofing: Fireproofing
 
+    init?(coder: NSCoder, fireproofing: Fireproofing) {
+        self.fireproofing = fireproofing
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshModel()

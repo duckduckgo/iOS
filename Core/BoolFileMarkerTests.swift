@@ -41,7 +41,11 @@ final class BoolFileMarkerTests: XCTestCase {
         let fileURL = try XCTUnwrap(testFileURL)
 
         let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+#if targetEnvironment(simulator)
         XCTAssertNil(attributes[.protectionKey])
+#else
+        XCTAssertEqual(attributes[.protectionKey] as? FileProtectionType, FileProtectionType.none)
+#endif
         XCTAssertTrue(FileManager.default.fileExists(atPath: fileURL.path))
         XCTAssertEqual(marker.isPresent, true)
     }

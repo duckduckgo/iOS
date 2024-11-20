@@ -41,8 +41,8 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testEnsureIdAllocatedAfterClearing() async throws {
-        let fireproofing = UserDefaultsFireproofing.shared
-        fireproofing.clearAll()
+        let fireproofing = MockFireproofing(domains: [])
+
         let storage = CookieStorage()
 
         let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
@@ -63,9 +63,7 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
-        let fireproofing = UserDefaultsFireproofing.shared
-        fireproofing.clearAll()
-        fireproofing.addToAllowed(domain: "mobile.twitter.com")
+        let fireproofing = MockFireproofing(domains: ["mobile.twitter.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -114,9 +112,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-        let fireproofing = UserDefaultsFireproofing.shared
-        fireproofing.clearAll()
-        fireproofing.addToAllowed(domain: "www.example.com")
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -151,9 +147,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
-        let fireproofing = UserDefaultsFireproofing.shared
-        fireproofing.clearAll()
-        fireproofing.addToAllowed(domain: "www.example.com")
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
@@ -171,9 +165,7 @@ class WebCacheManagerTests: XCTestCase {
     
     @MainActor
     func testWhenClearedThenCookiesForLoginsAreRetained() async {
-        let fireproofing = UserDefaultsFireproofing.shared
-        fireproofing.clearAll()
-        fireproofing.addToAllowed(domain: "www.example.com")
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -203,36 +195,15 @@ class WebCacheManagerTests: XCTestCase {
         let pool = WebCacheManager.shared.getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }
-            
+
     // MARK: Mocks
     
-    class MockFireproofing: Fireproofing {
-
-        var loginDetectionEnabled: Bool = true
-
-        func isAllowed(cookieDomain: String) -> Bool {
-            return true
-        }
-        
-        func isAllowed(fireproofDomain domain: String) -> Bool {
-            return true
-        }
-        
-        func addToAllowed(domain: String) {
-        }
-        
-        func remove(domain: String) {
-        }
-        
-        func clearAll() {
+    class MockFireproofing: UserDefaultsFireproofing {
+        override var allowedDomains: [String] {
+            return domains
         }
 
         let domains: [String]
-        
-        var allowedDomains: [String] {
-            return domains
-        }
-        
         init(domains: [String]) {
             self.domains = domains
         }

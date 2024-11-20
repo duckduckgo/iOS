@@ -32,6 +32,7 @@ public protocol Fireproofing {
 
 }
 
+// This class is not final because we override allowed domains in WebCacheManagerTests
 public class UserDefaultsFireproofing: Fireproofing {
 
     public static let shared: Fireproofing = UserDefaultsFireproofing()

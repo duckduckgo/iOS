@@ -270,15 +270,26 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptFailure,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                             error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelStartOnDemandWithoutAccessToken:
             vpnLogger.logStartingWithoutAuthToken()

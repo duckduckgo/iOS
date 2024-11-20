@@ -25,8 +25,6 @@ class FeedbackPickerViewController: UITableViewController {
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var supplementaryText: UILabel!
 
-    private var isFromBrokenSiteReportFlow: Bool = false
-
     private var entries = [FeedbackEntry]()
     private var selectionHandler: (Feedback.Model) -> Void = { _ in }
     
@@ -61,15 +59,14 @@ class FeedbackPickerViewController: UITableViewController {
         }
     }
     
-    func configure(with categories: [Feedback.Category], isFromBrokenSiteReportFlow: Bool) {
+    func configure(with categories: [Feedback.Category]) {
         entries = categories
-        self.isFromBrokenSiteReportFlow = isFromBrokenSiteReportFlow
 
         headerText.setAttributedTextString(UserText.feedbackNegativeHeader)
         supplementaryText.setAttributedTextString(UserText.feedbackNegativeSupplementary)
     }
     
-    func configureFor(entries: [FeedbackEntry], with model: Feedback.Model, isFromBrokenSiteReportFlow: Bool) {
+    func configureFor(entries: [FeedbackEntry], with model: Feedback.Model) {
         guard let category = model.category else {
             fatalError("Feedback model has empty category")
         }
@@ -81,7 +78,6 @@ class FeedbackPickerViewController: UITableViewController {
         supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
         
         self.entries = entries
-        self.isFromBrokenSiteReportFlow = isFromBrokenSiteReportFlow
     }
     
     func setSelectionHandler(_ handler: @escaping (Feedback.Model) -> Void) {
@@ -105,7 +101,7 @@ class FeedbackPickerViewController: UITableViewController {
             model.subcategory = selectedEntry
         }
         
-        FeedbackNavigator.navigate(to: selectedEntry.nextStep, from: self, with: model, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
+        FeedbackNavigator.navigate(to: selectedEntry.nextStep, from: self, with: model)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

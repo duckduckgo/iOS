@@ -69,7 +69,7 @@ class FeedbackViewController: UIViewController {
         let isNavigatingToCategories = sender as? UIButton == negativeFeedbackButton
         if isNavigatingToCategories {
             controller.loadViewIfNeeded()
-            controller.configure(with: Feedback.Category.allCases, isFromBrokenSiteReportFlow: false)
+            controller.configure(with: Feedback.Category.allCases)
             return
         }
     }

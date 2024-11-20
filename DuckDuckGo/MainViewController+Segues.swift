@@ -150,7 +150,7 @@ extension MainViewController {
         Pixel.fire(pixel: .reportBrokenSiteShown, withAdditionalParameters: parameters)
     }
 
-    func segueToNegativeFeedbackForm(isFromBrokenSiteReportFlow: Bool = false) {
+    func segueToNegativeFeedbackForm() {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()
 
@@ -160,7 +160,7 @@ extension MainViewController {
         feedbackPicker.view.backgroundColor = UIColor(designSystemColor: .backgroundSheets)
         feedbackPicker.modalPresentationStyle = isPad ? .formSheet : .pageSheet
         feedbackPicker.loadViewIfNeeded()
-        feedbackPicker.configure(with: Feedback.Category.allCases, isFromBrokenSiteReportFlow: isFromBrokenSiteReportFlow)
+        feedbackPicker.configure(with: Feedback.Category.allCases)
 
         present(UINavigationController(rootViewController: feedbackPicker), animated: true)
     }

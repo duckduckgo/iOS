@@ -119,7 +119,4 @@ struct FeedbackSubmitter: FeedbackSender {
         Pixel.fire(pixel: pixel)
     }
 
-    public func fireBrokenSiteReportPixel(with model: Feedback.Model) {
-        Pixel.fire(pixel: .reportBrokenSiteFeedbackCategorySubmitted, withAdditionalParameters: ["category": model.category?.component ?? ""])
-    }
 }

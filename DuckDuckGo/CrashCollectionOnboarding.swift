@@ -58,7 +58,6 @@ final class CrashCollectionOnboarding: NSObject {
         if featureFlagger.isFeatureOn(.crashReportOptInStatusResetting) {
             if appSettings.crashCollectionOptInStatus == .optedIn &&
                 appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
-                debugPrint("Resettting crash report opt in status from \(appSettings.crashCollectionOptInStatus) to .undetermined")
                 appSettings.crashCollectionOptInStatus = .undetermined
                 appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
             }

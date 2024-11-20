@@ -142,6 +142,7 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
                     }
                 } header: {
                     Text(prompt)
+                        .font(.caption)
                 }
             }
             .listRowBackground(Color(designSystemColor: .surface))
@@ -219,6 +220,7 @@ private struct CompactIssueDescriptionFormView: View {
 private struct IssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
     @FocusState private var isTextEditorFocused: Bool
+    @Environment(\.colorScheme) private var colorScheme
 
     let placeholder: String
 
@@ -233,24 +235,31 @@ private struct IssueDescriptionFormView: View {
             }
     }
 
+    private var textFieldBackgroundColor: Color {
+        colorScheme == .light ? Color(designSystemColor: .surface) : Color(uiColor: UIColor(hex: "1C1C1E"))
+    }
+
     @ViewBuilder
     private func form() -> some View {
         ScrollView {
             ScrollViewReader { scrollView in
                 VStack {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 0) {
                         header()
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
                         IssueDescriptionTextEditor(label: UserText.pproFeedbackFormTextBoxTitle,
                                                    placeholder: placeholder,
                                                    text: $viewModel.feedbackFormText,
                                                    focusState: $isTextEditorFocused,
                                                    scrollViewProxy: scrollView)
+                            .padding(.bottom, 10)
                         Text(UserText.pproFeedbackFormEmailLabel)
                             .font(.caption)
                             .textCase(.uppercase)
                             .foregroundColor(.secondary)
-                            .padding(.horizontal, 2)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 4)
                         TextField(UserText.pproFeedbackFormEmailPlaceholder, text: $viewModel.userEmail)
                             .font(.body)
                             .foregroundColor(.primary)
@@ -259,13 +268,14 @@ private struct IssueDescriptionFormView: View {
                             .background(
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 8.0)
-                                        .stroke(Color(designSystemColor: .surface), lineWidth: 0.4)
+                                        .stroke(textFieldBackgroundColor, lineWidth: 0.4)
                                     RoundedRectangle(cornerRadius: 8.0)
-                                        .fill(Color(designSystemColor: .surface))
+                                        .fill(textFieldBackgroundColor)
                                 }
                             )
                         footer()
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
                     }
                     .foregroundColor(.secondary)
                     .background(Color(designSystemColor: .background))
@@ -351,7 +361,7 @@ private struct IssueDescriptionTextEditor: View {
                 .font(.caption)
                 .textCase(.uppercase)
                 .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, 16)
             TextEditorWithPlaceholder(text: text, placeholder: placeholder)
                 .font(.body)
                 .foregroundColor(.primary)

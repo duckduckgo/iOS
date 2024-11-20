@@ -1625,17 +1625,17 @@ extension TabViewController: WKNavigationDelegate {
     
     private func checkLoginDetectionAfterNavigation() {
         if fireproofingWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
-                                                      currentURL: url,
-                                                      isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
-                                                      saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
-                                                      saveLoginPromptIsPresenting: saveLoginPromptIsPresenting)
-           ?? false {
+                                                    currentURL: url,
+                                                    isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
+                                                    saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
+                                                    saveLoginPromptIsPresenting: saveLoginPromptIsPresenting) ?? false {
+
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
             saveLoginPromptIsPresenting = false
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         Logger.general.debug("didFailNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()

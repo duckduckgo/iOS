@@ -1235,12 +1235,10 @@ class TabViewController: UIViewController {
             self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
                                                      image: "SiteBreakage",
                                                      leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptYes)
                 (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
                                                                                                               didToggleProtectionsFixIssue: true))
             }),
                                                      rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
-                Pixel.fire(pixel: .reportBrokenSiteTogglePromptNo)
                 (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
                                                                                                               didToggleProtectionsFixIssue: false))
             }))

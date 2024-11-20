@@ -860,16 +860,9 @@ extension Pixel {
         case secureVaultL2KeyMigration
         case secureVaultL2KeyPasswordMigration
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case reportBrokenSiteShown
-        case reportBrokenSiteBreakageCategorySelected
         case reportBrokenSiteSent
-        case reportBrokenSiteOverallCategorySelected
-        case reportBrokenSiteFeedbackCategorySubmitted
-        case reportBrokenSiteTogglePromptNo
-        case reportBrokenSiteTogglePromptYes
-        case reportBrokenSiteSkipToggleStep
-        case reportBrokenSiteToggleProtectionOff
 
         // MARK: New Tab Page baseline engagement
         case addFavoriteDaily
@@ -1824,16 +1817,9 @@ extension Pixel.Event {
         case .secureVaultL2KeyMigration: return "m_secure-vault_keystore_event_l2-key-migration"
         case .secureVaultL2KeyPasswordMigration: return "m_secure-vault_keystore_event_l2-key-password-migration"
 
-        // MARK: Experimental report broken site flows
+        // MARK: Report broken site flows
         case .reportBrokenSiteShown: return "m_report-broken-site_shown"
-        case .reportBrokenSiteBreakageCategorySelected: return "m_report-broken-site_breakage-category-selected"
         case .reportBrokenSiteSent: return "m_report-broken-site_sent"
-        case .reportBrokenSiteOverallCategorySelected: return "m_report-broken-site_overall-category-selected"
-        case .reportBrokenSiteFeedbackCategorySubmitted: return "m_report-broken-site_feedback-category-submitted"
-        case .reportBrokenSiteTogglePromptNo: return "m_report-broken-site_toggle-prompt-no"
-        case .reportBrokenSiteTogglePromptYes: return "m_report-broken-site_toggle-prompt-yes"
-        case .reportBrokenSiteSkipToggleStep: return "m_report-broken-site_skip-toggle-step"
-        case .reportBrokenSiteToggleProtectionOff: return "m_report-broken-site_toggle-protection-off"
 
         // MARK: New Tab Page baseline engagement
         case .addFavoriteDaily: return "m_add_favorite_daily"

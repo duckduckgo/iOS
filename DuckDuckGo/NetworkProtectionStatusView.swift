@@ -149,13 +149,13 @@ struct NetworkProtectionStatusView: View {
         .listRowBackground(Color(designSystemColor: .surface))
 
         Section {
-            if #available(iOS 17.0, *) {
+            if #available(iOS 18.0, *) {
                 widgetTipView()
                     .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
             }
 
-            if #available(iOS 17.0, *) {
+            if #available(iOS 18.0, *) {
                 snoozeTipView()
                     .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
@@ -257,7 +257,7 @@ struct NetworkProtectionStatusView: View {
         .listRowBackground(Color(designSystemColor: .surface))
 
         Section {
-            if #available(iOS 17.0, *) {
+            if #available(iOS 18.0, *) {
                 geoswitchingTipView()
                     .tipImageSize(Self.defaultImageSize)
                     .padding(.horizontal, 3)
@@ -355,7 +355,7 @@ struct NetworkProtectionStatusView: View {
 
     // MARK: - Tips
 
-    @available(iOS 17.0, *)
+    @available(iOS 18.0, *)
     @ViewBuilder
     private func geoswitchingTipView() -> some View {
         if statusModel.canShowTips {
@@ -367,7 +367,7 @@ struct NetworkProtectionStatusView: View {
         }
     }
 
-    @available(iOS 17.0, *)
+    @available(iOS 18.0, *)
     @ViewBuilder
     private func snoozeTipView() -> some View {
         if statusModel.canShowTips,
@@ -380,7 +380,7 @@ struct NetworkProtectionStatusView: View {
         }
     }
 
-    @available(iOS 17.0, *)
+    @available(iOS 18.0, *)
     @ViewBuilder
     private func widgetTipView() -> some View {
         if statusModel.canShowTips,

@@ -425,6 +425,7 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
         let contentScopeProperties = ContentScopeProperties(gpcEnabled: AppDependencyProvider.shared.appSettings.sendDoNotSell,
                                                             sessionKey: "",
+                                                            messageSecret: "",
                                                             featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
 
         let runtimeConfig = DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,

@@ -18,6 +18,7 @@
 //
 
 import Core
+import BrowserServicesKit
 import Foundation
 import os.log
 
@@ -28,26 +29,29 @@ protocol TipKitAppEventHandling {
 struct TipKitAppEventHandler: TipKitAppEventHandling {
 
     private let controller: TipKitController
+    private let featureFlagger: FeatureFlagger
     private let logger: Logger
 
     init(controller: TipKitController = .make(),
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
          logger: Logger = .tipKit) {
 
         self.controller = controller
+        self.featureFlagger = featureFlagger
         self.logger = logger
     }
 
     func appDidFinishLaunching() {
-        if #available(iOS 17.0, *) {
-            // TipKit is temporarily disabled.
-            // See https://app.asana.com/0/inbox/1203108348814444/1208724397684354/1208739407931826
-            // for more information
-            logger.log("TipKit is temporarily disabled.")
+        guard featureFlagger.isFeatureOn(.networkProtectionUserTips) else {
+            logger.log("TipKit disabled by remote feature flag.")
+            return
+        }
 
-            // controller.configureTipKit([
-            //    .displayFrequency(.immediate),
-            //    .datastoreLocation(.applicationDefault)
-            // ])
+        if #available(iOS 18.0, *) {
+            controller.configureTipKit([
+                .displayFrequency(.immediate),
+                .datastoreLocation(.applicationDefault)
+            ])
         } else {
             logger.log("TipKit initialization skipped: iOS 17.0 or later is required.")
         }

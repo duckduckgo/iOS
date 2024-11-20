@@ -263,7 +263,7 @@ private struct IssueDescriptionFormView: View {
                         TextField(UserText.pproFeedbackFormEmailPlaceholder, text: $viewModel.userEmail)
                             .font(.body)
                             .foregroundColor(.primary)
-                            .padding(EdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4))
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                             .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
                             .background(
                                 ZStack {
@@ -415,8 +415,8 @@ private struct TextEditorWithPlaceholder: View {
                 Text(placeholder)
                     .foregroundColor(.secondary)
                     .opacity(0.5)
-                    .padding(.top, 8)
-                    .padding(.leading, 5)
+                    .padding(.top, 10)
+                    .padding(.leading, 16)
             }
         }
     }

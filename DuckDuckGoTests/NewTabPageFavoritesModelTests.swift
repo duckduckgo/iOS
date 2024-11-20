@@ -27,8 +27,8 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
     private let favoriteDataSource = MockNewTabPageFavoriteDataSource()
 
     override func setUpWithError() throws {
-        XCTSkip("Potentially flaky")
-        
+        throw XCTSkip("Potentially flaky")
+
         try super.setUpWithError()
     }
 

@@ -157,7 +157,7 @@ struct SettingsSubscriptionView: View {
     private var subscriptionDetailsView: some View {
         
         if settingsViewModel.state.subscription.entitlements.contains(.networkProtection) {
-            NavigationLink(destination: NetworkProtectionRootView(), isActive: $isShowingVPN) {
+            NavigationLink(destination: LazyView(NetworkProtectionRootView()), isActive: $isShowingVPN) {
                 SettingsCellView(
                     label: UserText.settingsPProVPNTitle,
                     image: Image("SettingsPrivacyProVPN"),
@@ -167,7 +167,7 @@ struct SettingsSubscriptionView: View {
         }
         
         if settingsViewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
-            NavigationLink(destination: SubscriptionPIRView(), isActive: $isShowingDBP) {
+            NavigationLink(destination: LazyView(SubscriptionPIRView()), isActive: $isShowingDBP) {
                 SettingsCellView(
                     label: UserText.settingsPProDBPTitle,
                     image: Image("SettingsPrivacyProPIR"),
@@ -178,7 +178,7 @@ struct SettingsSubscriptionView: View {
         
         if settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
             NavigationLink(
-                destination: SubscriptionITPView(),
+                destination: LazyView(SubscriptionITPView()),
                 isActive: $isShowingITP) {
                     SettingsCellView(
                         label: UserText.settingsPProITRTitle,
@@ -188,7 +188,7 @@ struct SettingsSubscriptionView: View {
             }
         }
         
-        NavigationLink(destination: SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel)
+        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel))
             .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })

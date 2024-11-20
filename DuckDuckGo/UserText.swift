@@ -221,7 +221,6 @@ public struct UserText {
     
     public static let favorite = NSLocalizedString("favorite", value: "Favorite", comment: "")
     
-    public static let launchscreenWelcomeMessage = NSLocalizedString("launchscreenWelcomeMessage", value: "Welcome to\nDuckDuckGo!", comment: "Please preserve newline character")
     public static let onboardingWelcomeHeader = NSLocalizedString("onboardingWelcomeHeader", value: "Welcome to DuckDuckGo!", comment: "")
     public static let onboardingContinue = NSLocalizedString("onboardingContinue", value: "Continue", comment: "")
     public static let onboardingSkip = NSLocalizedString("onboardingSkip", value: "Skip", comment: "")
@@ -273,9 +272,6 @@ public struct UserText {
     public static let daxDialogFireButtonEducation = NSLocalizedString("dax.onboarding.fire.button", value: "Personal data can build up in your browser. Yuck. Use the Fire Button to burn it all away. Give it a try now! 👇", comment: "Encourage user to try clearing data with the fire button")
     public static let daxDialogFireButtonEducationConfirmAction = NSLocalizedString("dax.onboarding.fire.button.confirmAction", value: "Close Tabs and Clear Data", comment: "Encourage user to try clearing data with the fire button")
     public static let daxDialogFireButtonEducationCancelAction = NSLocalizedString("dax.onboarding.fire.button.cancelAction", value: "Cancel", comment: "Cancel action")
-    
-    
-    public static let daxDialogOnboardingMessage = NSLocalizedString("dax.onboarding.message", value: "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.", comment: "")
     
     public static let daxDialogHideTitle = NSLocalizedString("dax.hide.title", value: "Hide remaining tips?", comment: "Title in Hide Dax dialog")
     public static let daxDialogHideMessage = NSLocalizedString("dax.hide.message", value: "There are only a few, and we tried to make them informative.", comment: "Subtitle in Hide Dax dialog")
@@ -330,8 +326,10 @@ public struct UserText {
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
     public static let voiceSearchFooterOld = NSLocalizedString("voiceSearch.footer.note.old", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Add Private Voice Search option to the address bar. Audio is not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
-    public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.", comment: "Description text for the text size adjustment setting")
-    public static func textSizeFooter(for percentage: String) -> String {
+
+    // Legacy name is text size - don't want to mess up translations by changing it.
+    public static let textZoomDescription = NSLocalizedString("textSize.description", value: "Increase or decrease text size across all sites.", comment: "Description text for the text size adjustment setting")
+    public static func textZoomFooter(for percentage: String) -> String {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
         return message.format(arguments: percentage)
     }
@@ -358,6 +356,18 @@ public struct UserText {
     }
     public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
     
+    public static let textZoomMenuItem = NSLocalizedString("action.text-zoom-sheet-menu-item", value: "Zoom", comment: "Text zoom menu item")
+
+    public static func textZoomWithPercentSheetTitle(_ percent: Int) -> String {
+        let message = NSLocalizedString("action.text-zoom-sheet-title", value: "Text Zoom (%d%%)", comment: "Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
+        return message.format(arguments: percent)
+    }
+
+    public static func textZoomWithPercentForMenuItem(_ percent: Int) -> String {
+        let message = NSLocalizedString("action.text-zoom-menu-item", value: "Zoom (%d%%)", comment: "Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please.")
+        return message.format(arguments: percent)
+    }
+
     public static let actionGenericShow = NSLocalizedString("action.generic.show", value: "Show", comment: "Button label for a generic show action")
     public static let actionDownloads = NSLocalizedString("action.title.downloads", value: "Downloads", comment: "Downloads menu item opening the downlods list")
     public static let downloadsScreenTitle = NSLocalizedString("downloads.downloads-list.title", value: "Downloads", comment: "Downloads list screen title")
@@ -1055,7 +1065,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
     public static let settingsFirebutton = NSLocalizedString("settings.firebutton", value: "Fire Button Animation", comment: "Settings screen cell text for fire button animation")
-    public static let settingsText = NSLocalizedString("settings.text.size", value: "Text Size", comment: "Settings screen cell text for text size")
+    public static let settingsText = NSLocalizedString("settings.text.size", value: "Default Text Zoom", comment: "Settings screen cell text for text size")
     public static let settingsAddressBar = NSLocalizedString("settings.address.bar", value: "Address Bar Position", comment: "Settings screen cell text for addess bar position")
     public static let settingsFullURL = NSLocalizedString("settings.address.full.url", value: "Show Full Site Address", comment: "Settings screen cell title for toggling full URL visibility in address bar")
 
@@ -1258,7 +1268,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let siteNotWorkingTitle = NSLocalizedString("site.not.working.title", value: "Site not working? Let DuckDuckGo know.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
     public static let siteNotWorkingSubtitle = NSLocalizedString("site.not.working.subtitle", value: "This helps us improve the browser.", comment: "Prompt asking user to send report to us if we suspect site may be broken")
     public static let siteNotWorkingDismiss = NSLocalizedString("site.not.working.dismiss", value: "Dismiss", comment: "Dismiss button")
-    public static let siteNotWorkingWebsiteIsBroken = NSLocalizedString("site.not.working.website.is.broken", value: "Website Is Broken", comment: "Button that triggers flow to report broken site")
+    public static let siteNotWorkingReportBrokenSite = NSLocalizedString("site.not.working.report.broken.site", value: "Report Broken Site", comment: "Button that triggers flow to report broken site")
     public static let siteNotWorkingDescription = NSLocalizedString("site.not.working.description", value: "Select the option that best describes the problem you experienced.", comment: "Description on a report broken site page.")
 
     // Broken site report experiment
@@ -1415,25 +1425,22 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
 
     public enum AddToDockOnboarding {
-        public enum Buttons {
-            static let addToDockTutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button at the end of the browser onboarding. On click it shows the user a video about how to add the application to the device dock.")
-            static let dismiss = NSLocalizedString("contextual.onboarding.addToDock.buttons.dismiss", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
-        }
-
-        public enum EndOfJourney {
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.endOfJourney.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding to the browser app.")
+        public enum Promo {
+            static let title = NSLocalizedString("contextual.onboarding.addToDock.promo.title", value: "Add me to your Dock!", comment: "The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let introMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.intro.message", value: "I’ll nest in easy reach for all your daily browsing.", comment: "The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock.")
+            static let contextualMessage = NSLocalizedString("contextual.onboarding.addToDock.promo.contextual.message", value: "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.", comment: "Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock.")
         }
 
         public enum Tutorial {
             static let title = NSLocalizedString("contextual.onboarding.addToDock.tutorial.title", value: "Adding me to your Dock is easy.", comment: "The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
-            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find or search for the DuckDuckGo icon on your home screen. Then press and drag into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
+            static let message = NSLocalizedString("contextual.onboarding.addToDock.tutorial.message", value: "Find the DuckDuckGo icon on your Home Screen. Then press and drag it into place. That’s it!", comment: "The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock.")
         }
 
-        public enum Intro {
-            static let title = NSLocalizedString("onboarding.addToDock.title", value: "Want to add me to your Dock?", comment: "The title of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
-            static let message = NSLocalizedString("onboarding.addToDock.message", value: "I can paddle into the Dock and perch there until you need me.", comment: "The message of the onboarding dialog popup informing the user on the benefits of adding the DDG browser icon to the dock.")
-            static let skipCTA = NSLocalizedString("onboarding.addToDock.cta", value: "Skip", comment: "The title of the dialog button CTA to skip adding the DDB browser icon to the dock.")
-            static let tutorialDismissCTA =  NSLocalizedString("onboarding.addToDock.tutorial.cta", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will dismiss the screen and proceed to the next step.")
+        public enum Buttons {
+            static let tutorial = NSLocalizedString("contextual.onboarding.addToDock.buttons.tutorial", value: "Show Me How", comment: "Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock.")
+            static let startBrowsing = NSLocalizedString("contextual.onboarding.addToDock.buttons.startBrowsing", value: "Start Browsing", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let skip = NSLocalizedString("contextual.onboarding.addToDock.buttons.skip", value: "Skip", comment: "Button to continue the onboarding process")
+            static let gotIt =  NSLocalizedString("onboarding.addToDock.buttons.gotIt", value: "Got It", comment: "Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding.")
         }
     }
 }

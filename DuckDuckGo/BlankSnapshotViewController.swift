@@ -162,7 +162,7 @@ extension BlankSnapshotViewController: UICollectionViewDataSource {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
-    
+
     func onVoiceSearchPressed() {
        // No-op
     }
@@ -201,6 +201,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
 
     func onClearPressed() {
         // No-op
+    }
+
+    func onAbortPressed() {
+        // no-op
     }
 }
 

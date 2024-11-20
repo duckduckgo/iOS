@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "ОК";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Мащабиране (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Мащабиране";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Мащабиране на текста (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
@@ -769,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Да";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Пропускане";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Стартиране на сърфирането";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Покажи ми как";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Не забравяйте: всеки път когато сърфирате с мен, аз ще подрязвам крилцата на досадните реклами.\n\nЗатова ме дръжте в своя панел за ежедневното си сърфиране.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Ще се сгуша на удобно място да ви чакам, за да сърфирате с мен всеки ден.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Добавете ме към панела си!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Намерете иконата DuckDuckGo на своя начален екран. След това натиснете и я плъзнете на място. Това е всичко!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Лесно е да ме добавите към своя панел.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1784,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Изскачащият прозорец е скрит";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Разбрах";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Изберете своя браузър";
 
@@ -2226,7 +2262,7 @@
 "settings.sync" = "Синхронизиране и архивиране";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Размер на текста";
+"settings.text.size" = "Мащабиране на текста по подразбиране";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Тема";
@@ -2255,14 +2291,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Отказване";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Подаване на сигнал за повреден сайт";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Това ни помага да подобрим браузъра.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Сайтът не работи ли? Уведомете DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Уебсайтът е повреден";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Изпращане на доклад";
@@ -2574,7 +2610,7 @@
 "tab.switcher.accessibility.label" = "Превключване на раздели";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Изберете предпочитания размер на текста. Уебсайтът, който разглеждате в DuckDuckGo, ще се регулира спрямо него.";
+"textSize.description" = "Увеличете или намалете размера на текста във всички сайтове.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Размер на текста - %@";

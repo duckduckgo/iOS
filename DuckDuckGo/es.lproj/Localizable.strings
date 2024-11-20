@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "De acuerdo";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zoom de texto (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Añadir";
 
@@ -769,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Sí";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Omitir";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Empezar a navegar";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Muéstrame cómo";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Recuerda: cada vez que navegas conmigo corto las alas a un anuncio escalofriante.\n\nAsí que mantenme en tu Dock para la navegación diaria.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Estaré al alcance de la mano para toda tu navegación diaria.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "¡Añádeme a tu Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Busca el icono de DuckDuckGo en tu pantalla de inicio. A continuación, selecciónalo y arrástralo a su ubicación. ¡Eso es todo!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Añadirme a tu Dock es fácil.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1784,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Ventana emergente oculta";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Entendido";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Elige tu navegador";
 
@@ -2224,7 +2260,7 @@
 "settings.sync" = "Sincronización y copia de seguridad";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Tamaño del texto";
+"settings.text.size" = "Zoom de texto predeterminado";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2253,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Descartar";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Informar de sitio web dañado";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Esto nos ayuda a mejorar el navegador.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "¿El sitio no funciona? Házselo saber a DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "El sitio web no funciona";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Enviar informe";
@@ -2572,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Cambiar pestañas";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Elige tu tamaño de texto preferido. Los sitios web que veas en DuckDuckGo se ajustarán a él.";
+"textSize.description" = "Aumenta o disminuye el tamaño del texto en todos los sitios.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Tamaño del texto - %@";

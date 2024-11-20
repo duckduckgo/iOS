@@ -42,7 +42,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+          -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           -skipMacroValidation \
@@ -68,7 +68,7 @@ jobs:
   end-to-end-tests:
     name: End to end Tests
     needs: build-end-to-end-tests
-    runs-on: macos-14-xlarge
+    runs-on: macos-14
     timeout-minutes: 90
     strategy:
       matrix:

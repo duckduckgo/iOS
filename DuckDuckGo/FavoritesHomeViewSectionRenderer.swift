@@ -156,6 +156,7 @@ class FavoritesHomeViewSectionRenderer {
         guard let indexPath = collectionView.indexPath(for: cell),
         let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
+        fireActionPixel()
         viewModel.removeFavorite(favorite)
         WidgetCenter.shared.reloadAllTimelines()
         collectionView.performBatchUpdates {
@@ -168,6 +169,7 @@ class FavoritesHomeViewSectionRenderer {
         guard let indexPath = collectionView.indexPath(for: cell),
               let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenEditFavorite)
+        fireActionPixel()
         controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
@@ -272,7 +274,7 @@ class FavoritesHomeViewSectionRenderer {
               let dragItem = coordinator.items.first?.dragItem,
               let sourcePath = coordinator.items.first?.sourceIndexPath,
               let destinationPath = coordinator.destinationIndexPath,
-              let cell = self.collectionView(collectionView, cellForItemAt: sourcePath) as? FavoriteHomeCell,
+              let cell = collectionView.cellForItem(at: sourcePath) as? FavoriteHomeCell,
               let favorite = cell.favorite
         else { return }
 
@@ -285,10 +287,11 @@ class FavoritesHomeViewSectionRenderer {
 
         coordinator.drop(dragItem, toItemAt: destinationPath)
 
+        fireActionPixel()
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return [] }
 
         if let size = cell.iconImage.image?.size.width, size <= 32 {
             cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
@@ -312,6 +315,11 @@ class FavoritesHomeViewSectionRenderer {
         }
 
         return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    /// Actions are only available from the bookmarks UI, so this is safe to send from here.
+    func fireActionPixel() {
+        DailyPixel.fire(pixel: .bookmarksUIFavoritesAction)
     }
 
 }

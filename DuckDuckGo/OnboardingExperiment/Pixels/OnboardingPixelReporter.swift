@@ -67,7 +67,14 @@ protocol OnboardingDaxDialogsReporting {
     func trackEndOfJourneyDialogCTAAction()
 }
 
-typealias OnboardingPixelReporting = OnboardingIntroImpressionReporting & OnboardingIntroPixelReporting & OnboardingSearchSuggestionsPixelReporting & OnboardingSiteSuggestionsPixelReporting & OnboardingCustomInteractionPixelReporting & OnboardingDaxDialogsReporting
+protocol OnboardingAddToDockReporting {
+    func trackAddToDockPromoImpression()
+    func trackAddToDockPromoShowTutorialCTAAction()
+    func trackAddToDockPromoDismissCTAAction()
+    func trackAddToDockTutorialDismissCTAAction()
+}
+
+typealias OnboardingPixelReporting = OnboardingIntroImpressionReporting & OnboardingIntroPixelReporting & OnboardingSearchSuggestionsPixelReporting & OnboardingSiteSuggestionsPixelReporting & OnboardingCustomInteractionPixelReporting & OnboardingDaxDialogsReporting & OnboardingAddToDockReporting
 
 // MARK: - Implementation
 
@@ -228,6 +235,28 @@ extension OnboardingPixelReporter: OnboardingDaxDialogsReporting {
 
     func trackEndOfJourneyDialogCTAAction() {
         fire(event: .daxDialogsEndOfJourneyDismissed, unique: false)
+    }
+
+}
+
+// MARK: - OnboardingPixelReporter + Add To Dock
+
+extension OnboardingPixelReporter: OnboardingAddToDockReporting {
+   
+    func trackAddToDockPromoImpression() {
+        fire(event: .onboardingAddToDockPromoImpressionsUnique, unique: true)
+    }
+    
+    func trackAddToDockPromoShowTutorialCTAAction() {
+        fire(event: .onboardingAddToDockPromoShowTutorialCTATapped, unique: false)
+    }
+    
+    func trackAddToDockPromoDismissCTAAction() {
+        fire(event: .onboardingAddToDockPromoDismissCTATapped, unique: false)
+    }
+    
+    func trackAddToDockTutorialDismissCTAAction() {
+        fire(event: .onboardingAddToDockTutorialDismissCTATapped, unique: false)
     }
 
 }

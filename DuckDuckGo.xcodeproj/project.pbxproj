@@ -315,6 +315,7 @@
 		6F64AA5F2C49463C00CF4489 /* ShortcutsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F64AA5E2C49463C00CF4489 /* ShortcutsModel.swift */; };
 		6F655BE22BAB289E00AC3597 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */; };
 		6F691CCA2C4979EC002E9553 /* FavoritesTooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F691CC92C4979EC002E9553 /* FavoritesTooltip.swift */; };
+		6F7BACD42CEE084B00F561D8 /* OmniBarEqualityCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BACD32CEE084100F561D8 /* OmniBarEqualityCheckTests.swift */; };
 		6F7FB8E12C660B3E00867DA7 /* NewTabPageFavoritesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8DF2C660B1A00867DA7 /* NewTabPageFavoritesModelTests.swift */; };
 		6F7FB8E32C660BF300867DA7 /* DailyPixelFiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8E22C660BF300867DA7 /* DailyPixelFiring.swift */; };
 		6F7FB8E52C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7FB8E42C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift */; };
@@ -1623,6 +1624,7 @@
 		6F64AA5E2C49463C00CF4489 /* ShortcutsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsModel.swift; sourceTree = "<group>"; };
 		6F655BE12BAB289E00AC3597 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		6F691CC92C4979EC002E9553 /* FavoritesTooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTooltip.swift; sourceTree = "<group>"; };
+		6F7BACD32CEE084100F561D8 /* OmniBarEqualityCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarEqualityCheckTests.swift; sourceTree = "<group>"; };
 		6F7FB8DF2C660B1A00867DA7 /* NewTabPageFavoritesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageFavoritesModelTests.swift; sourceTree = "<group>"; };
 		6F7FB8E22C660BF300867DA7 /* DailyPixelFiring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixelFiring.swift; sourceTree = "<group>"; };
 		6F7FB8E42C66158D00867DA7 /* NewTabPageShortcutsSettingsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabPageShortcutsSettingsModelTests.swift; sourceTree = "<group>"; };
@@ -6348,6 +6350,7 @@
 			isa = PBXGroup;
 			children = (
 				6F3529FE2CDCEDF700A59170 /* OmniBarLoadingStateBearerTests.swift */,
+				6F7BACD32CEE084100F561D8 /* OmniBarEqualityCheckTests.swift */,
 				BBFF18B02C76448100C48D7D /* QuerySubmittedTests.swift */,
 				8588026424E4209900C24AB6 /* LargeOmniBarStateTests.swift */,
 				85F20005221702F7006BB258 /* AddressDisplayHelperTests.swift */,
@@ -8090,6 +8093,7 @@
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				C1935A242C89CC6D001AD72D /* AutofillHeaderViewFactoryTests.swift in Sources */,
 				C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */,
+				6F7BACD42CEE084B00F561D8 /* OmniBarEqualityCheckTests.swift in Sources */,
 				6F7FB8E72C66197E00867DA7 /* NewTabPageSectionsSettingsModelTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				569437362BE5160600C0881B /* SyncSettingsViewControllerErrorTests.swift in Sources */,

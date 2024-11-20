@@ -360,15 +360,19 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: any OmniBarState) {
-        if !newState.isEquivalent(to: state) {
+        if state.requiresUpdate(transitioningInto: newState) {
             Logger.general.debug("OmniBar entering \(newState.description) from \(self.state.description)")
-            if newState.clearTextOnStart {
-                clear()
+
+            if state.isDifferentState(than: newState) {
+                if newState.clearTextOnStart {
+                    clear()
+                }
+                cancelAllAnimations()
             }
+
             state = newState
-            cancelAllAnimations()
         }
-        
+
         searchFieldContainer.adjustTextFieldOffset(for: state)
         
         setVisibility(privacyInfoContainer, hidden: !state.showPrivacyIcon)

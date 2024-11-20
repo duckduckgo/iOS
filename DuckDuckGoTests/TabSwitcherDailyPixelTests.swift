@@ -28,8 +28,8 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
 
         let parameters = pixel.parameters(with: tabs)
 
-        XCTAssertNotNil(parameters["TabCount"])
-        XCTAssertNotNil(parameters["NewTabCount"])
+        XCTAssertNotNil(parameters[ParameterName.tabCount])
+        XCTAssertNotNil(parameters[ParameterName.newTabCount])
     }
 
     func testIncludesProperCountsForParameters() {
@@ -38,8 +38,8 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
 
         let parameters = pixel.parameters(with: tabs)
 
-        XCTAssertEqual(parameters["TabCount"], "2-5")
-        XCTAssertEqual(parameters["NewTabCount"], "1-5")
+        XCTAssertEqual(parameters[ParameterName.tabCount], "2-5")
+        XCTAssertEqual(parameters[ParameterName.newTabCount], "1-5")
     }
 
     func testBucketsAggregation() {
@@ -62,7 +62,7 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
             for value in bucket.key {
                 let tabs = Array(repeating: Tab.mock(), count: value)
 
-                let countParameter = TabSwitcherOpenDailyPixel().parameters(with: tabs)["TabCount"]
+                let countParameter = TabSwitcherOpenDailyPixel().parameters(with: tabs)[ParameterName.tabCount]
 
                 XCTAssertEqual(countParameter, bucket.value)
             }
@@ -81,7 +81,7 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
             for value in bucket.key {
                 let tabs = Array(repeating: Tab(), count: value)
 
-                let countParameter = TabSwitcherOpenDailyPixel().parameters(with: tabs)["NewTabCount"]
+                let countParameter = TabSwitcherOpenDailyPixel().parameters(with: tabs)[ParameterName.newTabCount]
 
                 XCTAssertEqual(countParameter, bucket.value)
             }
@@ -93,4 +93,9 @@ private extension Tab {
     static func mock() -> Tab {
         Tab(link: Link(title: nil, url: URL("https://example.com")!))
     }
+}
+
+private enum ParameterName {
+    static let newTabCount = "new_tab_count"
+    static let tabCount = "tab_count"
 }

@@ -64,7 +64,7 @@ struct TabSwitcherOpenDailyPixel {
     }
 
     private enum ParameterName {
-        static let tabCount = "TabCount"
-        static let newTabCount = "NewTabCount"
+        static let tabCount = "tab_count"
+        static let newTabCount = "new_tab_count"
     }
 }

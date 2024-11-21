@@ -37,9 +37,9 @@ public struct UserDefaultsWrapper<T> {
         case gridViewEnabled = "com.duckduckgo.ios.tabs.grid"
         case gridViewSeen = "com.duckduckgo.ios.tabs.seen"
 
-        case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
-        case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
-        case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
+        case fireproofingAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
+        case fireproofingDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
+        case fireproofingLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
 
         case daxIsDismissed = "com.duckduckgo.ios.daxOnboardingIsDismissed"
         case daxHomeScreenMessagesSeen = "com.duckduckgo.ios.daxOnboardingHomeScreenMessagesSeen"

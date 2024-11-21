@@ -49,13 +49,13 @@ final class FireButtonReferenceTests: XCTestCase {
     func testClearDataUsingLegacyContainer() async throws {
 
         // Using WKWebsiteDataStore(forIdentifier:) doesn't persist cookies in a testable way, so use the legacy container here.
-        let preservedLogins = PreserveLogins.shared
-        preservedLogins.clearAll()
+        let fireproofing = UserDefaultsFireproofing.shared
+        fireproofing.clearAll()
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
             print("Adding %s to fireproofed sites", sanitizedSite)
-            preservedLogins.addToAllowed(domain: sanitizedSite)
+            fireproofing.addToAllowed(domain: sanitizedSite)
         }
         
         let referenceTests = testData.fireButtonFireproofing.tests.filter {
@@ -80,7 +80,7 @@ final class FireButtonReferenceTests: XCTestCase {
             // Pretend the webview was loaded and the cookies were previously consumed
             cookieStorage.isConsumed = true
             
-            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, logins: preservedLogins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+            await WebCacheManager.shared.clear(cookieStorage: cookieStorage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 
@@ -97,13 +97,13 @@ final class FireButtonReferenceTests: XCTestCase {
     }
     
     func testCookieStorage() throws {
-        let preservedLogins = PreserveLogins.shared
-        preservedLogins.clearAll()
+        let fireproofing = UserDefaultsFireproofing.shared
+        fireproofing.clearAll()
         
         for site in testData.fireButtonFireproofing.fireproofedSites {
             let sanitizedSite = sanitizedSite(site)
             print("Adding %s to fireproofed sites", sanitizedSite)
-            preservedLogins.addToAllowed(domain: sanitizedSite)
+            fireproofing.addToAllowed(domain: sanitizedSite)
         }
         
         let referenceTests = testData.fireButtonFireproofing.tests.filter {
@@ -121,7 +121,7 @@ final class FireButtonReferenceTests: XCTestCase {
             // This simulates loading the cookies from the current web view data stores and updating the storage
             cookieStorage.updateCookies([
                 cookie
-            ], keepingPreservedLogins: preservedLogins)
+            ], preservingFireproofedDomains: fireproofing)
 
             let testCookie = cookieStorage.cookies.filter { $0.name == test.cookieName }.first
 

@@ -29,7 +29,7 @@ protocol OmniBarState: CustomStringConvertible {
     var showForwardButton: Bool { get }
     var showBookmarksButton: Bool { get }
     var showShareButton: Bool { get }
-    
+
     var clearTextOnStart: Bool { get }
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
@@ -61,12 +61,20 @@ protocol OmniBarState: CustomStringConvertible {
     func withLoading() -> Self
     func withoutLoading() -> Self
 
-    func isEquivalent(to other: OmniBarState) -> Bool
+    func requiresUpdate(transitioningInto other: OmniBarState) -> Bool
+    func isDifferentState(than other: OmniBarState) -> Bool
 }
 
 extension OmniBarState {
-    func isEquivalent(to other: OmniBarState) -> Bool {
-        name == other.name && isLoading == other.isLoading
+    /// Returns if new state requires UI update
+    func requiresUpdate(transitioningInto other: OmniBarState) -> Bool {
+        name != other.name || isLoading != other.isLoading
+    }
+
+    /// Checks whether the state type is different.
+    /// If `true` it may require transitioning to a different appearance and/or cancelling pending animations.
+    func isDifferentState(than other: OmniBarState) -> Bool {
+        name != other.name
     }
 
     var description: String {

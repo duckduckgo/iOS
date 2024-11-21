@@ -21,6 +21,7 @@ import BrowserServicesKit
 import XCTest
 
 @testable import Core
+@testable import DuckDuckGo
 
 class MockEmbeddedDataProvider: EmbeddedDataProvider {
     var embeddedDataEtag: String

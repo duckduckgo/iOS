@@ -1,5 +1,5 @@
 //
-//  PreserveLoginsTests.swift
+//  UserDefaultsFireproofingTests.swift
 //  UnitTests
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -56,10 +56,9 @@ extension XCTestCase {
         UserDefaults.app.removePersistentDomain(forName: tmpPath)
         UserDefaults.app = UserDefaults(suiteName: tmpPath)!
     }
-
 }
 
-class PreserveLoginsTests: XCTestCase {
+class UserDefaultsFireproofingTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -68,15 +67,15 @@ class PreserveLoginsTests: XCTestCase {
     }
     
     func testWhenAllowedDomainsContainsFireproofedDomainThenReturnsTrue() {
-        let logins = PreserveLogins()
-        XCTAssertFalse(logins.isAllowed(fireproofDomain: "example.com"))
-        logins.addToAllowed(domain: "example.com")
-        XCTAssertTrue(logins.isAllowed(fireproofDomain: "example.com"))
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertFalse(fireproofing.isAllowed(fireproofDomain: "example.com"))
+        fireproofing.addToAllowed(domain: "example.com")
+        XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "example.com"))
     }
     
     func testWhenNewThenAllowedDomainsIsEmpty() {
-        let logins = PreserveLogins()
-        XCTAssertTrue(logins.allowedDomains.isEmpty)
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertTrue(fireproofing.allowedDomains.isEmpty)
     }
 
 }

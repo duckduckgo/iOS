@@ -64,19 +64,20 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testEnsureIdAllocatedAfterClearing() async throws {
-        let logins = MockPreservedLogins(domains: [])
+        let fireproofing = MockFireproofing(domains: [])
+
         let storage = CookieStorage()
 
         let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
         XCTAssertNil(inMemoryDataStoreIdManager.currentId)
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
 
         XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
         let oldId = inMemoryDataStoreIdManager.currentId?.uuidString
         XCTAssertNotNil(oldId)
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: inMemoryDataStoreIdManager)
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
 
         XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
         XCTAssertNotEqual(inMemoryDataStoreIdManager.currentId?.uuidString, oldId)
@@ -85,9 +86,7 @@ class WebCacheManagerTests: XCTestCase {
     @available(iOS 17, *)
     @MainActor
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
-        let logins = MockPreservedLogins(domains: [
-            "mobile.twitter.com"
-        ])
+        let fireproofing = MockFireproofing(domains: ["mobile.twitter.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -105,7 +104,7 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(5, loadedCount)
 
         let cookieStore = CookieStorage()
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
@@ -136,9 +135,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
-            "www.example.com"
-        ])
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -153,7 +150,7 @@ class WebCacheManagerTests: XCTestCase {
         let cookieStorage = CookieStorage()
         
         await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
-                                           logins: logins,
+                                           fireproofing: fireproofing,
                                            dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
         let cookies = await defaultStore.httpCookieStore.allCookies()
 
@@ -173,9 +170,7 @@ class WebCacheManagerTests: XCTestCase {
 
     @MainActor
     func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
-            "www.example.com"
-        ])
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
@@ -184,7 +179,7 @@ class WebCacheManagerTests: XCTestCase {
         let storage = CookieStorage()
         storage.isConsumed = true
         
-        await WebCacheManager.shared.clear(cookieStorage: storage, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         XCTAssertEqual(storage.cookies.count, 2)
         XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
@@ -193,9 +188,7 @@ class WebCacheManagerTests: XCTestCase {
     
     @MainActor
     func testWhenClearedThenCookiesForLoginsAreRetained() async {
-        let logins = MockPreservedLogins(domains: [
-            "www.example.com"
-        ])
+        let fireproofing = MockFireproofing(domains: ["www.example.com"])
 
         let defaultStore = WKWebsiteDataStore.default()
         await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
@@ -211,7 +204,7 @@ class WebCacheManagerTests: XCTestCase {
 
         let cookieStore = CookieStorage()
         
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, logins: logins, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
+        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
         XCTAssertEqual(cookies.count, 0)
@@ -225,21 +218,18 @@ class WebCacheManagerTests: XCTestCase {
         let pool = WebCacheManager.shared.getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }
-            
+
     // MARK: Mocks
     
-    class MockPreservedLogins: PreserveLogins {
-        
-        let domains: [String]
-        
+    class MockFireproofing: UserDefaultsFireproofing {
         override var allowedDomains: [String] {
             return domains
         }
-        
+
+        let domains: [String]
         init(domains: [String]) {
             self.domains = domains
         }
-        
     }
     
 }

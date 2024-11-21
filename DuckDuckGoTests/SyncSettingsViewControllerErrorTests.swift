@@ -50,7 +50,8 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         let bookmarksAdapter = SyncBookmarksAdapter(
             database: database,
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: CapturingAdapterErrorHandler())
+            syncErrorHandler: CapturingAdapterErrorHandler(),
+            faviconStoring: MockFaviconStore())
         let credentialsAdapter = SyncCredentialsAdapter(
             secureVaultErrorReporter: MockSecureVaultReporting(),
             syncErrorHandler: CapturingAdapterErrorHandler())

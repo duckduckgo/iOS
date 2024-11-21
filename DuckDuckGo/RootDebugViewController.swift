@@ -250,13 +250,15 @@ protocol DiagnosticReportDataSourceDelegate: AnyObject {
 class DiagnosticReportDataSource: UIActivityItemProvider {
 
     weak var delegate: DiagnosticReportDataSourceDelegate?
+    var fireproofing: Fireproofing?
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastRefreshDate: Date
 
-    convenience init(delegate: DiagnosticReportDataSourceDelegate) {
+    convenience init(delegate: DiagnosticReportDataSourceDelegate, fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.init(placeholderItem: "")
         self.delegate = delegate
+        self.fireproofing = fireproofing
     }
 
     override var item: Any {
@@ -288,7 +290,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-        let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
+        let allowedDomains = fireproofing?.allowedDomains.map { "* \($0)" } ?? []
 
         let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
 

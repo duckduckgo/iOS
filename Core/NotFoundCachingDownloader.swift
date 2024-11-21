@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import Kingfisher
 
 class NotFoundCachingDownloader: ImageDownloader {

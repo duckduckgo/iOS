@@ -64,8 +64,20 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
         Group {
+            let subtitleText = {
+                // TODO: no feature flag (old text)
+                // UserText.settingsPProDescription
+
+                switch subscriptionManager.storePurchaseManager().currentStorefrontRegion {
+                case .usa:
+                    UserText.settingsPProPurchaseUSDescription
+                case .restOfWorld:
+                    UserText.settingsPProPurchaseROWDescription
+                }
+            }()
+
             SettingsCellView(label: UserText.settingsPProSubscribe,
-                             subtitle: UserText.settingsPProDescription,
+                             subtitle: subtitleText,
                              image: Image("SettingsPrivacyPro"))
 
             // Get privacy pro

@@ -1084,6 +1084,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsPProSectionFooter = NSLocalizedString("settings.ppro.footer", value: "Privacy Policy and Terms of Service", comment: "Title for Link in the Footer of Privacy Pro section")
     public static let settingsPProSubscribe = NSLocalizedString("settings.subscription.subscribe", value: "Protect your connection and identity with Privacy Pro", comment: "Call to action title for Privacy Pro settings")
     public static let settingsPProDescription = NSLocalizedString("settings.subscription.description", value:"Includes our VPN, Personal Information Removal, and Identity Theft Restoration.", comment: "Privacy pro description subtitle in settings")
+    public static let settingsPProPurchaseUSDescription = NSLocalizedString("settings.subscription.purchase.us.description", value:"Includes our VPN, Personal Information Removal, and Identity Theft Restoration", comment: "Privacy Pro description subtitle in settings")
+    public static let settingsPProPurchaseROWDescription = NSLocalizedString("settings.subscription.purchase.row.description", value:"Includes our VPN and Identity Theft Restoration", comment: "Privacy Pro description subtitle in settings")
     public static let settingsPProActivating = NSLocalizedString("settings.subscription.activating", value:"Activating", comment: "Privacy pro description subtitle in settings when the is activating")
 
     public static let settingsPProLearnMore = NSLocalizedString("settings.subscription.learn.more", value: "Get Privacy Pro", comment: "Get Privacy Pro button text for privacy pro")

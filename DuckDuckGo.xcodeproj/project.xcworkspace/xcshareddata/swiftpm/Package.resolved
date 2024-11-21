@@ -33,7 +33,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "sam/delay-shutting-down-vpn-when-encountering-error",
-        "revision" : "69d5dbc93b2e781a42806e91a56c1697db504194"
+        "revision" : "90bb44164b2c37ae7eecd19b755244d6f69f0562"
       }
     },
     {

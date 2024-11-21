@@ -1,5 +1,5 @@
 //
-//  ThreatProtectionFeatureCheckTests.swift
+//  ThreatDetectionFeatureCheckTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,16 +21,16 @@ import Testing
 import BrowserServicesKit
 @testable import DuckDuckGo
 
-@Suite("Threat Protection - Feature Flags")
-final class ThreatProtectionFeatureCheckTests {
-    private var sut: ThreatProtectionFeatureCheck!
+@Suite("Threat Detection - Feature Flags", .serialized)
+final class ThreatDetectionFeatureCheckTests {
+    private var sut: ThreatDetectionFeatureCheck!
     private var featureFlaggerMock: MockFeatureFlagger!
     private var configurationManagerMock: PrivacyConfigurationManagerMock!
 
     init() async throws {
         featureFlaggerMock = MockFeatureFlagger()
         configurationManagerMock = PrivacyConfigurationManagerMock()
-        sut = ThreatProtectionFeatureCheck(featureFlagger: featureFlaggerMock, privacyConfigManager: configurationManagerMock)
+        sut = ThreatDetectionFeatureCheck(featureFlagger: featureFlaggerMock, privacyConfigManager: configurationManagerMock)
     }
 
     deinit {
@@ -41,32 +41,32 @@ final class ThreatProtectionFeatureCheckTests {
 
     // MARK: - Web Error Page
 
-    @Test("Check isThreatProtectionEnabled returns true when feature flag is enabled")
-    func whenIsThreatProtectionCalledAndFeatureFlagIsOnThenReturnTrue() async throws {
+    @Test("Check Threat Detection Enabled")
+    func whenThreatDetectionEnabled_AndFeatureFlagIsOn_ThenReturnTrue() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [.threatDetectionErrorPage]
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled
+        let result = sut.isThreatDetectionEnabled
 
         // THEN
         #expect(result)
     }
 
-    @Test("Check isThreatProtectionEnabled returns false when feature flag is disabled")
-    func whenIsThreatProtectionCalledAndFeatureFlagIsOffThenReturnFalse() async throws {
+    @Test("Check Threat Detection Disabled")
+    func whenThreatDetectionEnabled_AndFeatureFlagIsOff_ThenReturnFalse() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = []
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled
+        let result = sut.isThreatDetectionEnabled
 
         // THEN
         #expect(!result)
     }
 
-    @Test("Check isThreatProtectionEnabledForDomain returns true when feature flag is enabled and privacy config feature flag is enabled for domain")
-    func whenIsThreatProtectionCalledForDomainAndPrivacyConfigFeatureFlagIsOnThenReturnTrue() async throws {
+    @Test("Check Threat Detection Enabled For Domain")
+    func whenThreatDetectionEnabledForDomain_AndFeatureIsAvailableForDomain_ThenReturnTrue() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [.threatDetectionErrorPage]
         let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
@@ -74,14 +74,14 @@ final class ThreatProtectionFeatureCheckTests {
         let domain = "example.com"
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled(forDomain: domain)
+        let result = sut.isThreatDetectionEnabled(forDomain: domain)
 
         // THEN
         #expect(result)
     }
 
-    @Test("Check isThreatProtectionEnabledForDomain returns false when feature flag is enabled and privacy config feature flag is disabled for domain")
-    func whenIsThreatProtectionCalledForDomainAndDomainFeatureIsNotAvailableForDomainThenReturnFalse() async throws {
+    @Test("Check Threat Detection Disabled For Domain When Domain Is Not Available")
+    func whenThreatDetectionCalledEnabledForDomain_AndFeatureIsNotAvailableForDomain_ThenReturnFalse() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [.threatDetectionErrorPage]
         let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
@@ -89,14 +89,14 @@ final class ThreatProtectionFeatureCheckTests {
         let domain = "example.com"
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled(forDomain: domain)
+        let result = sut.isThreatDetectionEnabled(forDomain: domain)
 
         // THEN
         #expect(!result)
     }
 
-    @Test("Check isThreatProtectionEnabledForDomain returns false when feature flag is disabled and privacy config feature flag is enabled for domain")
-    func whenIsThreatProtectionCalledForDomainAndPrivacyConfigFeatureFlagIsOnAndThreatDetectionSubFeatureIsOffThenReturnTrue() async throws {
+    @Test("Check Threat Detection Disabled For Domain When Error Page Feature Flag Is Off")
+    func whenThreatDetectionEnabledForDomain_AndPrivacyConfigFeatureFlagIsOn_AndThreatDetectionSubFeatureIsOff_ThenReturnTrue() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = []
         let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
@@ -104,14 +104,14 @@ final class ThreatProtectionFeatureCheckTests {
         let domain = "example.com"
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled(forDomain: domain)
+        let result = sut.isThreatDetectionEnabled(forDomain: domain)
 
         // THEN
         #expect(!result)
     }
 
-    @Test("Check isThreatProtectionEnabledForDomain returns false when feature flag is enabled and privacy config feature flag is disabled")
-    func whenIsThreatProtectionCalledForDomainAndPrivacyConfigFeatureFlagIsOffThenReturnFalse() async throws {
+    @Test("Check Threat Detection Disabled For Domain When Master Feature Flag Is Off")
+    func whenThreatDetectionEnabledForDomain_AndPrivacyConfigFeatureFlagIsOff_ThenReturnFalse() throws {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [.threatDetectionErrorPage]
         let privacyConfigMock = try #require(configurationManagerMock.privacyConfig as? PrivacyConfigurationMock)
@@ -119,7 +119,7 @@ final class ThreatProtectionFeatureCheckTests {
         let domain = "example.com"
 
         // WHEN
-        let result = sut.isThreatProtectionEnabled(forDomain: domain)
+        let result = sut.isThreatDetectionEnabled(forDomain: domain)
 
         // THEN
         #expect(!result)
@@ -127,28 +127,27 @@ final class ThreatProtectionFeatureCheckTests {
 
     // MARK: - Settings
 
-    @Test("Check isThreatProtectionSettingsEnabled returns true when feature flag is enabled")
-    func checkThreatProtectionSettingsIsEnabled() {
+    @Test("Check Threat Detection Settings Enabled")
+    func whenIsThreatDetectionSettingsEnabled_AndThreatDetectionPreferencesIsOn_ThenReturnTrue() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [.threatDetectionPreferences]
 
         // WHEN
-        let result = sut.isThreatProtectionSettingsEnabled
+        let result = sut.isThreatDetectionSettingsEnabled
 
         // THEN
         #expect(result)
     }
 
-    @Test("Check isThreatProtectionSettingsEnabled returns false when feature flag is disabled")
-    func checkThreatProtectionSettingsIsDisabled() {
+    @Test("Check Threat Detection Settings Disabled")
+    func whenIsThreatDetectionSettingsEnabled_AndThreatDetectionPreferencesIsOff_ThenReturnFalse() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = []
 
         // WHEN
-        let result = sut.isThreatProtectionSettingsEnabled
+        let result = sut.isThreatDetectionSettingsEnabled
 
         // THEN
         #expect(!result)
     }
-
 }

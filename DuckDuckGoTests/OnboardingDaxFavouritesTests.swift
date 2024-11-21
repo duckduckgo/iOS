@@ -44,7 +44,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
+            syncErrorHandler: SyncErrorHandler(),
+            faviconStoring: MockFaviconStore()
         )
 
         let remoteMessagingClient = RemoteMessagingClient(

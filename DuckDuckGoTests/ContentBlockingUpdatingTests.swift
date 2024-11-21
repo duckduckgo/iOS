@@ -120,7 +120,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         }
     }
 
-    func testWhenPreserveLoginsNotificationSentThenUserScriptsAreRebuild() {
+    func testWhenFireproffingNotificationSentThenUserScriptsAreRebuild() {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
 
@@ -141,7 +141,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         withExtendedLifetime(c) {
             waitForExpectations(timeout: 1, handler: nil)
             e2 = expectation(description: "should rebuild user scripts")
-            NotificationCenter.default.post(name: PreserveLogins.Notifications.loginDetectionStateChanged, object: nil)
+            NotificationCenter.default.post(name: UserDefaultsFireproofing.Notifications.loginDetectionStateChanged, object: nil)
             waitForExpectations(timeout: 1, handler: nil)
         }
     }

@@ -122,11 +122,14 @@ public final class ContentBlocking {
         case .contentBlockingLookupRulesSucceeded:
             domainEvent = .contentBlockingLookupRulesSucceeded
             
-        case .contentBlockingFetchRulesSucceeded:
-            domainEvent = .contentBlockingFetchRulesSucceeded
+        case .contentBlockingFetchLRCSucceeded:
+            domainEvent = .contentBlockingFetchLRCSucceeded
             
-        case .contentBlockingLookupAndFetchFailed:
-            domainEvent = .contentBlockingLookupAndFetchFailed
+        case .contentBlockingNoMatchInLRC:
+            domainEvent = .contentBlockingNoMatchInLRC
+            
+        case .contentBlockingLRCMissing:
+            domainEvent = .contentBlockingLRCMissing
         }
 
         if let error = error {

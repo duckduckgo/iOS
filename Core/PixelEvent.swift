@@ -519,8 +519,9 @@ extension Pixel {
         
         case contentBlockingCompilationTime
         case contentBlockingLookupRulesSucceeded
-        case contentBlockingFetchRulesSucceeded
-        case contentBlockingLookupAndFetchFailed
+        case contentBlockingFetchLRCSucceeded
+        case contentBlockingNoMatchInLRC
+        case contentBlockingLRCMissing
         
         case ampBlockingRulesCompilationFailed
         
@@ -1366,8 +1367,10 @@ extension Pixel.Event {
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .contentBlockingLookupRulesSucceeded: return "m_content_blocking_lookup_rules_succeeded"
-        case .contentBlockingFetchRulesSucceeded: return "m_content_blocking_fetch_rules_succeeded"
-        case .contentBlockingLookupAndFetchFailed: return "m_content_blocking_lookup_and_fetch_failed"
+        case .contentBlockingFetchLRCSucceeded: return "m_content_blocking_fetch_lrc_succeeded"
+        case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
+        case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
+
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"

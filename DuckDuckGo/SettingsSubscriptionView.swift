@@ -188,7 +188,8 @@ struct SettingsSubscriptionView: View {
             }
         }
         
-        if settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
+        if settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestoration) ||
+            settingsViewModel.state.subscription.entitlements.contains(.identityTheftRestorationGlobal) {
             NavigationLink(
                 destination: LazyView(SubscriptionITPView()),
                 isActive: $isShowingITP) {

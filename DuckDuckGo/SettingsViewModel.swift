@@ -750,7 +750,7 @@ extension SettingsViewModel {
 
             // Check entitlements and update state
             var currentEntitlements: [Entitlement.ProductName] = []
-            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration, .identityTheftRestorationGlobal]
 
             for entitlement in entitlementsToCheck {
                 if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {

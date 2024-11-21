@@ -39,7 +39,7 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
         let parameters = pixel.parameters(with: tabs)
 
         XCTAssertEqual(parameters[ParameterName.tabCount], "2-5")
-        XCTAssertEqual(parameters[ParameterName.newTabCount], "1-5")
+        XCTAssertEqual(parameters[ParameterName.newTabCount], "2-10")
     }
 
     func testBucketsAggregation() {
@@ -71,11 +71,9 @@ final class TabSwitcherDailyPixelTests: XCTestCase {
 
     func testNewTabBucketsAggregation() {
         let bucketValues = [
-            0...0: "0",
-            1...5: "1-5",
-            6...10: "6-10",
-            11...50: "11-50",
-            51...60: "51+"]
+            0...1: "0-1",
+            2...10: "2-10",
+            11...20: "11+"]
 
         for bucket in bucketValues {
             for value in bucket.key {

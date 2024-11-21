@@ -55,11 +55,9 @@ struct TabSwitcherOpenDailyPixel {
         let count = tabs.count { $0.link == nil }
 
         switch count {
-        case 0: return "0"
-        case 1...5: return "1-5"
-        case 6...10: return "6-10"
-        case 11...50: return "11-50"
-        default: return "51+"
+        case 0...1: return "0-1"
+        case 2...10: return "2-10"
+        default: return "11+"
         }
     }
 

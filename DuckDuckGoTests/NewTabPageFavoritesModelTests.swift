@@ -222,7 +222,7 @@ private final class MockFavoritesFaviconLoading: FavoritesFaviconLoading {
 }
 
 private final class MockFavoritesFaviconCaching: FavoritesFaviconCaching {
-    func populateFavicon(for domain: String, intoCache: Favicons.CacheType, fromCache: Favicons.CacheType?) {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?) {
 
     }
 }

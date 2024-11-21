@@ -38,7 +38,7 @@ protocol NewTabPageFavoriteDataSource {
 }
 
 protocol FavoritesFaviconCaching {
-    func populateFavicon(for domain: String, intoCache: Favicons.CacheType, fromCache: Favicons.CacheType?)
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?)
 }
 
 struct FavoritesSlice {
@@ -242,7 +242,7 @@ private extension FavoriteItem {
 }
 
 extension Favicons: FavoritesFaviconCaching {
-    func populateFavicon(for domain: String, intoCache: Favicons.CacheType, fromCache: Favicons.CacheType?) {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?) {
         loadFavicon(forDomain: domain, intoCache: intoCache, fromCache: fromCache)
     }
 }

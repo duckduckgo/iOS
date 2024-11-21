@@ -37,6 +37,7 @@ struct EditableShortcutsView: View {
                     ShortcutItemView(shortcut: setting.item, accessoryType: isEnabled ? .selected : .add)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
+                .buttonStyle(.plain)
                 .padding([.horizontal, .top], 6) // Adjust for the accessory being cut-off when lifting for preview
                 .previewShape()
             } preview: { setting in

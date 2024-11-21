@@ -2976,6 +2976,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         return ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
                                       sessionKey: autofillUserScript?.sessionKey ?? "",
+                                      messageSecret: autofillUserScript?.messageSecret ?? "",
                                       featureToggles: supportedFeatures)
     }
 

@@ -53,6 +53,9 @@ public enum FeatureFlag: String {
 
     /// https://app.asana.com/0/72649045549333/1208617860225199/f
     case networkProtectionEnforceRoutes
+    
+    /// https://app.asana.com/0/1208592102886666/1208613627589762/f
+    case crashReportOptInStatusResetting
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -118,6 +121,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
+        case .crashReportOptInStatusResetting:
+            return .internalOnly
         }
     }
 }

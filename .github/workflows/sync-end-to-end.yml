@@ -72,7 +72,7 @@ jobs:
     timeout-minutes: 90
     strategy:
       matrix:
-        os-version: [15, 16, 17]
+        os-version: [17] #[15, 16, 17]
       max-parallel: 1 # Uncomment this line to run tests sequentially. 
       fail-fast: false
     

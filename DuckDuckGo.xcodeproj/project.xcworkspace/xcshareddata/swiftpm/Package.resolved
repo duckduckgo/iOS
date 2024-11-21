@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "branch" : "pr-releases/pr-196",
-        "revision" : "b4e4a2f7ef5fb0faa999bacb46adef9eac4ce583"
+        "revision" : "3f58e008d4e9d1b56ab12dbb95bd891045cf2758",
+        "version" : "8.0.0"
       }
     },
     {

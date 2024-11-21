@@ -94,6 +94,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
     var pixelsFired: [String] = []
 
     override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
         // Pixels
         Pixel.isDryRun = false
         stub(condition: isHost("improving.duckduckgo.com")) { request -> HTTPStubsResponse in

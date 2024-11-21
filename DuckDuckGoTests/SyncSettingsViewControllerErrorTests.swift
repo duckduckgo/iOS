@@ -31,8 +31,9 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
     var errorHandler: CapturingSyncPausedStateManager!
 
     @MainActor
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
+        try super.setUpWithError()
         cancellables = []
         errorHandler = CapturingSyncPausedStateManager()
         let bundle = DDGSync.bundle

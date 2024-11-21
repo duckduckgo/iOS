@@ -109,15 +109,19 @@ final class AppDependencyProvider: DependencyProvider {
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
         let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionService,
+                                                                                     userDefaults: subscriptionUserDefaults)
+
         let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
 
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
                                                              subscriptionEnvironment: subscriptionEnvironment)
         accountManager.delegate = subscriptionManager
 

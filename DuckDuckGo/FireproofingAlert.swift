@@ -1,5 +1,5 @@
 //
-//  PreserveLoginsAlert.swift
+//  FireproofingAlert.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -20,22 +20,22 @@
 import Foundation
 import Core
 
-class PreserveLoginsAlert {
+class FireproofingAlert {
 
     static func showFireproofDisabledMessage(usingController controller: UIViewController,
-                                             worker: PreserveLoginsWorker,
+                                             worker: FireproofingWorking,
                                              forDomain domain: String) {
         
-        let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.droppingWwwPrefix())
+        let message = UserText.fireproofingRemovalConfirmMessage.format(arguments: domain.droppingWwwPrefix())
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserEnablingFireproofing(forDomain: domain)
         })
     }
     
     static func showFireproofEnabledMessage(usingController controller: UIViewController,
-                                            worker: PreserveLoginsWorker,
+                                            worker: FireproofingWorking,
                                             forDomain domain: String) {
-        let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.droppingWwwPrefix())
+        let message = UserText.fireproofingConfirmMessage.format(arguments: domain.droppingWwwPrefix())
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserDisablingFireproofing(forDomain: domain)
         })
@@ -44,10 +44,10 @@ class PreserveLoginsAlert {
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,
                                             forDomain domain: String,
                                             onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.droppingWwwPrefix()),
-                                       message: UserText.preserveLoginsFireproofAskMessage,
+        let prompt = UIAlertController(title: UserText.fireproofingAskTitle.format(arguments: domain.droppingWwwPrefix()),
+                                       message: UserText.fireproofingAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction, style: .default) {
+        prompt.addAction(title: UserText.FireproofingConfirmAction, style: .default) {
             onConfirmHandler()
         }
         prompt.addAction(title: UserText.actionCancel, style: .cancel)
@@ -57,21 +57,21 @@ class PreserveLoginsAlert {
     static func showFireproofWebsitePrompt(usingController controller: UIViewController,
                                            forDomain domain: String,
                                            onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.droppingWwwPrefix()),
-                                       message: UserText.preserveLoginsFireproofAskMessage,
+        let prompt = UIAlertController(title: UserText.fireproofingAskTitle.format(arguments: domain.droppingWwwPrefix()),
+                                       message: UserText.fireproofingAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
-        prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction) {
+        prompt.addAction(title: UserText.FireproofingConfirmAction) {
             onConfirmHandler()
         }
-        prompt.addAction(title: UserText.preserveLoginsFireproofDefer, style: .cancel)
+        prompt.addAction(title: UserText.fireproofingDeferAction, style: .cancel)
         controller.present(prompt, animated: true)
     }
     
     static func showClearAllAlert(usingController controller: UIViewController, cancelled: @escaping () -> Void, confirmed: @escaping () -> Void) {
         
         if controller.isPad {
-            let alert = UIAlertController(title: UserText.preserveLoginsRemoveAll, message: nil, preferredStyle: .alert)
-            alert.addAction(title: UserText.preserveLoginsRemoveAllOk, style: .destructive) {
+            let alert = UIAlertController(title: UserText.fireproofingRemoveAllTitle, message: nil, preferredStyle: .alert)
+            alert.addAction(title: UserText.fireproofingRemoveAllOk, style: .destructive) {
                 confirmed()
             }
             alert.addAction(title: UserText.actionCancel, style: .cancel) {
@@ -80,7 +80,7 @@ class PreserveLoginsAlert {
             controller.present(alert, animated: true)
         } else {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(title: UserText.preserveLoginsRemoveAll, style: .destructive) {
+            alert.addAction(title: UserText.fireproofingRemoveAllTitle, style: .destructive) {
                 confirmed()
             }
             alert.addAction(title: UserText.actionCancel, style: .cancel) {

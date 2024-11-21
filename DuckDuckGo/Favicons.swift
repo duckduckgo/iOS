@@ -51,13 +51,16 @@ public class Favicons {
 
     let sourcesProvider: FaviconSourcesProvider
     let downloader: NotFoundCachingDownloader
+    let fireproofing: Fireproofing
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
-         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
+         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader(),
+         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.sourcesProvider = sourcesProvider
         self.downloader = downloader
+        self.fireproofing = fireproofing
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.fireproofCache)
@@ -159,7 +162,7 @@ public class Favicons {
     }
 
     public func removeBookmarkFavicon(forDomain domain: String) {
-        guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return }
+        guard !fireproofing.isAllowed(fireproofDomain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .fireproof)
     }
 

@@ -177,7 +177,7 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    let preserveLogins: PreserveLogins
+    let fireproofing: Fireproofing
     let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
@@ -204,7 +204,7 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        preserveLogins: PreserveLogins = .shared,
+        fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating
     ) {
@@ -243,7 +243,7 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
-        self.preserveLogins = preserveLogins
+        self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
 
@@ -2749,7 +2749,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     private func forgetTextZoom() {
-        let allowedDomains = preserveLogins.allowedDomains
+        let allowedDomains = fireproofing.allowedDomains
         textZoomCoordinator.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 

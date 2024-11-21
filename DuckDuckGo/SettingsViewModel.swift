@@ -759,6 +759,7 @@ extension SettingsViewModel {
             }
 
             self.state.subscription.entitlements = currentEntitlements
+            self.state.subscription.subscriptionFeatures = await subscriptionManager.currentSubscriptionFeatures()
 
         case .failure:
             break

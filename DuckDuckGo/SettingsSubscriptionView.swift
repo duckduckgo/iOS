@@ -105,23 +105,33 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var disabledFeaturesView: some View {
-        SettingsCellView(label: UserText.settingsPProVPNTitle,
-                         image: Image("SettingsPrivacyProVPN"),
-                         statusIndicator: StatusIndicatorView(status: .off),
-                         isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProDBPTitle,
-            image: Image("SettingsPrivacyProPIR"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProITRTitle,
-            image: Image("SettingsPrivacyProITP"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
+        let features = settingsViewModel.state.subscription.subscriptionFeatures
+
+        if features.contains(.networkProtection) {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             isGreyedOut: true
+            )
+        }
+
+        if features.contains(.dataBrokerProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProDBPTitle,
+                image: Image("SettingsPrivacyProPIR"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+            SettingsCellView(
+                label: UserText.settingsPProITRTitle,
+                image: Image("SettingsPrivacyProITP"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
     }
 
     @ViewBuilder

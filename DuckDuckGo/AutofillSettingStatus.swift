@@ -19,7 +19,6 @@
 
 import Foundation
 import LocalAuthentication
-import os.log
 import UIKit
 
 struct AutofillSettingStatus {

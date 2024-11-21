@@ -182,7 +182,7 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         accountStorage = nil
         accessTokenStorage = nil
 
-        entitlementsCache.reset()
+        entitlementsCache?.reset()
         entitlementsCache = nil
 
         accountManager = nil

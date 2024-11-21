@@ -48,7 +48,8 @@ final class SyncBookmarksAdapterTests: XCTestCase {
                                     options: [:])
         adapter = SyncBookmarksAdapter(database: database,
                                        favoritesDisplayModeStorage: MockFavoriteDisplayModeStorage(),
-                                       syncErrorHandler: errorHandler)
+                                       syncErrorHandler: errorHandler,
+                                       faviconStoring: MockFaviconStore())
         cancellables = []
     }
 

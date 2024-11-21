@@ -1,8 +1,8 @@
 //
-//  FaviconRequestModifier.swift
-//  Core
+//  FaviconHasher.swift
+//  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,15 @@
 //  limitations under the License.
 //
 
-import Core
+
+import Foundation
 import Kingfisher
 
-class FaviconRequestModifier: ImageDownloadRequestModifier {
+public struct FaviconHasher {
 
-    let userAgentManager: UserAgentManager
-
-    init(userAgentManager: UserAgentManager = DefaultUserAgentManager.shared) {
-        self.userAgentManager = userAgentManager
-    }
-
-    func modified(for request: URLRequest) -> URLRequest? {
-        var r = request
-        userAgentManager.update(request: &r, isDesktop: false)
-        return r
+    static let salt = "DDGSalt:"
+    public static func createHash(ofDomain domain: String) -> String {
+        return "\(Self.salt)\(domain)".sha256()
     }
 
 }

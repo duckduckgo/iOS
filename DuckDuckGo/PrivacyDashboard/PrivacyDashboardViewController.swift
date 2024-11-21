@@ -26,19 +26,11 @@ import PrivacyDashboard
 import Common
 import os.log
 
-protocol PrivacyDashboardViewControllerDelegate: AnyObject {
-
-    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController,
-                                        didSelectBreakageCategory breakageCategory: String)
-    
-}
-
 final class PrivacyDashboardViewController: UIViewController {
 
     @IBOutlet private(set) weak var webView: WKWebView!
 
     public var breakageAdditionalInfo: BreakageAdditionalInfo?
-    public weak var delegate: PrivacyDashboardViewControllerDelegate?
 
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
@@ -175,10 +167,6 @@ extension PrivacyDashboardViewController {
 // MARK: - PrivacyDashboardControllerDelegate
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
-    
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didSelectBreakageCategory category: String) {
-        delegate?.privacyDashboardViewController(self, didSelectBreakageCategory: category)
-    }
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
                                     didChangeProtectionSwitch protectionState: ProtectionState,

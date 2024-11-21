@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "browserserviceskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
+      "state" : {
+        "branch" : "jacek/new-breakage-form",
+        "revision" : "f188fb3fb4f598bd67f4c0d209aa81fe8e762916"
+      }
+    },
+    {
       "identity" : "content-scope-scripts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
@@ -59,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/GRDB.swift.git",
       "state" : {
-        "revision" : "4225b85c9a0c50544e413a1ea1e502c802b44b35",
-        "version" : "2.4.0"
+        "revision" : "5b2f6a81099d26ae0f9e38788f51490cd6a4b202",
+        "version" : "2.4.2"
       }
     },
     {

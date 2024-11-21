@@ -913,8 +913,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.delegate = self
-            breakageCategory = nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -1179,40 +1177,12 @@ class TabViewController: UIViewController {
         job()
     }
 
-    private var alertPresenter: AlertViewPresenter?
-    var breakageCategory: String?
-    private func schedulePrivacyProtectionsOffAlert() {
-        guard let breakageCategory else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.alertPresenter?.hide()
-            self.alertPresenter = AlertViewPresenter(title: UserText.brokenSiteReportToggleAlertTitle,
-                                                     image: "SiteBreakage",
-                                                     leftButton: (UserText.brokenSiteReportToggleAlertYesButton, { [weak self] in
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: true))
-            }),
-                                                     rightButton: (UserText.brokenSiteReportToggleAlertNoButton, { [weak self] in
-                (self?.parent as? MainViewController)?.segueToReportBrokenSite(entryPoint: .afterTogglePrompt(category: breakageCategory,
-                                                                                                              didToggleProtectionsFixIssue: false))
-            }))
-            self.alertPresenter?.present(in: self, animated: true)
-        }
-    }
-
     deinit {
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
         removeObservers()
         temporaryDownloadForPreviewedFile?.cancel()
         cleanUpBeforeClosing()
     }
-}
-
-extension TabViewController: PrivacyDashboardViewControllerDelegate {
-
-    func privacyDashboardViewController(_ privacyDashboardViewController: PrivacyDashboardViewController, didSelectBreakageCategory breakageCategory: String) {
-        self.breakageCategory = breakageCategory
-    }
-
 }
 
 // MARK: - LoginFormDetectionDelegate
@@ -2531,7 +2501,6 @@ extension TabViewController: UserContentControllerDelegate {
             }) {
 
             reload()
-            schedulePrivacyProtectionsOffAlert()
         }
     }
 

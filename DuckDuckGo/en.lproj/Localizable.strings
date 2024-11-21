@@ -755,15 +755,6 @@
 /* Message that appears after submitting report */
 "broken.site.report.success.toast" = "Your report helps make DuckDuckGo better for everyone!";
 
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.no.button" = "No";
-
-/* An alert that appears after user turns off the privacy protection */
-"broken.site.report.toggle.alert.title" = "Did turning Privacy Protections off resolve the issue on this site?";
-
-/* Button to answer question 'Did turning off protections resolve the issue on this site?' */
-"broken.site.report.toggle.alert.yes.button" = "Yes";
-
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Skip";
 

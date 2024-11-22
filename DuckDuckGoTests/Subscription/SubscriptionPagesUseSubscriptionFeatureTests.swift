@@ -812,11 +812,11 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let onFeatureSelectedCalled = expectation(description: "onFeatureSelected")
         feature.onFeatureSelected = { selection in
             onFeatureSelectedCalled.fulfill()
-            XCTAssertEqual(selection, SubscriptionFeatureSelection.itr)
+            XCTAssertEqual(selection, .identityTheftRestoration)
         }
 
         // When
-        let featureSelectionParams = ["feature": SubscriptionFeatureName.itr]
+        let featureSelectionParams = ["productFeature": Entitlement.ProductName.identityTheftRestoration]
         let result = await feature.featureSelected(params: featureSelectionParams, original: Constants.mockScriptMessage)
 
         // Then

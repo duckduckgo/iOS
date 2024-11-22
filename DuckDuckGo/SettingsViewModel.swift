@@ -46,7 +46,7 @@ final class SettingsViewModel: ObservableObject {
     let textZoomCoordinator: TextZoomCoordinating
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManager
+    let subscriptionManager: SubscriptionManager
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var subscriptionSignOutObserver: Any?
     var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {

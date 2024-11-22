@@ -54,7 +54,7 @@ struct UnifiedFeedbackRootView: View {
     @ViewBuilder
     func reportProblemView() -> some View {
         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle,
-                                    options: UnifiedFeedbackCategory.allCases,
+                                    options: viewModel.availableCategories,
                                     selection: $viewModel.selectedCategory) {
             Group {
                 if let selectedCategory = viewModel.selectedCategory {

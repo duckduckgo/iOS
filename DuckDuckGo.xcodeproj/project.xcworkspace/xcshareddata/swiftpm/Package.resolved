@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "bbcb41c87c5788718a43883b5b10eb3b4f54aff3",
-        "version" : "218.0.1"
+        "branch" : "graeme/partial-form-save",
+        "revision" : "655ef65c3873621e1f2e41fcceca0b260fd987e7"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
-        "revision" : "c992041d16ec10d790e6204dce9abf9966d1363c",
-        "version" : "15.1.0"
+        "branch" : "dbajpeyi/feature/partial-form-save",
+        "revision" : "e1030b4292f39b18f1e0f0701a6e8d1a68cfa8cd"
       }
     },
     {

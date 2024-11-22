@@ -38,7 +38,7 @@ protocol ScriptSourceProviding {
 
 struct DefaultScriptSourceProvider: ScriptSourceProviding {
 
-    var loginDetectionEnabled: Bool { PreserveLogins.shared.loginDetectionEnabled }
+    var loginDetectionEnabled: Bool { fireproofing.loginDetectionEnabled }
     let sendDoNotSell: Bool
     
     let contentBlockerRulesConfig: ContentBlockerUserScriptConfig
@@ -50,16 +50,19 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
 
     let privacyConfigurationManager: PrivacyConfigurationManaging
     let contentBlockingManager: ContentBlockerRulesManagerProtocol
+    let fireproofing: Fireproofing
 
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
-         contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager) {
-        
+         contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
+         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+
         sendDoNotSell = appSettings.sendDoNotSell
         
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
-        
+        self.fireproofing = fireproofing
+
         contentBlockerRulesConfig = Self.buildContentBlockerRulesConfig(contentBlockingManager: contentBlockingManager,
                                                                         privacyConfigurationManager: privacyConfigurationManager)
         surrogatesConfig = Self.buildSurrogatesConfig(contentBlockingManager: contentBlockingManager,

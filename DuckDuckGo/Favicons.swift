@@ -24,102 +24,24 @@ import UIKit
 import LinkPresentation
 import WidgetKit
 import os.log
+import Core
 
 public class Favicons {
 
     public struct Constants {
 
-        static let salt = "DDGSalt:"
-        static let faviconsFolderName = "Favicons"
         static let requestModifier = FaviconRequestModifier()
-        static let fireproofCache = CacheType.fireproof.create()
-        static let tabsCache = CacheType.tabs.create()
+        static let fireproofCache = FaviconsCacheType.fireproof.create()
+        static let tabsCache = FaviconsCacheType.tabs.create()
         static let targetImageSizePoints: CGFloat = 64
         public static let tabsCachePath = "com.onevcat.Kingfisher.ImageCache.tabs"
         public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
         public static let caches = [
-            CacheType.fireproof: fireproofCache,
-            CacheType.tabs: tabsCache
+            FaviconsCacheType.fireproof: fireproofCache,
+            FaviconsCacheType.tabs: tabsCache
         ]
 
-    }
-
-    public enum CacheType: String {
-
-        case tabs
-        case fireproof
-
-        func create() -> ImageCache {
-            
-            // If unable to create cache in desired location default to Kingfisher's default location which is Library/Cache.  Images may disappear
-            //  but at least the app won't crash.  This should not happen.
-            let cache = createCacheInDesiredLocation() ?? ImageCache(name: rawValue)
-            
-            // We hash the resource key when loading the resource so don't use Kingfisher's hashing which is md5 based
-            cache.diskStorage.config.usesHashedFileName = false
-
-            if self == .fireproof {
-                migrateBookmarksCacheContents(to: cache.diskStorage.directoryURL)
-            }
-
-            return cache
-        }
-
-        public func cacheLocation() -> URL? {
-            return baseCacheURL()?.appendingPathComponent(Constants.faviconsFolderName)
-        }
-
-        private func createCacheInDesiredLocation() -> ImageCache? {
-            
-            guard var url = cacheLocation() else { return nil }
-            
-            if !FileManager.default.fileExists(atPath: url.path) {
-                try? FileManager.default.createDirectory(at: url,
-                                        withIntermediateDirectories: true,
-                                        attributes: nil)
-                
-                // Exclude from backup
-                var resourceValues = URLResourceValues()
-                resourceValues.isExcludedFromBackup = true
-                try? url.setResourceValues(resourceValues)
-            }
-            
-            Logger.general.debug("favicons \(rawValue) location \(url.absoluteString)")
-            return try? ImageCache(name: self.rawValue, cacheDirectoryURL: url)
-        }
-
-        private func baseCacheURL() -> URL? {
-            switch self {
-            case .fireproof:
-                let groupName = BookmarksDatabase.Constants.bookmarksGroupID
-                return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
-                       
-            case .tabs:
-                return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-            }
-        }
-
-        private func migrateBookmarksCacheContents(to url: URL) {
-            guard let cacheUrl = CacheType.fireproof.cacheLocation() else { return }
-
-            // Using hardcoded path as this is a one time migration
-            let bookmarksCache = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks")
-            guard FileManager.default.fileExists(atPath: bookmarksCache.path) else { return }
-
-            if let contents = try? FileManager.default.contentsOfDirectory(at: bookmarksCache, includingPropertiesForKeys: nil, options: []) {
-                contents.forEach {
-                    let destination = url.appendingPathComponent($0.lastPathComponent)
-                    try? FileManager.default.moveItem(at: $0, to: destination)
-                }
-            }
-
-            do {
-                try FileManager.default.removeItem(at: bookmarksCache)
-            } catch {
-                Logger.general.error("Failed to remove favicon bookmarks cache: \(error.localizedDescription, privacy: .public)")
-            }
-        }
     }
 
     public static let shared = Favicons()
@@ -129,13 +51,16 @@ public class Favicons {
 
     let sourcesProvider: FaviconSourcesProvider
     let downloader: NotFoundCachingDownloader
+    let fireproofing: Fireproofing
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
-         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
+         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader(),
+         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.sourcesProvider = sourcesProvider
         self.downloader = downloader
+        self.fireproofing = fireproofing
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.fireproofCache)
@@ -219,7 +144,7 @@ public class Favicons {
         }
     }
 
-    public func clearCache(_ cacheType: CacheType, clearMemoryCache: Bool = false) {
+    public func clearCache(_ cacheType: FaviconsCacheType, clearMemoryCache: Bool = false) {
         Constants.caches[cacheType]?.clearDiskCache()
         
         if clearMemoryCache {
@@ -227,17 +152,17 @@ public class Favicons {
         }
     }
 
-    private func removeFavicon(forDomain domain: String, fromCache cacheType: CacheType) {
+    private func removeFavicon(forDomain domain: String, fromCache cacheType: FaviconsCacheType) {
         let key = defaultResource(forDomain: domain)?.cacheKey ?? domain
         Constants.caches[cacheType]?.removeImage(forKey: key, fromDisk: true)
     }
 
-    private func removeFavicon(forCacheKey key: String, fromCache cacheType: CacheType) {
+    private func removeFavicon(forCacheKey key: String, fromCache cacheType: FaviconsCacheType) {
         Constants.caches[cacheType]?.removeImage(forKey: key, fromDisk: true)
     }
 
     public func removeBookmarkFavicon(forDomain domain: String) {
-        guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return }
+        guard !fireproofing.isAllowed(fireproofDomain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .fireproof)
     }
 
@@ -253,7 +178,7 @@ public class Favicons {
        removeFavicon(forCacheKey: key, fromCache: .tabs)
     }
 
-    private func copyFavicon(forDomain domain: String, fromCache: CacheType, toCache: CacheType, completion: ((UIImage?) -> Void)? = nil) {
+    private func copyFavicon(forDomain domain: String, fromCache: FaviconsCacheType, toCache: FaviconsCacheType, completion: ((UIImage?) -> Void)? = nil) {
         guard let resource = defaultResource(forDomain: domain),
              let options = kfOptions(forDomain: domain, usingCache: toCache) else { return }
         
@@ -277,8 +202,8 @@ public class Favicons {
     //  e.g. if launching a bookmark, or clicking on a tab.
     public func loadFavicon(forDomain domain: String?,
                             fromURL url: URL? = nil,
-                            intoCache targetCacheType: CacheType,
-                            fromCache: CacheType? = nil,
+                            intoCache targetCacheType: FaviconsCacheType,
+                            fromCache: FaviconsCacheType? = nil,
                             queue: DispatchQueue? = OperationQueue.current?.underlyingQueue,
                             completion: ((UIImage?) -> Void)? = nil) {
 
@@ -441,7 +366,7 @@ public class Favicons {
         return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 
-    public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
+    public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: FaviconsCacheType) -> KingfisherOptionsInfo? {
         guard let domain = domain else {
             return nil
         }
@@ -471,10 +396,6 @@ public class Favicons {
             expiry,
             .alternativeSources(sources)
         ]
-    }
-
-    public static func createHash(ofDomain domain: String) -> String {
-        return "\(Constants.salt)\(domain)".sha256()
     }
 
 }
@@ -508,4 +429,64 @@ extension Favicons: Bookmarks.FaviconStoring {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
+}
+
+extension FaviconsCacheType {
+
+    func create() -> ImageCache {
+
+        // If unable to create cache in desired location default to Kingfisher's default location which is Library/Cache.  Images may disappear
+        //  but at least the app won't crash.  This should not happen.
+        let cache = createCacheInDesiredLocation() ?? ImageCache(name: rawValue)
+
+        // We hash the resource key when loading the resource so don't use Kingfisher's hashing which is md5 based
+        cache.diskStorage.config.usesHashedFileName = false
+
+        if self == .fireproof {
+            migrateBookmarksCacheContents(to: cache.diskStorage.directoryURL)
+        }
+
+        return cache
+    }
+
+    private func createCacheInDesiredLocation() -> ImageCache? {
+
+        guard var url = cacheLocation() else { return nil }
+
+        if !FileManager.default.fileExists(atPath: url.path) {
+            try? FileManager.default.createDirectory(at: url,
+                                    withIntermediateDirectories: true,
+                                    attributes: nil)
+
+            // Exclude from backup
+            var resourceValues = URLResourceValues()
+            resourceValues.isExcludedFromBackup = true
+            try? url.setResourceValues(resourceValues)
+        }
+
+        Logger.general.debug("favicons \(rawValue) location \(url.absoluteString)")
+        return try? ImageCache(name: self.rawValue, cacheDirectoryURL: url)
+    }
+
+    private func migrateBookmarksCacheContents(to url: URL) {
+        guard let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return }
+
+        // Using hardcoded path as this is a one time migration
+        let bookmarksCache = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks")
+        guard FileManager.default.fileExists(atPath: bookmarksCache.path) else { return }
+
+        if let contents = try? FileManager.default.contentsOfDirectory(at: bookmarksCache, includingPropertiesForKeys: nil, options: []) {
+            contents.forEach {
+                let destination = url.appendingPathComponent($0.lastPathComponent)
+                try? FileManager.default.moveItem(at: $0, to: destination)
+            }
+        }
+
+        do {
+            try FileManager.default.removeItem(at: bookmarksCache)
+        } catch {
+            Logger.general.error("Failed to remove favicon bookmarks cache: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
 }

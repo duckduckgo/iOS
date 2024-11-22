@@ -107,7 +107,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // MARK: Properties
 
     private let debugFeatures: NetworkProtectionDebugFeatures
-    private let tokenStore: NetworkProtectionTokenStore
     private let pathMonitor = NWPathMonitor()
 
     private var currentNetworkPath: String?
@@ -129,17 +128,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // MARK: Lifecycle
 
     required init?(coder: NSCoder,
-                   tokenStore: NetworkProtectionTokenStore,
                    debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
         
         self.debugFeatures = debugFeatures
-        self.tokenStore = tokenStore
 
         super.init(coder: coder)
     }
 
     required convenience init?(coder: NSCoder) {
-        self.init(coder: coder, tokenStore: AppDependencyProvider.shared.networkProtectionKeychainTokenStore)
+        self.init(coder: coder, debugFeatures: NetworkProtectionDebugFeatures())
     }
 
     override func viewWillAppear(_ animated: Bool) {

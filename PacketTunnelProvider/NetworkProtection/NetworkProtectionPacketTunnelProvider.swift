@@ -45,7 +45,6 @@ extension SubscriptionSomething {
     }
 }
 
-
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
@@ -53,7 +52,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
     private let subscriptionManager: any SubscriptionManager
-    private let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
@@ -495,21 +493,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         )
         notificationsPresenter.requestAuthorization()
 
-        self.networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: {
-            guard let token = subscriptionManager.getTokenContainerSynchronously(policy: .localValid)?.accessToken else {
-                Logger.networkProtection.error("NetworkProtectionKeychainTokenStore failed to provide token")
-                return nil
-            }
-            return token
-        })
-
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                    wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
-                   tokenStore: self.networkProtectionKeychainTokenStore,
+                   tokenProvider: subscriptionManager,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,

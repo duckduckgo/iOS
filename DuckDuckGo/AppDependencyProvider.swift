@@ -45,7 +45,6 @@ protocol DependencyProvider {
     var subscriptionManager: any SubscriptionManager { get }
     var pageRefreshMonitor: PageRefreshMonitor { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
-    var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
@@ -80,7 +79,6 @@ final class AppDependencyProvider: DependencyProvider {
     // Subscription
     let subscriptionManager: SubscriptionManager
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
-    let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
@@ -151,14 +149,7 @@ final class AppDependencyProvider: DependencyProvider {
                                                              subscriptionEnvironment: subscriptionEnvironment,
                                                              pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: {
-            guard let token = subscriptionManager.getTokenContainerSynchronously(policy: .localValid)?.accessToken else {
-                Logger.networkProtection.error("NetworkProtectionKeychainTokenStore failed to provide token")
-                return nil
-            }
-            return token
-        })
-        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenStore: networkProtectionKeychainTokenStore,
+        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenProvider: subscriptionManager,
                                                                               featureFlagger: featureFlagger,
                                                                               persistentPixel: persistentPixel,
                                                                               settings: vpnSettings)

@@ -38,7 +38,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
     private let debugFeatures = NetworkProtectionDebugFeatures()
-    private let tokenStore: NetworkProtectionKeychainTokenStore
+    private let tokenProvider: any SubscriptionTokenProvider
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
     private let notificationCenter: NotificationCenter = .default
@@ -130,7 +130,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     // MARK: - Initializers
 
-    init(tokenStore: NetworkProtectionKeychainTokenStore,
+    init(tokenProvider: any SubscriptionTokenProvider,
          featureFlagger: FeatureFlagger,
          persistentPixel: PersistentPixelFiring,
          settings: VPNSettings) {
@@ -138,7 +138,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         self.featureFlagger = featureFlagger
         self.persistentPixel = persistentPixel
         self.settings = settings
-        self.tokenStore = tokenStore
+        self.tokenProvider = tokenProvider
 
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
@@ -267,7 +267,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // Intentional no-op
             break
         default:
-            try start(tunnelManager)
+            try await start(tunnelManager)
         }
     }
 
@@ -275,7 +275,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         internalManager = nil
     }
 
-    private func start(_ tunnelManager: NETunnelProviderManager) throws {
+    private func start(_ tunnelManager: NETunnelProviderManager) async throws {
         var options = [String: NSObject]()
 
         if Self.shouldSimulateFailure {
@@ -285,7 +285,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
         options["activationAttemptId"] = UUID().uuidString as NSString
 
-        if let token = tokenStore.fetchToken() as NSString? {
+        if let token = try await tokenProvider.getTokenContainer(policy: .localValid).accessToken as NSString? {
             options["authToken"] = token
         } else {
             throw StartError.fetchAuthTokenFailed

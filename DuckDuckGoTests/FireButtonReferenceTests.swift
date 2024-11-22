@@ -61,7 +61,7 @@ final class FireButtonReferenceTests: XCTestCase {
             $0.exceptPlatforms.contains("ios-browser") == false
         }
                     
-        let cookieStorage = CookieStorage()
+        let cookieStorage = MigratableCookieStorage()
 
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
@@ -105,7 +105,7 @@ final class FireButtonReferenceTests: XCTestCase {
             $0.exceptPlatforms.contains("ios-browser") == false
         }
             
-        let cookieStorage = CookieStorage()
+        let cookieStorage = MigratableCookieStorage()
         cookieStorage.isConsumed = true
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))

@@ -26,8 +26,8 @@ class WebCacheManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        CookieStorage().cookies = []
-        CookieStorage().isConsumed = true
+        MigratableCookieStorage().cookies = []
+        MigratableCookieStorage().isConsumed = true
 
         if #available(iOS 17, *) {
             WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
@@ -43,7 +43,7 @@ class WebCacheManagerTests: XCTestCase {
     func testEnsureIdAllocatedAfterClearing() async throws {
         let fireproofing = MockFireproofing(domains: [])
 
-        let storage = CookieStorage()
+        let storage = MigratableCookieStorage()
 
         let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
         XCTAssertNil(inMemoryDataStoreIdManager.currentId)
@@ -80,7 +80,7 @@ class WebCacheManagerTests: XCTestCase {
         let loadedCount = await defaultStore.httpCookieStore.allCookies().count
         XCTAssertEqual(5, loadedCount)
 
-        let cookieStore = CookieStorage()
+        let cookieStore = MigratableCookieStorage()
         await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 
         let cookies = await defaultStore.httpCookieStore.allCookies()
@@ -124,7 +124,7 @@ class WebCacheManagerTests: XCTestCase {
         await defaultStore.httpCookieStore.setCookie(.make(domain: "example.com"))
         await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
 
-        let cookieStorage = CookieStorage()
+        let cookieStorage = MigratableCookieStorage()
         
         await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
                                            fireproofing: fireproofing,
@@ -153,7 +153,7 @@ class WebCacheManagerTests: XCTestCase {
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
         await cookieStore.setCookie(.make(name: "name", value: "value", domain: "subdomain.duckduckgo.com"))
 
-        let storage = CookieStorage()
+        let storage = MigratableCookieStorage()
         storage.isConsumed = true
         
         await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
@@ -179,7 +179,7 @@ class WebCacheManagerTests: XCTestCase {
         let loadedCount = await defaultStore.httpCookieStore.allCookies().count
         XCTAssertEqual(2, loadedCount)
 
-        let cookieStore = CookieStorage()
+        let cookieStore = MigratableCookieStorage()
         
         await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
 

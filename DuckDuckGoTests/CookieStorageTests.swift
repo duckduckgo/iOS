@@ -23,7 +23,7 @@ import WebKit
 
 public class CookieStorageTests: XCTestCase {
     
-    var storage: CookieStorage!
+    var storage: MigratableCookieStorage!
     
     // This is updated by the `make` function which preserves any cookies added as part of this test
     let fireproofing = UserDefaultsFireproofing.shared
@@ -34,7 +34,7 @@ public class CookieStorageTests: XCTestCase {
         super.setUp()
         let defaults = UserDefaults(suiteName: Self.userDefaultsSuiteName)!
         defaults.removePersistentDomain(forName: Self.userDefaultsSuiteName)
-        storage = CookieStorage(userDefaults: defaults)
+        storage = MigratableCookieStorage(userDefaults: defaults)
         storage.isConsumed = true
         fireproofing.clearAll()
     }
@@ -158,7 +158,7 @@ public class CookieStorageTests: XCTestCase {
         ], preservingFireproofedDomains: fireproofing)
         storage.isConsumed = true
 
-        let otherStorage = CookieStorage(userDefaults: UserDefaults(suiteName: Self.userDefaultsSuiteName)!)
+        let otherStorage = MigratableCookieStorage(userDefaults: UserDefaults(suiteName: Self.userDefaultsSuiteName)!)
         XCTAssertEqual(1, otherStorage.cookies.count)
         XCTAssertTrue(otherStorage.isConsumed)
     }

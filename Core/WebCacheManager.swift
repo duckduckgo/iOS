@@ -19,7 +19,6 @@
 
 import Common
 import WebKit
-import GRDB
 import os.log
 
 extension WKWebsiteDataStore {
@@ -52,7 +51,7 @@ public class WebCacheManager {
     /// We save cookies from the current container rather than copying them to a new container because
     ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
     ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
-    public func consumeCookies(cookieStorage: CookieStorage = CookieStorage(),
+    public func consumeCookies(cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
                                httpCookieStore: WKHTTPCookieStore) async {
         guard !cookieStorage.isConsumed else { return }
 
@@ -77,42 +76,72 @@ public class WebCacheManager {
         Pixel.fire(pixel: .cookieDeletionTime(.init(number: totalTime)))
     }
 
-    public func clear(cookieStorage: CookieStorage = CookieStorage(),
+    public func clear(fromDataStore dataStore: WKWebsiteDataStore,
+                      cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
                       fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
                       dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
 
-        var cookiesToUpdate = [HTTPCookie]()
-        var leftoverContainerIDs = [UUID]()
-        if #available(iOS 17, *) {
-            let result = await containerBasedClearing(storeIdManager: dataStoreIdManager)
-            cookiesToUpdate += result.cookies
-            leftoverContainerIDs = result.leftoverContainerIDs
-        }
+        await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, destinationStore: dataStore)
+        await clearData(fromDataStore: dataStore, withFireproofing: fireproofing)
+        removeContainersIfNeeded()
 
-        // Perform legacy clearing to migrate to new container
-        cookiesToUpdate += await legacyDataClearing() ?? []
-
-        cookieStorage.updateCookies(cookiesToUpdate, preservingFireproofedDomains: fireproofing)
-
-        // Attempt to clean up leftover stores again after a delay
-        // This should not be a problem as these containers are not supposed to be used anymore.
-        // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
-        if #available(iOS 17, *), !leftoverContainerIDs.isEmpty {
-            Task {
-                try? await Task.sleep(for: .seconds(3))
-                for uuid in leftoverContainerIDs {
-                    try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
-                }
-            }
-        }
     }
 
 }
 
 extension WebCacheManager {
 
-    @available(iOS 17, *)
+    private func performMigrationIfNeeded(dataStoreIdManager: DataStoreIdManaging,
+                                          cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
+                                          destinationStore: WKWebsiteDataStore) async {
+
+        // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function
+        guard #available(iOS 17, *) else { return }
+
+        // If there's no id, then migration has been done or isn't needed
+        guard dataStoreIdManager.currentId != nil else { return }
+
+        // Get all cookies, we'll clean them later to keep all that logic in the same place
+        let cookies = cookieStorage.cookies
+
+        // The returned cookies should be kept so move them to the data store
+        for cookie in cookies {
+            await destinationStore.httpCookieStore.setCookie(cookie)
+        }
+
+        cookieStorage.migrationComplete()
+        dataStoreIdManager.invalidateCurrentId()
+    }
+
+    private func removeContainersIfNeeded() {
+        // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function
+        guard #available(iOS 17, *) else { return }
+
+        // Attempt to clean up all previous stores, but wait for a few seconds.
+        // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
+        Task {
+            try? await Task.sleep(for: .seconds(3))
+            for uuid in await WKWebsiteDataStore.allDataStoreIdentifiers {
+                try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
+            }
+
+            let count = await WKWebsiteDataStore.allDataStoreIdentifiers.count
+            switch count {
+            case 0:
+                Pixel.fire(pixel: .debugWebsiteDataStoresCleared)
+
+            case 1:
+                Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
+
+            default:
+                Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+            }
+        }
+    }
+
     private func checkForLeftBehindDataStores(previousLeftOversCount: Int) async {
+        guard #available(iOS 17, *) else { return }
+
         let params = [
             "left_overs_count": "\(previousLeftOversCount)"
         ]
@@ -127,54 +156,17 @@ extension WebCacheManager {
         }
     }
 
-    @available(iOS 17, *)
-    private func containerBasedClearing(storeIdManager: DataStoreIdManaging) async -> (cookies: [HTTPCookie],
-                                                                                       leftoverContainerIDs: [UUID]) {
-        guard let containerId = storeIdManager.currentId else {
-            storeIdManager.invalidateCurrentIdAndAllocateNew()
-            return ([], [])
-        }
-        storeIdManager.invalidateCurrentIdAndAllocateNew()
-
-        var leftoverContainerIDs = [UUID]()
-
-        var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
-        let cookies = await dataStore?.httpCookieStore.allCookies() ?? []
-        dataStore = nil
-
-        var uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-
-        // There may be a timing issue related to fetching current container, so append previous UUID as a precaution
-        if uuids.firstIndex(of: containerId) == nil {
-            uuids.append(containerId)
-        }
-
-        if let newContainerID = storeIdManager.currentId,
-            let newIdIndex = uuids.firstIndex(of: newContainerID) {
-            assertionFailure("Attempted to cleanup current Data Store")
-            uuids.remove(at: newIdIndex)
-        }
-
-        let previousLeftOversCount = max(0, uuids.count - 1) // -1 because one store is expected to be cleared
-        for uuid in uuids {
-            do {
-                try await WKWebsiteDataStore.remove(forIdentifier: uuid)
-            } catch {
-                leftoverContainerIDs.append(uuid)
-            }
-        }
-        await checkForLeftBehindDataStores(previousLeftOversCount: previousLeftOversCount)
-
-        return (cookies, leftoverContainerIDs)
-    }
-
-    private func legacyDataClearing() async -> [HTTPCookie]? {
-
-        let dataStore = WKWebsiteDataStore.default()
+    private func clearData(fromDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {
         let startTime = CACurrentMediaTime()
 
-        let cookies = await dataStore.httpCookieStore.allCookies()
+        // Start with all types
         var types = WKWebsiteDataStore.allWebsiteDataTypes()
+
+        // Remove types we want to retain
+        types.remove(WKWebsiteDataTypeCookies)
+        types.remove(WKWebsiteDataTypeLocalStorage)
+
+        // Add types without an API constant that we also want to clear
         types.insert("_WKWebsiteDataTypeMediaKeys")
         types.insert("_WKWebsiteDataTypeHSTSCache")
         types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
@@ -184,55 +176,16 @@ extension WebCacheManager {
         types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
         types.insert("_WKWebsiteDataTypeAlternativeServices")
 
-        await dataStore.removeData(ofTypes: types, modifiedSince: .distantPast)
+        // Get a list of records that are NOT fireproofed
+        let removableRecords = await dataStore.dataRecords(ofTypes: types).filter { record in
+            !fireproofing.isAllowed(fireproofDomain: record.displayName)
+        }
+
+        await dataStore.removeData(ofTypes: types, for: removableRecords)
 
         self.removeObservationsData()
         let totalTime = CACurrentMediaTime() - startTime
-        Pixel.fire(pixel: .legacyDataClearingTime(.init(number: totalTime)))
-
-        return cookies
+        Pixel.fire(pixel: .clearDataInDefaultPersistence(.init(number: totalTime)))
     }
-
-    private func removeObservationsData() {
-        if let pool = getValidDatabasePool() {
-            removeObservationsData(from: pool)
-        } else {
-            Logger.general.debug("Could not find valid pool to clear observations data")
-        }
-    }
-
-    func getValidDatabasePool() -> DatabasePool? {
-        let bundleID = Bundle.main.bundleIdentifier ?? ""
-
-        let databaseURLs = [
-            FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-                       .appendingPathComponent("WebKit/WebsiteData/ResourceLoadStatistics/observations.db"),
-            FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-                       .appendingPathComponent("WebKit/\(bundleID)/WebsiteData/ResourceLoadStatistics/observations.db")
-        ]
-
-        guard let validURL = databaseURLs.first(where: { FileManager.default.fileExists(atPath: $0.path) }),
-              let pool = try? DatabasePool(path: validURL.absoluteString) else {
-            return nil
-        }
-
-        return pool
-    }
-
-    private func removeObservationsData(from pool: DatabasePool) {
-         do {
-             try pool.write { database in
-                 try database.execute(sql: "PRAGMA wal_checkpoint(TRUNCATE);")
-
-                 let tables = try String.fetchAll(database, sql: "SELECT name FROM sqlite_master WHERE type='table'")
-
-                 for table in tables {
-                     try database.execute(sql: "DELETE FROM \(table)")
-                 }
-             }
-         } catch {
-             Pixel.fire(pixel: .debugCannotClearObservationsDatabase, error: error)
-         }
-     }
 
 }

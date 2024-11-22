@@ -34,4 +34,3 @@ class MockFireproofing: UserDefaultsFireproofing {
     }
 
 }
-

@@ -54,9 +54,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
                                                                                    cost: SubscriptionOptionCost(displayPrice: "99 USD", recurrence: "yearly"))
                                                              ],
                                                              features: [
-                                                                SubscriptionFeature(name: "vpn"),
-                                                                SubscriptionFeature(name: "personal-information-removal"),
-                                                                SubscriptionFeature(name: "identity-theft-restoration")
+                                                                SubscriptionFeature(name: .networkProtection),
+                                                                SubscriptionFeature(name: .dataBrokerProtection),
+                                                                SubscriptionFeature(name: .identityTheftRestoration)
                                                              ])
 
         static let validateTokenResponse = ValidateTokenResponse(account: ValidateTokenResponse.Account(email: Constants.email,

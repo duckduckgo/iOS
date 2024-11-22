@@ -206,7 +206,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             if subscriptionFeatureAvailability.isSubscriptionPurchaseAllowed {
                 return subscriptionOptions
             } else {
-                return SubscriptionOptions.empty
+                return subscriptionOptions.withoutPurchaseOptions()
             }
         } else {
             Logger.subscription.error("Failed to obtain subscription options")

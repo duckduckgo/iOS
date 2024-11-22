@@ -85,6 +85,19 @@ struct SettingsGeneralView: View {
                 SettingsCellView(label: UserText.settingsAssociatedApps,
                                  accessory: .toggle(isOn: viewModel.universalLinksBinding))
             }
+
+            if viewModel.threatDetectionSettingsViewModel.shouldShowMaliciousSiteProtectionSection {
+                Section(
+                    header: Text(verbatim: "Malicious Site Protection"),
+                    footer: Text(verbatim: "Disabling this feature can put your personal information at risk. ")
+                        .foregroundColor(.red)
+                ) {
+                    SettingsCellView(label: "Warn me when a webpage may be malicious or fraudulent",
+                                     accessory: .toggle(isOn: viewModel.threatDetectionSettingsViewModel.threatDetectionBinding))
+                }
+            }
+
+
         }
         .applySettingsListModifiers(title: UserText.general,
                                     displayMode: .inline,

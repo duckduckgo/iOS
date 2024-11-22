@@ -46,6 +46,7 @@ final class SettingsViewModel: ObservableObject {
     let privacyProDataReporter: PrivacyProDataReporting?
     let textZoomCoordinator: TextZoomCoordinating
     let aiChatSettings: AIChatSettingsProvider
+    @Published var threatDetectionSettingsViewModel: ThreatDetectionSettingsViewModel = ThreatDetectionSettingsViewModel()
 
     // Subscription Dependencies
     let subscriptionManager: SubscriptionManager

@@ -24,7 +24,7 @@ struct UnifiedFeedbackRootView: View {
     @StateObject var viewModel: UnifiedFeedbackFormViewModel
 
     var body: some View {
-        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormTitle, sources: UnifiedFeedbackReportType.self, selection: $viewModel.selectedReportType) {
+        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormTitle, options: UnifiedFeedbackReportType.allCases, selection: $viewModel.selectedReportType) {
             if let selectedReportType = viewModel.selectedReportType {
                 switch UnifiedFeedbackReportType(rawValue: selectedReportType) {
                 case nil:
@@ -54,7 +54,7 @@ struct UnifiedFeedbackRootView: View {
     @ViewBuilder
     func reportProblemView() -> some View {
         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle,
-                                    sources: UnifiedFeedbackCategory.self,
+                                    options: UnifiedFeedbackCategory.allCases,
                                     selection: $viewModel.selectedCategory) {
             Group {
                 if let selectedCategory = viewModel.selectedCategory {
@@ -63,28 +63,28 @@ struct UnifiedFeedbackRootView: View {
                         EmptyView()
                     case .subscription:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle,
-                                                    sources: PrivacyProFeedbackSubcategory.self,
+                                                    options: PrivacyProFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .vpn:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle,
-                                                    sources: VPNFeedbackSubcategory.self,
+                                                    options: VPNFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .pir:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle,
-                                                    sources: PIRFeedbackSubcategory.self,
+                                                    options: PIRFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .itr:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle,
-                                                    sources: ITRFeedbackSubcategory.self,
+                                                    options: ITRFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
@@ -106,21 +106,21 @@ struct UnifiedFeedbackRootView: View {
     }
 }
 
-struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.AllCases == [Category], Category.RawValue == String {
+struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.RawValue == String {
     let title: String
     let prompt: String
-    let sources: Category.Type
+    let options: [Category]
     let selection: Binding<String?>
     let destination: () -> Destination
 
     init(_ title: String,
          prompt: String = UserText.pproFeedbackFormSelectCategoryTitle,
-         sources: Category.Type,
+         options: [Category],
          selection: Binding<String?>,
          @ViewBuilder destination: @escaping () -> Destination) {
         self.title = title
         self.prompt = prompt
-        self.sources = sources
+        self.options = options
         self.selection = selection
         self.destination = destination
     }
@@ -129,7 +129,7 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
         VStack {
             List(selection: selection) {
                 Section {
-                    ForEach(sources.allCases) { option in
+                    ForEach(options) { option in
                         NavigationLink {
                             destination()
                         } label: {

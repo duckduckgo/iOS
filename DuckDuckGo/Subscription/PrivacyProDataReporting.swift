@@ -127,7 +127,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
          secureVaultMaker: @escaping () -> (any AutofillSecureVault)? = { try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) },
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,
-         fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
+         fireproofing: Fireproofing,
          dateGenerator: @escaping () -> Date = Date.init) {
         self.configurationManager = configurationManager
         self.variantManager = variantManager

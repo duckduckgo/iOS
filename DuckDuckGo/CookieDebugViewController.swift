@@ -41,7 +41,7 @@ class CookieDebugViewController: UITableViewController {
     var loaded = false
     let fireproofing: Fireproofing
 
-    init(fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+    init(fireproofing: Fireproofing) {
         self.fireproofing = fireproofing
         super.init()
     }

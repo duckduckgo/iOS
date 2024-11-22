@@ -55,7 +55,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
-         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+         fireproofing: Fireproofing) {
 
         sendDoNotSell = appSettings.sendDoNotSell
         

@@ -285,7 +285,8 @@ import os.log
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        privacyProDataReporter = PrivacyProDataReporter()
+        let fireproofing = UserDefaultsFireproofing.xshared
+        privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
@@ -357,8 +358,11 @@ import os.log
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          fireproofing: fireproofing,
                                           subscriptionCookieManager: subscriptionCookieManager,
-                                          textZoomCoordinator: makeTextZoomCoordinator())
+                                          textZoomCoordinator: makeTextZoomCoordinator(),
+                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing)
+            )
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -409,6 +413,13 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeWebsiteDataManager(fireproofing: Fireproofing,
+                                        dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WebsiteDataManaging {
+        return WebCacheManager(cookieStorage: MigratableCookieStorage(),
+                               fireproofing: fireproofing,
+                               dataStoreIdManager: dataStoreIdManager)
     }
 
     private func makeTextZoomCoordinator() -> TextZoomCoordinator {

@@ -42,17 +42,31 @@ extension HTTPCookie {
 }
 
 @MainActor
-public class WebCacheManager {
+public protocol WebsiteDataManaging {
 
-    public static var shared = WebCacheManager()
+    func removeCookies(forDomains domains: [String], fromDataStore: WKWebsiteDataStore) async
+    func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async
+    func clear(dataStore: WKWebsiteDataStore) async
 
-    private init() { }
+}
+
+@MainActor
+public class WebCacheManager: WebsiteDataManaging {
+
+    let cookieStorage: MigratableCookieStorage
+    let fireproofing: Fireproofing
+    let dataStoreIdManager: DataStoreIdManaging
+
+    public init(cookieStorage: MigratableCookieStorage, fireproofing: Fireproofing, dataStoreIdManager: DataStoreIdManaging) {
+        self.cookieStorage = cookieStorage
+        self.fireproofing = fireproofing
+        self.dataStoreIdManager = dataStoreIdManager
+    }
 
     /// We save cookies from the current container rather than copying them to a new container because
     ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
     ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
-    public func consumeCookies(cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
-                               httpCookieStore: WKHTTPCookieStore) async {
+    public func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async {
         guard !cookieStorage.isConsumed else { return }
 
         let cookies = cookieStorage.cookies
@@ -65,7 +79,7 @@ public class WebCacheManager {
     }
 
     public func removeCookies(forDomains domains: [String],
-                              dataStore: WKWebsiteDataStore) async {
+                              fromDataStore dataStore: WKWebsiteDataStore) async {
         let startTime = CACurrentMediaTime()
         let cookieStore = dataStore.httpCookieStore
         let cookies = await cookieStore.allCookies()
@@ -76,13 +90,10 @@ public class WebCacheManager {
         Pixel.fire(pixel: .cookieDeletionTime(.init(number: totalTime)))
     }
 
-    public func clear(fromDataStore dataStore: WKWebsiteDataStore,
-                      cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
-                      fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
-                      dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) async {
+    public func clear(dataStore: WKWebsiteDataStore) async {
 
         await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, destinationStore: dataStore)
-        await clearData(fromDataStore: dataStore, withFireproofing: fireproofing)
+        await clearData(inDataStore: dataStore, withFireproofing: fireproofing)
         removeContainersIfNeeded()
 
     }
@@ -156,7 +167,7 @@ extension WebCacheManager {
         }
     }
 
-    private func clearData(fromDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {
+    private func clearData(inDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {
         let startTime = CACurrentMediaTime()
 
         // Start with all types

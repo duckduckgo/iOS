@@ -35,7 +35,9 @@ public protocol Fireproofing {
 // This class is not final because we override allowed domains in WebCacheManagerTests
 public class UserDefaultsFireproofing: Fireproofing {
 
-    public static let shared: Fireproofing = UserDefaultsFireproofing()
+    /// This is only here because there are some places that don't support injection at this time.  DO NOT USE IT.
+    ///  If you find you really need to use it, ping Apple Devs channel first.
+    public static let xshared: Fireproofing = UserDefaultsFireproofing()
 
     public struct Notifications {
         public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")

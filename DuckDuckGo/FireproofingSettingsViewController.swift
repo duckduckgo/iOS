@@ -37,9 +37,13 @@ class FireproofingSettingsViewController: UITableViewController {
     private var shouldShowRemoveAll = false
 
     private let fireproofing: Fireproofing
+    private let websiteDataManager: WebsiteDataManaging
 
-    init?(coder: NSCoder, fireproofing: Fireproofing) {
+    init?(coder: NSCoder,
+          fireproofing: Fireproofing,
+          websiteDataManager: WebsiteDataManaging) {
         self.fireproofing = fireproofing
+        self.websiteDataManager = websiteDataManager
         super.init(coder: coder)
     }
     
@@ -166,7 +170,7 @@ class FireproofingSettingsViewController: UITableViewController {
         }
 
         Task { @MainActor in
-            await WebCacheManager.shared.removeCookies(forDomains: [domain], dataStore: WKWebsiteDataStore.current())
+            await websiteDataManager.removeCookies(forDomains: [domain], fromDataStore: WKWebsiteDataStore.current())
         }
     }
     
@@ -225,7 +229,7 @@ class FireproofingSettingsViewController: UITableViewController {
             self?.refreshModel()
         }, confirmed: { [weak self] in
             Task { @MainActor in
-                await WebCacheManager.shared.removeCookies(forDomains: self?.model ?? [], dataStore: WKWebsiteDataStore.current())
+                await self?.websiteDataManager.removeCookies(forDomains: self?.model ?? [], fromDataStore: WKWebsiteDataStore.current())
                 self?.fireproofing.clearAll()
                 self?.refreshModel()
                 self?.endEditing()

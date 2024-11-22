@@ -105,9 +105,9 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var disabledFeaturesView: some View {
-        let features = settingsViewModel.state.subscription.subscriptionFeatures
+        let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
 
-        if features.contains(.networkProtection) {
+        if subscriptionFeatures.contains(.networkProtection) {
             SettingsCellView(label: UserText.settingsPProVPNTitle,
                              image: Image("SettingsPrivacyProVPN"),
                              statusIndicator: StatusIndicatorView(status: .off),
@@ -115,7 +115,7 @@ struct SettingsSubscriptionView: View {
             )
         }
 
-        if features.contains(.dataBrokerProtection) {
+        if subscriptionFeatures.contains(.dataBrokerProtection) {
             SettingsCellView(
                 label: UserText.settingsPProDBPTitle,
                 image: Image("SettingsPrivacyProPIR"),
@@ -124,7 +124,7 @@ struct SettingsSubscriptionView: View {
             )
         }
 
-        if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+        if subscriptionFeatures.contains(.identityTheftRestoration) || subscriptionFeatures.contains(.identityTheftRestorationGlobal) {
             SettingsCellView(
                 label: UserText.settingsPProITRTitle,
                 image: Image("SettingsPrivacyProITP"),

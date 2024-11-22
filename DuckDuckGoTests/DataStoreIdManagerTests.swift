@@ -26,45 +26,26 @@ import TestUtils
 
 class DataStoreIdManagerTests: XCTestCase {
 
-    func testWhenFreshlyInstalledThenIdIsAllocated() {
+    func testWhenFreshlyInstalledThenNoIdIsAllocated() {
         let manager = DataStoreIdManager(store: MockKeyValueStore())
-
         XCTAssertNil(manager.currentId)
-        manager.invalidateCurrentIdAndAllocateNew()
-        XCTAssertNotNil(manager.currentId)
     }
 
-    func testWhenIdIsInvalidatedThenNewIsCreated() {
-
+    func testWhenIdIsInvalidatedThenNoNewIdIsCreated() {
         let manager = DataStoreIdManager(store: MockKeyValueStore())
-
         XCTAssertNil(manager.currentId)
-        manager.invalidateCurrentIdAndAllocateNew()
-
-        let firstID = manager.currentId
-        XCTAssertNotNil(firstID)
-
-        manager.invalidateCurrentIdAndAllocateNew()
-        let secondID = manager.currentId
-
-        XCTAssertNotEqual(firstID, secondID)
-
-        manager.invalidateCurrentIdAndAllocateNew()
-        let thirdID = manager.currentId
-
-        XCTAssertNotEqual(firstID, thirdID)
-        XCTAssertNotEqual(secondID, thirdID)
+        manager.invalidateCurrentId()
+        XCTAssertNil(manager.currentId)
     }
 
     func testWhenIdAlreadyExistsThenItIsRedFromTheStore() {
-
         let storedUUID = UUID().uuidString
         let store = MockKeyValueStore()
         store.set(storedUUID, forKey: DataStoreIdManager.Constants.currentWebContainerId.rawValue)
-
         let manager = DataStoreIdManager(store: store)
-
         XCTAssertEqual(manager.currentId?.uuidString, storedUUID)
+        manager.invalidateCurrentId()
+        XCTAssertNil(manager.currentId)
     }
 
 }

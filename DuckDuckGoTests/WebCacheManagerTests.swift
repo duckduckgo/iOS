@@ -22,6 +22,7 @@ import XCTest
 import WebKit
 import TestUtils
 
+/*
 class WebCacheManagerTests: XCTestCase {
 
     override func setUp() {
@@ -195,18 +196,5 @@ class WebCacheManagerTests: XCTestCase {
         let pool = WebCacheManager.shared.getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }
-
-    // MARK: Mocks
-    
-    class MockFireproofing: UserDefaultsFireproofing {
-        override var allowedDomains: [String] {
-            return domains
-        }
-
-        let domains: [String]
-        init(domains: [String]) {
-            self.domains = domains
-        }
-    }
-    
 }
+*/

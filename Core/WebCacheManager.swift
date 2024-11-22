@@ -41,7 +41,6 @@ extension HTTPCookie {
 
 }
 
-@MainActor
 public protocol WebsiteDataManaging {
 
     func removeCookies(forDomains domains: [String], fromDataStore: WKWebsiteDataStore) async

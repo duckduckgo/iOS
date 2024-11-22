@@ -80,8 +80,11 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
             featureFlagger: MockFeatureFlagger(),
+            fireproofing: MockFireproofing(),
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
-            textZoomCoordinator: MockTextZoomCoordinator())
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            websiteDataManager: MockWebsiteDataManager()
+        )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

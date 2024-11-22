@@ -182,12 +182,13 @@ struct SettingsSubscriptionView: View {
 
         if subscriptionFeatures.contains(.networkProtection) {
             let hasVPNEntitlement = userEntitlements.contains(.networkProtection)
+            let isVPNConnected = settingsViewModel.state.networkProtectionConnected
 
             NavigationLink(destination: LazyView(NetworkProtectionRootView()), isActive: $isShowingVPN) {
                 SettingsCellView(
                     label: UserText.settingsPProVPNTitle,
                     image: Image("SettingsPrivacyProVPN"),
-                    statusIndicator: StatusIndicatorView(status: settingsViewModel.state.networkProtectionConnected ? .on : .off),
+                    statusIndicator: StatusIndicatorView(status: isVPNConnected ? .on : .off),
                     isGreyedOut: !hasVPNEntitlement
                 )
             }
@@ -215,7 +216,7 @@ struct SettingsSubscriptionView: View {
                 SettingsCellView(
                     label: UserText.settingsPProITRTitle,
                     image: Image("SettingsPrivacyProITP"),
-                    statusIndicator: StatusIndicatorView(status: .on),
+                    statusIndicator: StatusIndicatorView(status: hasITREntitlement ? .on : .off),
                     isGreyedOut: !hasITREntitlement
                 )
             }

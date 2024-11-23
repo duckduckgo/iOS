@@ -193,4 +193,38 @@ class PixelTests: XCTestCase {
         wait(for: [firstFireExpectation, thirdFireExpectation], timeout: Double(debounceInterval + 4))
     }
 
+    func testWhenDefiningUnderlyingErrorParametersThenNestedErrorsAreIncluded() {
+        let underlyingError4 = NSError(domain: "underlyingError4", code: 5, userInfo: [:])
+        let underlyingError3 = NSError(domain: "underlyingError3", code: 4, userInfo: [NSUnderlyingErrorKey: underlyingError4])
+        let underlyingError2 = NSError(domain: "underlyingError2", code: 3, userInfo: [NSUnderlyingErrorKey: underlyingError3])
+        let underlyingError1 = NSError(domain: "underlyingError1", code: 2, userInfo: [NSUnderlyingErrorKey: underlyingError2])
+        let error = NSError(domain: "error", code: 1, userInfo: [NSUnderlyingErrorKey: underlyingError1])
+
+        var parameters: [String: String] = [:]
+        parameters.appendErrorPixelParams(error: error)
+
+        XCTAssertEqual(parameters.count, 10)
+        XCTAssertEqual(parameters["d"], error.domain)
+        XCTAssertEqual(parameters["e"], String(error.code))
+        XCTAssertEqual(parameters["ud"], underlyingError1.domain)
+        XCTAssertEqual(parameters["ue"], String(underlyingError1.code))
+        XCTAssertEqual(parameters["ud2"], underlyingError2.domain)
+        XCTAssertEqual(parameters["ue2"], String(underlyingError2.code))
+        XCTAssertEqual(parameters["ud3"], underlyingError3.domain)
+        XCTAssertEqual(parameters["ue3"], String(underlyingError3.code))
+        XCTAssertEqual(parameters["ud4"], underlyingError4.domain)
+        XCTAssertEqual(parameters["ue4"], String(underlyingError4.code))
+    }
+
+    func testWhenDefiningUnderlyingErrorParametersAndThereIsNoUnderlyingErrorThenOnlyTopLevelParametersAreIncluded() {
+        let error = NSError(domain: "error", code: 1, userInfo: [:])
+
+        var parameters: [String: String] = [:]
+        parameters.appendErrorPixelParams(error: error)
+
+        XCTAssertEqual(parameters.count, 2)
+        XCTAssertEqual(parameters["d"], error.domain)
+        XCTAssertEqual(parameters["e"], String(error.code))
+    }
+
 }

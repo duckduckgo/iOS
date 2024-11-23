@@ -430,6 +430,7 @@ import os.log
 
         // Keep track of feature flag changes
         subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self, weak privacyConfigurationManager] in
                 guard let self, !self.appIsLaunching, let privacyConfigurationManager else { return }
 

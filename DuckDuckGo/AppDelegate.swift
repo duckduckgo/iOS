@@ -438,7 +438,6 @@ import os.log
                 Task { [weak self] in
                     if isEnabled {
                         self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
-                        await self?.subscriptionCookieManager.refreshSubscriptionCookie()
                     } else {
                         await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
                     }

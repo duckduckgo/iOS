@@ -441,15 +441,15 @@ import os.log
 
         // Keep track of feature flag changes
         subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self, weak privacyConfigurationManager] in
-                guard let self, let privacyConfigurationManager else { return }
+                guard let self, !self.appIsLaunching, let privacyConfigurationManager else { return }
 
                 let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
 
-                Task { [weak self] in
+                Task { @MainActor [weak self] in
                     if isEnabled {
                         self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
-                        await self?.subscriptionCookieManager.refreshSubscriptionCookie()
                     } else {
                         await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
                     }

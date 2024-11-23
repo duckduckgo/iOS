@@ -435,7 +435,7 @@ import os.log
 
                 let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
 
-                Task { [weak self] in
+                Task { @MainActor [weak self] in
                     if isEnabled {
                         self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
                     } else {

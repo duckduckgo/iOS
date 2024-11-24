@@ -25,12 +25,12 @@ final class FaviconViewModel {
 
     private let domain: String
     private let useFakeFavicon: Bool
-    private let cacheType: Favicons.CacheType
+    private let cacheType: FaviconsCacheType
     private let preferredFaviconLetters: String?
     
     internal init(domain: String,
                   useFakeFavicon: Bool = true,
-                  cacheType: Favicons.CacheType = .tabs,
+                  cacheType: FaviconsCacheType = .tabs,
                   preferredFakeFaviconLetters: String? = nil) {
         
         self.domain = domain

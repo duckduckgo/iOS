@@ -20,6 +20,7 @@
 import XCTest
 
 @testable import Core
+@testable import DuckDuckGo
 
 class NotFoundCachingDownloaderTests: XCTestCase {
 
@@ -38,6 +39,12 @@ class NotFoundCachingDownloaderTests: XCTestCase {
         super.tearDown()
     }
 
+    // If this test fails... ask yourself why have you changed the salt?
+    //  If it was intentional, then please update this test.
+    func testSaltValueHasNotChanged() {
+        XCTAssertEqual("DDGSalt:", FaviconHasher.salt)
+    }
+
     func testWhenURLSavedNotStoredInPlainText() {
         downloader.noFaviconsFound(forDomain: "example.com")
 
@@ -49,7 +56,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
         
         XCTAssertEqual(1, domains.count)
         domains.forEach {
-            XCTAssertEqual($0.key, "\(Favicons.Constants.salt)example.com".sha256())
+            XCTAssertEqual($0.key, "\(FaviconHasher.salt)example.com".sha256())
         }
         
     }

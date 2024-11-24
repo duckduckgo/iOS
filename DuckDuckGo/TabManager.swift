@@ -24,6 +24,7 @@ import WebKit
 import BrowserServicesKit
 import Persistence
 import History
+import Subscription
 import os.log
 
 class TabManager {
@@ -36,11 +37,15 @@ class TabManager {
     private let historyManager: HistoryManaging
     private let syncService: DDGSyncing
     private var previewsSource: TabPreviewsSource
-    private var duckPlayer: DuckPlayerProtocol
+    private var duckPlayer: DuckPlayerControlling
     private var privacyProDataReporter: PrivacyProDataReporting
     private let contextualOnboardingPresenter: ContextualOnboardingPresenting
     private let contextualOnboardingLogic: ContextualOnboardingLogic
     private let onboardingPixelReporter: OnboardingPixelReporting
+    private let featureFlagger: FeatureFlagger
+    private let textZoomCoordinator: TextZoomCoordinating
+    private let subscriptionCookieManager: SubscriptionCookieManaging
+    private let appSettings: AppSettings
 
     weak var delegate: TabDelegate?
 
@@ -57,7 +62,11 @@ class TabManager {
          privacyProDataReporter: PrivacyProDataReporting,
          contextualOnboardingPresenter: ContextualOnboardingPresenting,
          contextualOnboardingLogic: ContextualOnboardingLogic,
-         onboardingPixelReporter: OnboardingPixelReporting) {
+         onboardingPixelReporter: OnboardingPixelReporting,
+         featureFlagger: FeatureFlagger,
+         subscriptionCookieManager: SubscriptionCookieManaging,
+         appSettings: AppSettings,
+         textZoomCoordinator: TextZoomCoordinating) {
         self.model = model
         self.previewsSource = previewsSource
         self.bookmarksDatabase = bookmarksDatabase
@@ -68,6 +77,10 @@ class TabManager {
         self.contextualOnboardingPresenter = contextualOnboardingPresenter
         self.contextualOnboardingLogic = contextualOnboardingLogic
         self.onboardingPixelReporter = onboardingPixelReporter
+        self.featureFlagger = featureFlagger
+        self.subscriptionCookieManager = subscriptionCookieManager
+        self.appSettings = appSettings
+        self.textZoomCoordinator = textZoomCoordinator
         registerForNotifications()
     }
 
@@ -80,6 +93,7 @@ class TabManager {
     @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
+
         let controller = TabViewController.loadFromStoryboard(model: tab,
                                                               bookmarksDatabase: bookmarksDatabase,
                                                               historyManager: historyManager,
@@ -89,7 +103,9 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
+                                                              featureFlagger: featureFlagger,
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
@@ -167,7 +183,9 @@ class TabManager {
                                                               contextualOnboardingPresenter: contextualOnboardingPresenter,
                                                               contextualOnboardingLogic: contextualOnboardingLogic,
                                                               onboardingPixelReporter: onboardingPixelReporter,
-                                                              featureFlagger: AppDependencyProvider.shared.featureFlagger)
+                                                              featureFlagger: featureFlagger,
+                                                              subscriptionCookieManager: subscriptionCookieManager,
+                                                              textZoomCoordinator: textZoomCoordinator)
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
@@ -293,7 +311,7 @@ class TabManager {
 
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self,
-                  let tabsCacheUrl = Favicons.CacheType.tabs.cacheLocation()?.appendingPathComponent(Favicons.Constants.tabsCachePath),
+                  let tabsCacheUrl = FaviconsCacheType.tabs.cacheLocation()?.appendingPathComponent(Favicons.Constants.tabsCachePath),
                   let contents = try? FileManager.default.contentsOfDirectory(at: tabsCacheUrl, includingPropertiesForKeys: nil, options: []),
                     !contents.isEmpty else { return }
 
@@ -309,7 +327,7 @@ class TabManager {
             })
 
             // hash the unique tab hosts
-            let tabLinksHashed = tabLink.map { Favicons.createHash(ofDomain: $0) }
+            let tabLinksHashed = tabLink.map { FaviconHasher.createHash(ofDomain: $0) }
 
             // filter images that don't have a corresponding tab
             let toDelete = imageDomainURLs.filter { !tabLinksHashed.contains($0) }
@@ -350,4 +368,5 @@ extension TabManager {
             TabPreviewsCleanup.shared.startCleanup(with: model, source: previewsSource)
         }
     }
+
 }

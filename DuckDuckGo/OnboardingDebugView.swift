@@ -22,6 +22,7 @@ import SwiftUI
 struct OnboardingDebugView: View {
 
     @StateObject private var viewModel = OnboardingDebugViewModel()
+    @State private var isShowingResetDaxDialogsAlert = false
 
     private let newOnboardingIntroStartAction: () -> Void
 
@@ -33,7 +34,7 @@ struct OnboardingDebugView: View {
         List {
             Section {
                 Toggle(
-                    isOn: $viewModel.isLocalFlagEnabled,
+                    isOn: $viewModel.isOnboardingHighlightsLocalFlagEnabled,
                     label: {
                         Text(verbatim: "Onboarding Highlights local setting enabled")
                     }
@@ -45,8 +46,38 @@ struct OnboardingDebugView: View {
             }
 
             Section {
+                Picker(
+                    selection: $viewModel.onboardingAddToDockLocalFlagState,
+                    content: {
+                        ForEach(OnboardingAddToDockState.allCases) { state in
+                            Text(verbatim: state.description).tag(state)
+                        }
+                    },
+                    label: {
+                        Text(verbatim: "Onboarding Add to Dock local setting enabled")
+                    }
+                )
+            } header: {
+                Text(verbatim: "Onboarding Add to Dock settings")
+            } footer: {
+                Text(verbatim: "Requires internal user flag set to have an effect.")
+            }
+
+            Section {
+                Button(action: {
+                    viewModel.resetDaxDialogs()
+                    isShowingResetDaxDialogsAlert = true
+                }, label: {
+                    Text(verbatim: "Reset Dax Dialogs State")
+                })
+                .alert(isPresented: $isShowingResetDaxDialogsAlert, content: {
+                    Alert(title: Text(verbatim: "Dax Dialogs reset"), dismissButton: .cancel())
+                })
+            }
+
+            Section {
                 Button(action: newOnboardingIntroStartAction, label: {
-                    let onboardingType = viewModel.isLocalFlagEnabled ? "Highlights" : ""
+                    let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
                     Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
                 })
             }
@@ -55,21 +86,50 @@ struct OnboardingDebugView: View {
 }
 
 final class OnboardingDebugViewModel: ObservableObject {
-    @Published var isLocalFlagEnabled: Bool {
+    @Published var isOnboardingHighlightsLocalFlagEnabled: Bool {
         didSet {
-            manager.isLocalFlagEnabled = isLocalFlagEnabled
+            manager.isOnboardingHighlightsLocalFlagEnabled = isOnboardingHighlightsLocalFlagEnabled
         }
     }
 
-    private let manager: OnboardingHighlightsDebugging
-
-    init(manager: OnboardingHighlightsDebugging = OnboardingManager()) {
-        self.manager = manager
-        isLocalFlagEnabled = manager.isLocalFlagEnabled
+    @Published var onboardingAddToDockLocalFlagState: OnboardingAddToDockState {
+        didSet {
+            manager.addToDockLocalFlagState = onboardingAddToDockLocalFlagState
+        }
     }
 
+    private let manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging
+    private var settings: DaxDialogsSettings
+
+    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager(), settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+        self.manager = manager
+        self.settings = settings
+        isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
+        onboardingAddToDockLocalFlagState = manager.addToDockLocalFlagState
+    }
+
+    func resetDaxDialogs() {
+        settings.isDismissed = false
+        settings.homeScreenMessagesSeen = 0
+        settings.browsingAfterSearchShown = false
+        settings.browsingWithTrackersShown = false
+        settings.browsingWithoutTrackersShown = false
+        settings.browsingMajorTrackingSiteShown = false
+        settings.fireMessageExperimentShown = false
+        settings.fireButtonPulseDateShown = nil
+        settings.privacyButtonPulseShown = false
+        settings.browsingFinalDialogShown = false
+        settings.lastVisitedOnboardingWebsiteURLPath = nil
+        settings.lastShownContextualOnboardingDialogType = nil
+    }
 }
 
 #Preview {
     OnboardingDebugView(onNewOnboardingIntroStartAction: {})
+}
+
+extension OnboardingAddToDockState: Identifiable {
+    var id: OnboardingAddToDockState {
+        self
+    }
 }

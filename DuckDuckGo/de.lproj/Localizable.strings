@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Textzoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Hinzufügen";
 
@@ -472,6 +481,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Passwörter suchen";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Passwörter sind verschlüsselt. Niemand außer dir kann sie sehen, nicht einmal wir.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Passwörter sind verschlüsselt. Niemand außer dir kann sie sehen, nicht einmal wir. [Mehr erfahren](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dieses Passwort speichern?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Nein, danke";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Speichere dein Passwort mit DuckDuckGo Passwörter & Autovervollständigen sicher auf dem Gerät.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Überspringen";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Mit dem Browsen beginnen";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Anleitung";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Hinweis: Jedes Mal, wenn du mit mir browst, verliert eine aufdringliche Werbung ihren Schrecken.\n\nBehalte mich also zum täglichen Browsen in deinem Dock.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Ich niste in leicht erreichbarer Nähe für dein tägliches Browsen.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Füge mich zu deinem Dock hinzu!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Suche auf deinem Startbildschirm das DuckDuckGo-Symbol. Klicke es an und ziehe es dann an die richtige Stelle. Das war es schon!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Es ist ganz einfach, mich zu deinem Dock hinzuzufügen.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up ausgeblendet";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Verstanden";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Wähle deinen Browser";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Synchronisieren und sichern";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Textgröße";
+"settings.text.size" = "Standardmäßiger Textzoom";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Design";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Verwerfen";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Fehlerhafte Website melden";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Das hilft uns, den Browser zu verbessern.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Webseite funktioniert nicht? Sag DuckDuckGo Bescheid.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website ist fehlerhaft";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Bericht senden";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Tabwechsel-Bildschirm";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Wähle die gewünschte Textgröße aus. In DuckDuckGo angezeigte Websites werden sich daran anpassen.";
+"textSize.description" = "Erhöhe oder verringere die Textgröße auf allen Seiten.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Textgröße – %@";

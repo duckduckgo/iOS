@@ -26,6 +26,7 @@ import Subscription
 import Common
 import NetworkProtection
 import RemoteMessaging
+import PageRefreshMonitor
 
 protocol DependencyProvider {
 
@@ -39,7 +40,7 @@ protocol DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
-    var userBehaviorMonitor: UserBehaviorMonitor { get }
+    var pageRefreshMonitor: PageRefreshMonitor { get }
     var subscriptionManager: SubscriptionManager { get }
     var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
@@ -72,7 +73,8 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()
 
-    let userBehaviorMonitor = UserBehaviorMonitor()
+    let pageRefreshMonitor = PageRefreshMonitor(onDidDetectRefreshPattern: PageRefreshMonitor.onDidDetectRefreshPattern,
+                                                store: PageRefreshStore())
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -111,7 +113,7 @@ final class AppDependencyProvider: DependencyProvider {
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
-        
+
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
@@ -124,17 +126,14 @@ final class AppDependencyProvider: DependencyProvider {
         let accessTokenProvider: () -> String? = {
             return { accountManager.accessToken }
         }()
-#if os(macOS)
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                                                                                  errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  accessTokenProvider: accessTokenProvider)
-#else
+
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-#endif
+
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
                                                                               tokenStore: networkProtectionKeychainTokenStore,
-                                                                              persistentPixel: persistentPixel)
+                                                                              featureFlagger: featureFlagger,
+                                                                              persistentPixel: persistentPixel,
+                                                                              settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }

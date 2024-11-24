@@ -50,9 +50,6 @@ struct NetworkProtectionVPNSettingsView: View {
                     footerText: UserText.netPExcludeLocalNetworksSettingFooter
                 ) {
                     Toggle("", isOn: $viewModel.excludeLocalNetworks)
-                        .onTapGesture {
-                            viewModel.toggleExcludeLocalNetworks()
-                        }
                 }
 
                 dnsSection()

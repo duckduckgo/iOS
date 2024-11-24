@@ -42,7 +42,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+          -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           -skipMacroValidation \
@@ -68,7 +68,7 @@ jobs:
   end-to-end-tests:
     name: End to end Tests
     needs: build-end-to-end-tests
-    runs-on: macos-14-xlarge
+    runs-on: macos-14
     timeout-minutes: 90
     strategy:
       matrix:
@@ -95,17 +95,17 @@ jobs:
       run: |
         export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} -e ONBOARDING_COMPLETED=true --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=17 --include-tags=${{ matrix.test-tag }} DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
       
-  notify-failure:
-    name: Notify on failure
-    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
-    needs: [build-end-to-end-tests, end-to-end-tests]
-    runs-on: ubuntu-latest
+  # notify-failure:
+  #   name: Notify on failure
+  #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
+  #   needs: [build-end-to-end-tests, end-to-end-tests]
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Create Asana task when workflow failed
-      run: |
-        curl -s "https://app.asana.com/api/1.0/tasks" \
-          --header "Accept: application/json" \
-          --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-          --header "Content-Type: application/json" \
-          --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}. For instructions on how to handle the failure(s), check https://app.asana.com/0/0/1206423571874502/f" } }'
+  #   steps:
+  #   - name: Create Asana task when workflow failed
+  #     run: |
+  #       curl -s "https://app.asana.com/api/1.0/tasks" \
+  #         --header "Accept: application/json" \
+  #         --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+  #         --header "Content-Type: application/json" \
+  #         --data ' { "data": { "name": "GH Workflow Failure - End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}. For instructions on how to handle the failure(s), check https://app.asana.com/0/0/1206423571874502/f" } }'

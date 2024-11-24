@@ -36,10 +36,12 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
 
-            let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape)
+            let columns = NewTabPageGrid.columnsCount(for: horizontalSizeClass,
+                                                      isLandscape: isLandscape,
+                                                      isDynamic: model.isNewTabPageCustomizationEnabled)
             let result = model.prefixedFavorites(for: columns)
 
-            NewTabPageGridView(geometry: geometry) { _ in
+            NewTabPageGridView(geometry: geometry, isUsingDynamicSpacing: model.isNewTabPageCustomizationEnabled) { _ in
                 ReorderableForEach(result.items) { item in
                     viewFor(item)
                         .previewShape()
@@ -106,6 +108,7 @@ struct FavoritesView<Model: FavoritesViewModel>: View {
                 .background(.clear)
                 .frame(width: NewTabPageGrid.Item.edgeSize)
             })
+            .buttonStyle(.plain)
         case .addFavorite:
             Button(action: {
                 isAddingFavorite = true

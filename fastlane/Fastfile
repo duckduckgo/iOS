@@ -168,6 +168,32 @@ lane :alpha_adhoc do |options|
   end
 end
 
+
+
+desc 'Promotes the latest TestFlight build to App Store without submitting for review'
+lane :promote_latest_testflight_to_appstore do |options|
+
+  app_identifier = options[:alpha] ? "com.duckduckgo.mobile.ios.alpha" : "com.duckduckgo.mobile.ios"
+
+  latest_testflight_build_number(
+    api_key: get_api_key,
+    username: get_username(options),
+    platform: 'ios',
+    app_identifier: app_identifier
+  )
+
+  latest_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]   
+  latest_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
+
+  UI.message("The latest build number #{latest_build_number} of the latest version: #{latest_build_version} for app identifier: #{app_identifier}")
+
+  upload_metadata({
+    build_number: latest_build_number.to_s,
+    app_version: latest_build_version.to_s,
+    app_identifier: app_identifier 
+  })
+end
+
 desc 'Makes App Store release build and uploads it to App Store Connect'
 lane :release_appstore do |options|
   build_release(options)
@@ -194,7 +220,8 @@ desc 'Updates App Store metadata'
 lane :upload_metadata do |options|
   deliver(common_deliver_arguments.merge(options).merge({
     skip_binary_upload: true,
-    skip_metadata: false
+    skip_metadata: false,
+    version_check_wait_retry_limit: 1
   }))
 end
 

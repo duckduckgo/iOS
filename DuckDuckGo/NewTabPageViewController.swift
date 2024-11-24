@@ -25,13 +25,9 @@ import Core
 
 final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
 
-    private let syncService: DDGSyncing
-    private let syncBookmarksAdapter: SyncBookmarksAdapter
     private let variantManager: VariantManager
     private let newTabDialogFactory: any NewTabDaxDialogProvider
     private let newTabDialogTypeProvider: NewTabDialogSpecProvider
-
-    private(set) lazy var faviconsFetcherOnboarding = FaviconsFetcherOnboarding(syncService: syncService, syncBookmarksAdapter: syncBookmarksAdapter)
 
     private let newTabPageViewModel: NewTabPageViewModel
     private let messagesModel: NewTabPageMessagesModel
@@ -46,6 +42,8 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     private weak var daxDialogViewController: DaxDialogViewController?
     private var daxDialogHeightConstraint: NSLayoutConstraint?
 
+    private let pixelFiring: PixelFiring.Type
+
     var isDaxDialogVisible: Bool {
         daxDialogViewController?.view.isHidden == false
     }
@@ -53,21 +51,19 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     init(tab: Tab,
          isNewTabPageCustomizationEnabled: Bool,
          interactionModel: FavoritesListInteracting,
-         syncService: DDGSyncing,
-         syncBookmarksAdapter: SyncBookmarksAdapter,
          homePageMessagesConfiguration: HomePageMessagesConfiguration,
          privacyProDataReporting: PrivacyProDataReporting? = nil,
          variantManager: VariantManager,
          newTabDialogFactory: any NewTabDaxDialogProvider,
          newTabDialogTypeProvider: NewTabDialogSpecProvider,
-         faviconLoader: FavoritesFaviconLoading) {
+         faviconLoader: FavoritesFaviconLoading,
+         pixelFiring: PixelFiring.Type = Pixel.self) {
 
         self.associatedTab = tab
-        self.syncService = syncService
-        self.syncBookmarksAdapter = syncBookmarksAdapter
         self.variantManager = variantManager
         self.newTabDialogFactory = newTabDialogFactory
         self.newTabDialogTypeProvider = newTabDialogTypeProvider
+        self.pixelFiring = pixelFiring
 
         newTabPageViewModel = NewTabPageViewModel()
         shortcutsSettingsModel = NewTabPageShortcutsSettingsModel()
@@ -104,14 +100,20 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        view.backgroundColor = UIColor(designSystemColor: .background)
+
+        // If there's no tab switcher then this will be true, if there is a tabswitcher then only allow the
+        // stuff below to happen if it's being dismissed
+        guard presentedViewController?.isBeingDismissed ?? true else {
+            return
+        }
+
         associatedTab.viewed = true
 
         presentNextDaxDialog()
 
-        Pixel.fire(pixel: .homeScreenShown)
+        pixelFiring.fire(.homeScreenShown, withAdditionalParameters: [:])
         sendDailyDisplayPixel()
-
-        view.backgroundColor = UIColor(designSystemColor: .background)
     }
 
     private func setUpDaxDialog() {
@@ -145,7 +147,8 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     private func assignFavoriteModelActions() {
         favoritesModel.onFaviconMissing = { [weak self] in
             guard let self else { return }
-            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+
+            delegate?.newTabPageDidRequestFaviconsFetcherOnboarding(self)
         }
 
         favoritesModel.onFavoriteURLSelected = { [weak self] url in
@@ -215,7 +218,10 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     }
 
     func dismiss() {
-
+        delegate = nil
+        chromeDelegate = nil
+        removeFromParent()
+        view.removeFromSuperview()
     }
 
     func showNextDaxDialog() {
@@ -310,9 +316,12 @@ extension NewTabPageViewController {
 
         guard let spec = dialogProvider.nextHomeScreenMessageNew() else { return }
 
-        let onDismiss = {
+        let onDismiss = { [weak self] in
+            guard let self else { return }
             dialogProvider.dismiss()
             self.dismissHostingController(didFinishNTPOnboarding: true)
+            // Make the address bar first responder after closing the new tab page final dialog.
+            self.launchNewSearch()
         }
         let daxDialogView = AnyView(factory.createDaxDialog(for: spec, onDismiss: onDismiss))
         let hostingController = UIHostingController(rootView: daxDialogView)

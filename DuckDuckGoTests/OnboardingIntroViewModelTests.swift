@@ -241,7 +241,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.state, .onboarding(.init(type: .startOnboardingDialog, step: .hidden)))
     }
-    //
+
     func testWhenStartOnboardingActionIsCalledAndIsHighlightsIpadFlowThenViewStateChangesToBrowsersComparisonDialogAndProgressIs1Of3() {
         // GIVEN
         onboardingManager.isOnboardingHighlightsEnabled = true
@@ -473,6 +473,98 @@ final class OnboardingIntroViewModelTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(result, UserText.HighlightsOnboardingExperiment.BrowsersComparison.title)
+    }
+
+    // MARK: - Add To Dock
+
+    func testWhenSetDefaultBrowserActionIsCalledAndIsHighlightsIphoneFlowThenViewStateChangesToAddToDockPromoDialogAndProgressIs2Of4() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingPixelReporterMock(), onboardingManager: onboardingManager, isIpad: false, urlOpener: MockURLOpener())
+        XCTAssertEqual(sut.state, .landing)
+
+        // WHEN
+        sut.setDefaultBrowserAction()
+
+        // THEN
+        XCTAssertEqual(sut.state, .onboarding(.init(type: .addToDockPromoDialog, step: .init(currentStep: 2, totalSteps: 4))))
+    }
+
+    func testWhenAddtoDockContinueActionIsCalledAndIsHighlightsIphoneFlowThenThenViewStateChangesToChooseAppIconAndProgressIs3of4() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let sut = OnboardingIntroViewModel(pixelReporter: OnboardingPixelReporterMock(), onboardingManager: onboardingManager, isIpad: false)
+        XCTAssertEqual(sut.state, .landing)
+
+        // WHEN
+        sut.addToDockContinueAction(isShowingAddToDockTutorial: false)
+
+        // THEN
+        XCTAssertEqual(sut.state, .onboarding(.init(type: .chooseAppIconDialog, step: .init(currentStep: 3, totalSteps: 4))))
+    }
+
+    // MARK: - Pixel Add To Dock
+
+    func testWhenStateChangesToAddToDockPromoThenPixelReporterTrackAddToDockPromoImpression() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let pixelReporterMock = OnboardingPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+        XCTAssertFalse(pixelReporterMock.didCallTrackAddToDockPromoImpression)
+
+        // WHEN
+        sut.setDefaultBrowserAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackAddToDockPromoImpression)
+    }
+
+    func testWhenAddToDockShowTutorialActionIsCalledThenPixelReporterTrackAddToDockPromoShowTutorialCTA() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let pixelReporterMock = OnboardingPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+        XCTAssertFalse(pixelReporterMock.didCallTrackAddToDockPromoShowTutorialCTAAction)
+
+        // WHEN
+        sut.addtoDockShowTutorialAction()
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackAddToDockPromoShowTutorialCTAAction)
+    }
+
+    func testWhenAddToDockContinueActionIsCalledAndIsShowingFromAddToDockTutorialIsTrueThenPixelReporterTrackAddToDockTutorialDismissCTA() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let pixelReporterMock = OnboardingPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+        XCTAssertFalse(pixelReporterMock.didCallTrackAddToDockTutorialDismissCTAAction)
+
+        // WHEN
+        sut.addToDockContinueAction(isShowingAddToDockTutorial: true)
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackAddToDockTutorialDismissCTAAction)
+    }
+
+    func testWhenAddToDockContinueActionIsCalledAndIsShowingFromAddToDockTutorialIsFalseThenPixelReporterTrackAddToDockTutorialDismissCTA() {
+        // GIVEN
+        onboardingManager.isOnboardingHighlightsEnabled = true
+        onboardingManager.addToDockEnabledState = .intro
+        let pixelReporterMock = OnboardingPixelReporterMock()
+        let sut = OnboardingIntroViewModel(pixelReporter: pixelReporterMock, onboardingManager: onboardingManager, urlOpener: MockURLOpener())
+        XCTAssertFalse(pixelReporterMock.didCallTrackAddToDockPromoDismissCTAAction)
+
+        // WHEN
+        sut.addToDockContinueAction(isShowingAddToDockTutorial: false)
+
+        // THEN
+        XCTAssertTrue(pixelReporterMock.didCallTrackAddToDockPromoDismissCTAAction)
     }
 
 }

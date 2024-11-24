@@ -40,6 +40,7 @@ struct OnboardingView: View {
 
     @State private var appIconPickerContentState = AppIconPickerContentState()
     @State private var addressBarPositionContentState = AddressBarPositionContentState()
+    @State private var addToDockPromoContentState = AddToDockPromoContentState()
 
     init(model: OnboardingIntroViewModel) {
         self.model = model
@@ -75,6 +76,10 @@ struct OnboardingView: View {
                             case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
+                            case .addToDockPromoDialog:
+                                addToDockPromoContentState.animateTitle = false
+                                addToDockPromoContentState.animateMessage = false
+                                addToDockPromoContentState.showContent = true
                             case .chooseAppIconDialog:
                                 appIconPickerContentState.animateTitle = false
                                 appIconPickerContentState.animateMessage = false
@@ -90,6 +95,8 @@ struct OnboardingView: View {
                                 introView
                             case .browsersComparisonDialog:
                                 browsersComparisonView
+                            case .addToDockPromoDialog:
+                                addToDockPromoView
                             case .chooseAppIconDialog:
                                 appIconPickerView
                             case .chooseAddressBarPositionDialog:
@@ -149,6 +156,17 @@ struct OnboardingView: View {
             }
         )
         .onboardingDaxDialogStyle()
+    }
+
+    private var addToDockPromoView: some View {
+        AddToDockPromoContent(
+            showTutorialAction: {
+                model.addtoDockShowTutorialAction()
+            },
+            dismissAction: { fromAddToDockTutorial in
+                model.addToDockContinueAction(isShowingAddToDockTutorial: fromAddToDockTutorial)
+            }
+        )
     }
 
     private var appIconPickerView: some View {
@@ -231,6 +249,7 @@ extension OnboardingView.ViewState.Intro {
     enum IntroType: Equatable {
         case startOnboardingDialog
         case browsersComparisonDialog
+        case addToDockPromoDialog
         case chooseAppIconDialog
         case chooseAddressBarPositionDialog
     }

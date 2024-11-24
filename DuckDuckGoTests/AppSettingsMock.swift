@@ -22,6 +22,7 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+    var defaultTextZoomLevel: DuckDuckGo.TextZoomLevel = .percent100
 
     var recentlyVisitedSites: Bool = false
 
@@ -81,6 +82,8 @@ class AppSettingsMock: AppSettings {
     var autoconsentEnabled = true
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus = .undetermined
+    
+    var crashCollectionShouldRevertOptedInStatusTrigger: Int = 0
 
     var newTabPageSectionsEnabled: Bool = false
 
@@ -95,6 +98,6 @@ class AppSettingsMock: AppSettings {
     var newTabPageIntroMessageSeenCount: Int = 0
 
     var onboardingHighlightsEnabled: Bool = false
-    
-    
+    var onboardingAddToDockState: OnboardingAddToDockState = .disabled
+
 }

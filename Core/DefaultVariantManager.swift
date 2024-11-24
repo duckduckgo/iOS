@@ -153,6 +153,7 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
+        return VariantIOS(name: "mx", weight: 1, isIncluded: VariantIOS.When.always, features: [.newOnboardingIntroHighlights, .contextualDaxDialogs])
         if let overriddenAppVariantName = variantNameOverride.overriddenAppVariantName {
             return variants.first(where: { $0.name == overriddenAppVariantName })
         }

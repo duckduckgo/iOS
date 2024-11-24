@@ -71,6 +71,7 @@ protocol OnboardingHighlightsDebugging: OnboardingHighlightsManaging {
 extension OnboardingManager: OnboardingHighlightsManaging, OnboardingHighlightsDebugging {
 
     var isOnboardingHighlightsEnabled: Bool {
+        return true
         variantManager.isOnboardingHighlightsExperiment || (isOnboardingHighlightsLocalFlagEnabled && isOnboardingHighlightsFeatureFlagEnabled)
     }
 
@@ -103,6 +104,7 @@ protocol OnboardingAddToDockDebugging: AnyObject {
 extension OnboardingManager: OnboardingAddToDockManaging, OnboardingAddToDockDebugging {
 
     var addToDockEnabledState: OnboardingAddToDockState {
+        return .intro
         // TODO: Add variant condition OR local conditions
         guard isAddToDockFeatureFlagEnabled && isIphone else { return .disabled }
 

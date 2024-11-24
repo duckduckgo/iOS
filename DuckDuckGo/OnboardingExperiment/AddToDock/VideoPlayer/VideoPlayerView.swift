@@ -19,6 +19,8 @@
 
 import SwiftUI
 import AVFoundation
+import AVKit
+import Combine
 
 struct VideoPlayerView: View {
 
@@ -32,7 +34,7 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        PlayerView(player: model.player)
+        PlayerView(model: model)
             .foregroundColor(Color.red)
             .onChange(of: isPlaying.wrappedValue) { newValue in
                 if newValue {
@@ -51,23 +53,78 @@ struct VideoPlayerView: View {
 // The issue is that is not possible to change the background/foreground color of the view so the default color is black.
 // Using UIKit -> AVPlayerLayer solves the problem.
 private struct PlayerView: UIViewRepresentable {
+    private let model: VideoPlayerViewModel
 
-    private let player: AVPlayer
-
-    init(player: AVPlayer) {
-        self.player = player
+    init(model: VideoPlayerViewModel) {
+        self.model = model
     }
 
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
     }
 
     func makeUIView(context: Context) -> UIView {
-        return PlayerUIView(player: player)
+        let view = PlayerUIView(player: model.player)
+        context.coordinator.setController(view.playerLayer, isPIPEnabled: model.$isPIPEnabled.eraseToAnyPublisher())
+        return view
+    }
+
+    func makeCoordinator() -> VideoPlayerCoordinator {
+        VideoPlayerCoordinator(self)
+    }
+}
+
+private class VideoPlayerCoordinator: NSObject, AVPictureInPictureControllerDelegate {
+    private let playerView: PlayerView
+    private var controller: AVPictureInPictureController?
+    private var pictureInPictureCancellable: AnyCancellable?
+
+    init(_ playerView: PlayerView) {
+        print("~~~ VideoPlayerCoordinator init")
+        self.playerView = playerView
+        super.init()
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playback, mode: .moviePlayback, options: .mixWithOthers)
+            try audioSession.setActive(true)
+        } catch {
+            print("~~~ Error setting AVAudioSession active: \(error)")
+        }
+    }
+
+    deinit {
+        try? AVAudioSession.sharedInstance().setActive(false)
+        print("~~~ VideoPlayerCoordinator deinit")
+    }
+
+    func setController(_ playerLayer: AVPlayerLayer, isPIPEnabled: AnyPublisher<Bool, Never>) {
+        controller = AVPictureInPictureController(playerLayer: playerLayer)
+        controller?.canStartPictureInPictureAutomaticallyFromInline = true
+        controller?.delegate = self
+
+        pictureInPictureCancellable = isPIPEnabled.sink { [weak self] isPIPEnabled in
+            if isPIPEnabled && self?.controller?.isPictureInPicturePossible == true {
+                self?.controller?.startPictureInPicture()
+            } else {
+                self?.controller?.stopPictureInPicture()
+            }
+        }
+    }
+
+    func pictureInPictureControllerDidStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("~~~ Picture in Picture Started")
+    }
+
+    func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("~~~ Picture in Picture Stopped")
+    }
+
+    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, failedToStartPictureInPictureWithError error: any Error) {
+        print("~~~ Picture in Picture Failed: \(error)")
     }
 }
 
 private final class PlayerUIView: UIView {
-    private let playerLayer = AVPlayerLayer()
+    let playerLayer = AVPlayerLayer()
 
     init(player: AVPlayer) {
         playerLayer.player = player

@@ -20,6 +20,7 @@
 import SwiftUI
 import Onboarding
 import DuckUI
+import Combine
 
 private struct VideoPlayerFramePreferenceKey: PreferenceKey {
     static var defaultValue: CGRect = .zero
@@ -82,15 +83,27 @@ struct AddToDockTutorialView: View {
                         }
                     }
                 }
-            
-            Button(action: action) {
-                Text(cta)
+
+            Group {
+                Button(action: {
+                    videoPlayerModel.startPIP()
+                    UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                }) {
+                    Text(verbatim: "Add Widget to Dock")
+                }
+
+                Button(action: action) {
+                    Text(cta)
+                }
             }
             .buttonStyle(PrimaryButtonStyle())
             .visibility(showContent ? .visible : .invisible)
         }
         .onFrameUpdate(in: .global, using: VideoPlayerFramePreferenceKey.self) { rect in
             videoPlayerWidth = rect.width
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            videoPlayerModel.stopPIP()
         }
     }
 

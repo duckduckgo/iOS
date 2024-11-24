@@ -23,6 +23,7 @@ import AVFoundation
 final class VideoPlayerViewModel: ObservableObject {
 
     @Published private(set) var player: AVPlayer
+    @Published private(set) var isPIPEnabled: Bool = false
 
     let url: URL
 
@@ -50,6 +51,14 @@ final class VideoPlayerViewModel: ObservableObject {
 
     func pause() {
         player.pause()
+    }
+
+    func startPIP() {
+        isPIPEnabled = true
+    }
+
+    func stopPIP() {
+        isPIPEnabled = false
     }
 
 }

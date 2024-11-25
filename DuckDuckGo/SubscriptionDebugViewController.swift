@@ -160,7 +160,7 @@ final class SubscriptionDebugViewController: UITableViewController {
 
             switch FeatureFlagRows(rawValue: indexPath.row) {
             case .isLaunchedROW:
-                cell.textLabel?.text = "isLaunchedROW"
+                cell.textLabel?.text = "isPrivacyProLaunchedROWOverride"
                 cell.accessoryType = featureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride) ? .checkmark : .none
             case .none:
                 break

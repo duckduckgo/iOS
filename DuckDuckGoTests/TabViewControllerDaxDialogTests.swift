@@ -55,7 +55,7 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNil(delegateMock.capturedQuery)
 
         // WHEN
-        sut.searchFor(query)
+        sut.searchFromOnboarding(for: query)
 
         // THEN
         XCTAssertTrue(delegateMock.didRequestLoadQueryCalled)
@@ -68,7 +68,7 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
         XCTAssertNil(delegateMock.capturedURL)
 
         // WHEN
-        sut.navigateTo(url: .ddg)
+        sut.navigateFromOnboarding(to: .ddg)
 
         // THEN
         XCTAssertTrue(delegateMock.didRequestLoadURLCalled)

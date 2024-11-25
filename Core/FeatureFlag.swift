@@ -61,6 +61,9 @@ public enum FeatureFlag: String {
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+
+    public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
+
     public var supportsLocalOverriding: Bool {
         switch self {
         case .isPrivacyProLaunchedROWOverride:

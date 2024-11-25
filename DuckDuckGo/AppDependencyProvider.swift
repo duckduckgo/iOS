@@ -94,7 +94,12 @@ final class AppDependencyProvider: DependencyProvider {
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                               localOverrides: FeatureFlagLocalOverrides(
+                                                keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
+                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
+                                               ),
+                                               for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)
 

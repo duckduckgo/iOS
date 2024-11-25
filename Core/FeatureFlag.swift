@@ -45,13 +45,24 @@ public enum FeatureFlag: String {
     case onboardingAddToDock
     case autofillSurveys
     case autcompleteTabs
+    case textZoom
     case adAttributionReporting
 
     /// https://app.asana.com/0/72649045549333/1208231259093710/f
     case networkProtectionUserTips
+
+    /// https://app.asana.com/0/72649045549333/1208617860225199/f
+    case networkProtectionEnforceRoutes
+    
+    /// https://app.asana.com/0/1208592102886666/1208613627589762/f
+    case crashReportOptInStatusResetting
 }
 
-extension FeatureFlag: FeatureFlagSourceProviding {
+extension FeatureFlag: FeatureFlagDescribing {
+    public var supportsLocalOverriding: Bool {
+        false
+    }
+
     public var source: FeatureFlagSource {
         switch self {
         case .debugMenu:
@@ -104,14 +115,20 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.feature(.autocompleteTabs))
         case .networkProtectionUserTips:
             return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.userTips))
+        case .textZoom:
+            return .remoteReleasable(.feature(.textZoom))
+        case .networkProtectionEnforceRoutes:
+            return .remoteDevelopment(.subfeature(NetworkProtectionSubfeature.enforceRoutes))
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
+        case .crashReportOptInStatusResetting:
+            return .internalOnly
         }
     }
 }
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
-        return isFeatureOn(forProvider: featureFlag)
+        return isFeatureOn(for: featureFlag)
     }
 }

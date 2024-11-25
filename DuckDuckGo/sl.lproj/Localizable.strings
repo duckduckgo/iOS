@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "V REDU";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Povečava (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Povečava";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Povečava besedila (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
@@ -769,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Da";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Začni brskanje";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Pokaži mi, kako";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Ne pozabite: Vedno kadar brskate z mano, grozljivemu oglasu pristrižete krila.\n\nZato me imejte na domačem zaslonu za vsakodnevno brskanje.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Ugnezdil se bom na dosegu roke za vsakodnevno brskanje.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Dodajte me na svoj domači zaslon!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Poiščite ikono DuckDuckGo na domačem zaslonu. Nato jo pritisnite in povlecite na svoje mesto. To je to!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Na svoj domači zaslon me lahko dodate povsem preprosto";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1784,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pojavno okno je skrito";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Razumem";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Izberite brskalnik";
 
@@ -2224,7 +2260,7 @@
 "settings.sync" = "Sinhronizacija in varnostno kopiranje";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Velikost besedila";
+"settings.text.size" = "Privzeta povečava besedila";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2253,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Opusti";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Prijavi nedelujočo stran";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "To nam pomaga izboljšati brskalnik.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Stran ne deluje? Sporočite DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Spletna stran je nedelujoča";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošlji poročilo";
@@ -2572,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Preklopi med zavihki";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Izberite želeno velikost besedila. Spletna mesta, ki se prikazujejo v iskalniku DuckDuckGo, se temu prilagodijo.";
+"textSize.description" = "Povečajte ali zmanjšajte velikost besedila na vseh spletnih mestih.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Velikost besedila - %@";

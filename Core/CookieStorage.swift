@@ -95,7 +95,7 @@ public class CookieStorage {
 
     /// Update ALL cookies. The absence of cookie domains here indicateds they have been removed by the website, so be sure to call this with all cookies that might need to be persisted even if those websites have not been visited yet.
     @discardableResult
-    func updateCookies(_ cookies: [HTTPCookie], keepingPreservedLogins preservedLogins: PreserveLogins) -> CookieDomainsOnUpdateDiagnostic {
+    func updateCookies(_ cookies: [HTTPCookie], preservingFireproofedDomains fireproofing: Fireproofing) -> CookieDomainsOnUpdateDiagnostic {
         guard isConsumed else { return .notConsumed }
 
         isConsumed = false
@@ -130,7 +130,7 @@ public class CookieStorage {
         persistedCookiesByDomain.keys.forEach {
             guard !URL.isDuckDuckGo(domain: $0) else { return } // DDG cookies are for SERP settings only
 
-            if !preservedLogins.isAllowed(cookieDomain: $0) {
+            if !fireproofing.isAllowed(cookieDomain: $0) {
                 persistedCookiesByDomain.removeValue(forKey: $0)
             }
         }

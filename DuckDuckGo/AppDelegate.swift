@@ -138,7 +138,7 @@ import os.log
         }
 #endif
 
-#if DEBUG && !ALPHA
+#if DEBUG
         Pixel.isDryRun = true
 #else
         Pixel.isDryRun = false
@@ -272,7 +272,8 @@ import os.log
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-            syncErrorHandler: syncErrorHandler
+            syncErrorHandler: syncErrorHandler,
+            faviconStoring: Favicons.shared
         )
 
         let syncService = DDGSync(
@@ -355,7 +356,9 @@ import os.log
                                           contextualOnboardingPixelReporter: onboardingPixelReporter,
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
-                                          subscriptionCookieManager: subscriptionCookieManager)
+                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          subscriptionCookieManager: subscriptionCookieManager,
+                                          textZoomCoordinator: makeTextZoomCoordinator())
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -408,6 +411,15 @@ import os.log
         return true
     }
 
+    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+        let provider = AppDependencyProvider.shared
+        let storage = TextZoomStorage()
+
+        return TextZoomCoordinator(appSettings: provider.appSettings,
+                                   storage: storage,
+                                   featureFlagger: provider.featureFlagger)
+    }
+
     private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
         let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                               currentCookieStore: { [weak self] in
@@ -430,15 +442,15 @@ import os.log
 
         // Keep track of feature flag changes
         subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self, weak privacyConfigurationManager] in
-                guard let self, let privacyConfigurationManager else { return }
+                guard let self, !self.appIsLaunching, let privacyConfigurationManager else { return }
 
                 let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
 
-                Task { [weak self] in
+                Task { @MainActor [weak self] in
                     if isEnabled {
                         self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
-                        await self?.subscriptionCookieManager.refreshSubscriptionCookie()
                     } else {
                         await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
                     }

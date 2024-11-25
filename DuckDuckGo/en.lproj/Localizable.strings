@@ -13,6 +13,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Text Zoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -962,9 +971,6 @@
 /* ad = advertisment */
 "dax.onboarding.home.subsequent" = "You’ve got this!\n\nRemember: Every time you browse with me, a creepy ad loses its wings. 👍";
 
-/* No comment provided by engineer. */
-"dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
-
 /* Default string used if users device is not iPhone or iPad */
 "device.type.default" = "device";
 
@@ -1564,9 +1570,6 @@
 
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Show All Tabs";
-
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
@@ -2380,7 +2383,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Text Size";
+"settings.text.size" = "Default Text Zoom";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Theme";
@@ -2409,14 +2412,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Dismiss button */
 "site.not.working.dismiss" = "Dismiss";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Report Broken Site";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "This helps us improve the browser.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Site not working? Let DuckDuckGo know.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website Is Broken";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
@@ -2734,7 +2737,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "tab.switcher.accessibility.label" = "Tab Switcher";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.";
+"textSize.description" = "Increase or decrease text size across all sites.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Text Size - %@";

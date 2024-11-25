@@ -37,9 +37,9 @@ public struct UserDefaultsWrapper<T> {
         case gridViewEnabled = "com.duckduckgo.ios.tabs.grid"
         case gridViewSeen = "com.duckduckgo.ios.tabs.seen"
 
-        case preserveLoginsAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
-        case preserveLoginsDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
-        case preserveLoginsLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
+        case fireproofingAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains2"
+        case fireproofingDetectionEnabled = "com.duckduckgo.ios.PreserveLogins.detectionEnabled"
+        case fireproofingLegacyAllowedDomains = "com.duckduckgo.ios.PreserveLogins.userDecision.allowedDomains"
 
         case daxIsDismissed = "com.duckduckgo.ios.daxOnboardingIsDismissed"
         case daxHomeScreenMessagesSeen = "com.duckduckgo.ios.daxOnboardingHomeScreenMessagesSeen"
@@ -75,7 +75,9 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
-        case textSize = "com.duckduckgo.ios.textSize"
+
+        // Text size is the legacy name and this key is still in use
+        case textZoom = "com.duckduckgo.ios.textSize"
 
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
@@ -143,9 +145,7 @@ public struct UserDefaultsWrapper<T> {
 
         case appleAdAttributionReportCompleted = "com.duckduckgo.ios.appleAdAttributionReport.completed"
 
-        case didRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didRefreshTimestamp"
-        case didDoubleRefreshTimestamp = "com.duckduckgo.ios.userBehavior.didDoubleRefreshTimestamp"
-        case didRefreshCounter = "com.duckduckgo.ios.userBehavior.didRefreshCounter"
+        case refreshTimestamps = "com.duckduckgo.ios.pageRefreshMonitor.refreshTimestamps"
         case lastBrokenSiteToastShownDate = "com.duckduckgo.ios.userBehavior.lastBrokenSiteToastShownDate"
         case toastDismissStreakCounter = "com.duckduckgo.ios.userBehavior.toastDismissStreakCounter"
 
@@ -180,6 +180,9 @@ public struct UserDefaultsWrapper<T> {
         case duckPlayerPixelExperimentLastDayPixelFired = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.day.pixel.fired.v2"
         case duckPlayerPixelExperimentLastVideoIDRendered = "com.duckduckgo.ios.duckplayer.pixel.experiment.last.videoID.rendered.v2"
         case duckPlayerPixelExperimentOverride = "com.duckduckgo.ios.duckplayer.pixel.experiment.override.v2"
+
+        // Domain specific text zoom
+        case domainTextZoomStorage = "com.duckduckgo.ios.domainTextZoomStorage"
 
         // TipKit
         case resetTipKitOnNextLaunch = "com.duckduckgo.ios.tipKit.resetOnNextLaunch"

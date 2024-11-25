@@ -28,7 +28,7 @@ class SmallOmniBarStateTests: XCTestCase {
     let disabledVoiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
     
     func testWhenInHomeEmptyEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: disabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: disabledVoiceSearchHelper, isLoading: false)
 
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
@@ -38,6 +38,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -47,7 +49,7 @@ class SmallOmniBarStateTests: XCTestCase {
     }
     
     func testWhenInHomeEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
 
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
@@ -57,6 +59,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
         XCTAssertTrue(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -66,42 +70,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInHomeEmptyEditingStateThenEditingStartedMaintainsState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeEmptyEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeEmptyEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeEmptyEditingStateThenClearingTextMaintainsState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeEmptyEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeEmptyEditingStateThenBrowsingStoppedMaintainsState() {
-        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: disabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: disabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertTrue(testee.showClear)
@@ -110,6 +114,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -119,7 +125,7 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenInHomeTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertTrue(testee.showClear)
@@ -128,6 +134,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -137,42 +145,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
     
     func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateThenEnteringTextMaintainsState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeTextEditingStateThenBrowsingStoppedTransitionsToHomeTextEditingState() {
-        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: disabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: disabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertFalse(testee.showClear)
@@ -181,6 +189,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -190,7 +200,7 @@ class SmallOmniBarStateTests: XCTestCase {
     }
     
     func testWhenInHomeNonEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertFalse(testee.showClear)
@@ -199,6 +209,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertTrue(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -208,42 +220,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInHomeNonEditingStateThenEditingStartedTransitionsToEmptyEditingState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateThenEditingStoppedMaintainsState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.HomeTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInHomeNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
-        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowserEmptyEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: disabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: disabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertFalse(testee.showClear)
@@ -252,6 +264,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -261,7 +275,7 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenInBrowserEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertFalse(testee.showClear)
@@ -270,6 +284,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
         XCTAssertTrue(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -279,42 +295,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
     
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEditingStartedMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEditingStoppedTrainsitionsToBrowsingNonEditingState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenClearingMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenBrowsingStartedMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingEmptyEditingStateThenBrowsingStoppedTransitionsToHomeEmptyEditingState() {
-        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: disabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: disabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertTrue(testee.showClear)
@@ -323,6 +339,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -332,7 +350,7 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenInBrowsingTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showPrivacyIcon)
         XCTAssertTrue(testee.showClear)
@@ -341,6 +359,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
         XCTAssertFalse(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertFalse(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -350,42 +370,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
     
     func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingTextEditingStateThenEditingStartedMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateThenEditingStoppedTrainsitionsToNonEditingState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateThenEnteringTextMaintainstState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateThenBrowsingStartedMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingTextEditingStateThenBrowsingStoppedTransitionsToHomeTextEditingState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShown() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showPrivacyIcon)
         XCTAssertFalse(testee.showClear)
@@ -393,6 +413,8 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
+        XCTAssertFalse(testee.showAbort)
+        XCTAssertTrue(testee.showRefresh)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -402,42 +424,42 @@ class SmallOmniBarStateTests: XCTestCase {
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {
-        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
+        let testee = SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInBrowsingNonEditingStateThenToBrowsingTextEditingStartedState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingStartedState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingStartedState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
     
     func testWhenInBrowsingEditingStartedStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = SmallOmniBarState.BrowsingTextEditingStartedState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingTextEditingStartedState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenEditingStoppedMaintainsState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onEditingStoppedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenEnteringTextTransitionsToTextEditingState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenClearingTextTransitionsToEmptyEditingState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onTextClearedState.name, SmallOmniBarState.BrowsingEmptyEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenBrowsingStartedMaintainstState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 
     func testWhenInBrowsingNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
-        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper)
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper).name)
+        let testee = SmallOmniBarState.BrowsingNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: enabledVoiceSearchHelper, isLoading: false).name)
     }
 }

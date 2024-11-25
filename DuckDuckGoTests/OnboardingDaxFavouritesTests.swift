@@ -44,7 +44,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
+            syncErrorHandler: SyncErrorHandler(),
+            faviconStoring: MockFaviconStore()
         )
 
         let remoteMessagingClient = RemoteMessagingClient(
@@ -80,7 +81,9 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             tutorialSettings: tutorialSettingsMock,
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
-            subscriptionCookieManager: SubscriptionCookieManagerMock()
+            featureFlagger: MockFeatureFlagger(),
+            subscriptionCookieManager: SubscriptionCookieManagerMock(),
+            textZoomCoordinator: MockTextZoomCoordinator()
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

@@ -34,7 +34,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
 
     var loadFaviconDomain: String?
     var loadFaviconURL: URL?
-    var loadFaviconCache: Favicons.CacheType?
+    var loadFaviconCache: FaviconsCacheType?
 
     var image: UIImage?
 
@@ -120,7 +120,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         didUpdateFaviconCalled = true
     }
 
-    func loadFavicon(forDomain domain: String, fromURL url: URL?, intoCache cacheType: Favicons.CacheType, completion: ((UIImage?) -> Void)?) {
+    func loadFavicon(forDomain domain: String, fromURL url: URL?, intoCache cacheType: FaviconsCacheType, completion: ((UIImage?) -> Void)?) {
         loadFaviconDomain = domain
         loadFaviconURL = url
         loadFaviconCache = cacheType

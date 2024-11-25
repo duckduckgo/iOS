@@ -54,7 +54,8 @@ class FavoritesViewModel: ObservableObject {
     private let favoriteDataSource: NewTabPageFavoriteDataSource
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
-    private let isNewTabPageCustomizationEnabled: Bool
+
+    let isNewTabPageCustomizationEnabled: Bool
 
     var isEmpty: Bool {
         allFavorites.filter(\.isFavorite).isEmpty

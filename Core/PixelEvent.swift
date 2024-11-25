@@ -59,6 +59,7 @@ extension Pixel {
         case tabSwitcherClickCloseTab
         case tabSwitcherSwipeCloseTab
         case tabSwitchLongPressNewTab
+        case tabSwitcherOpenDaily
 
         case settingsDoNotSellShown
         case settingsDoNotSellOn
@@ -80,6 +81,7 @@ extension Pixel {
         case browsingMenuCopy
         case browsingMenuPrint
         case browsingMenuFindInPage
+        case browsingMenuZoom
         case browsingMenuDisableProtection
         case browsingMenuEnableProtection
         case browsingMenuReportBrokenSite
@@ -207,6 +209,9 @@ extension Pixel {
         case bookmarkAddFavoriteBySwipe
         case bookmarkDeletedFromBookmark
 
+        case bookmarksUIFavoritesAction
+        case bookmarksUIFavoritesManage
+
         case bookmarkImportSuccess
         case bookmarkImportFailure
         case bookmarkImportFailureParsingDL
@@ -217,8 +222,10 @@ extension Pixel {
         case bookmarkExportSuccess
         case bookmarkExportFailure
 
-        case textSizeSettingsChanged
-        
+        case textZoomSettingsChanged
+        case textZoomChangedOnPage
+        case textZoomChangedOnPageDaily
+
         case downloadStarted
         case downloadStartedDueToUnhandledMIMEType
         case downloadTriedToPresentPreviewWithoutTab
@@ -632,6 +639,8 @@ extension Pixel {
         case syncDeleteAccountError
         case syncLoginExistingAccountError
         case syncSecureStorageReadError
+        case syncSecureStorageDecodingError
+        case syncAccountRemoved(reason: String)
 
         case syncGetOtherDevices
         case syncGetOtherDevicesCopy
@@ -671,8 +680,10 @@ extension Pixel {
         case toggleReportDoNotSend
         case toggleReportDismiss
 
-        case userBehaviorReloadTwiceWithin12Seconds
-        case userBehaviorReloadThreeTimesWithin20Seconds
+        case pageRefreshThreeTimesWithin20Seconds
+
+        case siteNotWorkingShown
+        case siteNotWorkingWebsiteIsBroken
 
         // MARK: History
         case historyStoreLoadFailed
@@ -741,7 +752,7 @@ extension Pixel {
         case settingsRecentlyVisitedOff
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
-        case settingsAccessiblityTextSize
+        case settingsAccessiblityTextZoom
 
         // Web pixels
         case privacyProOfferMonthlyPriceClick
@@ -848,6 +859,17 @@ extension Pixel {
         case protectedDataUnavailableWhenBecomeActive
         case statisticsLoaderATBStateMismatch
         case adAttributionReportStateMismatch
+
+        // MARK: Browsing
+        case stopPageLoad
+        
+        // MARK: - DuckPlayer Overlay Navigation
+        case duckPlayerYouTubeOverlayNavigationBack
+        case duckPlayerYouTubeOverlayNavigationRefresh
+        case duckPlayerYouTubeNavigationWithinYouTube
+        case duckPlayerYouTubeOverlayNavigationOutsideYoutube
+        case duckPlayerYouTubeOverlayNavigationClosed
+        case duckPlayerYouTubeNavigationIdle30
     }
 
 }
@@ -889,6 +911,7 @@ extension Pixel.Event {
         case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
         case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
         case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
+        case .tabSwitcherOpenDaily: return "m_tab_manager_clicked_daily"
 
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
@@ -909,6 +932,7 @@ extension Pixel.Event {
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuFindInPage: return "mb_fp"
+        case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
         case .browsingMenuEnableProtection: return "mb_wlr"
         case .browsingMenuReportBrokenSite: return "mb_rb"
@@ -952,6 +976,9 @@ extension Pixel.Event {
         case .bookmarkRemoveFavoriteFromBookmark: return "m_remove_favorite_from_bookmark"
         case .bookmarkAddFavoriteBySwipe: return "m_add_favorite_by_swipe"
         case .bookmarkDeletedFromBookmark: return "m_bookmark_deleted_from_bookmark"
+
+        case .bookmarksUIFavoritesAction: return "m_bookmarks_ui_favorites_action_daily"
+        case .bookmarksUIFavoritesManage: return "m_bookmarks_ui_favorites_manage_daily"
 
         case .homeScreenShown: return "mh"
         case .homeScreenEditFavorite: return "mh_ef"
@@ -1042,8 +1069,11 @@ extension Pixel.Event {
         case .bookmarkExportSuccess: return "m_be_a"
         case .bookmarkExportFailure: return "m_be_e"
 
-        case .textSizeSettingsChanged: return "m_text_size_settings_changed"
-            
+        // Text size is the legacy name
+        case .textZoomSettingsChanged: return "m_text_size_settings_changed"
+        case .textZoomChangedOnPageDaily: return "m_menu_page_zoom_changed_daily"
+        case .textZoomChangedOnPage: return "m_menu_page_zoom_changed"
+
         case .downloadStarted: return "m_download_started"
         case .downloadStartedDueToUnhandledMIMEType: return "m_download_started_due_to_unhandled_mime_type"
         case .downloadTriedToPresentPreviewWithoutTab: return "m_download_tried_to_present_preview_without_tab"
@@ -1447,6 +1477,8 @@ extension Pixel.Event {
         case .syncDeleteAccountError: return "m_d_sync_delete_account_error"
         case .syncLoginExistingAccountError: return "m_d_sync_login_existing_account_error"
         case .syncSecureStorageReadError: return "m_d_sync_secure_storage_error"
+        case .syncSecureStorageDecodingError: return "sync_secure_storage_decoding_error"
+        case .syncAccountRemoved(let reason): return "sync_account_removed_reason_\(reason)"
 
         case .syncGetOtherDevices: return "sync_get_other_devices"
         case .syncGetOtherDevicesCopy: return "sync_get_other_devices_copy"
@@ -1494,9 +1526,11 @@ extension Pixel.Event {
         // MARK: - Apple Ad Attribution
         case .appleAdAttribution: return "m_apple-ad-attribution"
 
-        // MARK: - User behavior
-        case .userBehaviorReloadTwiceWithin12Seconds: return "m_reload-twice-within-12-seconds"
-        case .userBehaviorReloadThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+        // MARK: - Page refresh toasts
+        case .pageRefreshThreeTimesWithin20Seconds: return "m_reload-three-times-within-20-seconds"
+
+        case .siteNotWorkingShown: return "m_site-not-working_shown"
+        case .siteNotWorkingWebsiteIsBroken: return "m_site-not-working_website-is-broken"
 
         // MARK: - History debug
         case .historyStoreLoadFailed: return "m_debug_history-store-load-failed"
@@ -1565,7 +1599,9 @@ extension Pixel.Event {
         case .settingsRecentlyVisitedOff: return "m_settings_autocomplete_recently-visited_off"
         case .settingsAddressBarSelectorPressed: return "m_settings_address_bar_selector_pressed"
         case .settingsAccessibilityOpen: return "m_settings_accessibility_open"
-        case .settingsAccessiblityTextSize: return "m_settings_accessiblity_text_size"
+
+        // legacy name is text size
+        case .settingsAccessiblityTextZoom: return "m_settings_accessiblity_text_size"
 
         // Web
         case .privacyProOfferMonthlyPriceClick: return "m_privacy-pro_offer_monthly-price_click"
@@ -1686,6 +1722,18 @@ extension Pixel.Event {
         case .protectedDataUnavailableWhenBecomeActive: return "m_protected_data_unavailable_when_become_active"
         case .statisticsLoaderATBStateMismatch: return "m_statistics_loader_atb_state_mismatch"
         case .adAttributionReportStateMismatch: return "m_ad_attribution_report_state_mismatch"
+
+        // MARK: Browsing
+        case .stopPageLoad: return "m_stop-page-load"
+                        
+        // MARK: - DuckPlayer Overlay Navigation
+        case .duckPlayerYouTubeOverlayNavigationBack: return "duckplayer.youtube.overlay.navigation.back"
+        case .duckPlayerYouTubeOverlayNavigationRefresh: return "duckplayer.youtube.overlay.navigation.refresh"
+        case .duckPlayerYouTubeNavigationWithinYouTube: return "duckplayer.youtube.overlay.navigation.within-youtube"
+        case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
+        case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
+        case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+
         }
     }
 }

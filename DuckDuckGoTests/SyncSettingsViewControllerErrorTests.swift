@@ -32,7 +32,6 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
 
     @MainActor
     override func setUpWithError() throws {
-        throw XCTSkip("Potentially flaky")
         try super.setUpWithError()
         cancellables = []
         errorHandler = CapturingSyncPausedStateManager()

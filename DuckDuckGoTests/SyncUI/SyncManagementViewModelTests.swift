@@ -160,7 +160,6 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
 
     func testWhenRecoverSyncDataPressed_RecoverDataViewShown() throws {
-        throw XCTSkip("Potentially flaky")
         model.recoverSyncDataPressed()
         waitForInvocation()
 

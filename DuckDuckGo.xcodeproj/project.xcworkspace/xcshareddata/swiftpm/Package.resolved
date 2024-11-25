@@ -60,7 +60,7 @@
       "location" : "https://github.com/duckduckgo/duckduckgo-autofill.git",
       "state" : {
         "branch" : "dbajpeyi/feature/partial-form-save",
-        "revision" : "e1030b4292f39b18f1e0f0701a6e8d1a68cfa8cd"
+        "revision" : "07db870dc0cfbbac37bebef00231048ee09066b3"
       }
     },
     {

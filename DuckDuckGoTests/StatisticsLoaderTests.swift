@@ -30,7 +30,6 @@ class StatisticsLoaderTests: XCTestCase {
     var testee: StatisticsLoader!
 
     override func setUpWithError() throws {
-        throw XCTSkip("Potentially flaky")
         try super.setUpWithError()
 
         mockStatisticsStore = MockStatisticsStore()

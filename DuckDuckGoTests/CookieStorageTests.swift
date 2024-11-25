@@ -27,11 +27,11 @@ public class CookieStorageTests: XCTestCase {
         let defaults = UserDefaults(suiteName: "test")!
         defaults.removeSuite(named: "test")
 
-        addCookies([
-                    make("example.com", name: "test1", value: "value1"),
-                    make("example.com", name: "test2", value: "value2"),
-                    make("facebook.com", name: "test3", value: "value3"),
-                   ], defaults)
+        MigratableCookieStorage.addCookies([
+                .make(name: "test1", value: "value1", domain: "example.com"),
+                .make(name: "test2", value: "value2", domain: "example.com"),
+                .make(name: "test3", value: "value3", domain: "facebook.com"),
+        ], defaults)
 
         let storage = MigratableCookieStorage(userDefaults: defaults)
         XCTAssertEqual(storage.cookies.count, 3)
@@ -60,7 +60,12 @@ public class CookieStorageTests: XCTestCase {
         XCTAssertTrue(storage.cookies.isEmpty)
     }
 
-    func addCookies(_ cookies: [HTTPCookie], _ defaults: UserDefaults) {
+
+}
+
+extension MigratableCookieStorage {
+
+    static func addCookies(_ cookies: [HTTPCookie], _ defaults: UserDefaults) {
 
         var cookieData = [[String: Any?]]()
         cookies.forEach { cookie in
@@ -72,16 +77,6 @@ public class CookieStorageTests: XCTestCase {
         }
         defaults.setValue(cookieData, forKey: MigratableCookieStorage.Keys.allowedCookies)
 
-    }
-
-    func make(_ domain: String, name: String, value: String, expires: Date? = nil) -> HTTPCookie {
-        return HTTPCookie(properties: [
-            .domain: domain,
-            .name: name,
-            .value: value,
-            .path: "/",
-            .expires: expires as Any
-        ])!
     }
 
 }

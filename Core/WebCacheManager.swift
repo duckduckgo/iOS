@@ -88,11 +88,13 @@ public class WebCacheManager: WebsiteDataManaging {
     let cookieStorage: MigratableCookieStorage
     let fireproofing: Fireproofing
     let dataStoreIdManager: DataStoreIdManaging
+    let dataStoreClearingDelay: TimeInterval
 
-    public init(cookieStorage: MigratableCookieStorage, fireproofing: Fireproofing, dataStoreIdManager: DataStoreIdManaging) {
+    public init(cookieStorage: MigratableCookieStorage, fireproofing: Fireproofing, dataStoreIdManager: DataStoreIdManaging, dataStoreClearingDelay: TimeInterval = 3.0) {
         self.cookieStorage = cookieStorage
         self.fireproofing = fireproofing
         self.dataStoreIdManager = dataStoreIdManager
+        self.dataStoreClearingDelay = dataStoreClearingDelay
     }
 
     /// The previous version saved cookies externally to the data so we can move them between containers.  We now use
@@ -126,7 +128,7 @@ public class WebCacheManager: WebsiteDataManaging {
 
     public func clear(dataStore: WKWebsiteDataStore) async {
 
-        await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, destinationStore: dataStore)
+        await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, cookieStorage: cookieStorage, destinationStore: dataStore)
         await clearData(inDataStore: dataStore, withFireproofing: fireproofing)
         removeContainersIfNeeded()
 
@@ -137,7 +139,7 @@ public class WebCacheManager: WebsiteDataManaging {
 extension WebCacheManager {
 
     private func performMigrationIfNeeded(dataStoreIdManager: DataStoreIdManaging,
-                                          cookieStorage: MigratableCookieStorage = MigratableCookieStorage(),
+                                          cookieStorage: MigratableCookieStorage,
                                           destinationStore: WKWebsiteDataStore) async {
 
         // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function
@@ -165,7 +167,7 @@ extension WebCacheManager {
         // Attempt to clean up all previous stores, but wait for a few seconds.
         // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
         Task {
-            try? await Task.sleep(for: .seconds(3))
+            try? await Task.sleep(interval: dataStoreClearingDelay)
             for uuid in await WKWebsiteDataStore.allDataStoreIdentifiers {
                 try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
             }

@@ -22,179 +22,149 @@ import XCTest
 import WebKit
 import TestUtils
 
-/*
+// TODO DataStoreIDManager assert new install has nil id for container
+
 class WebCacheManagerTests: XCTestCase {
+
+    let defaults = UserDefaults(suiteName: "Test")!
+    let dataStoreIdStore = MockKeyValueStore()
+
+    lazy var cookieStorage = MigratableCookieStorage(userDefaults: defaults)
+    lazy var fireproofing = MockFireproofing()
+    lazy var dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
 
     override func setUp() {
         super.setUp()
-        MigratableCookieStorage().cookies = []
-        MigratableCookieStorage().isConsumed = true
-
-        if #available(iOS 17, *) {
-            WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
-                uuids.forEach {
-                    WKWebsiteDataStore.remove(forIdentifier: $0, completionHandler: { _ in })
-                }
-            }
-        }
+        defaults.removePersistentDomain(forName: "Test")
     }
 
+    func test_whenNewInstall_ThenUsesDefaultPersistence() async {
+        let dataStore = await WKWebsiteDataStore.current()
+        let defaultStore = await WKWebsiteDataStore.default()
+        XCTAssertTrue(dataStore === defaultStore)
+    }
+
+    func test_whenClearingData_ThenCookiesAreRemoved() async {
+        let dataStore = await WKWebsiteDataStore.default()
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test", value: "Value", domain: "example.com"))
+
+        var cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(1, cookies.count)
+
+        let webCacheManager = await makeWebCacheManager()
+        await webCacheManager.clear(dataStore: dataStore)
+
+        cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(0, cookies.count)
+    }
+
+    func test_WhenClearingDefaultPersistence_ThenLeaveFireproofedCookies() async {
+        fireproofing = MockFireproofing(domains: ["example.com"])
+
+        let dataStore = await WKWebsiteDataStore.default()
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test1", value: "Value", domain: "example.com"))
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test2", value: "Value", domain: ".example.com"))
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test3", value: "Value", domain: "facebook.com"))
+
+        var cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(3, cookies.count)
+
+        let webCacheManager = await makeWebCacheManager()
+        await webCacheManager.clear(dataStore: dataStore)
+
+        cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(2, cookies.count)
+        XCTAssertTrue(cookies.contains(where: { $0.domain == "example.com" }))
+        XCTAssertTrue(cookies.contains(where: { $0.domain == ".example.com" }))
+    }
+
+    // TODO create an abstraction for WKWebsiteDataStore management and pass it into the webcache manager
+    @MainActor
     @available(iOS 17, *)
-    @MainActor
-    func testEnsureIdAllocatedAfterClearing() async throws {
-        let fireproofing = MockFireproofing(domains: [])
+    func test_WhenClearingDataAfterUsingContainer_ThenCookiesAreMigratedAndOldContainersAreRemoved() async {
+        fireproofing = MockFireproofing(domains: ["example.com"])
 
-        let storage = MigratableCookieStorage()
+        MigratableCookieStorage.addCookies([
+            .make(name: "Test1", value: "Value", domain: "example.com"),
+            .make(name: "Test2", value: "Value", domain: ".example.com"),
+            .make(name: "Test3", value: "Value", domain: "facebook.com"),
+        ], defaults)
 
-        let inMemoryDataStoreIdManager = DataStoreIdManager(store: MockKeyValueStore())
-        XCTAssertNil(inMemoryDataStoreIdManager.currentId)
+        // Setup a new container and add something to it just to make it real
+        let uuid = await createContainer()
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
+        var dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
+        XCTAssertEqual(1, dataStoreIds.count)
 
-        XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
-        let oldId = inMemoryDataStoreIdManager.currentId?.uuidString
-        XCTAssertNotNil(oldId)
+        // Use the UUID we just created for the store id
+        dataStoreIdStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: uuid.uuidString]
+        dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
 
-        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: inMemoryDataStoreIdManager)
+        let dataStore = WKWebsiteDataStore.default()
+        var cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(0, cookies.count)
 
-        XCTAssertNotNil(inMemoryDataStoreIdManager.currentId)
-        XCTAssertNotEqual(inMemoryDataStoreIdManager.currentId?.uuidString, oldId)
-    }
+        let webCacheManager = makeWebCacheManager()
+        await webCacheManager.clear(dataStore: dataStore)
 
-    @available(iOS 17, *)
-    @MainActor
-    func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
-        let fireproofing = MockFireproofing(domains: ["mobile.twitter.com"])
+        try? await Task.sleep(interval: 0.3)
 
-        let defaultStore = WKWebsiteDataStore.default()
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
+        cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(2, cookies.count)
+        XCTAssertTrue(cookies.contains(where: { $0.domain == "example.com" }))
+        XCTAssertTrue(cookies.contains(where: { $0.domain == ".example.com" }))
 
-        let initialCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(0, initialCount)
-
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "twitter.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: ".twitter.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "mobile.twitter.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "fake.mobile.twitter.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: ".fake.mobile.twitter.com"))
-
-        let loadedCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(5, loadedCount)
-
-        let cookieStore = MigratableCookieStorage()
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
-
-        let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 0)
-
-        XCTAssertEqual(2, cookieStore.cookies.count)
-        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == ".twitter.com" }))
-        XCTAssertTrue(cookieStore.cookies.contains(where: { $0.domain == "mobile.twitter.com" }))
-    }
-    
-    @MainActor
-    func testWhenRemovingCookieForDomainThenItIsRemovedFromCookieStorage() async {
-        let defaultStore = WKWebsiteDataStore.default()
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-
-        let initialCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(0, initialCount)
-
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "www.example.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
-        let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 2)
-
-        await WebCacheManager.shared.removeCookies(forDomains: ["www.example.com"], dataStore: WKWebsiteDataStore.default())
-        let cleanCookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cleanCookies.count, 0)
-    }
-
-    @MainActor
-    func testWhenClearedThenCookiesWithParentDomainsAreRetained() async {
-        let fireproofing = MockFireproofing(domains: ["www.example.com"])
-
-        let defaultStore = WKWebsiteDataStore.default()
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-
-        let initialCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(0, initialCount)
-
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "example.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: ".example.com"))
-
-        let cookieStorage = MigratableCookieStorage()
-        
-        await WebCacheManager.shared.clear(cookieStorage: cookieStorage,
-                                           fireproofing: fireproofing,
-                                           dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
-        let cookies = await defaultStore.httpCookieStore.allCookies()
-
-        XCTAssertEqual(cookies.count, 0)
-        XCTAssertEqual(cookieStorage.cookies.count, 1)
-        XCTAssertEqual(cookieStorage.cookies[0].domain, ".example.com")
+        dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
+        XCTAssertTrue(dataStoreIds.isEmpty)
     }
 
     @MainActor
     @available(iOS 17, *)
-    func testWhenClearedWithDataStoreContainerThenDDGCookiesAreRetained() async throws {
-        throw XCTSkip("WKWebsiteDataStore(forIdentifier:) does not persist cookies properly until attached to a running webview")
-        
-        // This test should look like `testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained` but
-        //  with a container ID set on the `dataStoreIdManager`.
+    func test_WhenClearingData_ThenOldContainersAreRemoved() async {
+        _ = await createContainer()
+        _ = await createContainer()
+        _ = await createContainer()
+        _ = await createContainer()
+        _ = await createContainer()
+
+        try? await Task.sleep(interval: 0.3)
+
+        var dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
+        XCTAssertEqual(5, dataStoreIds.count)
+
+        await makeWebCacheManager().clear(dataStore: .default())
+
+        try? await Task.sleep(interval: 0.3)
+
+        dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
+        XCTAssertEqual(0, dataStoreIds.count)
     }
 
-    @MainActor
-    func testWhenClearedWithLegacyContainerThenDDGCookiesAreRetained() async {
-        let fireproofing = MockFireproofing(domains: ["www.example.com"])
-
-        let cookieStore = WKWebsiteDataStore.default().httpCookieStore
-        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "duckduckgo.com"))
-        await cookieStore.setCookie(.make(name: "name", value: "value", domain: "subdomain.duckduckgo.com"))
-
-        let storage = MigratableCookieStorage()
-        storage.isConsumed = true
-        
-        await WebCacheManager.shared.clear(cookieStorage: storage, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
-
-        XCTAssertEqual(storage.cookies.count, 2)
-        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "duckduckgo.com" }))
-        XCTAssertTrue(storage.cookies.contains(where: { $0.domain == "subdomain.duckduckgo.com" }))
-    }
-    
-    @MainActor
-    func testWhenClearedThenCookiesForLoginsAreRetained() async {
-        let fireproofing = MockFireproofing(domains: ["www.example.com"])
-
-        let defaultStore = WKWebsiteDataStore.default()
-        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
-
-        let initialCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(0, initialCount)
-
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "www.example.com"))
-        await defaultStore.httpCookieStore.setCookie(.make(domain: "facebook.com"))
-
-        let loadedCount = await defaultStore.httpCookieStore.allCookies().count
-        XCTAssertEqual(2, loadedCount)
-
-        let cookieStore = MigratableCookieStorage()
-        
-        await WebCacheManager.shared.clear(cookieStorage: cookieStore, fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore()))
-
-        let cookies = await defaultStore.httpCookieStore.allCookies()
-        XCTAssertEqual(cookies.count, 0)
-        
-        XCTAssertEqual(1, cookieStore.cookies.count)
-        XCTAssertEqual(cookieStore.cookies[0].domain, "www.example.com")
-    }
-
+    /// Temporarily disabled.
     @MainActor
     func x_testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
-        let pool = WebCacheManager.shared.getValidDatabasePool()
+        let pool = makeWebCacheManager().getValidDatabasePool()
         XCTAssertNotNil(pool, "DatabasePool should not be nil")
     }
+
+    @MainActor
+    private func makeWebCacheManager() -> WebCacheManager {
+        return WebCacheManager(
+            cookieStorage: cookieStorage,
+            fireproofing: fireproofing,
+            dataStoreIdManager: dataStoreIdManager,
+            dataStoreClearingDelay: 0.01
+        )
+    }
+
+    @available(iOS 17, *)
+    @MainActor private func createContainer() async -> UUID {
+        let uuid = UUID()
+        let containerStore = WKWebsiteDataStore(forIdentifier: uuid)
+        await containerStore.httpCookieStore.setCookie(.make(name: "Not", value: "Used"))
+        let cookies = await containerStore.httpCookieStore.allCookies()
+        XCTAssertEqual(1, cookies.count)
+        return uuid
+    }
+
 }
-*/

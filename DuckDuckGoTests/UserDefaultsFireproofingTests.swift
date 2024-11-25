@@ -35,7 +35,16 @@ class UserDefaultsFireproofingTests: XCTestCase {
         fireproofing.addToAllowed(domain: "example.com")
         XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "example.com"))
     }
-    
+
+    func testAllowedCookieDomains() {
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertFalse(fireproofing.isAllowed(fireproofDomain: "example.com"))
+        fireproofing.addToAllowed(domain: "example.com")
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: ".example.com"))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: "subdomain.example.com"))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: ".subdomain.example.com"))
+    }
+
     func testWhenNewThenAllowedDomainsIsEmpty() {
         let fireproofing = UserDefaultsFireproofing()
         XCTAssertTrue(fireproofing.allowedDomains.isEmpty)

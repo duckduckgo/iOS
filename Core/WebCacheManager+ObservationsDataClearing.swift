@@ -31,7 +31,8 @@ extension WebCacheManager {
         }
     }
 
-    private func getValidDatabasePool() -> DatabasePool? {
+    /// Only has internal so that it can be accessed by test
+    func getValidDatabasePool() -> DatabasePool? {
         let bundleID = Bundle.main.bundleIdentifier ?? ""
 
         let databaseURLs = [

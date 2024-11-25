@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 
 public protocol Fireproofing {
 
@@ -53,13 +54,20 @@ public class UserDefaultsFireproofing: Fireproofing {
         }
     }
 
+    var allowedDomainsIncludingDuckDuckGo: [String] {
+        allowedDomains + [
+            URL.ddg.host ?? "",
+            SubscriptionCookieManager.cookieDomain
+        ]
+    }
+
     public func addToAllowed(domain: String) {
         allowedDomains += [domain]
     }
 
     public func isAllowed(cookieDomain: String) -> Bool {
 
-        return allowedDomains.contains(where: { $0 == cookieDomain
+        return allowedDomainsIncludingDuckDuckGo.contains(where: { $0 == cookieDomain
             || ".\($0)" == cookieDomain
             || (cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain)) })
     }
@@ -73,7 +81,7 @@ public class UserDefaultsFireproofing: Fireproofing {
     }
 
     public func isAllowed(fireproofDomain domain: String) -> Bool {
-        return allowedDomains.contains(domain)
+        return allowedDomainsIncludingDuckDuckGo.contains(domain)
     }
 
 }

@@ -52,6 +52,39 @@ public protocol WebsiteDataManaging {
 @MainActor
 public class WebCacheManager: WebsiteDataManaging {
 
+    static let safelyRemovableWebsiteDataTypes: Set<String> = {
+        var types = WKWebsiteDataStore.allWebsiteDataTypes()
+
+        types.insert("_WKWebsiteDataTypeMediaKeys")
+        types.insert("_WKWebsiteDataTypeHSTSCache")
+        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
+        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
+        types.insert("_WKWebsiteDataTypeCredentials")
+        types.insert("_WKWebsiteDataTypeAdClickAttributions")
+        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
+        types.insert("_WKWebsiteDataTypeAlternativeServices")
+
+        fireproofableDataTypes.forEach {
+            types.remove($0)
+        }
+
+        return types
+    }()
+
+    static let fireproofableDataTypes: Set<String> = {
+        Set<String>([
+            WKWebsiteDataTypeLocalStorage,
+            WKWebsiteDataTypeIndexedDBDatabases,
+            WKWebsiteDataTypeCookies,
+        ])
+    }()
+
+    static let fireproofableDataTypesExceptCookies: Set<String> = {
+        var dataTypes = fireproofableDataTypes
+        dataTypes.remove(WKWebsiteDataTypeCookies)
+        return dataTypes
+    }()
+
     let cookieStorage: MigratableCookieStorage
     let fireproofing: Fireproofing
     let dataStoreIdManager: DataStoreIdManaging
@@ -62,10 +95,13 @@ public class WebCacheManager: WebsiteDataManaging {
         self.dataStoreIdManager = dataStoreIdManager
     }
 
-    /// We save cookies from the current container rather than copying them to a new container because
-    ///  the container only persists cookies to disk when the web view is used.  If the user presses the fire button
-    ///  twice then the fire proofed cookies will be lost and the user will be logged out any sites they're logged in to.
+    /// The previous version saved cookies externally to the data so we can move them between containers.  We now use
+    /// the default persistence so this only needs to happen once when the fire button is pressed.
+    ///
+    /// The migration code removes the key that is used to check for the isConsumed flag so will only be
+    ///  true if the data needs to be migrated.
     public func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async {
+        // This can only be true if the data has not yet been migrated.
         guard !cookieStorage.isConsumed else { return }
 
         let cookies = cookieStorage.cookies
@@ -74,7 +110,6 @@ public class WebCacheManager: WebsiteDataManaging {
             consumedCookiesCount += 1
             await httpCookieStore.setCookie(cookie)
         }
-        cookieStorage.isConsumed = true
     }
 
     public func removeCookies(forDomains domains: [String],
@@ -169,33 +204,44 @@ extension WebCacheManager {
     private func clearData(inDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {
         let startTime = CACurrentMediaTime()
 
-        // Start with all types
-        var types = WKWebsiteDataStore.allWebsiteDataTypes()
+        await clearDataForSafelyRemovableDataTypes(fromStore: dataStore)
+        await clearFireproofableDataForNonFireproofDomains(fromStore: dataStore, usingFireproofing: fireproofing)
+        await clearCookiesForNonFireproofedDomains(fromStore: dataStore, usingFireproofing: fireproofing)
+        self.removeObservationsData()
 
-        // Remove types we want to retain
-        types.remove(WKWebsiteDataTypeCookies)
-        types.remove(WKWebsiteDataTypeLocalStorage)
+        let totalTime = CACurrentMediaTime() - startTime
+        Pixel.fire(pixel: .clearDataInDefaultPersistence(.init(number: totalTime)))
+    }
 
-        // Add types without an API constant that we also want to clear
-        types.insert("_WKWebsiteDataTypeMediaKeys")
-        types.insert("_WKWebsiteDataTypeHSTSCache")
-        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
-        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
-        types.insert("_WKWebsiteDataTypeCredentials")
-        types.insert("_WKWebsiteDataTypeAdClickAttributions")
-        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
-        types.insert("_WKWebsiteDataTypeAlternativeServices")
+    @MainActor
+    private func clearDataForSafelyRemovableDataTypes(fromStore dataStore: WKWebsiteDataStore) async {
+        await dataStore.removeData(ofTypes: Self.safelyRemovableWebsiteDataTypes, modifiedSince: Date.distantPast)
+    }
 
-        // Get a list of records that are NOT fireproofed
-        let removableRecords = await dataStore.dataRecords(ofTypes: types).filter { record in
+    @MainActor
+    private func clearFireproofableDataForNonFireproofDomains(fromStore dataStore: WKWebsiteDataStore, usingFireproofing fireproofing: Fireproofing) async {
+        let allRecords = await dataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
+        let removableRecords = allRecords.filter { record in
             !fireproofing.isAllowed(fireproofDomain: record.displayName)
         }
 
-        await dataStore.removeData(ofTypes: types, for: removableRecords)
+        var fireproofableTypesExceptCookies = Self.fireproofableDataTypesExceptCookies
+        fireproofableTypesExceptCookies.remove(WKWebsiteDataTypeCookies)
+        await dataStore.removeData(ofTypes: fireproofableTypesExceptCookies, for: removableRecords)
+    }
 
-        self.removeObservationsData()
-        let totalTime = CACurrentMediaTime() - startTime
-        Pixel.fire(pixel: .clearDataInDefaultPersistence(.init(number: totalTime)))
+    @MainActor
+    private func clearCookiesForNonFireproofedDomains(fromStore dataStore: WKWebsiteDataStore, usingFireproofing fireproofing: Fireproofing) async {
+        let cookieStore = dataStore.httpCookieStore
+        let cookies = await cookieStore.allCookies()
+
+        let cookiesToRemove = cookies.filter { cookie in
+            !fireproofing.isAllowed(cookieDomain: cookie.domain)
+        }
+
+        for cookie in cookiesToRemove {
+            await cookieStore.deleteCookie(cookie)
+        }
     }
 
 }

@@ -32,12 +32,13 @@ public class MigratableCookieStorage {
     private var userDefaults: UserDefaults
 
     var isConsumed: Bool {
-        get {
-            return userDefaults.bool(forKey: Keys.consumed, defaultValue: false)
-        }
-        set {
-            userDefaults.set(newValue, forKey: Keys.consumed)
-        }
+        // The default is now true because if this key does not exist then there are no
+        //  cookies to consume as they have been migrated.
+        // Nothing sets this to false explicitly now.  If the stored value is false then there
+        //  are cookies from a previous version of the app which still need to be migrated. This
+        //  could happen if the user hit the fire button and then an update happened
+        //  before they browsed again.
+        return userDefaults.bool(forKey: Keys.consumed, defaultValue: true)
     }
 
     var cookies: [HTTPCookie] {

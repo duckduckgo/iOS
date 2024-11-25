@@ -19,6 +19,7 @@
 
 import XCTest
 @testable import Core
+@testable import Subscription
 
 class UserDefaultsFireproofingTests: XCTestCase {
     
@@ -38,6 +39,14 @@ class UserDefaultsFireproofingTests: XCTestCase {
     func testWhenNewThenAllowedDomainsIsEmpty() {
         let fireproofing = UserDefaultsFireproofing()
         XCTAssertTrue(fireproofing.allowedDomains.isEmpty)
+    }
+
+    func testDuckDuckGoIsFireproofed() {
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "duckduckgo.com"))
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: "duckduckgo.com"))
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: SubscriptionCookieManager.cookieDomain))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: "test.duckduckgo.com"))
     }
 
 }

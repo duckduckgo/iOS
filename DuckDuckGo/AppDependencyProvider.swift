@@ -117,12 +117,23 @@ final class AppDependencyProvider: DependencyProvider {
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
 
+        let theFeatureFlagger = featureFlagger
+        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
+            switch feature {
+            case .isLaunchedROW:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
+            case .isLaunchedROWOverride:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
+            }
+        }
+
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,
                                                              subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger)
         accountManager.delegate = subscriptionManager
 
         self.subscriptionManager = subscriptionManager

@@ -114,6 +114,9 @@ import os.log
     private let voiceSearchHelper = VoiceSearchHelper()
 
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
+
+    private var didFinishLaunchingStartTime: CFAbsoluteTime?
+
     override init() {
         super.init()
 
@@ -125,7 +128,18 @@ import os.log
     }
 
     // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -358,7 +372,8 @@ import os.log
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                           subscriptionCookieManager: subscriptionCookieManager,
-                                          textZoomCoordinator: makeTextZoomCoordinator())
+                                          textZoomCoordinator: makeTextZoomCoordinator(),
+                                          appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -560,6 +575,14 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
@@ -754,6 +777,12 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        didFinishLaunchingStartTime = nil
+        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func suspendSync() {

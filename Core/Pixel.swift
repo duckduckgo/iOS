@@ -159,6 +159,8 @@ public struct PixelParameters {
     // Persistent pixel
     public static let originalPixelTimestamp = "originalPixelTimestamp"
     public static let retriedPixel = "retriedPixel"
+
+    public static let time = "time"
 }
 
 public struct PixelValues {

@@ -428,7 +428,7 @@ import os.log
                 return nil
             }
 
-            return WKWebsiteDataStore.current().httpCookieStore
+            return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
         }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
 
@@ -629,7 +629,7 @@ import os.log
             }
         }
 
-        Task { @MainActor in
+        Task {
             await subscriptionCookieManager.refreshSubscriptionCookie()
         }
 

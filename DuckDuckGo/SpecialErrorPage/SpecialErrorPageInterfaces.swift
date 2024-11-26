@@ -106,6 +106,14 @@ protocol SpecialErrorPageNavigationDelegate: AnyObject {
     func closeSpecialErrorPageTab()
 }
 
+// MARK: - WebViewNavigation
+
+/// For testing purposes.
 protocol WebViewNavigation {}
 
+// Used in tests. WKNavigation() crashes on deinit when initialising it manually.
+// As workaround we used to Swizzle the implementation of deinit in tests.
+// The problem with that approach is that when running different test suites it is possible that unrelated tests re-set the original implementation of deinit while other tests are running.
+// This cause the app to crash as the original implementation is executed.
+// Defining a protocol for WKNavigation and using mocks such as DummyWKNavigation in tests resolves the problem.
 extension WKNavigation: WebViewNavigation {}

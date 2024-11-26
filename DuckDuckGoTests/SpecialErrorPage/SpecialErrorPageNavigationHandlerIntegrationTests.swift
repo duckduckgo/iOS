@@ -38,14 +38,12 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
             maliciousSiteProtectionNavigationHandler: DummyMaliciousSiteProtectionNavigationHandler()
         )
-        WKNavigation.swizzleDealloc()
     }
 
     deinit {
         sslErrorPageNavigationHandler = nil
         sut = nil
         webView = nil
-        WKNavigation.restoreDealloc()
     }
 
     @MainActor
@@ -68,7 +66,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
+            sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: error)
 
             // THEN
             let html = try #require(expectedHTML)
@@ -102,7 +100,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
+            sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: error)
 
             // THEN
             let html = try #require(expectedHTML)
@@ -136,7 +134,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
+            sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: error)
 
             // THEN
             let html = try #require(expectedHTML)
@@ -170,7 +168,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
             }
 
             // WHEN
-            sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
+            sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: error)
 
             // THEN
             let html = try #require(expectedHTML)
@@ -195,7 +193,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         #expect(script.isEnabled == false)
 
         // WHEN
-        sut.handleWebView(webView, didFinish: WKNavigation())
+        sut.handleWebView(webView, didFinish: DummyWKNavigation())
 
         // THEN
         #expect(script.isEnabled == false)
@@ -215,11 +213,11 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         sut.setUserScript(script)
         sut.attachWebView(webView)
         // Fail the request with a different URL.
-        sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: error)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: error)
         #expect(script.isEnabled == false)
 
         // WHEN
-        sut.handleWebView(webView, didFinish: WKNavigation())
+        sut.handleWebView(webView, didFinish: DummyWKNavigation())
 
         // THEN
         #expect(script.isEnabled == false)
@@ -234,7 +232,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         let script = SpecialErrorPageUserScript(localeStrings: "", languageCode: "")
         sut.setUserScript(script)
         sut.attachWebView(webView)
-        let navigation = WKNavigation()
+        let navigation = DummyWKNavigation()
         let error = NSError(
             domain: "test",
             code: NSURLErrorServerCertificateUntrusted,

@@ -33,12 +33,10 @@ final class SSLSpecialErrorPageTests: XCTestCase {
         let featureFlagger = MockFeatureFlagger()
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         sut = SSLErrorPageNavigationHandler(urlCredentialCreator: MockCredentialCreator(), featureFlagger: featureFlagger)
-        WKNavigation.swizzleDealloc()
     }
 
     override func tearDown() async throws {
         try await super.tearDown()
-        await WKNavigation.restoreDealloc()
         sut = nil
     }
 

@@ -38,14 +38,12 @@ final class SpecialErrorPageNavigationHandlerTests {
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
             maliciousSiteProtectionNavigationHandler: DummyMaliciousSiteProtectionNavigationHandler()
         )
-        WKNavigation.swizzleDealloc()
     }
 
     deinit {
         sslErrorPageNavigationHandler = nil
         sut = nil
         webView = nil
-        WKNavigation.restoreDealloc()
     }
 
     @Test("Receive Challenge forward event to SSL Error Page Navigation Handler")
@@ -65,7 +63,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     @Test("Leave Site forward event to SSL Error Page Navigation Handler")
     func whenLeaveSite_AndSSLError_ThenCallLeaveSiteOnSSLErrorPageNavigationHandler() {
         // GIVEN
-        sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: .genericSSL)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!sslErrorPageNavigationHandler.didCallLeaveSite)
 
         // WHEN
@@ -115,7 +113,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     @Test("Visit Site forward event to SSL Error Page Navigation Handler")
     func whenVisitSite_AndSSLError_ThenCallVisitSiteOnSSLErrorPageNavigationHandler() {
         // GIVEN
-        sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: .genericSSL)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!sslErrorPageNavigationHandler.didCallVisitSite)
 
         // WHEN
@@ -135,7 +133,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     func whenVisitSite_ThenSetIsSpecialErrorPageVisibleToFalseAndReloadPage() {
         // GIVEN
         sut.attachWebView(webView)
-        sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: .genericSSL)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(sut.isSpecialErrorPageVisible)
         #expect(!webView.didCallReload)
 
@@ -150,7 +148,7 @@ final class SpecialErrorPageNavigationHandlerTests {
     @Test("Advanced Info Presented forward event to SSL Error Page Navigation Handler")
     func whenAdvancedInfoPresented_AndSSLError_ThenCallAdvancedInfoPresentedOnSSLErrorPageNavigationHandler() {
         // GIVEN
-        sut.handleWebView(webView, didFailProvisionalNavigation: WKNavigation(), withError: .genericSSL)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!sslErrorPageNavigationHandler.didCalladvancedInfoPresented)
 
         // WHEN

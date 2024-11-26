@@ -81,7 +81,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
         sslErrorPageNavigationHandler.handleServerTrustChallenge(challenge, completionHandler: completionHandler)
     }
     
-    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
+    func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError) {
         guard let (url, sslErrorType, specialErrorData) = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
         failedURL = url
         sslErrorPageNavigationHandler.errorPageVisited(errorType: sslErrorType)
@@ -90,7 +90,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
         loadSpecialErrorPage(url: url)
     }
     
-    func handleWebView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {
         userScript?.isEnabled = webView.url == failedURL
         if webView.url != failedURL {
             isSpecialErrorPageVisible = false

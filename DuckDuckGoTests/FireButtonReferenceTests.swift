@@ -64,12 +64,11 @@ final class FireButtonReferenceTests: XCTestCase {
                     
         let cookieStorage = CookieStorage()
 
-        let warmup = WebViewWarmupHelper()
-
         for test in referenceTests {
             let cookie = try XCTUnwrap(cookie(for: test))
 
             let warmupCompleted = XCTestExpectation(description: "Warmup Completed")
+            let warmup = WebViewWarmupHelper()
             warmup.warmupWebView(expectation: warmupCompleted)
 
             await fulfillment(of: [warmupCompleted], timeout: 5)

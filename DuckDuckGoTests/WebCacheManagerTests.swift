@@ -31,6 +31,7 @@ class WebCacheManagerTests: XCTestCase {
     lazy var fireproofing = MockFireproofing()
     lazy var dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
     let dataStoreCleaner = MockDataStoreCleaner()
+    let observationsCleaner = MockObservationsCleaner()
 
     override func setUp() {
         super.setUp()
@@ -77,7 +78,6 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertTrue(cookies.contains(where: { $0.domain == ".example.com" }))
     }
 
-    @available(iOS 17, *)
     func test_WhenClearingDataAfterUsingContainer_ThenCookiesAreMigratedAndOldContainersAreRemoved() async {
         // Mock having a single container so we can validate cleaning it gets called
         dataStoreCleaner.countContainersReturnValue = 1
@@ -110,7 +110,6 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(1, dataStoreCleaner.removeAllContainersAfterDelayCalls[0])
     }
 
-    @available(iOS 17, *)
     func test_WhenClearingData_ThenOldContainersAreRemoved() async {
         // Mock existence of 5 containers so we can validate that cleaning it is called even without migrations
         dataStoreCleaner.countContainersReturnValue = 5
@@ -119,11 +118,10 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(5, dataStoreCleaner.removeAllContainersAfterDelayCalls[0])
     }
 
-    /// Temporarily disabled.
-    @MainActor
-    func x_testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
-        let pool = makeWebCacheManager().getValidDatabasePool()
-        XCTAssertNotNil(pool, "DatabasePool should not be nil")
+    func test_WhenClearingData_ThenObservationsDatabaseIsCleared() async {
+        XCTAssertEqual(0, observationsCleaner.removeObservationsDataCallCount)
+        await makeWebCacheManager().clear(dataStore: .default())
+        XCTAssertEqual(1, observationsCleaner.removeObservationsDataCallCount)
     }
 
     @MainActor
@@ -132,7 +130,8 @@ class WebCacheManagerTests: XCTestCase {
             cookieStorage: cookieStorage,
             fireproofing: fireproofing,
             dataStoreIdManager: dataStoreIdManager,
-            dataStoreCleaner: dataStoreCleaner
+            dataStoreCleaner: dataStoreCleaner,
+            observationsCleaner: observationsCleaner
         )
     }
 }
@@ -148,6 +147,16 @@ class MockDataStoreCleaner: WebsiteDataStoreCleaning {
     
     func removeAllContainersAfterDelay(previousCount: Int) {
         removeAllContainersAfterDelayCalls.append(previousCount)
+    }
+
+}
+
+class MockObservationsCleaner: ObservationsDataCleaning {
+
+    var removeObservationsDataCallCount = 0
+
+    func removeObservationsData() async {
+        removeObservationsDataCallCount += 1
     }
 
 }

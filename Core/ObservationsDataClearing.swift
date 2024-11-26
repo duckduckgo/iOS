@@ -1,5 +1,5 @@
 //
-//  WebCacheManager+ObservationsDataClearing.swift
+//  ObservationsDataCleaning.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,9 +21,18 @@ import Common
 import GRDB
 import os.log
 
-extension WebCacheManager {
+public protocol ObservationsDataCleaning {
 
-    func removeObservationsData() {
+    func removeObservationsData() async
+
+}
+
+/// Used by data clearing.  Has no unit tests just now because getting the observation data is flakey, so we inject this for testing.
+public class DefaultObservationsDataCleaner: ObservationsDataCleaning {
+
+    public init() { }
+
+    public func removeObservationsData() async {
         if let pool = getValidDatabasePool() {
             removeObservationsData(from: pool)
         } else {
@@ -31,7 +40,6 @@ extension WebCacheManager {
         }
     }
 
-    /// Only has internal so that it can be accessed by test
     func getValidDatabasePool() -> DatabasePool? {
         let bundleID = Bundle.main.bundleIdentifier ?? ""
 
@@ -62,4 +70,5 @@ extension WebCacheManager {
             Pixel.fire(pixel: .debugCannotClearObservationsDatabase, error: error)
         }
     }
+
 }

@@ -89,15 +89,18 @@ public class WebCacheManager: WebsiteDataManaging {
     let fireproofing: Fireproofing
     let dataStoreIdManager: DataStoreIdManaging
     let dataStoreCleaner: WebsiteDataStoreCleaning
+    let observationsCleaner: ObservationsDataCleaning
 
     public init(cookieStorage: MigratableCookieStorage,
                 fireproofing: Fireproofing,
                 dataStoreIdManager: DataStoreIdManaging,
-                dataStoreCleaner: WebsiteDataStoreCleaning = DefaultWebsiteDataStoreCleaner()) {
+                dataStoreCleaner: WebsiteDataStoreCleaning = DefaultWebsiteDataStoreCleaner(),
+                observationsCleaner: ObservationsDataCleaning = DefaultObservationsDataCleaner()) {
         self.cookieStorage = cookieStorage
         self.fireproofing = fireproofing
         self.dataStoreIdManager = dataStoreIdManager
         self.dataStoreCleaner = dataStoreCleaner
+        self.observationsCleaner = observationsCleaner
     }
 
     /// The previous version saved cookies externally to the data so we can move them between containers.  We now use
@@ -174,7 +177,7 @@ extension WebCacheManager {
         await clearDataForSafelyRemovableDataTypes(fromStore: dataStore)
         await clearFireproofableDataForNonFireproofDomains(fromStore: dataStore, usingFireproofing: fireproofing)
         await clearCookiesForNonFireproofedDomains(fromStore: dataStore, usingFireproofing: fireproofing)
-        self.removeObservationsData()
+        await observationsCleaner.removeObservationsData()
 
         let totalTime = CACurrentMediaTime() - startTime
         Pixel.fire(pixel: .clearDataInDefaultPersistence(.init(number: totalTime)))

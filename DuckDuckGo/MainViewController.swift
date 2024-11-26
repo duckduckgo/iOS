@@ -209,7 +209,7 @@ class MainViewController: UIViewController {
         fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
-        appDidFinishLaunchingStartTime: CFAbsoluteTime
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner

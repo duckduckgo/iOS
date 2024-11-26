@@ -371,7 +371,8 @@ import os.log
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                           subscriptionCookieManager: subscriptionCookieManager,
-                                          textZoomCoordinator: makeTextZoomCoordinator())
+                                          textZoomCoordinator: makeTextZoomCoordinator(),
+                                          appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main

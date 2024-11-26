@@ -134,7 +134,7 @@ import os.log
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidFinishLaunchingTime,
+                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
             }
         }
@@ -577,7 +577,7 @@ import os.log
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidBecomeActiveTime,
+                Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
             }
         }
@@ -681,12 +681,6 @@ import os.log
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
         }
-        resetAppStartTime()
-    }
-
-    private func resetAppStartTime() {
-        didFinishLaunchingStartTime = nil
-        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func fireAppLaunchPixel() {
@@ -782,6 +776,12 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        didFinishLaunchingStartTime = nil
+        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func suspendSync() {

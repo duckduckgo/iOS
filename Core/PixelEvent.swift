@@ -872,9 +872,9 @@ extension Pixel {
         case duckPlayerYouTubeNavigationIdle30
 
         // MARK: Launch time
-        case appDidFinishLaunchingTime
-        case appDidShowUITime
-        case appDidBecomeActiveTime
+        case appDidFinishLaunchingTime(time: BucketAggregation)
+        case appDidShowUITime(time: BucketAggregation)
+        case appDidBecomeActiveTime(time: BucketAggregation)
 
     }
 
@@ -1741,9 +1741,9 @@ extension Pixel.Event {
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
 
         // MARK: Launch time
-        case .appDidFinishLaunchingTime: return "m_debug_app-did-finish-launching-time"
-        case .appDidShowUITime: return "m_debug_app-did-show-ui-time"
-        case .appDidBecomeActiveTime: return "m_debug_app-did-become-active-time"
+        case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
+        case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
+        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         }
     }

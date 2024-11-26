@@ -344,7 +344,7 @@ class MainViewController: UIViewController {
         defer {
             if let appDidFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidShowUITime,
+                Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
             }
         }

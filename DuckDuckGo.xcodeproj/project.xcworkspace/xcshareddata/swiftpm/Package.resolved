@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "hotfix/211.0.0-2-pr-fix",
-        "revision" : "31554a7c77057061d7abd7c59d592b217201d647"
+        "revision" : "777ae008c623e381c539ad10f8d37a42caac37d8",
+        "version" : "211.0.0-2"
       }
     },
     {

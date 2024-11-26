@@ -183,6 +183,8 @@ class MainViewController: UIViewController {
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
+    var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -206,7 +208,8 @@ class MainViewController: UIViewController {
         featureFlagger: FeatureFlagger,
         fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
         subscriptionCookieManager: SubscriptionCookieManaging,
-        textZoomCoordinator: TextZoomCoordinating
+        textZoomCoordinator: TextZoomCoordinating,
+        appDidFinishLaunchingStartTime: CFAbsoluteTime
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -246,6 +249,7 @@ class MainViewController: UIViewController {
         self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
 
         super.init(nibName: nil, bundle: nil)
         
@@ -337,7 +341,14 @@ class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        defer {
+            if let appDidFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidShowUITime,
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         // Needs to be called here because sometimes the frames are not the expected size during didLoad
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
 

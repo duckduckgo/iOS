@@ -114,6 +114,9 @@ import os.log
     private let voiceSearchHelper = VoiceSearchHelper()
 
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
+
+    private var didFinishLaunchingStartTime: CFAbsoluteTime?
+
     override init() {
         super.init()
 
@@ -126,6 +129,16 @@ import os.log
 
     // swiftlint:disable:next function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidFinishLaunchingTime,
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -560,6 +573,14 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidBecomeActiveTime,
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
@@ -659,6 +680,12 @@ import os.log
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
         }
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        didFinishLaunchingStartTime = nil
+        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func fireAppLaunchPixel() {

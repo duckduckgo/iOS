@@ -870,6 +870,12 @@ extension Pixel {
         case duckPlayerYouTubeOverlayNavigationOutsideYoutube
         case duckPlayerYouTubeOverlayNavigationClosed
         case duckPlayerYouTubeNavigationIdle30
+
+        // MARK: Launch time
+        case appDidFinishLaunchingTime
+        case appDidShowUITime
+        case appDidBecomeActiveTime
+
     }
 
 }
@@ -1733,6 +1739,11 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+
+        // MARK: Launch time
+        case .appDidFinishLaunchingTime: return "m_debug_app-did-finish-launching-time"
+        case .appDidShowUITime: return "m_debug_app-did-show-ui-time"
+        case .appDidBecomeActiveTime: return "m_debug_app-did-become-active-time"
 
         }
     }

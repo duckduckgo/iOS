@@ -29,9 +29,9 @@ class StatisticsLoaderTests: XCTestCase {
     var mockUsageSegmentation: MockUsageSegmentation!
     var testee: StatisticsLoader!
 
-    override func setUp() {
-        super.setUp()
-        
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
         mockStatisticsStore = MockStatisticsStore()
         mockUsageSegmentation = MockUsageSegmentation()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore,

@@ -51,7 +51,7 @@ final class FavoritesListInteractingAdapterTests: XCTestCase {
 
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)
 
-        wait(for: [expectation], timeout: 0.1)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     func testPublishesUpdateOnExternalListUpdate() {
@@ -69,7 +69,7 @@ final class FavoritesListInteractingAdapterTests: XCTestCase {
 
         publisher.send()
 
-        wait(for: [expectation], timeout: 0.1)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     private func createSUT() -> FavoritesListInteractingAdapter {

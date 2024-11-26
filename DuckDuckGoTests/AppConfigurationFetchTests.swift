@@ -25,9 +25,13 @@ class AppConfigurationFetchTests: XCTestCase {
 
     let testGroupName = "configurationFetchTestGroup"
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+#if !targetEnvironment(simulator)
+        throw XCTSkip("Ignore when ran on a device")
+#endif
         
+        try super.setUpWithError()
+
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
 

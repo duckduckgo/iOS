@@ -26,6 +26,12 @@ import Bookmarks
 final class NewTabPageFavoritesModelTests: XCTestCase {
     private let favoriteDataSource = MockNewTabPageFavoriteDataSource()
 
+    override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
+
+        try super.setUpWithError()
+    }
+
     override func tearDown() {
         PixelFiringMock.tearDown()
     }

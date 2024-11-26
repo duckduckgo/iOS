@@ -198,7 +198,19 @@ import os.log
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+
+            window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+
+            let blockingDelegate = BlockingNavigationDelegate()
+            let webView = blockingDelegate.prepareWebView()
+            window?.rootViewController?.view.addSubview(webView)
+            window?.rootViewController?.view.backgroundColor = .red
+            webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
+
+            let request = URLRequest(url: URL(string: "about:blank")!)
+            webView.load(request)
+
             return true
         }
 

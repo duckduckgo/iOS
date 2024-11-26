@@ -135,7 +135,6 @@ extension TabViewController {
             contextualOnboardingPresenter: contextualOnboardingPresenter,
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: contextualOnboardingPixelReporter,
-            urlCredentialCreator: MockCredentialCreator(),
             featureFlagger: featureFlagger,
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator()

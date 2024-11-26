@@ -20,6 +20,7 @@
 import Common
 import Foundation
 import os.log
+import Persistence
 
 /// This class was used to store cookies when moving between persistences containers, but now we are clearing the default container, this class is only used for storing cookies that existed previously and need to be migrated.
 public class MigratableCookieStorage {
@@ -29,7 +30,7 @@ public class MigratableCookieStorage {
         static let consumed = "com.duckduckgo.consumedCookies"
     }
 
-    private var userDefaults: UserDefaults
+    private var keyValueStore: KeyValueStoring
 
     var isConsumed: Bool {
         // The default is now true because if this key does not exist then there are no
@@ -38,12 +39,12 @@ public class MigratableCookieStorage {
         //  are cookies from a previous version of the app which still need to be migrated. This
         //  could happen if the user hit the fire button and then an update happened
         //  before they browsed again.
-        return userDefaults.bool(forKey: Keys.consumed, defaultValue: true)
+        return (keyValueStore.object(forKey: Keys.consumed) as? Bool) ?? true
     }
 
     var cookies: [HTTPCookie] {
         var storedCookies = [HTTPCookie]()
-        if let cookies = userDefaults.object(forKey: Keys.allowedCookies) as? [[String: Any?]] {
+        if let cookies = keyValueStore.object(forKey: Keys.allowedCookies) as? [[String: Any?]] {
             for cookieData in cookies {
                 var properties = [HTTPCookiePropertyKey: Any]()
                 cookieData.forEach({
@@ -56,18 +57,30 @@ public class MigratableCookieStorage {
                 }
             }
         }
-
         return storedCookies
     }
 
-    public init(userDefaults: UserDefaults = UserDefaults.app) {
-        self.userDefaults = userDefaults
+    public init(store: KeyValueStoring = UserDefaults.app) {
+        self.keyValueStore = store
+    }
+
+    /// Called after consuming cookies but migration has not happened.
+    /// This can happen in the following flow
+    /// * User presses fire button on container based app and then backgrounds it/switches to another app
+    /// * Installs update to this version of the app without using the browser
+    /// * Starts browsing
+    func setConsumed() {
+        resetStore()
     }
 
     /// Called when migration is completed to clean up
     func migrationComplete() {
-        userDefaults.removeObject(forKey: Keys.allowedCookies)
-        userDefaults.removeObject(forKey: Keys.consumed)
+        resetStore()
+    }
+
+    private func resetStore() {
+        keyValueStore.removeObject(forKey: Keys.allowedCookies)
+        keyValueStore.removeObject(forKey: Keys.consumed)
     }
 
 }

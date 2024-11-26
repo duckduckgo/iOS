@@ -66,10 +66,7 @@ public class UserDefaultsFireproofing: Fireproofing {
     }
 
     public func isAllowed(cookieDomain: String) -> Bool {
-
-        return allowedDomainsIncludingDuckDuckGo.contains(where: { $0 == cookieDomain
-            || ".\($0)" == cookieDomain
-            || (cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain)) })
+        return allowedDomainsIncludingDuckDuckGo.contains(where: { HTTPCookie.cookieDomain(cookieDomain, matchesTestDomain: $0) })
     }
 
     public func remove(domain: String) {

@@ -33,14 +33,6 @@ extension WKWebsiteDataStore {
 
 }
 
-extension HTTPCookie {
-
-    func matchesDomain(_ domain: String) -> Bool {
-        return self.domain == domain || (self.domain.hasPrefix(".") && domain.hasSuffix(self.domain))
-    }
-
-}
-
 public protocol WebsiteDataManaging {
 
     func removeCookies(forDomains domains: [String], fromDataStore: WKWebsiteDataStore) async
@@ -118,6 +110,8 @@ public class WebCacheManager: WebsiteDataManaging {
             consumedCookiesCount += 1
             await httpCookieStore.setCookie(cookie)
         }
+
+        cookieStorage.setConsumed()
     }
 
     public func removeCookies(forDomains domains: [String],
@@ -125,7 +119,7 @@ public class WebCacheManager: WebsiteDataManaging {
         let startTime = CACurrentMediaTime()
         let cookieStore = dataStore.httpCookieStore
         let cookies = await cookieStore.allCookies()
-        for cookie in cookies where domains.contains(where: { cookie.matchesDomain($0) }) {
+        for cookie in cookies where domains.contains(where: { HTTPCookie.cookieDomain(cookie.domain, matchesTestDomain: $0) }) {
             await cookieStore.deleteCookie(cookie)
         }
         let totalTime = CACurrentMediaTime() - startTime

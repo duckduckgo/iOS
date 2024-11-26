@@ -20,20 +20,20 @@
 import XCTest
 @testable import Core
 import WebKit
+import Persistence
+import TestUtils
 
 public class CookieStorageTests: XCTestCase {
 
     func testLoadCookiesFromDefaultsAndRemovalWhenMigrationCompletes() {
-        let defaults = UserDefaults(suiteName: "test")!
-        defaults.removeSuite(named: "test")
-
+        let store = MockKeyValueStore()
         MigratableCookieStorage.addCookies([
                 .make(name: "test1", value: "value1", domain: "example.com"),
                 .make(name: "test2", value: "value2", domain: "example.com"),
                 .make(name: "test3", value: "value3", domain: "facebook.com"),
-        ], defaults)
+        ], store)
 
-        let storage = MigratableCookieStorage(userDefaults: defaults)
+        let storage = MigratableCookieStorage(store: store)
         XCTAssertEqual(storage.cookies.count, 3)
 
         XCTAssertTrue(storage.cookies.contains(where: {
@@ -65,7 +65,7 @@ public class CookieStorageTests: XCTestCase {
 
 extension MigratableCookieStorage {
 
-    static func addCookies(_ cookies: [HTTPCookie], _ defaults: UserDefaults) {
+    static func addCookies(_ cookies: [HTTPCookie], _ store: KeyValueStoring) {
 
         var cookieData = [[String: Any?]]()
         cookies.forEach { cookie in
@@ -75,8 +75,7 @@ extension MigratableCookieStorage {
             }
             cookieData.append(mappedCookie)
         }
-        defaults.setValue(cookieData, forKey: MigratableCookieStorage.Keys.allowedCookies)
-
+        store.set(cookieData, forKey: MigratableCookieStorage.Keys.allowedCookies)
     }
 
 }

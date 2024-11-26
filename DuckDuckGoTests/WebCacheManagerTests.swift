@@ -24,19 +24,13 @@ import TestUtils
 
 class WebCacheManagerTests: XCTestCase {
 
-    let defaults = UserDefaults(suiteName: "Test")!
-    let dataStoreIdStore = MockKeyValueStore()
+    let keyValueStore = MockKeyValueStore()
 
-    lazy var cookieStorage = MigratableCookieStorage(userDefaults: defaults)
+    lazy var cookieStorage = MigratableCookieStorage(store: keyValueStore)
     lazy var fireproofing = MockFireproofing()
-    lazy var dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
+    lazy var dataStoreIdManager = DataStoreIdManager(store: keyValueStore)
     let dataStoreCleaner = MockDataStoreCleaner()
     let observationsCleaner = MockObservationsCleaner()
-
-    override func setUp() {
-        super.setUp()
-        defaults.removePersistentDomain(forName: "Test")
-    }
 
     func test_whenNewInstall_ThenUsesDefaultPersistence() async {
         let dataStore = await WKWebsiteDataStore.current()
@@ -83,8 +77,8 @@ class WebCacheManagerTests: XCTestCase {
         dataStoreCleaner.countContainersReturnValue = 1
 
         // Mock a data store id to force migration to happen
-        dataStoreIdStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: UUID().uuidString]
-        dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
+        keyValueStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: UUID().uuidString]
+        dataStoreIdManager = DataStoreIdManager(store: keyValueStore)
 
         fireproofing = MockFireproofing(domains: ["example.com"])
 
@@ -92,7 +86,7 @@ class WebCacheManagerTests: XCTestCase {
             .make(name: "Test1", value: "Value", domain: "example.com"),
             .make(name: "Test2", value: "Value", domain: ".example.com"),
             .make(name: "Test3", value: "Value", domain: "facebook.com"),
-        ], defaults)
+        ], keyValueStore)
 
         let dataStore = await WKWebsiteDataStore.default()
         var cookies = await dataStore.httpCookieStore.allCookies()
@@ -122,6 +116,47 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertEqual(0, observationsCleaner.removeObservationsDataCallCount)
         await makeWebCacheManager().clear(dataStore: .default())
         XCTAssertEqual(1, observationsCleaner.removeObservationsDataCallCount)
+    }
+
+    func test_WhenCookiesAreFromPreviousAppWithContainers_ThenTheyAreConsumed() async {
+
+        MigratableCookieStorage.addCookies([
+            .make(name: "Test1", value: "Value", domain: "example.com"),
+            .make(name: "Test2", value: "Value", domain: ".example.com"),
+            .make(name: "Test3", value: "Value", domain: "facebook.com"),
+        ], keyValueStore)
+
+        keyValueStore.set(false, forKey: MigratableCookieStorage.Keys.consumed)
+
+        cookieStorage = MigratableCookieStorage(store: keyValueStore)
+
+        let dataStore = await WKWebsiteDataStore.default()
+        let httpCookieStore = await dataStore.httpCookieStore
+        await makeWebCacheManager().consumeCookies(intoHTTPCookieStore: httpCookieStore)
+
+        XCTAssertTrue(self.cookieStorage.isConsumed)
+        XCTAssertTrue(self.cookieStorage.cookies.isEmpty)
+
+        let cookies = await httpCookieStore.allCookies()
+        XCTAssertEqual(3, cookies.count)
+    }
+
+    func test_WhenRemoveCookiesForDomains_ThenUnaffectedLeftBehind() async {
+        let dataStore = await WKWebsiteDataStore.default()
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test1", value: "Value", domain: "example.com"))
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test4", value: "Value", domain: "sample.com"))
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test2", value: "Value", domain: ".example.com"))
+        await dataStore.httpCookieStore.setCookie(.make(name: "Test3", value: "Value", domain: "facebook.com"))
+
+        var cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(4, cookies.count)
+
+        let webCacheManager = await makeWebCacheManager()
+        await webCacheManager.removeCookies(forDomains: ["example.com", "sample.com"], fromDataStore: dataStore)
+
+        cookies = await dataStore.httpCookieStore.allCookies()
+        XCTAssertEqual(1, cookies.count)
+        XCTAssertTrue(cookies.contains(where: { $0.domain == "facebook.com" }))
     }
 
     @MainActor

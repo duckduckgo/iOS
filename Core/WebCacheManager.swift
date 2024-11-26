@@ -88,13 +88,16 @@ public class WebCacheManager: WebsiteDataManaging {
     let cookieStorage: MigratableCookieStorage
     let fireproofing: Fireproofing
     let dataStoreIdManager: DataStoreIdManaging
-    let dataStoreClearingDelay: TimeInterval
+    let dataStoreCleaner: WebsiteDataStoreCleaning
 
-    public init(cookieStorage: MigratableCookieStorage, fireproofing: Fireproofing, dataStoreIdManager: DataStoreIdManaging, dataStoreClearingDelay: TimeInterval = 3.0) {
+    public init(cookieStorage: MigratableCookieStorage,
+                fireproofing: Fireproofing,
+                dataStoreIdManager: DataStoreIdManaging,
+                dataStoreCleaner: WebsiteDataStoreCleaning = DefaultWebsiteDataStoreCleaner()) {
         self.cookieStorage = cookieStorage
         self.fireproofing = fireproofing
         self.dataStoreIdManager = dataStoreIdManager
-        self.dataStoreClearingDelay = dataStoreClearingDelay
+        self.dataStoreCleaner = dataStoreCleaner
     }
 
     /// The previous version saved cookies externally to the data so we can move them between containers.  We now use
@@ -128,9 +131,10 @@ public class WebCacheManager: WebsiteDataManaging {
 
     public func clear(dataStore: WKWebsiteDataStore) async {
 
+        let count = await dataStoreCleaner.countContainers()
         await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, cookieStorage: cookieStorage, destinationStore: dataStore)
         await clearData(inDataStore: dataStore, withFireproofing: fireproofing)
-        removeContainersIfNeeded()
+        dataStoreCleaner.removeAllContainersAfterDelay(previousCount: count)
 
     }
 
@@ -160,47 +164,8 @@ extension WebCacheManager {
         dataStoreIdManager.invalidateCurrentId()
     }
 
-    private func removeContainersIfNeeded() {
-        // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function
-        guard #available(iOS 17, *) else { return }
-
-        // Attempt to clean up all previous stores, but wait for a few seconds.
-        // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
-        Task {
-            try? await Task.sleep(interval: dataStoreClearingDelay)
-            for uuid in await WKWebsiteDataStore.allDataStoreIdentifiers {
-                try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
-            }
-
-            let count = await WKWebsiteDataStore.allDataStoreIdentifiers.count
-            switch count {
-            case 0:
-                Pixel.fire(pixel: .debugWebsiteDataStoresCleared)
-
-            case 1:
-                Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
-
-            default:
-                Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
-            }
-        }
-    }
-
-    private func checkForLeftBehindDataStores(previousLeftOversCount: Int) async {
-        guard #available(iOS 17, *) else { return }
-
-        let params = [
-            "left_overs_count": "\(previousLeftOversCount)"
-        ]
-
-        let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        if ids.count > 1 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple, withAdditionalParameters: params)
-        } else if ids.count > 0 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne, withAdditionalParameters: params)
-        } else if previousLeftOversCount > 0 {
-            Pixel.fire(pixel: .debugWebsiteDataStoresCleared, withAdditionalParameters: params)
-        }
+    private func removeContainersIfNeeded(previousCount: Int) {
+        dataStoreCleaner.removeAllContainersAfterDelay(previousCount: previousCount)
     }
 
     private func clearData(inDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {

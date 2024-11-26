@@ -22,8 +22,6 @@ import XCTest
 import WebKit
 import TestUtils
 
-// TODO DataStoreIDManager assert new install has nil id for container
-
 class WebCacheManagerTests: XCTestCase {
 
     let defaults = UserDefaults(suiteName: "Test")!
@@ -32,6 +30,7 @@ class WebCacheManagerTests: XCTestCase {
     lazy var cookieStorage = MigratableCookieStorage(userDefaults: defaults)
     lazy var fireproofing = MockFireproofing()
     lazy var dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
+    let dataStoreCleaner = MockDataStoreCleaner()
 
     override func setUp() {
         super.setUp()
@@ -78,10 +77,15 @@ class WebCacheManagerTests: XCTestCase {
         XCTAssertTrue(cookies.contains(where: { $0.domain == ".example.com" }))
     }
 
-    // TODO create an abstraction for WKWebsiteDataStore management and pass it into the webcache manager
-    @MainActor
     @available(iOS 17, *)
     func test_WhenClearingDataAfterUsingContainer_ThenCookiesAreMigratedAndOldContainersAreRemoved() async {
+        // Mock having a single container so we can validate cleaning it gets called
+        dataStoreCleaner.countContainersReturnValue = 1
+
+        // Mock a data store id to force migration to happen
+        dataStoreIdStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: UUID().uuidString]
+        dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
+
         fireproofing = MockFireproofing(domains: ["example.com"])
 
         MigratableCookieStorage.addCookies([
@@ -90,54 +94,29 @@ class WebCacheManagerTests: XCTestCase {
             .make(name: "Test3", value: "Value", domain: "facebook.com"),
         ], defaults)
 
-        // Setup a new container and add something to it just to make it real
-        let uuid = await createContainer()
-
-        var dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
-        XCTAssertEqual(1, dataStoreIds.count)
-
-        // Use the UUID we just created for the store id
-        dataStoreIdStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: uuid.uuidString]
-        dataStoreIdManager = DataStoreIdManager(store: dataStoreIdStore)
-
-        let dataStore = WKWebsiteDataStore.default()
+        let dataStore = await WKWebsiteDataStore.default()
         var cookies = await dataStore.httpCookieStore.allCookies()
         XCTAssertEqual(0, cookies.count)
 
-        let webCacheManager = makeWebCacheManager()
+        let webCacheManager = await makeWebCacheManager()
         await webCacheManager.clear(dataStore: dataStore)
-
-        try? await Task.sleep(interval: 0.3)
 
         cookies = await dataStore.httpCookieStore.allCookies()
         XCTAssertEqual(2, cookies.count)
         XCTAssertTrue(cookies.contains(where: { $0.domain == "example.com" }))
         XCTAssertTrue(cookies.contains(where: { $0.domain == ".example.com" }))
 
-        dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
-        XCTAssertTrue(dataStoreIds.isEmpty)
+        XCTAssertEqual(1, dataStoreCleaner.removeAllContainersAfterDelayCalls.count)
+        XCTAssertEqual(1, dataStoreCleaner.removeAllContainersAfterDelayCalls[0])
     }
 
-    @MainActor
     @available(iOS 17, *)
     func test_WhenClearingData_ThenOldContainersAreRemoved() async {
-        _ = await createContainer()
-        _ = await createContainer()
-        _ = await createContainer()
-        _ = await createContainer()
-        _ = await createContainer()
-
-        try? await Task.sleep(interval: 0.3)
-
-        var dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
-        XCTAssertEqual(5, dataStoreIds.count)
-
+        // Mock existence of 5 containers so we can validate that cleaning it is called even without migrations
+        dataStoreCleaner.countContainersReturnValue = 5
         await makeWebCacheManager().clear(dataStore: .default())
-
-        try? await Task.sleep(interval: 0.3)
-
-        dataStoreIds = await WKWebsiteDataStore.allDataStoreIdentifiers
-        XCTAssertEqual(0, dataStoreIds.count)
+        XCTAssertEqual(1, dataStoreCleaner.removeAllContainersAfterDelayCalls.count)
+        XCTAssertEqual(5, dataStoreCleaner.removeAllContainersAfterDelayCalls[0])
     }
 
     /// Temporarily disabled.
@@ -153,18 +132,22 @@ class WebCacheManagerTests: XCTestCase {
             cookieStorage: cookieStorage,
             fireproofing: fireproofing,
             dataStoreIdManager: dataStoreIdManager,
-            dataStoreClearingDelay: 0.01
+            dataStoreCleaner: dataStoreCleaner
         )
     }
+}
 
-    @available(iOS 17, *)
-    @MainActor private func createContainer() async -> UUID {
-        let uuid = UUID()
-        let containerStore = WKWebsiteDataStore(forIdentifier: uuid)
-        await containerStore.httpCookieStore.setCookie(.make(name: "Not", value: "Used"))
-        let cookies = await containerStore.httpCookieStore.allCookies()
-        XCTAssertEqual(1, cookies.count)
-        return uuid
+class MockDataStoreCleaner: WebsiteDataStoreCleaning {
+
+    var countContainersReturnValue = 0
+    var removeAllContainersAfterDelayCalls: [Int] = []
+
+    func countContainers() async -> Int {
+        return countContainersReturnValue
+    }
+    
+    func removeAllContainersAfterDelay(previousCount: Int) {
+        removeAllContainersAfterDelayCalls.append(previousCount)
     }
 
 }

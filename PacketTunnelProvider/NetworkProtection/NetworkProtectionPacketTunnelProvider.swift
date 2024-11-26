@@ -212,15 +212,26 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                             error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelWakeAttempt(let step):
             vpnLogger.log(step, named: "Tunnel Wake")
@@ -259,15 +270,26 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptFailure,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                             error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess,
-                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelStartOnDemandWithoutAccessToken:
             vpnLogger.logStartingWithoutAuthToken()

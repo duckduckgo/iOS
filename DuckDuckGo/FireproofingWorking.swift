@@ -1,5 +1,5 @@
 //
-//  PreserveLoginsWorker.swift
+//  FireproofingWorking.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,18 +20,19 @@
 import UIKit
 import Core
 
-struct PreserveLoginsWorker {
+struct FireproofingWorking {
 
     private struct Constants {
         static let timeForAutofillToBlockFireproofPrompt = 10.0
     }
 
     weak var controller: UIViewController?
+    let fireproofing: Fireproofing
 
     func handleLoginDetection(detectedURL: URL?, currentURL: URL?, isAutofillEnabled: Bool, saveLoginPromptLastDismissed: Date?, saveLoginPromptIsPresenting: Bool) -> Bool {
         guard let detectedURL = detectedURL, let currentURL = currentURL else { return false }
         guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return false }
-        guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return false }
+        guard !fireproofing.isAllowed(fireproofDomain: domain) else { return false }
         if isAutofillEnabled && autofillShouldBlockPrompt(saveLoginPromptLastDismissed, saveLoginPromptIsPresenting: saveLoginPromptIsPresenting) {
             return false
         }
@@ -72,23 +73,23 @@ struct PreserveLoginsWorker {
 
     private func promptToFireproof(_ domain: String) {
         guard let controller = controller else { return }
-        PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
+        FireproofingAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
             self.addDomain(domain)
         }
     }
 
     private func addDomain(_ domain: String) {
         guard let controller = controller else { return }
-        PreserveLogins.shared.addToAllowed(domain: domain)
+        fireproofing.addToAllowed(domain: domain)
         Favicons.shared.loadFavicon(forDomain: domain, intoCache: .fireproof, fromCache: .tabs)
-        PreserveLoginsAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
+        FireproofingAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
 
     private func removeDomain(_ domain: String) {
         guard let controller = controller else { return }
-        PreserveLogins.shared.remove(domain: domain)
+        fireproofing.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
-        PreserveLoginsAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
+        FireproofingAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
 
 }

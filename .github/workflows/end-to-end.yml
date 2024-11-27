@@ -87,14 +87,11 @@ jobs:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
 
-    - name: Install Maestro
+    - name: Install Maestro and run tests
       run: |
         export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
-
-    - name: End to End tests
-      run: |
         ./.maestro/setup_ui_tests.sh --skip-build
-        ./.maestro/run_ui_tests.sh 
+        ./.maestro/run_ui_tests.sh
       
   # notify-failure:
   #   name: Notify on failure

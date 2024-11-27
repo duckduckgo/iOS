@@ -43,6 +43,7 @@ final class AIChatViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = UserText.aiChatTitle
+        titleLabel.font = UIFont.semiBoldAppFont(ofSize: 17)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stackView.axis = .horizontal

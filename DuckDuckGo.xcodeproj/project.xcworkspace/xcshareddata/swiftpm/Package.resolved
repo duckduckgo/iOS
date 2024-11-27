@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "f83b1f5ebd328bc2447d1a3793149bb21037d685",
-        "version" : "211.1.3"
+        "branch" : "smodi/content_blocking_lookup_time_tracking",
+        "revision" : "0f82487050cddbe2ec38594f504fdab5d2b99ba5"
       }
     },
     {

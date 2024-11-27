@@ -31,23 +31,35 @@ final class AIChatViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        let imageView = UIImageView(image: UIImage(systemName: "globe"))
+        let imageView = UIImageView(image: UIImage(named: "Logo"))
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        let imageSize: CGFloat = 32
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: imageSize),
+            imageView.heightAnchor.constraint(equalToConstant: imageSize)
+        ])
 
         let titleLabel = UILabel()
         titleLabel.text = UserText.aiChatTitle
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stackView.axis = .horizontal
         stackView.spacing = 8
-        stackView.alignment = .leading
+        stackView.alignment = .center
         stackView.distribution = .fill
 
         let leftBarButtonItem = UIBarButtonItem(customView: stackView)
         navigationItem.leftBarButtonItem = leftBarButtonItem
 
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        let closeButton = UIBarButtonItem(
+            image: UIImage(named: "Close-24")!,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
+        closeButton.tintColor = .label
         navigationItem.rightBarButtonItem = closeButton
     }
 

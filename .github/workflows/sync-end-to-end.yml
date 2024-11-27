@@ -94,7 +94,7 @@ jobs:
 
     - name: Install Maestro
       run: |
-        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
         
     - name: Overwrite default config with sync one
       run: |

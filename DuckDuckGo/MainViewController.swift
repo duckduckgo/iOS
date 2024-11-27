@@ -177,11 +177,13 @@ class MainViewController: UIViewController {
         fatalError("Use init?(code:")
     }
     
-    let preserveLogins: PreserveLogins
+    let fireproofing: Fireproofing
     let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
+
+    var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -204,9 +206,10 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        preserveLogins: PreserveLogins = .shared,
+        fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
         subscriptionCookieManager: SubscriptionCookieManaging,
-        textZoomCoordinator: TextZoomCoordinating
+        textZoomCoordinator: TextZoomCoordinating,
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -243,9 +246,10 @@ class MainViewController: UIViewController {
         self.statisticsStore = statisticsStore
         self.subscriptionFeatureAvailability = subscriptionFeatureAvailability
         self.voiceSearchHelper = voiceSearchHelper
-        self.preserveLogins = preserveLogins
+        self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
 
         super.init(nibName: nil, bundle: nil)
         
@@ -337,7 +341,14 @@ class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        defer {
+            if let appDidFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         // Needs to be called here because sometimes the frames are not the expected size during didLoad
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
 
@@ -1816,7 +1827,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         if updatedQuery.isEmpty {
-            if newTabPageViewController != nil {
+            if newTabPageViewController != nil || !omniBar.textField.isEditing {
                 hideSuggestionTray()
             } else {
                 let didShow = tryToShowSuggestionTray(.favorites)
@@ -2551,6 +2562,8 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
+        DailyPixel.fireDaily(.tabSwitcherOpenDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+
         performCancel()
         showTabSwitcher()
     }
@@ -2751,7 +2764,7 @@ extension MainViewController: AutoClearWorker {
     }
 
     private func forgetTextZoom() {
-        let allowedDomains = preserveLogins.allowedDomains
+        let allowedDomains = fireproofing.allowedDomains
         textZoomCoordinator.resetTextZoomLevels(excludingDomains: allowedDomains)
     }
 

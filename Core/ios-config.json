@@ -1,7 +1,16 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1731320660413,
+    "version": 1732540137973,
     "features": {
+        "adAttributionReporting": {
+            "state": "disabled",
+            "exceptions": [],
+            "minSupportedVersion": "7.145.0",
+            "settings": {
+                "includeToken": false
+            },
+            "hash": "1da4782852f0317459b4465d801eda1f"
+        },
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
             "state": "enabled",
@@ -160,6 +169,9 @@
                     "domain": "eurostar.com"
                 },
                 {
+                    "domain": "geo.fr"
+                },
+                {
                     "domain": "ksta.de"
                 },
                 {
@@ -260,9 +272,6 @@
                 },
                 {
                     "domain": "motorsport.com"
-                },
-                {
-                    "domain": "paypal.com"
                 },
                 {
                     "domain": "elmundotoday.com"
@@ -391,6 +400,192 @@
                     "domain": "manoloblahnik.com"
                 },
                 {
+                    "domain": "skyscanner.net"
+                },
+                {
+                    "domain": "skyscanner.ru"
+                },
+                {
+                    "domain": "skyscanner.fi"
+                },
+                {
+                    "domain": "skyscanner.no"
+                },
+                {
+                    "domain": "skyscanner.nl"
+                },
+                {
+                    "domain": "skyscanner.ro"
+                },
+                {
+                    "domain": "skyscanner.com.ni"
+                },
+                {
+                    "domain": "skyscanner.at"
+                },
+                {
+                    "domain": "skyscanner.com.sg"
+                },
+                {
+                    "domain": "skyscanner.es"
+                },
+                {
+                    "domain": "skyscanner.co.nz"
+                },
+                {
+                    "domain": "skyscanner.com.sa"
+                },
+                {
+                    "domain": "skyscanner.com.bo"
+                },
+                {
+                    "domain": "skyscanner.com.br"
+                },
+                {
+                    "domain": "skyscanner.mx"
+                },
+                {
+                    "domain": "skyscanner.it"
+                },
+                {
+                    "domain": "skyscanner.ae"
+                },
+                {
+                    "domain": "skyscanner.in"
+                },
+                {
+                    "domain": "skyscanner.com.sv"
+                },
+                {
+                    "domain": "skyscanner.ie"
+                },
+                {
+                    "domain": "skyscanner.co.kr"
+                },
+                {
+                    "domain": "skyscanner.com.pe"
+                },
+                {
+                    "domain": "skyscanner.com.ph"
+                },
+                {
+                    "domain": "skyscanner.com.pa"
+                },
+                {
+                    "domain": "skyscanner.hu"
+                },
+                {
+                    "domain": "skyscanner.com.gt"
+                },
+                {
+                    "domain": "skyscanner.com.co"
+                },
+                {
+                    "domain": "skyscanner.dk"
+                },
+                {
+                    "domain": "skyscanner.co.th"
+                },
+                {
+                    "domain": "skyscanner.com.hn"
+                },
+                {
+                    "domain": "skyscanner.pt"
+                },
+                {
+                    "domain": "skyscanner.tw"
+                },
+                {
+                    "domain": "skyscanner.de"
+                },
+                {
+                    "domain": "skyscanner.com.hk"
+                },
+                {
+                    "domain": "skyscanner.com.tw"
+                },
+                {
+                    "domain": "skyscanner.pl"
+                },
+                {
+                    "domain": "skyscanner.com.tr"
+                },
+                {
+                    "domain": "skyscanner.cz"
+                },
+                {
+                    "domain": "skyscanner.com"
+                },
+                {
+                    "domain": "skyscanner.cr"
+                },
+                {
+                    "domain": "skyscanner.com.py"
+                },
+                {
+                    "domain": "skyscanner.cl"
+                },
+                {
+                    "domain": "skyscanner.com.ua"
+                },
+                {
+                    "domain": "skyscanner.com.do"
+                },
+                {
+                    "domain": "skyscanner.kr"
+                },
+                {
+                    "domain": "skyscanner.co.id"
+                },
+                {
+                    "domain": "skyscanner.ch"
+                },
+                {
+                    "domain": "skyscanner.gg"
+                },
+                {
+                    "domain": "skyscanner.ca"
+                },
+                {
+                    "domain": "skyscanner.com.uy"
+                },
+                {
+                    "domain": "skyscanner.com.ec"
+                },
+                {
+                    "domain": "skyscanner.co.il"
+                },
+                {
+                    "domain": "skyscanner.co.in"
+                },
+                {
+                    "domain": "skyscanner.com.vn"
+                },
+                {
+                    "domain": "skyscanner.se"
+                },
+                {
+                    "domain": "skyscanner.com.ar"
+                },
+                {
+                    "domain": "skyscanner.com.au"
+                },
+                {
+                    "domain": "skyscanner.fr"
+                },
+                {
+                    "domain": "skyscanner.jp"
+                },
+                {
+                    "domain": "skyscanner.com.my"
+                },
+                {
+                    "domain": "skyscanner.com.mx"
+                },
+                {
+                    "domain": "outlet46.de"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -408,7 +603,8 @@
             ],
             "settings": {
                 "disabledCMPs": [
-                    "healthline-media"
+                    "healthline-media",
+                    "bing.com"
                 ]
             },
             "state": "enabled",
@@ -431,7 +627,7 @@
                     }
                 }
             },
-            "hash": "c2885a67db26958bdb316564d5c94878"
+            "hash": "2c73b04e22812bf92bc2a859e7540c3a"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -1422,12 +1618,6 @@
                     "domain": "instructure.com"
                 },
                 {
-                    "domain": "humana.com"
-                },
-                {
-                    "domain": "centerwellpharmacy.com"
-                },
-                {
                     "domain": "marvel.com"
                 },
                 {
@@ -1444,7 +1634,7 @@
                 }
             ],
             "state": "disabled",
-            "hash": "33c2d56a2a9dd43c88a353d8a57dfa72"
+            "hash": "fce0a9ccd7ae060d25e7debe4d8905fb"
         },
         "customUserAgent": {
             "settings": {
@@ -1465,10 +1655,6 @@
                     {
                         "domain": "ihg.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2383"
-                    },
-                    {
-                        "domain": "humana.com",
-                        "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2408"
                     }
                 ],
                 "ddgDefaultSites": [
@@ -1498,7 +1684,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "345d837217e74afd3f9e5fd04b208fa7"
+            "hash": "e577ccb473bdb7ada49c4d3c6e79cf01"
         },
         "dbp": {
             "state": "disabled",
@@ -1526,7 +1712,8 @@
                     "state": "disabled"
                 },
                 "openInNewTab": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.144.0"
                 },
                 "enableDuckPlayer": {
                     "state": "enabled",
@@ -1619,7 +1806,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "c21895584fc5a38e4290c7941ec7d5f8"
+            "hash": "0181fe3479adc4db0b7dd140eb1bcc2e"
         },
         "elementHiding": {
             "exceptions": [
@@ -2316,6 +2503,15 @@
                         ]
                     },
                     {
+                        "domain": "androidauthority.com",
+                        "rules": [
+                            {
+                                "selector": "div[data-ad-type]",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "androidpolice.com",
                         "rules": [
                             {
@@ -2910,6 +3106,14 @@
                             {
                                 "selector": ".viafoura-standalone-mpu",
                                 "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "expressnews.com",
+                        "rules": [
+                            {
+                                "type": "disable-default"
                             }
                         ]
                     },
@@ -3709,6 +3913,10 @@
                             {
                                 "selector": "[class^='ads__right-rail']",
                                 "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".atf_mobile-scroll-ad",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -4981,7 +5189,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "2fa4c7c9bfd50585ee22d6c2d3bd3279"
+            "hash": "16e64ea4c926bdf7c865a8b7cbde1b2b"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -5213,6 +5421,15 @@
                     "domain": "xfinity.com"
                 },
                 {
+                    "domain": "centerwellpharmacy.com"
+                },
+                {
+                    "domain": "go365.com"
+                },
+                {
+                    "domain": "humana.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5232,7 +5449,7 @@
                 }
             ],
             "state": "enabled",
-            "hash": "cd4a8461973d1c1648dd20e6d1f532a7"
+            "hash": "b1f406c6ff87e27244d26289c0e383f9"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5615,6 +5832,15 @@
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
+        "messageBridge": {
+            "exceptions": [],
+            "settings": {
+                "aiChat": "disabled",
+                "domains": []
+            },
+            "state": "disabled",
+            "hash": "cec85d8cf7db4b2abcbc450c66dd63fc"
+        },
         "navigatorInterface": {
             "exceptions": [
                 {
@@ -5718,7 +5944,7 @@
             "hash": "6792064606a5a72c5cd44addb4d40bda"
         },
         "phishingDetection": {
-            "state": "disabled",
+            "state": "internal",
             "exceptions": [
                 {
                     "domain": "marvel.com"
@@ -5736,7 +5962,15 @@
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "37e0cf88badfc8b01b6394f0884502f6"
+            "features": {
+                "allowErrorPage": {
+                    "state": "internal"
+                },
+                "allowPreferencesToggle": {
+                    "state": "internal"
+                }
+            },
+            "hash": "9a9143022e6cc8976461b337abfa81a1"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5810,9 +6044,23 @@
                 "useUnifiedFeedback": {
                     "state": "enabled",
                     "minSupportedVersion": "7.136.0"
+                },
+                "setAccessTokenCookieForSubscriptionDomains": {
+                    "state": "enabled",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 25
+                            },
+                            {
+                                "percent": 50
+                            }
+                        ]
+                    },
+                    "minSupportedVersion": "7.145.1"
                 }
             },
-            "hash": "c2a2ca6f3ae1b8ddb4f3fa011cb3e227"
+            "hash": "2a9bad4e25e3a161fbbbc324a240c03e"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",
@@ -6726,6 +6974,12 @@
                                 "domains": [
                                     "scheels.com"
                                 ]
+                            },
+                            {
+                                "rule": "api.cquotient.com/v3",
+                                "domains": [
+                                    "grillagrills.com"
+                                ]
                             }
                         ]
                     },
@@ -6735,6 +6989,16 @@
                                 "rule": "bidder.criteo.com/cdb",
                                 "domains": [
                                     "aternos.org"
+                                ]
+                            }
+                        ]
+                    },
+                    "criteo.net": {
+                        "rules": [
+                            {
+                                "rule": "static.criteo.net/js/ld/ld.js",
+                                "domains": [
+                                    "jackssmallengines.com"
                                 ]
                             }
                         ]
@@ -6871,6 +7135,51 @@
                                 ]
                             },
                             {
+                                "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
+                                "domains": [
+                                    "ah.nl",
+                                    "applesfera.com",
+                                    "goplay.be",
+                                    "itsthevibe.com",
+                                    "nytimes.com",
+                                    "realmadrid.com",
+                                    "rocketnews24.com",
+                                    "solitaired.com",
+                                    "stuff.co.nz",
+                                    "uwbadgers.com",
+                                    "wunderground.com",
+                                    "youmath.it"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt/.*/pubads_impl.js",
+                                "domains": [
+                                    "stuff.co.nz"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
+                                "domains": [
+                                    "rocketnews24.com",
+                                    "weather.com",
+                                    "wunderground.com"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt",
+                                "domains": [
+                                    "applesfera.com",
+                                    "itsthevibe.com",
+                                    "triblive.com"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net",
+                                "domains": [
+                                    "xataka.com"
+                                ]
+                            },
+                            {
                                 "rule": "pubads.g.doubleclick.net/gampad/ads",
                                 "domains": [
                                     "crunchyroll.com",
@@ -6893,28 +7202,6 @@
                                 ]
                             },
                             {
-                                "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
-                                "domains": [
-                                    "ah.nl",
-                                    "applesfera.com",
-                                    "goplay.be",
-                                    "nytimes.com",
-                                    "realmadrid.com",
-                                    "rocketnews24.com",
-                                    "solitaired.com",
-                                    "stuff.co.nz",
-                                    "uwbadgers.com",
-                                    "wunderground.com",
-                                    "youmath.it"
-                                ]
-                            },
-                            {
-                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt/.*/pubads_impl.js",
-                                "domains": [
-                                    "stuff.co.nz"
-                                ]
-                            },
-                            {
                                 "rule": "securepubads.g.doubleclick.net/gpt/pubads_impl_",
                                 "domains": [
                                     "ah.nl",
@@ -6923,24 +7210,9 @@
                                 ]
                             },
                             {
-                                "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
-                                "domains": [
-                                    "rocketnews24.com",
-                                    "weather.com",
-                                    "wunderground.com"
-                                ]
-                            },
-                            {
                                 "rule": "securepubads.g.doubleclick.net/pagead/ima_ppub_config",
                                 "domains": [
                                     "sbs.com.au"
-                                ]
-                            },
-                            {
-                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt",
-                                "domains": [
-                                    "applesfera.com",
-                                    "triblive.com"
                                 ]
                             },
                             {
@@ -7476,6 +7748,7 @@
                                     "cosmicbook.news",
                                     "eatroyo.com",
                                     "experian.com",
+                                    "ljsilvers.com",
                                     "piedmontng.com",
                                     "thesimsresource.com",
                                     "tradersync.com",
@@ -7606,6 +7879,7 @@
                                     "siouxlandnews.com",
                                     "southernoregoncw.com",
                                     "star64.tv",
+                                    "stockcharts.com",
                                     "thecw38.com",
                                     "thecw46.com",
                                     "thecwtc.com",
@@ -8553,6 +8827,7 @@
                                 "domains": [
                                     "signupgenius.com",
                                     "smithsonianmag.com",
+                                    "stockcharts.com",
                                     "titantv.com"
                                 ]
                             },
@@ -9255,6 +9530,12 @@
                                 ]
                             },
                             {
+                                "rule": "runtime.strm.yandex.ru/player/video/",
+                                "domains": [
+                                    "yandex.cloud"
+                                ]
+                            },
+                            {
                                 "rule": "strm.yandex.ru/vh-special-converted/vod-content/",
                                 "domains": [
                                     "<all>"
@@ -9427,7 +9708,7 @@
                     "domain": "instructure.com"
                 }
             ],
-            "hash": "b7c276ffe1417313a46c0d13fbc9fcd9"
+            "hash": "f5b235ed3c5c9afdd44edfa3464235cf"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9486,6 +9767,18 @@
                     "domain": "axs.com"
                 },
                 {
+                    "domain": "urldefense.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
+                },
+                {
+                    "domain": "go365.com"
+                },
+                {
+                    "domain": "humana.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -9534,7 +9827,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3805ecfb8a129f70a99e73a364b38f38"
+            "hash": "3792a4970c07fe00da08f77e7dcf01ed"
         },
         "userAgentRotation": {
             "settings": {

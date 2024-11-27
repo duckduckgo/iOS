@@ -23,6 +23,7 @@ import Kingfisher
 import XCTest
 
 @testable import Core
+@testable import DuckDuckGo
 
 class FaviconsTests: XCTestCase {
 
@@ -110,7 +111,7 @@ class FaviconsTests: XCTestCase {
     func testWhenGeneratingKingfisherResourceThenCorrectKeyAndURLAreGenerated() {
         
         let resource = favicons.defaultResource(forDomain: Constants.exampleDomain)
-        XCTAssertEqual(resource?.cacheKey, "\(Favicons.Constants.salt)\(Constants.exampleDomain)".sha256())
+        XCTAssertEqual(resource?.cacheKey, "\(FaviconHasher.salt)\(Constants.exampleDomain)".sha256())
         XCTAssertEqual(resource?.downloadURL, URL(string: "https://example.com/apple-touch-icon.png"))
         
     }

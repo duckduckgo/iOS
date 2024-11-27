@@ -82,6 +82,8 @@ class AppSettingsMock: AppSettings {
     var autoconsentEnabled = true
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus = .undetermined
+    
+    var crashCollectionShouldRevertOptedInStatusTrigger: Int = 0
 
     var newTabPageSectionsEnabled: Bool = false
 

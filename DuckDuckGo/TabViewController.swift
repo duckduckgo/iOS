@@ -128,7 +128,7 @@ class TabViewController: UIViewController {
     private var performanceMetrics: PerformanceMetricsSubfeature?
 
     private var detectedLoginURL: URL?
-    private var preserveLoginsWorker: PreserveLoginsWorker?
+    private var fireproofingWorker: FireproofingWorking?
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
@@ -370,6 +370,7 @@ class TabViewController: UIViewController {
     let contextualOnboardingLogic: ContextualOnboardingLogic
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
+    let fireproofing: Fireproofing
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -386,7 +387,8 @@ class TabViewController: UIViewController {
                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
-                   textZoomCoordinator: TextZoomCoordinating) {
+                   textZoomCoordinator: TextZoomCoordinating,
+                   fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -407,6 +409,7 @@ class TabViewController: UIViewController {
         self.featureFlagger = featureFlagger
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.fireproofing = fireproofing
 
         super.init(coder: aDecoder)
         
@@ -421,7 +424,7 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        preserveLoginsWorker = PreserveLoginsWorker(controller: self)
+        fireproofingWorker = FireproofingWorking(controller: self, fireproofing: fireproofing)
         initAttributionLogic()
         decorate()
         addTextZoomObserver()
@@ -794,14 +797,14 @@ class TabViewController: UIViewController {
     }
     
     func enableFireproofingForDomain(_ domain: String) {
-        PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
+        FireproofingAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
             Pixel.fire(pixel: .browsingMenuFireproof)
-            self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
+            self?.fireproofingWorker?.handleUserEnablingFireproofing(forDomain: domain)
         }
     }
     
     func disableFireproofingForDomain(_ domain: String) {
-        preserveLoginsWorker?.handleUserDisablingFireproofing(forDomain: domain)
+        fireproofingWorker?.handleUserDisablingFireproofing(forDomain: domain)
     }
 
     func dismissContextualDaxFireDialog() {
@@ -1621,18 +1624,18 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func checkLoginDetectionAfterNavigation() {
-        if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
-                                                      currentURL: url,
-                                                      isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
-                                                      saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
-                                                      saveLoginPromptIsPresenting: saveLoginPromptIsPresenting)
-           ?? false {
+        if fireproofingWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
+                                                    currentURL: url,
+                                                    isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
+                                                    saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
+                                                    saveLoginPromptIsPresenting: saveLoginPromptIsPresenting) ?? false {
+
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
             saveLoginPromptIsPresenting = false
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         Logger.general.debug("didFailNavigation; error: \(error)")
         adClickAttributionDetection.onDidFailNavigation()
@@ -2569,7 +2572,7 @@ extension TabViewController: UserContentControllerDelegate {
         
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
-            PreserveLogins.Notifications.loginDetectionStateChanged,
+            UserDefaultsFireproofing.Notifications.loginDetectionStateChanged,
             AppUserDefaults.Notifications.doNotSellStatusChange
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
@@ -2976,6 +2979,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         return ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
                                       sessionKey: autofillUserScript?.sessionKey ?? "",
+                                      messageSecret: autofillUserScript?.messageSecret ?? "",
                                       featureToggles: supportedFeatures)
     }
 

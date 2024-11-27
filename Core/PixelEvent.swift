@@ -59,6 +59,7 @@ extension Pixel {
         case tabSwitcherClickCloseTab
         case tabSwitcherSwipeCloseTab
         case tabSwitchLongPressNewTab
+        case tabSwitcherOpenDaily
 
         case settingsDoNotSellShown
         case settingsDoNotSellOn
@@ -870,6 +871,12 @@ extension Pixel {
         case duckPlayerYouTubeOverlayNavigationOutsideYoutube
         case duckPlayerYouTubeOverlayNavigationClosed
         case duckPlayerYouTubeNavigationIdle30
+
+        // MARK: Launch time
+        case appDidFinishLaunchingTime(time: BucketAggregation)
+        case appDidShowUITime(time: BucketAggregation)
+        case appDidBecomeActiveTime(time: BucketAggregation)
+
     }
 
 }
@@ -911,6 +918,7 @@ extension Pixel.Event {
         case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
         case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
         case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
+        case .tabSwitcherOpenDaily: return "m_tab_manager_clicked_daily"
 
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
@@ -1733,6 +1741,11 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+
+        // MARK: Launch time
+        case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
+        case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
+        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         }
     }

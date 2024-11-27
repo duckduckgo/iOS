@@ -1,2 +1,2 @@
-- Videos in Duck Player now open in a new tab by default, making it easier to navigate between YouTube and Duck Player. This setting can also be turned off in Settings > Duck Player.
+- Improved text zoom! You can now set the zoom level of specific domains from the browsing menu. Use the Fire Button to reset zoom levels to the default.
 - Bug fixes and other improvements.

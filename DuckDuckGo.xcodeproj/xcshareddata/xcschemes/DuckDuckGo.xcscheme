@@ -50,7 +50,8 @@
       </CommandLineArguments>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84E341A51E2F7EFB00BDBA6F"
@@ -77,7 +78,8 @@
             </SkippedTests>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "85D33FCA25C97B6E002B91A6"
@@ -87,13 +89,25 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "WaitlistTests"
                BuildableName = "WaitlistTests"
                BlueprintName = "WaitlistTests"
                ReferencedContainer = "container:LocalPackages/Waitlist">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "984249BD2CED4F430071C7DB"
+               BuildableName = "WebViewUnitTests.xctest"
+               BlueprintName = "WebViewUnitTests"
+               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

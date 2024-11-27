@@ -25,7 +25,7 @@ extension UIImageView {
     
     /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
     func loadFavicon(forDomain domain: String?,
-                     usingCache cacheType: Favicons.CacheType,
+                     usingCache cacheType: FaviconsCacheType,
                      useFakeFavicon: Bool = true,
                      preferredFakeFaviconLetters: String? = nil,
                      completion: ((UIImage?, Bool) -> Void)? = nil) {

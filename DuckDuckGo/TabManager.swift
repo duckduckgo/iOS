@@ -311,7 +311,7 @@ class TabManager {
 
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self,
-                  let tabsCacheUrl = Favicons.CacheType.tabs.cacheLocation()?.appendingPathComponent(Favicons.Constants.tabsCachePath),
+                  let tabsCacheUrl = FaviconsCacheType.tabs.cacheLocation()?.appendingPathComponent(Favicons.Constants.tabsCachePath),
                   let contents = try? FileManager.default.contentsOfDirectory(at: tabsCacheUrl, includingPropertiesForKeys: nil, options: []),
                     !contents.isEmpty else { return }
 
@@ -327,7 +327,7 @@ class TabManager {
             })
 
             // hash the unique tab hosts
-            let tabLinksHashed = tabLink.map { Favicons.createHash(ofDomain: $0) }
+            let tabLinksHashed = tabLink.map { FaviconHasher.createHash(ofDomain: $0) }
 
             // filter images that don't have a corresponding tab
             let toDelete = imageDomainURLs.filter { !tabLinksHashed.contains($0) }

@@ -42,15 +42,15 @@ public class DataStoreWarmup {
 
 }
 
-private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
+public class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
 
     var finished: PassthroughSubject? = PassthroughSubject<Void, Never>()
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         return .allow
     }
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let finished {
             finished.send()
             self.finished = nil
@@ -59,7 +59,7 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
         }
     }
 
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         Pixel.fire(pixel: .webKitDidTerminateDuringWarmup)
 
         if let finished {
@@ -71,7 +71,7 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
     }
 
     var cancellable: AnyCancellable?
-    func waitForLoad() async {
+    public func waitForLoad() async {
         await withCheckedContinuation { continuation in
             cancellable = finished?.sink { _ in
                 continuation.resume()
@@ -80,10 +80,16 @@ private class BlockingNavigationDelegate: NSObject, WKNavigationDelegate {
     }
 
     @MainActor
-    func loadInBackgroundWebView(url: URL) async {
+    public func prepareWebView() -> WKWebView {
         let config = WKWebViewConfiguration.persistent()
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
+        return webView
+    }
+
+    @MainActor
+    public func loadInBackgroundWebView(url: URL) async {
+        let webView = prepareWebView()
         let request = URLRequest(url: url)
         webView.load(request)
         await waitForLoad()

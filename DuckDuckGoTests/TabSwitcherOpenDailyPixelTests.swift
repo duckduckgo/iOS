@@ -1,5 +1,5 @@
 //
-//  TabSwitcherDailyPixelTests.swift
+//  TabSwitcherOpenDailyPixelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import XCTest
 import Core
 @testable import DuckDuckGo
 
-final class TabSwitcherDailyPixelTests: XCTestCase {
+final class TabSwitcherOpenDailyPixelTests: XCTestCase {
     func testPopulatesParameters() {
         let tabs = [Tab(), Tab(), Tab()]
         let pixel = TabSwitcherOpenDailyPixel()

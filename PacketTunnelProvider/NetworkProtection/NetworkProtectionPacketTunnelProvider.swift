@@ -493,6 +493,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         )
         notificationsPresenter.requestAuthorization()
 
+        let entitlementsCheck: (() async -> Result<Bool, Error>) = {
+            do {
+                Logger.networkProtection.log("Entitlements check...")
+                let entitlements = try await subscriptionManager.getEntitlements(forceRefresh: true)
+                Logger.networkProtection.log("Entitlements found: \(entitlements, privacy: .public)")
+                return .success(entitlements.contains(.networkProtection))
+            } catch {
+                Logger.networkProtection.error("Failed to get entitlements: \(error)")
+                return .failure(error)
+            }
+        }
+
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
@@ -504,11 +516,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
-                   entitlementCheck: {
-            let hasEntitlement = subscriptionManager.entitlements.contains(.networkProtection)
-            return .success(hasEntitlement)
-        }
-        )
+                   entitlementCheck: entitlementsCheck)
 
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
@@ -560,11 +568,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         activationDateStore.setActivationDateIfNecessary()
         activationDateStore.updateLastActiveDate()
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
-    }
-
-    private func entitlementCheck() async -> Result<Bool, Error> {
-        let hasEntitlement = self.subscriptionManager.entitlements.contains(.networkProtection)
-        return .success(hasEntitlement)
     }
 }
 

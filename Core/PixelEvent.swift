@@ -476,6 +476,23 @@ extension Pixel {
 
         case networkProtectionMalformedErrorDetected
 
+        // MARK: - VPN Tips
+
+        case networkProtectionGeoswitchingTipShown
+        case networkProtectionGeoswitchingTipActioned
+        case networkProtectionGeoswitchingTipDismissed
+        case networkProtectionGeoswitchingTipIgnored
+
+        case networkProtectionSnoozeTipShown
+        case networkProtectionSnoozeTipActioned
+        case networkProtectionSnoozeTipDismissed
+        case networkProtectionSnoozeTipIgnored
+
+        case networkProtectionWidgetTipShown
+        case networkProtectionWidgetTipActioned
+        case networkProtectionWidgetTipDismissed
+        case networkProtectionWidgetTipIgnored
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -1316,6 +1333,23 @@ extension Pixel.Event {
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
 
         case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
+
+            // MARK: VPN tips
+
+        case .networkProtectionGeoswitchingTipShown: return "m_vpn_tip_geoswitching_shown"
+        case .networkProtectionGeoswitchingTipActioned: return "m_vpn_tip_geoswitching_actioned"
+        case .networkProtectionGeoswitchingTipDismissed: return "m_vpn_tip_geoswitching_dismissed"
+        case .networkProtectionGeoswitchingTipIgnored: return "m_vpn_tip_geoswitching_ignored"
+
+        case .networkProtectionSnoozeTipShown: return "m_vpn_tip_snooze_shown"
+        case .networkProtectionSnoozeTipActioned: return "m_vpn_tip_snooze_actioned"
+        case .networkProtectionSnoozeTipDismissed: return "m_vpn_tip_snooze_dismissed"
+        case .networkProtectionSnoozeTipIgnored: return "m_vpn_tip_snooze_ignored"
+
+        case .networkProtectionWidgetTipShown: return "m_vpn_tip_widget_shown"
+        case .networkProtectionWidgetTipActioned: return "m_vpn_tip_widget_actioned"
+        case .networkProtectionWidgetTipDismissed: return "m_vpn_tip_widget_dismissed"
+        case .networkProtectionWidgetTipIgnored: return "m_vpn_tip_widget_ignored"
 
             // MARK: remote messaging pixels
             

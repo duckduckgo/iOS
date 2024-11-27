@@ -68,11 +68,11 @@ jobs:
   end-to-end-tests:
     name: End to end Tests
     needs: build-end-to-end-tests
-    runs-on: macos-14
-    timeout-minutes: 90
+    runs-on: macos-14-xlarge
+    timeout-minutes: 120
     strategy:
       matrix:
-        test-tag: [release, privacy, securityTest, adClick]
+        test-tag: [release]
       max-parallel: 1 # Uncomment this line to run tests sequentially. 
       fail-fast: false
 
@@ -89,12 +89,13 @@ jobs:
 
     - name: Install Maestro
       run: |
-        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
+        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
 
     - name: End to End tests
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=17 --include-tags=${{ matrix.test-tag }} DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
-  
+        ./.maestro/setup_ui_tests.sh --skip-build
+        ./.maestro/run_ui_tests.sh 
+      
   # notify-failure:
   #   name: Notify on failure
   #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}

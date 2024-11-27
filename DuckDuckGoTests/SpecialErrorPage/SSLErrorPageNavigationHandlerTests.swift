@@ -48,12 +48,12 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://expired.badssl.com")!])
 
         // WHEN
-        let (failedURL, sslError, errorData) = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(failedURL, URL(string: "https://expired.badssl.com")!)
-        XCTAssertEqual(sslError, .expired)
-        XCTAssertEqual(errorData, SpecialErrorData(kind: .ssl,
+        XCTAssertEqual(sslError.url, URL(string: "https://expired.badssl.com")!)
+        XCTAssertEqual(sslError.type, .expired)
+        XCTAssertEqual(sslError.errorData, SpecialErrorData(kind: .ssl,
                                                        errorType: "expired",
                                                        domain: "expired.badssl.com",
                                                        eTldPlus1: "badssl.com"))
@@ -67,12 +67,12 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://wrong.host.badssl.com")!])
 
         // WHEN
-        let (failedURL, sslError, errorData) = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(failedURL, URL(string: "https://wrong.host.badssl.com")!)
-        XCTAssertEqual(sslError, .wrongHost)
-        XCTAssertEqual(errorData, SpecialErrorData(kind: .ssl,
+        XCTAssertEqual(sslError.url, URL(string: "https://wrong.host.badssl.com")!)
+        XCTAssertEqual(sslError.type, .wrongHost)
+        XCTAssertEqual(sslError.errorData, SpecialErrorData(kind: .ssl,
                                                        errorType: "wrongHost",
                                                        domain: "wrong.host.badssl.com",
                                                        eTldPlus1: "badssl.com"))
@@ -86,12 +86,12 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://self-signed.badssl.com")!])
 
         // WHEN
-        let (failedURL, sslError, errorData) = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(failedURL, URL(string: "https://self-signed.badssl.com")!)
-        XCTAssertEqual(sslError, .selfSigned)
-        XCTAssertEqual(errorData, SpecialErrorData(kind: .ssl,
+        XCTAssertEqual(sslError.url, URL(string: "https://self-signed.badssl.com")!)
+        XCTAssertEqual(sslError.type, .selfSigned)
+        XCTAssertEqual(sslError.errorData, SpecialErrorData(kind: .ssl,
                                                        errorType: "selfSigned",
                                                        domain: "self-signed.badssl.com",
                                                        eTldPlus1: "badssl.com"))
@@ -105,12 +105,12 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://untrusted-root.badssl.com")!])
 
         // WHEN
-        let (failedURL, sslError, errorData) = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(failedURL, URL(string: "https://untrusted-root.badssl.com")!)
-        XCTAssertEqual(sslError, .invalid)
-        XCTAssertEqual(errorData, SpecialErrorData(kind: .ssl,
+        XCTAssertEqual(sslError.url, URL(string: "https://untrusted-root.badssl.com")!)
+        XCTAssertEqual(sslError.type, .invalid)
+        XCTAssertEqual(sslError.errorData, SpecialErrorData(kind: .ssl,
                                                        errorType: "invalid",
                                                        domain: "untrusted-root.badssl.com",
                                                        eTldPlus1: "badssl.com"))

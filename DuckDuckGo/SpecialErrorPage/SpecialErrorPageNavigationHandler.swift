@@ -82,12 +82,12 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
     }
     
     func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError) {
-        guard let (url, sslErrorType, specialErrorData) = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
-        failedURL = url
-        sslErrorPageNavigationHandler.errorPageVisited(errorType: sslErrorType)
-        errorData = specialErrorData
+        guard let sslSpecialError = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
+        failedURL = sslSpecialError.url
+        sslErrorPageNavigationHandler.errorPageVisited(errorType: sslSpecialError.type)
+        errorData = sslSpecialError.errorData
         errorPageType = .ssl
-        loadSpecialErrorPage(url: url)
+        loadSpecialErrorPage(url: sslSpecialError.url)
     }
     
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {

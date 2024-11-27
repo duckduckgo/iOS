@@ -23,10 +23,16 @@ import BrowserServicesKit
 import SpecialErrorPages
 import Core
 
+struct SSLSpecialError {
+    let url: URL
+    let type: SSLErrorType
+    let errorData: SpecialErrorData
+}
+
 protocol SSLSpecialErrorPageNavigationHandling {
     func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 
-    func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> (url: URL, sslErrorType: SSLErrorType, specialErrorData: SpecialErrorData)?
+    func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> SSLSpecialError?
 
     func errorPageVisited(errorType: SSLErrorType)
 }
@@ -63,7 +69,7 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
         completionHandler(.useCredential, credential)
     }
 
-    func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> (url: URL, sslErrorType: SSLErrorType, specialErrorData: SpecialErrorData)? {
+    func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> SSLSpecialError? {
         guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
               error.code == NSURLErrorServerCertificateUntrusted,
               let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
@@ -77,7 +83,7 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
                                          domain: failedURL.host,
                                          eTldPlus1: storageCache.tld.eTLDplus1(failedURL.host))
 
-        return (failedURL, errorType, errorData)
+        return SSLSpecialError(url: failedURL, type: errorType, errorData: errorData)
     }
 
     func errorPageVisited(errorType: SSLErrorType) {

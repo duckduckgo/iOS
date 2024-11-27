@@ -24,13 +24,8 @@ import SpecialErrorPages
 import WebKit
 
 enum MaliciousSiteProtectionNavigationResult: Equatable {
-    case navigationHandled(MaliciousSiteProtectionNavigationHandlerModel)
+    case navigationHandled(SpecialErrorModel)
     case navigationNotHandled
-}
-
-struct MaliciousSiteProtectionNavigationHandlerModel: Equatable {
-    let error: SpecialErrorData
-    let url: URL
 }
 
 protocol MaliciousSiteProtectionNavigationHandling: AnyObject {

@@ -117,3 +117,15 @@ protocol WebViewNavigation {}
 // This cause the app to crash as the original implementation is executed.
 // Defining a protocol for WKNavigation and using mocks such as DummyWKNavigation in tests resolves the problem.
 extension WKNavigation: WebViewNavigation {}
+
+// MARK: - Special Error Model
+
+struct SpecialErrorModel: Equatable {
+    let url: URL
+    let errorData: SpecialErrorData
+}
+
+struct SSLSpecialError {
+    let type: SSLErrorType
+    let error: SpecialErrorModel
+}

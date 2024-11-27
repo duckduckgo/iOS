@@ -65,7 +65,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
                 var request = navigationAction.request
                 request.url = model.url
                 failedURL = model.url
-                errorData = model.error
+                errorData = model.errorData
                 errorPageType = .phishing
                 loadSpecialErrorPage(request: request)
                 return true
@@ -83,11 +83,11 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
     
     func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError) {
         guard let sslSpecialError = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
-        failedURL = sslSpecialError.url
+        failedURL = sslSpecialError.error.url
         sslErrorPageNavigationHandler.errorPageVisited(errorType: sslSpecialError.type)
-        errorData = sslSpecialError.errorData
+        errorData = sslSpecialError.error.errorData
         errorPageType = .ssl
-        loadSpecialErrorPage(url: sslSpecialError.url)
+        loadSpecialErrorPage(url: sslSpecialError.error.url)
     }
     
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {

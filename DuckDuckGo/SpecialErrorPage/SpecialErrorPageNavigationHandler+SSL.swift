@@ -23,12 +23,6 @@ import BrowserServicesKit
 import SpecialErrorPages
 import Core
 
-struct SSLSpecialError {
-    let url: URL
-    let type: SSLErrorType
-    let errorData: SpecialErrorData
-}
-
 protocol SSLSpecialErrorPageNavigationHandling {
     func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 
@@ -83,7 +77,7 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
                                          domain: failedURL.host,
                                          eTldPlus1: storageCache.tld.eTLDplus1(failedURL.host))
 
-        return SSLSpecialError(url: failedURL, type: errorType, errorData: errorData)
+        return SSLSpecialError(type: errorType, error: SpecialErrorModel(url: failedURL, errorData: errorData))
     }
 
     func errorPageVisited(errorType: SSLErrorType) {

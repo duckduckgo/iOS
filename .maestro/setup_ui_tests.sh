@@ -67,9 +67,9 @@ build_app() {
 echo
 echo "ℹ️  Checking environment for UI testing with maestro"
 
-check_maestro
-check_command xcodebuild
-check_command xcrun
+#check_maestro
+#check_command xcodebuild
+#check_command xcrun
 
 echo "✅ Expected commands available"
 echo

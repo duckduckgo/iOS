@@ -56,6 +56,10 @@ public enum FeatureFlag: String {
     
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
+
+    /// https://app.asana.com/0/1204167627774280/1208794395441049/f
+    case aiChatBrowsingToolbarShortcut
+
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
@@ -122,6 +126,8 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
+            return .internalOnly
+        case .aiChatBrowsingToolbarShortcut:
             return .internalOnly
         }
     }

@@ -25,6 +25,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
+/* Open AI Chat action in the menu list */
+"action.title.aichat" = "Chat";
+
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Passwords";
 
@@ -79,8 +82,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Print";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Print Site";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";
@@ -135,6 +141,9 @@
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
+
+/* Title for DuckDuckGo AI Chat. Should not be translated */
+"aichat.title" = "DuckDuckGo AI Chat";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";

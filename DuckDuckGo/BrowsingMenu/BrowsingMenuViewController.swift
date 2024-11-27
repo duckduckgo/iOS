@@ -249,8 +249,9 @@ extension BrowsingMenuViewController: UITableViewDelegate {
         
         switch menuEntries[indexPath.row] {
         case .regular(_, _, _, _, let action):
-            dismiss(animated: true)
-            action()
+            dismiss(animated: true) {
+                action()
+            }
         case .separator:
             break
         }

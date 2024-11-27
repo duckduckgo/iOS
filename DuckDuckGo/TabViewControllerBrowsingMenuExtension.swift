@@ -28,25 +28,29 @@ import PrivacyDashboard
 
 extension TabViewController {
 
-    func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
+    private var shouldShowAIChatInMenuHeader: Bool {
+        featureFlagger.isFeatureOn(.aiChatBrowsingToolbarShortcut)
+    }
+    private var shouldShowPrintButtonInBrowsingMenu: Bool { shouldShowAIChatInMenuHeader }
 
+    func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab,
-                                                 accessibilityLabel: UserText.keyCommandNewTab,
-                                                 image: UIImage(named: "Add-24")!,
-                                                 action: { [weak self] in
+        let newTabEntry = BrowsingMenuEntry.regular(name: UserText.actionNewTab,
+                                                    accessibilityLabel: UserText.keyCommandNewTab,
+                                                    image: UIImage(named: "Add-24")!,
+                                                    action: { [weak self] in
             self?.onNewTabAction()
-        }))
+        })
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
+        let shareEntry = BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
             Pixel.fire(pixel: .browsingMenuShare)
             self.onShareAction(forLink: self.link!, fromView: menu)
-        }))
+        })
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
+        let copyEntry = BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
             guard let strongSelf = self else { return }
             if !strongSelf.isError, let url = strongSelf.webView.url {
                 strongSelf.onCopyAction(forUrl: url)
@@ -58,15 +62,32 @@ extension TabViewController {
             let addressBarBottom = strongSelf.appSettings.currentAddressBarPosition.isBottom
             ActionMessageView.present(message: UserText.actionCopyMessage,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
-        }))
+        })
 
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
+        let printEntry = BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuPrint)
             self?.print()
-        }))
+        })
+
+        let chatEntry = BrowsingMenuEntry.regular(name: UserText.actionOpenAIChat, image: UIImage(named: "AIChat-24")!, action: { [weak self] in
+            self?.openAIChat()
+        })
+
+        if shouldShowAIChatInMenuHeader {
+            entries.append(newTabEntry)
+            entries.append(chatEntry)
+            entries.append(shareEntry)
+            entries.append(copyEntry)
+        } else {
+            entries.append(newTabEntry)
+            entries.append(shareEntry)
+            entries.append(copyEntry)
+            entries.append(printEntry)
+        }
 
         return entries
     }
+
 
     var favoriteEntryIndex: Int { 1 }
 
@@ -82,6 +103,15 @@ extension TabViewController {
 
         if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
+        }
+
+        if shouldShowPrintButtonInBrowsingMenu {
+            entries.append(.regular(name: UserText.actionPrintSite,
+                                    accessibilityLabel: UserText.actionPrintSite,
+                                    image: UIImage(named: "Print-16")!,
+                                    action: { [weak self] in
+                self?.print()
+            }))
         }
 
         if link != nil {
@@ -438,6 +468,10 @@ extension TabViewController {
 
     private func onOpenBookmarksAction() {
         delegate?.tabDidRequestBookmarks(tab: self)
+    }
+
+    private func openAIChat() {
+        delegate?.tabDidRequestAIChat(tab: self)
     }
 
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {

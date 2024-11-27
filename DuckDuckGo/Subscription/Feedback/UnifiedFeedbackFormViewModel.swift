@@ -135,7 +135,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
         }
     }
 
-    private let accountManager: any AccountManager
+    private let subscriptionTokenProvider: any SubscriptionTokenProvider
     private let apiService: any Networking.APIService
     private let vpnMetadataCollector: any UnifiedMetadataCollector
     private let defaultMetadataCollector: any UnifiedMetadataCollector
@@ -143,7 +143,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
 
     let source: String
 
-    init(accountManager: any AccountManager,
+    init(subscriptionTokenProvider: any SubscriptionTokenProvider,
          apiService: any Networking.APIService,
          vpnMetadataCollector: any UnifiedMetadataCollector,
          defaultMetadatCollector: any UnifiedMetadataCollector = DefaultMetadataCollector(),
@@ -151,7 +151,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
          source: Source = .unknown) {
         self.viewState = .feedbackPending
 
-        self.accountManager = accountManager
+        self.subscriptionTokenProvider = subscriptionTokenProvider
         self.apiService = apiService
         self.vpnMetadataCollector = vpnMetadataCollector
         self.defaultMetadataCollector = defaultMetadatCollector
@@ -269,7 +269,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
     private func submitIssue(metadata: UnifiedFeedbackMetadata?) async throws {
         guard !userEmail.isEmpty, let selectedCategory else { return }
 
-        guard let accessToken = accountManager.accessToken else {
+        guard let accessToken = try? await subscriptionTokenProvider.getTokenContainer(policy: .localValid) else {
             throw Error.missingAccessToken
         }
 

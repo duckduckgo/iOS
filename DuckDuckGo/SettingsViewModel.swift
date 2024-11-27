@@ -740,7 +740,7 @@ extension SettingsViewModel {
             state.subscription.subscriptionExist = true
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
-            state.subscription.entitlements = subscriptionManager.entitlements
+            state.subscription.entitlements = subscriptionManager.currentEntitlements
         } catch SubscriptionEndpointServiceError.noData, OAuthClientError.missingTokens {
             // Auth successful but no Subscription is available
             Logger.subscription.log("Subscription not present")

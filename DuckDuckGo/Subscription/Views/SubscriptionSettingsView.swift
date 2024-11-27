@@ -245,7 +245,7 @@ struct SubscriptionSettingsView: View {
     @ViewBuilder
     private var supportButton: some View {
         let viewModel = UnifiedFeedbackFormViewModel(
-            accountManager: AppDependencyProvider.shared.accountManager,
+            subscriptionTokenProvider: AppDependencyProvider.shared.subscriptionManager,
             apiService: DefaultAPIService(),
             vpnMetadataCollector: DefaultVPNMetadataCollector(),
             source: .ppro

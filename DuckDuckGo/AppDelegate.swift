@@ -1086,8 +1086,7 @@ import os.log
             return
         }
 
-        let entitlements = AppDependencyProvider.shared.subscriptionManager.entitlements
-        if entitlements.contains(.networkProtection) {
+        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1165,8 +1164,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func presentNetworkProtectionStatusSettingsModal() {
-        let entitlements = AppDependencyProvider.shared.subscriptionManager.entitlements
-        if entitlements.contains(.networkProtection) {
+        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
             (window?.rootViewController as? MainViewController)?.segueToVPN()
         } else {
             (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()

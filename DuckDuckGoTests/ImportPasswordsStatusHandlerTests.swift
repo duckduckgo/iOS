@@ -38,7 +38,7 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
         syncService = nil
     }
 
-    func testWhenAuthStateInactiveThenSetImportViaSyncStartDate() {
+    func testWhenAuthStateInactiveThenSetImportViaSyncStartDate() async {
         appSettings.autofillImportViaSyncStart = nil
         syncService.authState = .inactive
 
@@ -51,12 +51,12 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenAuthStateActiveAndHasNotSyncedDesktopDeviceThenSetImportViaSyncStartDate() {
+    func testWhenAuthStateActiveAndHasNotSyncedDesktopDeviceThenSetImportViaSyncStartDate() async {
         appSettings.autofillImportViaSyncStart = nil
         syncService.authState = .active
         syncService.registeredDevices = []
@@ -71,12 +71,12 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenAuthStateActiveAndHasSyncedDesktopDeviceThenDoNotSetImportViaSyncStartDate() {
+    func testWhenAuthStateActiveAndHasSyncedDesktopDeviceThenDoNotSetImportViaSyncStartDate() async {
         appSettings.autofillImportViaSyncStart = nil
         syncService.authState = .active
         syncService.registeredDevices = [RegisteredDevice(id: "1", name: "Device 1", type: "desktop")]
@@ -91,12 +91,12 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenNeverStartedImportThenNoPixelFired() {
+    func testWhenNeverStartedImportThenNoPixelFired() async {
 
         let importPasswordsStatusHandler = TestImportPasswordsStatusHandler.init(appSettings: appSettings, syncService: syncService)
         let expectation = XCTestExpectation(description: "CheckSyncSuccessStatus completes")
@@ -107,12 +107,12 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
     }
 
-    func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenSuccessPixelFired() {
+    func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenSuccessPixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date()
         syncService.authState = .active
@@ -127,13 +127,13 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportSuccess)
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenNoPixelFired() {
+    func testWhenRecentlyStartedImportAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenNoPixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date()
         syncService.authState = .active
@@ -148,13 +148,13 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
         XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenRecentlyStartedImportAndSyncAuthStateIsInactiveThenNoPixelFired() {
+    func testWhenRecentlyStartedImportAndSyncAuthStateIsInactiveThenNoPixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date()
         syncService.authState = .inactive
@@ -168,13 +168,13 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
         XCTAssertNotNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenNoPixelFired() {
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasSyncedDesktopDeviceThenNoPixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
         syncService.authState = .active
@@ -189,13 +189,13 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertNil(importPasswordsStatusHandler.lastFiredPixel)
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenFailurePixelFired() {
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsActiveAndHasNotSyncedDesktopDeviceThenFailurePixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
         syncService.authState = .active
@@ -210,13 +210,13 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportFailure)
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 
-    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsInactiveThenFailurePixelFired() {
+    func testWhenImportStartedMoreThan48HoursAgoAndSyncAuthStateIsInactiveThenFailurePixelFired() async {
 
         appSettings.autofillImportViaSyncStart = Date().addingTimeInterval(-60 * 60 * 49)
         syncService.authState = .inactive
@@ -230,13 +230,12 @@ final class ImportPasswordsStatusHandlerTests: XCTestCase {
               expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
 
         XCTAssertEqual(importPasswordsStatusHandler.lastFiredPixel, .autofillLoginsImportFailure)
         XCTAssertNil(appSettings.autofillImportViaSyncStart)
     }
 }
-
 
 class TestImportPasswordsStatusHandler: ImportPasswordsStatusHandler {
     var lastFiredPixel: Pixel.Event?

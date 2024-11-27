@@ -114,6 +114,9 @@ import os.log
     private let voiceSearchHelper = VoiceSearchHelper()
 
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
+
+    private var didFinishLaunchingStartTime: CFAbsoluteTime?
+
     override init() {
         super.init()
 
@@ -125,7 +128,18 @@ import os.log
     }
 
     // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -184,7 +198,19 @@ import os.log
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+
+            window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+
+            let blockingDelegate = BlockingNavigationDelegate()
+            let webView = blockingDelegate.prepareWebView()
+            window?.rootViewController?.view.addSubview(webView)
+            window?.rootViewController?.view.backgroundColor = .red
+            webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
+
+            let request = URLRequest(url: URL(string: "about:blank")!)
+            webView.load(request)
+
             return true
         }
 
@@ -361,8 +387,8 @@ import os.log
                                           fireproofing: fireproofing,
                                           subscriptionCookieManager: subscriptionCookieManager,
                                           textZoomCoordinator: makeTextZoomCoordinator(),
-                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing)
-            )
+                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
+                                          appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -440,7 +466,7 @@ import os.log
                 return nil
             }
 
-            return WKWebsiteDataStore.current().httpCookieStore
+            return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
         }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
 
@@ -571,6 +597,14 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
@@ -641,7 +675,7 @@ import os.log
             }
         }
 
-        Task { @MainActor in
+        Task {
             await subscriptionCookieManager.refreshSubscriptionCookie()
         }
 
@@ -765,6 +799,12 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        didFinishLaunchingStartTime = nil
+        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func suspendSync() {

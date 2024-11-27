@@ -21,6 +21,44 @@ import XCTest
 @testable import Core
 @testable import Subscription
 
+// TODO: More broad shared TestUtils
+extension UserDefaultsWrapper {
+
+    public static func clearAll() {
+        Key.allCases.forEach { key in
+            UserDefaults.app.removeObject(forKey: key.rawValue)
+        }
+    }
+}
+
+extension XCTestCase {
+
+    func temporaryUserDefaultSuite(with filePath: String) -> String {
+        guard let lastPathComponent = NSURL(fileURLWithPath: filePath).lastPathComponent else {
+            fatalError("Path should have a last path component")
+        }
+
+        do {
+            let temporaryDirectory = try FileManager.default.url(
+                for: .itemReplacementDirectory,
+                in: .userDomainMask,
+                appropriateFor: FileManager.default.temporaryDirectory,
+                create: true
+            )
+
+            return "\(temporaryDirectory)\(lastPathComponent)"
+        } catch {
+            fatalError("temporary directory should always be created")
+        }
+    }
+
+    func setupUserDefault(with path: String) {
+        let tmpPath = temporaryUserDefaultSuite(with: path)
+        UserDefaults.app.removePersistentDomain(forName: tmpPath)
+        UserDefaults.app = UserDefaults(suiteName: tmpPath)!
+    }
+}
+
 class UserDefaultsFireproofingTests: XCTestCase {
     
     override func setUp() {

@@ -87,7 +87,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             fireproofing: MockFireproofing(),
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
-            websiteDataManager: mockWebsiteDataManager
+            websiteDataManager: mockWebsiteDataManager,
+            appDidFinishLaunchingStartTime: nil
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

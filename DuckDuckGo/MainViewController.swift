@@ -185,8 +185,6 @@ class MainViewController: UIViewController {
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
-    private var aiChatNavigationController: UINavigationController?
-
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -1685,11 +1683,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        self.aiChatNavigationController = nil
-    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -2349,14 +2342,10 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
-        if aiChatNavigationController == nil {
-             aiChatNavigationController = UINavigationController(rootViewController: AIChatViewController())
-         }
+        let navigationController = UINavigationController(rootViewController: AIChatViewController())
 
-        guard let aiChatNavigationController else { return }
-
-        aiChatNavigationController.modalPresentationStyle = .fullScreen
-        tab.present(aiChatNavigationController, animated: true, completion: nil)
+        navigationController.modalPresentationStyle = .fullScreen
+        tab.present(navigationController, animated: true, completion: nil)
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {

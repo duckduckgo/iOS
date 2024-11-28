@@ -65,14 +65,11 @@ struct SettingsSubscriptionView: View {
     private var purchaseSubscriptionView: some View {
         Group {
             let subtitleText = {
-                // TODO: no feature flag (old text)
-                // UserText.settingsPProDescription
-
                 switch subscriptionManager.storePurchaseManager().currentStorefrontRegion {
                 case .usa:
-                    UserText.settingsPProPurchaseUSDescription
+                    UserText.settingsPProDescription
                 case .restOfWorld:
-                    UserText.settingsPProPurchaseROWDescription
+                    UserText.settingsPProROWDescription
                 }
             }()
 

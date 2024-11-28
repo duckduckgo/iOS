@@ -34,14 +34,16 @@ final class AIChatModel {
         cleanupTimerCancellable?.cancel()
     }
 
+    /// Starts a 10-minute timer to trigger cleanup after AI Chat is closed.
+    /// Cancels any existing timer before starting a new one.
     func startCleanupTimer() {
         print("Start timer")
         cancelTimer()
 
         cleanupTimerCancellable = Just(())
-            .delay(for: .seconds(5), scheduler: RunLoop.main)
+            .delay(for: .seconds(600), scheduler: RunLoop.main)
             .sink { [weak self] in
                 self?.cleanupPublisher.send()
             }
     }
-}
+

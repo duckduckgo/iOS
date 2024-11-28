@@ -110,8 +110,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     private func applyTextZoom(_ webView: WKWebView) {
         guard isEnabled else { return }
         let level = textZoomLevel(forHost: webView.url?.host)
-        let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 1.0)
-        let viewScale = CGFloat(level.rawValue) / 100 * dynamicTypeScalePercentage
+        let viewScale = CGFloat(level.rawValue) / 100
         webView.applyViewScale(viewScale)
     }
 

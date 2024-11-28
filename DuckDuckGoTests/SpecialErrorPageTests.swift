@@ -68,7 +68,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
     func testWhenCertificateExpiredThenExpectedErrorPageIsShown() {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLCertExpired,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://expired.badssl.com")!])
@@ -89,10 +89,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.failedURL, URL(string: "https://expired.badssl.com")!)
-        XCTAssertEqual(sut.errorData, SpecialErrorData(kind: .ssl,
-                                                       errorType: "expired",
-                                                       domain: "expired.badssl.com",
-                                                       eTldPlus1: "badssl.com"))
+        XCTAssertEqual(sut.errorData, SpecialErrorData.ssl(type: .expired, domain: "expired.badssl.com", eTldPlus1: "badssl.com"))
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
@@ -100,7 +97,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
     func testWhenCertificateWrongHostThenExpectedErrorPageIsShown() {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLHostNameMismatch,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://wrong.host.badssl.com")!])
@@ -121,10 +118,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.failedURL, URL(string: "https://wrong.host.badssl.com")!)
-        XCTAssertEqual(sut.errorData, SpecialErrorData(kind: .ssl,
-                                                       errorType: "wrongHost",
-                                                       domain: "wrong.host.badssl.com",
-                                                       eTldPlus1: "badssl.com"))
+        XCTAssertEqual(sut.errorData, SpecialErrorData.ssl(type: .wrongHost, domain: "wrong.host.badssl.com", eTldPlus1: "badssl.com"))
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
@@ -132,7 +126,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
     func testWhenCertificateSelfSignedThenExpectedErrorPageIsShown() {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLXCertChainInvalid,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://self-signed.badssl.com")!])
@@ -153,10 +147,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.failedURL, URL(string: "https://self-signed.badssl.com")!)
-        XCTAssertEqual(sut.errorData, SpecialErrorData(kind: .ssl,
-                                                       errorType: "selfSigned",
-                                                       domain: "self-signed.badssl.com",
-                                                       eTldPlus1: "badssl.com"))
+        XCTAssertEqual(sut.errorData, SpecialErrorData.ssl(type: .selfSigned, domain: "self-signed.badssl.com", eTldPlus1: "badssl.com"))
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
@@ -164,7 +155,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
     func testWhenOtherCertificateIssueThenExpectedErrorPageIsShown() {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLUnknownRootCert,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://untrusted-root.badssl.com")!])
@@ -185,10 +176,7 @@ final class SpecialErrorPageTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.failedURL, URL(string: "https://untrusted-root.badssl.com")!)
-        XCTAssertEqual(sut.errorData, SpecialErrorData(kind: .ssl,
-                                                       errorType: "invalid",
-                                                       domain: "untrusted-root.badssl.com",
-                                                       eTldPlus1: "badssl.com"))
+        XCTAssertEqual(sut.errorData, SpecialErrorData.ssl(type: .invalid, domain: "untrusted-root.badssl.com", eTldPlus1: "badssl.com"))
         waitForExpectations(timeout: 1) { error in
             XCTAssertNil(error, "Expectation was not fulfilled in time")
         }
@@ -246,7 +234,7 @@ final class SpecialErrorPageTests: XCTestCase {
     func testWhenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() async {
         let protectionSpace = URLProtectionSpace(host: "", port: 4, protocol: nil, realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
         let challenge = URLAuthenticationChallenge(protectionSpace: protectionSpace, proposedCredential: nil, previousFailureCount: 0, failureResponse: nil, error: nil, sender: ChallengeSender())
-        await sut.visitSite()
+        await sut.visitSiteAction()
         await sut.webView(webView, didReceive: challenge) { _, credential in
             XCTAssertNotNil(credential)
         }

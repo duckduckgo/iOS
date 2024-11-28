@@ -39,4 +39,16 @@ final class MockFeatureFlagger: FeatureFlagger {
         }
         return true
     }
+
+    func getCohortIfEnabled(_ subfeature: any PrivacySubfeature) -> CohortID? {
+        return nil
+    }
+
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any CohortEnum)? where Flag: FeatureFlagExperimentDescribing {
+        return nil
+    }
+
+    func getAllActiveExperiments() -> Experiments {
+        return [:]
+    }
 }

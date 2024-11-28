@@ -66,7 +66,7 @@ extension FeatureFlag: FeatureFlagDescribing {
     public var source: FeatureFlagSource {
         switch self {
         case .debugMenu:
-            return .internalOnly
+            return .internalOnly()
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
         case .autofillCredentialInjecting:
@@ -106,9 +106,9 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
-            return .internalOnly
+            return .internalOnly()
         case .onboardingAddToDock:
-            return .internalOnly
+            return .internalOnly()
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
         case .autcompleteTabs:
@@ -122,7 +122,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
-            return .internalOnly
+            return .internalOnly()
         }
     }
 }

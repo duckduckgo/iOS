@@ -254,6 +254,18 @@ final class MockDuckPlayerFeatureFlagger: FeatureFlagger {
     func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         return !enabledFeatures.isEmpty
     }
+
+    func getCohortIfEnabled(_ subfeature: any PrivacySubfeature) -> CohortID? {
+        return nil
+    }
+
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any CohortEnum)? where Flag: FeatureFlagExperimentDescribing {
+        return nil
+    }
+
+    func getAllActiveExperiments() -> Experiments {
+        return [:]
+    }
 }
 
 final class MockDuckPlayerStorage: DuckPlayerStorage {

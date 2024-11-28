@@ -21,7 +21,20 @@ import UIKit
 import WebKit
 
 final class AIChatWebViewController: UIViewController {
-    private var webView = WKWebView()
+    private let chatModel: AIChatModel
+
+    private lazy var webView: WKWebView = {
+        return WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
+    }()
+
+    init(chatModel: AIChatModel) {
+        self.chatModel = chatModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -185,6 +185,11 @@ class MainViewController: UIViewController {
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
+    private lazy var aiChatNavigationController: UINavigationController = {
+        let chatModel = AIChatModel(webViewConfiguration: WKWebViewConfiguration.persistent())
+        return UINavigationController(rootViewController: AIChatViewController(chatModel: chatModel))
+    }()
+
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -2342,10 +2347,8 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
-        let navigationController = UINavigationController(rootViewController: AIChatViewController())
-
-        navigationController.modalPresentationStyle = .fullScreen
-        tab.present(navigationController, animated: true, completion: nil)
+        aiChatNavigationController.modalPresentationStyle = .fullScreen
+        tab.present(aiChatNavigationController, animated: true, completion: nil)
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {

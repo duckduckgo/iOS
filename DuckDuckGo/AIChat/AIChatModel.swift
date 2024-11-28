@@ -18,11 +18,30 @@
 //
 
 import WebKit
+import Combine
 
 final class AIChatModel {
+    private var cleanupTimerCancellable: AnyCancellable?
+
     let webViewConfiguration: WKWebViewConfiguration
+    let cleanupPublisher = PassthroughSubject<Void, Never>()
 
     init(webViewConfiguration: WKWebViewConfiguration) {
         self.webViewConfiguration = webViewConfiguration
+    }
+
+    func cancelTimer() {
+        cleanupTimerCancellable?.cancel()
+    }
+
+    func startCleanupTimer() {
+        print("Start timer")
+        cancelTimer()
+
+        cleanupTimerCancellable = Just(())
+            .delay(for: .seconds(5), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?.cleanupPublisher.send()
+            }
     }
 }

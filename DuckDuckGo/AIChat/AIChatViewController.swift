@@ -18,10 +18,12 @@
 //
 
 import UIKit
+import Combine
 
 final class AIChatViewController: UIViewController {
     private let chatModel: AIChatModel
-    private lazy var webViewController = AIChatWebViewController(chatModel: chatModel)
+    private var webViewController: AIChatWebViewController?
+    private var cleanupCancellable: AnyCancellable?
 
     init(chatModel: AIChatModel) {
         self.chatModel = chatModel
@@ -36,7 +38,17 @@ final class AIChatViewController: UIViewController {
         super.viewDidLoad()
 
         setupNavigationBar()
+        subscribeToCleanupPublisher()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         addWebViewController()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        chatModel.cancelTimer()
     }
 
     private func setupNavigationBar() {
@@ -72,23 +84,52 @@ final class AIChatViewController: UIViewController {
         closeButton.tintColor = .label
         navigationItem.rightBarButtonItem = closeButton
     }
-
     private func addWebViewController() {
-        addChild(webViewController)
-        view.addSubview(webViewController.view)
-        webViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        guard webViewController == nil else {
+            print("WebViewController already exists, returning")
+            return
+        }
+
+        let newWebViewController = AIChatWebViewController(chatModel: chatModel)
+        webViewController = newWebViewController
+
+        addChild(newWebViewController)
+        view.addSubview(newWebViewController.view)
+        newWebViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            webViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            webViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            webViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            newWebViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            newWebViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            newWebViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            newWebViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        webViewController.didMove(toParent: self)
+        newWebViewController.didMove(toParent: self)
+    }
+
+
+    private func removeWebViewController() {
+        webViewController?.removeFromParent()
+        webViewController?.view.removeFromSuperview()
+        webViewController = nil
+    }
+
+    private func subscribeToCleanupPublisher() {
+        cleanupCancellable = chatModel.cleanupPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.webViewController?.reload()
+            }
     }
 
     @objc private func closeButtonTapped() {
+        chatModel.startCleanupTimer()
         dismiss(animated: true, completion: nil)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        chatModel.cancelTimer()
+        removeWebViewController()
     }
 }

@@ -55,6 +55,10 @@ final class AIChatWebViewController: UIViewController {
         ])
     }
 
+    func reload() {
+        loadWebsite()
+    }
+
     private func loadWebsite() {
         if let url = URL(string: "https://duck.ai") {
             let request = URLRequest(url: url)

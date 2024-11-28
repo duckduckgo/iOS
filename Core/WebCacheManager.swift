@@ -131,7 +131,7 @@ public class WebCacheManager: WebsiteDataManaging {
         let count = await dataStoreCleaner.countContainers()
         await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, cookieStorage: cookieStorage, destinationStore: dataStore)
         await clearData(inDataStore: dataStore, withFireproofing: fireproofing)
-        dataStoreCleaner.removeAllContainersAfterDelay(previousCount: count)
+        await dataStoreCleaner.removeAllContainersAfterDelay(previousCount: count)
 
     }
 
@@ -161,8 +161,8 @@ extension WebCacheManager {
         dataStoreIdManager.invalidateCurrentId()
     }
 
-    private func removeContainersIfNeeded(previousCount: Int) {
-        dataStoreCleaner.removeAllContainersAfterDelay(previousCount: previousCount)
+    private func removeContainersIfNeeded(previousCount: Int) async {
+        await dataStoreCleaner.removeAllContainersAfterDelay(previousCount: previousCount)
     }
 
     private func clearData(inDataStore dataStore: WKWebsiteDataStore, withFireproofing fireproofing: Fireproofing) async {

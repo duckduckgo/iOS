@@ -128,7 +128,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .crashReportOptInStatusResetting:
             return .internalOnly
         case .aiChatBrowsingToolbarShortcut:
-            return .internalOnly
+            return .remoteReleasable(.subfeature(AIChatSubfeature.browsingToolbarShortcut))
         }
     }
 }

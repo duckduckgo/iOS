@@ -76,6 +76,7 @@ struct SettingsSubscriptionView: View {
             SettingsCellView(label: UserText.settingsPProSubscribe,
                              subtitle: subtitleText,
                              image: Image("SettingsPrivacyPro"))
+            .disabled(true)
 
             // Get privacy pro
             SettingsCustomCell(content: {

@@ -35,7 +35,7 @@ struct AIChatRemoteSettings: AIChatRemoteSettingsProvider {
 
         var defaultValue: String {
             switch self {
-            case .aiChatURL: return "https://duck.ai"
+            case .aiChatURL: return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=4"
             }
         }
     }

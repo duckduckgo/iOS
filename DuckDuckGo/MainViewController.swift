@@ -186,7 +186,8 @@ class MainViewController: UIViewController {
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
     private lazy var aiChatNavigationController: UINavigationController = {
-        let chatModel = AIChatModel(webViewConfiguration: WKWebViewConfiguration.persistent())
+        let remoteSettings = AIChatRemoteSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+        let chatModel = AIChatViewModel(webViewConfiguration: WKWebViewConfiguration.persistent(), remoteSettings: remoteSettings)
         return UINavigationController(rootViewController: AIChatViewController(chatModel: chatModel))
     }()
 

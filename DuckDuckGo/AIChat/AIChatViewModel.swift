@@ -1,5 +1,5 @@
 //
-//  AIChatModel.swift
+//  AIChatViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,30 +20,38 @@
 import WebKit
 import Combine
 
-final class AIChatModel {
+final class AIChatViewModel {
+    private let remoteSettings: AIChatRemoteSettingsProvider
     private var cleanupTimerCancellable: AnyCancellable?
 
     let webViewConfiguration: WKWebViewConfiguration
     let cleanupPublisher = PassthroughSubject<Void, Never>()
 
-    init(webViewConfiguration: WKWebViewConfiguration) {
+    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider) {
         self.webViewConfiguration = webViewConfiguration
+        self.remoteSettings = remoteSettings
     }
 
     func cancelTimer() {
+        Logger.aiChat.debug("Cancelling cleanup timer")
         cleanupTimerCancellable?.cancel()
     }
 
     /// Starts a 10-minute timer to trigger cleanup after AI Chat is closed.
     /// Cancels any existing timer before starting a new one.
     func startCleanupTimer() {
-        print("Start timer")
+        Logger.aiChat.debug("Starting cleanup timer")
         cancelTimer()
 
         cleanupTimerCancellable = Just(())
             .delay(for: .seconds(600), scheduler: RunLoop.main)
             .sink { [weak self] in
+                Logger.aiChat.debug("Cleanup timer done")
                 self?.cleanupPublisher.send()
             }
+    }
+
+    var aiChatURL: URL {
+        remoteSettings.aiChatURL
     }
 }

@@ -20,11 +20,11 @@ import UIKit
 import Combine
 
 final class AIChatViewController: UIViewController {
-    private let chatModel: AIChatModel
+    private let chatModel: AIChatViewModel
     private var webViewController: AIChatWebViewController?
     private var cleanupCancellable: AnyCancellable?
 
-    init(chatModel: AIChatModel) {
+    init(chatModel: AIChatViewModel) {
         self.chatModel = chatModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,6 +32,10 @@ final class AIChatViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Lifecycle
+extension AIChatViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +52,16 @@ final class AIChatViewController: UIViewController {
         super.viewDidAppear(animated)
         chatModel.cancelTimer()
     }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        chatModel.cancelTimer()
+        removeWebViewController()
+    }
+}
+
+// MARK: - Views Setup
+extension AIChatViewController {
 
     private func setupNavigationBar() {
         let imageView = UIImageView(image: UIImage(named: "Logo"))
@@ -110,6 +124,10 @@ final class AIChatViewController: UIViewController {
         webViewController?.view.removeFromSuperview()
         webViewController = nil
     }
+}
+
+// MARK: - Event handling
+extension AIChatViewController {
 
     private func subscribeToCleanupPublisher() {
         cleanupCancellable = chatModel.cleanupPublisher
@@ -122,11 +140,5 @@ final class AIChatViewController: UIViewController {
     @objc private func closeButtonTapped() {
         chatModel.startCleanupTimer()
         dismiss(animated: true)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        chatModel.cancelTimer()
-        removeWebViewController()
     }
 }

@@ -21,13 +21,13 @@ import UIKit
 import WebKit
 
 final class AIChatWebViewController: UIViewController {
-    private let chatModel: AIChatModel
+    private let chatModel: AIChatViewModel
 
     private lazy var webView: WKWebView = {
         return WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
     }()
 
-    init(chatModel: AIChatModel) {
+    init(chatModel: AIChatViewModel) {
         self.chatModel = chatModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,15 +54,18 @@ final class AIChatWebViewController: UIViewController {
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+}
+
+// MARK: - WebView functions
+
+extension AIChatWebViewController {
 
     func reload() {
         loadWebsite()
     }
 
     private func loadWebsite() {
-        if let url = URL(string: "https://duck.ai") {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
+        let request = URLRequest(url: chatModel.aiChatURL)
+        webView.load(request)
     }
 }

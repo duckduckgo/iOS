@@ -20,11 +20,19 @@
 import UIKit
 import WebKit
 
+protocol AIChatWebViewControllerDelegate: AnyObject {
+    func aiChatWebViewController(_ viewController: AIChatWebViewController, didRequestToLoad url: URL)
+}
+
 final class AIChatWebViewController: UIViewController {
+    weak var delegate: AIChatWebViewControllerDelegate?
+    private var didLoadAIChat = false
     private let chatModel: AIChatViewModel
 
     private lazy var webView: WKWebView = {
-        return WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
+        let webView = WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
+        webView.navigationDelegate = self // Set the navigation delegate
+        return webView
     }()
 
     init(chatModel: AIChatViewModel) {
@@ -67,5 +75,24 @@ extension AIChatWebViewController {
     private func loadWebsite() {
         let request = URLRequest(url: chatModel.aiChatURL)
         webView.load(request)
+    }
+}
+
+// MARK: - WKNavigationDelegate
+
+extension AIChatWebViewController: WKNavigationDelegate {
+
+    /// Allow loading only AI Chat-related requests; delegate others to the parent for handling.
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url {
+            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
+                decisionHandler(.allow)
+            } else {
+                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
+                decisionHandler(.cancel)
+            }
+        } else {
+            decisionHandler(.allow)
+        }
     }
 }

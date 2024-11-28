@@ -188,7 +188,9 @@ class MainViewController: UIViewController {
     private lazy var aiChatNavigationController: UINavigationController = {
         let remoteSettings = AIChatRemoteSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
         let chatModel = AIChatViewModel(webViewConfiguration: WKWebViewConfiguration.persistent(), remoteSettings: remoteSettings)
-        return UINavigationController(rootViewController: AIChatViewController(chatModel: chatModel))
+        let aiChatViewController = AIChatViewController(chatModel: chatModel)
+        aiChatViewController.delegate = self
+        return UINavigationController(rootViewController: aiChatViewController)
     }()
 
     init(
@@ -2934,5 +2936,11 @@ extension MainViewController {
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+extension MainViewController: AIChatViewControllerDelegate {
+    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
+        handleRequestedURL(url)
     }
 }

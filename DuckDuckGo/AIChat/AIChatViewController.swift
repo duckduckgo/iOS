@@ -19,7 +19,12 @@
 import UIKit
 import Combine
 
+protocol AIChatViewControllerDelegate: AnyObject {
+    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL)
+}
+
 final class AIChatViewController: UIViewController {
+    weak var delegate: AIChatViewControllerDelegate?
     private let chatModel: AIChatViewModel
     private var webViewController: AIChatWebViewController?
     private var cleanupCancellable: AnyCancellable?
@@ -90,7 +95,7 @@ extension AIChatViewController {
             image: UIImage(named: "Close-24"),
             style: .plain,
             target: self,
-            action: #selector(closeButtonTapped)
+            action: #selector(closeAIChat)
         )
         closeButton.tintColor = .label
         navigationItem.rightBarButtonItem = closeButton
@@ -102,21 +107,22 @@ extension AIChatViewController {
             return
         }
 
-        let newWebViewController = AIChatWebViewController(chatModel: chatModel)
-        webViewController = newWebViewController
+        let viewController = AIChatWebViewController(chatModel: chatModel)
+        viewController.delegate = self
+        webViewController = viewController
 
-        addChild(newWebViewController)
-        view.addSubview(newWebViewController.view)
-        newWebViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            newWebViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            newWebViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            newWebViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            newWebViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        newWebViewController.didMove(toParent: self)
+        viewController.didMove(toParent: self)
     }
 
     private func removeWebViewController() {
@@ -137,8 +143,15 @@ extension AIChatViewController {
             }
     }
 
-    @objc private func closeButtonTapped() {
+    @objc private func closeAIChat() {
         chatModel.startCleanupTimer()
         dismiss(animated: true)
+    }
+}
+
+extension AIChatViewController: AIChatWebViewControllerDelegate {
+    func aiChatWebViewController(_ viewController: AIChatWebViewController, didRequestToLoad url: URL) {
+        delegate?.aiChatViewController(self, didRequestToLoad: url)
+        closeAIChat()
     }
 }

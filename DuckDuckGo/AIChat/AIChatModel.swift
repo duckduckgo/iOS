@@ -46,4 +46,4 @@ final class AIChatModel {
                 self?.cleanupPublisher.send()
             }
     }
-
+}

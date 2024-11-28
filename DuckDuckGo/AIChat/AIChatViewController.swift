@@ -16,7 +16,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 import UIKit
 import Combine
 
@@ -36,7 +35,6 @@ final class AIChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavigationBar()
         subscribeToCleanupPublisher()
     }
@@ -64,7 +62,7 @@ final class AIChatViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = UserText.aiChatTitle
-        titleLabel.font = UIFont.semiBoldAppFont(ofSize: 17)
+        titleLabel.font = .semiBoldAppFont(ofSize: 17)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stackView.axis = .horizontal
@@ -72,11 +70,10 @@ final class AIChatViewController: UIViewController {
         stackView.alignment = .center
         stackView.distribution = .fill
 
-        let leftBarButtonItem = UIBarButtonItem(customView: stackView)
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
 
         let closeButton = UIBarButtonItem(
-            image: UIImage(named: "Close-24")!,
+            image: UIImage(named: "Close-24"),
             style: .plain,
             target: self,
             action: #selector(closeButtonTapped)
@@ -84,6 +81,7 @@ final class AIChatViewController: UIViewController {
         closeButton.tintColor = .label
         navigationItem.rightBarButtonItem = closeButton
     }
+
     private func addWebViewController() {
         guard webViewController == nil else {
             print("WebViewController already exists, returning")
@@ -107,7 +105,6 @@ final class AIChatViewController: UIViewController {
         newWebViewController.didMove(toParent: self)
     }
 
-
     private func removeWebViewController() {
         webViewController?.removeFromParent()
         webViewController?.view.removeFromSuperview()
@@ -124,7 +121,7 @@ final class AIChatViewController: UIViewController {
 
     @objc private func closeButtonTapped() {
         chatModel.startCleanupTimer()
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 
     override func didReceiveMemoryWarning() {

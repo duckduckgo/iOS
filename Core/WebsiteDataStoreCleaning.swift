@@ -33,7 +33,6 @@ public class DefaultWebsiteDataStoreCleaner: WebsiteDataStoreCleaning {
     @MainActor
     public func countContainers() async -> Int {
         guard #available(iOS 17, *) else { return 0 }
-        print("***", #function)
         return await WKWebsiteDataStore.allDataStoreIdentifiers.count
     }
 
@@ -45,7 +44,6 @@ public class DefaultWebsiteDataStoreCleaner: WebsiteDataStoreCleaning {
         // If this fails, we are going to still clean them next time as WebKit keeps track of all stores for us.
         Task {
             try? await Task.sleep(interval: 3.0)
-            print("***", #function)
             for uuid in await WKWebsiteDataStore.allDataStoreIdentifiers {
                 try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
             }
@@ -62,7 +60,6 @@ public class DefaultWebsiteDataStoreCleaner: WebsiteDataStoreCleaning {
             "left_overs_count": "\(previousLeftOversCount)"
         ]
 
-        print("***", #function)
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
         if ids.count > 1 {
             Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple, withAdditionalParameters: params)

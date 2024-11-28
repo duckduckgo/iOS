@@ -22,6 +22,8 @@ import Core
 import BrowserServicesKit
 import DDGSync
 
+/// The additional parameters being collected only apply to a single promotion about a DuckDuckGo product.
+/// The parameters are temporary, collected in aggregate, and anonymous.
 enum PrivacyProPromoParameters: String, CaseIterable {
     case isReinstall
     case fireButtonUser = "fireButtonUsed"

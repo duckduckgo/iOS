@@ -314,6 +314,8 @@ class TabViewController: UIViewController {
     
     private var lastRenderedURL: URL?
 
+    let pageLoadTimeCalculator: PageLoadTimeCalculator
+
     static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
@@ -405,6 +407,8 @@ class TabViewController: UIViewController {
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
         self.specialErrorPageNavigationHandler = specialErrorPageNavigationHandler
+
+        pageLoadTimeCalculator = PageLoadTimeCalculator()
 
         super.init(coder: aDecoder)
         
@@ -1439,6 +1443,15 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if let url = webView.url {
+            let result = pageLoadTimeCalculator.didFinishLoading(url)
+            if writeToCSV(fileName: "page_load_times.csv", loadTimes: result) {
+                let controller = UIAlertController(title: "Page loaded", message: String(describing: currentlyLoadedURL?.absoluteString), preferredStyle: .alert)
+                controller.addAction(.init(title: "Dismiss Page Loaded", style: .default))
+                present(controller, animated: true)
+            }
+        }
+
         self.currentlyLoadedURL = webView.url
         onTextZoomChange()
         adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
@@ -1829,6 +1842,10 @@ extension TabViewController: WKNavigationDelegate {
                     return
                 }
             }
+        }
+
+        if let url = navigationAction.request.url, navigationAction.isTargetingMainFrame() {
+            pageLoadTimeCalculator.willStartLoading(url)
         }
 
         Task { @MainActor in
@@ -3139,4 +3156,137 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
         }
     }
     
+}
+
+struct LoadTime {
+  let startTime: CFTimeInterval
+  var endTime: CFTimeInterval
+}
+
+final class PageLoadTimeCalculator {
+
+    private let tld = AppDependencyProvider.shared.storageCache.tld
+
+    private var loadTimes: [String: [LoadTime]]
+
+    init(loadTimes: [String: [LoadTime]] = [:]) {
+        self.loadTimes = loadTimes
+    }
+
+    func willStartLoading(_ url: URL) {
+        // If there's already an inflying request with same url and end time is 0 return it means we already handled it.
+        let tld = self.tld.eTLDplus1(url.host!)!
+        if loadTimes[tld]?.last?.endTime == 0 { return }
+        print("~~~WILL START LOADING URL: \(url.absoluteString)")
+        let startTime = CACurrentMediaTime()
+        let loadTime = LoadTime(startTime: startTime, endTime: 0)
+        loadTimes[tld, default: []].append(loadTime)
+    }
+
+    func didFinishLoading(_ url: URL) -> [String: [LoadTime]] {
+        let tld = self.tld.eTLDplus1(url.host!)!
+        guard var loadedTime = loadTimes[tld] else { return loadTimes }
+        // Calculate the load time
+        let endTime = CACurrentMediaTime()
+        // Update the last LoadTime instance with the end time
+        loadedTime[loadedTime.count - 1].endTime = endTime
+        loadTimes[tld] = loadedTime
+        let elapsedTime = loadedTime[loadedTime.count - 1].endTime - loadedTime[loadedTime.count - 1].startTime
+
+        print("~~~FINISHED LOADING URL: \(url.absoluteString), elapsed time: \(elapsedTime * 1000)ms")
+
+        print("~~~DATA: \(loadTimes)")
+
+        return loadTimes
+    }
+
+}
+
+//func loadExistingData(from fileName: String) -> [String: [LoadTime]] {
+//    // Get the path to the documents directory
+//    let fileManager = FileManager.default
+//    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+//        fatalError("Could not find documents directory")
+//    }
+//
+//    // Create the file URL
+//    let fileURL = documentsDirectory.appendingPathComponent(fileName)
+//
+//    // Check if the file exists
+//    if fileManager.fileExists(atPath: fileURL.path) {
+//        do {
+//            var loadTimes: [String: [LoadTime]] = [:]
+//            let content = try String(contentsOf: fileURL, encoding: .utf8)
+//            let lines = content.split(separator: "\n")
+//
+//            for line in lines {
+//                let components = line.split(separator: ",")
+//                guard components.count > 1 else { continue }
+//
+//                let url = String(components[0])
+//                let loadTimesArray = components[1...].compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
+//                let loadTimeObjects = loadTimesArray.map { LoadTime(startTime: 0, endTime: $0 / 1000) } // Convert milliseconds to seconds
+//                loadTimes[url] = loadTimeObjects
+//            }
+//        } catch {
+//            fatalError("Error reading file: \(error)")
+//        }
+//    }
+//    return [:]
+//}
+
+func writeToCSV(fileName: String, loadTimes: [String: [LoadTime]]) -> Bool {
+    // Get the path to the documents directory
+    let fileManager = FileManager.default
+    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        fatalError("Could not find documents directory")
+    }
+
+    // Create the file URL
+    let fileURL = documentsDirectory.appendingPathComponent(fileName)
+
+    // Prepare a dictionary to hold the consolidated load times
+    var consolidatedLoadTimes: [String: [Double]] = [:]
+
+    // Read existing data from the CSV file if it exists
+    if fileManager.fileExists(atPath: fileURL.path) {
+        do {
+            let content = try String(contentsOf: fileURL, encoding: .utf8)
+            let lines = content.split(separator: "\n")
+
+            for line in lines {
+                let components = line.split(separator: ",")
+                guard components.count > 1 else { continue }
+
+                let url = String(components[0])
+                let loadTimesArray = components[1...].compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
+
+                // Append existing load times to the consolidated dictionary
+                consolidatedLoadTimes[url, default: []].append(contentsOf: loadTimesArray)
+            }
+        } catch {
+            fatalError("Error reading file: \(error)")
+        }
+    }
+
+    // Update the consolidated dictionary with new load times
+    for (url, times) in loadTimes {
+        let newLoadTimes = times.map { ($0.endTime - $0.startTime) * 1000 } // Convert to milliseconds
+        consolidatedLoadTimes[url, default: []].append(contentsOf: newLoadTimes)
+    }
+
+    // Prepare the CSV string for writing
+    var csvString = ""
+    for (url, times) in consolidatedLoadTimes {
+        let loadTimesString = times.map { String(format: "%.0f", $0) }.joined(separator: ",") // Format as string
+        csvString += "\(url), \(loadTimesString)\n" // Format as "URL, loadTime1, loadTime2, ..."
+    }
+
+    // Write the consolidated data back to the file
+    do {
+        try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+        return true
+    } catch {
+        fatalError("Error writing to file: \(error)")
+    }
 }

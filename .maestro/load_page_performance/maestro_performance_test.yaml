@@ -1,0 +1,69 @@
+# maestro_performance_test.yaml
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+# Steps:
+# this automation expects the tested apps to trigger a JS alert() when the page metrics are collected
+# test builds should report metrics in Android logs, which are collected by a separate script
+
+# icons:
+# default: orange (default)
+# defaultadddocumentstartjs: yellow
+# nojsadddocumentstart: yellow
+# autofill-only: green
+# cpmonly: purple
+# elementhidingonly: black and white
+# cssonly: sneaky
+# nojs: blue
+#'https://edition.cnn.com/travel/istanbul-grand-bazaar-rooftop-tours/index.html',
+- evalScript: ${output.ATTEMPTS = 20}
+- evalScript: ${output.counter = 0}
+- evalScript: |
+    ${output.testSites = [
+      'https://www.twitch.tv/epicnpcman',
+      'https://www.bbc.com/sport/formula1/68591119',
+      'https://en.wikipedia.org/wiki/Hayao_Miyazaki',
+      'https://www.usatoday.com/story/money/2024/03/28/sam-bankman-fried-sentencing-ftx-crypto-founder/73128640007/',
+      'https://www.okcupid.com/',
+      'https://www.roboform.com/filling-test-all-fields',
+    ]}
+- evalScript: |
+    ${output.testApps = [
+      'com.duckduckgo.mobile.ios',
+    ]}
+
+# Set up 
+- runFlow: 
+    file: ../shared/setup.yaml
+
+- repeat:
+    while:
+      true: ${output.counter < output.testSites.length}
+    commands:
+      - repeat:
+          times: ${output.ATTEMPTS}
+          commands:
+            - evalScript: ${output.appCounter = 0}
+            - repeat:
+                while:
+                  true: ${output.appCounter < output.testApps.length}
+                commands:
+                  - launchApp: ${output.testApps[output.appCounter]}
+                  - tapOn:
+                      id: "searchEntry"
+                  - inputText: ${output.testSites[output.counter]}
+                  - pressKey: Enter
+                  - extendedWaitUntil:
+                      visible:
+                        text: "Page loaded"
+                      timeout: 20000
+                  - tapOn: "Dismiss Page Loaded"
+                  - tapOn: "Close Tabs and Clear Data"
+                  - tapOn: "Close Tabs and Clear Data"
+                  - assertVisible: "Search or enter address"
+                  - stopApp: ${output.testApps[output.appCounter]}
+                  - evalScript: ${output.appCounter = output.appCounter + 1}
+      - evalScript: ${output.counter = output.counter + 1}

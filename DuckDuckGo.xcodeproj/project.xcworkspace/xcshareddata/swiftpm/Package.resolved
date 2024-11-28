@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bunn/aichat-flags",
-        "revision" : "667c6e02537ef25cfcca7652b8653fa573ad01d6"
+        "revision" : "a3d5a2fc45ce000515b04666aa2fa7ad2d30e288",
+        "version" : "212.1.0"
       }
     },
     {

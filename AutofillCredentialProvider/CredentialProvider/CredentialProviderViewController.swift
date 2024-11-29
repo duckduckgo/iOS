@@ -27,6 +27,19 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
         static let openPasswords = AppDeepLinkSchemes.openPasswords.url
     }
 
+    override func prepareInterfaceForExtensionConfiguration() {
+        let viewModel = CredentialProviderActivatedViewModel { [weak self] shouldLaunchApp in
+            if shouldLaunchApp {
+                self?.openUrl(Constants.openPasswords)
+            }
+            self?.extensionContext.completeExtensionConfigurationRequest()
+        }
+
+        let view = CredentialProviderActivatedView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: view)
+        installChildViewController(hostingController)
+    }
+
     /*
      Prepare your UI to list available credentials for the user to choose from. The items in
      'serviceIdentifiers' describe the service the user is logging in to, so your extension can

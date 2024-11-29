@@ -27,6 +27,7 @@ struct NetworkProtectionRootView: View {
     let statusViewModel: NetworkProtectionStatusViewModel
 
     init() {
+        let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
         let accountManager = AppDependencyProvider.shared.subscriptionManager.accountManager
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(accountManager: accountManager)
         let usesUnifiedFeedbackForm = accountManager.isUserAuthenticated
@@ -35,7 +36,8 @@ struct NetworkProtectionRootView: View {
                                                            statusObserver: AppDependencyProvider.shared.connectionObserver,
                                                            serverInfoObserver: AppDependencyProvider.shared.serverInfoObserver,
                                                            locationListRepository: locationListRepository,
-                                                           usesUnifiedFeedbackForm: usesUnifiedFeedbackForm)
+                                                           usesUnifiedFeedbackForm: usesUnifiedFeedbackForm,
+                                                           subscriptionManager: subscriptionManager)
     }
 
     var body: some View {

@@ -43,6 +43,7 @@ struct SettingsState {
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
+        var subscriptionFeatures: [Entitlement.ProductName]
         var entitlements: [Entitlement.ProductName]
         var platform: DDGSubscription.Platform
         var isShowingStripeView: Bool
@@ -132,6 +133,7 @@ struct SettingsState {
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
+                                       subscriptionFeatures: [],
                                        entitlements: [],
                                        platform: .unknown,
                                        isShowingStripeView: false),

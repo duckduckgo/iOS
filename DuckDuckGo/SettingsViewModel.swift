@@ -46,7 +46,7 @@ final class SettingsViewModel: ObservableObject {
     let textZoomCoordinator: TextZoomCoordinating
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManager
+    let subscriptionManager: SubscriptionManager
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var subscriptionSignOutObserver: Any?
     var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
@@ -750,7 +750,7 @@ extension SettingsViewModel {
 
             // Check entitlements and update state
             var currentEntitlements: [Entitlement.ProductName] = []
-            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
+            let entitlementsToCheck: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration, .identityTheftRestorationGlobal]
 
             for entitlement in entitlementsToCheck {
                 if case .success(true) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement) {
@@ -759,6 +759,7 @@ extension SettingsViewModel {
             }
 
             self.state.subscription.entitlements = currentEntitlements
+            self.state.subscription.subscriptionFeatures = await subscriptionManager.currentSubscriptionFeatures()
 
         case .failure:
             break

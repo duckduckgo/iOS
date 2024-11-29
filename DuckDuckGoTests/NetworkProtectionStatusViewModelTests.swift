@@ -22,12 +22,14 @@ import NetworkProtection
 import NetworkExtension
 import NetworkProtectionTestUtils
 import SubscriptionTestingUtilities
+import Subscription
 @testable import DuckDuckGo
 
 final class NetworkProtectionStatusViewModelTests: XCTestCase {
     private var tunnelController: MockTunnelController!
     private var statusObserver: MockConnectionStatusObserver!
     private var serverInfoObserver: MockConnectionServerInfoObserver!
+    private var subscriptionManager: SubscriptionManagerMock!
     private var viewModel: NetworkProtectionStatusViewModel!
 
     private var testError: Error {
@@ -40,12 +42,20 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         tunnelController = MockTunnelController()
         statusObserver = MockConnectionStatusObserver()
         serverInfoObserver = MockConnectionServerInfoObserver()
+        subscriptionManager = SubscriptionManagerMock(accountManager: AccountManagerMock(),
+                                                      subscriptionEndpointService: SubscriptionEndpointServiceMock(),
+                                                      authEndpointService: AuthEndpointServiceMock(),
+                                                      storePurchaseManager: StorePurchaseManagerMock(),
+                                                      currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production, purchasePlatform: .appStore),
+                                                      canPurchase: true,
+                                                      subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
         viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController,
                                                      settings: VPNSettings(defaults: .networkProtectionGroupDefaults),
                                                      statusObserver: statusObserver,
                                                      serverInfoObserver: serverInfoObserver,
                                                      locationListRepository: MockNetworkProtectionLocationListRepository(),
-                                                     usesUnifiedFeedbackForm: false)
+                                                     usesUnifiedFeedbackForm: false,
+                                                     subscriptionManager: subscriptionManager)
     }
 
     override func tearDown() {

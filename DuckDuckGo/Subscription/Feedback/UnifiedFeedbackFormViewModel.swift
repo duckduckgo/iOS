@@ -19,6 +19,7 @@
 
 import Combine
 import SwiftUI
+import Subscription
 
 final class UnifiedFeedbackFormViewModel: ObservableObject {
     enum Source: String {
@@ -104,16 +105,33 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
 
     let source: String
 
+    private(set) var availableCategories: [UnifiedFeedbackCategory] = [.subscription]
+
     init(vpnMetadataCollector: any UnifiedMetadataCollector,
          defaultMetadatCollector: any UnifiedMetadataCollector = DefaultMetadataCollector(),
          feedbackSender: any UnifiedFeedbackSender = DefaultFeedbackSender(),
-         source: Source = .unknown) {
+         source: Source = .unknown,
+         subscriptionManager: any SubscriptionManager) {
         self.viewState = .feedbackPending
 
         self.vpnMetadataCollector = vpnMetadataCollector
         self.defaultMetadataCollector = defaultMetadatCollector
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
+
+        Task {
+            let features = await subscriptionManager.currentSubscriptionFeatures()
+
+            if features.contains(.networkProtection) {
+                availableCategories.append(.vpn)
+            }
+            if features.contains(.dataBrokerProtection) {
+                availableCategories.append(.pir)
+            }
+            if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+                availableCategories.append(.itr)
+            }
+        }
     }
 
     @MainActor

@@ -41,7 +41,8 @@ final class StorePurchaseManagerTests: XCTestCase {
         session.disableDialogs = true
         session.clearTransactions()
 
-        storePurchaseManager = DefaultStorePurchaseManager()
+        let subscriptionFeatureMappingCache = SubscriptionFeatureMappingCacheMock()
+        storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
     }
 
     override func tearDownWithError() throws {
@@ -70,7 +71,7 @@ final class StorePurchaseManagerTests: XCTestCase {
 
         // Then
         XCTAssertEqual(subscriptionOptions.options.count, 2)
-        XCTAssertEqual(subscriptionOptions.features.count, SubscriptionFeatureName.allCases.count)
+        XCTAssertEqual(subscriptionOptions.features.count, 3)
         XCTAssertTrue(storePurchaseManager.areProductsAvailable)
 
         let optionIDs = subscriptionOptions.options.map { $0.id }

@@ -2370,6 +2370,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
 
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Includes our VPN and Identity Theft Restoration.";
+
 /* Call to action title for Privacy Pro settings */
 "settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
 

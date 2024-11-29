@@ -176,4 +176,3 @@ extension AIChatViewController: AIChatWebViewControllerDelegate {
         closeAIChat()
     }
 }
-

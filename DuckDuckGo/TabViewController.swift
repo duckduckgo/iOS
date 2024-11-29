@@ -1707,11 +1707,12 @@ extension TabViewController: WKNavigationDelegate {
         guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
               error.isServerCertificateUntrusted,
               let errorType = error.sslErrorType,
-              let failedURL = error.failedUrl else { return }
+              let failedURL = error.failedUrl,
+              let host = failedURL.host else { return }
 
         let tld = storageCache.tld
         self.failedURL = failedURL
-        errorData = SpecialErrorData.ssl(type: errorType, domain: failedURL.host!, eTldPlus1: tld.eTLDplus1(failedURL.host))
+        errorData = SpecialErrorData.ssl(type: errorType, domain: host, eTldPlus1: tld.eTLDplus1(host))
         loadSpecialErrorPage(url: failedURL)
         Pixel.fire(pixel: .certificateWarningDisplayed(errorType.pixelParameter))
     }

@@ -1,5 +1,5 @@
 //
-//  AIChatRemoteSettingsProvider.swift
+//  AIChatPixelHandler.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,9 +17,16 @@
 //  limitations under the License.
 //
 
-import Foundation
+import AIChat
+import Core
 
-public protocol AIChatRemoteSettingsProvider {
-    /// The URL used to open AI Chat in `AIChatViewController`.
-    var aiChatURL: URL { get }
+struct AIChatPixelHandler: AIChatPixelHandling {
+    func fire(pixel: AIChatPixel) {
+        switch pixel {
+        case .openAfter10min:
+            Pixel.fire(pixel: .openAIChatAfter10min)
+        case .openBefore10min:
+            Pixel.fire(pixel: .openAIChatBefore10min)
+        }
+    }
 }

@@ -189,7 +189,8 @@ class MainViewController: UIViewController {
     private lazy var aiChatNavigationController: UINavigationController = {
         let remoteSettings = AIChatRemoteSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
         let aiChatViewController = AIChatViewController(remoteSettings: remoteSettings,
-                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
+                                                        pixelHandler: AIChatPixelHandler())
         aiChatViewController.delegate = self
         return UINavigationController(rootViewController: aiChatViewController)
     }()

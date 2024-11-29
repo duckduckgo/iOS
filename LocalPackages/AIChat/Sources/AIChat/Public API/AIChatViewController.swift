@@ -35,19 +35,24 @@ public final class AIChatViewController: UIViewController {
     private let chatModel: AIChatViewModeling
     private var webViewController: AIChatWebViewController?
     private var cleanupCancellable: AnyCancellable?
+    private var didCleanup: Bool = false
+    private let timerPixelHandler: TimerPixelHandler
 
     /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
     ///
     /// - Parameters:
     ///   - remoteSettings: An object conforming to `AIChatRemoteSettingsProvider` that provides remote settings.
     ///   - webViewConfiguration: A `WKWebViewConfiguration` object used to configure the web view.
-    public convenience init(remoteSettings: AIChatRemoteSettingsProvider, webViewConfiguration: WKWebViewConfiguration) {
+    ///   - pixelHandler: A `AIChatPixelHandling` object used to send pixel events.
+    public convenience init(remoteSettings: AIChatRemoteSettingsProvider, webViewConfiguration: WKWebViewConfiguration, pixelHandler: AIChatPixelHandling) {
         let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, remoteSettings: remoteSettings)
-        self.init(chatModel: chatModel)
+        self.init(chatModel: chatModel, pixelHandler: pixelHandler)
     }
 
-    internal init(chatModel: AIChatViewModeling) {
+    internal init(chatModel: AIChatViewModeling, pixelHandler: AIChatPixelHandling) {
         self.chatModel = chatModel
+        self.timerPixelHandler = TimerPixelHandler(pixelHandler: pixelHandler)
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -72,6 +77,7 @@ extension AIChatViewController {
 
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        timerPixelHandler.sendOpenPixel()
         chatModel.cancelTimer()
     }
 
@@ -119,10 +125,7 @@ extension AIChatViewController {
     }
 
     private func addWebViewController() {
-        guard webViewController == nil else {
-            print("WebViewController already exists, returning")
-            return
-        }
+        guard webViewController == nil else { return }
 
         let viewController = AIChatWebViewController(chatModel: chatModel)
         viewController.delegate = self
@@ -157,6 +160,7 @@ extension AIChatViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.webViewController?.reload()
+                self?.timerPixelHandler.markCleanup()
             }
     }
 
@@ -172,3 +176,4 @@ extension AIChatViewController: AIChatWebViewControllerDelegate {
         closeAIChat()
     }
 }
+

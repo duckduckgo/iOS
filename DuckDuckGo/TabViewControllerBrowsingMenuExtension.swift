@@ -70,6 +70,7 @@ extension TabViewController {
         })
 
         let chatEntry = BrowsingMenuEntry.regular(name: UserText.actionOpenAIChat, image: UIImage(named: "AIChat-24")!, action: { [weak self] in
+            Pixel.fire(pixel: .browsingMenuAIChat)
             self?.openAIChat()
         })
 
@@ -110,6 +111,7 @@ extension TabViewController {
                                     accessibilityLabel: UserText.actionPrintSite,
                                     image: UIImage(named: "Print-16")!,
                                     action: { [weak self] in
+                Pixel.fire(pixel: .browsingMenuListPrint)
                 self?.print()
             }))
         }

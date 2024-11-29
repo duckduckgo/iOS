@@ -20,6 +20,7 @@
 import BrowserServicesKit
 import AIChat
 import Foundation
+import Core
 
 /// This struct serves as a wrapper for PrivacyConfigurationManaging, enabling the retrieval of data relevant to AIChat.
 /// It also fire pixels when necessary data is missing.
@@ -52,28 +53,13 @@ struct AIChatRemoteSettings: AIChatRemoteSettingsProvider {
         return url
     }
 
-    var isAIChatEnabled: Bool {
-        privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .aiChat)
-    }
-
-    // browsingToolbarShortcut
-    var isBrowsingToolbarShortcutEnabled: Bool {
-        privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(AIChatSubfeature.toolbarShortcut)
-    }
-
-    // addressBarShortcut
-    var isAddressBarShortcutEnabled: Bool {
-        privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(AIChatSubfeature.applicationMenuShortcut)
-    }
-
     // MARK: - Private
 
     private func getSettingsData(_ value: SettingsValue) -> String {
         if let value = settings[value.rawValue] as? String {
             return value
         } else {
-            Logger.aiChat.debug("No remote settings found \(value.rawValue)")
-            // PixelKit.fire(GeneralPixel.aichatNoRemoteSettingsFound(value), includeAppVersionParameter: true)
+            Pixel.fire(pixel: .aiChatNoRemoteSettingsFound(settings: value.rawValue))
             return value.defaultValue
         }
     }

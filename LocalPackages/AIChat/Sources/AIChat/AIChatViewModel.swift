@@ -51,7 +51,7 @@ final class AIChatViewModel: AIChatViewModeling {
 
     let cleanupTime: TimeInterval
 
-    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider, cleanupTime: TimeInterval = 600) {
+    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider, cleanupTime: TimeInterval = 5) {
         self.cleanupTime = cleanupTime
         self.webViewConfiguration = webViewConfiguration
         self.remoteSettings = remoteSettings

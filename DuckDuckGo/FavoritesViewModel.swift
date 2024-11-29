@@ -37,6 +37,10 @@ protocol NewTabPageFavoriteDataSource {
     func removeFavorite(_ favorite: Favorite)
 }
 
+protocol FavoritesFaviconCaching {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?)
+}
+
 struct FavoritesSlice {
     let items: [FavoriteItem]
     let isCollapsible: Bool
@@ -52,6 +56,7 @@ class FavoritesViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private let favoriteDataSource: NewTabPageFavoriteDataSource
+    private let faviconsCache: FavoritesFaviconCaching
     private let pixelFiring: PixelFiring.Type
     private let dailyPixelFiring: DailyPixelFiring.Type
 
@@ -64,6 +69,7 @@ class FavoritesViewModel: ObservableObject {
     init(isNewTabPageCustomizationEnabled: Bool = false,
          favoriteDataSource: NewTabPageFavoriteDataSource,
          faviconLoader: FavoritesFaviconLoading,
+         faviconsCache: FavoritesFaviconCaching = Favicons.shared,
          pixelFiring: PixelFiring.Type = Pixel.self,
          dailyPixelFiring: DailyPixelFiring.Type = DailyPixel.self) {
         self.favoriteDataSource = favoriteDataSource
@@ -71,6 +77,7 @@ class FavoritesViewModel: ObservableObject {
         self.dailyPixelFiring = dailyPixelFiring
         self.isNewTabPageCustomizationEnabled = isNewTabPageCustomizationEnabled
         self.isCollapsed = isNewTabPageCustomizationEnabled
+        self.faviconsCache = faviconsCache
 
         self.faviconLoader = MissingFaviconWrapper(loader: faviconLoader, onFaviconMissing: { [weak self] in
             guard let self else { return }
@@ -130,7 +137,9 @@ class FavoritesViewModel: ObservableObject {
 
         pixelFiring.fire(.favoriteLaunchedNTP, withAdditionalParameters: [:])
         dailyPixelFiring.fireDaily(.favoriteLaunchedNTPDaily)
-        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
+        if let host = url.host {
+            faviconsCache.populateFavicon(for: host, intoCache: .fireproof, fromCache: .tabs)
+        }
 
         onFavoriteURLSelected?(url)
     }
@@ -229,5 +238,11 @@ private extension FavoriteItem {
         case .addFavorite, .placeholder:
             return false
         }
+    }
+}
+
+extension Favicons: FavoritesFaviconCaching {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?) {
+        loadFavicon(forDomain: domain, intoCache: intoCache, fromCache: fromCache)
     }
 }

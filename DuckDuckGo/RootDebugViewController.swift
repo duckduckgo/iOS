@@ -123,6 +123,15 @@ class RootDebugViewController: UITableViewController {
         return controller
     }
 
+    @IBSegueAction func onCreateCookieDebugScreen(_ coder: NSCoder) -> CookieDebugViewController? {
+        guard let controller = CookieDebugViewController(coder: coder, fireproofing: UserDefaultsFireproofing.shared) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {
             cell.accessoryType = AppUserDefaults().inspectableWebViewEnabled ? .checkmark : .none

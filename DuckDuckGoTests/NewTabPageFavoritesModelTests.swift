@@ -172,7 +172,8 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
     private func createSUT(isNewTabPageCustomizationEnabled: Bool = true) -> FavoritesViewModel {
         FavoritesViewModel(isNewTabPageCustomizationEnabled: isNewTabPageCustomizationEnabled,
                            favoriteDataSource: favoriteDataSource,
-                           faviconLoader: FavoritesFaviconLoader(),
+                           faviconLoader: MockFavoritesFaviconLoading(),
+                           faviconsCache: MockFavoritesFaviconCaching(),
                            pixelFiring: PixelFiringMock.self,
                            dailyPixelFiring: PixelFiringMock.self)
     }
@@ -209,5 +210,25 @@ private extension FavoriteItem {
         case .placeholder: return true
         case .favorite, .addFavorite: return false
         }
+    }
+}
+
+private final class MockFavoritesFaviconLoading: FavoritesFaviconLoading {
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+        nil
+    }
+
+    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+        Favicon(image: .init(), isUsingBorder: false, isFake: false)
+    }
+
+    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+        nil
+    }
+}
+
+private final class MockFavoritesFaviconCaching: FavoritesFaviconCaching {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?) {
+
     }
 }

@@ -89,20 +89,12 @@ class FavoritesHomeViewSectionRenderer {
     }
 
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
-        if controller is FavoritesOverlay {
-            return Constants.largeModeMargin
-        }
-        
-        let margin: CGFloat
         if isPad {
-            margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
+            return Constants.largeModeMargin
         } else {
             let defaultMargin = FavoritesHomeViewSectionRenderer.Constants.sideInsets
-            let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
-            margin = isPortrait ? defaultMargin : landscapeMargin
+            return (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
         }
-        
-        return margin
     }
     
     // Visible margin is adjusted for offset inside Favorite Cells
@@ -188,7 +180,7 @@ class FavoritesHomeViewSectionRenderer {
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
         return CGSize(width: 1, height: headerHeight)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {

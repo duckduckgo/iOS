@@ -43,8 +43,6 @@ class SuggestionTrayViewController: UIViewController {
         autocompleteController != nil
     }
 
-    private let appSettings = AppUserDefaults()
-
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
@@ -53,6 +51,7 @@ class SuggestionTrayViewController: UIViewController {
     private let historyManager: HistoryManaging
     private let tabsModel: TabsModel
     private let featureFlagger: FeatureFlagger
+    private let appSettings: AppSettings
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -82,12 +81,19 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksDatabase: CoreDataDatabase, historyManager: HistoryManaging, tabsModel: TabsModel, featureFlagger: FeatureFlagger) {
+    required init?(coder: NSCoder,
+                   favoritesViewModel: FavoritesListInteracting,
+                   bookmarksDatabase: CoreDataDatabase,
+                   historyManager: HistoryManaging,
+                   tabsModel: TabsModel,
+                   featureFlagger: FeatureFlagger,
+                   appSettings: AppSettings) {
         self.favoritesModel = favoritesViewModel
         self.bookmarksDatabase = bookmarksDatabase
         self.historyManager = historyManager
         self.tabsModel = tabsModel
         self.featureFlagger = featureFlagger
+        self.appSettings = appSettings
         super.init(coder: coder)
     }
     
@@ -168,7 +174,7 @@ class SuggestionTrayViewController: UIViewController {
         topConstraint.constant = 4
 
         let isFirstPresentation = fullHeightConstraint.isActive
-        if isFirstPresentation {
+        if isFirstPresentation {            
             variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight
         }
         
@@ -326,6 +332,6 @@ extension SuggestionTrayViewController {
 
 private extension SuggestionTrayViewController {
     enum Constant {
-        static let suggestionTrayInitialHeight = 312.0 // ie 52 * 6
+        static let suggestionTrayInitialHeight = 380.0 // ie 52 * 6
     }
 }

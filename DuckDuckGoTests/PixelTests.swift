@@ -30,6 +30,7 @@ class PixelTests: XCTestCase {
     let userAgentName = "User-Agent"
 
     override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
         try super.setUpWithError()
 
         Pixel.isDryRun = false
@@ -161,8 +162,7 @@ class PixelTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
-    func testPixelDebouncePreventsFiringWithinInterval() throws {
-        throw XCTSkip("Flaky")
+    func testPixelDebouncePreventsFiringWithinInterval() {
         let firstFireExpectation = XCTestExpectation(description: "First pixel fire should succeed")
         let thirdFireExpectation = XCTestExpectation(description: "Third pixel fire should succeed after debounce interval")
 

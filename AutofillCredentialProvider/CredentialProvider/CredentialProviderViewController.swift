@@ -18,8 +18,14 @@
 //
 
 import AuthenticationServices
+import SwiftUI
+import Core
 
 class CredentialProviderViewController: ASCredentialProviderViewController {
+
+    private struct Constants {
+        static let openPasswords = AppDeepLinkSchemes.openPasswords.url
+    }
 
     /*
      Prepare your UI to list available credentials for the user to choose from. The items in

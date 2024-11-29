@@ -938,7 +938,6 @@
 		C1EA86622C74CB8B00E8604D /* SyncPromoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EA86612C74CB8B00E8604D /* SyncPromoViewModel.swift */; };
 		C1EF5B232CC0457B002980E6 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1EF5B222CC0457B002980E6 /* AuthenticationServices.framework */; };
 		C1EF5B262CC0457B002980E6 /* CredentialProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EF5B252CC0457B002980E6 /* CredentialProviderViewController.swift */; };
-		C1EF5B292CC0457B002980E6 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C1EF5B282CC0457B002980E6 /* Base */; };
 		C1EF5B2E2CC0457B002980E6 /* AutofillCredentialProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C1EF5B212CC0457B002980E6 /* AutofillCredentialProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C1F341C52A6924000032057B /* EmailAddressPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C42A6924000032057B /* EmailAddressPromptView.swift */; };
 		C1F341C72A6924100032057B /* EmailAddressPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F341C62A6924100032057B /* EmailAddressPromptViewModel.swift */; };
@@ -2764,7 +2763,6 @@
 		C1EF5B212CC0457B002980E6 /* AutofillCredentialProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AutofillCredentialProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1EF5B222CC0457B002980E6 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C1EF5B252CC0457B002980E6 /* CredentialProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderViewController.swift; sourceTree = "<group>"; };
-		C1EF5B282CC0457B002980E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		C1EF5B2A2CC0457B002980E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1EF5B2B2CC0457B002980E6 /* AutofillCredentialProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutofillCredentialProvider.entitlements; sourceTree = "<group>"; };
 		C1F341C42A6924000032057B /* EmailAddressPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressPromptView.swift; sourceTree = "<group>"; };
@@ -5344,9 +5342,8 @@
 		C1EF5B242CC0457B002980E6 /* AutofillCredentialProvider */ = {
 			isa = PBXGroup;
 			children = (
+				C1CAAA6D2CF8BBBC00C37EE6 /* CredentialProvider */,
 				C1CAAA672CF8B74200C37EE6 /* AutofillCredentialProviderAlpha.entitlements */,
-				C1EF5B252CC0457B002980E6 /* CredentialProviderViewController.swift */,
-				C1EF5B272CC0457B002980E6 /* MainInterface.storyboard */,
 				C1EF5B2A2CC0457B002980E6 /* Info.plist */,
 				C1EF5B2B2CC0457B002980E6 /* AutofillCredentialProvider.entitlements */,
 			);
@@ -6860,6 +6857,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C1CAAA7E2CF8C8ED00C37EE6 /* PBXTargetDependency */,
 			);
 			name = AutofillCredentialProvider;
 			productName = AutofillCredentialProvider;
@@ -9142,14 +9140,6 @@
 				981685482521EEF100FA91A1 /* nb */,
 			);
 			name = OmniBar.xib;
-			sourceTree = "<group>";
-		};
-		C1EF5B272CC0457B002980E6 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1EF5B282CC0457B002980E6 /* Base */,
-			);
-			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		CB1143DC2AF6D4B600C1CCD3 /* InfoPlist.strings */ = {

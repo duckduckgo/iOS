@@ -49,7 +49,10 @@ final class AIChatViewModel: AIChatViewModeling {
     let webViewConfiguration: WKWebViewConfiguration
     let cleanupPublisher = PassthroughSubject<Void, Never>()
 
-    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider) {
+    let cleanupTime: TimeInterval
+
+    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider, cleanupTime: TimeInterval = 600) {
+        self.cleanupTime = cleanupTime
         self.webViewConfiguration = webViewConfiguration
         self.remoteSettings = remoteSettings
     }
@@ -60,11 +63,12 @@ final class AIChatViewModel: AIChatViewModeling {
     }
 
     func startCleanupTimer() {
-        Logger.aiChat.debug("Starting cleanup timer")
         cancelTimer()
 
+        Logger.aiChat.debug("Starting cleanup timer")
+
         cleanupTimerCancellable = Just(())
-            .delay(for: .seconds(600), scheduler: RunLoop.main)
+            .delay(for: .seconds(cleanupTime), scheduler: RunLoop.main)
             .sink { [weak self] in
                 Logger.aiChat.debug("Cleanup timer done")
                 self?.cleanupPublisher.send()

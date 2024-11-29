@@ -35,6 +35,8 @@ enum MaliciousSiteProtectionNavigationResult: Equatable {
 }
 
 protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
+    var currentThreatKind: ThreatKind? { get }
+
     /// Decides whether to cancel navigation to prevent opening the YouTube app from the web view.
     ///
     /// - Parameters:
@@ -62,6 +64,10 @@ final class MaliciousSiteProtectionNavigationHandler {
 // MARK: - MaliciousSiteProtectionNavigationHandling
 
 extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling {
+
+    var currentThreatKind: ThreatKind? {
+        bypassedMaliciousSiteThreatKind
+    }
 
     @MainActor
     func handleMaliciousSiteProtectionNavigation(for navigationAction: WKNavigationAction, webView: WKWebView) async -> MaliciousSiteProtectionNavigationResult {

@@ -22,7 +22,9 @@ import WebKit
 import SpecialErrorPages
 import Core
 
-final class SpecialErrorPageNavigationHandler: BaseSpecialErrorPageNavigationHandling {
+typealias SpecialErrorPageManaging = SpecialErrorPageContextHandling & WebViewNavigationHandling & SpecialErrorPageUserScriptDelegate
+
+final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
     private var webView: WKWebView?
     private(set) var errorData: SpecialErrorData?
     private var errorPageType: SpecialErrorKind?

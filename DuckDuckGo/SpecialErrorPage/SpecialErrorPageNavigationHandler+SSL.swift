@@ -25,9 +25,7 @@ import Core
 
 protocol SSLSpecialErrorPageNavigationHandling {
     func handleServerTrustChallenge(_ challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
-
     func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> SSLSpecialError?
-
     func errorPageVisited(errorType: SSLErrorType)
 }
 

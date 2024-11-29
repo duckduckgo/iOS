@@ -364,7 +364,7 @@ class TabViewController: UIViewController {
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
     let fireproofing: Fireproofing
-    let specialErrorPageNavigationHandler: SpecialErrorPageNavigationHandling
+    let specialErrorPageNavigationHandler: SpecialErrorPageManaging
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -383,7 +383,7 @@ class TabViewController: UIViewController {
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
                    fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
-                   specialErrorPageNavigationHandler: SpecialErrorPageNavigationHandling = SpecialErrorPageNavigationHandler()) {
+                   specialErrorPageNavigationHandler: SpecialErrorPageManaging = SpecialErrorPageNavigationHandler()) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase

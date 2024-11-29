@@ -18,29 +18,29 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 import WebKit
 
 @testable import SpecialErrorPages
 @testable import DuckDuckGo
 
-final class SSLSpecialErrorPageTests: XCTestCase {
+@Suite("Special Error Pages - SSLSpecialErrorPageTests Unit Tests", .serialized)
+final class SSLSpecialErrorPageTests {
 
     private var sut: SSLErrorPageNavigationHandler!
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    init() {
         let featureFlagger = MockFeatureFlagger()
         featureFlagger.enabledFeatureFlags = [.sslCertificatesBypass]
         sut = SSLErrorPageNavigationHandler(urlCredentialCreator: MockCredentialCreator(), featureFlagger: featureFlagger)
     }
 
-    override func tearDown() async throws {
-        try await super.tearDown()
+    deinit {
         sut = nil
     }
 
-    func testWhenCertificateExpiredThenExpectedErrorPageIsShown() throws {
+    @Test
+    func whenCertificateExpiredThenExpectedErrorPageIsShown() throws {
         // GIVEN
         let error = NSError(domain: "test",
                             code: NSURLErrorServerCertificateUntrusted,
@@ -48,18 +48,19 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://expired.badssl.com")!])
 
         // WHEN
-        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try #require(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(sslError.error.url, URL(string: "https://expired.badssl.com")!)
-        XCTAssertEqual(sslError.type, .expired)
-        XCTAssertEqual(sslError.error.errorData, SpecialErrorData(kind: .ssl,
+        #expect(sslError.error.url == URL(string: "https://expired.badssl.com")!)
+        #expect(sslError.type == .expired)
+        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
                                                        errorType: "expired",
                                                        domain: "expired.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
 
-    func testWhenCertificateWrongHostThenExpectedErrorPageIsShown() throws {
+    @Test
+    func whenCertificateWrongHostThenExpectedErrorPageIsShown() throws {
         // GIVEN
         let error = NSError(domain: "test",
                             code: NSURLErrorServerCertificateUntrusted,
@@ -67,18 +68,19 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://wrong.host.badssl.com")!])
 
         // WHEN
-        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try #require(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(sslError.error.url, URL(string: "https://wrong.host.badssl.com")!)
-        XCTAssertEqual(sslError.type, .wrongHost)
-        XCTAssertEqual(sslError.error.errorData, SpecialErrorData(kind: .ssl,
+        #expect(sslError.error.url == URL(string: "https://wrong.host.badssl.com")!)
+        #expect(sslError.type == .wrongHost)
+        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
                                                        errorType: "wrongHost",
                                                        domain: "wrong.host.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
 
-    func testWhenCertificateSelfSignedThenExpectedErrorPageIsShown() throws {
+    @Test
+    func whenCertificateSelfSignedThenExpectedErrorPageIsShown() throws {
         // GIVEN
         let error = NSError(domain: "test",
                             code: NSURLErrorServerCertificateUntrusted,
@@ -86,18 +88,19 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://self-signed.badssl.com")!])
 
         // WHEN
-        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try #require(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(sslError.error.url, URL(string: "https://self-signed.badssl.com")!)
-        XCTAssertEqual(sslError.type, .selfSigned)
-        XCTAssertEqual(sslError.error.errorData, SpecialErrorData(kind: .ssl,
+        #expect(sslError.error.url == URL(string: "https://self-signed.badssl.com")!)
+        #expect(sslError.type == .selfSigned)
+        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
                                                        errorType: "selfSigned",
                                                        domain: "self-signed.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
 
-    func testWhenOtherCertificateIssueThenExpectedErrorPageIsShown() throws {
+    @Test
+    func whenOtherCertificateIssueThenExpectedErrorPageIsShown() throws {
         // GIVEN
         let error = NSError(domain: "test",
                             code: NSURLErrorServerCertificateUntrusted,
@@ -105,18 +108,19 @@ final class SSLSpecialErrorPageTests: XCTestCase {
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://untrusted-root.badssl.com")!])
 
         // WHEN
-        let sslError = try XCTUnwrap(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
+        let sslError = try #require(sut.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error))
 
         // THEN
-        XCTAssertEqual(sslError.error.url, URL(string: "https://untrusted-root.badssl.com")!)
-        XCTAssertEqual(sslError.type, .invalid)
-        XCTAssertEqual(sslError.error.errorData, SpecialErrorData(kind: .ssl,
+        #expect(sslError.error.url == URL(string: "https://untrusted-root.badssl.com")!)
+        #expect(sslError.type == .invalid)
+        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
                                                        errorType: "invalid",
                                                        domain: "untrusted-root.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
 
-    func testWhenDidReceiveChallengeIfChallengeForCertificateValidationAndNoBypassThenShouldNotReturnCredentials() {
+    @Test
+    func whenDidReceiveChallengeIfChallengeForCertificateValidationAndNoBypassThenShouldNotReturnCredentials() {
         // GIVEN
         let protectionSpace = URLProtectionSpace(host: "", port: 4, protocol: nil, realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
         let challenge = URLAuthenticationChallenge(protectionSpace: protectionSpace, proposedCredential: nil, previousFailureCount: 0, failureResponse: nil, error: nil, sender: ChallengeSender())
@@ -128,10 +132,11 @@ final class SSLSpecialErrorPageTests: XCTestCase {
         }
 
         // THEN
-        XCTAssertNil(expectedCredential)
+        #expect(expectedCredential == nil)
     }
 
-    func testWhenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() {
+    @Test
+    func whenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() {
         // GIVEN
         let protectionSpace = URLProtectionSpace(host: "", port: 4, protocol: nil, realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
         let challenge = URLAuthenticationChallenge(protectionSpace: protectionSpace, proposedCredential: nil, previousFailureCount: 0, failureResponse: nil, error: nil, sender: ChallengeSender())
@@ -144,7 +149,7 @@ final class SSLSpecialErrorPageTests: XCTestCase {
         }
 
         // THEN
-        XCTAssertNotNil(expectedCredential)
+        #expect(expectedCredential != nil)
     }
 
 }

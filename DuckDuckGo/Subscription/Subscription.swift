@@ -31,28 +31,3 @@ enum SubscriptionPurchaseError: Error {
          cancelledByUser,
          generalError
 }
-
-enum SubscriptionFeatureName {
-      static let netP = "vpn"
-      static let itr = "identity-theft-restoration"
-      static let dbp = "personal-information-removal"
-  }
-
-enum SubscriptionFeatureSelection: Codable {
-    case netP
-    case itr
-    case dbp
-
-    init?(featureName: String) {
-        switch featureName {
-        case SubscriptionFeatureName.netP:
-            self = .netP
-        case SubscriptionFeatureName.itr:
-            self = .itr
-        case SubscriptionFeatureName.dbp:
-            self = .dbp
-        default:
-            return nil
-        }
-    }
-}

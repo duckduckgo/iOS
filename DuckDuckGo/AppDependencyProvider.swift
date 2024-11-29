@@ -95,7 +95,12 @@ final class AppDependencyProvider: DependencyProvider {
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()))
+                                               localOverrides: FeatureFlagLocalOverrides(
+                                                keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
+                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
+                                               ),
+                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()),
+                                               for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)
 
@@ -110,16 +115,33 @@ final class AppDependencyProvider: DependencyProvider {
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
         let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionService,
+                                                                                     userDefaults: subscriptionUserDefaults)
+
         let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
 
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+        let theFeatureFlagger = featureFlagger
+        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
+            switch feature {
+            case .isLaunchedROW:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
+            case .isLaunchedROWOverride:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
+            default:
+                return feature.defaultState
+            }
+        }
+
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger)
         accountManager.delegate = subscriptionManager
 
         self.subscriptionManager = subscriptionManager

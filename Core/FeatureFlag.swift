@@ -56,11 +56,21 @@ public enum FeatureFlag: String {
     
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
+    case isPrivacyProLaunchedROW
+    case isPrivacyProLaunchedROWOverride
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+
+    public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
+
     public var supportsLocalOverriding: Bool {
-        false
+        switch self {
+        case .isPrivacyProLaunchedROWOverride:
+            return true
+        default:
+            return false
+        }
     }
 
     public var source: FeatureFlagSource {
@@ -123,6 +133,10 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
             return .internalOnly()
+        case .isPrivacyProLaunchedROW:
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROW))
+        case .isPrivacyProLaunchedROWOverride:
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROWOverride))
         }
     }
 }

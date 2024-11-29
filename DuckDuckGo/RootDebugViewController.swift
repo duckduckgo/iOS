@@ -123,6 +123,15 @@ class RootDebugViewController: UITableViewController {
         return controller
     }
 
+    @IBSegueAction func onCreateCookieDebugScreen(_ coder: NSCoder) -> CookieDebugViewController? {
+        guard let controller = CookieDebugViewController(coder: coder, fireproofing: UserDefaultsFireproofing.shared) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {
             cell.accessoryType = AppUserDefaults().inspectableWebViewEnabled ? .checkmark : .none
@@ -250,13 +259,15 @@ protocol DiagnosticReportDataSourceDelegate: AnyObject {
 class DiagnosticReportDataSource: UIActivityItemProvider {
 
     weak var delegate: DiagnosticReportDataSourceDelegate?
+    var fireproofing: Fireproofing?
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastRefreshDate: Date
 
-    convenience init(delegate: DiagnosticReportDataSourceDelegate) {
+    convenience init(delegate: DiagnosticReportDataSourceDelegate, fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.init(placeholderItem: "")
         self.delegate = delegate
+        self.fireproofing = fireproofing
     }
 
     override var item: Any {
@@ -288,7 +299,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-        let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
+        let allowedDomains = fireproofing?.allowedDomains.map { "* \($0)" } ?? []
 
         let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
 

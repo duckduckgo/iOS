@@ -44,7 +44,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
+            syncErrorHandler: SyncErrorHandler(),
+            faviconStoring: MockFaviconStore()
         )
         
         let remoteMessagingClient = RemoteMessagingClient(
@@ -80,7 +81,8 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
             featureFlagger: MockFeatureFlagger(),
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
-            textZoomCoordinator: MockTextZoomCoordinator())
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            appDidFinishLaunchingStartTime: nil)
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
         window.makeKeyAndVisible()

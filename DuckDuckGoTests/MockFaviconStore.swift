@@ -1,8 +1,8 @@
 //
-//  FaviconRequestModifier.swift
-//  Core
+//  MockFaviconStore.swift
+//  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,14 @@
 //  limitations under the License.
 //
 
-import Core
-import Kingfisher
+import Foundation
+@testable import Bookmarks
 
-class FaviconRequestModifier: ImageDownloadRequestModifier {
-
-    let userAgentManager: UserAgentManager
-
-    init(userAgentManager: UserAgentManager = DefaultUserAgentManager.shared) {
-        self.userAgentManager = userAgentManager
+class MockFaviconStore: FaviconStoring {
+    func hasFavicon(for domain: String) -> Bool {
+        return false
     }
 
-    func modified(for request: URLRequest) -> URLRequest? {
-        var r = request
-        userAgentManager.update(request: &r, isDesktop: false)
-        return r
+    func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
     }
-
 }

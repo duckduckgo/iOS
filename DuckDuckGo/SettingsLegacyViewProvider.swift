@@ -28,25 +28,34 @@ import Common
 
 class SettingsLegacyViewProvider: ObservableObject {
 
+    enum StoryboardName {
+        static let settings = "Settings"
+        static let homeRow = "HomeRow"
+        static let feedback = "Feedback"
+    }
+
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let appSettings: AppSettings
     let bookmarksDatabase: CoreDataDatabase
     let tabManager: TabManager
     let syncPausedStateManager: any SyncPausedStateManaging
+    let fireproofing: Fireproofing
 
     init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
          appSettings: any AppSettings,
          bookmarksDatabase: CoreDataDatabase,
          tabManager: TabManager,
-         syncPausedStateManager: any SyncPausedStateManaging) {
+         syncPausedStateManager: any SyncPausedStateManaging,
+         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.tabManager = tabManager
         self.syncPausedStateManager = syncPausedStateManager
+        self.fireproofing = fireproofing
     }
     
     enum LegacyView {
@@ -63,27 +72,36 @@ class SettingsLegacyViewProvider: ObservableObject {
              feedback,
              debug
     }
-    
+
     private func instantiate(_ identifier: String, fromStoryboard name: String) -> UIViewController {
         let storyboard = UIStoryboard(name: name, bundle: nil)
         return storyboard.instantiateViewController(withIdentifier: identifier)
     }
-    
-    // Legacy UIKit Views (Pushed unmodified)
-    var addToDock: UIViewController { instantiate( "instructions", fromStoryboard: "HomeRow") }
-    var appIcon: UIViewController { instantiate("AppIcon", fromStoryboard: "Settings") }
-    var gpc: UIViewController { instantiate("DoNotSell", fromStoryboard: "Settings") }
-    var autoConsent: UIViewController { instantiate("AutoconsentSettingsViewController", fromStoryboard: "Settings") }
-    var unprotectedSites: UIViewController { instantiate("UnprotectedSites", fromStoryboard: "Settings") }
-    var fireproofSites: UIViewController { instantiate("FireProofSites", fromStoryboard: "Settings") }
-    var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
-    var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
-    var autoclearData: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+
+    private func instantiateFireproofingController() -> UIViewController {
+        let storyboard = UIStoryboard(name: StoryboardName.settings, bundle: nil)
+        return storyboard.instantiateViewController(identifier: "FireProofSites") { coder in
+            return FireproofingSettingsViewController(coder: coder, fireproofing: self.fireproofing)
+        }
+    }
+
+    private func instantiateAutoClearController() -> UIViewController {
+        let storyboard = UIStoryboard(name: StoryboardName.settings, bundle: nil)
         return storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController", creator: { coder in
             return AutoClearSettingsViewController(appSettings: self.appSettings, coder: coder)
         })
     }
+
+    // Legacy UIKit Views (Pushed unmodified)
+    var addToDock: UIViewController { instantiate( "instructions", fromStoryboard: StoryboardName.homeRow) }
+    var appIcon: UIViewController { instantiate("AppIcon", fromStoryboard: StoryboardName.settings) }
+    var gpc: UIViewController { instantiate("DoNotSell", fromStoryboard: StoryboardName.settings) }
+    var autoConsent: UIViewController { instantiate("AutoconsentSettingsViewController", fromStoryboard: StoryboardName.settings) }
+    var unprotectedSites: UIViewController { instantiate("UnprotectedSites", fromStoryboard: StoryboardName.settings) }
+    var fireproofSites: UIViewController { instantiateFireproofingController() }
+    var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: StoryboardName.settings) }
+    var feedback: UIViewController { instantiate("Feedback", fromStoryboard: StoryboardName.feedback) }
+    var autoclearData: UIViewController { instantiateAutoClearController() }
 
     @MainActor
     func syncSettings(source: String? = nil) -> SyncSettingsViewController {

@@ -66,6 +66,7 @@ public final class SyncBookmarksAdapter {
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     let syncErrorHandler: SyncErrorHandling
+    private let faviconStoring: FaviconStoring
 
     @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
     private var didMigrateToImprovedListsHandling: Bool
@@ -88,10 +89,13 @@ public final class SyncBookmarksAdapter {
 
     public init(database: CoreDataDatabase,
                 favoritesDisplayModeStorage: FavoritesDisplayModeStoring,
-                syncErrorHandler: SyncErrorHandling) {
+                syncErrorHandler: SyncErrorHandling,
+                faviconStoring: FaviconStoring) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
         self.syncErrorHandler = syncErrorHandler
+        self.faviconStoring = faviconStoring
+
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
@@ -172,7 +176,7 @@ public final class SyncBookmarksAdapter {
             database: database,
             stateStore: stateStore,
             fetcher: FaviconFetcher(),
-            faviconStore: Favicons.shared,
+            faviconStore: faviconStoring,
             errorEvents: BookmarksFaviconsFetcherErrorHandler()
         )
     }

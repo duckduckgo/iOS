@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/experiment-framework",
-        "revision" : "84643c13f432a530c45f56b264f7028cdcf30955"
+        "revision" : "9563e1ea53ff0590e3bb78e566234907edb73678",
+        "version" : "213.0.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "757bbbae1e2afbb421caee9bfca04ee5c56c3af8",
-        "version" : "7.2.0"
+        "revision" : "49db79829dcb166b3524afdbc1c680890452ce1c",
+        "version" : "7.2.1"
       }
     },
     {

@@ -129,6 +129,8 @@ final class AppDependencyProvider: DependencyProvider {
                 return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
             case .isLaunchedROWOverride:
                 return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
+            default:
+                return feature.defaultState
             }
         }
 

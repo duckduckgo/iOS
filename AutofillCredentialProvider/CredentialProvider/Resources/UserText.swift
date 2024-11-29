@@ -29,6 +29,8 @@ final class UserText {
 
     static let actionCancel = NSLocalizedString("action.button.cancel", value: "Cancel", comment: "Cancel button title")
 
+    static let actionClose = NSLocalizedString("action.button.cancel", value: "Close", comment: "Close button title")
+
     static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value: "Passwords", comment: "Title for screen listing autofill logins")
 
     static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value: "Search passwords", comment: "Placeholder for search field on autofill login listing")
@@ -49,4 +51,13 @@ final class UserText {
     static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock device to access passwords", comment: "Reason for auth when opening login list")
 
     static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
+
+    static let autofillNoDeviceAuthSetTitle = NSLocalizedString("autofill.no-device-auth-set.title", value: "Device Passcode Required", comment: "Title for alert when device authentication is not set")
+
+    static let autofillNoDeviceAuthSetMessage = NSLocalizedString("autofill.no-device-auth-set.message", value: "Set a passcode on %@ to autofill your DuckDuckGo passwords.", comment: "Message for alert when device authentication is not set, where %@ is iPhone|iPad|device")
+
+    static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value:"iPhone", comment: "Device type is iPhone")
+    static let deviceTypeiPad = NSLocalizedString("device.type.pad", value:"iPad", comment: "Device type is iPad")
+    static let deviceTypeDefault = NSLocalizedString("device.type.default", value:"device", comment: "Default string used if users device is not iPhone or iPad")
+
 }

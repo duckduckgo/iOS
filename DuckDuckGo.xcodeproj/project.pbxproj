@@ -906,6 +906,7 @@
 		C1641EB32BC2F53C0012607A /* ImportPasswordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1641EB22BC2F53C0012607A /* ImportPasswordsViewModel.swift */; };
 		C174CE602BD6A6CE00AED2EA /* MockDDGSyncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C185ED652BD43A5500BAE9DC /* MockDDGSyncing.swift */; };
 		C177D9F42CFDDFEB0039CBF7 /* AutofillPasswordFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C177D9F32CFDDFEB0039CBF7 /* AutofillPasswordFetcher.swift */; };
+		C177D9F62CFDDFEB0039CBF7 /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C177D9F52CFDDFEB0039CBF7 /* UIAlertControllerExtension.swift */; };
 		C17B59592A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */; };
 		C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */; };
 		C17B595B2A03AAD30055F2D1 /* PasswordGenerationPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */; };
@@ -2754,6 +2755,7 @@
 		C1641EB02BC2F52B0012607A /* ImportPasswordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPasswordsView.swift; sourceTree = "<group>"; };
 		C1641EB22BC2F53C0012607A /* ImportPasswordsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPasswordsViewModel.swift; sourceTree = "<group>"; };
 		C177D9F32CFDDFEB0039CBF7 /* AutofillPasswordFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillPasswordFetcher.swift; sourceTree = "<group>"; };
+		C177D9F52CFDDFEB0039CBF7 /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewModel.swift; sourceTree = "<group>"; };
 		C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewController.swift; sourceTree = "<group>"; };
 		C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptView.swift; sourceTree = "<group>"; };
@@ -5402,6 +5404,7 @@
 		C1CAAA6E2CF8BBC900C37EE6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C177D9F52CFDDFEB0039CBF7 /* UIAlertControllerExtension.swift */,
 				C1CAAA9D2CFCB78700C37EE6 /* UIColorExtension.swift */,
 				C1CAAA9F2CFCB7C200C37EE6 /* UImageExtension.swift */,
 				C1CAAA842CF8C9EA00C37EE6 /* UIResponderExtension.swift */,
@@ -8526,6 +8529,7 @@
 				C1CAAA9E2CFCB78700C37EE6 /* UIColorExtension.swift in Sources */,
 				C1CAAA8A2CF9FFF300C37EE6 /* CredentialProviderListViewModel.swift in Sources */,
 				C1CAAAA02CFCB7C200C37EE6 /* UImageExtension.swift in Sources */,
+				C177D9F62CFDDFEB0039CBF7 /* UIAlertControllerExtension.swift in Sources */,
 				C177D9F42CFDDFEB0039CBF7 /* AutofillPasswordFetcher.swift in Sources */,
 				C1CAAA882CF9FFE100C37EE6 /* CredentialProviderListViewController.swift in Sources */,
 				C1CAAAAA2CFCC13E00C37EE6 /* SecureVaultReporter.swift in Sources */,

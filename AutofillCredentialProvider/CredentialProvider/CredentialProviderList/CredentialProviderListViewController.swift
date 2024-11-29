@@ -160,6 +160,11 @@ class CredentialProviderListViewController: UIViewController {
                 if error != nil {
                     if error != .noAuthAvailable {
                         self.onDismiss()
+                    } else {
+                        let alert = UIAlertController.makeDeviceAuthenticationAlert { [weak self] in
+                            self?.onDismiss()
+                        }
+                        present(alert, animated: true)
                     }
                 }
             }

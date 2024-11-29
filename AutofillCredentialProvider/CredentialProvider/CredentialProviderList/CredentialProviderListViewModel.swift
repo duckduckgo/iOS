@@ -127,7 +127,7 @@ final class CredentialProviderListViewModel: ObservableObject {
     func authenticate(completion: @escaping (UserAuthenticator.AuthError?) -> Void) {
         if !authenticator.canAuthenticate() {
             viewState = .noAuthAvailable
-            completion(nil)
+            completion(.noAuthAvailable)
             return
         }
 

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "db9c29a429896138fab29da987981a5f4a8d6712",
-        "version" : "212.1.1"
+        "branch" : "sam/add-rmf-survey-locale-parameter",
+        "revision" : "49d31fb741dd39446fd0ddfc70e36846191394e4"
       }
     },
     {

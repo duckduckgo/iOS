@@ -94,7 +94,8 @@ final class AppDependencyProvider: DependencyProvider {
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()))
 
         configurationManager = ConfigurationManager(store: configurationStore)
 

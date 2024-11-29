@@ -60,17 +60,27 @@ public enum FeatureFlag: String {
     /// https://app.asana.com/0/1204167627774280/1208794395441049/f
     case aiChatBrowsingToolbarShortcut
 
+    case isPrivacyProLaunchedROW
+    case isPrivacyProLaunchedROWOverride
 }
 
 extension FeatureFlag: FeatureFlagDescribing {
+
+    public static var localOverrideStoreName: String = "com.duckduckgo.app.featureFlag.localOverrides"
+
     public var supportsLocalOverriding: Bool {
-        false
+        switch self {
+        case .isPrivacyProLaunchedROWOverride:
+            return true
+        default:
+            return false
+        }
     }
 
     public var source: FeatureFlagSource {
         switch self {
         case .debugMenu:
-            return .internalOnly
+            return .internalOnly()
         case .sync:
             return .remoteReleasable(.subfeature(SyncSubfeature.level0ShowSync))
         case .autofillCredentialInjecting:
@@ -110,9 +120,9 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .syncPromotionPasswords:
             return .remoteReleasable(.subfeature(SyncPromotionSubfeature.passwords))
         case .onboardingHighlights:
-            return .internalOnly
+            return .internalOnly()
         case .onboardingAddToDock:
-            return .internalOnly
+            return .internalOnly()
         case .autofillSurveys:
             return .remoteReleasable(.feature(.autofillSurveys))
         case .autcompleteTabs:
@@ -129,6 +139,11 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .internalOnly
         case .aiChatBrowsingToolbarShortcut:
             return .remoteReleasable(.subfeature(AIChatSubfeature.browsingToolbarShortcut))
+            return .internalOnly()
+        case .isPrivacyProLaunchedROW:
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROW))
+        case .isPrivacyProLaunchedROWOverride:
+            return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROWOverride))
         }
     }
 }

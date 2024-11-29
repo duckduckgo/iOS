@@ -30,13 +30,15 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let subscriptionService = SubscriptionEndpointServiceMock()
         let authService = AuthEndpointServiceMock()
         let storePurchaseManager = StorePurchaseManagerMock()
+        let subscriptionFeatureMappingCache = SubscriptionFeatureMappingCacheMock()
         return SubscriptionManagerMock(accountManager: accountManager,
                                        subscriptionEndpointService: subscriptionService,
                                        authEndpointService: authService,
                                        storePurchaseManager: storePurchaseManager,
                                        currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                    purchasePlatform: .appStore),
-                                       canPurchase: true)
+                                       canPurchase: true,
+                                       subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
     }()
 
     let subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled

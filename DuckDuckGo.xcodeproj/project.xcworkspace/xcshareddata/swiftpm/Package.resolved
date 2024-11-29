@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "db9c29a429896138fab29da987981a5f4a8d6712",
-        "version" : "212.1.1"
+        "branch" : "sam/remove-malformed-error-pixel",
+        "revision" : "a2f5f25a6ad30edd672bb77699f824e7510fad56"
       }
     },
     {

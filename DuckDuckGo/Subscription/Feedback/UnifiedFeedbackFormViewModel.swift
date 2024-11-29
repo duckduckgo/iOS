@@ -143,7 +143,9 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
 
     let source: String
 
-    init(accountManager: any AccountManager,
+    private(set) var availableCategories: [UnifiedFeedbackCategory] = [.subscription]
+
+    init(subscriptionManager: any SubscriptionManager,
          apiService: any Networking.APIService,
          vpnMetadataCollector: any UnifiedMetadataCollector,
          defaultMetadatCollector: any UnifiedMetadataCollector = DefaultMetadataCollector(),
@@ -151,12 +153,26 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
          source: Source = .unknown) {
         self.viewState = .feedbackPending
 
-        self.accountManager = accountManager
+        self.accountManager = subscriptionManager.accountManager
         self.apiService = apiService
         self.vpnMetadataCollector = vpnMetadataCollector
         self.defaultMetadataCollector = defaultMetadatCollector
         self.feedbackSender = feedbackSender
         self.source = source.rawValue
+
+        Task {
+            let features = await subscriptionManager.currentSubscriptionFeatures()
+
+            if features.contains(.networkProtection) {
+                availableCategories.append(.vpn)
+            }
+            if features.contains(.dataBrokerProtection) {
+                availableCategories.append(.pir)
+            }
+            if features.contains(.identityTheftRestoration) || features.contains(.identityTheftRestorationGlobal) {
+                availableCategories.append(.itr)
+            }
+        }
     }
 
     @MainActor

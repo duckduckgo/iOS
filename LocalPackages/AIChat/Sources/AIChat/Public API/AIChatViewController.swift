@@ -18,47 +18,64 @@
 //
 import UIKit
 import Combine
+import WebKit
 
-protocol AIChatViewControllerDelegate: AnyObject {
+/// A protocol that defines the delegate methods for `AIChatViewController`.
+public protocol AIChatViewControllerDelegate: AnyObject {
+    /// Tells the delegate that a request to load a URL has been made.
+    ///
+    /// - Parameters:
+    ///   - viewController: The `AIChatViewController` instance making the request.
+    ///   - url: The `URL` that is requested to be loaded.
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL)
 }
 
-final class AIChatViewController: UIViewController {
-    weak var delegate: AIChatViewControllerDelegate?
-    private let chatModel: AIChatViewModel
+public final class AIChatViewController: UIViewController {
+    public weak var delegate: AIChatViewControllerDelegate?
+    private let chatModel: AIChatViewModeling
     private var webViewController: AIChatWebViewController?
     private var cleanupCancellable: AnyCancellable?
 
-    init(chatModel: AIChatViewModel) {
+    /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
+    ///
+    /// - Parameters:
+    ///   - remoteSettings: An object conforming to `AIChatRemoteSettingsProvider` that provides remote settings.
+    ///   - webViewConfiguration: A `WKWebViewConfiguration` object used to configure the web view.
+    public convenience init(remoteSettings: AIChatRemoteSettingsProvider, webViewConfiguration: WKWebViewConfiguration) {
+        let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, remoteSettings: remoteSettings)
+        self.init(chatModel: chatModel)
+    }
+
+    internal init(chatModel: AIChatViewModeling) {
         self.chatModel = chatModel
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+         fatalError("init(coder:) has not been implemented")
+     }
 }
 
 // MARK: - Lifecycle
 extension AIChatViewController {
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         subscribeToCleanupPublisher()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addWebViewController()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         chatModel.cancelTimer()
     }
 
-    override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         chatModel.cancelTimer()
         removeWebViewController()
@@ -81,7 +98,7 @@ extension AIChatViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = UserText.aiChatTitle
-        titleLabel.font = .semiBoldAppFont(ofSize: 17)
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stackView.axis = .horizontal

@@ -21,21 +21,21 @@ import UIKit
 import WebKit
 
 protocol AIChatWebViewControllerDelegate: AnyObject {
-    func aiChatWebViewController(_ viewController: AIChatWebViewController, didRequestToLoad url: URL)
+    @MainActor func aiChatWebViewController(_ viewController: AIChatWebViewController, didRequestToLoad url: URL)
 }
 
 final class AIChatWebViewController: UIViewController {
     weak var delegate: AIChatWebViewControllerDelegate?
     private var didLoadAIChat = false
-    private let chatModel: AIChatViewModel
+    private let chatModel: AIChatViewModeling
 
     private lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
-        webView.navigationDelegate = self // Set the navigation delegate
+        webView.navigationDelegate = self
         return webView
     }()
 
-    init(chatModel: AIChatViewModel) {
+    init(chatModel: AIChatViewModeling) {
         self.chatModel = chatModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,17 +82,16 @@ extension AIChatWebViewController {
 
 extension AIChatWebViewController: WKNavigationDelegate {
 
-    /// Allow loading only AI Chat-related requests; delegate others to the parent for handling.
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         if let url = navigationAction.request.url {
             if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
-                decisionHandler(.allow)
+                return .allow
             } else {
                 delegate?.aiChatWebViewController(self, didRequestToLoad: url)
-                decisionHandler(.cancel)
+                return .cancel
             }
         } else {
-            decisionHandler(.allow)
+            return .allow
         }
     }
 }

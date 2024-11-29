@@ -1,5 +1,5 @@
 //
-//  AIChatRemoteSettingsProvider.swift
+//  AIChatRemoteSettings.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,14 +18,8 @@
 //
 
 import BrowserServicesKit
+import AIChat
 import Foundation
-
-protocol AIChatRemoteSettingsProvider {
-    var aiChatURL: URL { get }
-    var isAIChatEnabled: Bool { get }
-    var isBrowsingToolbarShortcutEnabled: Bool { get }
-    var isAddressBarShortcutEnabled: Bool { get }
-}
 
 /// This struct serves as a wrapper for PrivacyConfigurationManaging, enabling the retrieval of data relevant to AIChat.
 /// It also fire pixels when necessary data is missing.

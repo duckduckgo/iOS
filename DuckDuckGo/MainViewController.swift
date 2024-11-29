@@ -38,6 +38,7 @@ import Onboarding
 import os.log
 import PageRefreshMonitor
 import BrokenSitePrompt
+import AIChat
 
 class MainViewController: UIViewController {
     
@@ -187,8 +188,8 @@ class MainViewController: UIViewController {
 
     private lazy var aiChatNavigationController: UINavigationController = {
         let remoteSettings = AIChatRemoteSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
-        let chatModel = AIChatViewModel(webViewConfiguration: WKWebViewConfiguration.persistent(), remoteSettings: remoteSettings)
-        let aiChatViewController = AIChatViewController(chatModel: chatModel)
+        let aiChatViewController = AIChatViewController(remoteSettings: remoteSettings,
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent())
         aiChatViewController.delegate = self
         return UINavigationController(rootViewController: aiChatViewController)
     }()

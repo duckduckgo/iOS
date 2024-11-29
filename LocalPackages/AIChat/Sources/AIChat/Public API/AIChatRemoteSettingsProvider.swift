@@ -1,5 +1,5 @@
 //
-//  Logger+AIChat.swift
+//  AIChatRemoteSettingsProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,8 +18,17 @@
 //
 
 import Foundation
-import os.log
 
-public extension Logger {
-    static var aiChat = { Logger(subsystem: "AI Chat", category: "") }()
+public protocol AIChatRemoteSettingsProvider {
+    /// The URL used to open AI Chat in `AIChatViewController`.
+    var aiChatURL: URL { get }
+
+    /// Indicates if AI Chat parent feature is enabled.
+    var isAIChatEnabled: Bool { get }
+
+    /// Indicates if the AI Chat shortcut sub-feature is enabled in the browsing toolbar.
+    var isBrowsingToolbarShortcutEnabled: Bool { get }
+
+    /// Indicates if the AI Chat shortcut sub-feature is enabled in the address bar.
+    var isAddressBarShortcutEnabled: Bool { get }
 }

@@ -19,8 +19,17 @@
 
 import WebKit
 import Combine
+import os.log
 
-final class AIChatViewModel {
+protocol AIChatViewModeling {
+    var aiChatURL: URL { get }
+    var webViewConfiguration: WKWebViewConfiguration { get }
+    var cleanupPublisher: PassthroughSubject<Void, Never> { get }
+    func cancelTimer()
+    func startCleanupTimer()
+}
+
+final class AIChatViewModel: AIChatViewModeling {
     private let remoteSettings: AIChatRemoteSettingsProvider
     private var cleanupTimerCancellable: AnyCancellable?
 
@@ -37,8 +46,6 @@ final class AIChatViewModel {
         cleanupTimerCancellable?.cancel()
     }
 
-    /// Starts a 10-minute timer to trigger cleanup after AI Chat is closed.
-    /// Cancels any existing timer before starting a new one.
     func startCleanupTimer() {
         Logger.aiChat.debug("Starting cleanup timer")
         cancelTimer()

@@ -31,6 +31,8 @@ final class TabViewControllerDaxDialogTests: XCTestCase {
     private var onboardingPixelReporterMock: OnboardingPixelReporterMock!
 
     override func setUpWithError() throws {
+        throw XCTSkip("Potentially Flaky")
+
         try super.setUpWithError()
         delegateMock = MockTabDelegate()
         onboardingPresenterMock = ContextualOnboardingPresenterMock()

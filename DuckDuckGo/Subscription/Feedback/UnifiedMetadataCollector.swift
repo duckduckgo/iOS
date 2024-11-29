@@ -27,6 +27,7 @@ protocol UnifiedMetadataCollector {
 
 protocol UnifiedFeedbackMetadata: Encodable {
     func toBase64() -> String
+    func toString() -> String
 }
 
 extension UnifiedFeedbackMetadata {
@@ -38,6 +39,16 @@ extension UnifiedFeedbackMetadata {
             return encodedMetadata.base64EncodedString()
         } catch {
             return "Failed to encode metadata to JSON, error message: \(error.localizedDescription)"
+        }
+    }
+
+    func toString() -> String {
+        let encoder = JSONEncoder()
+        do {
+            let encodedMetadata = try encoder.encode(self)
+            return String(data: encodedMetadata, encoding: .utf8) ?? ""
+        } catch {
+            return "Failed to encode metadata to JSON string, error message: \(error.localizedDescription)"
         }
     }
 }

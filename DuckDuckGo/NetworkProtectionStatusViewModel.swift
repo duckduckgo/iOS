@@ -113,6 +113,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published
     var showAddWidgetEducationView: Bool = false
 
+    let tipsModel: VPNTipsModel
+
     // MARK: Error
 
     struct ErrorItem {
@@ -138,7 +140,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         didSet {
             if #available(iOS 17.0, *) {
                 if isNetPEnabled {
-                    VPNGeoswitchingTip.donateVPNConnectedEvent()
+                    VPNGeoswitchingTip.vpnEnabledOnce = true
                 }
 
                 VPNSnoozeTip.vpnEnabled = isNetPEnabled
@@ -184,6 +186,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository,
                 usesUnifiedFeedbackForm: Bool) {
+
         self.tunnelController = tunnelController
         self.settings = settings
         self.statusObserver = statusObserver
@@ -198,6 +201,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.preferredLocation = NetworkProtectionLocationStatusModel(selectedLocation: settings.selectedLocation)
 
         self.dnsSettings = settings.dnsSettings
+
+        self.tipsModel = VPNTipsModel(
+            isTipFeatureEnabled: featureFlagger.isFeatureOn(.networkProtectionUserTips),
+            statusObserver: statusObserver,
+            vpnSettings: settings)
 
         updateViewModel(withStatus: statusObserver.recentValue)
 
@@ -477,8 +485,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             return
         }
 
-        if #available(iOS 17.0, *) {
-            VPNSnoozeTip().invalidate(reason: .actionPerformed)
+        if #available(iOS 18.0, *) {
+            tipsModel.handleUserSnoozedVPN()
         }
 
         let defaultDuration: TimeInterval = .minutes(20)
@@ -577,7 +585,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: - UI Events handling
 
-    @available(iOS 17.0, *)
+    @available(iOS 18.0, *)
     func snoozeActionHandler(action: Tips.Action) {
         if action.id == VPNSnoozeTip.ActionIdentifiers.learnMore.rawValue {
             let url = URL(string: "https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/vpn/troubleshooting/")!
@@ -585,22 +593,22 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         }
     }
 
-    @available(iOS 17.0, *)
+    @available(iOS 18.0, *)
     @MainActor
     func widgetActionHandler(action: Tips.Action) {
         if action.id == VPNAddWidgetTip.ActionIdentifiers.addWidget.rawValue {
             showAddWidgetEducationView = true
 
-            VPNAddWidgetTip().invalidate(reason: .actionPerformed)
+            tipsModel.handleUserOpenedWidgetLearnMore()
         }
     }
 
     /// The user opened the VPN locations view
     ///
     func handleUserOpenedVPNLocations() {
-        if #available(iOS 17.0, *) {
+        if #available(iOS 18.0, *) {
             Task { @MainActor in
-                VPNGeoswitchingTip().invalidate(reason: .actionPerformed)
+                tipsModel.handleUserOpenedLocations()
             }
         }
     }

@@ -476,6 +476,23 @@ extension Pixel {
 
         case networkProtectionMalformedErrorDetected
 
+        // MARK: - VPN Tips
+
+        case networkProtectionGeoswitchingTipShown
+        case networkProtectionGeoswitchingTipActioned
+        case networkProtectionGeoswitchingTipDismissed
+        case networkProtectionGeoswitchingTipIgnored
+
+        case networkProtectionSnoozeTipShown
+        case networkProtectionSnoozeTipActioned
+        case networkProtectionSnoozeTipDismissed
+        case networkProtectionSnoozeTipIgnored
+
+        case networkProtectionWidgetTipShown
+        case networkProtectionWidgetTipActioned
+        case networkProtectionWidgetTipDismissed
+        case networkProtectionWidgetTipIgnored
+
         // MARK: remote messaging pixels
         
         case remoteMessageShown
@@ -518,6 +535,10 @@ extension Pixel {
                                               component: ContentBlockerDebugEvents.Component)
         
         case contentBlockingCompilationTime
+        case contentBlockingLookupRulesSucceeded
+        case contentBlockingFetchLRCSucceeded
+        case contentBlockingNoMatchInLRC
+        case contentBlockingLRCMissing
         
         case ampBlockingRulesCompilationFailed
         
@@ -870,6 +891,12 @@ extension Pixel {
         case duckPlayerYouTubeOverlayNavigationOutsideYoutube
         case duckPlayerYouTubeOverlayNavigationClosed
         case duckPlayerYouTubeNavigationIdle30
+
+        // MARK: Launch time
+        case appDidFinishLaunchingTime(time: BucketAggregation)
+        case appDidShowUITime(time: BucketAggregation)
+        case appDidBecomeActiveTime(time: BucketAggregation)
+
     }
 
 }
@@ -1311,6 +1338,23 @@ extension Pixel.Event {
 
         case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
 
+            // MARK: VPN tips
+
+        case .networkProtectionGeoswitchingTipShown: return "m_vpn_tip_geoswitching_shown"
+        case .networkProtectionGeoswitchingTipActioned: return "m_vpn_tip_geoswitching_actioned"
+        case .networkProtectionGeoswitchingTipDismissed: return "m_vpn_tip_geoswitching_dismissed"
+        case .networkProtectionGeoswitchingTipIgnored: return "m_vpn_tip_geoswitching_ignored"
+
+        case .networkProtectionSnoozeTipShown: return "m_vpn_tip_snooze_shown"
+        case .networkProtectionSnoozeTipActioned: return "m_vpn_tip_snooze_actioned"
+        case .networkProtectionSnoozeTipDismissed: return "m_vpn_tip_snooze_dismissed"
+        case .networkProtectionSnoozeTipIgnored: return "m_vpn_tip_snooze_ignored"
+
+        case .networkProtectionWidgetTipShown: return "m_vpn_tip_widget_shown"
+        case .networkProtectionWidgetTipActioned: return "m_vpn_tip_widget_actioned"
+        case .networkProtectionWidgetTipDismissed: return "m_vpn_tip_widget_dismissed"
+        case .networkProtectionWidgetTipIgnored: return "m_vpn_tip_widget_ignored"
+
             // MARK: remote messaging pixels
             
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -1356,6 +1400,11 @@ extension Pixel.Event {
             
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
+        case .contentBlockingLookupRulesSucceeded: return "m_content_blocking_lookup_rules_succeeded"
+        case .contentBlockingFetchLRCSucceeded: return "m_content_blocking_fetch_lrc_succeeded"
+        case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
+        case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
+
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"
@@ -1733,6 +1782,11 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+
+        // MARK: Launch time
+        case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
+        case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
+        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
 
         }
     }

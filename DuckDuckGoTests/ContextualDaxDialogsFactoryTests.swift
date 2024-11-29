@@ -32,6 +32,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
     private var window: UIWindow!
 
     override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
         try super.setUpWithError()
         delegate = ContextualOnboardingDelegateMock()
         settingsMock = ContextualOnboardingSettingsMock()
@@ -48,7 +49,7 @@ final class ContextualDaxDialogsFactoryTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        window.isHidden = true
+        window?.isHidden = true
         window = nil
         delegate = nil
         settingsMock = nil

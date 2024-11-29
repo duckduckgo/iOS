@@ -136,10 +136,9 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .adAttributionReporting:
             return .remoteReleasable(.feature(.adAttributionReporting))
         case .crashReportOptInStatusResetting:
-            return .internalOnly
+            return .internalOnly()
         case .aiChatBrowsingToolbarShortcut:
             return .remoteReleasable(.subfeature(AIChatSubfeature.browsingToolbarShortcut))
-            return .internalOnly()
         case .isPrivacyProLaunchedROW:
             return .remoteReleasable(.subfeature(PrivacyProSubfeature.isLaunchedROW))
         case .isPrivacyProLaunchedROWOverride:

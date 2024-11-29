@@ -2939,8 +2939,9 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     }
 }
 
+// MARK: - AIChatViewControllerDelegate
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
-        handleRequestedURL(url)
+        loadUrlInNewTab(url, inheritedAttribution: nil)
     }
 }

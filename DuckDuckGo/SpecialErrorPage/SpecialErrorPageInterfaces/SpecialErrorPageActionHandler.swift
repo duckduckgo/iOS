@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import SpecialErrorPages
 
 /// A type that defines actions for handling special error pages.
 ///
@@ -26,7 +27,7 @@ import Foundation
 /// advanced information related to the error.
 protocol SpecialErrorPageActionHandler {
     /// Handles the action of navigating to the site associated with the error page
-    func visitSite()
+    func visitSite(url: URL, errorData: SpecialErrorData)
 
     /// Handles the action of leaving the site associated with the error page
     func leaveSite()

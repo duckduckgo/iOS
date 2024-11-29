@@ -24,8 +24,13 @@ import SpecialErrorPages
 import WebKit
 
 enum MaliciousSiteProtectionNavigationResult: Equatable {
-    case navigationHandled(SpecialErrorModel)
+    case navigationHandled(NavigationType)
     case navigationNotHandled
+
+    enum NavigationType: Equatable {
+        case mainFrame(SpecialErrorData)
+        case iFrame(maliciousURL: URL, error: SpecialErrorData)
+    }
 }
 
 protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
@@ -41,7 +46,9 @@ protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
 final class MaliciousSiteProtectionNavigationHandler {
     private let maliciousSiteProtectionManager: MaliciousSiteDetecting
     private let storageCache: StorageCache
-
+    private var maliciousURLExemptions: [URL: MaliciousSiteProtection.ThreatKind] = [:]
+    private var bypassedMaliciousSiteThreatKind: ThreatKind?
+    
     init(
         maliciousSiteProtectionManager: MaliciousSiteDetecting = MaliciousSiteProtectionManager(),
         storageCache: StorageCache = AppDependencyProvider.shared.storageCache
@@ -57,9 +64,34 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
 
     @MainActor
     func handleMaliciousSiteProtectionNavigation(for navigationAction: WKNavigationAction, webView: WKWebView) async -> MaliciousSiteProtectionNavigationResult {
-        // Implement logic to use `maliciousSiteProtectionManager.evaluate(url)`
-        // Return navigationNotHandled for the time being
-        return .navigationNotHandled
+
+        guard let url = navigationAction.request.url else {
+            return .navigationNotHandled
+        }
+
+        if let aboutBlankURL = URL(string: "about:blank"), url == aboutBlankURL {
+            return .navigationNotHandled
+        }
+
+        handleMaliciousExemptions(for: navigationAction.navigationType, url: url)
+
+        guard !shouldBypassMaliciousSiteProtection(for: url) else {
+            return .navigationNotHandled
+        }
+
+        guard let threatKind = await maliciousSiteProtectionManager.evaluate(url) else {
+            return .navigationNotHandled
+        }
+
+        if navigationAction.isTargetingMainFrame {
+            let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: url)
+            return .navigationHandled(.mainFrame(errorData))
+        } else {
+            // Extract the URL of the source frame (the iframe) that initiated the navigation action
+            let iFrameTopURL = navigationAction.sourceFrame.safeRequest?.url ?? url
+            let errorData = SpecialErrorData.maliciousSite(kind: threatKind, url: iFrameTopURL)
+            return .navigationHandled(.iFrame(maliciousURL: url, error: errorData))
+        }
     }
 
 }
@@ -68,7 +100,10 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
 
 extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandler {
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
+        maliciousURLExemptions[url] = errorData.threatKind
+        bypassedMaliciousSiteThreatKind = errorData.threatKind
+
         // Fire Pixel
     }
 
@@ -78,6 +113,23 @@ extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandle
 
     func advancedInfoPresented() {
         // Fire Pixel
+    }
+
+}
+
+// MARK: - Private
+
+private extension MaliciousSiteProtectionNavigationHandler {
+
+    func handleMaliciousExemptions(for navigationType: WKNavigationType, url: URL) {
+        if let threatKind = bypassedMaliciousSiteThreatKind, navigationType == .other {
+            maliciousURLExemptions[url] = threatKind
+        }
+        bypassedMaliciousSiteThreatKind = maliciousURLExemptions[url]
+    }
+
+    func shouldBypassMaliciousSiteProtection(for url: URL) -> Bool {
+        bypassedMaliciousSiteThreatKind != .none || url.isDuckDuckGo || url.isDuckURLScheme
     }
 
 }

@@ -22,12 +22,25 @@ import Combine
 import os.log
 
 protocol AIChatViewModeling {
+    /// The URL to be loaded in the AI Chat View Controller's web view.
     var aiChatURL: URL { get }
+
+    /// The configuration settings for the web view used in the AI Chat.
+    /// This configuration can include preferences such as data storage
     var webViewConfiguration: WKWebViewConfiguration { get }
+
+    /// A publisher that emits a signal after a 10-minute interval.
+    /// This is used to notify the controller that it should perform a reload or cleanup operation,
     var cleanupPublisher: PassthroughSubject<Void, Never> { get }
+
+    /// Cancels the currently active cleanup timer.
     func cancelTimer()
+
+    /// Initiates the cleanup timer, which is set to trigger after a specified duration.
+    /// The purpose of this timer is to clear previous chat conversations
     func startCleanupTimer()
 }
+
 
 final class AIChatViewModel: AIChatViewModeling {
     private let remoteSettings: AIChatRemoteSettingsProvider

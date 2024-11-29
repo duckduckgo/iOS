@@ -1831,19 +1831,28 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
 
-        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let self = self,
-               let url = navigationAction.request.url,
-               decision != .cancel,
-               navigationAction.isTargetingMainFrame() {
-                if url.isDuckDuckGoSearch {
-                    StatisticsLoader.shared.refreshSearchRetentionAtb()
-                    privacyProDataReporter.saveSearchCount()
+        Task { @MainActor in
+            // Check if should show a special error page for malicious site
+            if let url = navigationAction.request.url,
+               !specialErrorPageNavigationHandler.isSpecialErrorPageVisible,
+               await specialErrorPageNavigationHandler.handleSpecialErrorNavigation(navigationAction: navigationAction, webView: webView) {
+                decisionHandler(.cancel)
+            } else {
+                decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+                    if let self = self,
+                       let url = navigationAction.request.url,
+                       decision != .cancel,
+                       navigationAction.isTargetingMainFrame() {
+                        if url.isDuckDuckGoSearch {
+                            StatisticsLoader.shared.refreshSearchRetentionAtb()
+                            privacyProDataReporter.saveSearchCount()
+                        }
+                        self.delegate?.closeFindInPage(tab: self)
+                    }
+                    decisionHandler(decision)
                 }
-
-                self.delegate?.closeFindInPage(tab: self)
             }
-            decisionHandler(decision)
+
         }
     }
     // swiftlint:enable cyclomatic_complexity

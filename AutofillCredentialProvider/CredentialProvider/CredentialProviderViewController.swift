@@ -19,14 +19,23 @@
 
 import AuthenticationServices
 import SwiftUI
+import BrowserServicesKit
 import Core
 
 class CredentialProviderViewController: ASCredentialProviderViewController {
-
+    
     private struct Constants {
         static let openPasswords = AppDeepLinkSchemes.openPasswords.url
     }
-
+    
+    private lazy var secureVault: (any AutofillSecureVault)? = {
+        return try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter())
+    }()
+    
+    private lazy var passwordFetcher: CredentialFetcher = {
+        return CredentialFetcher(secureVault: secureVault)
+    }()
+    
     override func prepareInterfaceForExtensionConfiguration() {
         let viewModel = CredentialProviderActivatedViewModel { [weak self] shouldLaunchApp in
             if shouldLaunchApp {
@@ -34,47 +43,41 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
             }
             self?.extensionContext.completeExtensionConfigurationRequest()
         }
-
+        
         let view = CredentialProviderActivatedView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
         installChildViewController(hostingController)
     }
-
-    /*
-     Prepare your UI to list available credentials for the user to choose from. The items in
-     'serviceIdentifiers' describe the service the user is logging in to, so your extension can
-     prioritize the most relevant credentials in the list.
-    */
+    
     override func prepareCredentialList(for serviceIdentifiers: [ASCredentialServiceIdentifier]) {
+        loadCredentialsList(for: serviceIdentifiers)
     }
-
-    /*
-     Implement this method if your extension supports showing credentials in the QuickType bar.
-     When the user selects a credential from your app, this method will be called with the
-     ASPasswordCredentialIdentity your app has previously saved to the ASCredentialIdentityStore.
-     Provide the password by completing the extension request with the associated ASPasswordCredential.
-     If using the credential would require showing custom UI for authenticating the user, cancel
-     the request with error code ASExtensionError.userInteractionRequired.
-
-    override func provideCredentialWithoutUserInteraction(for credentialIdentity: ASPasswordCredentialIdentity) {
-        let databaseIsUnlocked = true
-        if (databaseIsUnlocked) {
-            let passwordCredential = ASPasswordCredential(user: "j_appleseed", password: "apple1234")
-            self.extensionContext.completeRequest(withSelectedCredential: passwordCredential, completionHandler: nil)
-        } else {
-            self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain, code:ASExtensionError.userInteractionRequired.rawValue))
-        }
+    
+    private func loadCredentialsList(for serviceIdentifiers: [ASCredentialServiceIdentifier], returnString: Bool = false) {
+        let credentialProviderListViewController = CredentialProviderListViewController(serviceIdentifiers: serviceIdentifiers,
+                                                                                        secureVault: secureVault,
+                                                                                        onRowSelected: { [weak self] item in
+            guard let self = self else {
+                self?.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
+                                                                        code: ASExtensionError.failed.rawValue))
+                return
+            }
+            
+            let credential = self.passwordFetcher.fetchCredential(for: item.account)
+            self.extensionContext.completeRequest(withSelectedCredential: credential, completionHandler: nil)
+            
+        }, onDismiss: {
+            self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
+                                                                   code: ASExtensionError.userCanceled.rawValue))
+        })
+        
+        let navigationController = UINavigationController(rootViewController: credentialProviderListViewController)
+        self.view.subviews.forEach { $0.removeFromSuperview() }
+        addChild(navigationController)
+        navigationController.view.frame = self.view.bounds
+        navigationController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(navigationController.view)
+        navigationController.didMove(toParent: self)
     }
-    */
-
-    /*
-     Implement this method if provideCredentialWithoutUserInteraction(for:) can fail with
-     ASExtensionError.userInteractionRequired. In this case, the system may present your extension's
-     UI and call this method. Show appropriate UI for authenticating the user then provide the password
-     by completing the extension request with the associated ASPasswordCredential.
-
-    override func prepareInterfaceToProvideCredential(for credentialIdentity: ASPasswordCredentialIdentity) {
-    }
-    */
     
 }

@@ -28,4 +28,25 @@ final class UserText {
     static let credentialProviderActivatedButton = NSLocalizedString("credential.provider.activated.button", value: "Open DuckDuckGo", comment: "Title of button to launch the DuckDuckGo app")
 
     static let actionCancel = NSLocalizedString("action.button.cancel", value: "Cancel", comment: "Cancel button title")
+
+    static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value: "Passwords", comment: "Title for screen listing autofill logins")
+
+    static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value: "Search passwords", comment: "Placeholder for search field on autofill login listing")
+
+    static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
+
+    static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.list.enable.footer", value:"Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
+
+    static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value: "Suggested", comment: "Section title for group of suggested saved logins")
+
+    static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value: "No Results", comment: "Title displayed when there are no results on Autofill search")
+
+    static func autofillSearchNoResultSubtitle(for query: String) -> String {
+        let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
+        return message.format(arguments: query)
+    }
+
+    static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock device to access passwords", comment: "Reason for auth when opening login list")
+
+    static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
 }

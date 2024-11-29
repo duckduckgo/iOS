@@ -23,9 +23,16 @@ extension UIViewController {
 
     public func installChildViewController(_ childController: UIViewController) {
         addChild(childController)
-        childController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        childController.view.frame = view.bounds
         view.addSubview(childController.view)
+
+        childController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            childController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            childController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            childController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            childController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+
         childController.didMove(toParent: self)
     }
 

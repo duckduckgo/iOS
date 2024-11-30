@@ -80,6 +80,9 @@ class MainViewController: UIViewController {
         return emailManager
     }()
 
+    private lazy var aiChatViewController = AIChatViewController(url: URL(string: "http://duck.ai")!)
+    private lazy var gptChatViewController = AIChatViewController(url: URL(string: "http://chatgpt.com")!)
+
     var newTabPageViewController: NewTabPageViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
@@ -2336,6 +2339,21 @@ extension MainViewController: TabDelegate {
 
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
         segueToReportBrokenSite()
+    }
+
+    func tabDidRequestAIChatFullScreen(tab: TabViewController) {
+        aiChatViewController.modalPresentationStyle = .fullScreen
+        tab.present(aiChatViewController, animated: true, completion: nil)
+    }
+
+    func tabDidRequestAIChatModal(tab: TabViewController) {
+        aiChatViewController.modalPresentationStyle = .pageSheet
+        tab.present(aiChatViewController, animated: true, completion: nil)
+    }
+
+    func tabDidRequestGPT(tab: TabViewController) {
+        gptChatViewController.modalPresentationStyle = .fullScreen
+        tab.present(gptChatViewController, animated: true, completion: nil)
     }
 
     func tab(_ tab: TabViewController, didRequestToggleReportWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {

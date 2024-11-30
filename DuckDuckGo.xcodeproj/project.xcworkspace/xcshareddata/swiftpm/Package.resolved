@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/remove-malformed-error-pixel",
-        "revision" : "a2f5f25a6ad30edd672bb77699f824e7510fad56"
+        "revision" : "837dfbfe7a1b2a5e0ec2fb24a47a53dec53444b0",
+        "version" : "215.0.1"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/content-scope-scripts",
       "state" : {
-        "revision" : "dfef00ef77f5181d1d8a4f7cc88f7b7c0514dd34",
-        "version" : "6.39.0"
+        "revision" : "c4bb146afdf0c7a93fb9a7d95b1cb255708a470d",
+        "version" : "6.41.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/privacy-dashboard",
       "state" : {
-        "revision" : "757bbbae1e2afbb421caee9bfca04ee5c56c3af8",
-        "version" : "7.2.0"
+        "revision" : "49db79829dcb166b3524afdbc1c680890452ce1c",
+        "version" : "7.2.1"
       }
     },
     {

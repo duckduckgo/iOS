@@ -83,8 +83,11 @@ extension AIChatViewController {
 
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        chatModel.cancelTimer()
-        removeWebViewController()
+
+        if viewIfLoaded?.window == nil {
+            chatModel.cancelTimer()
+            removeWebViewController()
+        }
     }
 }
 

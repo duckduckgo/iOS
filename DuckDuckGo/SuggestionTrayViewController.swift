@@ -174,7 +174,7 @@ class SuggestionTrayViewController: UIViewController {
         topConstraint.constant = 4
 
         let isFirstPresentation = fullHeightConstraint.isActive
-        if isFirstPresentation {            
+        if isFirstPresentation {
             variableHeightConstraint.constant = Constant.suggestionTrayInitialHeight
         }
         

@@ -35,15 +35,18 @@ public class StatisticsLoader {
     private let parser = AtbParser()
     private let atbPresenceFileMarker = BoolFileMarker(name: .isATBPresent)
     private let inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring
+    private let pixelFiring: PixelFiring.Type
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
          usageSegmentation: UsageSegmenting = UsageSegmentation(),
-         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor()) {
+         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor(),
+         pixelFiring: PixelFiring.Type = Pixel.self) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.usageSegmentation = usageSegmentation
         self.inconsistencyMonitoring = inconsistencyMonitoring
+        self.pixelFiring = pixelFiring
     }
 
     public func load(completion: @escaping Completion = {}) {
@@ -75,6 +78,7 @@ public class StatisticsLoader {
 
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.requestExti(atb: atb, completion: completion)
+                self.fireInstallPixel()
             } else {
                 completion()
             }
@@ -100,6 +104,14 @@ public class StatisticsLoader {
             self.createATBFileMarker()
             completion()
         }
+    }
+
+    private func fireInstallPixel() {
+        pixelFiring.fire(.appInstall, withAdditionalParameters: [:], includedParameters: [.appVersion], onComplete: { error in
+            if let error {
+                Logger.general.error("Install pixel failed with error: \(error.localizedDescription, privacy: .public)")
+            }
+        })
     }
 
     private func createATBFileMarker() {

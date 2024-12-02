@@ -1231,3 +1231,37 @@ private extension Error {
     }
 
 }
+
+@MainActor
+public struct WKHTTPCookieStoreWrapper: HTTPCookieStore {
+
+    let store: WKHTTPCookieStore
+
+    public init(store: WKHTTPCookieStore) {
+        self.store = store
+    }
+
+    public func allCookies() async -> [HTTPCookie] {
+        return await withCheckedContinuation { continuation in
+            store.getAllCookies { cookies in
+                continuation.resume(returning: cookies)
+            }
+        }
+    }
+
+    public func setCookie(_ cookie: HTTPCookie) async {
+        await withCheckedContinuation { continuation in
+            store.setCookie(cookie) {
+                continuation.resume()
+            }
+        }
+    }
+
+    public func deleteCookie(_ cookie: HTTPCookie) async {
+        await withCheckedContinuation { continuation in
+            store.delete(cookie) {
+                continuation.resume()
+            }
+        }
+    }
+}

@@ -2832,11 +2832,11 @@ extension MainViewController: OnboardingDelegate {
 }
 
 extension MainViewController: OnboardingNavigationDelegate {
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         self.loadUrl(url, fromExternalLink: true)
     }
     
-    func searchFor(_ query: String) {
+    func searchFromOnboarding(for query: String) {
         self.loadQuery(query)
     }
 }

@@ -297,9 +297,7 @@ final class UnifiedFeedbackFormViewModel: ObservableObject {
                               problemSubCategory: selectedSubcategory ?? "",
                               customMetadata: metadata?.toString() ?? "")
         let headers = APIRequestV2.HeadersV2(additionalHeaders: [HTTPHeaderKey.authorization: "Bearer \(accessToken)"])
-        guard let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData()) else {
-            throw Error.invalidRequest
-        }
+        let request = APIRequestV2(url: Self.feedbackEndpoint, method: .post, headers: headers, body: payload.toData())
 
         let response: Response = try await apiService.fetch(request: request).decodeBody()
         if let error = response.error, !error.isEmpty {

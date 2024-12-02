@@ -3055,12 +3055,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 }
 
 extension TabViewController: OnboardingNavigationDelegate {
-    
-    func searchFor(_ query: String) {
+
+    func searchFromOnboarding(for query: String) {
         delegate?.tab(self, didRequestLoadQuery: query)
     }
 
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         delegate?.tab(self, didRequestLoadURL: url)
     }
 

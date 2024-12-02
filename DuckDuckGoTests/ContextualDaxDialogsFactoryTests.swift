@@ -486,11 +486,11 @@ final class ContextualOnboardingDelegateMock: ContextualOnboardingDelegate {
         didCallDidTapDismissContextualOnboardingAction = true
     }
     
-    func searchFor(_ query: String) {
+    func searchFromOnboarding(for query: String) {
         didCallSearchForQuery = true
     }
     
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         didCallNavigateToURL = true
         urlToNavigateTo = url
     }

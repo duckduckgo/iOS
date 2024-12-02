@@ -51,7 +51,7 @@ final class MockSSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHand
         capturedSpecialErrorType = errorType
     }
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
         didCallVisitSite = true
     }
 

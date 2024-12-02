@@ -19,6 +19,7 @@
 
 import Foundation
 import WebKit
+import SpecialErrorPages
 @testable import DuckDuckGo
 
 class DummyMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler {
@@ -26,7 +27,7 @@ class DummyMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavi
         .navigationNotHandled
     }
 
-    func visitSite() {}
+    func visitSite(url: URL, errorData: SpecialErrorData) {}
 
     func leaveSite() {}
 

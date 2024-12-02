@@ -90,7 +90,7 @@ extension SSLErrorPageNavigationHandler: SpecialErrorPageActionHandler {
         Pixel.fire(pixel: .certificateWarningLeaveClicked)
     }
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
         shouldBypassSSLError = true
     }
 

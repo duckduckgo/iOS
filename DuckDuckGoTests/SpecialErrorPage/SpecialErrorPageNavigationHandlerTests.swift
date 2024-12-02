@@ -113,8 +113,11 @@ final class SpecialErrorPageNavigationHandlerTests {
 
     @MainActor
     @Test("Visit Site forward event to SSL Error Page Navigation Handler")
-    func whenVisitSite_AndSSLError_ThenCallVisitSiteOnSSLErrorPageNavigationHandler() {
+    func whenVisitSite_AndSSLError_ThenCallVisitSiteOnSSLErrorPageNavigationHandler() throws {
         // GIVEN
+        let url = try #require(URL(string: "https://example.com"))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
         sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!sslErrorPageNavigationHandler.didCallVisitSite)
 

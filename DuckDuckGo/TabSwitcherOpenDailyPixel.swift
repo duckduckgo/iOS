@@ -20,11 +20,19 @@
 import Foundation
 
 struct TabSwitcherOpenDailyPixel {
-    func parameters(with tabs: [Tab]) -> [String: String] {
+    /// Returns parameters with buckets for respective tabs statistics.
+    /// - Parameters:
+    ///     - tabs: Tabs to be included in the statistics
+    ///     - referenceDate: Date to be used as a reference for calculating inactive tabs. Required for testing.
+    func parameters(with tabs: [Tab], referenceDate: Date = .now) -> [String: String] {
         var parameters = [String: String]()
 
         parameters[ParameterName.tabCount] = tabCountBucket(for: tabs)
         parameters[ParameterName.newTabCount] = newTabCountBucket(for: tabs)
+        parameters[ParameterName.tabActive7dCount] = bucketForInactiveTabs(tabs, within: (-7)..., from: referenceDate)
+        parameters[ParameterName.tabInactive1wCount] = bucketForInactiveTabs(tabs, within: (-14)...(-8), from: referenceDate)
+        parameters[ParameterName.tabInactive2wCount] = bucketForInactiveTabs(tabs, within: (-21)...(-15), from: referenceDate)
+        parameters[ParameterName.tabInactive3wCount] = bucketForInactiveTabs(tabs, within: ...(-22), from: referenceDate)
 
         return parameters
     }
@@ -51,6 +59,24 @@ struct TabSwitcherOpenDailyPixel {
 
     }
 
+    private func bucketForInactiveTabs<Range: RangeExpression>(_ tabs: [Tab], within daysInterval: Range, from referenceDate: Date) -> String? where Range.Bound == Int {
+        let dateInterval = AbsoluteDateInterval(daysInterval: daysInterval, basedOn: referenceDate)
+
+        let matchingTabsCount = tabs.count {
+            guard let lastViewedDate = $0.lastViewedDate else { return false }
+
+            return dateInterval.contains(lastViewedDate)
+        }
+
+        switch matchingTabsCount {
+        case 0: return "0"
+        case 1...5: return "1-5"
+        case 6...10: return "6-10"
+        case 11...20: return "11-20"
+        default: return "21+"
+        }
+    }
+
     private func newTabCountBucket(for tabs: [Tab]) -> String? {
         let count = tabs.count { $0.link == nil }
 
@@ -64,5 +90,42 @@ struct TabSwitcherOpenDailyPixel {
     private enum ParameterName {
         static let tabCount = "tab_count"
         static let newTabCount = "new_tab_count"
+
+        static let tabActive7dCount = "tab_active_7d"
+        static let tabInactive1wCount = "tab_inactive_1w"
+        static let tabInactive2wCount = "tab_inactive_2w"
+        static let tabInactive3wCount = "tab_inactive_3w"
+    }
+}
+
+private extension TimeInterval {
+    static let dayInterval: TimeInterval = 86400
+}
+
+private struct AbsoluteDateInterval<R: RangeExpression> where R.Bound == Int {
+    private let lowerBoundDate: Date
+    private let upperBoundDate: Date
+
+    init(daysInterval: R, basedOn referenceDate: Date) {
+        switch daysInterval {
+        case let daysRange as ClosedRange<R.Bound>:
+            self.lowerBoundDate = referenceDate.addingTimeInterval(Double(daysRange.lowerBound) * .dayInterval)
+            self.upperBoundDate = referenceDate.addingTimeInterval(Double(daysRange.upperBound) * .dayInterval)
+
+        case let daysRange as PartialRangeThrough<R.Bound>:
+            self.lowerBoundDate = Date.distantPast
+            self.upperBoundDate = referenceDate.addingTimeInterval(Double(daysRange.upperBound) * .dayInterval)
+
+        case let daysRange as PartialRangeFrom<R.Bound>:
+            self.lowerBoundDate = referenceDate.addingTimeInterval(Double(daysRange.lowerBound) * .dayInterval)
+            self.upperBoundDate = Date.distantFuture
+
+        default:
+            fatalError("\(R.self) is not supported")
+        }
+    }
+
+    func contains(_ date: Date) -> Bool {
+        lowerBoundDate...upperBoundDate ~= date
     }
 }

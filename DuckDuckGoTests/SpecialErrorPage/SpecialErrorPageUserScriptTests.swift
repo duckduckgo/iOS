@@ -17,13 +17,15 @@
 //  limitations under the License.
 //
 
-import XCTest
+import Testing
 import SpecialErrorPages
 @testable import DuckDuckGo
 
-final class SpecialErrorPageUserScriptTests: XCTestCase {
+@Suite("Special Error Pages - SpecialErrorPageUserScript Unit Tests", .serialized)
+struct SpecialErrorPageUserScriptTests {
 
-    func testLocaleStringsForNotSupportedLanguage() {
+    @Test
+    func localeStringsForNotSupportedLanguage() {
         // Given
         let languageCode = "ko"
 
@@ -31,20 +33,21 @@ final class SpecialErrorPageUserScriptTests: XCTestCase {
         let result = SpecialErrorPageUserScript.localeStrings(for: languageCode)
 
         // Then
-        XCTAssertNil(result, "The result should be nil for Korean language")
+        #expect(result == nil, "The result should be nil for Korean language")
     }
 
-    func testLocaleStringsForPolishLanguage() {
+    @Test
+    func localeStringsForPolishLanguage() throws {
         // Given
         let languageCode = "pl"
 
         // When
-        let result = SpecialErrorPageUserScript.localeStrings(for: languageCode)
+        let result = try #require(SpecialErrorPageUserScript.localeStrings(for: languageCode))
 
         // Then
-        XCTAssertNotNil(result, "The result should not be nil for the Polish language code.")
+        #expect(result != nil, "The result should not be nil for the Polish language code.")
         let expectedSubstring = "Ostrzeżenie: ta witryna może być niebezpieczna"
-        XCTAssertTrue(result!.contains(expectedSubstring), "The result should contain the expected Polish string.")
+        #expect(result.contains(expectedSubstring), "The result should contain the expected Polish string.")
     }
 
 }

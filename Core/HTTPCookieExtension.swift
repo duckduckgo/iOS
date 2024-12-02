@@ -21,6 +21,11 @@ import WebKit
 
 extension HTTPCookie {
 
+    /// Checks that the `cookieDomain` (provided by a cookie) matches a given domain. e.g.
+    /// * cookie domain example.com would match a domain called example.com
+    /// * cookie domain `.example.com` would also match a domain called example.com and also any subdomain, e.g. `docs.example.com`
+    ///
+    /// See `UserDefaultsFireproofingTests` for more examples.
     static func cookieDomain(_ cookieDomain: String, matchesTestDomain testDomain: String) -> Bool {
         return testDomain == cookieDomain
             || ".\(testDomain)" == cookieDomain

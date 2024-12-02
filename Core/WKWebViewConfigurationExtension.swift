@@ -23,11 +23,11 @@ import Persistence
 extension WKWebViewConfiguration {
 
     @MainActor
-    public static func persistent(idManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebViewConfiguration {
+    public static func persistent(idManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WKWebViewConfiguration {
         let config = configuration(persistsData: true)
 
         // Only use a container if there's an id.  We no longer allocate ids so this should not happen.
-        if #available(iOS 17, *), let containerId = idManager.currentId {
+        if #available(iOS 17, *), let containerId = idManager.currentID {
             config.websiteDataStore = WKWebsiteDataStore(forIdentifier: containerId)
         }
         return config

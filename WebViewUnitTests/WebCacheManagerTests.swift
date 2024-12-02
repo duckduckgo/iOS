@@ -51,7 +51,7 @@ class WebCacheManagerTests: XCTestCase {
 
     lazy var cookieStorage = MigratableCookieStorage(store: keyValueStore)
     lazy var fireproofing = MockFireproofing()
-    lazy var dataStoreIdManager = DataStoreIdManager(store: keyValueStore)
+    lazy var dataStoreIDManager = DataStoreIDManager(store: keyValueStore)
     let dataStoreCleaner = MockDataStoreCleaner()
     let observationsCleaner = MockObservationsCleaner()
 
@@ -100,8 +100,8 @@ class WebCacheManagerTests: XCTestCase {
         dataStoreCleaner.countContainersReturnValue = 1
 
         // Mock a data store id to force migration to happen
-        keyValueStore.store = [DataStoreIdManager.Constants.currentWebContainerId.rawValue: UUID().uuidString]
-        dataStoreIdManager = DataStoreIdManager(store: keyValueStore)
+        keyValueStore.store = [DataStoreIDManager.Constants.currentWebContainerID.rawValue: UUID().uuidString]
+        dataStoreIDManager = DataStoreIDManager(store: keyValueStore)
 
         fireproofing = MockFireproofing(domains: ["example.com"])
 
@@ -155,7 +155,7 @@ class WebCacheManagerTests: XCTestCase {
 
         let dataStore = await WKWebsiteDataStore.default()
         let httpCookieStore = await dataStore.httpCookieStore
-        await makeWebCacheManager().consumeCookies(intoHTTPCookieStore: httpCookieStore)
+        await makeWebCacheManager().consumeCookies(into: httpCookieStore)
 
         XCTAssertTrue(self.cookieStorage.isConsumed)
         XCTAssertTrue(self.cookieStorage.cookies.isEmpty)
@@ -187,7 +187,7 @@ class WebCacheManagerTests: XCTestCase {
         return WebCacheManager(
             cookieStorage: cookieStorage,
             fireproofing: fireproofing,
-            dataStoreIdManager: dataStoreIdManager,
+            dataStoreIDManager: dataStoreIDManager,
             dataStoreCleaner: dataStoreCleaner,
             observationsCleaner: observationsCleaner
         )

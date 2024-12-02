@@ -442,10 +442,10 @@ import os.log
     }
 
     private func makeWebsiteDataManager(fireproofing: Fireproofing,
-                                        dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WebsiteDataManaging {
+                                        dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
         return WebCacheManager(cookieStorage: MigratableCookieStorage(),
                                fireproofing: fireproofing,
-                               dataStoreIdManager: dataStoreIdManager)
+                               dataStoreIDManager: dataStoreIDManager)
     }
 
     private func makeTextZoomCoordinator() -> TextZoomCoordinator {

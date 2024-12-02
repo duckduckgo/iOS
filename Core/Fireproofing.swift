@@ -54,7 +54,7 @@ public class UserDefaultsFireproofing: Fireproofing {
         }
     }
 
-    var allowedDomainsIncludingDuckDuckGo: [String] {
+    private var allowedDomainsIncludingDuckDuckGo: [String] {
         allowedDomains + [
             URL.ddg.host ?? "",
             SubscriptionCookieManager.cookieDomain

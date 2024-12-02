@@ -1,5 +1,5 @@
 //
-//  DataStoreIdManager.swift
+//  DataStoreIDManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -23,35 +23,35 @@ import Persistence
 
 /// Supports an existing ID set in previous versions of the app, but moving forward does not allocate an ID.  We have gone back to using the default
 ///  peristence for the webview storage so that we can fireproof types that don't have an API for accessing their data. (e.g. localStorage)
-public protocol DataStoreIdManaging {
+public protocol DataStoreIDManaging {
 
-    var currentId: UUID? { get }
+    var currentID: UUID? { get }
 
-    func invalidateCurrentId()
+    func invalidateCurrentID()
 }
 
-public class DataStoreIdManager: DataStoreIdManaging {
+public class DataStoreIDManager: DataStoreIDManaging {
 
     enum Constants: String {
-        case currentWebContainerId = "com.duckduckgo.ios.webcontainer.id"
+        case currentWebContainerID = "com.duckduckgo.ios.webcontainer.id"
     }
 
-    public static let shared = DataStoreIdManager()
+    public static let shared = DataStoreIDManager()
 
     private let store: KeyValueStoring
     init(store: KeyValueStoring = UserDefaults.app) {
         self.store = store
     }
 
-    public var currentId: UUID? {
-        guard let uuidString = store.object(forKey: Constants.currentWebContainerId.rawValue) as? String else {
+    public var currentID: UUID? {
+        guard let uuidString = store.object(forKey: Constants.currentWebContainerID.rawValue) as? String else {
             return nil
         }
         return UUID(uuidString: uuidString)
     }
 
-    public func invalidateCurrentId() {
-        store.removeObject(forKey: Constants.currentWebContainerId.rawValue)
+    public func invalidateCurrentID() {
+        store.removeObject(forKey: Constants.currentWebContainerID.rawValue)
     }
 
 }

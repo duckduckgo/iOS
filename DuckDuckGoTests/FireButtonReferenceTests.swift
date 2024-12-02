@@ -75,7 +75,7 @@ final class FireButtonReferenceTests: XCTestCase {
             let cookieStore = dataStore.httpCookieStore
             await cookieStore.setCookie(cookie)
 
-            await WebCacheManager(cookieStorage: MigratableCookieStorage(), fireproofing: fireproofing, dataStoreIdManager: DataStoreIdManager(store: MockKeyValueStore())).clear(dataStore: dataStore)
+            await WebCacheManager(cookieStorage: MigratableCookieStorage(), fireproofing: fireproofing, dataStoreIDManager: DataStoreIDManager(store: MockKeyValueStore())).clear(dataStore: dataStore)
 
             let testCookie = await cookieStore.allCookies().filter { $0.name == test.cookieName }.first
 

@@ -23,8 +23,8 @@ import os.log
 
 extension WKWebsiteDataStore {
 
-    public static func current(dataStoreIdManager: DataStoreIdManaging = DataStoreIdManager.shared) -> WKWebsiteDataStore {
-        if #available(iOS 17, *), let id = dataStoreIdManager.currentId {
+    public static func current(dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WKWebsiteDataStore {
+        if #available(iOS 17, *), let id = dataStoreIDManager.currentID {
             return WKWebsiteDataStore(forIdentifier: id)
         } else {
             return WKWebsiteDataStore.default()
@@ -36,7 +36,7 @@ extension WKWebsiteDataStore {
 public protocol WebsiteDataManaging {
 
     func removeCookies(forDomains domains: [String], fromDataStore: WKWebsiteDataStore) async
-    func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async
+    func consumeCookies(into httpCookieStore: WKHTTPCookieStore) async
     func clear(dataStore: WKWebsiteDataStore) async
 
 }
@@ -79,18 +79,18 @@ public class WebCacheManager: WebsiteDataManaging {
 
     let cookieStorage: MigratableCookieStorage
     let fireproofing: Fireproofing
-    let dataStoreIdManager: DataStoreIdManaging
+    let dataStoreIDManager: DataStoreIDManaging
     let dataStoreCleaner: WebsiteDataStoreCleaning
     let observationsCleaner: ObservationsDataCleaning
 
     public init(cookieStorage: MigratableCookieStorage,
                 fireproofing: Fireproofing,
-                dataStoreIdManager: DataStoreIdManaging,
+                dataStoreIDManager: DataStoreIDManaging,
                 dataStoreCleaner: WebsiteDataStoreCleaning = DefaultWebsiteDataStoreCleaner(),
                 observationsCleaner: ObservationsDataCleaning = DefaultObservationsDataCleaner()) {
         self.cookieStorage = cookieStorage
         self.fireproofing = fireproofing
-        self.dataStoreIdManager = dataStoreIdManager
+        self.dataStoreIDManager = dataStoreIDManager
         self.dataStoreCleaner = dataStoreCleaner
         self.observationsCleaner = observationsCleaner
     }
@@ -100,7 +100,7 @@ public class WebCacheManager: WebsiteDataManaging {
     ///
     /// The migration code removes the key that is used to check for the isConsumed flag so will only be
     ///  true if the data needs to be migrated.
-    public func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async {
+    public func consumeCookies(into httpCookieStore: WKHTTPCookieStore) async {
         // This can only be true if the data has not yet been migrated.
         guard !cookieStorage.isConsumed else { return }
 
@@ -129,7 +129,7 @@ public class WebCacheManager: WebsiteDataManaging {
     public func clear(dataStore: WKWebsiteDataStore) async {
 
         let count = await dataStoreCleaner.countContainers()
-        await performMigrationIfNeeded(dataStoreIdManager: dataStoreIdManager, cookieStorage: cookieStorage, destinationStore: dataStore)
+        await performMigrationIfNeeded(dataStoreIDManager: dataStoreIDManager, cookieStorage: cookieStorage, destinationStore: dataStore)
         await clearData(inDataStore: dataStore, withFireproofing: fireproofing)
         await dataStoreCleaner.removeAllContainersAfterDelay(previousCount: count)
 
@@ -139,15 +139,16 @@ public class WebCacheManager: WebsiteDataManaging {
 
 extension WebCacheManager {
 
-    private func performMigrationIfNeeded(dataStoreIdManager: DataStoreIdManaging,
+    private func performMigrationIfNeeded(dataStoreIDManager: DataStoreIDManaging,
                                           cookieStorage: MigratableCookieStorage,
                                           destinationStore: WKWebsiteDataStore) async {
 
-        // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function
+        // Check version here rather than on function so that we don't need complicated logic related to verison in the calling function.
+        // Also, migration will not be needed if we are on a version lower than this.
         guard #available(iOS 17, *) else { return }
 
         // If there's no id, then migration has been done or isn't needed
-        guard dataStoreIdManager.currentId != nil else { return }
+        guard dataStoreIDManager.currentID != nil else { return }
 
         // Get all cookies, we'll clean them later to keep all that logic in the same place
         let cookies = cookieStorage.cookies
@@ -158,7 +159,7 @@ extension WebCacheManager {
         }
 
         cookieStorage.migrationComplete()
-        dataStoreIdManager.invalidateCurrentId()
+        dataStoreIDManager.invalidateCurrentID()
     }
 
     private func removeContainersIfNeeded(previousCount: Int) async {

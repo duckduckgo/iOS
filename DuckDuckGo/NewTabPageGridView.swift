@@ -32,7 +32,7 @@ struct NewTabPageGridView<Content: View>: View {
     var body: some View {
         let columnsCount = NewTabPageGrid.columnsCount(for: horizontalSizeClass, isLandscape: isLandscape, isDynamic: isUsingDynamicSpacing)
 
-        LazyVGrid(columns: createColumns(columnsCount), spacing: 24, content: {
+        LazyVGrid(columns: createColumns(columnsCount), alignment: .center, spacing: 24, content: {
             content(columnsCount)
         })
         .frame(maxWidth: .infinity)
@@ -67,10 +67,17 @@ struct NewTabPageGridView<Content: View>: View {
     }
 
     private func staticColumns(_ count: Int) -> [GridItem] {
-        return Array(repeating: GridItem(.fixed(NewTabPageGrid.Item.edgeSize),
-                                         spacing: NewTabPageGrid.Item.staticSpacing,
-                                         alignment: .top),
+        let isRegularSizeClassOnPad =  UIDevice.current.userInterfaceIdiom == .pad && horizontalSizeClass == .regular
+
+        let spacing: CGFloat = isRegularSizeClassOnPad ? NewTabPageGrid.Item.staticSpacingPad : NewTabPageGrid.Item.staticSpacing
+        let maximumSize = NewTabPageGrid.Item.maximumWidth - spacing
+        let itemSize = GridItem.Size.flexible(minimum: NewTabPageGrid.Item.edgeSize,
+                                          // This causes automatic (larger) spacing, when spacing itself is small comparing to parent view width.
+                                              maximum: maximumSize)
+
+        return Array(repeating: GridItem(itemSize, spacing: spacing, alignment: .top),
                      count: count)
+
     }
 
     private func createColumns(_ count: Int) -> [GridItem] {
@@ -120,5 +127,7 @@ private extension NewTabPageGrid {
 }
 
 private extension NewTabPageGrid.Item {
-    static let staticSpacing = 32.0
+    static let staticSpacing = 10.0
+    static let staticSpacingPad = 32.0
+    static let maximumWidth = 128.0
 }

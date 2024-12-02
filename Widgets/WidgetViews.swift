@@ -46,6 +46,7 @@ struct FavoriteView: View {
                             
                             Image(uiImage: image)
                                 .scaleDown(image.size.width > 60)
+                                .useFullColorRendering()
                                 .cornerRadius(10)
                             
                         } else if favorite.isDuckDuckGo {
@@ -86,10 +87,12 @@ struct LargeSearchFieldView: View {
                     .fill(Color.widgetSearchFieldBackground)
                     .frame(minHeight: 46, maxHeight: 46)
                     .padding(.vertical, 16)
+                    .makeAccentable()
 
                 HStack {
 
                     Image(.duckDuckGoColor24)
+                        .useFullColorRendering()
                         .frame(width: 24, height: 24, alignment: .leading)
 
                     Text(UserText.searchDuckDuckGo)
@@ -99,6 +102,7 @@ struct LargeSearchFieldView: View {
                     Spacer()
 
                     Image(.findSearch20)
+                        .useAccentedRendering()
                         .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
 
                 }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
@@ -167,7 +171,7 @@ struct FavoritesWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(Color(designSystemColor: .backgroundSheets))
+            // Rectangle().fill(Color(designSystemColor: .backgroundSheets))
 
             VStack(alignment: .center, spacing: 0) {
 
@@ -215,14 +219,11 @@ struct SearchWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(Color(designSystemColor: .backgroundSheets))
-                .accessibilityLabel(Text(UserText.searchDuckDuckGo))
-
             VStack(alignment: .center, spacing: 15) {
 
                 Image(.logo)
                     .resizable()
+                    .useFullColorRendering()
                     .frame(width: 46, height: 46, alignment: .center)
                     .isHidden(false)
                     .accessibilityHidden(true)
@@ -234,6 +235,7 @@ struct SearchWidgetView: View {
                         .frame(width: 126, height: 46)
 
                     Image(.findSearch20)
+                        .useFullColorRendering()
                         .frame(width: 20, height: 20)
                         .padding(.leading)
                         .padding(.trailing, 13)
@@ -279,13 +281,21 @@ struct PasswordsWidgetView: View {
 // See https://stackoverflow.com/a/59228385/73479
 extension View {
 
-    @ViewBuilder func widgetContainerBackground(color: Color = .clear) -> some View {
+    func widgetContainerBackground(color: Color = .clear) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
-            containerBackground(for: .widget) {
+            return containerBackground(for: .widget) {
                 color
             }
         } else {
-            self
+            return background(color)
+        }
+    }
+
+    func makeAccentable(_ isAccentable: Bool = true) -> some View {
+        if #available(iOSApplicationExtension 16.0, *) {
+            return self.widgetAccentable(isAccentable)
+        } else {
+            return self
         }
     }
 
@@ -325,9 +335,26 @@ extension View {
 
 extension Image {
 
-    @ViewBuilder func scaleDown(_ shouldScale: Bool) -> some View {
+    @ViewBuilder func scaleDown(_ shouldScale: Bool) -> Image {
         if shouldScale {
             self.resizable().aspectRatio(contentMode: .fit)
+        } else {
+            self
+        }
+    }
+
+    /// Marks images as exempt from tint color overrides, such as favicons which should not have their color modified even when a tint color is set.
+    @ViewBuilder func useFullColorRendering() -> some View {
+        if #available(iOSApplicationExtension 18.0, *) {
+            self.widgetAccentedRenderingMode(.fullColor)
+        } else {
+            self
+        }
+    }
+
+    @ViewBuilder func useAccentedRendering() -> some View {
+        if #available(iOSApplicationExtension 18.0, *) {
+            self.widgetAccentedRenderingMode(.accented)
         } else {
             self
         }

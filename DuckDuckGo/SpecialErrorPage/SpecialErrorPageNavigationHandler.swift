@@ -21,6 +21,7 @@ import Foundation
 import WebKit
 import SpecialErrorPages
 import Core
+import MaliciousSiteProtection
 
 typealias SpecialErrorPageManaging = SpecialErrorPageContextHandling & WebViewNavigationHandling & SpecialErrorPageUserScriptDelegate
 

@@ -66,6 +66,7 @@ extension AIChatViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
         setupNavigationBar()
         subscribeToCleanupPublisher()
     }
@@ -95,11 +96,26 @@ extension AIChatViewController {
 extension AIChatViewController {
 
     private func setupNavigationBar() {
+        guard let navigationController = navigationController else { return }
+
+        // Make the navigation bar transparent
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.shadowImage = UIImage()
+        appearance.shadowColor = .clear
+
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.compactAppearance = appearance
+        navigationController.navigationBar.isTranslucent = true
+
+        // Set up the custom title view
         let imageView = UIImageView(image: UIImage(named: "Logo"))
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
-        let imageSize: CGFloat = 32
+        let imageSize: CGFloat = 28
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: imageSize),
             imageView.heightAnchor.constraint(equalToConstant: imageSize)
@@ -127,6 +143,7 @@ extension AIChatViewController {
         navigationItem.rightBarButtonItem = closeButton
     }
 
+
     private func addWebViewController() {
         guard webViewController == nil else { return }
 
@@ -139,7 +156,7 @@ extension AIChatViewController {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            viewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)

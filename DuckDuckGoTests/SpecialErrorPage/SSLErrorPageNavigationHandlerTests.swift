@@ -42,7 +42,7 @@ final class SSLSpecialErrorPageTests {
     @Test
     func whenCertificateExpiredThenExpectedErrorPageIsShown() throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLCertExpired,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://expired.badssl.com")!])
@@ -53,8 +53,7 @@ final class SSLSpecialErrorPageTests {
         // THEN
         #expect(sslError.error.url == URL(string: "https://expired.badssl.com")!)
         #expect(sslError.type == .expired)
-        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
-                                                       errorType: "expired",
+        #expect(sslError.error.errorData == .ssl(type: .expired,
                                                        domain: "expired.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
@@ -62,7 +61,7 @@ final class SSLSpecialErrorPageTests {
     @Test
     func whenCertificateWrongHostThenExpectedErrorPageIsShown() throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLHostNameMismatch,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://wrong.host.badssl.com")!])
@@ -73,8 +72,7 @@ final class SSLSpecialErrorPageTests {
         // THEN
         #expect(sslError.error.url == URL(string: "https://wrong.host.badssl.com")!)
         #expect(sslError.type == .wrongHost)
-        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
-                                                       errorType: "wrongHost",
+        #expect(sslError.error.errorData == .ssl(type: .wrongHost,
                                                        domain: "wrong.host.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
@@ -82,7 +80,7 @@ final class SSLSpecialErrorPageTests {
     @Test
     func whenCertificateSelfSignedThenExpectedErrorPageIsShown() throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLXCertChainInvalid,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://self-signed.badssl.com")!])
@@ -93,8 +91,7 @@ final class SSLSpecialErrorPageTests {
         // THEN
         #expect(sslError.error.url == URL(string: "https://self-signed.badssl.com")!)
         #expect(sslError.type == .selfSigned)
-        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
-                                                       errorType: "selfSigned",
+        #expect(sslError.error.errorData == .ssl(type: .selfSigned,
                                                        domain: "self-signed.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
@@ -102,7 +99,7 @@ final class SSLSpecialErrorPageTests {
     @Test
     func whenOtherCertificateIssueThenExpectedErrorPageIsShown() throws {
         // GIVEN
-        let error = NSError(domain: "test",
+        let error = NSError(domain: NSURLErrorDomain,
                             code: NSURLErrorServerCertificateUntrusted,
                             userInfo: ["_kCFStreamErrorCodeKey": errSSLUnknownRootCert,
                                        NSURLErrorFailingURLErrorKey: URL(string: "https://untrusted-root.badssl.com")!])
@@ -113,8 +110,7 @@ final class SSLSpecialErrorPageTests {
         // THEN
         #expect(sslError.error.url == URL(string: "https://untrusted-root.badssl.com")!)
         #expect(sslError.type == .invalid)
-        #expect(sslError.error.errorData == SpecialErrorData(kind: .ssl,
-                                                       errorType: "invalid",
+        #expect(sslError.error.errorData == .ssl(type: .invalid,
                                                        domain: "untrusted-root.badssl.com",
                                                        eTldPlus1: "badssl.com"))
     }
@@ -136,12 +132,13 @@ final class SSLSpecialErrorPageTests {
     }
 
     @Test
-    func whenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() {
+    func whenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() throws {
         // GIVEN
         let protectionSpace = URLProtectionSpace(host: "", port: 4, protocol: nil, realm: nil, authenticationMethod: NSURLAuthenticationMethodServerTrust)
         let challenge = URLAuthenticationChallenge(protectionSpace: protectionSpace, proposedCredential: nil, previousFailureCount: 0, failureResponse: nil, error: nil, sender: ChallengeSender())
         var expectedCredential: URLCredential?
-        sut.visitSite()
+        let dummyURL = try #require(URL(string: "https://example.com"))
+        sut.visitSite(url: dummyURL, errorData: .ssl(type: .invalid, domain: "", eTldPlus1: nil))
 
         // WHEN
         sut.handleServerTrustChallenge(challenge) { _, credential in

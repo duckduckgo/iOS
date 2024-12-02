@@ -744,7 +744,6 @@
 		9F254AB12CF48A6B0063B308 /* SpecialErrorPageNavigationHandler+SSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AB02CF48A6B0063B308 /* SpecialErrorPageNavigationHandler+SSL.swift */; };
 		9F254AB32CF4A1F10063B308 /* SpecialErrorPageNavigationHandler+MaliciousSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AB22CF4A1E10063B308 /* SpecialErrorPageNavigationHandler+MaliciousSite.swift */; };
 		9F254ACB2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACA2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift */; };
-		9F254ACC2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACA2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift */; };
 		9F254ACE2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */; };
 		9F254ACF2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ACD2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift */; };
 		9F254AD22CF5D3A80063B308 /* MockSpecialErrorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AD12CF5D3A20063B308 /* MockSpecialErrorWebView.swift */; };
@@ -757,6 +756,7 @@
 		9F254ADC2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADA2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift */; };
 		9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
 		9F254ADF2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254ADD2CF636CF0063B308 /* DummyWKNavigation.swift */; };
+		9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */ = {isa = PBXBuildFile; productRef = 9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */; };
 		9F254AFF2CF9FA1B0063B308 /* WebViewNavigationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254AFE2CF9FA1B0063B308 /* WebViewNavigationHandling.swift */; };
 		9F254B012CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B002CF9FA8D0063B308 /* SpecialErrorPageActionHandler.swift */; };
 		9F254B032CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F254B022CF9FB2E0063B308 /* SpecialErrorPageNavigationDelegate.swift */; };
@@ -2648,6 +2648,7 @@
 		9FB027182C26BC29009EA190 /* BrowsersComparisonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsersComparisonModel.swift; sourceTree = "<group>"; };
 		9FB0271A2C2927D0009EA190 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FB0271C2C293619009EA190 /* OnboardingIntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntroViewModel.swift; sourceTree = "<group>"; };
+		9FBC76652CFDF64B008B21E7 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = SOURCE_ROOT; };
 		9FCFCD7D2C6AF52A006EB7A0 /* LaunchOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchOptionsHandler.swift; path = ../DuckDuckGo/LaunchOptionsHandler.swift; sourceTree = "<group>"; };
 		9FCFCD7F2C6AF56D006EB7A0 /* LaunchOptionsHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchOptionsHandlerTests.swift; sourceTree = "<group>"; };
 		9FCFCD842C75C91A006EB7A0 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -3150,6 +3151,7 @@
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				CB941A6E2B96AB08000F9E7A /* PrivacyDashboard in Frameworks */,
 				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
+				9F254AF12CF8D5250063B308 /* MaliciousSiteProtection in Frameworks */,
 				1E5918472CA422A7008ED2B3 /* Navigation in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
@@ -4273,6 +4275,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				9FBC76652CFDF64B008B21E7 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,
@@ -6786,6 +6789,7 @@
 				9F8FE9482BAE50E50071E372 /* Lottie */,
 				9F96F73A2C9144D5009E45D5 /* Onboarding */,
 				1E5918462CA422A7008ED2B3 /* Navigation */,
+				9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -8487,7 +8491,6 @@
 				9F254ADE2CF636CF0063B308 /* DummyWKNavigation.swift in Sources */,
 				8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */,
 				9F254ADB2CF6120E0063B308 /* MockSpecialErrorPageNavigationDelegate.swift in Sources */,
-				9F254ACC2CF5CDC60063B308 /* SpecialErrorPageNavigationHandlerTests.swift in Sources */,
 				9F254ACF2CF5D3540063B308 /* SpecialErrorPageNavigationHandlerIntegrationTests.swift in Sources */,
 				9F254AD82CF605310063B308 /* MockSSLErrorPageNavigationHandler.swift in Sources */,
 			);
@@ -11627,6 +11630,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Bookmarks;
+		};
+		9F254AF02CF8D5250063B308 /* MaliciousSiteProtection */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MaliciousSiteProtection;
 		};
 		9F8FE9482BAE50E50071E372 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -60,6 +60,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(sslErrorPageNavigationHandler.didCallHandleServerTrustChallenge)
     }
 
+    @MainActor
     @Test("Leave Site forward event to SSL Error Page Navigation Handler")
     func whenLeaveSite_AndSSLError_ThenCallLeaveSiteOnSSLErrorPageNavigationHandler() {
         // GIVEN
@@ -67,7 +68,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(!sslErrorPageNavigationHandler.didCallLeaveSite)
 
         // WHEN
-        sut.leaveSite()
+        sut.leaveSiteAction()
 
         // THEN
         #expect(sslErrorPageNavigationHandler.didCallLeaveSite)
@@ -87,7 +88,7 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(!webView.didCallGoBack)
 
         // WHEN
-        sut.leaveSite()
+        sut.leaveSiteAction()
 
         // THEN
         #expect(webView.didCallGoBack)
@@ -104,20 +105,24 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
 
         // WHEN
-        sut.leaveSite()
+        sut.leaveSiteAction()
 
         // THEN
         #expect(delegate.didCallCloseSpecialErrorPageTab)
     }
 
+    @MainActor
     @Test("Visit Site forward event to SSL Error Page Navigation Handler")
-    func whenVisitSite_AndSSLError_ThenCallVisitSiteOnSSLErrorPageNavigationHandler() {
+    func whenVisitSite_AndSSLError_ThenCallVisitSiteOnSSLErrorPageNavigationHandler() throws {
         // GIVEN
+        let url = try #require(URL(string: "https://example.com"))
+        webView.setCurrentURL(url)
+        sut.attachWebView(webView)
         sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!sslErrorPageNavigationHandler.didCallVisitSite)
 
         // WHEN
-        sut.visitSite()
+        sut.visitSiteAction()
 
         // THEN
         #expect(sslErrorPageNavigationHandler.didCallVisitSite)
@@ -138,13 +143,14 @@ final class SpecialErrorPageNavigationHandlerTests {
         #expect(!webView.didCallReload)
 
         // WHEN
-        sut.visitSite()
+        sut.visitSiteAction()
 
         // THEN
         #expect(!sut.isSpecialErrorPageVisible)
         #expect(webView.didCallReload)
     }
 
+    @MainActor
     @Test("Advanced Info Presented forward event to SSL Error Page Navigation Handler")
     func whenAdvancedInfoPresented_AndSSLError_ThenCallAdvancedInfoPresentedOnSSLErrorPageNavigationHandler() {
         // GIVEN

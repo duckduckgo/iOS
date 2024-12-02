@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import SpecialErrorPages
 import WebKit
+import MaliciousSiteProtection
 
 enum MaliciousSiteProtectionNavigationResult: Equatable {
     case navigationHandled(NavigationType)
@@ -46,7 +47,7 @@ protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
 final class MaliciousSiteProtectionNavigationHandler {
     private let maliciousSiteProtectionManager: MaliciousSiteDetecting
     private let storageCache: StorageCache
-    private var maliciousURLExemptions: [URL: MaliciousSiteProtection.ThreatKind] = [:]
+    private var maliciousURLExemptions: [URL: ThreatKind] = [:]
     private var bypassedMaliciousSiteThreatKind: ThreatKind?
     
     init(

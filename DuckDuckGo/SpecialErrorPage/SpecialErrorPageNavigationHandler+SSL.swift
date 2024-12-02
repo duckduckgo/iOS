@@ -62,24 +62,31 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
     }
 
     func makeNewRequestURLAndSpecialErrorDataIfEnabled(error: NSError) -> SSLSpecialError? {
-        guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
-              error.code == NSURLErrorServerCertificateUntrusted,
-              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
-              let failedURL = error.failedUrl else {
+        guard
+            featureFlagger.isFeatureOn(.sslCertificatesBypass),
+            error.isServerCertificateUntrusted,
+            let errorType = error.sslErrorType
+        else {
             return nil
         }
 
-        let errorType = SSLErrorType.forErrorCode(Int(errorCode))
-        let errorData = SpecialErrorData(kind: .ssl,
-                                         errorType: errorType.rawValue,
-                                         domain: failedURL.host,
-                                         eTldPlus1: storageCache.tld.eTLDplus1(failedURL.host))
+        guard
+            let failedURL = error.failedUrl,
+            let host = failedURL.host else {
+            return nil
+        }
+
+        let errorData = SpecialErrorData.ssl(
+            type: errorType,
+            domain: failedURL.host!,
+            eTldPlus1: storageCache.tld.eTLDplus1(failedURL.host)
+        )
 
         return SSLSpecialError(type: errorType, error: SpecialErrorModel(url: failedURL, errorData: errorData))
     }
 
     func errorPageVisited(errorType: SSLErrorType) {
-        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.rawParameter))
+        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.pixelParameter))
     }
 
 }
@@ -92,7 +99,7 @@ extension SSLErrorPageNavigationHandler: SpecialErrorPageActionHandler {
         Pixel.fire(pixel: .certificateWarningLeaveClicked)
     }
 
-    func visitSite() {
+    func visitSite(url: URL, errorData: SpecialErrorData) {
         shouldBypassSSLError = true
     }
 

@@ -47,6 +47,8 @@ final class AIChatWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .black
+
         setupWebView()
         loadWebsite()
     }

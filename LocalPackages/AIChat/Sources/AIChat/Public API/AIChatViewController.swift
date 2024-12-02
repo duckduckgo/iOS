@@ -66,8 +66,10 @@ extension AIChatViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .black
+
         setupNavigationBar()
+
         subscribeToCleanupPublisher()
     }
 
@@ -98,7 +100,6 @@ extension AIChatViewController {
     private func setupNavigationBar() {
         guard let navigationController = navigationController else { return }
 
-        // Make the navigation bar transparent
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.backgroundColor = .clear
@@ -110,7 +111,6 @@ extension AIChatViewController {
         navigationController.navigationBar.compactAppearance = appearance
         navigationController.navigationBar.isTranslucent = true
 
-        // Set up the custom title view
         let imageView = UIImageView(image: UIImage(named: "Logo"))
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +124,7 @@ extension AIChatViewController {
         let titleLabel = UILabel()
         titleLabel.text = UserText.aiChatTitle
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-
+        titleLabel.textColor = .white
         let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
         stackView.axis = .horizontal
         stackView.spacing = 8
@@ -139,7 +139,8 @@ extension AIChatViewController {
             target: self,
             action: #selector(closeAIChat)
         )
-        closeButton.tintColor = .label
+        closeButton.tintColor = .white
+
         navigationItem.rightBarButtonItem = closeButton
     }
 
@@ -161,6 +162,11 @@ extension AIChatViewController {
             viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+
+        viewController.view.backgroundColor = .black
+        viewController.view.layer.cornerRadius = 20
+        viewController.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        viewController.view.clipsToBounds = true
 
         viewController.didMove(toParent: self)
     }

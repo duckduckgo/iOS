@@ -115,14 +115,6 @@ final class MockTabDelegate: TabDelegate {
 
 }
 
-final class MockCredentialCreator: URLCredentialCreating {
-
-    func urlCredentialFrom(trust: SecTrust?) -> URLCredential? {
-        return URLCredential(user: "", password: "", persistence: .forSession)
-    }
-
-}
-
 extension TabViewController {
 
     static func fake(

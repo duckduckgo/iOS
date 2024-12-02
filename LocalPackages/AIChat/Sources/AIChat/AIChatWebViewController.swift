@@ -16,7 +16,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 import UIKit
 import WebKit
 
@@ -26,13 +25,20 @@ protocol AIChatWebViewControllerDelegate: AnyObject {
 
 final class AIChatWebViewController: UIViewController {
     weak var delegate: AIChatWebViewControllerDelegate?
-    private var didLoadAIChat = false
     private let chatModel: AIChatViewModeling
 
     private lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
         webView.navigationDelegate = self
         return webView
+    }()
+
+    private lazy var loadingView: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .label
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
     }()
 
     init(chatModel: AIChatViewModeling) {
@@ -50,6 +56,7 @@ final class AIChatWebViewController: UIViewController {
         view.backgroundColor = .black
 
         setupWebView()
+        setupLoadingView()
         loadWebsite()
     }
 
@@ -62,6 +69,15 @@ final class AIChatWebViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    private func setupLoadingView() {
+        view.addSubview(loadingView)
+
+        NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
@@ -95,5 +111,21 @@ extension AIChatWebViewController: WKNavigationDelegate {
         } else {
             return .allow
         }
+    }
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        loadingView.startAnimating()
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        loadingView.stopAnimating()
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        loadingView.stopAnimating()
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        loadingView.stopAnimating()
     }
 }

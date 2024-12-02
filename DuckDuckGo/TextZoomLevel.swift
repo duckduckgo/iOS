@@ -25,6 +25,9 @@ enum TextZoomLevel: Int, CaseIterable, CustomStringConvertible {
         return "\(self.rawValue)%"
     }
 
+    case percent50 = 50
+    case percent60 = 60
+    case percent70 = 70
     case percent80 = 80
     case percent90 = 90
     case percent100 = 100

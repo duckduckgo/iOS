@@ -474,8 +474,6 @@ extension Pixel {
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
 
-        case networkProtectionMalformedErrorDetected
-
         // MARK: - VPN Tips
 
         case networkProtectionGeoswitchingTipShown
@@ -1336,8 +1334,6 @@ extension Pixel.Event {
         case .networkProtectionVPNConfigurationRemovalFailed: return "m_netp_vpn_configuration_removal_failed"
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
-
-        case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
 
             // MARK: VPN tips
 

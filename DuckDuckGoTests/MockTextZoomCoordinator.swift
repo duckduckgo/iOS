@@ -24,7 +24,7 @@ import WebKit
 
 class MockTextZoomCoordinator: TextZoomCoordinating {
 
-    let isEnabled: Bool = true
+    var isFeatureEnabled: Bool = true
 
     func textZoomLevel(forHost host: String?) -> TextZoomLevel {
         return .percent100
@@ -50,6 +50,10 @@ class MockTextZoomCoordinator: TextZoomCoordinating {
     }
 
     func resetTextZoomLevels(excludingDomains: [String]) {
+    }
+
+    func isEnabled(forDomain: String?) -> Bool {
+        return true
     }
 
 }

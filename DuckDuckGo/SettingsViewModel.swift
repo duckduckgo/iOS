@@ -422,7 +422,7 @@ extension SettingsViewModel {
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
-            textZoom: SettingsState.TextZoom(enabled: textZoomCoordinator.isEnabled, level: appSettings.defaultTextZoomLevel),
+            textZoom: SettingsState.TextZoom(enabled: textZoomCoordinator.isFeatureEnabled, level: appSettings.defaultTextZoomLevel),
             addressBar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             showsFullURL: appSettings.showFullSiteAddress,
             sendDoNotSell: appSettings.sendDoNotSell,

@@ -26,13 +26,16 @@ import WebKit
 
 final class TextZoomTests: XCTestCase {
 
+
+    private var appSettings: AppSettingsMock = AppSettingsMock()
+    private var storage: MockTextZoomStorage = MockTextZoomStorage()
+    private var featureFlagger: MockFeatureFlagger = MockFeatureFlagger(enabledFeatureFlags: [.textZoom])
+    private var privacyConfigManager: MockPrivacyConfigurationManager = MockPrivacyConfigurationManager()
+
     let viewScaleKey = "viewScale"
 
     func testZoomLevelAppliedToWebView() {
-        let storage = TextZoomStorage()
-        storage.textZoomLevels = [:]
-
-        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator(storage: storage)
+        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator()
         let webView = URLFixedWebView(frame: .zero, configuration: .nonPersistent())
 
         webView.setValue(0.1, forKey: viewScaleKey)
@@ -65,16 +68,13 @@ final class TextZoomTests: XCTestCase {
 
         // When reset to the default then "forget"
         coordinator.set(textZoomLevel: .percent100, forHost: host)
-        XCTAssertEqual(storage.textZoomLevels, [:])
+        XCTAssertEqual(storage.setTextZoomLevels, [:])
     }
 
     func testMenuItemCreation() {
         let host = "example.com"
 
-        let storage = TextZoomStorage()
-        storage.textZoomLevels = [:]
-
-        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator(storage: storage)
+        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator()
         coordinator.set(textZoomLevel: .percent120, forHost: host)
 
         let controller = UIViewController()
@@ -110,10 +110,7 @@ final class TextZoomTests: XCTestCase {
         let host1 = "example.com"
         let host2 = "another.org"
 
-        let storage = TextZoomStorage()
-        storage.textZoomLevels = [:]
-
-        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator(storage: storage)
+        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator()
         coordinator.set(textZoomLevel: .percent120, forHost: host1)
         XCTAssertEqual(coordinator.textZoomLevel(forHost: host1), .percent120)
 
@@ -131,14 +128,12 @@ final class TextZoomTests: XCTestCase {
         webView.setValue(0.1, forKey: viewScaleKey)
         XCTAssertEqual(0.1, webView.value(forKey: viewScaleKey) as? Double)
 
-        let featureFlagger = MockFeatureFlagger()
-        featureFlagger.enabledFeatureFlags = [.textZoom]
-        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator(featureFlagger: featureFlagger)
-        XCTAssertTrue(coordinator.isEnabled)
+        let coordinator: TextZoomCoordinating = makeTextZoomCoordinator()
+        XCTAssertTrue(coordinator.isFeatureEnabled)
 
         featureFlagger.enabledFeatureFlags = []
-        XCTAssertFalse(coordinator.isEnabled)
-        
+        XCTAssertFalse(coordinator.isFeatureEnabled)
+
         coordinator.onNavigationCommitted(applyToWebView: webView)
         coordinator.onTextZoomChange(applyToWebView: webView)
         coordinator.onWebViewCreated(applyToWebView: webView)
@@ -147,14 +142,11 @@ final class TextZoomTests: XCTestCase {
         XCTAssertEqual(0.1, webView.value(forKey: viewScaleKey) as? Double)
     }
 
-    private func makeTextZoomCoordinator(
-        appSettings: AppSettings = AppSettingsMock(),
-        storage: TextZoomStoring = MockTextZoomStorage(),
-        featureFlagger: FeatureFlagger = MockFeatureFlagger(enabledFeatureFlags: [.textZoom])
-    ) -> TextZoomCoordinating {
+    private func makeTextZoomCoordinator() -> TextZoomCoordinating {
         return TextZoomCoordinator(appSettings: appSettings,
                                    storage: storage,
-                                   featureFlagger: featureFlagger)
+                                   featureFlagger: featureFlagger,
+                                   privacyConfigManaging: privacyConfigManager)
     }
 
     private func makeLink(title: String? = "title", url: URL = .ddg, localPath: URL? = nil) -> Link {
@@ -166,17 +158,26 @@ final class TextZoomTests: XCTestCase {
 /// Nothing else should be using storage directly so just keeping it here out of the way.
 private class MockTextZoomStorage: TextZoomStoring {
 
+    var setTextZoomLevels: [String: DuckDuckGo.TextZoomLevel] = [:]
+
     func textZoomLevelForDomain(_ domain: String) -> DuckDuckGo.TextZoomLevel? {
-        return nil
+        return setTextZoomLevels[domain]
     }
     
     func set(textZoomLevel: DuckDuckGo.TextZoomLevel, forDomain domain: String) {
+        setTextZoomLevels[domain] = textZoomLevel
     }
     
     func removeTextZoomLevel(forDomain domain: String) {
+        setTextZoomLevels.removeValue(forKey: domain)
     }
     
     func resetTextZoomLevels(excludingDomains: [String]) {
+        setTextZoomLevels.keys.filter {
+            !excludingDomains.contains($0)
+        }.forEach {
+            removeTextZoomLevel(forDomain: $0)
+        }
     }
 
 }

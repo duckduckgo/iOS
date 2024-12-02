@@ -438,13 +438,16 @@ import os.log
         return true
     }
 
-    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+    private func makeTextZoomCoordinator(
+        privacyConfigManaging: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) -> TextZoomCoordinator {
+            
         let provider = AppDependencyProvider.shared
         let storage = TextZoomStorage()
 
         return TextZoomCoordinator(appSettings: provider.appSettings,
                                    storage: storage,
-                                   featureFlagger: provider.featureFlagger)
+                                   featureFlagger: provider.featureFlagger,
+                                   privacyConfigManaging: privacyConfigManaging)
     }
 
     private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {

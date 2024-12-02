@@ -28,7 +28,10 @@ import Core
 protocol TextZoomCoordinating {
 
     /// Based on .textZoom feature flag
-    var isEnabled: Bool { get }
+    var isFeatureEnabled: Bool { get }
+
+    /// Based on .textZoom feature flag and privay config exclusion list for this feature
+    func isEnabled(forDomain: String?) -> Bool
 
     /// @return The zoom level for a host or the current default if there isn't one.  Uses eTLDplus1 to determine the domain.
     func textZoomLevel(forHost host: String?) -> TextZoomLevel
@@ -51,7 +54,7 @@ protocol TextZoomCoordinating {
     func onTextZoomChange(applyToWebView webView: WKWebView)
 
     /// Shows a text zoom editor for the current webview. Does nothing if the feature is disabled.
-    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView)
+    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView) async
 
     /// Creates a browsing menu entry for the given link.  Returns nil if the feature is disabled.
     func makeBrowsingMenuEntry(forLink: Link, inController controller: UIViewController, forWebView webView: WKWebView) -> BrowsingMenuEntry?
@@ -63,15 +66,25 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     let appSettings: AppSettings
     let storage: TextZoomStoring
     let featureFlagger: FeatureFlagger
+    let privacyConfigManaging: PrivacyConfigurationManaging
 
-    var isEnabled: Bool {
+    var isFeatureEnabled: Bool {
         featureFlagger.isFeatureOn(.textZoom)
     }
 
-    init(appSettings: AppSettings, storage: TextZoomStoring, featureFlagger: FeatureFlagger) {
+    func isEnabled(forDomain domain: String?) -> Bool {
+        return isFeatureEnabled &&
+            !privacyConfigManaging.privacyConfig.isInExceptionList(domain: domain, forFeature: .textZoom)
+    }
+
+    init(appSettings: AppSettings,
+         storage: TextZoomStoring,
+         featureFlagger: FeatureFlagger,
+         privacyConfigManaging: PrivacyConfigurationManaging) {
         self.appSettings = appSettings
         self.storage = storage
         self.featureFlagger = featureFlagger
+        self.privacyConfigManaging = privacyConfigManaging
     }
 
     func textZoomLevel(forHost host: String?) -> TextZoomLevel {
@@ -108,15 +121,15 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     }
 
     private func applyTextZoom(_ webView: WKWebView) {
-        guard isEnabled else { return }
+        guard isEnabled(forDomain: webView.url?.host) else { return }
         let level = textZoomLevel(forHost: webView.url?.host)
         let viewScale = CGFloat(level.rawValue) / 100
         webView.applyViewScale(viewScale)
     }
 
     @MainActor
-    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView) {
-        guard isEnabled else { return }
+    func showTextZoomEditor(inController controller: UIViewController, forWebView webView: WKWebView) async {
+        guard isEnabled(forDomain: webView.url?.host) else { return }
 
         guard let domain = TLD().eTLDplus1(webView.url?.host) else { return }
         let zoomController = TextZoomController(
@@ -144,7 +157,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     func makeBrowsingMenuEntry(forLink link: Link,
                                inController controller: UIViewController,
                                forWebView webView: WKWebView) -> BrowsingMenuEntry? {
-        guard isEnabled else { return nil }
+        guard isEnabled(forDomain: webView.url?.host) else { return nil }
 
         let label: String
         if let domain = TLD().eTLDplus1(link.url.host),
@@ -159,7 +172,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
                                          showNotificationDot: false) { [weak self, weak controller, weak webView] in
             guard let self = self, let controller = controller, let webView = webView else { return }
             Task { @MainActor in
-                self.showTextZoomEditor(inController: controller, forWebView: webView)
+                await self.showTextZoomEditor(inController: controller, forWebView: webView)
                 Pixel.fire(pixel: .browsingMenuZoom)
             }
         }

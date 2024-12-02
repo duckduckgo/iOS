@@ -75,6 +75,6 @@ struct CredentialProviderActivatedView: View {
     
 }
 
-//#Preview {
-//    CredentialProviderActivatedView(viewModel: CredentialProviderActivatedViewModel)
-//}
+#Preview {
+    CredentialProviderActivatedView(viewModel: CredentialProviderActivatedViewModel)
+}

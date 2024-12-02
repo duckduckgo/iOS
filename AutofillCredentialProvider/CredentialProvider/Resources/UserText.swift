@@ -35,9 +35,9 @@ final class UserText {
 
     static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value: "Search passwords", comment: "Placeholder for search field on autofill login listing")
 
-    static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No passwords saved yet", comment: "Title for view displayed when autofill has no items")
+    static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value: "No passwords saved yet", comment: "Title for view displayed when autofill has no items")
 
-    static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.list.enable.footer", value:"Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
+    static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.list.enable.footer", value: "Passwords are stored securely on your device.", comment: "Footer label displayed below table section with option to enable autofill")
 
     static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value: "Suggested", comment: "Section title for group of suggested saved logins")
 
@@ -48,16 +48,16 @@ final class UserText {
         return message.format(arguments: query)
     }
 
-    static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock device to access passwords", comment: "Reason for auth when opening login list")
+    static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value: "Unlock device to access passwords", comment: "Reason for auth when opening login list")
 
-    static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
+    static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value: "Cancel", comment: "Cancel button for auth when opening login list")
 
     static let autofillNoDeviceAuthSetTitle = NSLocalizedString("autofill.no-device-auth-set.title", value: "Device Passcode Required", comment: "Title for alert when device authentication is not set")
 
     static let autofillNoDeviceAuthSetMessage = NSLocalizedString("autofill.no-device-auth-set.message", value: "Set a passcode on %@ to autofill your DuckDuckGo passwords.", comment: "Message for alert when device authentication is not set, where %@ is iPhone|iPad|device")
 
-    static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value:"iPhone", comment: "Device type is iPhone")
-    static let deviceTypeiPad = NSLocalizedString("device.type.pad", value:"iPad", comment: "Device type is iPad")
-    static let deviceTypeDefault = NSLocalizedString("device.type.default", value:"device", comment: "Default string used if users device is not iPhone or iPad")
+    static let deviceTypeiPhone = NSLocalizedString("device.type.iphone", value: "iPhone", comment: "Device type is iPhone")
+    static let deviceTypeiPad = NSLocalizedString("device.type.pad", value: "iPad", comment: "Device type is iPad")
+    static let deviceTypeDefault = NSLocalizedString("device.type.default", value: "device", comment: "Default string used if users device is not iPhone or iPad")
 
 }

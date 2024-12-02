@@ -24,8 +24,8 @@ import Common
 public extension Array where Element == SecureVaultModels.WebsiteAccount {
 
     func groupedByFirstLetter(tld: TLD,
-                            autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
-                            autofillDomainNameUrlSort: AutofillDomainNameUrlSort)
+                              autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
+                              autofillDomainNameUrlSort: AutofillDomainNameUrlSort)
             -> [String: [AutofillLoginItem]] {
         reduce(into: [String: [AutofillLoginItem]]()) { result, account in
 
@@ -53,7 +53,7 @@ public extension Array where Element == SecureVaultModels.WebsiteAccount {
 public extension Dictionary where Key == String, Value == [AutofillLoginItem] {
 
     func sortedIntoSections(_ autofillDomainNameUrlSort: AutofillDomainNameUrlSort,
-                           tld: TLD) -> [AutofillLoginListSectionType] {
+                            tld: TLD) -> [AutofillLoginListSectionType] {
         map { dictionaryItem -> AutofillLoginListSectionType in
             let sortedGroup = dictionaryItem.value.sorted(by: {
                 autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0.account, rhs: $1.account, tld: tld) == .orderedAscending

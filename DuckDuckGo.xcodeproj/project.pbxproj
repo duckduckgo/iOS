@@ -921,6 +921,7 @@
 		C1935A222C89CA9F001AD72D /* AutofillSurveyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1935A212C89CA9F001AD72D /* AutofillSurveyManagerTests.swift */; };
 		C1935A242C89CC6D001AD72D /* AutofillHeaderViewFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1935A232C89CC6D001AD72D /* AutofillHeaderViewFactoryTests.swift */; };
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
+		C19D90D12CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19D90D02CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift */; };
 		C1B7B51C28941E980098FD6A /* HomeMessageViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */; };
 		C1B7B52528941F2A0098FD6A /* RemoteMessagingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52128941F2A0098FD6A /* RemoteMessagingClient.swift */; };
 		C1B7B52D2894469D0098FD6A /* DefaultVariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52C2894469D0098FD6A /* DefaultVariantManager.swift */; };
@@ -941,7 +942,6 @@
 		C1CAAA882CF9FFE100C37EE6 /* CredentialProviderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA872CF9FFE100C37EE6 /* CredentialProviderListViewController.swift */; };
 		C1CAAA8A2CF9FFF300C37EE6 /* CredentialProviderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA892CF9FFF300C37EE6 /* CredentialProviderListViewModel.swift */; };
 		C1CAAA922CFCAA0500C37EE6 /* CredentialProviderListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA912CFCAA0500C37EE6 /* CredentialProviderListItemTableViewCell.swift */; };
-		C1CAAA982CFCAB9C00C37EE6 /*  AutofillLoginListSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA972CFCAB9C00C37EE6 /*  AutofillLoginListSectionType.swift */; };
 		C1CAAA9A2CFCAD3E00C37EE6 /* AutofillLoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA992CFCAD3E00C37EE6 /* AutofillLoginItem.swift */; };
 		C1CAAA9C2CFCB39800C37EE6 /* AutofillLoginListSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA9B2CFCB39800C37EE6 /* AutofillLoginListSorting.swift */; };
 		C1CAAA9E2CFCB78700C37EE6 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CAAA9D2CFCB78700C37EE6 /* UIColorExtension.swift */; };
@@ -2772,6 +2772,7 @@
 		C1935A212C89CA9F001AD72D /* AutofillSurveyManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillSurveyManagerTests.swift; sourceTree = "<group>"; };
 		C1935A232C89CC6D001AD72D /* AutofillHeaderViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillHeaderViewFactoryTests.swift; sourceTree = "<group>"; };
 		C1963862283794A000298D4D /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
+		C19D90D02CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListSectionType.swift; sourceTree = "<group>"; };
 		C1B0F6412AB08BE9001EAF05 /* MockPrivacyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyConfiguration.swift; sourceTree = "<group>"; };
 		C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewModelBuilder.swift; sourceTree = "<group>"; };
 		C1B7B52128941F2A0098FD6A /* RemoteMessagingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessagingClient.swift; sourceTree = "<group>"; };
@@ -2791,7 +2792,6 @@
 		C1CAAA872CF9FFE100C37EE6 /* CredentialProviderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListViewController.swift; sourceTree = "<group>"; };
 		C1CAAA892CF9FFF300C37EE6 /* CredentialProviderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListViewModel.swift; sourceTree = "<group>"; };
 		C1CAAA912CFCAA0500C37EE6 /* CredentialProviderListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderListItemTableViewCell.swift; sourceTree = "<group>"; };
-		C1CAAA972CFCAB9C00C37EE6 /*  AutofillLoginListSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AutofillLoginListSectionType.swift"; sourceTree = "<group>"; };
 		C1CAAA992CFCAD3E00C37EE6 /* AutofillLoginItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginItem.swift; sourceTree = "<group>"; };
 		C1CAAA9B2CFCB39800C37EE6 /* AutofillLoginListSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListSorting.swift; sourceTree = "<group>"; };
 		C1CAAA9D2CFCB78700C37EE6 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -5437,7 +5437,7 @@
 		C1CAAA962CFCAB8000C37EE6 /* Autofill */ = {
 			isa = PBXGroup;
 			children = (
-				C1CAAA972CFCAB9C00C37EE6 /*  AutofillLoginListSectionType.swift */,
+				C19D90D02CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift */,
 				C1CAAA992CFCAD3E00C37EE6 /* AutofillLoginItem.swift */,
 				C1CAAA9B2CFCB39800C37EE6 /* AutofillLoginListSorting.swift */,
 			);
@@ -8589,7 +8589,6 @@
 				EE9D68DE2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift in Sources */,
 				31B2F1112C92FEE000CD30E3 /* MarketplaceAdPostback.swift in Sources */,
 				CB258D1F29A52B2500DEBA24 /* Configuration.swift in Sources */,
-				C1CAAA982CFCAB9C00C37EE6 /*  AutofillLoginListSectionType.swift in Sources */,
 				BDC234F72B27F51100D3C798 /* UniquePixel.swift in Sources */,
 				98629D312C21765A001E6031 /* BookmarksStateValidation.swift in Sources */,
 				9847C00027A2DDBB00DB07AA /* AppPrivacyConfigurationDataProvider.swift in Sources */,
@@ -8645,6 +8644,7 @@
 				1E05D1D629C46EBB00BF9A1F /* DailyPixel.swift in Sources */,
 				1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */,
 				379E877429E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift in Sources */,
+				C19D90D12CFE3A7F00D17DF3 /* AutofillLoginListSectionType.swift in Sources */,
 				988F3DCF237D5C0F00AEE34C /* SchemeHandler.swift in Sources */,
 				9875E00722316B8400B1373F /* Instruments.swift in Sources */,
 				85E065BA2C73A4DF00D73E2A /* UsageSegmentation.swift in Sources */,

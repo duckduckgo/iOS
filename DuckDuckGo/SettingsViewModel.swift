@@ -47,7 +47,7 @@ final class SettingsViewModel: ObservableObject {
     let textZoomCoordinator: TextZoomCoordinating
 
     // Subscription Dependencies
-    private let subscriptionManager: SubscriptionManager
+    let subscriptionManager: SubscriptionManager
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private var subscriptionSignOutObserver: Any?
     var duckPlayerContingencyHandler: DuckPlayerContingencyHandler {
@@ -741,6 +741,7 @@ extension SettingsViewModel {
             state.subscription.platform = subscription.platform
             state.subscription.hasActiveSubscription = subscription.isActive
             state.subscription.entitlements = subscriptionManager.currentEntitlements
+            state.subscription.subscriptionFeatures = subscriptionManager.currentEntitlements
         } catch SubscriptionEndpointServiceError.noData, OAuthClientError.missingTokens {
             // Auth successful but no Subscription is available
             Logger.subscription.log("Subscription not present")

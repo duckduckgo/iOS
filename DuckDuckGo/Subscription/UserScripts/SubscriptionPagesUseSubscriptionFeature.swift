@@ -117,11 +117,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     // Subscription Activation Actions
     var onSetSubscription: (() -> Void)?
     var onBackToSettings: (() -> Void)?
-    var onFeatureSelected: ((SubscriptionFeatureSelection) -> Void)?
+    var onFeatureSelected: ((SubscriptionEntitlement) -> Void)?
     var onActivateSubscription: (() -> Void)?
     
     struct FeatureSelection: Codable {
-        let feature: String
+        let productFeature: SubscriptionEntitlement
     }
     
     weak var broker: UserScriptMessageBroker?
@@ -209,7 +209,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 return subscriptionOptions
             } else {
                 Logger.subscription.log("Subscription purchase not allowed")
-                return SubscriptionOptions.empty
+                return subscriptionOptions.withoutPurchaseOptions()
             }
         } else {
             Logger.subscription.error("Failed to obtain subscription options")
@@ -345,15 +345,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
             return nil
         }
 
-        guard let featureSelection = SubscriptionFeatureSelection(featureName: featureSelection.feature) else {
-            assertionFailure("SubscriptionPagesUserScript: unexpected feature name value")
-            Logger.subscription.error("SubscriptionPagesUserScript: unexpected feature name value")
-            setTransactionError(.generalError)
-            return nil
-        }
+        onFeatureSelected?(featureSelection.productFeature)
 
-        onFeatureSelected?(featureSelection)
-        
         return nil
     }
 

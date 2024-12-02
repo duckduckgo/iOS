@@ -90,7 +90,13 @@ final class AppDependencyProvider: DependencyProvider {
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                               localOverrides: FeatureFlagLocalOverrides(
+                                                keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
+                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
+                                               ),
+                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()),
+                                               for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)
 
@@ -109,6 +115,17 @@ final class AppDependencyProvider: DependencyProvider {
         let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
         let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
+        let theFeatureFlagger = featureFlagger
+        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
+            switch feature {
+            case .isLaunchedROW:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
+            case .isLaunchedROWOverride:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
+            default:
+                return feature.defaultState
+            }
+        }
 
         // keychain storage
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
@@ -133,10 +150,11 @@ final class AppDependencyProvider: DependencyProvider {
                 return tokenContainer.accessToken
             }
         }
-        let storePurchaseManager = DefaultStorePurchaseManager()
-        
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
                                                                              baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionEndpointService,
+                                                                                     userDefaults: subscriptionUserDefaults)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
         let pixelHandler: SubscriptionManager.PixelHandler = { type in
             switch type {
             case .deadToken:
@@ -146,7 +164,9 @@ final class AppDependencyProvider: DependencyProvider {
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
                                                              subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger,
                                                              pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         networkProtectionTunnelController = NetworkProtectionTunnelController(tokenProvider: subscriptionManager,

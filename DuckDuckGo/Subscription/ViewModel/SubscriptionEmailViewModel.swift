@@ -170,15 +170,17 @@ final class SubscriptionEmailViewModel: ObservableObject {
         subFeature.onFeatureSelected = { feature in
             DispatchQueue.main.async {
                 switch feature {
-                case .netP:
+                case .networkProtection:
                     UniquePixel.fire(pixel: .privacyProWelcomeVPN)
                     self.state.selectedFeature = .netP
-                case .itr:
+                case .dataBrokerProtection:
                     UniquePixel.fire(pixel: .privacyProWelcomePersonalInformationRemoval)
                     self.state.selectedFeature = .itr
-                case .dbp:
+                case .identityTheftRestoration, .identityTheftRestorationGlobal:
                     UniquePixel.fire(pixel: .privacyProWelcomeIdentityRestoration)
                     self.state.selectedFeature = .dbp
+                case .unknown:
+                    break
                 }
             }
             

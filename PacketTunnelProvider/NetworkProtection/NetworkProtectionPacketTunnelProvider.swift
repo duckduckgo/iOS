@@ -490,9 +490,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 return tokenContainer.accessToken
             }
         }
-        let storePurchaseManager = DefaultStorePurchaseManager()
+
         let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
                                                                              baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionEndpointService,
+                                                                                             userDefaults: UserDefaults.standard)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
+
         let pixelHandler: SubscriptionManager.PixelHandler = { type in
             switch type {
             case .deadToken:
@@ -502,7 +506,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              oAuthClient: authClient,
                                                              subscriptionEndpointService: subscriptionEndpointService,
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
                                                              subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: nil,
                                                              pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
         let errorStore = NetworkProtectionTunnelErrorStore()

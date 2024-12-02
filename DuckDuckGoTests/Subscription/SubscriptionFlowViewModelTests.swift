@@ -24,21 +24,8 @@ import SubscriptionTestingUtilities
 
 final class SubscriptionFlowViewModelTests: XCTestCase {
     private var sut: SubscriptionFlowViewModel!
-    
-    let subscriptionManager = SubscriptionManagerMock()
-//        let accountManager = AccountManagerMock()
-//        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
-//        let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
-//        let storePurchaseManager = DefaultStorePurchaseManager()
-//        return SubscriptionManagerMock(accountManager: accountManager,
-//                                       subscriptionEndpointService: subscriptionService,
-//                                       authEndpointService: authService,
-//                                       storePurchaseManager: storePurchaseManager,
-//                                       currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
-//                                                                                   purchasePlatform: .appStore),
-//                                       canPurchase: true)
-//    }()
 
+    let subscriptionManager = SubscriptionManagerMock()
     let subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled
 
     func testWhenInitWithOriginThenSubscriptionFlowPurchaseURLHasOriginSet() {
@@ -46,7 +33,7 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: storePurchaseManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
@@ -66,7 +53,7 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
     }
     
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: storePurchaseManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,

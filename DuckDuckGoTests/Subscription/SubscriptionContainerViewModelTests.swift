@@ -32,7 +32,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
         let origin = "test_origin"
         let queryParameter = URLQueryItem(name: "origin", value: "test_origin")
         let expectedURL = SubscriptionURL.purchase.subscriptionURL(environment: .production).appending(percentEncodedQueryItem: queryParameter)
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: storePurchaseManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
@@ -54,7 +54,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
     }
 
     func testWhenInitWithoutOriginThenSubscriptionFlowPurchaseURLDoesNotHaveOriginSet() {
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock())
         let appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                              storePurchaseManager: storePurchaseManager)
         let appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,

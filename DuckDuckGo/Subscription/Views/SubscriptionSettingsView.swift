@@ -244,12 +244,10 @@ struct SubscriptionSettingsView: View {
 
     @ViewBuilder
     private var supportButton: some View {
-        let viewModel = UnifiedFeedbackFormViewModel(
-            subscriptionTokenProvider: AppDependencyProvider.shared.subscriptionManager,
-            apiService: DefaultAPIService(),
-            vpnMetadataCollector: DefaultVPNMetadataCollector(),
-            source: .ppro
-        )
+        let viewModel = UnifiedFeedbackFormViewModel(subscriptionManager: settingsViewModel.subscriptionManager,
+                                                     apiService: DefaultAPIService(),
+                                                     vpnMetadataCollector: DefaultVPNMetadataCollector(),
+                                                     source: .ppro)
         NavigationLink(UserText.subscriptionFeedback, destination: UnifiedFeedbackRootView(viewModel: viewModel))
             .daxBodyRegular()
             .foregroundColor(.init(designSystemColor: .textPrimary))

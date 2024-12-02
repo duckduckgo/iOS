@@ -48,18 +48,14 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
         static let mostRecentTransactionJWS = "dGhpcyBpcyBub3QgYSByZWFsIEFw(...)cCBTdG9yZSB0cmFuc2FjdGlvbiBKV1M="
 
-        static let subscriptionOptions = SubscriptionOptions(platform: SubscriptionPlatformName.ios.rawValue,
+        static let subscriptionOptions = SubscriptionOptions(platform: SubscriptionPlatformName.ios,
                                                              options: [
                                                                 SubscriptionOption(id: "1",
                                                                                    cost: SubscriptionOptionCost(displayPrice: "9 USD", recurrence: "monthly")),
                                                                 SubscriptionOption(id: "2",
                                                                                    cost: SubscriptionOptionCost(displayPrice: "99 USD", recurrence: "yearly"))
                                                              ],
-                                                             features: [
-                                                                SubscriptionFeature(name: "vpn"),
-                                                                SubscriptionFeature(name: "personal-information-removal"),
-                                                                SubscriptionFeature(name: "identity-theft-restoration")
-                                                             ])
+                                                             features: [.networkProtection, .dataBrokerProtection, .identityTheftRestoration])
 
         static let mockParams: [String: String] = [:]
         @MainActor static let mockScriptMessage = MockWKScriptMessage(name: "", body: "", webView: WKWebView() )
@@ -71,6 +67,9 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
 
     var storePurchaseManager: StorePurchaseManagerMock!
     var subscriptionEnvironment: SubscriptionEnvironment!
+
+    var subscriptionFeatureMappingCache: SubscriptionFeatureMappingCacheMock!
+    var subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags>!
 
     var appStorePurchaseFlow: AppStorePurchaseFlow!
     var appStoreRestoreFlow: AppStoreRestoreFlow!
@@ -102,7 +101,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         }
 
         // Mocks
-//        subscriptionService = SubscriptionEndpointServiceMock()
         storePurchaseManager = StorePurchaseManagerMock()
         subscriptionEnvironment = SubscriptionEnvironment(serviceEnvironment: .production,
                                                            purchasePlatform: .appStore)
@@ -110,14 +108,12 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         userDefaults.removePersistentDomain(forName: Constants.userDefaultsSuiteName)
 
         subscriptionManager = SubscriptionManagerMock()
-
         // Real Flows
         appStoreRestoreFlow = DefaultAppStoreRestoreFlow(subscriptionManager: subscriptionManager,
                                                          storePurchaseManager: storePurchaseManager)
         appStorePurchaseFlow = DefaultAppStorePurchaseFlow(subscriptionManager: subscriptionManager,
                                                            storePurchaseManager: storePurchaseManager,
                                                            appStoreRestoreFlow: appStoreRestoreFlow)
-
         feature = SubscriptionPagesUseSubscriptionFeature(subscriptionManager: subscriptionManager,
                                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                                           subscriptionAttributionOrigin: nil,
@@ -129,7 +125,6 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         Pixel.isDryRun = true
         pixelsFired.removeAll()
         HTTPStubs.removeAllStubs()
-//        subscriptionService = nil
         storePurchaseManager = nil
         subscriptionEnvironment = nil
         userDefaults = nil
@@ -696,11 +691,11 @@ final class SubscriptionPagesUseSubscriptionFeatureTests: XCTestCase {
         let onFeatureSelectedCalled = expectation(description: "onFeatureSelected")
         feature.onFeatureSelected = { selection in
             onFeatureSelectedCalled.fulfill()
-            XCTAssertEqual(selection, SubscriptionFeatureSelection.itr)
+            XCTAssertEqual(selection, .identityTheftRestoration)
         }
 
         // When
-        let featureSelectionParams = ["feature": SubscriptionFeatureName.itr]
+        let featureSelectionParams = ["productFeature": SubscriptionEntitlement.identityTheftRestoration.rawValue]
         let result = await feature.featureSelected(params: featureSelectionParams, original: Constants.mockScriptMessage)
 
         // Then

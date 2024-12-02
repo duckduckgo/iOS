@@ -45,6 +45,7 @@ struct SettingsState {
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
         var entitlements: [SubscriptionEntitlement]
+        var subscriptionFeatures: [SubscriptionEntitlement]
         var platform: PrivacyProSubscription.Platform
         var isShowingStripeView: Bool
     }
@@ -128,14 +129,15 @@ struct SettingsState {
             loginsEnabled: false,
             networkProtectionConnected: false,
             subscription: SubscriptionState(enabled: false,
-                                       canPurchase: false,
-                                       subscriptionExist: false,
-                                       hasActiveSubscription: false,
-                                       isRestoring: false,
-                                       shouldDisplayRestoreSubscriptionError: false,
-                                       entitlements: [],
-                                       platform: .unknown,
-                                       isShowingStripeView: false),
+                                            canPurchase: false,
+                                            subscriptionExist: false,
+                                            hasActiveSubscription: false,
+                                            isRestoring: false,
+                                            shouldDisplayRestoreSubscriptionError: false,
+                                            entitlements: [],
+                                            subscriptionFeatures: [],
+                                            platform: .unknown,
+                                            isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: ""),
             syncSource: nil,
             duckPlayerEnabled: false,

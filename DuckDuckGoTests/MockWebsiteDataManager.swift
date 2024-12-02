@@ -26,7 +26,7 @@ class MockWebsiteDataManager: WebsiteDataManaging {
     func removeCookies(forDomains domains: [String], fromDataStore: WKWebsiteDataStore) async {
     }
 
-    func consumeCookies(intoHTTPCookieStore httpCookieStore: WKHTTPCookieStore) async {
+    func consumeCookies(into httpCookieStore: WKHTTPCookieStore) async {
     }
 
     func clear(dataStore: WKWebsiteDataStore) async {

@@ -281,7 +281,7 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func about() -> some View {
-        let viewModel = UnifiedFeedbackFormViewModel(accountManager: AppDependencyProvider.shared.accountManager,
+        let viewModel = UnifiedFeedbackFormViewModel(subscriptionManager: statusModel.subscriptionManager,
                                                      apiService: DefaultAPIService(),
                                                      vpnMetadataCollector: DefaultVPNMetadataCollector(),
                                                      source: .vpn)

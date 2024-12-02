@@ -226,7 +226,7 @@ class AppUserDefaultsTests: XCTestCase {
         mockManager.privacyConfig = mockConfiguration(subfeatureEnabled: enabled)
 
         let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
-        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfigManager: mockManager)
+        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfigManager: mockManager, experimentManager: nil)
     }
 
     private func mockConfiguration(subfeatureEnabled: Bool) -> PrivacyConfiguration {

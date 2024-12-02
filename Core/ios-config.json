@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1732540137973,
+    "version": 1733157661102,
     "features": {
         "adAttributionReporting": {
             "state": "disabled",
@@ -69,10 +69,26 @@
             },
             "hash": "b813ade8472a097ffbd43a3331116fe1"
         },
-        "aiChat": {
+        "additionalCampaignPixelParams": {
             "state": "disabled",
             "exceptions": [],
             "hash": "c292bb627849854515cebbded288ef5a"
+        },
+        "aiChat": {
+            "state": "enabled",
+            "exceptions": [],
+            "features": {
+                "browsingToolbarShortcut": {
+                    "state": "enabled"
+                },
+                "addressBarShortcut": {
+                    "state": "enabled"
+                }
+            },
+            "settings": {
+                "aiChatURL": "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=4"
+            },
+            "hash": "14908e76cd3a8b4919e03003fd201300"
         },
         "ampLinks": {
             "exceptions": [
@@ -734,6 +750,11 @@
                 }
             },
             "hash": "91e54b0d57fbf1cf8668c9a929631432"
+        },
+        "blockList": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "bookmarks": {
             "state": "enabled",
@@ -5822,6 +5843,15 @@
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
+        "maliciousSiteProtection": {
+            "state": "internal",
+            "exceptions": [],
+            "settings": {
+                "hashPrefixUpdateFrequency": 20,
+                "filterSetUpdateFrequency": 720
+            },
+            "hash": "ca9942379aea7619f878337a2debdee8"
+        },
         "marketplaceAdPostback": {
             "state": "enabled",
             "exceptions": [],
@@ -5944,33 +5974,9 @@
             "hash": "6792064606a5a72c5cd44addb4d40bda"
         },
         "phishingDetection": {
-            "state": "internal",
-            "exceptions": [
-                {
-                    "domain": "marvel.com"
-                },
-                {
-                    "domain": "sundancecatalog.com"
-                },
-                {
-                    "domain": "noaprints.com"
-                },
-                {
-                    "domain": "flexmls.com"
-                },
-                {
-                    "domain": "instructure.com"
-                }
-            ],
-            "features": {
-                "allowErrorPage": {
-                    "state": "internal"
-                },
-                "allowPreferencesToggle": {
-                    "state": "internal"
-                }
-            },
-            "hash": "9a9143022e6cc8976461b337abfa81a1"
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -6046,7 +6052,7 @@
                     "minSupportedVersion": "7.136.0"
                 },
                 "setAccessTokenCookieForSubscriptionDomains": {
-                    "state": "enabled",
+                    "state": "disabled",
                     "rollout": {
                         "steps": [
                             {
@@ -6054,13 +6060,18 @@
                             },
                             {
                                 "percent": 50
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
-                    },
-                    "minSupportedVersion": "7.145.1"
+                    }
+                },
+                "freeTrials": {
+                    "state": "internal"
                 }
             },
-            "hash": "2a9bad4e25e3a161fbbbc324a240c03e"
+            "hash": "c002a2f7b1299197657574c7328e8f88"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",

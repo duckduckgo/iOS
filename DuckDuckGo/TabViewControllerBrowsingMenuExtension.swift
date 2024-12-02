@@ -29,7 +29,7 @@ import PrivacyDashboard
 extension TabViewController {
 
     private var shouldShowAIChatInMenuHeader: Bool {
-        featureFlagger.isFeatureOn(.aiChatBrowsingToolbarShortcut)
+        featureFlagger.isFeatureOn(.aiChatBrowsingToolbarShortcut) || AppDependencyProvider.shared.internalUserDecider.isInternalUser
     }
     private var shouldShowPrintButtonInBrowsingMenu: Bool { shouldShowAIChatInMenuHeader }
 

@@ -29,7 +29,10 @@ final class AIChatWebViewController: UIViewController {
 
     private lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero, configuration: chatModel.webViewConfiguration)
+        webView.isOpaque = false /// Required to make the background color visible
+        webView.backgroundColor = .systemBackground
         webView.navigationDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
 
@@ -61,7 +64,6 @@ final class AIChatWebViewController: UIViewController {
     }
 
     private func setupWebView() {
-        webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
 
         NSLayoutConstraint.activate([

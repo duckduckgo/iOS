@@ -834,6 +834,7 @@ import os.log
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
+        appStateMachine.handle(.openURL(url))
 
         // If showing the onboarding intro ignore deeplinks
         guard mainViewController?.needsToShowOnboardingIntro() == false else {

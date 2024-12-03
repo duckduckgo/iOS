@@ -26,6 +26,8 @@ enum AppEvent {
     case backgrounding(UIApplication)
     case suspending(UIApplication)
 
+    case openURL(URL)
+
 }
 
 protocol AppState {

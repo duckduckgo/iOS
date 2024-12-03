@@ -39,6 +39,8 @@ extension Launched {
         switch event {
         case .activating(let application):
             return Active(application: application)
+        case .openURL:
+            return self
         case .launching, .suspending, .backgrounding:
             return handleUnexpectedEvent(event)
         }
@@ -52,7 +54,7 @@ extension Active {
         switch event {
         case .suspending(let application):
             return Inactive(application: application)
-        case .launching, .activating, .backgrounding:
+        case .launching, .activating, .backgrounding, .openURL:
             return handleUnexpectedEvent(event)
         }
     }
@@ -67,7 +69,7 @@ extension Inactive {
             return Background(application: application)
         case .activating(let application):
             return Active(application: application)
-        case .launching, .suspending:
+        case .launching, .suspending, .openURL:
             return handleUnexpectedEvent(event)
         }
     }
@@ -80,6 +82,8 @@ extension Background {
         switch event {
         case .activating(let application):
             return Active(application: application)
+        case .openURL:
+            return self
         case .launching, .suspending, .backgrounding:
             return handleUnexpectedEvent(event)
         }
@@ -95,6 +99,7 @@ extension AppEvent {
         case .activating: return "activating"
         case .backgrounding: return "backgrounding"
         case .suspending: return "suspending"
+        case .openURL: return "openURL"
         }
     }
 

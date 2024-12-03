@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Subscription
 
 public protocol Fireproofing {
 
@@ -35,7 +36,9 @@ public protocol Fireproofing {
 // This class is not final because we override allowed domains in WebCacheManagerTests
 public class UserDefaultsFireproofing: Fireproofing {
 
-    public static let shared: Fireproofing = UserDefaultsFireproofing()
+    /// This is only here because there are some places that don't support injection at this time.  DO NOT USE IT.
+    ///  If you find you really need to use it, ping Apple Devs channel first.
+    public static let xshared: Fireproofing = UserDefaultsFireproofing()
 
     public struct Notifications {
         public static let loginDetectionStateChanged = Foundation.Notification.Name("com.duckduckgo.ios.PreserveLogins.loginDetectionStateChanged")
@@ -51,15 +54,19 @@ public class UserDefaultsFireproofing: Fireproofing {
         }
     }
 
+    private var allowedDomainsIncludingDuckDuckGo: [String] {
+        allowedDomains + [
+            URL.ddg.host ?? "",
+            SubscriptionCookieManager.cookieDomain
+        ]
+    }
+
     public func addToAllowed(domain: String) {
         allowedDomains += [domain]
     }
 
     public func isAllowed(cookieDomain: String) -> Bool {
-
-        return allowedDomains.contains(where: { $0 == cookieDomain
-            || ".\($0)" == cookieDomain
-            || (cookieDomain.hasPrefix(".") && $0.hasSuffix(cookieDomain)) })
+        return allowedDomainsIncludingDuckDuckGo.contains(where: { HTTPCookie.cookieDomain(cookieDomain, matchesTestDomain: $0) })
     }
 
     public func remove(domain: String) {
@@ -71,7 +78,7 @@ public class UserDefaultsFireproofing: Fireproofing {
     }
 
     public func isAllowed(fireproofDomain domain: String) -> Bool {
-        return allowedDomains.contains(domain)
+        return allowedDomainsIncludingDuckDuckGo.contains(domain)
     }
 
 }

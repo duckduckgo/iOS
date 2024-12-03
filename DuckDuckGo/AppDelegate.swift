@@ -117,6 +117,8 @@ import os.log
 
     private var didFinishLaunchingStartTime: CFAbsoluteTime?
 
+    private let appStateMachine = AppStateMachine()
+
     override init() {
         super.init()
 
@@ -131,6 +133,7 @@ import os.log
     // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        appStateMachine.handle(.launching(application, launchOptions: launchOptions))
         didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
             if let didFinishLaunchingStartTime {
@@ -587,6 +590,8 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        appStateMachine.handle(.activating(application))
+
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -690,6 +695,7 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        appStateMachine.handle(.suspending(application))
         Task { @MainActor in
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
@@ -782,6 +788,7 @@ import os.log
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        appStateMachine.handle(.backgrounding(application))
         displayBlankSnapshotWindow()
         autoClear?.startClearingTimer()
         lastBackgroundDate = Date()

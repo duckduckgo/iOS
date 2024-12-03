@@ -26,6 +26,8 @@ import Subscription
 import Common
 import NetworkProtection
 import RemoteMessaging
+import Networking
+import os.log
 import PageRefreshMonitor
 
 protocol DependencyProvider {
@@ -40,11 +42,9 @@ protocol DependencyProvider {
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
+    var subscriptionManager: any SubscriptionManager { get }
     var pageRefreshMonitor: PageRefreshMonitor { get }
-    var subscriptionManager: SubscriptionManager { get }
-    var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
-    var networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore { get }
     var networkProtectionTunnelController: NetworkProtectionTunnelController { get }
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
@@ -78,11 +78,7 @@ final class AppDependencyProvider: DependencyProvider {
 
     // Subscription
     let subscriptionManager: SubscriptionManager
-    var accountManager: AccountManager {
-        subscriptionManager.accountManager
-    }
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
-    let networkProtectionKeychainTokenStore: NetworkProtectionKeychainTokenStore
     let networkProtectionTunnelController: NetworkProtectionTunnelController
 
     let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
@@ -109,20 +105,16 @@ final class AppDependencyProvider: DependencyProvider {
         let subscriptionEnvironment = DefaultSubscriptionManager.getSavedOrDefaultEnvironment(userDefaults: subscriptionUserDefaults)
         vpnSettings.alignTo(subscriptionEnvironment: subscriptionEnvironment)
 
-        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: subscriptionUserDefaults,
-                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
-                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
-        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionService,
-                                                                                     userDefaults: subscriptionUserDefaults)
+        let configuration = URLSessionConfiguration.default
+        configuration.httpCookieStorage = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let urlSession = URLSession(configuration: configuration,
+                                    delegate: SessionDelegate(),
+                                    delegateQueue: nil)
+        let apiService = DefaultAPIService(urlSession: urlSession)
+        let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
-        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
-                                                   entitlementsCache: entitlementsCache,
-                                                   subscriptionEndpointService: subscriptionService,
-                                                   authEndpointService: authService)
-
+        let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
         let theFeatureFlagger = featureFlagger
         let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
             switch feature {
@@ -135,30 +127,53 @@ final class AppDependencyProvider: DependencyProvider {
             }
         }
 
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
-                                                             accountManager: accountManager,
-                                                             subscriptionEndpointService: subscriptionService,
-                                                             authEndpointService: authService,
+        // keychain storage
+        let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
+        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let legacyAccountStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+
+        let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,
+                                            legacyTokenStorage: legacyAccountStorage,
+                                            authService: authService)
+
+        apiService.authorizationRefresherCallback = { _ in
+            guard let tokenContainer = tokenStorage.tokenContainer else {
+                throw OAuthClientError.internalError("Missing refresh token")
+            }
+
+            if tokenContainer.decodedAccessToken.isExpired() {
+                Logger.OAuth.debug("Refreshing tokens")
+                let tokens = try await authClient.getTokens(policy: .localForceRefresh)
+                return tokens.accessToken
+            } else {
+                Logger.general.debug("Trying to refresh valid token, using the old one")
+                return tokenContainer.accessToken
+            }
+        }
+        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionEndpointService,
+                                                                                     userDefaults: subscriptionUserDefaults)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
+        let pixelHandler: SubscriptionManager.PixelHandler = { type in
+            switch type {
+            case .deadToken:
+                Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            }
+        }
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
+                                                             oAuthClient: authClient,
+                                                             subscriptionEndpointService: subscriptionEndpointService,
                                                              subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
                                                              subscriptionEnvironment: subscriptionEnvironment,
-                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger)
-        accountManager.delegate = subscriptionManager
-
+                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger,
+                                                             pixelHandler: pixelHandler)
         self.subscriptionManager = subscriptionManager
-
-        let accessTokenProvider: () -> String? = {
-            return { accountManager.accessToken }
-        }()
-
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-
-        networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore,
+        networkProtectionTunnelController = NetworkProtectionTunnelController(tokenProvider: subscriptionManager,
                                                                               featureFlagger: featureFlagger,
                                                                               persistentPixel: persistentPixel,
                                                                               settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
-                                                                  accountManager: accountManager)
+                                                                  oAuthClient: authClient)
     }
-
 }

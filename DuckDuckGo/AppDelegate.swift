@@ -62,7 +62,7 @@ import os.log
     @MainActor
     private lazy var vpnWorkaround: VPNRedditSessionWorkaround = {
         return VPNRedditSessionWorkaround(
-            accountManager: AppDependencyProvider.shared.accountManager,
+            subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
             tunnelController: AppDependencyProvider.shared.networkProtectionTunnelController
         )
     }()
@@ -91,6 +91,7 @@ import os.log
     private var subscriptionCookieManager: SubscriptionCookieManaging!
     private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
     var privacyProDataReporter: PrivacyProDataReporting!
+    private var tokenBackgroundRefreshTask: TokenBackgroundRefreshTask?
 
     // MARK: - Feature specific app event handlers
 
@@ -100,10 +101,6 @@ import os.log
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
-
-    var accountManager: AccountManager {
-        AppDependencyProvider.shared.accountManager
-    }
 
     @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
     private var didCrashDuringCrashHandlersSetUp: Bool
@@ -414,6 +411,9 @@ import os.log
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
 
+        tokenBackgroundRefreshTask = TokenBackgroundRefreshTask(subscriptionManager: AppDependencyProvider.shared.subscriptionManager)
+        tokenBackgroundRefreshTask?.registerBackgroundRefreshTaskHandler()
+
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
@@ -674,7 +674,7 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscriptionAndEntitlements { isSubscriptionActive in
+        AppDependencyProvider.shared.subscriptionManager.refreshCachedSubscription { isSubscriptionActive in
             if isSubscriptionActive {
                 DailyPixel.fire(pixel: .privacyProSubscriptionActive)
             }
@@ -696,7 +696,8 @@ import os.log
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
         // Only remove the VPN if the user is not authenticated, and it's installed:
-        guard !accountManager.isUserAuthenticated, await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
+        guard !AppDependencyProvider.shared.subscriptionManager.isUserAuthenticated,
+              await AppDependencyProvider.shared.networkProtectionTunnelController.isInstalled else {
             return
         }
 
@@ -806,6 +807,7 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        tokenBackgroundRefreshTask?.scheduleTask()
         resetAppStartTime()
     }
 
@@ -1102,7 +1104,7 @@ import os.log
             return
         }
 
-        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
+        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
             let items = [
                 UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
                                           localizedTitle: UserText.netPOpenVPNQuickAction,
@@ -1180,12 +1182,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func presentNetworkProtectionStatusSettingsModal() {
-        Task {
-            if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (window?.rootViewController as? MainViewController)?.segueToVPN()
-            } else {
-                (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
-            }
+        if AppDependencyProvider.shared.subscriptionManager.isEntitlementActive(.networkProtection) {
+            (window?.rootViewController as? MainViewController)?.segueToVPN()
+        } else {
+            (window?.rootViewController as? MainViewController)?.segueToPrivacyPro()
         }
     }
 

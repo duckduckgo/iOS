@@ -49,8 +49,6 @@ struct SubscriptionGoogleView: View {
         
 }
 
-
-#if DEBUG
 struct SubscriptionGoogleView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -58,4 +56,3 @@ struct SubscriptionGoogleView_Previews: PreviewProvider {
         }
     }
 }
-#endif

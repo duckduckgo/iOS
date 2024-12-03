@@ -102,18 +102,18 @@ protocol VPNMetadataCollector {
 final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
-    private let accountManager: AccountManager
+    private let subscriptionManager: any SubscriptionManager
     private let settings: VPNSettings
     private let defaults: UserDefaults
 
     init(statusObserver: ConnectionStatusObserver,
-         serverInfoObserver: ConnectionServerInfoObserver,
-         accountManager: AccountManager = AppDependencyProvider.shared.subscriptionManager.accountManager,
+         serverInfoObserver: ConnectionServerInfoObserver,// ConnectionServerInfoObserverThroughSession(),
+         subscriptionManager: any SubscriptionManager = AppDependencyProvider.shared.subscriptionManager,
          settings: VPNSettings = .init(defaults: .networkProtectionGroupDefaults),
          defaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
-        self.accountManager = accountManager
+        self.subscriptionManager = subscriptionManager
         self.settings = settings
         self.defaults = defaults
     }
@@ -242,10 +242,9 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     }
 
     func collectPrivacyProInfo() async -> VPNMetadata.PrivacyProInfo {
-        let hasVPNEntitlement = (try? await accountManager.hasEntitlement(forProductName: .networkProtection).get()) ?? false
         return .init(
-            hasPrivacyProAccount: accountManager.isUserAuthenticated,
-            hasVPNEntitlement: hasVPNEntitlement
+            hasPrivacyProAccount: subscriptionManager.isUserAuthenticated,
+            hasVPNEntitlement: subscriptionManager.isEntitlementActive(.networkProtection)
         )
     }
 

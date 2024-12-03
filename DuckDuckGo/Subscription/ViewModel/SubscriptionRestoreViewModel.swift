@@ -28,7 +28,6 @@ final class SubscriptionRestoreViewModel: ObservableObject {
     let userScript: SubscriptionPagesUserScript
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let subscriptionManager: SubscriptionManager
-    var accountManager: AccountManager { subscriptionManager.accountManager }
 
     private var cancellables = Set<AnyCancellable>()
     

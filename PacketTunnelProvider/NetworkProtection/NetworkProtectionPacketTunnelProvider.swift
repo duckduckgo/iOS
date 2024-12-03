@@ -31,13 +31,27 @@ import WidgetKit
 import WireGuard
 import BrowserServicesKit
 
+
+public protocol SubscriptionSomething {
+    func isUserAuthenticated() -> Bool
+    var subscriptionAuthToken: String? { get }
+
+}
+
+extension SubscriptionSomething {
+    var accessToken: String? {
+        guard let subscriptionAuthToken else { return nil }
+        return "ddg:"+subscriptionAuthToken
+    }
+}
+
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private static var vpnLogger = VPNLogger()
     private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
-    private let accountManager: AccountManager
+    private let subscriptionManager: any SubscriptionManager
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
@@ -438,28 +452,61 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
 
         // MARK: - Configure Subscription
-        let entitlementsCache = UserDefaultsCache<[Entitlement]>(userDefaults: UserDefaults.standard,
-                                                                 key: UserDefaultsCacheKey.subscriptionEntitlements,
-                                                                 settings: UserDefaultsCacheSettings(defaultExpirationInterval: .minutes(20)))
+        let configuration = URLSessionConfiguration.default
+        configuration.httpCookieStorage = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let urlSession = URLSession(configuration: configuration,
+                                    delegate: SessionDelegate(),
+                                    delegateQueue: nil)
+        let apiService = DefaultAPIService(urlSession: urlSession)
+        let authEnvironment: OAuthEnvironment = subscriptionEnvironment.serviceEnvironment == .production ? .production : .staging
 
+        let authService = DefaultOAuthService(baseURL: authEnvironment.url, apiService: apiService)
+
+        // keychain storage
         let subscriptionAppGroup = Bundle.main.appGroup(bundle: .subs)
-        let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
-        let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
-        let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
-                                                   entitlementsCache: entitlementsCache,
-                                                   subscriptionEndpointService: subscriptionService,
-                                                   authEndpointService: authService)
-        self.accountManager = accountManager
-        let featureVisibility = NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager)
-        let accessTokenProvider: () -> String? = {
-            if featureVisibility.shouldMonitorEntitlement() {
-                return { accountManager.accessToken }
-            }
-            return { nil }
-        }()
-        let tokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
+        let tokenStorage = SubscriptionTokenKeychainStorageV2(keychainType: .dataProtection(.named(subscriptionAppGroup)))
+        let legacyAccountStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
 
+        let authClient = DefaultOAuthClient(tokensStorage: tokenStorage,
+                                            legacyTokenStorage: legacyAccountStorage,
+                                            authService: authService)
+
+        apiService.authorizationRefresherCallback = { _ in
+            guard let tokenContainer = tokenStorage.tokenContainer else {
+                throw OAuthClientError.internalError("Missing refresh token")
+            }
+
+            if tokenContainer.decodedAccessToken.isExpired() {
+                Logger.OAuth.debug("Refreshing tokens")
+                let tokens = try await authClient.getTokens(policy: .localForceRefresh)
+                return tokens.accessToken
+            } else {
+                Logger.general.debug("Trying to refresh valid token, using the old one")
+                return tokenContainer.accessToken
+            }
+        }
+
+        let subscriptionEndpointService = DefaultSubscriptionEndpointService(apiService: apiService,
+                                                                             baseURL: subscriptionEnvironment.serviceEnvironment.url)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionEndpointService,
+                                                                                             userDefaults: UserDefaults.standard)
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
+
+        let pixelHandler: SubscriptionManager.PixelHandler = { type in
+            switch type {
+            case .deadToken:
+                Pixel.fire(pixel: .privacyProDeadTokenDetected)
+            }
+        }
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
+                                                             oAuthClient: authClient,
+                                                             subscriptionEndpointService: subscriptionEndpointService,
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: nil,
+                                                             pixelHandler: pixelHandler)
+        self.subscriptionManager = subscriptionManager
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
 
@@ -469,20 +516,32 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
+
+        let entitlementsCheck: (() async -> Result<Bool, Error>) = {
+            do {
+                Logger.networkProtection.log("Entitlements check...")
+                let entitlements = try await subscriptionManager.getEntitlements(forceRefresh: true)
+                Logger.networkProtection.log("Entitlements found: \(entitlements, privacy: .public)")
+                return .success(entitlements.contains(.networkProtection))
+            } catch {
+                Logger.networkProtection.error("Failed to get entitlements: \(error)")
+                return .failure(error)
+            }
+        }
+
         super.init(notificationsPresenter: notificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    snoozeTimingStore: NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults),
                    wireGuardInterface: DefaultWireGuardInterface(),
                    keychainType: .dataProtection(.unspecified),
-                   tokenStore: tokenStore,
+                   tokenProvider: subscriptionManager,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
                    settings: settings,
                    defaults: .networkProtectionGroupDefaults,
-                   entitlementCheck: { return await Self.entitlementCheck(accountManager: accountManager) })
+                   entitlementCheck: entitlementsCheck)
 
-        accountManager.delegate = self
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
@@ -534,21 +593,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         activationDateStore.updateLastActiveDate()
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
-
-    private static func entitlementCheck(accountManager: AccountManager) async -> Result<Bool, Error> {
-        
-        guard NetworkProtectionVisibilityForTunnelProvider(accountManager: accountManager).shouldMonitorEntitlement() else {
-            return .success(true)
-        }
-
-        let result = await accountManager.hasEntitlement(forProductName: .networkProtection)
-        switch result {
-        case .success(let hasEntitlement):
-            return .success(hasEntitlement)
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
 }
 
 final class DefaultWireGuardInterface: WireGuardInterface {
@@ -581,17 +625,17 @@ final class DefaultWireGuardInterface: WireGuardInterface {
     }
 }
 
-extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
-
-    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
-        let parameters = [
-            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
-            PixelParameters.privacyProKeychainError: error.errorDescription,
-            PixelParameters.source: "vpn"
-        ]
-
-        DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
-                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                     withAdditionalParameters: parameters)
-    }
-}
+// extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDelegate {
+//
+//    public func accountManagerKeychainAccessFailed(accessType: AccountKeychainAccessType, error: AccountKeychainAccessError) {
+//        let parameters = [
+//            PixelParameters.privacyProKeychainAccessType: accessType.rawValue,
+//            PixelParameters.privacyProKeychainError: error.errorDescription,
+//            PixelParameters.source: "vpn"
+//        ]
+//
+// DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+//                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+//                             withAdditionalParameters: parameters)
+//    }
+// }

@@ -22,6 +22,7 @@ import UIKit
 import Subscription
 import Core
 import NetworkProtection
+import Networking
 import StoreKit
 import BrowserServicesKit
 
@@ -319,18 +320,25 @@ final class SubscriptionDebugViewController: UITableViewController {
     }
 
     private func clearAuthData() {
-        subscriptionManager.accountManager.signOut()
-        showAlert(title: "Data cleared!")
+        Task {
+            await subscriptionManager.signOut()
+            showAlert(title: "Data cleared!")
+        }
     }
     
     private func showAccountDetails() {
-        let title = subscriptionManager.accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
-        let message = subscriptionManager.accountManager.isUserAuthenticated ?
-        ["Service Environment: \(subscriptionManager.currentEnvironment.serviceEnvironment.description)",
-            "AuthToken: \(subscriptionManager.accountManager.authToken ?? "")",
-            "AccessToken: \(subscriptionManager.accountManager.accessToken ?? "")",
-            "Email: \(subscriptionManager.accountManager.email ?? "")"].joined(separator: "\n") : nil
-        showAlert(title: title, message: message)
+        Task {
+            let tokenContainer = try? await subscriptionManager.getTokenContainer(policy: .local)
+            let authenticated = tokenContainer != nil
+            let title = authenticated ? "Authenticated" : "Not Authenticated"
+            let message = authenticated ?
+            ["Service Environment: \(subscriptionManager.currentEnvironment.serviceEnvironment)",
+             "AuthToken: \(tokenContainer?.accessToken ?? "")",
+             "Email: \(tokenContainer?.decodedAccessToken.email ?? "")"].joined(separator: "\n") : nil
+            DispatchQueue.main.async {
+                self.showAlert(title: title, message: message)
+            }
+        }
     }
 
     private func showRandomizedParamters() {
@@ -382,14 +390,12 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func validateToken() {
         Task {
-            guard let token = subscriptionManager.accountManager.accessToken else {
+            do {
+                let tokenContainer = try await subscriptionManager.getTokenContainer(policy: .localValid)
+                showAlert(title: "Token details", message: "\(tokenContainer.debugDescription)")
+            } catch OAuthClientError.missingTokens {
                 showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
-                return
-            }
-            switch await subscriptionManager.authEndpointService.validateToken(accessToken: token) {
-            case .success(let response):
-                showAlert(title: "Token details", message: "\(response)")
-            case .failure(let error):
+            } catch {
                 showAlert(title: "Error Validating Token", message: "\(error)")
             }
         }
@@ -397,37 +403,30 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private func getSubscriptionDetails() {
         Task {
-            guard let token = subscriptionManager.accountManager.accessToken else {
-                showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
-                return
-            }
-            switch await subscriptionManager.subscriptionEndpointService.getSubscription(accessToken: token,
-                                                                                         cachePolicy: .reloadIgnoringLocalCacheData) {
-            case .success(let response):
-                showAlert(title: "Subscription info", message: "\(response)")
-            case .failure(let error):
-                showAlert(title: "Subscription Error", message: "\(error)")
+            do {
+                let subscription = try await subscriptionManager.currentSubscription(refresh: true)
+                showAlert(title: "Subscription info", message: "\(subscription)")
+            } catch OAuthClientError.missingTokens {
+                showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
+            } catch {
+                showAlert(title: "Error retrieving subscription", message: "\(error)")
             }
         }
     }
     
     private func checkEntitlements() {
         Task {
-            var results: [String] = []
-            guard subscriptionManager.accountManager.accessToken != nil else {
-                showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
-                return
+            do {
+                let tokenContainer = try await subscriptionManager.getTokenContainer(policy: .localValid)
+                let entitlementsDescription = tokenContainer.decodedAccessToken.subscriptionEntitlements.map { entitlement in
+                    return entitlement.rawValue
+                }.joined(separator: "\n")
+                showAlert(title: "Available Entitlements", message: entitlementsDescription)
+            } catch OAuthClientError.missingTokens {
+                showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
+            } catch {
+                showAlert(title: "Error retrieving entitlements", message: "\(error)")
             }
-            let entitlements: [Entitlement.ProductName] = [.networkProtection, .dataBrokerProtection, .identityTheftRestoration]
-            for entitlement in entitlements {
-                if case let .success(result) = await subscriptionManager.accountManager.hasEntitlement(forProductName: entitlement,
-                                                                                                       cachePolicy: .reloadIgnoringLocalCacheData) {
-                    let resultSummary = "Entitlement check for \(entitlement.rawValue): \(result)"
-                    results.append(resultSummary)
-                    print(resultSummary)
-                }
-            }
-            showAlert(title: "Available Entitlements", message: results.joined(separator: "\n"))
         }
     }
     
@@ -439,20 +438,22 @@ final class SubscriptionDebugViewController: UITableViewController {
         newSubscriptionEnvironment.serviceEnvironment = environment
 
         if newSubscriptionEnvironment.serviceEnvironment != currentSubscriptionEnvironment.serviceEnvironment {
-            subscriptionManager.accountManager.signOut()
-
-            // Save Subscription environment
-            DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
-
-            // The VPN environment is forced to match the subscription environment
-            let settings = AppDependencyProvider.shared.vpnSettings
-            switch newSubscriptionEnvironment.serviceEnvironment {
-            case .production:
-                settings.selectedEnvironment = .production
-            case .staging:
-                settings.selectedEnvironment = .staging
+            Task {
+                await subscriptionManager.signOut()
+                
+                // Save Subscription environment
+                DefaultSubscriptionManager.save(subscriptionEnvironment: newSubscriptionEnvironment, userDefaults: subscriptionUserDefaults)
+                
+                // The VPN environment is forced to match the subscription environment
+                let settings = AppDependencyProvider.shared.vpnSettings
+                switch newSubscriptionEnvironment.serviceEnvironment {
+                case .production:
+                    settings.selectedEnvironment = .production
+                case .staging:
+                    settings.selectedEnvironment = .staging
+                }
+                NetworkProtectionLocationListCompositeRepository.clearCache()
             }
-            NetworkProtectionLocationListCompositeRepository.clearCache()
         }
     }
 

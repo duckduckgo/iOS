@@ -1,5 +1,5 @@
 //
-//  Logger+Subscription.swift
+//  Logger+Pixel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -20,9 +20,6 @@
 import Foundation
 import os.log
 
-extension Logger {
-
-    static var subscription: Logger = {
-        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DuckDuckGo", category: "SubscriptionPro")
-    }()
+public extension Logger {
+    static var pixels = { Logger(subsystem: "Pixels", category: "") }()
 }

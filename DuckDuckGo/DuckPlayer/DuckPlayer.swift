@@ -278,7 +278,7 @@ final class DuckPlayer: DuckPlayerControlling {
     ///   - message: The script message containing the parameters.
     /// - Returns: An optional `Encodable` response.
     public func setUserValues(params: Any, message: WKScriptMessage) -> Encodable? {
-        guard let userValues: UserValues = DecodableHelper.decode(from: params) else {
+        guard let userValues: UserValues = CodableHelper.decode(from: params) else {
             assertionFailure("DuckPlayer: expected JSON representation of UserValues")
             return nil
         }
@@ -369,7 +369,7 @@ final class DuckPlayer: DuckPlayerControlling {
     ///   - message: The script message containing the parameters.
     @MainActor
         public func telemetryEvent(params: Any, message: WKScriptMessage) async -> Encodable? {
-            guard let event: TelemetryEvent = DecodableHelper.decode(from: params) else {
+            guard let event: TelemetryEvent = CodableHelper.decode(from: params) else {
                 return nil
             }
 
@@ -461,7 +461,7 @@ final class DuckPlayer: DuckPlayerControlling {
     @MainActor
     private func firePixels(message: WKScriptMessage, userValues: UserValues) {
         
-        guard let messageData: WKMessageData = DecodableHelper.decode(from: message.body) else {
+        guard let messageData: WKMessageData = CodableHelper.decode(from: message.body) else {
             assertionFailure("DuckPlayer: expected JSON representation of Message")
             return
         }

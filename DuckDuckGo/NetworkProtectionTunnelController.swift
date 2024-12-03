@@ -38,7 +38,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
     private let featureFlagger: FeatureFlagger
     private var internalManager: NETunnelProviderManager?
     private let debugFeatures = NetworkProtectionDebugFeatures()
-    private let tokenStore: NetworkProtectionKeychainTokenStore
+    private let tokenProvider: any SubscriptionTokenProvider
     private let errorStore = NetworkProtectionTunnelErrorStore()
     private let snoozeTimingStore = NetworkProtectionSnoozeTimingStore(userDefaults: .networkProtectionGroupDefaults)
     private let notificationCenter: NotificationCenter = .default
@@ -92,7 +92,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         case loadFromPreferencesFailed(Error)
         case saveToPreferencesFailed(Error)
         case startVPNFailed(Error)
-        case fetchAuthTokenFailed(Error)
+        case fetchAuthTokenFailed
         case configSystemPermissionsDenied(Error)
 
         public var errorCode: Int {
@@ -109,13 +109,13 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         public var errorUserInfo: [String: Any] {
             switch self {
             case
-                    .simulateControllerFailureError:
+                    .simulateControllerFailureError,
+                    .fetchAuthTokenFailed:
                 return [:]
             case
                     .loadFromPreferencesFailed(let error),
                     .saveToPreferencesFailed(let error),
                     .startVPNFailed(let error),
-                    .fetchAuthTokenFailed(let error),
                     .configSystemPermissionsDenied(let error):
                 return [NSUnderlyingErrorKey: error]
             }
@@ -130,8 +130,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
 
     // MARK: - Initializers
 
-    init(accountManager: AccountManager,
-         tokenStore: NetworkProtectionKeychainTokenStore,
+    init(tokenProvider: any SubscriptionTokenProvider,
          featureFlagger: FeatureFlagger,
          persistentPixel: PersistentPixelFiring,
          settings: VPNSettings) {
@@ -139,7 +138,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         self.featureFlagger = featureFlagger
         self.persistentPixel = persistentPixel
         self.settings = settings
-        self.tokenStore = tokenStore
+        self.tokenProvider = tokenProvider
 
         subscribeToSnoozeTimingChanges()
         subscribeToStatusChanges()
@@ -268,7 +267,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
             // Intentional no-op
             break
         default:
-            try start(tunnelManager)
+            try await start(tunnelManager)
         }
     }
 
@@ -276,7 +275,7 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         internalManager = nil
     }
 
-    private func start(_ tunnelManager: NETunnelProviderManager) throws {
+    private func start(_ tunnelManager: NETunnelProviderManager) async throws {
         var options = [String: NSObject]()
 
         if Self.shouldSimulateFailure {
@@ -285,10 +284,11 @@ final class NetworkProtectionTunnelController: TunnelController, TunnelSessionPr
         }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
-        do {
-            options["authToken"] = try tokenStore.fetchToken() as NSString?
-        } catch {
-            throw StartError.fetchAuthTokenFailed(error)
+
+        if let token = try await tokenProvider.getTokenContainer(policy: .localValid).accessToken as NSString? {
+            options["authToken"] = token
+        } else {
+            throw StartError.fetchAuthTokenFailed
         }
         options[NetworkProtectionOptionKey.selectedEnvironment] = AppDependencyProvider.shared.vpnSettings
             .selectedEnvironment.rawValue as NSString

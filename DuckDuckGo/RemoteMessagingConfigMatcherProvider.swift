@@ -62,7 +62,7 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         let variantManager = DefaultVariantManager()
         let subscriptionManager = AppDependencyProvider.shared.subscriptionManager
 
-        let isPrivacyProSubscriber = subscriptionManager.accountManager.isUserAuthenticated
+        let isPrivacyProSubscriber = subscriptionManager.isUserAuthenticated
         let isPrivacyProEligibleUser = subscriptionManager.canPurchase
 
         let activationDateStore = DefaultVPNActivationDateStore()
@@ -84,42 +84,29 @@ final class RemoteMessagingConfigMatcherProvider: RemoteMessagingConfigMatcherPr
         
         let surveyActionMapper: DefaultRemoteMessagingSurveyURLBuilder
 
-        if let accessToken = subscriptionManager.accountManager.accessToken {
-            let subscriptionResult = await subscriptionManager.subscriptionEndpointService.getSubscription(
-                accessToken: accessToken
-            )
+        if let subscription = try? await subscriptionManager.currentSubscription(refresh: false) {
+            privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
+            privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
+            privacyProPurchasePlatform = subscription.platform.rawValue
 
-            if case let .success(subscription) = subscriptionResult {
-                privacyProDaysSinceSubscribed = Calendar.current.numberOfDaysBetween(subscription.startedAt, and: Date()) ?? -1
-                privacyProDaysUntilExpiry = Calendar.current.numberOfDaysBetween(Date(), and: subscription.expiresOrRenewsAt) ?? -1
-                privacyProPurchasePlatform = subscription.platform.rawValue
-
-                switch subscription.status {
-                case .autoRenewable, .gracePeriod:
-                    isPrivacyProSubscriptionActive = true
-                case .notAutoRenewable:
-                    isPrivacyProSubscriptionExpiring = true
-                case .expired, .inactive:
-                    isPrivacyProSubscriptionExpired = true
-                case .unknown:
-                    break // Not supported in RMF
-                }
-
-                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
-                    statisticsStore: statisticsStore,
-                    vpnActivationDateStore: DefaultVPNActivationDateStore(),
-                    subscription: subscription)
-            } else {
-                surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
-                    statisticsStore: statisticsStore,
-                    vpnActivationDateStore: DefaultVPNActivationDateStore(),
-                    subscription: nil)
+            switch subscription.status {
+            case .autoRenewable, .gracePeriod:
+                isPrivacyProSubscriptionActive = true
+            case .notAutoRenewable:
+                isPrivacyProSubscriptionExpiring = true
+            case .expired, .inactive:
+                isPrivacyProSubscriptionExpired = true
+            case .unknown:
+                break // Not supported in RMF
             }
+
+            surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore,
+                                                                        vpnActivationDateStore: DefaultVPNActivationDateStore(),
+                                                                        subscription: subscription)
         } else {
-            surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(
-                statisticsStore: statisticsStore,
-                vpnActivationDateStore: DefaultVPNActivationDateStore(),
-                subscription: nil)
+            surveyActionMapper = DefaultRemoteMessagingSurveyURLBuilder(statisticsStore: statisticsStore,
+                                                                        vpnActivationDateStore: DefaultVPNActivationDateStore(),
+                                                                        subscription: nil)
         }
 
         let dismissedMessageIds = store.fetchDismissedRemoteMessageIDs()

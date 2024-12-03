@@ -42,10 +42,10 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
         static let getAccessToken = "getAccessToken"
     }
         
-    private let accountManager: AccountManager
+    private let subscriptionManager: SubscriptionManager
 
-    init(accountManager: AccountManager) {
-        self.accountManager = accountManager
+    init(subscriptionManager: SubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
     }
 
     weak var broker: UserScriptMessageBroker?
@@ -71,9 +71,11 @@ final class IdentityTheftRestorationPagesFeature: Subfeature, ObservableObject {
     }
     
     func getAccessToken(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        if let accessToken = accountManager.accessToken {
+        do {
+            let accessToken = try await subscriptionManager.getTokenContainer(policy: .localValid).accessToken
             return [Constants.token: accessToken]
-        } else {
+        } catch {
+            Logger.subscription.debug("No access token available: \(error)")
             return [String: String]()
         }
     }

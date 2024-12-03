@@ -57,7 +57,7 @@ public class Favicons {
 
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
          downloader: NotFoundCachingDownloader = NotFoundCachingDownloader(),
-         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+         fireproofing: Fireproofing = UserDefaultsFireproofing.xshared) {
         self.sourcesProvider = sourcesProvider
         self.downloader = downloader
         self.fireproofing = fireproofing

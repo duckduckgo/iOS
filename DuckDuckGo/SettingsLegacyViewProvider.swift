@@ -41,6 +41,7 @@ class SettingsLegacyViewProvider: ObservableObject {
     let tabManager: TabManager
     let syncPausedStateManager: any SyncPausedStateManaging
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
 
     init(syncService: any DDGSyncing,
          syncDataProviders: SyncDataProviders,
@@ -48,7 +49,8 @@ class SettingsLegacyViewProvider: ObservableObject {
          bookmarksDatabase: CoreDataDatabase,
          tabManager: TabManager,
          syncPausedStateManager: any SyncPausedStateManaging,
-         fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+         fireproofing: Fireproofing,
+         websiteDataManager: WebsiteDataManaging) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
@@ -56,6 +58,7 @@ class SettingsLegacyViewProvider: ObservableObject {
         self.tabManager = tabManager
         self.syncPausedStateManager = syncPausedStateManager
         self.fireproofing = fireproofing
+        self.websiteDataManager = websiteDataManager
     }
     
     enum LegacyView {
@@ -81,7 +84,7 @@ class SettingsLegacyViewProvider: ObservableObject {
     private func instantiateFireproofingController() -> UIViewController {
         let storyboard = UIStoryboard(name: StoryboardName.settings, bundle: nil)
         return storyboard.instantiateViewController(identifier: "FireProofSites") { coder in
-            return FireproofingSettingsViewController(coder: coder, fireproofing: self.fireproofing)
+            return FireproofingSettingsViewController(coder: coder, fireproofing: self.fireproofing, websiteDataManager: self.websiteDataManager)
         }
     }
 
@@ -90,6 +93,18 @@ class SettingsLegacyViewProvider: ObservableObject {
         return storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController", creator: { coder in
             return AutoClearSettingsViewController(appSettings: self.appSettings, coder: coder)
         })
+    }
+
+    private func instantiateDebugController() -> UIViewController {
+        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+        return storyboard.instantiateViewController(identifier: "DebugMenu") { coder in
+            RootDebugViewController(coder: coder,
+                                    sync: self.syncService,
+                                    bookmarksDatabase: self.bookmarksDatabase,
+                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
+                                    tabManager: self.tabManager,
+                                    fireproofing: self.fireproofing)
+        }
     }
 
     // Legacy UIKit Views (Pushed unmodified)
@@ -102,6 +117,8 @@ class SettingsLegacyViewProvider: ObservableObject {
     var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: StoryboardName.settings) }
     var feedback: UIViewController { instantiate("Feedback", fromStoryboard: StoryboardName.feedback) }
     var autoclearData: UIViewController { instantiateAutoClearController() }
+    var debug: UIViewController { instantiateDebugController() }
+
 
     @MainActor
     func syncSettings(source: String? = nil) -> SyncSettingsViewController {
@@ -121,17 +138,5 @@ class SettingsLegacyViewProvider: ObservableObject {
                                                        selectedAccount: selectedAccount,
                                                        source: .settings)
     }
-    
-    var debug: UIViewController {
-        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
-        if let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as? RootDebugViewController {
-            viewController.configure(sync: syncService,
-                                     bookmarksDatabase: bookmarksDatabase,
-                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-                                     tabManager: tabManager)
-            return viewController
-        }
-        return UIViewController()
-    }
-        
+
 }

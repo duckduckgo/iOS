@@ -178,6 +178,7 @@ class MainViewController: UIViewController {
     }
     
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
     let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
@@ -206,9 +207,10 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
+        fireproofing: Fireproofing,
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
+        websiteDataManager: WebsiteDataManaging,
         appDidFinishLaunchingStartTime: CFAbsoluteTime?
     ) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -235,7 +237,9 @@ class MainViewController: UIViewController {
                                      featureFlagger: featureFlagger,
                                      subscriptionCookieManager: subscriptionCookieManager,
                                      appSettings: appSettings,
-                                     textZoomCoordinator: textZoomCoordinator)
+                                     textZoomCoordinator: textZoomCoordinator,
+                                     websiteDataManager: websiteDataManager,
+                                     fireproofing: fireproofing)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -249,6 +253,7 @@ class MainViewController: UIViewController {
         self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
 
         super.init(nibName: nil, bundle: nil)
@@ -2673,7 +2678,7 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        await WebCacheManager.shared.clear()
+        await websiteDataManager.clear(dataStore: WKWebsiteDataStore.default())
         pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
         AutoconsentManagement.shared.clearCache()

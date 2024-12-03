@@ -553,7 +553,7 @@ extension Pixel {
         
         case cookieDeletionTime(_ time: BucketAggregation)
         case cookieDeletionLeftovers
-        case legacyDataClearingTime(_ time: BucketAggregation)
+        case clearDataInDefaultPersistence(_ time: BucketAggregation)
 
         case webkitWarmupStart(appState: String)
         case webkitWarmupFinished(appState: String)
@@ -894,6 +894,9 @@ extension Pixel {
         case appDidFinishLaunchingTime(time: BucketAggregation)
         case appDidShowUITime(time: BucketAggregation)
         case appDidBecomeActiveTime(time: BucketAggregation)
+
+        // MARK: Lifecycle
+        case appDidTransitionToUnexpectedState
 
     }
 
@@ -1416,7 +1419,7 @@ extension Pixel.Event {
             
         case .cookieDeletionTime(let aggregation):
             return "m_debug_cookie-clearing-time-\(aggregation)"
-        case .legacyDataClearingTime(let aggregation):
+        case .clearDataInDefaultPersistence(let aggregation):
             return "m_debug_legacy-data-clearing-time-\(aggregation)"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
 
@@ -1783,6 +1786,9 @@ extension Pixel.Event {
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
         case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
+
+        // MARK: Lifecycle
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
 
         }
     }

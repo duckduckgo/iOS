@@ -161,6 +161,9 @@ public struct PixelParameters {
     public static let retriedPixel = "retriedPixel"
 
     public static let time = "time"
+
+    public static let appState = "state"
+    public static let appEvent = "event"
 }
 
 public struct PixelValues {

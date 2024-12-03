@@ -332,7 +332,9 @@ class TabViewController: UIViewController {
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                                    featureFlagger: FeatureFlagger,
                                    subscriptionCookieManager: SubscriptionCookieManaging,
-                                   textZoomCoordinator: TextZoomCoordinating) -> TabViewController {
+                                   textZoomCoordinator: TextZoomCoordinating,
+                                   websiteDataManager: WebsiteDataManaging,
+                                   fireproofing: Fireproofing) -> TabViewController {
 
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -350,7 +352,9 @@ class TabViewController: UIViewController {
                               urlCredentialCreator: urlCredentialCreator,
                               featureFlagger: featureFlagger,
                               subscriptionCookieManager: subscriptionCookieManager,
-                              textZoomCoordinator: textZoomCoordinator
+                              textZoomCoordinator: textZoomCoordinator,
+                              fireproofing: fireproofing,
+                              websiteDataManager: websiteDataManager
             )
         })
         return controller
@@ -371,6 +375,7 @@ class TabViewController: UIViewController {
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -388,7 +393,8 @@ class TabViewController: UIViewController {
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
-                   fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+                   fireproofing: Fireproofing,
+                   websiteDataManager: WebsiteDataManaging) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -410,6 +416,7 @@ class TabViewController: UIViewController {
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
+        self.websiteDataManager = websiteDataManager
 
         super.init(coder: aDecoder)
         
@@ -664,7 +671,7 @@ class TabViewController: UIViewController {
         Task { @MainActor in
             await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
+            await websiteDataManager.consumeCookies(into: cookieStore)
             subscriptionCookieManager.resetLastRefreshDate()
             await subscriptionCookieManager.refreshSubscriptionCookie()
             doLoad()

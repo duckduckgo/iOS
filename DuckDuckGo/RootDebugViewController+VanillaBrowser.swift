@@ -29,7 +29,7 @@ extension RootDebugViewController {
 
     fileprivate static let ddgURL = URL(string: "https://duckduckgo.com/")!
     @objc func openVanillaBrowser(_ sender: Any?) {
-        let homeURL = tabManager?.current()?.tabModel.link?.url ?? RootDebugViewController.ddgURL
+        let homeURL = tabManager.current()?.tabModel.link?.url ?? RootDebugViewController.ddgURL
         openVanillaBrowser(url: homeURL)
     }
 

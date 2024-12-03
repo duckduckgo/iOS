@@ -19,6 +19,7 @@
 
 import XCTest
 @testable import Core
+@testable import Subscription
 
 // TODO: More broad shared TestUtils
 extension UserDefaultsWrapper {
@@ -72,10 +73,27 @@ class UserDefaultsFireproofingTests: XCTestCase {
         fireproofing.addToAllowed(domain: "example.com")
         XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "example.com"))
     }
-    
+
+    func testAllowedCookieDomains() {
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertFalse(fireproofing.isAllowed(fireproofDomain: "example.com"))
+        fireproofing.addToAllowed(domain: "example.com")
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: ".example.com"))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: "subdomain.example.com"))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: ".subdomain.example.com"))
+    }
+
     func testWhenNewThenAllowedDomainsIsEmpty() {
         let fireproofing = UserDefaultsFireproofing()
         XCTAssertTrue(fireproofing.allowedDomains.isEmpty)
+    }
+
+    func testDuckDuckGoIsFireproofed() {
+        let fireproofing = UserDefaultsFireproofing()
+        XCTAssertTrue(fireproofing.isAllowed(fireproofDomain: "duckduckgo.com"))
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: "duckduckgo.com"))
+        XCTAssertTrue(fireproofing.isAllowed(cookieDomain: SubscriptionCookieManager.cookieDomain))
+        XCTAssertFalse(fireproofing.isAllowed(cookieDomain: "test.duckduckgo.com"))
     }
 
 }

@@ -28,16 +28,12 @@ struct SettingsAIChatView: View {
 
             VStack(alignment: .center) {
                 Image("SettingsDuckPlayerHero")
-                    .padding(.top, -20) // Adjust for the image padding
+                    .padding(.top, -20) // Change this to AI Chat image
 
                 Text(UserText.aiChatFeatureName)
                     .daxTitle3()
 
                 Text(.init(UserText.aiChatPreferencesCaptionWithLinkMarkdown))
-                    .environment(\.openURL, OpenURLAction { _ in
-                        /// Open link
-                        return .handled
-                    })
                     .tint(Color.init(designSystemColor: .accent))
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)

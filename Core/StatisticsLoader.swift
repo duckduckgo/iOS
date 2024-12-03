@@ -97,18 +97,18 @@ public class StatisticsLoader {
                 completion()
                 return
             }
+            self.fireInstallPixel()
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
             self.createATBFileMarker()
-            self.fireInstallPixel()
             completion()
         }
     }
 
     private func fireInstallPixel() {
         let formattedLocale = Locale.current.localeIdentifierAsJsonFormat
-        let isReinstall = String(returnUserMeasurement.isReturningUser)
+        let isReinstall = String(statisticsStore.variant == VariantIOS.returningUser.name)
         let parameters = [
             "locale": formattedLocale,
             "reinstall": isReinstall

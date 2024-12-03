@@ -78,8 +78,8 @@ extension SSLErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling {
 
         let errorData = SpecialErrorData.ssl(
             type: errorType,
-            domain: failedURL.host!,
-            eTldPlus1: storageCache.tld.eTLDplus1(failedURL.host)
+            domain: host,
+            eTldPlus1: storageCache.tld.eTLDplus1(host)
         )
 
         return SSLSpecialError(type: errorType, error: SpecialErrorModel(url: failedURL, errorData: errorData))

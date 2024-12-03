@@ -292,7 +292,9 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager,
-                                                            syncPausedStateManager: syncPausedStateManager)
+                                                            syncPausedStateManager: syncPausedStateManager,
+                                                            fireproofing: fireproofing,
+                                                            websiteDataManager: websiteDataManager)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
@@ -331,7 +333,8 @@ extension MainViewController {
                                     sync: self.syncService,
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-                                    tabManager: self.tabManager)
+                                    tabManager: self.tabManager,
+                                    fireproofing: self.fireproofing)
         }
 
         let controller = UINavigationController(rootViewController: settings)

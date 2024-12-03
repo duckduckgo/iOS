@@ -34,6 +34,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
     private var tutorialSettingsMock: MockTutorialSettings!
     private var contextualOnboardingLogicMock: ContextualOnboardingLogicMock!
 
+    let mockWebsiteDataManager = MockWebsiteDataManager()
+
     override func setUpWithError() throws {
         try super.setUpWithError()
         let db = CoreDataDatabase.bookmarksMock
@@ -82,8 +84,10 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
             voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
             featureFlagger: MockFeatureFlagger(),
+            fireproofing: MockFireproofing(),
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
             textZoomCoordinator: MockTextZoomCoordinator(),
+            websiteDataManager: mockWebsiteDataManager,
             appDidFinishLaunchingStartTime: nil
         )
         let window = UIWindow(frame: UIScreen.main.bounds)

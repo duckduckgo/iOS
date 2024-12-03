@@ -1,2 +1,1 @@
-- Improved text zoom! You can now set the zoom level of specific domains from the browsing menu. Use the Fire Button to reset zoom levels to the default.
 - Bug fixes and other improvements.

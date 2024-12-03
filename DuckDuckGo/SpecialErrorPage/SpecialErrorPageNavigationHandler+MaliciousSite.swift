@@ -47,9 +47,9 @@ protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
 final class MaliciousSiteProtectionNavigationHandler {
     private let maliciousSiteProtectionManager: MaliciousSiteDetecting
     private let storageCache: StorageCache
-    private var maliciousURLExemptions: [URL: ThreatKind] = [:]
-    private var bypassedMaliciousSiteThreatKind: ThreatKind?
-    
+    private(set) var maliciousURLExemptions: [URL: ThreatKind] = [:]
+    private(set) var bypassedMaliciousSiteThreatKind: ThreatKind?
+
     init(
         maliciousSiteProtectionManager: MaliciousSiteDetecting = MaliciousSiteProtectionManager(),
         storageCache: StorageCache = AppDependencyProvider.shared.storageCache

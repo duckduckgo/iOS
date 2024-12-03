@@ -33,7 +33,7 @@ struct SettingsAIChatView: View {
                 Text(UserText.aiChatFeatureName)
                     .daxTitle3()
 
-                Text(.init(UserText.aiChatPreferencesCaptionWithLinkMarkdown))
+                Text(.init(UserText.aiChatSettingsCaptionWithLinkMarkdown))
                     .tint(Color.init(designSystemColor: .accent))
                     .daxBodyRegular()
                     .multilineTextAlignment(.center)

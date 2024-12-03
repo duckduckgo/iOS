@@ -1296,8 +1296,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open YouTube Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let duckPlayerFeatureName = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     
-    public static let settingsOpenDuckPlayerNewTabLabel = NSLocalizedString("duckplayer.settings.open-new-tab-label", value: "Open Duck Player in a new tab", comment: "Settings screen cell text for DuckPlayer settings to open in new tab")    
-    
+    public static let settingsOpenDuckPlayerNewTabLabel = NSLocalizedString("duckplayer.settings.open-new-tab-label", value: "Open Duck Player in a New Tab", comment: "Settings screen cell text for DuckPlayer settings to open in new tab")
+
 
     public static let settingsOpenVideosInDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let settingsDuckPlayerFooter = NSLocalizedString("duckplayer.settings.footer", value: "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.", comment: "Footer label in the settings screen for Duck Player")
@@ -1318,9 +1318,11 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
 
     public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")
-    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browsing Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
-
-    static let aiChatPreferencesCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.caption.link.markdown", value: "AI Chat is an optional feature available at [duck.ai](https://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.", comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
+    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.text.markdown", value: """
+AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)
+""", comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
+    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
 
 
     // MARK: - New Tab Page

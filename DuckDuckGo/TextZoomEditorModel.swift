@@ -59,7 +59,6 @@ class TextZoomEditorModel: ObservableObject {
         NotificationCenter.default.post(
             name: AppUserDefaults.Notifications.textZoomChange,
             object: nil)
-        DailyPixel.fire(pixel: .textZoomChangedOnPageDaily)
     }
 
     func onDismiss() {
@@ -68,6 +67,7 @@ class TextZoomEditorModel: ObservableObject {
             PixelParameters.textZoomInitial: String(initialValue.rawValue),
             PixelParameters.textZoomUpdated: String(TextZoomLevel.allCases[value].rawValue),
         ])
+        DailyPixel.fire(pixel: .textZoomChangedOnPageDaily)
     }
 
 }

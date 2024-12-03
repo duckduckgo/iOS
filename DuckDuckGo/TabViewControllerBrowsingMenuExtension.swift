@@ -29,8 +29,11 @@ import PrivacyDashboard
 extension TabViewController {
 
     private var shouldShowAIChatInMenuHeader: Bool {
-        featureFlagger.isFeatureOn(.aiChatBrowsingToolbarShortcut) || AppDependencyProvider.shared.internalUserDecider.isInternalUser
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        return settings.isAIChatBrowsingToolbarShortcutFeatureEnabled
     }
+
     private var shouldShowPrintButtonInBrowsingMenu: Bool { shouldShowAIChatInMenuHeader }
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {

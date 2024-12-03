@@ -43,7 +43,7 @@ protocol AIChatViewModeling {
 
 
 final class AIChatViewModel: AIChatViewModeling {
-    private let remoteSettings: AIChatRemoteSettingsProvider
+    private let settings: AIChatSettingsProvider
     private var cleanupTimerCancellable: AnyCancellable?
 
     let webViewConfiguration: WKWebViewConfiguration
@@ -51,10 +51,10 @@ final class AIChatViewModel: AIChatViewModeling {
 
     let cleanupTime: TimeInterval
 
-    init(webViewConfiguration: WKWebViewConfiguration, remoteSettings: AIChatRemoteSettingsProvider, cleanupTime: TimeInterval = 600) {
+    init(webViewConfiguration: WKWebViewConfiguration, settings: AIChatSettingsProvider, cleanupTime: TimeInterval = 600) {
         self.cleanupTime = cleanupTime
         self.webViewConfiguration = webViewConfiguration
-        self.remoteSettings = remoteSettings
+        self.settings = settings
     }
 
     func cancelTimer() {
@@ -76,6 +76,6 @@ final class AIChatViewModel: AIChatViewModeling {
     }
 
     var aiChatURL: URL {
-        remoteSettings.aiChatURL
+        settings.aiChatURL
     }
 }

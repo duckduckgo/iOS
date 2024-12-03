@@ -78,7 +78,6 @@ public class StatisticsLoader {
 
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.requestExti(atb: atb, completion: completion)
-                self.fireInstallPixel()
             } else {
                 completion()
             }
@@ -102,12 +101,19 @@ public class StatisticsLoader {
             self.statisticsStore.atb = atb.version
             self.returnUserMeasurement.installCompletedWithATB(atb)
             self.createATBFileMarker()
+            self.fireInstallPixel()
             completion()
         }
     }
 
     private func fireInstallPixel() {
-        pixelFiring.fire(.appInstall, withAdditionalParameters: [:], includedParameters: [.appVersion], onComplete: { error in
+        let formattedLocale = Locale.current.localeIdentifierAsJsonFormat
+        let isReinstall = String(returnUserMeasurement.isReturningUser)
+        let parameters = [
+            "locale": formattedLocale,
+            "reinstall": isReinstall
+        ]
+        pixelFiring.fire(.appInstall, withAdditionalParameters: parameters, includedParameters: [.appVersion], onComplete: { error in
             if let error {
                 Logger.general.error("Install pixel failed with error: \(error.localizedDescription, privacy: .public)")
             }

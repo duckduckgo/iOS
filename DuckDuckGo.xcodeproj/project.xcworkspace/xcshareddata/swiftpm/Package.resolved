@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "content-scope-scripts",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/content-scope-scripts",
-      "state" : {
-        "revision" : "c4bb146afdf0c7a93fb9a7d95b1cb255708a470d",
-        "version" : "6.41.0"
-      }
-    },
-    {
       "identity" : "designresourceskit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckduckgo/DesignResourcesKit",

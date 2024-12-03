@@ -30,6 +30,7 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
     private(set) var errorData: SpecialErrorData?
     private(set) var isSpecialErrorPageVisible = false
     private(set) var failedURL: URL?
+    private(set) var isSpecialErrorPageRequest = false
     private weak var userScript: SpecialErrorPageUserScript?
     weak var delegate: SpecialErrorPageNavigationDelegate?
 
@@ -66,16 +67,19 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
             case let .navigationHandled(.mainFrame(error)):
                 var request = navigationAction.request
                 request.url = error.url
+                isSpecialErrorPageRequest = true
                 failedURL = error.url
                 errorData = error
                 loadSpecialErrorPage(request: request)
                 return true
             case let .navigationHandled(.iFrame(maliciousURL, error)):
+                isSpecialErrorPageRequest = true
                 failedURL = maliciousURL
                 errorData = error
                 loadSpecialErrorPage(url: maliciousURL)
                 return true
             case .navigationNotHandled:
+                isSpecialErrorPageRequest = false
                 return false
             }
         }
@@ -96,6 +100,7 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
     }
     
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {
+        isSpecialErrorPageRequest = false
         userScript?.isEnabled = webView.url == failedURL
         if webView.url != failedURL {
             isSpecialErrorPageVisible = false

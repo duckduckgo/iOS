@@ -74,7 +74,7 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
             return .navigationNotHandled
         }
 
-        handleMaliciousExemptions(for: navigationAction.navigationType, url: url)
+        //handleMaliciousExemptions(for: navigationAction, url: url)
 
         guard !shouldBypassMaliciousSiteProtection(for: url) else {
             return .navigationNotHandled

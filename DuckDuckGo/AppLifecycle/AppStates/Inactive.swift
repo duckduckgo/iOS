@@ -30,29 +30,8 @@ struct Inactive: AppState {
          vpnWorkaround: VPNRedditSessionWorkaround) {
         self.application = application
         Task { @MainActor in
-            await refreshVPNShortcuts()
+            await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility, accountManager: accountManager)
             await vpnWorkaround.removeRedditSessionWorkaround()
-        }
-    }
-
-    // TODO: move elsewhere - it is used in launching too
-    @MainActor
-    func refreshVPNShortcuts() async {
-        guard vpnFeatureVisibility.shouldShowVPNShortcut() else {
-            application.shortcutItems = nil
-            return
-        }
-
-        if case .success(true) = await accountManager.hasEntitlement(forProductName: .networkProtection, cachePolicy: .returnCacheDataDontLoad) {
-            application.shortcutItems = [
-                UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
-                                          localizedTitle: UserText.netPOpenVPNQuickAction,
-                                          localizedSubtitle: nil,
-                                          icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
-                                          userInfo: nil)
-            ]
-        } else {
-            application.shortcutItems = nil
         }
     }
 

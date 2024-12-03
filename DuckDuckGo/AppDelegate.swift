@@ -42,7 +42,7 @@ import os.log
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
-    private struct ShortcutKey {
+    struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
         static let passwords = "com.duckduckgo.mobile.ios.passwords"
         static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"

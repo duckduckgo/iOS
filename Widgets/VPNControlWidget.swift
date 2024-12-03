@@ -34,9 +34,9 @@ public struct VPNControlWidget: ControlWidget {
 
             ControlWidgetToggle("DuckDuckGo VPN", isOn: status.isConnected, action: VPNToggleIntent()) { isOn in
                 if isOn {
-                    Label("Enabled", systemImage: "globe")
+                    Label("Enabled", image: "ControlCenter-VPN-on")
                 } else {
-                    Label("Disabled", systemImage: "globe.americas")
+                    Label("Disabled", image: "ControlCenter-VPN-off")
                 }
             }
             .tint(.green)

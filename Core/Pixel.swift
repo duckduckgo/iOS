@@ -191,7 +191,7 @@ public class Pixel {
     }
 
     public static let storage = UserDefaults(suiteName: Constant.pixelStorageIdentifier)!
-    
+
     private init() {
     }
 
@@ -203,7 +203,7 @@ public class Pixel {
                             includedParameters: [QueryParameters] = [.appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in },
                             debounce: Int = 0) {
-        
+
         let date = Date().addingTimeInterval(-TimeInterval(debounce))
         if !pixel.hasBeenFiredSince(pixelStorage: storage, date: date) {
             fire(

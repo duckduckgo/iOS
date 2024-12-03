@@ -24,6 +24,8 @@ import BrowserServicesKit
 import PrivacyDashboard
 import Core
 import Persistence
+import Subscription
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class MockTabDelegate: TabDelegate {
@@ -113,6 +115,14 @@ final class MockTabDelegate: TabDelegate {
 
 }
 
+final class MockCredentialCreator: URLCredentialCreating {
+
+    func urlCredentialFrom(trust: SecTrust?) -> URLCredential? {
+        return URLCredential(user: "", password: "", persistence: .forSession)
+    }
+
+}
+
 extension TabViewController {
 
     static func fake(
@@ -134,7 +144,9 @@ extension TabViewController {
             contextualOnboardingLogic: contextualOnboardingLogic,
             onboardingPixelReporter: contextualOnboardingPixelReporter,
             urlCredentialCreator: MockCredentialCreator(),
-            featureFlagger: featureFlagger
+            featureFlagger: featureFlagger,
+            subscriptionCookieManager: SubscriptionCookieManagerMock(),
+            textZoomCoordinator: MockTextZoomCoordinator()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

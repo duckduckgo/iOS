@@ -60,7 +60,7 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var currentAddressBarPosition: AddressBarPosition { get set }
     var showFullSiteAddress: Bool { get set }
 
-    var textSize: Int { get set }
+    var defaultTextZoomLevel: TextZoomLevel { get set }
 
     var favoritesDisplayMode: FavoritesDisplayMode { get set }
     
@@ -79,11 +79,14 @@ protocol AppSettings: AnyObject, AppDebugSettings {
     var autoconsentEnabled: Bool { get set }
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
+    var crashCollectionShouldRevertOptedInStatusTrigger: Int { get set }
     
     var duckPlayerMode: DuckPlayerMode { get set }
     var duckPlayerAskModeOverlayHidden: Bool { get set }
+    var duckPlayerOpenInNewTab: Bool { get set }
 }
 
 protocol AppDebugSettings {
     var onboardingHighlightsEnabled: Bool { get set }
+    var onboardingAddToDockState: OnboardingAddToDockState { get set }
 }

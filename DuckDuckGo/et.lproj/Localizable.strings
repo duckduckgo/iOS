@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Suurendus (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Suurendus";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Teksti suumimine (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lisa";
 
@@ -472,6 +481,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Otsi paroole";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Paroolid on krüpteeritud. Keegi peale sinu ei näe neid, isegi mitte meie.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Paroolid on krüpteeritud. Keegi peale sinu ei näe neid, isegi mitte meie. [Lisateave](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas salvestada see parool?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Ei aitäh";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Salvesta oma parool turvaliselt seadmesse DuckDuckGo paroolide ja automaatse täitmisega.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Jah";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Jäta vahele";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Alusta sirvimist";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Näita mulle, kuidas";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Pea meeles, iga kord, kui minuga sirvid, kaotab salakaval reklaam oma tiivad.\n\nNii et hoia mind igapäevaselt sirvides oma Dockis.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Olen hõlpsasti ligipääsetav kogu teie igapäevase sirvimise vältel.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Lisa mind oma Docki!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Leia oma avakuvalt DuckDuckGo ikoon. Seejärel vajuta ja lohista see oma kohale. See on kõik!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Minu lisamine teie Docki on lihtne.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Hüpikaken on peidetud";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Sain aru";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Vali oma brauser";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Sünkroonimine ja varundamine";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Teksti suurus";
+"settings.text.size" = "Vaikimisi teksti suumimine";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Teema";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Loobu";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Teata mittetoimivast saidist";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "See aitab meil brauserit täiustada.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Kas sait ei tööta? Anna DuckDuckGole teada.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Veebisait ei toimi";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Vahekaardi vahetaja";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Valige soovitud teksti suurus. Veebisaidid, mida DuckDuckGos vaatate, kohanduvad sellega.";
+"textSize.description" = "Suurendage või vähendage teksti suurust kõigil saitidel.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Teksti suurus - %@";

@@ -31,9 +31,9 @@ struct SettingsState {
         var position: AddressBarPosition
     }
     
-    struct TextSize {
+    struct TextZoom {
         var enabled: Bool
-        var size: Int
+        var level: TextZoomLevel
     }
 
     struct Subscription: Codable {
@@ -43,6 +43,7 @@ struct SettingsState {
         var hasActiveSubscription: Bool
         var isRestoring: Bool
         var shouldDisplayRestoreSubscriptionError: Bool
+        var subscriptionFeatures: [Entitlement.ProductName]
         var entitlements: [Entitlement.ProductName]
         var platform: DDGSubscription.Platform
         var isShowingStripeView: Bool
@@ -57,7 +58,7 @@ struct SettingsState {
     var appTheme: ThemeName
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
-    var textSize: TextSize
+    var textZoom: TextZoom
     var addressBar: AddressBar
     var showsFullURL: Bool
 
@@ -99,13 +100,15 @@ struct SettingsState {
     // Duck Player Mode
     var duckPlayerEnabled: Bool
     var duckPlayerMode: DuckPlayerMode?
+    var duckPlayerOpenInNewTab: Bool
+    var duckPlayerOpenInNewTabEnabled: Bool
     
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
-            textSize: TextSize(enabled: false, size: 100),
+            textZoom: TextZoom(enabled: false, level: .percent100),
             addressBar: AddressBar(enabled: false, position: .top),
             showsFullURL: false,
             sendDoNotSell: true,
@@ -130,13 +133,16 @@ struct SettingsState {
                                        hasActiveSubscription: false,
                                        isRestoring: false,
                                        shouldDisplayRestoreSubscriptionError: false,
+                                       subscriptionFeatures: [],
                                        entitlements: [],
                                        platform: .unknown,
                                        isShowingStripeView: false),
             sync: SyncSettings(enabled: false, title: ""),
             syncSource: nil,
             duckPlayerEnabled: false,
-            duckPlayerMode: .alwaysAsk
+            duckPlayerMode: .alwaysAsk,
+            duckPlayerOpenInNewTab: true,
+            duckPlayerOpenInNewTabEnabled: false
         )
     }
 }

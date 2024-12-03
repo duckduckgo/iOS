@@ -39,7 +39,17 @@ class CookieDebugViewController: UITableViewController {
     }
 
     var loaded = false
+    let fireproofing: Fireproofing
 
+    init?(coder: NSCoder, fireproofing: Fireproofing) {
+        self.fireproofing = fireproofing
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCookies()
@@ -66,7 +76,7 @@ class CookieDebugViewController: UITableViewController {
                 .reversed())
 
             let domainName = domain +
-                (PreserveLogins.shared.isAllowed(cookieDomain: domain) ? " 👩‍🚒" : "")
+                (fireproofing.isAllowed(cookieDomain: domain) ? " 👩‍🚒" : "")
 
             tmp.append(DomainCookies(domain: domainName, cookies: domainCookies))
         }

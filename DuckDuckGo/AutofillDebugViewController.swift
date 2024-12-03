@@ -34,6 +34,7 @@ class AutofillDebugViewController: UITableViewController {
         case addAutofillData = 205
         case resetAutofillBrokenReports = 206
         case resetAutofillSurveys = 207
+        case viewAllCredentials = 208
     }
 
     let defaults = AppUserDefaults()
@@ -93,6 +94,8 @@ class AutofillDebugViewController: UITableViewController {
                 let autofillSurveyManager = AutofillSurveyManager()
                 autofillSurveyManager.resetSurveys()
                 ActionMessageView.present(message: "Autofill Surveys reset")
+            } else if cell.tag == Row.viewAllCredentials.rawValue {
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }

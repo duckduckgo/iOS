@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "U redu";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zumiranje (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zumiranje";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Zumiranje teksta (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
@@ -472,6 +481,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje lozinki";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Lozinke su šifrirane. Nitko osim tebe ne može ih vidjeti, čak ni mi. [Saznaj više](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li spremiti ovu lozinku?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Ne, hvala";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Sigurno pohrani svoju lozinku na uređaj pomoću usluge automatskog popunjavanja DuckDuckGo Passwords & Autofill.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Da";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Preskoči";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Započni pretraživanje";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Pokaži mi kako";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Zapamti: svaki put kad pregledavaš sa mnom, grozna reklama gubi krila.\n\nZato me zadrži u svom Docku za svakodnevno pregledavanje.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Bit ću ti na dohvat ruke za svo tvoje svakodnevno pregledavanje.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Dodaj me na svoj Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Pronađi ikonu DuckDuckGo na početnom zaslonu. Zatim je pritisni i povuci na mjesto. I to je sve!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Dodavanje mene na tvoj Dock je jednostavno.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skočni prozor je sakriven";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Shvatio/la sam";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Odaberi preglednik";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Sinkronizacija i sigurnosno kopiranje";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Veličina teksta";
+"settings.text.size" = "Zadano zumiranje teksta";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Odbaci";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Prijavi neispravno web-mjesto";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Ovo nam pomaže da poboljšamo preglednik.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Web-mjesto ne funkcionira? Javi DuckDuckGou.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Web-mjesto nije ispravno";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Mjenjač kartica";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Odaberite željenu veličinu teksta. Web stranice koje pregledavate u DuckDuckGou prilagodit će se ovoj postavci.";
+"textSize.description" = "Povećajte ili smanjite veličinu teksta na svim web-mjestima.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Veličina teksta: %@";

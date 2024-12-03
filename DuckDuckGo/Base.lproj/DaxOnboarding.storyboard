@@ -1,149 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YXw-O5-LLS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Dax Onboarding View Controller-->
-        <scene sceneID="8Y2-Tw-v4h">
-            <objects>
-                <viewController id="YXw-O5-LLS" customClass="DaxOnboardingViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="IfD-pB-0T8">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9R-nE-CaL">
-                                <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lighthouse" translatesAutoresizingMaskIntoConstraints="NO" id="77H-Rq-H5D">
-                                <rect key="frame" x="0.0" y="0.0" width="1026" height="769"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="67b-it-r0B">
-                                <rect key="frame" x="469" y="100" width="86" height="86"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="i0s-SN-jAq"/>
-                                    <constraint firstAttribute="width" secondItem="67b-it-r0B" secondAttribute="height" multiplier="1:1" id="kdw-WN-QfN"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lvy-9G-3gr">
-                                <rect key="frame" x="20" y="202" width="984" height="76.5"/>
-                                <string key="text">Welcome to
-DuckDuckGo!</string>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNL-CF-WGF">
-                                <rect key="frame" x="324.5" y="80" width="375" height="195"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="195" id="8wI-2U-C5o"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="375" id="x9B-xN-xqH"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="UUS-R7-a2i" kind="embed" id="Z8u-vf-YsD"/>
-                                </connections>
-                            </containerView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAv-Zt-uIt">
-                                <rect key="frame" x="335.5" y="299" width="355" height="44"/>
-                                <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ZX6-Se-sGe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Let’s Do It!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="22"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="onButtonTap" destination="UUS-R7-a2i" eventType="touchUpInside" id="uNu-V4-747"/>
-                                    <action selector="onTapButton" destination="YXw-O5-LLS" eventType="touchUpInside" id="FjV-tD-fTS"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f5N-oh-abb">
-                                <rect key="frame" x="0.0" y="767" width="1024" height="1"/>
-                                <color key="backgroundColor" red="0.35294117650000001" green="0.61176470589999998" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XSv-kV-jRp">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DaxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-WF-Cc8" userLabel="Transitional Icon">
-                                <rect key="frame" x="454.5" y="254.5" width="115" height="115"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DD1-q3-GlA">
-                                <rect key="frame" x="464" y="264" width="96" height="96"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="96" id="oo7-26-ciN"/>
-                                    <constraint firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1:1" id="pjk-YG-kx9"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ASL-d6-ybT"/>
-                        <color key="backgroundColor" systemColor="systemRedColor"/>
-                        <constraints>
-                            <constraint firstItem="77H-Rq-H5D" firstAttribute="leading" secondItem="IfD-pB-0T8" secondAttribute="leading" id="1ME-C8-Vm2"/>
-                            <constraint firstItem="f5N-oh-abb" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" id="2dC-da-5Wd"/>
-                            <constraint firstItem="g9R-nE-CaL" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" id="6P4-or-DGh"/>
-                            <constraint firstItem="oAv-Zt-uIt" firstAttribute="top" secondItem="qNL-CF-WGF" secondAttribute="bottom" constant="24" id="6va-2A-zGX"/>
-                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="width" secondItem="DD1-q3-GlA" secondAttribute="width" multiplier="1.2" id="8oB-k3-bYE"/>
-                            <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="g9R-nE-CaL" secondAttribute="bottom" id="9rF-2A-gHl"/>
-                            <constraint firstItem="qNL-CF-WGF" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="E2L-jn-kYz"/>
-                            <constraint firstAttribute="bottom" secondItem="f5N-oh-abb" secondAttribute="bottom" id="EPe-hs-aQ3"/>
-                            <constraint firstItem="qNL-CF-WGF" firstAttribute="width" secondItem="IfD-pB-0T8" secondAttribute="width" priority="750" id="GBz-88-5Qg"/>
-                            <constraint firstItem="XSv-kV-jRp" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Gh3-6z-c32"/>
-                            <constraint firstItem="XSv-kV-jRp" firstAttribute="leading" secondItem="IfD-pB-0T8" secondAttribute="leading" id="I97-j8-TKA"/>
-                            <constraint firstItem="ASL-d6-ybT" firstAttribute="bottom" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-1" id="LIR-FB-5jL"/>
-                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="height" secondItem="DD1-q3-GlA" secondAttribute="height" multiplier="1.2" id="N5e-hd-FUn"/>
-                            <constraint firstItem="67b-it-r0B" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="Ork-4W-eRy"/>
-                            <constraint firstItem="oAv-Zt-uIt" firstAttribute="centerX" secondItem="77H-Rq-H5D" secondAttribute="centerX" id="R3K-24-e0a"/>
-                            <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="g9R-nE-CaL" secondAttribute="trailing" id="UE2-tp-9O5"/>
-                            <constraint firstItem="Lvy-9G-3gr" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="VW5-GA-Yuv"/>
-                            <constraint firstAttribute="trailing" secondItem="XSv-kV-jRp" secondAttribute="trailing" id="WaQ-wg-M47"/>
-                            <constraint firstItem="77H-Rq-H5D" firstAttribute="top" secondItem="IfD-pB-0T8" secondAttribute="top" id="Y6T-vo-ZZZ"/>
-                            <constraint firstItem="f5N-oh-abb" firstAttribute="top" secondItem="77H-Rq-H5D" secondAttribute="bottom" constant="-2" id="YCB-Hg-cND"/>
-                            <constraint firstItem="67b-it-r0B" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="80" id="YJ2-ng-4PO"/>
-                            <constraint firstItem="ASL-d6-ybT" firstAttribute="trailing" secondItem="Lvy-9G-3gr" secondAttribute="trailing" constant="20" id="YfI-Kf-MD3"/>
-                            <constraint firstItem="Lvy-9G-3gr" firstAttribute="leading" secondItem="ASL-d6-ybT" secondAttribute="leading" constant="20" id="ccG-4f-oSM"/>
-                            <constraint firstItem="77H-Rq-H5D" firstAttribute="trailing" secondItem="IfD-pB-0T8" secondAttribute="trailing" constant="2" id="efA-8U-YSX"/>
-                            <constraint firstAttribute="bottom" secondItem="XSv-kV-jRp" secondAttribute="bottom" id="gMg-sx-vAN"/>
-                            <constraint firstItem="oAv-Zt-uIt" firstAttribute="width" secondItem="qNL-CF-WGF" secondAttribute="width" constant="-20" id="gQZ-NR-uqe"/>
-                            <constraint firstItem="g9R-nE-CaL" firstAttribute="leading" secondItem="ASL-d6-ybT" secondAttribute="leading" id="l74-9M-Qbf"/>
-                            <constraint firstItem="Lvy-9G-3gr" firstAttribute="top" secondItem="67b-it-r0B" secondAttribute="bottom" constant="16" id="lQh-Ei-FZo"/>
-                            <constraint firstItem="qNL-CF-WGF" firstAttribute="top" secondItem="ASL-d6-ybT" secondAttribute="top" constant="60" id="mFu-EV-af4"/>
-                            <constraint firstItem="f5N-oh-abb" firstAttribute="centerX" secondItem="ASL-d6-ybT" secondAttribute="centerX" id="ss2-jr-gcc"/>
-                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerX" secondItem="DD1-q3-GlA" secondAttribute="centerX" id="svY-An-J11"/>
-                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerY" secondItem="IfD-pB-0T8" secondAttribute="centerY" constant="-72" id="sxT-iD-NZp"/>
-                            <constraint firstItem="HyA-WF-Cc8" firstAttribute="centerY" secondItem="DD1-q3-GlA" secondAttribute="centerY" id="uJC-CM-mkB"/>
-                            <constraint firstItem="DD1-q3-GlA" firstAttribute="centerX" secondItem="IfD-pB-0T8" secondAttribute="centerX" id="wOb-am-IrD"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="backgroundView" destination="XSv-kV-jRp" id="hrm-wQ-uxP"/>
-                        <outlet property="button" destination="oAv-Zt-uIt" id="2F4-UO-qfi"/>
-                        <outlet property="daxDialogContainer" destination="qNL-CF-WGF" id="pMx-eZ-d4a"/>
-                        <outlet property="daxDialogContainerHeight" destination="8wI-2U-C5o" id="b7R-d2-40p"/>
-                        <outlet property="daxIcon" destination="67b-it-r0B" id="1g0-kH-R7G"/>
-                        <outlet property="onboardingIcon" destination="DD1-q3-GlA" id="SPQ-F0-fac"/>
-                        <outlet property="transitionalIcon" destination="HyA-WF-Cc8" id="FYZ-wh-6Ix"/>
-                        <outlet property="welcomeMessage" destination="Lvy-9G-3gr" id="LF7-0T-sN4"/>
-                        <segue destination="CDH-8I-u6b" kind="presentation" identifier="AddToHomeRow" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="SBX-Oj-Pz8"/>
-                        <segue destination="V3g-Ms-vCf" kind="presentation" identifier="AddToHomeRow-iPad" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="XNL-bY-mB0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ank-Fd-gq5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="121.73913043478262" y="158.70535714285714"/>
-        </scene>
         <!--Dax Dialog View Controller-->
         <scene sceneID="fPO-6e-MDt">
             <objects>
@@ -331,14 +196,6 @@ DuckDuckGo!</string>
             </objects>
             <point key="canvasLocation" x="121.28906249999999" y="853.90625"/>
         </scene>
-        <!--Onboarding-->
-        <scene sceneID="ERR-yD-y2u">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" id="CDH-8I-u6b" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QcI-Z6-5Ua" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2020" y="-21"/>
-        </scene>
         <!--Dax Onboarding Pad View Controller-->
         <scene sceneID="H80-CE-ohe">
             <objects>
@@ -348,7 +205,7 @@ DuckDuckGo!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jk-eV-fMX">
-                                <rect key="frame" x="324.5" y="16" width="375" height="736"/>
+                                <rect key="frame" x="324.5" y="26" width="375" height="736"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="736" id="Yau-va-Ro7"/>
                                     <constraint firstAttribute="width" constant="375" id="g5m-KJ-8Py"/>
@@ -442,12 +299,10 @@ DuckDuckGo!</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="WM8-Xy-pab"/>
+        <segue reference="x63-BY-KWY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DaxIcon" width="86" height="86"/>
-        <image name="Lighthouse" width="721" height="741"/>
-        <image name="Logo" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

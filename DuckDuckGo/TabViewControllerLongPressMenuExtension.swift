@@ -102,16 +102,20 @@ extension TabViewController {
 
     fileprivate func buildOpenLinkPreview(for url: URL) -> UIViewController? {
         let tab = Tab(link: Link(title: nil, url: url))
-        let tabController = TabViewController.loadFromStoryboard(model: tab,
-                                                                 bookmarksDatabase: bookmarksDatabase,
-                                                                 historyManager: historyManager,
-                                                                 syncService: syncService,
-                                                                 duckPlayer: duckPlayer,
-                                                                 privacyProDataReporter: privacyProDataReporter,
-                                                                 contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                                                 contextualOnboardingLogic: contextualOnboardingLogic,
-                                                                 onboardingPixelReporter: onboardingPixelReporter,
-                                                                 featureFlagger: AppDependencyProvider.shared.featureFlagger)
+        let tabController = TabViewController.loadFromStoryboard(
+            model: tab,
+            bookmarksDatabase: bookmarksDatabase,
+            historyManager: historyManager,
+            syncService: syncService,
+            duckPlayer: duckPlayer,
+            privacyProDataReporter: privacyProDataReporter,
+            contextualOnboardingPresenter: contextualOnboardingPresenter,
+            contextualOnboardingLogic: contextualOnboardingLogic,
+            onboardingPixelReporter: onboardingPixelReporter,
+            featureFlagger: featureFlagger,
+            subscriptionCookieManager: subscriptionCookieManager,
+            textZoomCoordinator: textZoomCoordinator)
+
         tabController.isLinkPreview = true
         let configuration = WKWebViewConfiguration.nonPersistent()
         tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)

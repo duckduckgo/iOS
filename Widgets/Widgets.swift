@@ -142,8 +142,8 @@ class Provider: TimelineProvider {
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
         guard let domain = domain else { return nil }
 
-        let key = Favicons.createHash(ofDomain: domain)
-        guard let cacheUrl = Favicons.CacheType.fireproof.cacheLocation() else { return nil }
+        let key = FaviconHasher.createHash(ofDomain: domain)
+        guard let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return nil }
 
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.

@@ -27,7 +27,7 @@ public class AppUserDefaults: AppSettings {
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
-        public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
+        public static let textZoomChange = Notification.Name("com.duckduckgo.app.TextZoomChange")
         public static let favoritesDisplayModeChange = Notification.Name("com.duckduckgo.app.FavoritesDisplayModeChange")
         public static let syncPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
         public static let syncCredentialsPausedStateChanged = SyncCredentialsAdapter.syncCredentialsPausedStateChanged
@@ -75,14 +75,17 @@ public class AppUserDefaults: AppSettings {
         static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
+        static let crashCollectionShouldRevertOptedInStatusTrigger = "com.duckduckgo.ios.crashCollectionShouldRevertOptedInStatusTrigger"
         
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
+        static let duckPlayerOpenInNewTab = "com.duckduckgo.ios.duckPlayerOpenInNewTab"
     }
 
     private struct DebugKeys {
         static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
         static let autofillDebugScriptEnabledKey = "com.duckduckgo.ios.debug.autofillDebugScriptEnabled"
+        static let onboardingAddToDockStateKey = "com.duckduckgo.ios.debug.onboardingAddToDockState"
     }
 
     private var userDefaults: UserDefaults? {
@@ -233,8 +236,21 @@ public class AppUserDefaults: AppSettings {
         }
     }
 
-    @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
-    var textSize: Int
+    @UserDefaultsWrapper(key: .textZoom, defaultValue: 100)
+    private var textZoom: Int {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.textZoomChange, object: textZoom)
+        }
+    }
+
+    var defaultTextZoomLevel: TextZoomLevel {
+        get {
+            return TextZoomLevel(rawValue: textZoom) ?? .percent100
+        }
+        set {
+            textZoom = newValue.rawValue
+        }
+    }
 
     public var favoritesDisplayMode: FavoritesDisplayMode {
         get {
@@ -384,6 +400,19 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
+    var crashCollectionShouldRevertOptedInStatusTrigger: Int {
+        get {
+            if let resetTrigger = userDefaults?.integer(forKey: Keys.crashCollectionShouldRevertOptedInStatusTrigger) {
+                return resetTrigger
+            } else {
+                return 0
+            }
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.crashCollectionShouldRevertOptedInStatusTrigger)
+        }
+    }
+    
     var duckPlayerMode: DuckPlayerMode {
         get {
             if let value = userDefaults?.string(forKey: Keys.duckPlayerMode),
@@ -414,9 +443,22 @@ public class AppUserDefaults: AppSettings {
                                             object: duckPlayerMode)
         }
     }
+    
+    @UserDefaultsWrapper(key: .duckPlayerOpenInNewTab, defaultValue: true)
+    var duckPlayerOpenInNewTab: Bool
 
     @UserDefaultsWrapper(key: .debugOnboardingHighlightsEnabledKey, defaultValue: false)
     var onboardingHighlightsEnabled: Bool
+
+    var onboardingAddToDockState: OnboardingAddToDockState {
+        get {
+            guard let rawValue = userDefaults?.string(forKey: DebugKeys.onboardingAddToDockStateKey) else { return .disabled }
+            return OnboardingAddToDockState(rawValue: rawValue) ?? .disabled
+        }
+        set {
+            userDefaults?.set(newValue.rawValue, forKey: DebugKeys.onboardingAddToDockStateKey)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

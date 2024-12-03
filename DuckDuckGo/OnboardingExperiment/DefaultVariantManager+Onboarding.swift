@@ -22,10 +22,6 @@ import BrowserServicesKit
 
 extension VariantManager {
 
-    var isNewIntroFlow: Bool {
-        isSupported(feature: .newOnboardingIntro) || isSupported(feature: .newOnboardingIntroHighlights)
-    }
-
     var isOnboardingHighlightsExperiment: Bool {
         isSupported(feature: .newOnboardingIntroHighlights)
     }

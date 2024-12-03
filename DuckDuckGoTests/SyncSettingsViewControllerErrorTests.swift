@@ -31,8 +31,8 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
     var errorHandler: CapturingSyncPausedStateManager!
 
     @MainActor
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         cancellables = []
         errorHandler = CapturingSyncPausedStateManager()
         let bundle = DDGSync.bundle
@@ -49,7 +49,8 @@ final class SyncSettingsViewControllerErrorTests: XCTestCase {
         let bookmarksAdapter = SyncBookmarksAdapter(
             database: database,
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: CapturingAdapterErrorHandler())
+            syncErrorHandler: CapturingAdapterErrorHandler(),
+            faviconStoring: MockFaviconStore())
         let credentialsAdapter = SyncCredentialsAdapter(
             secureVaultErrorReporter: MockSecureVaultReporting(),
             syncErrorHandler: CapturingAdapterErrorHandler())

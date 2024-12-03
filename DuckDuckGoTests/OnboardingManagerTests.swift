@@ -32,7 +32,7 @@ final class OnboardingManagerTests: XCTestCase {
         appSettingsMock = AppSettingsMock()
         featureFlaggerMock = MockFeatureFlagger()
         variantManagerMock = MockVariantManager()
-        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock)
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: true)
     }
 
     override func tearDownWithError() throws {
@@ -43,45 +43,47 @@ final class OnboardingManagerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testWhenIsLocalFlagEnabledIsCalledAndAppDefaultsOnboardingHiglightsEnabledIsTrueThenReturnTrue() {
+    // MARK: - Onboarding Highlights
+
+    func testWhenIsOnboardingHighlightsLocalFlagEnabledCalledAndAppDefaultsOnboardingHiglightsEnabledIsTrueThenReturnTrue() {
         // GIVEN
         appSettingsMock.onboardingHighlightsEnabled = true
 
         // WHEN
-        let result = sut.isLocalFlagEnabled
+        let result = sut.isOnboardingHighlightsLocalFlagEnabled
 
         // THEN
         XCTAssertTrue(result)
     }
 
-    func testWhenIsLocalFlagEnabledIsCalledAndAppDefaultsOnboardingHiglightsEnabledIsFalseThenReturnFalse() {
+    func testWhenIsOnboardingHighlightsLocalFlagEnabledCalledAndAppDefaultsOnboardingHiglightsEnabledIsFalseThenReturnFalse() {
         // GIVEN
         appSettingsMock.onboardingHighlightsEnabled = false
 
         // WHEN
-        let result = sut.isLocalFlagEnabled
+        let result = sut.isOnboardingHighlightsLocalFlagEnabled
 
         // THEN
         XCTAssertFalse(result)
     }
 
-    func testWhenIsFeatureFlagEnabledIsCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
+    func testWhenIsOnboardingHighlightsFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingHighlights]
 
         // WHEN
-        let result = sut.isFeatureFlagEnabled
+        let result = sut.isOnboardingHighlightsFeatureFlagEnabled
 
         // THEN
         XCTAssertTrue(result)
     }
 
-    func testWhenIsFeatureFlagEnabledIsCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
+    func testWhenIsOnboardingHighlightsFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
         // GIVEN
         featureFlaggerMock.enabledFeatureFlags = []
 
         // WHEN
-        let result = sut.isFeatureFlagEnabled
+        let result = sut.isOnboardingHighlightsFeatureFlagEnabled
 
         // THEN
         XCTAssertFalse(result)
@@ -150,4 +152,160 @@ final class OnboardingManagerTests: XCTestCase {
         // THEN
         XCTAssertFalse(result)
     }
+
+    // MARK: - Add to Dock
+
+    func testWhenAddToDockLocalFlagStateCalledAndAppDefaultsOnboardingAddToDockStateIsIntroThenReturnIntro() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .intro
+
+        // WHEN
+        let result = sut.addToDockLocalFlagState
+
+        // THEN
+        XCTAssertEqual(result, .intro)
+    }
+
+    func testWhenAddToDockLocalFlagStateCalledAndAppDefaultsOnboardingAddToDockStateIsContextualThenReturnContextual() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .contextual
+
+        // WHEN
+        let result = sut.addToDockLocalFlagState
+
+        // THEN
+        XCTAssertEqual(result, .contextual)
+    }
+
+    func testWhenAddToDockLocalFlagStateCalledAndAppDefaultsOnboardingAddToDockStateIsDisabledThenReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .disabled
+
+        // WHEN
+        let result = sut.addToDockLocalFlagState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenIsAddToDockFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOnThenReturnTrue() {
+        // GIVEN
+        featureFlaggerMock.enabledFeatureFlags = [FeatureFlag.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.isAddToDockFeatureFlagEnabled
+
+        // THEN
+        XCTAssertTrue(result)
+    }
+
+    func testWhenIsAddToDockFeatureFlagEnabledCalledAndFeaturFlaggerFeatureIsOffThenReturnFalse() {
+        // GIVEN
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.isAddToDockFeatureFlagEnabled
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
+    func testWhenAddToDockStateCalledAndLocalFlagStateIsDisabledAndFeatureFlagIsFalseThenReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .disabled
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenAddToDockStateCalledAndLocalFlagStateIsIntroAndFeatureFlagIsFalseThenReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .intro
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenAddToDockStateCalledAndLocalFlagStateIsContextualAndFeatureFlagIsFalseThenReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .contextual
+        featureFlaggerMock.enabledFeatureFlags = []
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenAddToDockStateCalledAndLocalFlagStateIsDisabledAndFeatureFlagEnabledIsTrueThenReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .disabled
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenAddToDockStateAndLocalFlagStateIsIntroAndFeatureFlagEnabledIsTrueThenReturnIntro() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .intro
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .intro)
+    }
+
+    func testWhenAddToDockStateAndLocalFlagStateIsContextualAndFeatureFlagEnabledIsTrueThenReturnContextual() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .contextual
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .contextual)
+    }
+
+    func testWhenAddToDockStateAndLocalFlagStateIsIntroAndFeatureFlagsIsEnabledAndDeviceIsIpadReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .intro
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: false)
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
+    func testWhenAddToDockStateAndLocalFlagStateIsContextualAndFeatureFlagsIsEnabledAndDeviceIsIpadReturnDisabled() {
+        // GIVEN
+        appSettingsMock.onboardingAddToDockState = .contextual
+        featureFlaggerMock.enabledFeatureFlags = [.onboardingAddToDock]
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: false)
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
 }

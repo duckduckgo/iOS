@@ -1,7 +1,16 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1727101913728,
+    "version": 1732540137973,
     "features": {
+        "adAttributionReporting": {
+            "state": "disabled",
+            "exceptions": [],
+            "minSupportedVersion": "7.145.0",
+            "settings": {
+                "includeToken": false
+            },
+            "hash": "1da4782852f0317459b4465d801eda1f"
+        },
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
             "state": "enabled",
@@ -60,6 +69,11 @@
             },
             "hash": "b813ade8472a097ffbd43a3331116fe1"
         },
+        "aiChat": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
         "ampLinks": {
             "exceptions": [
                 {
@@ -88,9 +102,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -117,7 +128,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "39481c86e0647ab1f235b35986da0fa0"
+            "hash": "fa5f86bac5946c528cd6bc7449a2718a"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -156,6 +167,9 @@
                 },
                 {
                     "domain": "eurostar.com"
+                },
+                {
+                    "domain": "geo.fr"
                 },
                 {
                     "domain": "ksta.de"
@@ -260,9 +274,6 @@
                     "domain": "motorsport.com"
                 },
                 {
-                    "domain": "paypal.com"
-                },
-                {
                     "domain": "elmundotoday.com"
                 },
                 {
@@ -356,6 +367,225 @@
                     "domain": "speedweek.com"
                 },
                 {
+                    "domain": "la-becanerie.com"
+                },
+                {
+                    "domain": "thrifty.com"
+                },
+                {
+                    "domain": "dollar.com"
+                },
+                {
+                    "domain": "ethicalconsumer.org"
+                },
+                {
+                    "domain": "diroots.com"
+                },
+                {
+                    "domain": "arbeitsagentur.de"
+                },
+                {
+                    "domain": "melawear.de"
+                },
+                {
+                    "domain": "dnb.com"
+                },
+                {
+                    "domain": "bookings.ltmuseum.co.uk"
+                },
+                {
+                    "domain": "famillemary.fr"
+                },
+                {
+                    "domain": "manoloblahnik.com"
+                },
+                {
+                    "domain": "skyscanner.net"
+                },
+                {
+                    "domain": "skyscanner.ru"
+                },
+                {
+                    "domain": "skyscanner.fi"
+                },
+                {
+                    "domain": "skyscanner.no"
+                },
+                {
+                    "domain": "skyscanner.nl"
+                },
+                {
+                    "domain": "skyscanner.ro"
+                },
+                {
+                    "domain": "skyscanner.com.ni"
+                },
+                {
+                    "domain": "skyscanner.at"
+                },
+                {
+                    "domain": "skyscanner.com.sg"
+                },
+                {
+                    "domain": "skyscanner.es"
+                },
+                {
+                    "domain": "skyscanner.co.nz"
+                },
+                {
+                    "domain": "skyscanner.com.sa"
+                },
+                {
+                    "domain": "skyscanner.com.bo"
+                },
+                {
+                    "domain": "skyscanner.com.br"
+                },
+                {
+                    "domain": "skyscanner.mx"
+                },
+                {
+                    "domain": "skyscanner.it"
+                },
+                {
+                    "domain": "skyscanner.ae"
+                },
+                {
+                    "domain": "skyscanner.in"
+                },
+                {
+                    "domain": "skyscanner.com.sv"
+                },
+                {
+                    "domain": "skyscanner.ie"
+                },
+                {
+                    "domain": "skyscanner.co.kr"
+                },
+                {
+                    "domain": "skyscanner.com.pe"
+                },
+                {
+                    "domain": "skyscanner.com.ph"
+                },
+                {
+                    "domain": "skyscanner.com.pa"
+                },
+                {
+                    "domain": "skyscanner.hu"
+                },
+                {
+                    "domain": "skyscanner.com.gt"
+                },
+                {
+                    "domain": "skyscanner.com.co"
+                },
+                {
+                    "domain": "skyscanner.dk"
+                },
+                {
+                    "domain": "skyscanner.co.th"
+                },
+                {
+                    "domain": "skyscanner.com.hn"
+                },
+                {
+                    "domain": "skyscanner.pt"
+                },
+                {
+                    "domain": "skyscanner.tw"
+                },
+                {
+                    "domain": "skyscanner.de"
+                },
+                {
+                    "domain": "skyscanner.com.hk"
+                },
+                {
+                    "domain": "skyscanner.com.tw"
+                },
+                {
+                    "domain": "skyscanner.pl"
+                },
+                {
+                    "domain": "skyscanner.com.tr"
+                },
+                {
+                    "domain": "skyscanner.cz"
+                },
+                {
+                    "domain": "skyscanner.com"
+                },
+                {
+                    "domain": "skyscanner.cr"
+                },
+                {
+                    "domain": "skyscanner.com.py"
+                },
+                {
+                    "domain": "skyscanner.cl"
+                },
+                {
+                    "domain": "skyscanner.com.ua"
+                },
+                {
+                    "domain": "skyscanner.com.do"
+                },
+                {
+                    "domain": "skyscanner.kr"
+                },
+                {
+                    "domain": "skyscanner.co.id"
+                },
+                {
+                    "domain": "skyscanner.ch"
+                },
+                {
+                    "domain": "skyscanner.gg"
+                },
+                {
+                    "domain": "skyscanner.ca"
+                },
+                {
+                    "domain": "skyscanner.com.uy"
+                },
+                {
+                    "domain": "skyscanner.com.ec"
+                },
+                {
+                    "domain": "skyscanner.co.il"
+                },
+                {
+                    "domain": "skyscanner.co.in"
+                },
+                {
+                    "domain": "skyscanner.com.vn"
+                },
+                {
+                    "domain": "skyscanner.se"
+                },
+                {
+                    "domain": "skyscanner.com.ar"
+                },
+                {
+                    "domain": "skyscanner.com.au"
+                },
+                {
+                    "domain": "skyscanner.fr"
+                },
+                {
+                    "domain": "skyscanner.jp"
+                },
+                {
+                    "domain": "skyscanner.com.my"
+                },
+                {
+                    "domain": "skyscanner.com.mx"
+                },
+                {
+                    "domain": "outlet46.de"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -369,17 +599,12 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "disabledCMPs": [
-                    "generic-cosmetic",
-                    "termsfeed3",
                     "healthline-media",
-                    "ketch"
+                    "bing.com"
                 ]
             },
             "state": "enabled",
@@ -402,7 +627,7 @@
                     }
                 }
             },
-            "hash": "ee8caeb715c81bf398024ed686bc3f5c"
+            "hash": "2c73b04e22812bf92bc2a859e7540c3a"
         },
         "autofillBreakageReporter": {
             "state": "enabled",
@@ -415,15 +640,10 @@
         "autofillSurveys": {
             "state": "enabled",
             "settings": {
-                "surveys": [
-                    {
-                        "id": "2024-09-10",
-                        "url": "https://selfserve.decipherinc.com/survey/selfserve/32ab/240900"
-                    }
-                ]
+                "surveys": []
             },
             "exceptions": [],
-            "hash": "fa60baa3935e8ab70e77dafa347a6a71"
+            "hash": "1d554e00b6a8adc2a7514accf9a92fdb"
         },
         "autofill": {
             "exceptions": [
@@ -502,12 +722,18 @@
                         "steps": [
                             {
                                 "percent": 10
+                            },
+                            {
+                                "percent": 50
+                            },
+                            {
+                                "percent": 100
                             }
                         ]
                     }
                 }
             },
-            "hash": "75ff21cf9a4181783c06965edd6fe746"
+            "hash": "91e54b0d57fbf1cf8668c9a929631432"
         },
         "bookmarks": {
             "state": "enabled",
@@ -531,12 +757,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "28a9e2628d3c372ae3434c9166031693"
+            "hash": "37e0cf88badfc8b01b6394f0884502f6"
         },
         "brokenSitePrompt": {
             "state": "enabled",
@@ -1240,9 +1463,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1260,7 +1480,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "600351972c8dec803846ad9c596164bd"
+            "hash": "cb1f114a9e0314393b2a0f789cba163f"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1278,9 +1498,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1293,7 +1510,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "ab8fd25afb81834139eabf76f3e0db20"
+            "hash": "894fb86c1f058aee9db47cfcdf3637de"
         },
         "clientBrandHint": {
             "exceptions": [],
@@ -1338,12 +1555,14 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "6b730954cd0f48a877191e501bf431fc"
+            "hash": "96b2f778bab196aa424e9c859ddea778"
+        },
+        "contextualOnboarding": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "cookie": {
             "settings": {
@@ -1361,6 +1580,10 @@
                     {
                         "domain": "payments.google.com",
                         "reason": "After sign-in for Google Pay flows (after flickering is resolved), blocking this causes the loading spinner to spin indefinitely, and the payment flow cannot proceed."
+                    },
+                    {
+                        "domain": "docs.google.com",
+                        "reason": "Embedded Google docs get into redirect loop if signed into a Google account"
                     }
                 ],
                 "firstPartyTrackerCookiePolicy": {
@@ -1408,13 +1631,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "081af6c291ebfb57c69ccb7dd486c671"
+            "hash": "fce0a9ccd7ae060d25e7debe4d8905fb"
         },
         "customUserAgent": {
             "settings": {
@@ -1431,6 +1651,10 @@
                     {
                         "domain": "xfinity.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2149"
+                    },
+                    {
+                        "domain": "ihg.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/pull/2383"
                     }
                 ],
                 "ddgDefaultSites": [
@@ -1451,13 +1675,16 @@
                     },
                     {
                         "domain": "xfinity.com"
+                    },
+                    {
+                        "domain": "ihg.com"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "2ed8c3ccd40db2d9dca1e7ecc4231045"
+            "hash": "e577ccb473bdb7ada49c4d3c6e79cf01"
         },
         "dbp": {
             "state": "disabled",
@@ -1485,10 +1712,12 @@
                     "state": "disabled"
                 },
                 "openInNewTab": {
-                    "state": "disabled"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.144.0"
                 },
                 "enableDuckPlayer": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.139.0"
                 }
             },
             "settings": {
@@ -1525,7 +1754,8 @@
                                 ".ytd-video-preview",
                                 "#thumbnail-container",
                                 "#video-title-link",
-                                "#video-title"
+                                "#video-title",
+                                "video.video-stream.html5-main-video"
                             ]
                         },
                         "thumbnailOverlays": {
@@ -1575,8 +1805,8 @@
                     }
                 ]
             },
-            "state": "internal",
-            "hash": "887a8548cb01c9568e4d1b4d195af88b"
+            "state": "enabled",
+            "hash": "0181fe3479adc4db0b7dd140eb1bcc2e"
         },
         "elementHiding": {
             "exceptions": [
@@ -1597,9 +1827,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -1766,6 +1993,10 @@
                         "type": "hide-empty"
                     },
                     {
+                        "selector": "#top-ad",
+                        "type": "hide"
+                    },
+                    {
                         "selector": "#topAd",
                         "type": "hide-empty"
                     },
@@ -1815,6 +2046,10 @@
                     },
                     {
                         "selector": "#google-one-tap-popup-container",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": ".google-one-tap__module",
                         "type": "hide"
                     },
                     {
@@ -2128,6 +2363,7 @@
                     "content continues below",
                     "x",
                     "_",
+                    "sponsor message",
                     "sponsored",
                     "sponsorisé",
                     "story continues below advertisement",
@@ -2262,6 +2498,15 @@
                             },
                             {
                                 "selector": ".nativeAd",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "androidauthority.com",
+                        "rules": [
+                            {
+                                "selector": "div[data-ad-type]",
                                 "type": "closest-empty"
                             }
                         ]
@@ -2865,6 +3110,14 @@
                         ]
                     },
                     {
+                        "domain": "expressnews.com",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "fandom.com",
                         "rules": [
                             {
@@ -3190,6 +3443,10 @@
                             {
                                 "selector": "[aria-labelledby='promo-header']",
                                 "type": "hide"
+                            },
+                            {
+                                "selector": "div[role='banner']:has(div > a[href='https://support.google.com/a/answer/33864'])",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -3474,6 +3731,15 @@
                         ]
                     },
                     {
+                        "domain": "livebeaches.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='random-ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "livemint.com",
                         "rules": [
                             {
@@ -3544,6 +3810,23 @@
                             {
                                 "selector": ".primis",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "mantan-web.jp",
+                        "rules": [
+                            {
+                                "selector": "center > div",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".ad-rec",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".conteiner__head",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -3630,6 +3913,10 @@
                             {
                                 "selector": "[class^='ads__right-rail']",
                                 "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".atf_mobile-scroll-ad",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -4124,6 +4411,15 @@
                         ]
                     },
                     {
+                        "domain": "salon.com",
+                        "rules": [
+                            {
+                                "selector": ".fc-ab-root",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "scmp.com",
                         "rules": [
                             {
@@ -4396,6 +4692,10 @@
                             {
                                 "selector": "[data-aa-adunit]",
                                 "type": "hide"
+                            },
+                            {
+                                "selector": "[data-adpath]",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -4889,7 +5189,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "0882839182c425cbc9f98b8329036254"
+            "hash": "16e64ea4c926bdf7c865a8b7cbde1b2b"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4907,13 +5207,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "extendedOnboarding": {
             "exceptions": [],
@@ -4940,12 +5237,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "1699e10a89e3f845b762d979c7784e07"
+            "hash": "7f042650922da2636492e77ed1101bce"
         },
         "fingerprintingBattery": {
             "exceptions": [
@@ -4966,13 +5260,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "7d41daff22dc87c5e77130ecfe07a5b2"
+            "hash": "fcc2138fa97c35ded544b39708fda919"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -5077,13 +5368,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "2d8237d98a58f72e1722594501e7a10a"
+            "hash": "49a3d497835bf5715aaaa73f87dd974f"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -5133,6 +5421,15 @@
                     "domain": "xfinity.com"
                 },
                 {
+                    "domain": "centerwellpharmacy.com"
+                },
+                {
+                    "domain": "go365.com"
+                },
+                {
+                    "domain": "humana.com"
+                },
+                {
                     "domain": "marvel.com"
                 },
                 {
@@ -5149,13 +5446,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "9f2be706bd8afb4ab5b20bcf105f3029"
+            "hash": "b1f406c6ff87e27244d26289c0e383f9"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -5209,13 +5503,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "af086ad86fb05240c6ae07b4f27990cb"
+            "hash": "046340bb9287a20efed6189525ec5fed"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -5242,13 +5533,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
-            "hash": "7503c4ad77f4d9a2e679c89f3a6d7758"
+            "hash": "14b7fe3d276b52109c59f0c71aee4f71"
         },
         "googleRejected": {
             "exceptions": [
@@ -5266,20 +5554,14 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "gpc": {
             "state": "enabled",
             "exceptions": [
-                {
-                    "domain": "allegiantair.com"
-                },
                 {
                     "domain": "boston.com"
                 },
@@ -5287,22 +5569,7 @@
                     "domain": "costco.com"
                 },
                 {
-                    "domain": "crunchyroll.com"
-                },
-                {
                     "domain": "espn.com"
-                },
-                {
-                    "domain": "eventbrite.com"
-                },
-                {
-                    "domain": "duluthtrading.com"
-                },
-                {
-                    "domain": "web.whatsapp.com"
-                },
-                {
-                    "domain": "verizon.com"
                 },
                 {
                     "domain": "chime.com"
@@ -5311,22 +5578,19 @@
                     "domain": "tirerack.com"
                 },
                 {
-                    "domain": "milesplit.live"
-                },
-                {
                     "domain": "dollargeneral.com"
                 },
                 {
-                    "domain": "monstergear.monsterenergy.com"
+                    "domain": "milesplit.live"
+                },
+                {
+                    "domain": "monsterenergy.com"
                 },
                 {
                     "domain": "npr.org"
                 },
                 {
                     "domain": "norton.com"
-                },
-                {
-                    "domain": "jcrew.com"
                 },
                 {
                     "domain": "marvel.com"
@@ -5341,13 +5605,7 @@
                     "domain": "flexmls.com"
                 },
                 {
-                    "domain": "oreillyauto.com"
-                },
-                {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5359,7 +5617,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "91efce5371a70d32b647ef748376666e"
+            "hash": "501bbc6471eb079cb27fa8a2a47467a5"
         },
         "harmfulApis": {
             "settings": {
@@ -5475,13 +5733,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "179ae7bb9c2f25cdca27e9ae3da9f506"
+            "hash": "fb598c4167ff166d85dd49c701cc5579"
         },
         "history": {
             "state": "enabled",
@@ -5532,12 +5787,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "3beb9d0dc3e5b08f87862264e6845d22"
+            "hash": "b47d255c6f836ecb7ae0b3e61cc2c025"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -5580,6 +5832,15 @@
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
+        "messageBridge": {
+            "exceptions": [],
+            "settings": {
+                "aiChat": "disabled",
+                "domains": []
+            },
+            "state": "disabled",
+            "hash": "cec85d8cf7db4b2abcbc450c66dd63fc"
+        },
         "navigatorInterface": {
             "exceptions": [
                 {
@@ -5596,9 +5857,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -5609,7 +5867,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "85c8d252b38056bb00cb6846fe2793cc"
+            "hash": "d14f6e3a9aa4139ee1d517016b59691e"
         },
         "networkProtection": {
             "state": "enabled",
@@ -5619,15 +5877,26 @@
                 },
                 "waitlist": {
                     "state": "enabled"
+                },
+                "userTips": {
+                    "state": "enabled"
+                },
+                "enforceRoutes": {
+                    "state": "enabled"
                 }
             },
             "exceptions": [],
-            "hash": "7899368978e0f3aaf7eb141a027e4150"
+            "hash": "137177ca43449da8ce870fc838b35845"
         },
         "newTabContinueSetUp": {
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "newTabSearchField": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "nonTracking3pCookies": {
             "settings": {
@@ -5648,13 +5917,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "09dadf2e11272ecfd8637c057f9970c3"
+            "hash": "82088db85ca7f64418fbfd57db25ade1"
         },
         "performanceMetrics": {
             "state": "enabled",
@@ -5673,15 +5939,12 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "d6d280cf631363943027afc66a36ffff"
+            "hash": "6792064606a5a72c5cd44addb4d40bda"
         },
         "phishingDetection": {
-            "state": "disabled",
+            "state": "internal",
             "exceptions": [
                 {
                     "domain": "marvel.com"
@@ -5697,12 +5960,17 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "28a9e2628d3c372ae3434c9166031693"
+            "features": {
+                "allowErrorPage": {
+                    "state": "internal"
+                },
+                "allowPreferencesToggle": {
+                    "state": "internal"
+                }
+            },
+            "hash": "9a9143022e6cc8976461b337abfa81a1"
         },
         "pluginPointFocusedViewPlugin": {
             "state": "disabled",
@@ -5776,9 +6044,23 @@
                 "useUnifiedFeedback": {
                     "state": "enabled",
                     "minSupportedVersion": "7.136.0"
+                },
+                "setAccessTokenCookieForSubscriptionDomains": {
+                    "state": "enabled",
+                    "rollout": {
+                        "steps": [
+                            {
+                                "percent": 25
+                            },
+                            {
+                                "percent": 50
+                            }
+                        ]
+                    },
+                    "minSupportedVersion": "7.145.1"
                 }
             },
-            "hash": "c2a2ca6f3ae1b8ddb4f3fa011cb3e227"
+            "hash": "2a9bad4e25e3a161fbbbc324a240c03e"
         },
         "privacyProtectionsPopup": {
             "state": "disabled",
@@ -5819,13 +6101,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "10bf3098ef71a9cac101c1fdce462b22"
+            "hash": "138c3b2409f6b3bf967b804ab9bf2ce2"
         },
         "remoteMessaging": {
             "state": "enabled",
@@ -5849,15 +6128,12 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "72518a0c7421196ec071b1fb9167fde7"
+            "hash": "baf19d9e0f506ed09f46c95b1849adee"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -5876,13 +6152,16 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {},
-            "hash": "baf8b326d74f71ed4f63a1ffa3d42794"
+            "hash": "dfede9f06b9e322e198736703d013d15"
+        },
+        "sendFullPackageInstallSource": {
+            "state": "enabled",
+            "settings": {},
+            "exceptions": [],
+            "hash": "26d319ff4b2f43012a287b5f35a8db3a"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -5900,13 +6179,31 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "a7b37a230e8eb8e25225a818e98be1a3"
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
+        },
+        "showOnAppLaunch": {
+            "exceptions": [
+                {
+                    "domain": "marvel.com"
+                },
+                {
+                    "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
+                },
+                {
+                    "domain": "flexmls.com"
+                },
+                {
+                    "domain": "instructure.com"
+                }
+            ],
+            "state": "disabled",
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "sslCertificates": {
             "state": "enabled",
@@ -5917,6 +6214,27 @@
                 }
             },
             "hash": "abe9584048f7f8157f71a14e7914cb1c"
+        },
+        "swipingTabs": {
+            "exceptions": [
+                {
+                    "domain": "marvel.com"
+                },
+                {
+                    "domain": "sundancecatalog.com"
+                },
+                {
+                    "domain": "noaprints.com"
+                },
+                {
+                    "domain": "flexmls.com"
+                },
+                {
+                    "domain": "instructure.com"
+                }
+            ],
+            "state": "disabled",
+            "hash": "be6751fe0307a7e1b9476f4d8b8d0aaf"
         },
         "syncPromotion": {
             "state": "enabled",
@@ -5950,6 +6268,11 @@
             "exceptions": [],
             "minSupportedVersion": "7.104.0",
             "hash": "d7dca6ee484eadebb5133e3f15fd9f41"
+        },
+        "textZoom": {
+            "exceptions": [],
+            "state": "enabled",
+            "hash": "52857469413a66e8b0c7b00de5589162"
         },
         "toggleReports": {
             "state": "enabled",
@@ -6651,6 +6974,12 @@
                                 "domains": [
                                     "scheels.com"
                                 ]
+                            },
+                            {
+                                "rule": "api.cquotient.com/v3",
+                                "domains": [
+                                    "grillagrills.com"
+                                ]
                             }
                         ]
                     },
@@ -6660,6 +6989,16 @@
                                 "rule": "bidder.criteo.com/cdb",
                                 "domains": [
                                     "aternos.org"
+                                ]
+                            }
+                        ]
+                    },
+                    "criteo.net": {
+                        "rules": [
+                            {
+                                "rule": "static.criteo.net/js/ld/ld.js",
+                                "domains": [
+                                    "jackssmallengines.com"
                                 ]
                             }
                         ]
@@ -6751,6 +7090,12 @@
                                     "homedepot.com",
                                     "sbs.com.au"
                                 ]
+                            },
+                            {
+                                "rule": "sbs.demdex.net",
+                                "domains": [
+                                    "sbs.com.au"
+                                ]
                             }
                         ]
                     },
@@ -6774,12 +7119,64 @@
                                 ]
                             },
                             {
+                                "rule": "doubleclick.net/ondemand/dash/content/",
+                                "domains": [
+                                    "cbs.com",
+                                    "paramountplus.com"
+                                ]
+                            },
+                            {
                                 "rule": "securepubads.g.doubleclick.net/gampad/ads",
                                 "domains": [
                                     "ah.nl",
                                     "applesfera.com",
                                     "rocketnews24.com",
                                     "servustv.com"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
+                                "domains": [
+                                    "ah.nl",
+                                    "applesfera.com",
+                                    "goplay.be",
+                                    "itsthevibe.com",
+                                    "nytimes.com",
+                                    "realmadrid.com",
+                                    "rocketnews24.com",
+                                    "solitaired.com",
+                                    "stuff.co.nz",
+                                    "uwbadgers.com",
+                                    "wunderground.com",
+                                    "youmath.it"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt/.*/pubads_impl.js",
+                                "domains": [
+                                    "stuff.co.nz"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
+                                "domains": [
+                                    "rocketnews24.com",
+                                    "weather.com",
+                                    "wunderground.com"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt",
+                                "domains": [
+                                    "applesfera.com",
+                                    "itsthevibe.com",
+                                    "triblive.com"
+                                ]
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net",
+                                "domains": [
+                                    "xataka.com"
                                 ]
                             },
                             {
@@ -6805,27 +7202,6 @@
                                 ]
                             },
                             {
-                                "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
-                                "domains": [
-                                    "ah.nl",
-                                    "applesfera.com",
-                                    "goplay.be",
-                                    "nytimes.com",
-                                    "realmadrid.com",
-                                    "rocketnews24.com",
-                                    "stuff.co.nz",
-                                    "uwbadgers.com",
-                                    "wunderground.com",
-                                    "youmath.it"
-                                ]
-                            },
-                            {
-                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt/.*/pubads_impl.js",
-                                "domains": [
-                                    "stuff.co.nz"
-                                ]
-                            },
-                            {
                                 "rule": "securepubads.g.doubleclick.net/gpt/pubads_impl_",
                                 "domains": [
                                     "ah.nl",
@@ -6834,18 +7210,9 @@
                                 ]
                             },
                             {
-                                "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
+                                "rule": "securepubads.g.doubleclick.net/pagead/ima_ppub_config",
                                 "domains": [
-                                    "rocketnews24.com",
-                                    "weather.com",
-                                    "wunderground.com"
-                                ]
-                            },
-                            {
-                                "rule": "securepubads.g.doubleclick.net/pagead/managed/js/gpt",
-                                "domains": [
-                                    "applesfera.com",
-                                    "triblive.com"
+                                    "sbs.com.au"
                                 ]
                             },
                             {
@@ -7052,7 +7419,8 @@
                                 "domains": [
                                     "bandsintown.com",
                                     "nextdoor.co.uk",
-                                    "nextdoor.com"
+                                    "nextdoor.com",
+                                    "solitaired.com"
                                 ]
                             },
                             {
@@ -7379,9 +7747,13 @@
                                     "bodyelectricvitality.com.au",
                                     "cosmicbook.news",
                                     "eatroyo.com",
+                                    "experian.com",
+                                    "ljsilvers.com",
+                                    "piedmontng.com",
                                     "thesimsresource.com",
                                     "tradersync.com",
-                                    "vanguardplan.com"
+                                    "vanguardplan.com",
+                                    "xpn.org"
                                 ]
                             }
                         ]
@@ -7473,6 +7845,7 @@
                                     "local12.com",
                                     "local21news.com",
                                     "midmichigannow.com",
+                                    "mlb.com",
                                     "my15wtcn.com",
                                     "my24milwaukee.com",
                                     "my48.tv",
@@ -7506,6 +7879,7 @@
                                     "siouxlandnews.com",
                                     "southernoregoncw.com",
                                     "star64.tv",
+                                    "stockcharts.com",
                                     "thecw38.com",
                                     "thecw46.com",
                                     "thecwtc.com",
@@ -8066,7 +8440,7 @@
                     "nosto.com": {
                         "rules": [
                             {
-                                "rule": "connect.nosto.com/script/shopify/nosto.js",
+                                "rule": "connect.nosto.com",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -8452,6 +8826,8 @@
                                 "rule": "a.pub.network/core/prebid-universal-creative.js",
                                 "domains": [
                                     "signupgenius.com",
+                                    "smithsonianmag.com",
+                                    "stockcharts.com",
                                     "titantv.com"
                                 ]
                             },
@@ -8596,6 +8972,16 @@
                             }
                         ]
                     },
+                    "sascdn.com": {
+                        "rules": [
+                            {
+                                "rule": "sascdn.com/tag/",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "scene7.com": {
                         "rules": [
                             {
@@ -8720,6 +9106,16 @@
                             }
                         ]
                     },
+                    "smartadserver.com": {
+                        "rules": [
+                            {
+                                "rule": "smartadserver.com/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "snapkit.com": {
                         "rules": [
                             {
@@ -8798,6 +9194,16 @@
                                     "bankofamerica.com",
                                     "idnotify.com",
                                     "united.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "svonm.com": {
+                        "rules": [
+                            {
+                                "rule": "hgc-cf-cache-1.svonm.com",
+                                "domains": [
+                                    "t-online.de"
                                 ]
                             }
                         ]
@@ -8884,6 +9290,13 @@
                                 "rule": "tags.tiqcdn.com/utag/.*/utag..*.js",
                                 "domains": [
                                     "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "tags.tiqcdn.com/utag/cbsi/",
+                                "domains": [
+                                    "cbs.com",
+                                    "paramountplus.com"
                                 ]
                             },
                             {
@@ -9117,6 +9530,12 @@
                                 ]
                             },
                             {
+                                "rule": "runtime.strm.yandex.ru/player/video/",
+                                "domains": [
+                                    "yandex.cloud"
+                                ]
+                            },
+                            {
                                 "rule": "strm.yandex.ru/vh-special-converted/vod-content/",
                                 "domains": [
                                     "<all>"
@@ -9250,6 +9669,16 @@
                             }
                         ]
                     },
+                    "eltiempo.co": {
+                        "rules": [
+                            {
+                                "rule": "ads.eltiempo.co/genericpost",
+                                "domains": [
+                                    "filmweb.pl"
+                                ]
+                            }
+                        ]
+                    },
                     "yandex.tm": {
                         "rules": [
                             {
@@ -9277,12 +9706,9 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
-            "hash": "d41dab46e3e6b98fa00b3f09d4982a14"
+            "hash": "f5b235ed3c5c9afdd44edfa3464235cf"
         },
         "trackingCookies1p": {
             "settings": {
@@ -9306,13 +9732,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "3266e0df13e8d3959de6e9d0bf35c089"
+            "hash": "763f56424b0827b5731927a043219912"
         },
         "trackingCookies3p": {
             "settings": {
@@ -9333,18 +9756,27 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "09dadf2e11272ecfd8637c057f9970c3"
+            "hash": "82088db85ca7f64418fbfd57db25ade1"
         },
         "trackingParameters": {
             "exceptions": [
                 {
                     "domain": "axs.com"
+                },
+                {
+                    "domain": "urldefense.com"
+                },
+                {
+                    "domain": "centerwellpharmacy.com"
+                },
+                {
+                    "domain": "go365.com"
+                },
+                {
+                    "domain": "humana.com"
                 },
                 {
                     "domain": "marvel.com"
@@ -9363,9 +9795,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "settings": {
@@ -9398,7 +9827,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "6aa495863362a10fcd54398369d780a4"
+            "hash": "3792a4970c07fe00da08f77e7dcf01ed"
         },
         "userAgentRotation": {
             "settings": {
@@ -9419,13 +9848,10 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "disabled",
-            "hash": "b1ca9a99352f9a9f1da0bce34d66a2fa"
+            "hash": "9225b8785d6973db37abde99d81d219c"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -9456,9 +9882,6 @@
                 },
                 {
                     "domain": "instructure.com"
-                },
-                {
-                    "domain": "capitalone.com"
                 }
             ],
             "state": "enabled",
@@ -9477,6 +9900,10 @@
                         ],
                         "undefined": []
                     }
+                },
+                "modifyLocalStorage": {
+                    "state": "enabled",
+                    "changes": []
                 },
                 "domains": [
                     {
@@ -9498,10 +9925,36 @@
                                 "value": "enabled"
                             }
                         ]
+                    },
+                    {
+                        "domain": "msn.com",
+                        "patchSettings": [
+                            {
+                                "op": "add",
+                                "path": "/modifyLocalStorage/changes/-",
+                                "value": {
+                                    "key": "continuousReadingOnAppState",
+                                    "action": "delete"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "privacy-test-pages.site",
+                        "patchSettings": [
+                            {
+                                "op": "add",
+                                "path": "/modifyLocalStorage/changes/-",
+                                "value": {
+                                    "key": "keyToBeDeleted",
+                                    "action": "delete"
+                                }
+                            }
+                        ]
                     }
                 ]
             },
-            "hash": "efc01837e0f1a6d59fffd8d00f67be41"
+            "hash": "2853748f3ebb813d59f4db4a7bb13c83"
         },
         "webViewBlobDownload": {
             "exceptions": [],
@@ -9517,6 +9970,16 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsFireWindow": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
+        },
+        "windowsNewTabPageExperiment": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

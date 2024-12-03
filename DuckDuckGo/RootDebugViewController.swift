@@ -47,8 +47,7 @@ class RootDebugViewController: UITableViewController {
         case newTabPageSections = 674
         case onboarding = 676
         case resetSyncPromoPrompts = 677
-        case resetDuckPlayerExperiment = 678
-        case overrideDuckPlayerExperiment = 679
+        case resetTipKit = 681
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -63,6 +62,7 @@ class RootDebugViewController: UITableViewController {
     private var sync: DDGSyncing?
     private var internalUserDecider: DefaultInternalUserDecider?
     var tabManager: TabManager?
+    private var tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling?
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
@@ -71,24 +71,29 @@ class RootDebugViewController: UITableViewController {
           sync: DDGSyncing,
           bookmarksDatabase: CoreDataDatabase,
           internalUserDecider: InternalUserDecider,
-          tabManager: TabManager) {
+          tabManager: TabManager,
+          tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling = TipKitDebugOptionsUIActionHandler()) {
 
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
         self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
         self.tabManager = tabManager
+        self.tipKitUIActionHandler = tipKitUIActionHandler
+
         super.init(coder: coder)
-    }
-        
-    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager) {
-        self.sync = sync
-        self.bookmarksDatabase = bookmarksDatabase
-        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
-        self.tabManager = tabManager
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    func configure(sync: DDGSyncing, bookmarksDatabase: CoreDataDatabase, internalUserDecider: InternalUserDecider, tabManager: TabManager, tipKitUIActionHandler: TipKitDebugOptionsUIActionHandling = TipKitDebugOptionsUIActionHandler()) {
+
+        self.sync = sync
+        self.bookmarksDatabase = bookmarksDatabase
+        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
+        self.tabManager = tabManager
+        self.tipKitUIActionHandler = tipKitUIActionHandler
     }
 
     @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder) -> ImageCacheDebugViewController? {
@@ -117,6 +122,15 @@ class RootDebugViewController: UITableViewController {
 
         return controller
     }
+
+    @IBSegueAction func onCreateCookieDebugScreen(_ coder: NSCoder) -> CookieDebugViewController? {
+        guard let controller = CookieDebugViewController(coder: coder, fireproofing: UserDefaultsFireproofing.shared) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {
@@ -183,12 +197,8 @@ class RootDebugViewController: UITableViewController {
                 let syncPromoPresenter = SyncPromoManager(syncService: sync)
                 syncPromoPresenter.resetPromos()
                 ActionMessageView.present(message: "Sync Promos reset")
-            case .resetDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().cleanup()
-                ActionMessageView.present(message: "Experiment Settings deleted. You'll be assigned a random cohort")
-            case .overrideDuckPlayerExperiment:
-                DuckPlayerLaunchExperiment().override()
-                ActionMessageView.present(message: "Overriding experiment.  You are now in the 'experiment' group.  Restart the app to complete")
+            case .resetTipKit:
+                tipKitUIActionHandler?.resetTipKitTapped()
             }
         }
     }
@@ -249,13 +259,15 @@ protocol DiagnosticReportDataSourceDelegate: AnyObject {
 class DiagnosticReportDataSource: UIActivityItemProvider {
 
     weak var delegate: DiagnosticReportDataSourceDelegate?
+    var fireproofing: Fireproofing?
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastRefreshDate: Date
 
-    convenience init(delegate: DiagnosticReportDataSourceDelegate) {
+    convenience init(delegate: DiagnosticReportDataSourceDelegate, fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
         self.init(placeholderItem: "")
         self.delegate = delegate
+        self.fireproofing = fireproofing
     }
 
     override var item: Any {
@@ -287,7 +299,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     }
 
     func fireproofingReport() -> String {
-        let allowedDomains = PreserveLogins.shared.allowedDomains.map { "* \($0)" }
+        let allowedDomains = fireproofing?.allowedDomains.map { "* \($0)" } ?? []
 
         let allowedDomainsEntry = ["### Allowed Domains"] + (allowedDomains.isEmpty ? [""] : allowedDomains)
 

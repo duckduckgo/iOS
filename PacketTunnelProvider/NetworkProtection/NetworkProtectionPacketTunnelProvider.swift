@@ -25,6 +25,7 @@ import Core
 import Networking
 import NetworkExtension
 import NetworkProtection
+import os.log
 import Subscription
 import WidgetKit
 import WireGuard
@@ -34,12 +35,12 @@ import BrowserServicesKit
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     private static var vpnLogger = VPNLogger()
+    private static let persistentPixel: PersistentPixelFiring = PersistentPixel()
     private var cancellables = Set<AnyCancellable>()
     private let accountManager: AccountManager
 
     private let configurationStore = ConfigurationStore()
     private let configurationManager: ConfigurationManager
-    private var configuationSubscription: AnyCancellable?
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -51,6 +52,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
                             withAdditionalParameters: [PixelParameters.vpnCohort: UniquePixel.cohort(from: defaults.vpnFirstEnabled)],
                             includedParameters: [.appVersion, .atb])
+
+            persistentPixel.sendQueuedPixels { error in
+                Logger.networkProtection.error("Failed to send queued pixels, with error: \(error)")
+            }
         case .connectionTesterStatusChange(let status, let server):
             vpnLogger.log(status, server: server)
 
@@ -66,6 +71,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 }()
 
                 DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              withAdditionalParameters: [PixelParameters.server: server],
                                              includedParameters: [.appVersion, .atb])
             case .recovered(let duration, let failureCount):
@@ -79,6 +85,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 }()
 
                 DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              withAdditionalParameters: [
                                                 PixelParameters.count: String(failureCount),
                                                 PixelParameters.server: server
@@ -91,15 +98,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             switch attempt {
             case .connecting:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              includedParameters: [.appVersion, .atb])
             case .success:
                 let versionStore = NetworkProtectionLastVersionRunStore(userDefaults: .networkProtectionGroupDefaults)
                 versionStore.lastExtensionVersionRun = AppVersion.shared.versionAndBuildNumber
 
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              includedParameters: [.appVersion, .atb])
             case .failure:
                 DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              includedParameters: [.appVersion, .atb])
             }
         case .reportTunnelFailure(result: let result):
@@ -107,9 +117,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
             switch result {
             case .failureDetected:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected, includedParameters: [.appVersion, .atb])
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                             includedParameters: [.appVersion, .atb])
             case .failureRecovered:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered, includedParameters: [.appVersion, .atb])
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                             includedParameters: [.appVersion, .atb])
             case .networkPathChanged(let newPath):
                 defaults.updateNetworkPath(with: newPath)
             }
@@ -121,29 +135,63 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 DailyPixel.fire(pixel: .networkProtectionLatencyError, includedParameters: [.appVersion, .atb])
             case .quality(let quality):
                 guard quality != .unknown else { return }
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality), includedParameters: [.appVersion, .atb])
+                DailyPixel.fireDailyAndCount(
+                    pixel: .networkProtectionLatency(quality: quality),
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    includedParameters: [.appVersion, .atb]
+                )
             }
         case .rekeyAttempt(let step):
             vpnLogger.log(step, named: "Rekey")
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyAttempt)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionRekeyAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyFailure, error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionRekeyFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionRekeyCompleted)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionRekeyCompleted,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelStartAttempt(let step):
             vpnLogger.log(step, named: "Tunnel Start")
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttempt)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelStartAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartFailure, error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelStartFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartSuccess)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelStartSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelStopAttempt(let step):
             vpnLogger.log(step, named: "Tunnel Stop")
@@ -152,20 +200,38 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .begin:
                 Pixel.fire(pixel: .networkProtectionTunnelStopAttempt)
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopFailure,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                             error: error)
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStopSuccess,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             }
         case .tunnelUpdateAttempt(let step):
             vpnLogger.log(step, named: "Tunnel Update")
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateAttempt)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateFailure, error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelUpdateSuccess)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionTunnelUpdateSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelWakeAttempt(let step):
             vpnLogger.log(step, named: "Tunnel Wake")
@@ -174,37 +240,61 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .begin:
                 Pixel.fire(pixel: .networkProtectionTunnelWakeAttempt)
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeFailure, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeFailure,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                             error: error)
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeSuccess)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelWakeSuccess,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             }
         case .failureRecoveryAttempt(let step):
             vpnLogger.log(step)
 
             switch step {
             case .started:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryStarted)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryStarted,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             case .completed(.healthy):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedHealthy)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedHealthy,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             case .completed(.unhealthy):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedUnhealthy)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryCompletedUnhealthy,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
             case .failed(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed, error: error)
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailureRecoveryFailed,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                             error: error)
             }
         case .serverMigrationAttempt(let step):
             vpnLogger.log(step, named: "Server Migration")
 
             switch step {
             case .begin:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttempt)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttempt,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .failure(let error):
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptFailure, error: error)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptFailure,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: error,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             case .success:
-                DailyPixel.fireDailyAndCount(pixel: .networkProtectionServerMigrationAttemptSuccess)
+                persistentPixel.fireDailyAndCount(
+                    pixel: .networkProtectionServerMigrationAttemptSuccess,
+                    pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                    error: nil,
+                    withAdditionalParameters: [:],
+                    includedParameters: [.appVersion]) { _ in }
             }
         case .tunnelStartOnDemandWithoutAccessToken:
             vpnLogger.logStartingWithoutAuthToken()
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
         }
     }
 
@@ -243,9 +333,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelError = eventError
             case .failedToParseRegisteredServersResponse:
                 pixelEvent = .networkProtectionClientFailedToParseRegisteredServersResponse
-            case .failedToEncodeRedeemRequest, .invalidInviteCode, .failedToRedeemInviteCode, .failedToParseRedeemResponse:
-                pixelEvent = .networkProtectionUnhandledError
-                // Should never be sent from the extension
             case .invalidAuthToken:
                 pixelEvent = .networkProtectionClientInvalidAuthToken
             case .serverListInconsistency:
@@ -293,8 +380,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
-            case .failedToRetrieveAuthToken:
-                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:
@@ -306,7 +391,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelEvent = .networkProtectionClientFailedToParseServerStatusResponse
                 pixelError = error
             }
-            DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
+            DailyPixel.fireDailyAndCount(pixel: pixelEvent,
+                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                         error: pixelError,
+                                         withAdditionalParameters: params)
         }
     }
 
@@ -317,6 +405,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         default:
             DailyPixel.fireDailyAndCount(
                 pixel: .networkProtectionDisconnected,
+                pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                 withAdditionalParameters: [PixelParameters.reason: String(reason.rawValue)]
             )
         }
@@ -324,6 +413,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+#if DEBUG
+        Pixel.isDryRun = true
+#endif
+
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
@@ -334,13 +427,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let privacyConfigurationManager = VPNPrivacyConfigurationManager.shared
         // Load cached config (if any)
         privacyConfigurationManager.reload(etag: configurationStore.loadEtag(for: .privacyConfiguration), data: configurationStore.loadData(for: .privacyConfiguration))
-
-        configuationSubscription = privacyConfigurationManager.updatesPublisher
-            .sink {
-                if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(BackgroundAgentPixelTestSubfeature.pixelTest) {
-                    DailyPixel.fire(pixel: .networkProtectionConfigurationPixelTest)
-                }
-            }
 
         // Align Subscription environment to the VPN environment
         var subscriptionEnvironment = SubscriptionEnvironment.default
@@ -402,28 +488,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
+    deinit {
+        memoryPressureSource?.cancel()
+        memoryPressureSource = nil
+    }
+
+    private var memoryPressureSource: DispatchSourceMemoryPressure?
+    private let memoryPressureQueue = DispatchQueue(label: "com.duckduckgo.mobile.ios.NetworkExtension.memoryPressure")
+
     private func startMonitoringMemoryPressureEvents() {
-        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: memoryPressureQueue)
 
-        let queue = DispatchQueue.init(label: "com.duckduckgo.mobile.ios.alpha.NetworkExtension.memoryPressure")
-        queue.async {
-            source.setEventHandler {
-                let event: DispatchSource.MemoryPressureEvent  = source.mask
-                print(event)
-                switch event {
-                case DispatchSource.MemoryPressureEvent.normal:
-                    break
-                case DispatchSource.MemoryPressureEvent.warning:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
-                case DispatchSource.MemoryPressureEvent.critical:
-                    DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
-                default:
-                    break
-                }
+        source.setEventHandler { [weak source] in
+            guard let source else { return }
 
+            let event = source.data
+
+            if event.contains(.warning) {
+                Logger.networkProtectionMemory.warning("Received memory pressure warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
+            } else if event.contains(.critical) {
+                Logger.networkProtectionMemory.warning("Received memory pressure critical warning")
+                DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
             }
-            source.resume()
         }
+
+        self.memoryPressureSource = source
+        source.activate()
     }
 
     private func observeServerChanges() {
@@ -501,6 +592,7 @@ extension NetworkProtectionPacketTunnelProvider: AccountManagerKeychainAccessDel
         ]
 
         DailyPixel.fireDailyAndCount(pixel: .privacyProKeychainAccessError,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                      withAdditionalParameters: parameters)
     }
 }

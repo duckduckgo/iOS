@@ -42,7 +42,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 15" \
+          -destination "platform=iOS Simulator,name=iPhone 16" \
           -derivedDataPath "DerivedData" \
           -skipPackagePluginValidation \
           -skipMacroValidation \
@@ -68,11 +68,11 @@ jobs:
   sync-end-to-end-tests:
     name: Sync End To End Tests
     needs: build-for-sync-end-to-end-tests
-    runs-on: macos-14-xlarge
+    runs-on: macos-14
     timeout-minutes: 90
     strategy:
       matrix:
-        os-version: [15, 16, 17]
+        os-version: [17] #[15, 16, 17]
       max-parallel: 1 # Uncomment this line to run tests sequentially. 
       fail-fast: false
     
@@ -94,7 +94,7 @@ jobs:
 
     - name: Install Maestro
       run: |
-        export MAESTRO_VERSION=1.36.0; curl -Ls "https://get.maestro.mobile.dev" | bash
+        export MAESTRO_VERSION=1.39.1; curl -Ls "https://get.maestro.mobile.dev" | bash
         
     - name: Overwrite default config with sync one
       run: |
@@ -102,26 +102,26 @@ jobs:
         
     - name: Sync e2e tests 
       run: |
-        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.MAESTRO_CLOUD_API_KEY }} -e ONBOARDING_COMPLETED=true --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app .maestro/
+        export PATH="$PATH":"$HOME/.maestro/bin"; maestro cloud --apiKey ${{ secrets.ROBIN_API_KEY }} --project-id ${{ secrets.ROBIN_PROJECT_KEY }} -e ONBOARDING_COMPLETED=true --env=CODE=${{ steps.sync-recovery-code.outputs.recovery-code }} --fail-on-timeout=true --fail-on-cancellation=true --timeout=150 --ios-version=${{ matrix.os-version }} --include-tags=sync --app-file DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app --flows .maestro/
 
     - name: Reset config
       run: |
         git checkout .maestro/config.yaml
     
-  notify-failure:
-    name: Notify on failure
-    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
-    needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
-    runs-on: ubuntu-latest
+  # notify-failure:
+  #   name: Notify on failure
+  #   if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.ref_name == 'main' }}
+  #   needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Create Asana task when workflow failed
-        run: |
-          curl -s "https://app.asana.com/api/1.0/tasks" \
-            --header "Accept: application/json" \
-            --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-            --header "Content-Type: application/json" \
-            --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+  #   steps:
+  #     - name: Create Asana task when workflow failed
+  #       run: |
+  #         curl -s "https://app.asana.com/api/1.0/tasks" \
+  #           --header "Accept: application/json" \
+  #           --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+  #           --header "Content-Type: application/json" \
+  #           --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
 
     
     

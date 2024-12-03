@@ -26,6 +26,7 @@ import Subscription
 import Common
 import NetworkProtection
 import RemoteMessaging
+import PageRefreshMonitor
 
 protocol DependencyProvider {
 
@@ -34,14 +35,12 @@ protocol DependencyProvider {
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
     var storageCache: StorageCache { get }
-    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
     var configurationStore: ConfigurationStore { get }
-    var userBehaviorMonitor: UserBehaviorMonitor { get }
-    var subscriptionFeatureAvailability: SubscriptionFeatureAvailability { get }
+    var pageRefreshMonitor: PageRefreshMonitor { get }
     var subscriptionManager: SubscriptionManager { get }
     var accountManager: AccountManager { get }
     var vpnFeatureVisibility: DefaultNetworkProtectionVisibility { get }
@@ -50,6 +49,8 @@ protocol DependencyProvider {
     var connectionObserver: ConnectionStatusObserver { get }
     var serverInfoObserver: ConnectionServerInfoObserver { get }
     var vpnSettings: VPNSettings { get }
+    var persistentPixel: PersistentPixelFiring { get }
+
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -65,7 +66,6 @@ final class AppDependencyProvider: DependencyProvider {
     let featureFlagger: FeatureFlagger
 
     let storageCache = StorageCache()
-    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
     lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
@@ -73,11 +73,8 @@ final class AppDependencyProvider: DependencyProvider {
     let configurationManager: ConfigurationManager
     let configurationStore = ConfigurationStore()
 
-    let userBehaviorMonitor = UserBehaviorMonitor()
-
-    let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-        purchasePlatform: .appStore)
+    let pageRefreshMonitor = PageRefreshMonitor(onDidDetectRefreshPattern: PageRefreshMonitor.onDidDetectRefreshPattern,
+                                                store: PageRefreshStore())
 
     // Subscription
     let subscriptionManager: SubscriptionManager
@@ -93,10 +90,17 @@ final class AppDependencyProvider: DependencyProvider {
     let connectionObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()
     let serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()
     let vpnSettings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+    let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     private init() {
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
-                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager)
+                                               privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
+                                               localOverrides: FeatureFlagLocalOverrides(
+                                                keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
+                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
+                                               ),
+                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()),
+                                               for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)
 
@@ -111,43 +115,50 @@ final class AppDependencyProvider: DependencyProvider {
         let accessTokenStorage = SubscriptionTokenKeychainStorage(keychainType: .dataProtection(.named(subscriptionAppGroup)))
         let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
         let authService = DefaultAuthEndpointService(currentServiceEnvironment: subscriptionEnvironment.serviceEnvironment)
+        let subscriptionFeatureMappingCache = DefaultSubscriptionFeatureMappingCache(subscriptionEndpointService: subscriptionService,
+                                                                                     userDefaults: subscriptionUserDefaults)
+
         let accountManager = DefaultAccountManager(accessTokenStorage: accessTokenStorage,
                                                    entitlementsCache: entitlementsCache,
                                                    subscriptionEndpointService: subscriptionService,
                                                    authEndpointService: authService)
-        
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(),
+
+        let theFeatureFlagger = featureFlagger
+        let subscriptionFeatureFlagger: FeatureFlaggerMapping<SubscriptionFeatureFlags> = FeatureFlaggerMapping { feature in
+            switch feature {
+            case .isLaunchedROW:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROW)
+            case .isLaunchedROWOverride:
+                return theFeatureFlagger.isFeatureOn(.isPrivacyProLaunchedROWOverride)
+            default:
+                return feature.defaultState
+            }
+        }
+
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,
-                                                             subscriptionEnvironment: subscriptionEnvironment)
+                                                             subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
+                                                             subscriptionEnvironment: subscriptionEnvironment,
+                                                             subscriptionFeatureFlagger: subscriptionFeatureFlagger)
         accountManager.delegate = subscriptionManager
 
         self.subscriptionManager = subscriptionManager
 
-        let subscriptionFeatureAvailability: SubscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
-            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-            purchasePlatform: .appStore)
         let accessTokenProvider: () -> String? = {
             return { accountManager.accessToken }
         }()
-#if os(macOS)
-        networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
-                                                                                  serviceName: "\(Bundle.main.bundleIdentifier!).authToken",
-                                                                                  errorEvents: .networkProtectionAppDebugEvents,
-                                                                                  accessTokenProvider: accessTokenProvider)
-#else
+
         networkProtectionKeychainTokenStore = NetworkProtectionKeychainTokenStore(accessTokenProvider: accessTokenProvider)
-#endif
+
         networkProtectionTunnelController = NetworkProtectionTunnelController(accountManager: accountManager,
-                                                                              tokenStore: networkProtectionKeychainTokenStore)
+                                                                              tokenStore: networkProtectionKeychainTokenStore,
+                                                                              featureFlagger: featureFlagger,
+                                                                              persistentPixel: persistentPixel,
+                                                                              settings: vpnSettings)
         vpnFeatureVisibility = DefaultNetworkProtectionVisibility(userDefaults: .networkProtectionGroupDefaults,
                                                                   accountManager: accountManager)
     }
 
-    /// Only meant to be used for testing.
-    ///
-    static func makeTestingInstance() -> Self {
-        Self.init()
-    }
 }

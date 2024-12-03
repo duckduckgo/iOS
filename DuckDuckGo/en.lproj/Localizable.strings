@@ -13,6 +13,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Text Zoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -593,6 +602,9 @@
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Save this password?";
 
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "No Thanks";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Securely store your password on device with DuckDuckGo Passwords & Autofill.";
 
@@ -760,6 +772,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Yes";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Skip";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Start Browsing";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Show Me How";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Remember, every time you browse with me a creepy ad loses its wings.\n\nSo keep me in your Dock for daily browsing.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "I’ll nest in easy reach for all your daily browsing.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Add me to your Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Find the DuckDuckGo icon on your Home Screen. Then press and drag it into place. That’s it!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Adding me to your Dock is easy.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -935,9 +971,6 @@
 /* ad = advertisment */
 "dax.onboarding.home.subsequent" = "You’ve got this!\n\nRemember: Every time you browse with me, a creepy ad loses its wings. 👍";
 
-/* No comment provided by engineer. */
-"dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
-
 /* Default string used if users device is not iPhone or iPad */
 "device.type.default" = "device";
 
@@ -1049,8 +1082,11 @@
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Learn More";
 
+/* Settings screen cell text for DuckPlayer settings to open in new tab */
+"duckplayer.settings.open-new-tab-label" = "Open Duck Player in a new tab";
+
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Open Videos in Duck Player";
+"duckplayer.settings.open-videos-in" = "Open YouTube Videos in Duck Player";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";
@@ -1535,9 +1571,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Show All Tabs";
 
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
@@ -1838,6 +1871,9 @@ https://duckduckgo.com/mac";
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Got It";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";
 
@@ -1958,6 +1994,12 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "Email (optional)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "name@email.com";
+
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
 "ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
 
@@ -1992,7 +2034,7 @@ https://duckduckgo.com/mac";
 "ppro.feedback-form.select-category.title" = "Select a category";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-1" = "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.";
+"ppro.feedback-form.text-1" = "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.\n\nProvide an email if you’d like us to contact you about this issue (we may not be able to respond to all issues):";
 
 /* Text for the body of the PPro feedback form */
 "ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
@@ -2334,6 +2376,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
 
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Includes our VPN and Identity Theft Restoration.";
+
 /* Call to action title for Privacy Pro settings */
 "settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
 
@@ -2347,7 +2392,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Text Size";
+"settings.text.size" = "Default Text Zoom";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Theme";
@@ -2376,14 +2421,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Dismiss button */
 "site.not.working.dismiss" = "Dismiss";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Report Broken Site";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "This helps us improve the browser.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Site not working? Let DuckDuckGo know.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Website Is Broken";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
@@ -2701,7 +2746,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "tab.switcher.accessibility.label" = "Tab Switcher";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.";
+"textSize.description" = "Increase or decrease text size across all sites.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Text Size - %@";

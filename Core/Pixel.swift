@@ -86,8 +86,9 @@ public struct PixelParameters {
     public static let count = "count"
     public static let source = "source"
 
-    public static let textSizeInitial = "text_size_initial"
-    public static let textSizeUpdated = "text_size_updated"
+    // Text size is the legacy name
+    public static let textZoomInitial = "text_size_initial"
+    public static let textZoomUpdated = "text_size_updated"
 
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
@@ -142,6 +143,7 @@ public struct PixelParameters {
     public static let adAttributionKeywordID = "keyword_id"
     public static let adAttributionAdID = "ad_id"
     public static let adAttributionToken = "attribution_token"
+    public static let adAttributionIsReinstall = "is_reinstall"
 
     // Autofill
     public static let countBucket = "count_bucket"
@@ -153,6 +155,12 @@ public struct PixelParameters {
     // Subscription
     public static let privacyProKeychainAccessType = "access_type"
     public static let privacyProKeychainError = "error"
+
+    // Persistent pixel
+    public static let originalPixelTimestamp = "originalPixelTimestamp"
+    public static let retriedPixel = "retriedPixel"
+
+    public static let time = "time"
 }
 
 public struct PixelValues {
@@ -172,7 +180,7 @@ public class Pixel {
         DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
-    public enum QueryParameters {
+    public enum QueryParameters: Codable {
         case atb
         case appVersion
     }
@@ -296,18 +304,37 @@ private extension Pixel.Event {
 }
 
 extension Dictionary where Key == String, Value == String {
+
     mutating func appendErrorPixelParams(error: Error) {
         let nsError = error as NSError
 
         self[PixelParameters.errorCode] = "\(nsError.code)"
         self[PixelParameters.errorDomain] = nsError.domain
 
-        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
-            self[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
-            self[PixelParameters.underlyingErrorDomain] = underlyingError.domain
-        } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
-            self[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
-            self[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
-        }
+        let underlyingErrorParameters = underlyingErrorParameters(for: error as NSError)
+        self.merge(underlyingErrorParameters) { first, _ in first }
     }
+
+    private func underlyingErrorParameters(for nsError: NSError, level: Int = 0) -> [String: String] {
+        if let underlyingError = nsError.userInfo[NSUnderlyingErrorKey] as? NSError {
+            let errorCodeParameterName = PixelParameters.underlyingErrorCode + (level == 0 ? "" : String(level + 1))
+            let errorDomainParameterName = PixelParameters.underlyingErrorDomain + (level == 0 ? "" : String(level + 1))
+
+            let currentUnderlyingErrorParameters = [
+                errorCodeParameterName: "\(underlyingError.code)",
+                errorDomainParameterName: underlyingError.domain
+            ]
+
+            let additionalParameters = underlyingErrorParameters(for: underlyingError, level: level + 1)
+            return currentUnderlyingErrorParameters.merging(additionalParameters) { first, _ in first }
+        } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
+            return [
+                PixelParameters.underlyingErrorCode: "\(sqlErrorCode.intValue)",
+                PixelParameters.underlyingErrorDomain: "NSSQLiteErrorDomain"
+            ]
+        }
+
+        return [:]
+    }
+
 }

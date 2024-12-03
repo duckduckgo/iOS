@@ -51,10 +51,15 @@ class BarsAnimatorTests: XCTestCase {
 
         scrollView.contentOffset.y = 300
         sut.didScroll(in: scrollView)
-        XCTAssertEqual(sut.barsState, .hidden)
+        
+        let expectation = XCTestExpectation(description: "Wait for bars state to update to hidden")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(sut.barsState, .hidden)
+            XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0), .setBarsVisibility(0.0)])
+            expectation.fulfill()
+        }
 
-        XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
-                                                   .setBarsVisibility(0.0)])
+        wait(for: [expectation], timeout: 0.2)
     }
 
     func testBarStateHiddenWhenScrollDownKeepsHiddenState() {
@@ -71,14 +76,28 @@ class BarsAnimatorTests: XCTestCase {
 
         scrollView.contentOffset.y = 300
         sut.didScroll(in: scrollView)
-        XCTAssertEqual(sut.barsState, .hidden)
+
+        // Add delay before checking hidden state
+        let expectation1 = XCTestExpectation(description: "Wait for bars state to update to hidden")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(sut.barsState, .hidden)
+            expectation1.fulfill()
+        }
+
+        wait(for: [expectation1], timeout: 0.2)
 
         scrollView.contentOffset.y = 100
         sut.didScroll(in: scrollView)
-        XCTAssertEqual(sut.barsState, .hidden)
 
-        XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
-                                                   .setBarsVisibility(0.0)])
+        // Add another delay before checking that barsState remains hidden
+        let expectation2 = XCTestExpectation(description: "Wait to confirm bars state remains hidden")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(sut.barsState, .hidden)
+            XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0), .setBarsVisibility(0.0)])
+            expectation2.fulfill()
+        }
+
+        wait(for: [expectation2], timeout: 0.2)
     }
 
     func testBarStateHiddenWhenScrollUpUpdatesToRevealedState() {
@@ -95,7 +114,15 @@ class BarsAnimatorTests: XCTestCase {
 
         scrollView.contentOffset.y = 400
         sut.didScroll(in: scrollView)
-        XCTAssertEqual(sut.barsState, .hidden)
+
+        // Add delay before checking hidden state
+        let expectation1 = XCTestExpectation(description: "Wait for bars state to update to hidden")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(sut.barsState, .hidden)
+            expectation1.fulfill()
+        }
+
+        wait(for: [expectation1], timeout: 0.2)
 
         scrollView.contentOffset.y = -100
         sut.didStartScrolling(in: scrollView)
@@ -104,13 +131,21 @@ class BarsAnimatorTests: XCTestCase {
 
         scrollView.contentOffset.y = -150
         sut.didScroll(in: scrollView)
-        XCTAssertEqual(sut.barsState, .revealed)
 
-        XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
-                                                   .setBarsVisibility(0.0),
-                                                   .setBarsVisibility(1.0),
-                                                   .setBarsVisibility(1.0)])
+        // Add another delay before checking revealed state
+        let expectation2 = XCTestExpectation(description: "Wait for bars state to update to revealed")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertEqual(sut.barsState, .revealed)
+            XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
+                                                       .setBarsVisibility(0.0),
+                                                       .setBarsVisibility(1.0),
+                                                       .setBarsVisibility(1.0)])
+            expectation2.fulfill()
+        }
+
+        wait(for: [expectation2], timeout: 0.2)
     }
+
 
     func testBarStateRevealedWhenScrollUpDoNotChangeCurrentState() {
         let (sut, delegate) = makeSUT()
@@ -184,7 +219,8 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
 
     var barsMaxHeight: CGFloat = 30
 
-    var omniBar: OmniBar = OmniBar(frame: CGRect(x: 0, y: 0, width: 300, height: 30))
+    var omniBar: OmniBar = OmniBar(voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+                                   frame: CGRect(x: 0, y: 0, width: 300, height: 30))
 
     var tabBarContainer: UIView = UIView()
 }

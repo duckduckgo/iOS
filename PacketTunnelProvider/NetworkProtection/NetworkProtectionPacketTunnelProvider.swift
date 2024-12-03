@@ -295,10 +295,6 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             vpnLogger.logStartingWithoutAuthToken()
             DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelStartAttemptOnDemandWithoutAccessToken,
                                          pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes)
-        case .malformedErrorDetected(let error):
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionMalformedErrorDetected,
-                                         pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
-                                         error: error)
         }
     }
 

@@ -476,8 +476,6 @@ extension Pixel {
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
 
-        case networkProtectionMalformedErrorDetected
-
         // MARK: - VPN Tips
 
         case networkProtectionGeoswitchingTipShown
@@ -557,7 +555,7 @@ extension Pixel {
         
         case cookieDeletionTime(_ time: BucketAggregation)
         case cookieDeletionLeftovers
-        case legacyDataClearingTime(_ time: BucketAggregation)
+        case clearDataInDefaultPersistence(_ time: BucketAggregation)
 
         case webkitWarmupStart(appState: String)
         case webkitWarmupFinished(appState: String)
@@ -903,6 +901,9 @@ extension Pixel {
         case openAIChatBefore10min
         case openAIChatAfter10min
         case aiChatNoRemoteSettingsFound(settings: String)
+
+        // MARK: Lifecycle
+        case appDidTransitionToUnexpectedState
     }
 
 }
@@ -1345,8 +1346,6 @@ extension Pixel.Event {
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
 
-        case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
-
             // MARK: VPN tips
 
         case .networkProtectionGeoswitchingTipShown: return "m_vpn_tip_geoswitching_shown"
@@ -1429,7 +1428,7 @@ extension Pixel.Event {
             
         case .cookieDeletionTime(let aggregation):
             return "m_debug_cookie-clearing-time-\(aggregation)"
-        case .legacyDataClearingTime(let aggregation):
+        case .clearDataInDefaultPersistence(let aggregation):
             return "m_debug_legacy-data-clearing-time-\(aggregation)"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
 
@@ -1802,6 +1801,10 @@ extension Pixel.Event {
         case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
         case .aiChatNoRemoteSettingsFound(let settings):
             return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
+
+        // MARK: Lifecycle
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
+
         }
     }
 }

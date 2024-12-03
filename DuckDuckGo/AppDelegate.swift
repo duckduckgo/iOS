@@ -117,6 +117,8 @@ import os.log
 
     private var didFinishLaunchingStartTime: CFAbsoluteTime?
 
+    private let appStateMachine = AppStateMachine()
+
     override init() {
         super.init()
 
@@ -131,6 +133,7 @@ import os.log
     // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        appStateMachine.handle(.launching(application, launchOptions: launchOptions))
         didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
             if let didFinishLaunchingStartTime {
@@ -311,7 +314,8 @@ import os.log
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        privacyProDataReporter = PrivacyProDataReporter()
+        let fireproofing = UserDefaultsFireproofing.xshared
+        privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
@@ -383,8 +387,10 @@ import os.log
                                           subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                           voiceSearchHelper: voiceSearchHelper,
                                           featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          fireproofing: fireproofing,
                                           subscriptionCookieManager: subscriptionCookieManager,
                                           textZoomCoordinator: makeTextZoomCoordinator(),
+                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
                                           appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
@@ -436,6 +442,13 @@ import os.log
         tipKitAppEventsHandler.appDidFinishLaunching()
 
         return true
+    }
+
+    private func makeWebsiteDataManager(fireproofing: Fireproofing,
+                                        dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
+        return WebCacheManager(cookieStorage: MigratableCookieStorage(),
+                               fireproofing: fireproofing,
+                               dataStoreIDManager: dataStoreIDManager)
     }
 
     private func makeTextZoomCoordinator() -> TextZoomCoordinator {
@@ -587,6 +600,8 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        appStateMachine.handle(.activating(application))
+
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -690,6 +705,7 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        appStateMachine.handle(.suspending(application))
         Task { @MainActor in
             await refreshShortcuts()
             await vpnWorkaround.removeRedditSessionWorkaround()
@@ -782,6 +798,7 @@ import os.log
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        appStateMachine.handle(.backgrounding(application))
         displayBlankSnapshotWindow()
         autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
@@ -827,6 +844,7 @@ import os.log
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
+        appStateMachine.handle(.openURL(url))
 
         // If showing the onboarding intro ignore deeplinks
         guard mainViewController?.needsToShowOnboardingIntro() == false else {

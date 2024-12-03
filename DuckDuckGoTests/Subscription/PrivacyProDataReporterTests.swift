@@ -73,6 +73,7 @@ final class PrivacyProDataReporterTests: XCTestCase {
             autofillCheck: { true },
             secureVaultMaker: { nil },
             tabsModel: TabsModel(tabs: [], desktop: false),
+            fireproofing: MockFireproofing(),
             dateGenerator: mockCalendar.now
         )
         anotherReporter = PrivacyProDataReporter(
@@ -85,7 +86,8 @@ final class PrivacyProDataReporterTests: XCTestCase {
             featureFlagger: MockFeatureFlagger(),
             autofillCheck: { true },
             secureVaultMaker: { nil },
-            tabsModel: TabsModel(tabs: [Tab(), Tab(), Tab(), Tab()], desktop: false)
+            tabsModel: TabsModel(tabs: [Tab(), Tab(), Tab(), Tab()], desktop: false),
+            fireproofing: MockFireproofing()
         )
     }
 

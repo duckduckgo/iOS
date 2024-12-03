@@ -111,7 +111,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL.makeSearchURL(query: query, queryContext: nil))
 
         // WHEN
-        mainVC.searchFor(query)
+        mainVC.searchFromOnboarding(for: query)
 
         // THEN
         assertExpected(queryURL: expectedUrl)
@@ -123,7 +123,7 @@ final class OnboardingNavigationDelegateTests: XCTestCase {
         let expectedUrl = try XCTUnwrap(URL(string: site))
 
         // WHEN
-        mainVC.navigateTo(url: expectedUrl)
+        mainVC.navigateFromOnboarding(to: expectedUrl)
 
         // THEN
         assertExpected(url: expectedUrl)

@@ -210,12 +210,12 @@ final class TabViewControllerMock: UIViewController, TabViewOnboardingDelegate {
         didCallDidTapDismissAction = true
     }
 
-    func searchFor(_ query: String) {
+    func searchFromOnboarding(for query: String) {
         didCallSearchForQuery = true
         capturedQuery = query
     }
 
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         didCallNavigateToURL = true
         capturedURL = url
     }

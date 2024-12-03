@@ -1130,6 +1130,12 @@ class MainViewController: UIViewController {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
 
+        if tab.url?.isDuckDuckGoSearch == true {
+            viewCoordinator.omniBar.setAccessoryButton(type: .chat)
+        } else {
+            viewCoordinator.omniBar.setAccessoryButton(type: .share)
+        }
+
         viewCoordinator.omniBar.startBrowsing()
     }
 

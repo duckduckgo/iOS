@@ -33,6 +33,11 @@ public enum OmniBarIcon: String {
 
 class OmniBar: UIView {
 
+    enum AccessoryType {
+        case share
+        case chat
+    }
+
     public static let didLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
     
     @IBOutlet weak var searchLoupe: UIView!
@@ -265,7 +270,18 @@ class OmniBar: UIView {
     public func hidePrivacyIcon() {
         privacyInfoContainer.privacyIcon.isHidden = true
     }
-    
+
+    public func setAccessoryButton(type: AccessoryType) {
+        switch type {
+        case .chat:
+            //Hide share button
+            //Show chat button
+        case .share:
+            //Hide share button
+            //Show chat button
+        }
+    }
+
     public func resetPrivacyIcon(for url: URL?) {
         cancelAllAnimations()
         privacyInfoContainer.privacyIcon.isHidden = false

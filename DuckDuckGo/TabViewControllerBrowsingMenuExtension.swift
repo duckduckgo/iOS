@@ -29,8 +29,11 @@ import PrivacyDashboard
 extension TabViewController {
 
     private var shouldShowAIChatInMenuHeader: Bool {
-        featureFlagger.isFeatureOn(.aiChatBrowsingToolbarShortcut) || AppDependencyProvider.shared.internalUserDecider.isInternalUser
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        return settings.isAIChatBrowsingToolbarShortcutFeatureEnabled
     }
+
     private var shouldShowPrintButtonInBrowsingMenu: Bool { shouldShowAIChatInMenuHeader }
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
@@ -102,10 +105,6 @@ extension TabViewController {
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
 
-        if let domain = self.privacyInfo?.domain {
-            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
-        }
-
         if shouldShowPrintButtonInBrowsingMenu {
             entries.append(.regular(name: UserText.actionPrintSite,
                                     accessibilityLabel: UserText.actionPrintSite,
@@ -114,6 +113,10 @@ extension TabViewController {
                 Pixel.fire(pixel: .browsingMenuListPrint)
                 self?.print()
             }))
+        }
+
+        if let domain = self.privacyInfo?.domain {
+            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 
         if link != nil {

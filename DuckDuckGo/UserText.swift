@@ -1315,6 +1315,13 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: - AI Chat
     public static let aiChatTitle = NSLocalizedString("aichat.title", value: "DuckDuckGo AI Chat", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
+    public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
+
+    public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")
+    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browsing Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
+
+    static let aiChatPreferencesCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.caption.link.markdown", value: "AI Chat is an optional feature available at [duck.ai](https://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.", comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
+
 
     // MARK: - New Tab Page
 

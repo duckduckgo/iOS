@@ -143,7 +143,9 @@ struct VPNStatusView: View {
     private func connectionView(with status: NEVPNStatus) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                Image(headerImageName(with: status)).padding([.bottom], 7)
+                Image(headerImageName(with: status))
+                    .useFullColorRendering()
+                    .padding([.bottom], 7)
 
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))

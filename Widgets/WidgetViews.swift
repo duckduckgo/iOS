@@ -43,11 +43,18 @@ struct FavoriteView: View {
                             .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                         
                         if let image = favorite.favicon {
-                            
-                            Image(uiImage: image)
-                                .scaleDown(image.size.width > 60)
-                                .useFullColorRendering()
-                                .cornerRadius(10)
+
+                            if image.size.width > 60 {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .useFullColorRendering()
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(10)
+                            } else {
+                                Image(uiImage: image)
+                                    .useFullColorRendering()
+                                    .cornerRadius(10)
+                            }
                             
                         } else if favorite.isDuckDuckGo {
                             
@@ -84,10 +91,9 @@ struct LargeSearchFieldView: View {
             ZStack {
 
                 RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                    .fill(Color.widgetSearchFieldBackground)
+                    .fill(Color(designSystemColor: .container))
                     .frame(minHeight: 46, maxHeight: 46)
                     .padding(.vertical, 16)
-                    .makeAccentable()
 
                 HStack {
 
@@ -102,7 +108,7 @@ struct LargeSearchFieldView: View {
                     Spacer()
 
                     Image(.findSearch20)
-                        .useAccentedRendering()
+                        .useFullColorRendering()
                         .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
 
                 }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
@@ -171,7 +177,6 @@ struct FavoritesWidgetView: View {
 
     var body: some View {
         ZStack {
-            // Rectangle().fill(Color(designSystemColor: .backgroundSheets))
 
             VStack(alignment: .center, spacing: 0) {
 
@@ -231,7 +236,7 @@ struct SearchWidgetView: View {
                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
 
                     RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                        .fill(Color.widgetSearchFieldBackground)
+                        .fill(Color(designSystemColor: .container))
                         .frame(width: 126, height: 46)
 
                     Image(.findSearch20)
@@ -254,13 +259,11 @@ struct PasswordsWidgetView: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                    .fill(Color(designSystemColor: .backgroundSheets))
-                    .accessibilityLabel(Text(UserText.passwords))
 
             VStack(alignment: .center, spacing: 6) {
 
                 Image(.widgetPasswordIllustration)
+                        .useFullColorRendering()
                         .frame(width: 96, height: 72)
                         .isHidden(false)
                         .accessibilityHidden(true)
@@ -334,14 +337,6 @@ extension View {
 }
 
 extension Image {
-
-    @ViewBuilder func scaleDown(_ shouldScale: Bool) -> Image {
-        if shouldScale {
-            self.resizable().aspectRatio(contentMode: .fit)
-        } else {
-            self
-        }
-    }
 
     /// Marks images as exempt from tint color overrides, such as favicons which should not have their color modified even when a tint color is set.
     @ViewBuilder func useFullColorRendering() -> some View {

@@ -20,10 +20,6 @@
 import Foundation
 import MaliciousSiteProtection
 
-protocol MaliciousSiteDetecting {
-    func evaluate(_ url: URL) async -> ThreatKind?
-}
-
 class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 
     func evaluate(_ url: URL) async -> ThreatKind? {

@@ -567,6 +567,7 @@ public struct UserText {
     static let netPVPNAlertsSectionHeader = NSLocalizedString("network.protection.vpn.alerts.section.header", value: "Notifications", comment: "Section header for the toggle for VPN notifications.")
     static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Notifications", comment: "Title for the toggle for VPN notifications.")
     static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
+    static let netPVPNShortcutsSectionHeader = NSLocalizedString("network.protection.vpn.shortcuts.section.header", value: "Shortcuts", comment: "Section header for the shortcuts section in VPN settings.")
     static let netPFrequentlyAskedQuestionsTitle = NSLocalizedString("network.protection.faq.title", value: "DuckDuckGo VPN FAQ", comment: "Title for the VPN FAQ screen.")
 
     static let netPOpenVPNQuickAction = NSLocalizedString("network.protection.quick-action.open-vpn", value: "Open VPN", comment: "Title text for an iOS quick action that opens VPN settings")
@@ -660,9 +661,14 @@ public struct UserText {
     static let itrFeedbackFormCategoryUnhelpful = NSLocalizedString("feedback.itr.category.unhelpful", value: "Call to Advisor was unhelpful", comment: "Category for unhelpful advisor calls")
     static let itrFeedbackFormCategorySomethingElse = NSLocalizedString("feedback.itr.category.something-else", value: "Something else", comment: "Category for other Identity Theft Restoration issues")
 
-    // MARK: VPN Widget
+    // MARK: VPN Shortcuts
 
     public static let vpnSettingsAddWidget = NSLocalizedString("vpn.settings.add.widget", value: "Add VPN Widget to Home Screen", comment: "VPN settings screen cell text for adding the VPN widget to the home screen")
+    public static let vpnSettingsAddControlCenterWidget = NSLocalizedString("vpn.settings.add.control-center.widget", value: "Add VPN to Control Center", comment: "VPN settings screen cell text for adding the VPN widget to the control center")
+    public static let vpnSettingsControlWithSiri = NSLocalizedString("vpn.settings.control.with.siri", value: "Control with Siri", comment: "VPN settings screen cell text to learn how to control the VPN with Siri")
+
+    // MARK: - VPN Widget
+
     public static let addVPNWidgetSettingsThirdParagraph = NSLocalizedString("vpn.addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "Title for the VPN widget onboarding screen")
 
     // MARK: Custom DNS

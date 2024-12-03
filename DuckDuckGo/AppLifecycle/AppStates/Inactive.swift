@@ -22,13 +22,10 @@ import Subscription
 
 struct Inactive: AppState {
 
-    let application: UIApplication
-
     init(application: UIApplication,
          accountManager: AccountManager,
          vpnFeatureVisibility: DefaultNetworkProtectionVisibility,
          vpnWorkaround: VPNRedditSessionWorkaround) {
-        self.application = application
         Task { @MainActor in
             await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility, accountManager: accountManager)
             await vpnWorkaround.removeRedditSessionWorkaround()

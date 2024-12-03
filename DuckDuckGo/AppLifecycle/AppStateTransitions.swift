@@ -109,9 +109,9 @@ extension AppState {
 
     func handleUnexpectedEvent(_ event: AppEvent) -> Self {
         Logger.lifecycle.error("Invalid transition (\(event.rawValue)) for state (\(type(of: self)))")
-        Pixel.fire(pixel: .appDidTransitionToUnexpectedState,
-                   withAdditionalParameters: [PixelParameters.appState: String(describing: type(of: self)),
-                                              PixelParameters.appEvent: event.rawValue])
+        DailyPixel.fireDailyAndCount(pixel: .appDidTransitionToUnexpectedState,
+                                     withAdditionalParameters: [PixelParameters.appState: String(describing: type(of: self)),
+                                                                PixelParameters.appEvent: event.rawValue])
         return self
     }
 

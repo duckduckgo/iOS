@@ -1844,8 +1844,7 @@ extension TabViewController: WKNavigationDelegate {
 
         Task { @MainActor in
             // Check if should show a special error page for malicious site
-            if let url = navigationAction.request.url,
-               !specialErrorPageNavigationHandler.isSpecialErrorPageVisible,
+            if !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
                await specialErrorPageNavigationHandler.handleSpecialErrorNavigation(navigationAction: navigationAction, webView: webView) {
                 decisionHandler(.cancel)
             } else {
@@ -1863,7 +1862,6 @@ extension TabViewController: WKNavigationDelegate {
                     decisionHandler(decision)
                 }
             }
-
         }
     }
     // swiftlint:enable cyclomatic_complexity

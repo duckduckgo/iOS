@@ -105,10 +105,6 @@ extension TabViewController {
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
 
-        if let domain = self.privacyInfo?.domain {
-            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
-        }
-
         if shouldShowPrintButtonInBrowsingMenu {
             entries.append(.regular(name: UserText.actionPrintSite,
                                     accessibilityLabel: UserText.actionPrintSite,
@@ -117,6 +113,10 @@ extension TabViewController {
                 Pixel.fire(pixel: .browsingMenuListPrint)
                 self?.print()
             }))
+        }
+
+        if let domain = self.privacyInfo?.domain {
+            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 
         if link != nil {

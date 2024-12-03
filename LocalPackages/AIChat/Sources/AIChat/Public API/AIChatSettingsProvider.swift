@@ -23,8 +23,8 @@ public protocol AIChatSettingsProvider {
     /// The URL used to open AI Chat in `AIChatViewController`.
     var aiChatURL: URL { get }
 
-    /// User settings state for AI Chat
-    var isAIChatUserSettingsEnabled: Bool { get }
+    /// User settings state for AI Chat browsing menu icon
+    var isAIChatBrowsingMenuUserSettingsEnabled: Bool { get }
 
     /// Remote feature flag state for AI Chat
     var isAIChatFeatureEnabled: Bool { get }
@@ -32,6 +32,6 @@ public protocol AIChatSettingsProvider {
     /// Remote feature flag for AI Chat shortcut in browsing menu
     var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool { get }
 
-    /// Update user settings state for AI Chat
-    func enableAIChatUserSettings(enable: Bool)
+    /// Update user settings state for AI Chat browsing menu
+    func enableAIChatBrowsingMenuUserSettings(enable: Bool)
 }

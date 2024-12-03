@@ -57,8 +57,8 @@ struct AIChatSettings: AIChatSettingsProvider {
         return url
     }
 
-    var isAIChatUserSettingsEnabled: Bool {
-        userDefaults.showAIChat
+    var isAIChatBrowsingMenuUserSettingsEnabled: Bool {
+        userDefaults.showAIChatBrowsingMenu
     }
 
     var isAIChatFeatureEnabled: Bool {
@@ -69,11 +69,11 @@ struct AIChatSettings: AIChatSettingsProvider {
         let isBrowsingToolbarShortcutFeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(AIChatSubfeature.browsingToolbarShortcut)
         let isInternalUser = internalUserDecider.isInternalUser
         let isFeatureEnabled = isBrowsingToolbarShortcutFeatureFlagEnabled || isInternalUser
-        return isFeatureEnabled && isAIChatUserSettingsEnabled
+        return isFeatureEnabled && isAIChatBrowsingMenuUserSettingsEnabled
     }
 
-    func enableAIChatUserSettings(enable: Bool) {
-        userDefaults.showAIChat = enable
+    func enableAIChatBrowsingMenuUserSettings(enable: Bool) {
+        userDefaults.showAIChatBrowsingMenu = enable
     }
 
     // MARK: - Private
@@ -90,19 +90,19 @@ struct AIChatSettings: AIChatSettingsProvider {
 
 private extension UserDefaults {
     enum Keys {
-        static let showAIChat = "aichat.settings.showAIChat"
+        static let showAIChatBrowsingMenu = "aichat.settings.showAIChatBrowsingMenu"
     }
 
-    static let showAIChatDefaultValue = true
+    static let showAIChatBrowsingMenuDefaultValue = true
 
-    @objc dynamic var showAIChat: Bool {
+    @objc dynamic var showAIChatBrowsingMenu: Bool {
         get {
-            value(forKey: Keys.showAIChat) as? Bool ?? Self.showAIChatDefaultValue
+            value(forKey: Keys.showAIChatBrowsingMenu) as? Bool ?? Self.showAIChatBrowsingMenuDefaultValue
         }
 
         set {
-            guard newValue != showAIChat else { return }
-            set(newValue, forKey: Keys.showAIChat)
+            guard newValue != showAIChatBrowsingMenu else { return }
+            set(newValue, forKey: Keys.showAIChatBrowsingMenu)
         }
     }
 }

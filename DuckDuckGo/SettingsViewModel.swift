@@ -263,9 +263,9 @@ final class SettingsViewModel: ObservableObject {
 
     var aiChatEnabledBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.aiChatSettings.isAIChatUserSettingsEnabled },
+            get: { self.aiChatSettings.isAIChatBrowsingMenuUserSettingsEnabled },
             set: { newValue in
-                self.aiChatSettings.enableAIChatUserSettings(enable: newValue)
+                self.aiChatSettings.enableAIChatBrowsingMenuUserSettings(enable: newValue)
             }
         )
     }

@@ -18,14 +18,37 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct SettingsAIChatView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
         List {
-            Section(footer: Text(UserText.aiChatSettingsEnableFooter)) {
-                SettingsCellView(label: UserText.aiChatSettingsEnableToggle,
+
+            VStack(alignment: .center) {
+                Image("SettingsDuckPlayerHero")
+                    .padding(.top, -20) // Adjust for the image padding
+
+                Text(UserText.aiChatFeatureName)
+                    .daxTitle3()
+
+                Text(.init(UserText.aiChatPreferencesCaptionWithLinkMarkdown))
+                    .environment(\.openURL, OpenURLAction { _ in
+                        /// Open link
+                        return .handled
+                    })
+                    .tint(Color.init(designSystemColor: .accent))
+                    .daxBodyRegular()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                    .padding(.top, 12)
+            }
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.clear)
+
+            Section {
+                SettingsCellView(label: UserText.aiChatSettingsEnableBrowsingMenuToggle,
                                  accessory: .toggle(isOn: viewModel.aiChatEnabledBinding))
             }
         }.applySettingsListModifiers(title: UserText.aiChatFeatureName,

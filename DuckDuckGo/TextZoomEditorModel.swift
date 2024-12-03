@@ -54,7 +54,7 @@ class TextZoomEditorModel: ObservableObject {
     }
 
     private func valueWasSet() {
-        title = UserText.textZoomWithPercentSheetTitle(TextZoomLevel.allCases[value].rawValue)
+        title = UserText.textZoomWithPercentForMenuItem(TextZoomLevel.allCases[value].rawValue)
         coordinator.set(textZoomLevel: TextZoomLevel.allCases[value], forHost: domain)
         NotificationCenter.default.post(
             name: AppUserDefaults.Notifications.textZoomChange,

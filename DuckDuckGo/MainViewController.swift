@@ -1514,13 +1514,15 @@ class MainViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 switch notification.object as? SettingsViewModel.SettingsDeepLinkSection {
-                
+
                 case .duckPlayer:
-                    let deepLinkTarget: SettingsViewModel.SettingsDeepLinkSection
-                        deepLinkTarget = .duckPlayer
-                    self?.launchSettings(deepLinkTarget: deepLinkTarget)
+                    self?.launchSettings(deepLinkTarget: .duckPlayer)
+
+                case .accessibility:
+                    self?.launchSettings(deepLinkTarget: .accessibility)
+
                 default:
-                    return
+                    break
                 }
             }
             .store(in: &settingsDeepLinkcancellables)

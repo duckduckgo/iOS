@@ -665,6 +665,7 @@ extension SettingsViewModel {
         case subscriptionFlow(origin: String? = nil)
         case restoreFlow
         case duckPlayer
+        case accessibility
         // Add other cases as needed
 
         var id: String {
@@ -675,6 +676,7 @@ extension SettingsViewModel {
             case .subscriptionFlow: return "subscriptionFlow"
             case .restoreFlow: return "restoreFlow"
             case .duckPlayer: return "duckPlayer"
+            case .accessibility: return "accessibility"
             // Ensure all cases are covered
             }
         }
@@ -683,7 +685,7 @@ extension SettingsViewModel {
         // Default to .sheet, specify .push where needed
         var type: DeepLinkType {
             switch self {
-            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer:
+            case .netP, .dbp, .itr, .subscriptionFlow, .restoreFlow, .duckPlayer, .accessibility:
                 return .navigationLink
             }
         }

@@ -22,16 +22,24 @@ import Core
 import Common
 
 protocol TextZoomStoring {
+
+    var settingsMessageDisplayedCount: Int { get }
+    func incrementSettingsMessageDisplayedCount()
+
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel?
     func set(textZoomLevel: TextZoomLevel, forDomain domain: String)
     func removeTextZoomLevel(forDomain domain: String)
     func resetTextZoomLevels(excludingDomains: [String])
+
 }
 
 class TextZoomStorage: TextZoomStoring {
 
     @UserDefaultsWrapper(key: .domainTextZoomStorage, defaultValue: [:])
-    var textZoomLevels: [String: Int]
+    private var textZoomLevels: [String: Int]
+
+    @UserDefaultsWrapper(key: .textZoomSettingsMessageDisplayedCount, defaultValue: 0)
+    var settingsMessageDisplayedCount: Int
 
     func textZoomLevelForDomain(_ domain: String) -> TextZoomLevel? {
         guard let zoomLevel = textZoomLevels[domain] else {
@@ -55,6 +63,10 @@ class TextZoomStorage: TextZoomStoring {
                 tld.eTLDplus1($0) == level.key
             })
         }
+    }
+
+    func incrementSettingsMessageDisplayedCount() {
+        settingsMessageDisplayedCount += 1
     }
 
 }

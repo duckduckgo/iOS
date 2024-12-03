@@ -30,6 +30,9 @@ protocol TextZoomCoordinating {
     /// Based on .textZoom feature flag
     var isFeatureEnabled: Bool { get }
 
+    /// True if the settings message should be displayed in the editor
+    var shouldShowSettingsMessage: Bool { get }
+
     /// Based on .textZoom feature flag and privay config exclusion list for this feature
     func isEnabled(forDomain: String?) -> Bool
 
@@ -67,6 +70,10 @@ final class TextZoomCoordinator: TextZoomCoordinating {
     let storage: TextZoomStoring
     let featureFlagger: FeatureFlagger
     let privacyConfigManaging: PrivacyConfigurationManaging
+
+    var shouldShowSettingsMessage: Bool {
+        storage.settingsMessageDisplayedCount < 3
+    }
 
     var isFeatureEnabled: Bool {
         featureFlagger.isFeatureOn(.textZoom)
@@ -141,7 +148,9 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         zoomController.modalPresentationStyle = .formSheet
         if #available(iOS 16.0, *) {
             zoomController.sheetPresentationController?.detents = [.custom(resolver: { _ in
-                return 152
+                // Figma: sheet is 208 - 21 padding for safe area, plus 28 if the message is shown
+                let spaceForInfoText = self.shouldShowSettingsMessage ? 28 : 0.0
+                return 187 + spaceForInfoText
             })]
 
             zoomController.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
@@ -152,6 +161,10 @@ final class TextZoomCoordinator: TextZoomCoordinating {
         }
 
         controller.present(zoomController, animated: true)
+
+        if shouldShowSettingsMessage {
+            incrementSettingsMessageDisplayedCounter()
+        }
     }
 
     func makeBrowsingMenuEntry(forLink link: Link,
@@ -164,7 +177,7 @@ final class TextZoomCoordinator: TextZoomCoordinating {
            let level = storage.textZoomLevelForDomain(domain) {
             label = UserText.textZoomWithPercentForMenuItem(level.rawValue)
         } else {
-            label = UserText.textZoomMenuItem
+            label = UserText.textZoomWithPercentForMenuItem(appSettings.defaultTextZoomLevel.rawValue)
         }
 
         return BrowsingMenuEntry.regular(name: label,
@@ -176,6 +189,10 @@ final class TextZoomCoordinator: TextZoomCoordinating {
                 Pixel.fire(pixel: .browsingMenuZoom)
             }
         }
+    }
+
+    func incrementSettingsMessageDisplayedCounter() {
+        storage.incrementSettingsMessageDisplayedCount()
     }
 }
 

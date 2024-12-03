@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "befc1f1094353d8d88a99ac08885684c978b2016",
-        "version" : "217.0.0"
+        "branch" : "sabrina/experiment-pixels",
+        "revision" : "c62fac4c79969c47c5396b23686c400df30b48eb"
       }
     },
     {

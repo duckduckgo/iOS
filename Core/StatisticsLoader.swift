@@ -21,6 +21,8 @@ import Common
 import Foundation
 import BrowserServicesKit
 import Networking
+import PixelKit
+import PixelExperimentKit
 import os.log
 
 public class StatisticsLoader {
@@ -35,15 +37,21 @@ public class StatisticsLoader {
     private let parser = AtbParser()
     private let atbPresenceFileMarker = BoolFileMarker(name: .isATBPresent)
     private let inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring
+    private let fireSearchExperimentPixels: () -> Void
+    private let fireAppRetentionExperimentPixels: () -> Void
 
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
          returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement(),
          usageSegmentation: UsageSegmenting = UsageSegmentation(),
-         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor()) {
+         inconsistencyMonitoring: StatisticsStoreInconsistencyMonitoring = StorageInconsistencyMonitor(),
+         fireAppRetentionExperimentPixels: @escaping () -> Void = PixelKit.fireAppRetentionExperimentPixels,
+         fireSearchExperimentPixels: @escaping () -> Void = PixelKit.fireSearchExperimentPixels) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
         self.usageSegmentation = usageSegmentation
         self.inconsistencyMonitoring = inconsistencyMonitoring
+        self.fireSearchExperimentPixels = fireSearchExperimentPixels
+        self.fireAppRetentionExperimentPixels = fireAppRetentionExperimentPixels
     }
 
     public func load(completion: @escaping Completion = {}) {
@@ -107,6 +115,7 @@ public class StatisticsLoader {
     }
 
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
+        fireSearchExperimentPixels()
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeSearchAtbURL() else {
             requestInstallStatistics {
                 self.updateUsageSegmentationAfterInstall(activityType: .search)
@@ -136,6 +145,7 @@ public class StatisticsLoader {
     }
 
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
+        fireAppRetentionExperimentPixels()
         guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
             requestInstallStatistics {
                 self.updateUsageSegmentationAfterInstall(activityType: .appUse)

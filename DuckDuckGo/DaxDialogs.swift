@@ -31,7 +31,6 @@ protocol EntityProviding {
 }
 
 protocol NewTabDialogSpecProvider {
-    func nextHomeScreenMessage() -> DaxDialogs.HomeScreenSpec?
     func nextHomeScreenMessageNew() -> DaxDialogs.HomeScreenSpec?
     func dismiss()
 }
@@ -144,14 +143,14 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                           highlightAddressBar: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajorUnique, type: .siteOwnedByMajorTracker)
 
-        static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
+        static let withOneTracker = BrowsingSpec(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
-                                                 highlightAddressBar: true,
+                                                 highlightAddressBar: false,
                                                  pixelName: .daxDialogsWithTrackersUnique, type: .withOneTracker)
 
-        static let withMultipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
+        static let withMultipleTrackers = BrowsingSpec(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
-                                                      highlightAddressBar: true,
+                                                      highlightAddressBar: false,
                                                       pixelName: .daxDialogsWithTrackersUnique, type: .withMultipleTrackers)
 
         // Message and CTA empty on purpose as for this case we use only pixelName and type
@@ -233,10 +232,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         self.addToDockManager = onboardingManager
     }
 
-    private var isNewOnboarding: Bool {
-        variantManager.isContextualDaxDialogsEnabled
-    }
-
     private var firstBrowsingMessageSeen: Bool {
         return settings.browsingAfterSearchShown
             || settings.browsingWithTrackersShown
@@ -272,17 +267,14 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     var isShowingSearchSuggestions: Bool {
-        guard isNewOnboarding else { return false }
         return currentHomeSpec == .initial
     }
 
     var isShowingSitesSuggestions: Bool {
-        guard isNewOnboarding else { return false }
         return lastShownDaxDialogType.flatMap(BrowsingSpec.SpecType.init(rawValue:)) == .visitWebsite || currentHomeSpec == .subsequent
     }
 
     var isShowingAddToDockDialog: Bool {
-        guard isNewOnboarding else { return false }
         return currentHomeSpec == .final && addToDockManager.addToDockEnabledState == .contextual
     }
 
@@ -293,7 +285,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     var isShowingFireDialog: Bool {
-        guard isNewOnboarding, let lastShownDaxDialogType else { return false }
+        guard let lastShownDaxDialogType else { return false }
         return BrowsingSpec.SpecType(rawValue: lastShownDaxDialogType) == .fire
     }
 
@@ -302,25 +294,16 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
     
     var shouldShowFireButtonPulse: Bool {
-        if isNewOnboarding {
-            // Show fire the user hasn't seen the fire education dialog or the fire button has not animated before.
-            nonDDGBrowsingMessageSeen && (!settings.fireMessageExperimentShown && settings.fireButtonPulseDateShown == nil) && isEnabled
-        } else {
-            nonDDGBrowsingMessageSeen && !settings.fireButtonEducationShownOrExpired && isEnabled
-        }
+        // Show fire the user hasn't seen the fire education dialog or the fire button has not animated before.
+        nonDDGBrowsingMessageSeen && (!settings.fireMessageExperimentShown && settings.fireButtonPulseDateShown == nil) && isEnabled
     }
 
     var shouldShowPrivacyButtonPulse: Bool {
-        guard isNewOnboarding else { return false }
         return settings.browsingWithTrackersShown && !settings.privacyButtonPulseShown && fireButtonPulseTimer == nil && isEnabled
     }
 
     func isStillOnboarding() -> Bool {
-        if isNewOnboarding {
-            if peekNextHomeScreenMessageExperiment() != nil {
-                return true
-            }
-        } else if peekNextHomeScreenMessage() != nil {
+        if peekNextHomeScreenMessageExperiment() != nil {
             return true
         }
         return false
@@ -337,7 +320,7 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func canEnableAddFavoriteFlow() -> Bool {
-        !isNewOnboarding
+        false // FIXME:
     }
 
     func enableAddFavoriteFlow() {
@@ -360,22 +343,19 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     private static let timeToFireButtonExpire: TimeInterval = 1 * 60 * 60
     
     private var lastVisitedOnboardingWebsiteURLPath: String? {
-        guard isNewOnboarding else { return nil }
         return settings.lastVisitedOnboardingWebsiteURLPath
     }
 
     private func saveLastVisitedOnboardingWebsite(url: URL?) {
-        guard isNewOnboarding, let url = url else { return }
+        guard let url = url else { return }
         settings.lastVisitedOnboardingWebsiteURLPath = url.absoluteString
     }
 
     private func removeLastVisitedOnboardingWebsite() {
-        guard isNewOnboarding else { return }
         settings.lastVisitedOnboardingWebsiteURLPath = nil
     }
 
     private var lastShownDaxDialogType: String? {
-        guard isNewOnboarding else { return nil }
         return settings.lastShownContextualOnboardingDialogType
     }
 
@@ -384,12 +364,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     private func saveLastShownDaxDialog(specType: BrowsingSpec.SpecType) {
-        guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = specType.rawValue
     }
 
     private func removeLastShownDaxDialog() {
-        guard isNewOnboarding else { return }
         settings.lastShownContextualOnboardingDialogType = nil
     }
 
@@ -404,13 +382,13 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             return BrowsingSpec.withoutTrackers
         case BrowsingSpec.SpecType.siteIsMajorTracker.rawValue:
             guard let host = privacyInfo.domain else { return nil }
-            return majorTrackerMessage(host)
+            return majorTrackerMessage(host, isReloadingDialog: true)
         case BrowsingSpec.SpecType.siteOwnedByMajorTracker.rawValue:
             guard let host = privacyInfo.domain, let owner = isOwnedByFacebookOrGoogle(host) else { return nil }
-            return majorTrackerOwnerMessage(host, owner)
+            return majorTrackerOwnerMessage(host, owner, isReloadingDialog: true)
         case BrowsingSpec.SpecType.withOneTracker.rawValue, BrowsingSpec.SpecType.withMultipleTrackers.rawValue:
             guard let entityNames = blockedEntityNames(privacyInfo.trackerInfo) else { return nil }
-            return trackersBlockedMessage(entityNames)
+            return trackersBlockedMessage(entityNames, isReloadingDialog: true)
         case BrowsingSpec.SpecType.fire.rawValue:
             return .fire
         case BrowsingSpec.SpecType.final.rawValue:
@@ -447,12 +425,10 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func setSearchMessageSeen() {
-        guard isNewOnboarding else { return }
         saveLastShownDaxDialog(specType: .visitWebsite)
     }
 
     func setFireEducationMessageSeen() {
-        guard isNewOnboarding else { return }
         // Set also privacy button pulse seen as we don't have to show anymore if we saw the fire educational message.
         settings.privacyButtonPulseShown = true
         settings.fireMessageExperimentShown = true
@@ -460,66 +436,29 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
     }
 
     func clearedBrowserData() {
-        guard isNewOnboarding else { return }
         setDaxDialogDismiss()
     }
 
     func setPrivacyButtonPulseSeen() {
-        guard isNewOnboarding else { return }
         settings.privacyButtonPulseShown = true
     }
 
     func setDaxDialogDismiss() {
-        guard isNewOnboarding else { return }
         clearOnboardingBrowsingData()
     }
 
     func setFinalOnboardingDialogSeen() {
-        guard isNewOnboarding else { return }
         settings.browsingFinalDialogShown = true
     }
 
     func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
 
-        var message: BrowsingSpec?
-        if isNewOnboarding {
-            message = nextBrowsingMessageExperiment(privacyInfo: privacyInfo)
-        } else {
-            guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
-            message = nextBrowsingMessage(privacyInfo: privacyInfo)
-        }
-
+        let message = nextBrowsingMessageExperiment(privacyInfo: privacyInfo)
         if message != nil {
             lastURLDaxDialogReturnedFor = privacyInfo.url
         }
         
         return message
-    }
-
-    private func nextBrowsingMessage(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
-        guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
-        guard let host = privacyInfo.domain else { return nil }
-        
-        if privacyInfo.url.isDuckDuckGoSearch {
-            return searchMessage()
-        }
-
-        // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(privacyInfo.url) {
-            return majorTrackerMessage(host)
-        }
-        
-        // won't be shown if major tracker message has already been shown
-        if let owner = isOwnedByFacebookOrGoogle(host) {
-            return majorTrackerOwnerMessage(host, owner)
-        }
-        
-        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo) {
-            return trackersBlockedMessage(entityNames)
-        }
-        
-        // only shown if first time on a non-ddg page and none of the non-ddg messages shown
-        return noTrackersMessage()
     }
 
     private func nextBrowsingMessageExperiment(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
@@ -546,12 +485,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
             spec = searchMessage()
         } else if isFacebookOrGoogle(privacyInfo.url) && shouldShowNetworkTrackerDialog {
             // won't be shown if owned by major tracker message has already been shown
-            spec = majorTrackerMessage(host)
+            spec = majorTrackerMessage(host, isReloadingDialog: false)
         } else if let owner = isOwnedByFacebookOrGoogle(host), shouldShowNetworkTrackerDialog {
             // won't be shown if major tracker message has already been shown
-            spec = majorTrackerOwnerMessage(host, owner)
+            spec = majorTrackerOwnerMessage(host, owner, isReloadingDialog: false)
         } else if let entityNames = blockedEntityNames(privacyInfo.trackerInfo), !settings.browsingWithTrackersShown {
-            spec = trackersBlockedMessage(entityNames)
+            spec = trackersBlockedMessage(entityNames, isReloadingDialog: false)
         } else if !settings.browsingWithoutTrackersShown && !privacyInfo.url.isDuckDuckGoSearch && !hasTrackers(host: host) {
             // if non duck duck go search and no trackers found and no tracker message already shown, show no trackers message
             spec = noTrackersMessage()
@@ -570,16 +509,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         return spec
     }
 
-    func nextHomeScreenMessage() -> HomeScreenSpec? {
-        guard let homeScreenSpec = peekNextHomeScreenMessage() else { return nil }
-
-        if homeScreenSpec != nextHomeScreenMessageOverride {
-            settings.homeScreenMessagesSeen += 1
-        }
-
-        return homeScreenSpec
-    }
-
     func nextHomeScreenMessageNew() -> HomeScreenSpec? {
         // Reset the last browsing information when opening a new tab so loading the previous website won't show again the Dax dialog
         clearedBrowserData()
@@ -590,25 +519,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         }
         currentHomeSpec = homeScreenSpec
         return homeScreenSpec
-    }
-
-    private func peekNextHomeScreenMessage() -> HomeScreenSpec? {
-        if nextHomeScreenMessageOverride != nil {
-            return nextHomeScreenMessageOverride
-        }
-
-        guard isEnabled else { return nil }
-        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else { return nil }
-
-        if settings.homeScreenMessagesSeen == 0 {
-            return .initial
-        }
-
-        if firstBrowsingMessageSeen {
-            return .final
-        }
-
-        return nil
     }
 
     private func peekNextHomeScreenMessageExperiment() -> HomeScreenSpec? {
@@ -645,9 +555,9 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         return nil
     }
 
-    func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity) -> DaxDialogs.BrowsingSpec? {
-        if !isNewOnboarding && settings.browsingMajorTrackingSiteShown { return nil }
-       
+    func majorTrackerOwnerMessage(_ host: String, _ majorTrackerEntity: Entity, isReloadingDialog: Bool) -> DaxDialogs.BrowsingSpec? {
+        if !isReloadingDialog && settings.browsingMajorTrackingSiteShown { return nil }
+        
         guard let entityName = majorTrackerEntity.displayName,
             let entityPrevalence = majorTrackerEntity.prevalence else { return nil }
         settings.browsingMajorTrackingSiteShown = true
@@ -657,8 +567,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                            entityPrevalence)
     }
     
-    private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
-        if !isNewOnboarding && settings.browsingMajorTrackingSiteShown { return nil }
+    private func majorTrackerMessage(_ host: String, isReloadingDialog: Bool) -> DaxDialogs.BrowsingSpec? {
+        if !isReloadingDialog && settings.browsingMajorTrackingSiteShown { return nil }
 
         guard let entityName = entityProviding.entity(forHost: host)?.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
@@ -677,8 +587,8 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         return BrowsingSpec.final
     }
 
-    private func trackersBlockedMessage(_ entitiesBlocked: [String]) -> BrowsingSpec? {
-        if !isNewOnboarding && settings.browsingWithTrackersShown { return nil }
+    private func trackersBlockedMessage(_ entitiesBlocked: [String], isReloadingDialog: Bool) -> BrowsingSpec? {
+        if !isReloadingDialog && settings.browsingWithTrackersShown { return nil }
 
         var spec: BrowsingSpec?
         switch entitiesBlocked.count {
@@ -689,24 +599,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case 1:
             settings.browsingWithTrackersShown = true
             let args = entitiesBlocked[0]
-            spec = if isNewOnboarding {
-                BrowsingSpec.withOneTracker.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker, args: args)
-            } else {
-                BrowsingSpec.withOneTracker.format(args: args)
-            }
+            spec = BrowsingSpec.withOneTracker.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker, args: args)
 
         default:
             settings.browsingWithTrackersShown = true
             let args: [CVarArg] = [entitiesBlocked.count - 2, entitiesBlocked[0], entitiesBlocked[1]]
-            spec = if isNewOnboarding {
-                BrowsingSpec.withMultipleTrackers.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers, args: args)
-            } else {
-                BrowsingSpec.withMultipleTrackers.format(args: args)
-            }
-        }
-        // New Contextual onboarding doesn't highlight the address bar. This checks prevents to cancel the lottie animation.
-        if isNewOnboarding {
-            spec?.highlightAddressBar = false
+            spec = BrowsingSpec.withMultipleTrackers.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers, args: args)
         }
         return spec
     }

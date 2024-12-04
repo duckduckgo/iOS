@@ -27,9 +27,6 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    public static let newOnboardingIntro = FeatureName(rawValue: "newOnboardingIntro")
-    public static let newOnboardingIntroHighlights = FeatureName(rawValue: "newOnboardingIntroHighlights")
-    public static let contextualDaxDialogs = FeatureName(rawValue: "contextualDaxDialogs")
 }
 
 public struct VariantIOS: Variant {
@@ -57,10 +54,6 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
-
-        VariantIOS(name: "ms", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro]),
-        VariantIOS(name: "mu", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro, .contextualDaxDialogs]),
-        VariantIOS(name: "mx", weight: 1, isIncluded: When.always, features: [.newOnboardingIntroHighlights, .contextualDaxDialogs]),
 
         returningUser
     ]

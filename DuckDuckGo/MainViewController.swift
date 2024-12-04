@@ -864,18 +864,10 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
-        if variantManager.isContextualDaxDialogsEnabled {
-            // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
-            currentTab?.dismissContextualDaxFireDialog()
-            ViewHighlighter.hideAll()
-            showClearDataAlert()
-        } else {
-            if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-                segueToActionSheetDaxDialogWithSpec(spec)
-            } else {
-               showClearDataAlert()
-            }
-        }
+        // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
+        currentTab?.dismissContextualDaxFireDialog()
+        ViewHighlighter.hideAll()
+        showClearDataAlert()
         
         performCancel()
     }
@@ -2733,9 +2725,8 @@ extension MainViewController: AutoClearWorker {
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
 
-            if self.variantManager.isContextualDaxDialogsEnabled {
-                DaxDialogs.shared.clearedBrowserData()
-            }
+            DaxDialogs.shared.clearedBrowserData()
+
         }
     }
     

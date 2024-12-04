@@ -296,6 +296,9 @@ extension MainViewController {
                                                             fireproofing: fireproofing,
                                                             websiteDataManager: websiteDataManager)
 
+        let aiChatSettings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                            internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                   subscriptionFeatureAvailability: subscriptionFeatureAvailability,
@@ -304,7 +307,8 @@ extension MainViewController {
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager,
                                                   privacyProDataReporter: privacyProDataReporter,
-                                                  textZoomCoordinator: textZoomCoordinator)
+                                                  textZoomCoordinator: textZoomCoordinator,
+                                                  aiChatSettings: aiChatSettings)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,

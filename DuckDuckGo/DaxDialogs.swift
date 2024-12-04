@@ -408,12 +408,6 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         fireButtonPulseTimer?.invalidate()
         settings.fireButtonEducationShownOrExpired = true
     }
-    
-    func fireButtonEducationMessage() -> ActionSheetSpec? {
-        guard shouldShowFireButtonPulse else { return nil }
-        settings.fireButtonEducationShownOrExpired = true
-        return ActionSheetSpec.fireButtonEducation
-    }
 
     func setSearchMessageSeen() {
         saveLastShownDaxDialog(specType: .visitWebsite)

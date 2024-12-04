@@ -163,4 +163,3 @@ final class AppDependencyProvider: DependencyProvider {
     }
 
 }
-

@@ -97,7 +97,6 @@ final class OnboardingDebugViewModel: ObservableObject {
 
     func resetDaxDialogs() {
         settings.isDismissed = false
-        settings.homeScreenMessagesSeen = 0
         settings.browsingAfterSearchShown = false
         settings.browsingWithTrackersShown = false
         settings.browsingWithoutTrackersShown = false

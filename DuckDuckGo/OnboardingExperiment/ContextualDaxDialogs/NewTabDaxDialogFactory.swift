@@ -87,11 +87,14 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createAddFavoriteDialog(message: String) -> some View {
         FadeInView {
-            DaxDialogView(logoPosition: .top) {
-                ContextualDaxDialogContent(message: NSAttributedString(string: message))
+            ScrollView(.vertical) {
+                DaxDialogView(logoPosition: .top) {
+                    ContextualDaxDialogContent(message: NSAttributedString(string: message))
+                }
+                .padding()
             }
-            .padding()
         }
+        .onboardingContextualBackgroundStyle(background: .illustratedGradient)
     }
 
     private func createFinalDialog(onDismiss: @escaping () -> Void) -> some View {

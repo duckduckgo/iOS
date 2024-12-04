@@ -464,12 +464,6 @@ class MainViewController: UIViewController {
     }
 
     func startAddFavoriteFlow() {
-        // Disable add favourite flow when new onboarding experiment is running and open a new tab.
-        guard contextualOnboardingLogic.canEnableAddFavoriteFlow() else {
-            newTab()
-            return
-        }
-
         contextualOnboardingLogic.enableAddFavoriteFlow()
         if tutorialSettings.hasSeenOnboarding {
             newTab()

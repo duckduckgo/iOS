@@ -48,6 +48,7 @@ extension MainViewController {
         guard canDisplayAddFavoriteVisualIndicator, let window = view.window, presentedViewController == nil else { return }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard self.canDisplayAddFavoriteVisualIndicator else { return }
             ViewHighlighter.hideAll()
             ViewHighlighter.showIn(window, focussedOnView: self.presentedMenuButton)
         }

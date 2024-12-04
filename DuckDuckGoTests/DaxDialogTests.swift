@@ -71,34 +71,14 @@ final class DaxDialog: XCTestCase {
         setupUserDefault(with: #file)
         entityProvider = MockEntityProvider()
     }
-    
-    func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessagesShown() throws {
-        throw XCTSkip("Re-Enable Add Favorite Flow")
-        mockVariantManager.isSupportedReturns = false
-        onboarding.enableAddFavoriteFlow()
-        onboarding.resumeRegularFlow()
-        XCTAssertNil(onboarding.nextHomeScreenMessageNew())
-        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
-        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.google)))
-        XCTAssertEqual(onboarding.nextHomeScreenMessageNew(), .final)
-        XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
-    }
 
-    func testWhenStartingAddFavoriteFlowThenNextMessageIsAddFavorite() throws {
-        throw XCTSkip("Re-Enable Add Favorite Flow")
+    func testWhenStartingAddFavoriteFlowThenNextMessageIsAddFavorite() {
+        // WHEN
         onboarding.enableAddFavoriteFlow()
+
+        // THEN
         XCTAssertEqual(onboarding.nextHomeScreenMessageNew(), .addFavorite)
-        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertTrue(onboarding.isAddFavoriteFlow)
-    }
-
-    func testWhenStartingNextMessageAndAddFavoriteFlowThenNextHomeScreenMessagesSeenDoesNotIncrement() throws {
-        throw XCTSkip("Re-Enable Add Favorite Flow")
-        XCTAssertNotNil(onboarding.nextHomeScreenMessageNew())
-        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
-        onboarding.enableAddFavoriteFlow()
-        XCTAssertEqual(onboarding.nextHomeScreenMessageNew(), .addFavorite)
-        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectly() {
@@ -755,39 +735,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertNil(settings.lastVisitedOnboardingWebsiteURLPath)
     }
 
-    func testWhenCanEnableAddFavoritesFlowIsCalled_ThenReturnFalse() {
-        // GIVEN
-        let sut = makeSUT(settings: InMemoryDaxDialogsSettings())
-
-        // WHEN
-        let result = sut.canEnableAddFavoriteFlow()
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
-    func testWhenControlGroup_AndCanEnableAddFavoritesFlowIsCalled_ThenReturnTrue() throws {
-        throw XCTSkip("Re-Enable Add Favorite Flow")
-        // WHEN
-        let result = onboarding.canEnableAddFavoriteFlow()
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenControlGroup_AndEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsTrue() throws {
-        throw XCTSkip("Re-Enable Add Favorite Flow")
-        // GIVEN
-        XCTAssertFalse(onboarding.isAddFavoriteFlow)
-
-        // WHEN
-        onboarding.enableAddFavoriteFlow()
-
-        // THEN
-        XCTAssertTrue(onboarding.isAddFavoriteFlow)
-    }
-
-    func testWhenEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsFalse() {
+    func testWhenEnableAddFavoritesFlowIsCalled_ThenIsAddFavoriteFlowIsTrue() {
         // GIVEN
         let sut = makeSUT(settings: InMemoryDaxDialogsSettings())
         XCTAssertFalse(sut.isAddFavoriteFlow)
@@ -796,7 +744,7 @@ final class DaxDialog: XCTestCase {
         sut.enableAddFavoriteFlow()
 
         // THEN
-        XCTAssertFalse(sut.isAddFavoriteFlow)
+        XCTAssertTrue(sut.isAddFavoriteFlow)
     }
 
     func testWhenBlockedTrackersDialogSeen_AndMajorTrackerNotSeen_ThenReturnNilSpec() {

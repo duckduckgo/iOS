@@ -27,8 +27,8 @@ struct SettingsAIChatView: View {
         List {
 
             VStack(alignment: .center) {
-                Image("SettingsDuckPlayerHero")
-                    .padding(.top, -20) // Change this to AI Chat image
+                Image("SettingsAIChatHero")
+                    .padding(.top, -20)
 
                 Text(UserText.aiChatFeatureName)
                     .daxTitle3()

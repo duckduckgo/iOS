@@ -81,7 +81,7 @@ import os.log
     private var syncStateCancellable: AnyCancellable?
     private var isSyncInProgressCancellable: AnyCancellable?
 
-    private let crashCollection = CrashCollection(platform: .iOS)
+    private let crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS))
     private var crashReportUploaderOnboarding: CrashCollectionOnboarding?
 
     private var autofillPixelReporter: AutofillPixelReporter?

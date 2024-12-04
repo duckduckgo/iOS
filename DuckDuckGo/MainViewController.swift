@@ -178,10 +178,13 @@ class MainViewController: UIViewController {
     }
     
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
     let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
+
+    var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -204,9 +207,11 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
+        fireproofing: Fireproofing,
         subscriptionCookieManager: SubscriptionCookieManaging,
-        textZoomCoordinator: TextZoomCoordinating
+        textZoomCoordinator: TextZoomCoordinating,
+        websiteDataManager: WebsiteDataManaging,
+        appDidFinishLaunchingStartTime: CFAbsoluteTime?
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
@@ -232,7 +237,9 @@ class MainViewController: UIViewController {
                                      featureFlagger: featureFlagger,
                                      subscriptionCookieManager: subscriptionCookieManager,
                                      appSettings: appSettings,
-                                     textZoomCoordinator: textZoomCoordinator)
+                                     textZoomCoordinator: textZoomCoordinator,
+                                     websiteDataManager: websiteDataManager,
+                                     fireproofing: fireproofing)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -246,6 +253,8 @@ class MainViewController: UIViewController {
         self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.websiteDataManager = websiteDataManager
+        self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
 
         super.init(nibName: nil, bundle: nil)
         
@@ -337,7 +346,14 @@ class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        defer {
+            if let appDidFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
         // Needs to be called here because sometimes the frames are not the expected size during didLoad
         refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
 
@@ -1814,7 +1830,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ updatedQuery: String) {
         if updatedQuery.isEmpty {
-            if newTabPageViewController != nil {
+            if newTabPageViewController != nil || !omniBar.textField.isEditing {
                 hideSuggestionTray()
             } else {
                 let didShow = tryToShowSuggestionTray(.favorites)
@@ -2549,6 +2565,8 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
     func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
+        DailyPixel.fireDaily(.tabSwitcherOpenDaily, withAdditionalParameters: TabSwitcherOpenDailyPixel().parameters(with: tabManager.model.tabs))
+
         performCancel()
         showTabSwitcher()
     }
@@ -2660,7 +2678,7 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        await WebCacheManager.shared.clear()
+        await websiteDataManager.clear(dataStore: WKWebsiteDataStore.default())
         pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
         AutoconsentManagement.shared.clearCache()
@@ -2819,11 +2837,11 @@ extension MainViewController: OnboardingDelegate {
 }
 
 extension MainViewController: OnboardingNavigationDelegate {
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         self.loadUrl(url, fromExternalLink: true)
     }
-    
-    func searchFor(_ query: String) {
+
+    func searchFromOnboarding(for query: String) {
         self.loadQuery(query)
     }
 }

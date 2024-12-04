@@ -29,14 +29,16 @@ final class SubscriptionFlowViewModelTests: XCTestCase {
         let accountManager = AccountManagerMock()
         let subscriptionService = DefaultSubscriptionEndpointService(currentServiceEnvironment: .production)
         let authService = DefaultAuthEndpointService(currentServiceEnvironment: .production)
-        let storePurchaseManager = DefaultStorePurchaseManager()
+        let subscriptionFeatureMappingCache = SubscriptionFeatureMappingCacheMock()
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
         return SubscriptionManagerMock(accountManager: accountManager,
                                        subscriptionEndpointService: subscriptionService,
                                        authEndpointService: authService,
                                        storePurchaseManager: storePurchaseManager,
                                        currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
                                                                                    purchasePlatform: .appStore),
-                                       canPurchase: true)
+                                       canPurchase: true,
+                                       subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
     }()
 
     let subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled

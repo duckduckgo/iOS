@@ -15,7 +15,7 @@ target_os="iOS-18-1"
 check_maestro() {
 
     local command_name="maestro"
-    local known_version="1.36.0"
+    local known_version="1.39.2"
 
     if command -v $command_name > /dev/null 2>&1; then
       local version_output=$($command_name -v 2>&1 | tail -n 1)

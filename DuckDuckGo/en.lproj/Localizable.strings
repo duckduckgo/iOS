@@ -1994,6 +1994,12 @@ https://duckduckgo.com/mac";
 /* Deactivate button */
 "pm.deactivate" = "Deactivate";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "Email (optional)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "name@email.com";
+
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
 "ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
 
@@ -2028,7 +2034,7 @@ https://duckduckgo.com/mac";
 "ppro.feedback-form.select-category.title" = "Select a category";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-1" = "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.";
+"ppro.feedback-form.text-1" = "Found an issue not covered in our [help center](duck://)? We definitely want to know about it.\n\nProvide an email if you’d like us to contact you about this issue (we may not be able to respond to all issues):";
 
 /* Text for the body of the PPro feedback form */
 "ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
@@ -2369,6 +2375,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Subscription Settings button text for privacy pro */
 "settings.subscription.manage" = "Subscription Settings";
+
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Includes our VPN and Identity Theft Restoration.";
 
 /* Call to action title for Privacy Pro settings */
 "settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";

@@ -67,6 +67,18 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
         return .disabled(.disabledInConfig) // this is not used in platform tests, so mocking this poorly for now
     }
 
+    func stateFor(subfeatureID: SubfeatureID, parentFeatureID: ParentFeatureID, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> PrivacyConfigurationFeatureState {
+        return .disabled(.disabledInConfig)
+    }
+
+    func cohorts(for subfeature: any PrivacySubfeature) -> [PrivacyConfigurationData.Cohort]? {
+        return nil
+    }
+
+    func cohorts(subfeatureID: SubfeatureID, parentFeatureID: ParentFeatureID) -> [PrivacyConfigurationData.Cohort]? {
+        return nil
+    }
+
     var protectedDomains = Set<String>()
     func isProtected(domain: String?) -> Bool {
         return protectedDomains.contains(domain ?? "")

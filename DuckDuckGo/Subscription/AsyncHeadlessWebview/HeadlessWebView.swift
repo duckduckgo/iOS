@@ -22,6 +22,7 @@ import SwiftUI
 import WebKit
 import UserScript
 import BrowserServicesKit
+import Core
 
 struct HeadlessWebView: UIViewRepresentable {
     weak var userScript: UserScriptMessaging?
@@ -85,7 +86,7 @@ struct HeadlessWebView: UIViewRepresentable {
         
         // Enable content blocking rules
         if settings.contentBlocking {
-            let sourceProvider = DefaultScriptSourceProvider()
+            let sourceProvider = DefaultScriptSourceProvider(fireproofing: UserDefaultsFireproofing.xshared)
             let contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
             let contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                                 properties: sourceProvider.contentScopeProperties)

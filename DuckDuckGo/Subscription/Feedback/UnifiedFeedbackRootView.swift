@@ -24,7 +24,7 @@ struct UnifiedFeedbackRootView: View {
     @StateObject var viewModel: UnifiedFeedbackFormViewModel
 
     var body: some View {
-        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormTitle, sources: UnifiedFeedbackReportType.self, selection: $viewModel.selectedReportType) {
+        UnifiedFeedbackCategoryView(UserText.pproFeedbackFormTitle, options: UnifiedFeedbackReportType.allCases, selection: $viewModel.selectedReportType) {
             if let selectedReportType = viewModel.selectedReportType {
                 switch UnifiedFeedbackReportType(rawValue: selectedReportType) {
                 case nil:
@@ -54,7 +54,7 @@ struct UnifiedFeedbackRootView: View {
     @ViewBuilder
     func reportProblemView() -> some View {
         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportProblemTitle,
-                                    sources: UnifiedFeedbackCategory.self,
+                                    options: viewModel.availableCategories,
                                     selection: $viewModel.selectedCategory) {
             Group {
                 if let selectedCategory = viewModel.selectedCategory {
@@ -63,28 +63,28 @@ struct UnifiedFeedbackRootView: View {
                         EmptyView()
                     case .subscription:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPProProblemTitle,
-                                                    sources: PrivacyProFeedbackSubcategory.self,
+                                                    options: PrivacyProFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .vpn:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportVPNProblemTitle,
-                                                    sources: VPNFeedbackSubcategory.self,
+                                                    options: VPNFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .pir:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportPIRProblemTitle,
-                                                    sources: PIRFeedbackSubcategory.self,
+                                                    options: PIRFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
                         }
                     case .itr:
                         UnifiedFeedbackCategoryView(UserText.pproFeedbackFormReportITRProblemTitle,
-                                                    sources: ITRFeedbackSubcategory.self,
+                                                    options: ITRFeedbackSubcategory.allCases,
                                                     selection: $viewModel.selectedSubcategory) {
                             IssueDescriptionFormView(viewModel: viewModel,
                                                      placeholder: UserText.pproFeedbackFormReportProblemPlaceholder)
@@ -106,21 +106,21 @@ struct UnifiedFeedbackRootView: View {
     }
 }
 
-struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.AllCases == [Category], Category.RawValue == String {
+struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destination: View>: View where Category.RawValue == String {
     let title: String
     let prompt: String
-    let sources: Category.Type
+    let options: [Category]
     let selection: Binding<String?>
     let destination: () -> Destination
 
     init(_ title: String,
          prompt: String = UserText.pproFeedbackFormSelectCategoryTitle,
-         sources: Category.Type,
+         options: [Category],
          selection: Binding<String?>,
          @ViewBuilder destination: @escaping () -> Destination) {
         self.title = title
         self.prompt = prompt
-        self.sources = sources
+        self.options = options
         self.selection = selection
         self.destination = destination
     }
@@ -129,7 +129,7 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
         VStack {
             List(selection: selection) {
                 Section {
-                    ForEach(sources.allCases) { option in
+                    ForEach(options) { option in
                         NavigationLink {
                             destination()
                         } label: {
@@ -142,6 +142,7 @@ struct UnifiedFeedbackCategoryView<Category: FeedbackCategoryProviding, Destinat
                     }
                 } header: {
                     Text(prompt)
+                        .font(.caption)
                 }
             }
             .listRowBackground(Color(designSystemColor: .surface))
@@ -219,6 +220,7 @@ private struct CompactIssueDescriptionFormView: View {
 private struct IssueDescriptionFormView: View {
     @ObservedObject var viewModel: UnifiedFeedbackFormViewModel
     @FocusState private var isTextEditorFocused: Bool
+    @Environment(\.colorScheme) private var colorScheme
 
     let placeholder: String
 
@@ -233,21 +235,47 @@ private struct IssueDescriptionFormView: View {
             }
     }
 
+    private var textFieldBackgroundColor: Color {
+        colorScheme == .light ? Color(designSystemColor: .surface) : Color(uiColor: UIColor(hex: "1C1C1E"))
+    }
+
     @ViewBuilder
     private func form() -> some View {
         ScrollView {
             ScrollViewReader { scrollView in
                 VStack {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 0) {
                         header()
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
                         IssueDescriptionTextEditor(label: UserText.pproFeedbackFormTextBoxTitle,
                                                    placeholder: placeholder,
                                                    text: $viewModel.feedbackFormText,
                                                    focusState: $isTextEditorFocused,
                                                    scrollViewProxy: scrollView)
+                            .padding(.bottom, 10)
+                        Text(UserText.pproFeedbackFormEmailLabel)
+                            .font(.caption)
+                            .textCase(.uppercase)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 4)
+                        TextField(UserText.pproFeedbackFormEmailPlaceholder, text: $viewModel.userEmail)
+                            .font(.body)
+                            .foregroundColor(.primary)
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                            .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
+                            .background(
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8.0)
+                                        .stroke(textFieldBackgroundColor, lineWidth: 0.4)
+                                    RoundedRectangle(cornerRadius: 8.0)
+                                        .fill(textFieldBackgroundColor)
+                                }
+                            )
                         footer()
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
                     }
                     .foregroundColor(.secondary)
                     .background(Color(designSystemColor: .background))
@@ -321,11 +349,17 @@ private struct IssueDescriptionFormView: View {
 }
 
 private struct IssueDescriptionTextEditor: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let label: String
     let placeholder: String
     let text: Binding<String>
     let focusState: FocusState<Bool>.Binding
     let scrollViewProxy: ScrollViewProxy
+
+    private var editorBackgroundColor: Color {
+        colorScheme == .light ? Color(designSystemColor: .surface) : Color(uiColor: UIColor(hex: "1C1C1E"))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -333,11 +367,11 @@ private struct IssueDescriptionTextEditor: View {
                 .font(.caption)
                 .textCase(.uppercase)
                 .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, 16)
             TextEditorWithPlaceholder(text: text, placeholder: placeholder)
                 .font(.body)
                 .foregroundColor(.primary)
-                .background(Color(designSystemColor: .panel))
+                .background(editorBackgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: 8.0, style: .continuous))
                 .frame(height: 100)
                 .fixedSize(horizontal: false, vertical: true)
@@ -383,12 +417,13 @@ private struct TextEditorWithPlaceholder: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: text)
+                .padding(.horizontal, 12)
             if text.wrappedValue.isEmpty {
                 Text(placeholder)
                     .foregroundColor(.secondary)
                     .opacity(0.5)
-                    .padding(.top, 8)
-                    .padding(.leading, 5)
+                    .padding(.top, 10)
+                    .padding(.leading, 16)
             }
         }
     }

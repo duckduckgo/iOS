@@ -32,9 +32,14 @@ extension VPNAddWidgetTip: Tip {
         case addWidget = "com.duckduckgo.vpn.tip.addWidget.action.addWidget"
     }
 
-    static let geolocationTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.addWidget.geolocationTipDismissedEvent")
-
-    static let snoozeTipDismissedEvent = Tips.Event(id: "com.duckduckgo.vpn.tip.addWidget.geolocationTipDismissedEvent")
+    /// This condition tries to verify that this tip is distanced from the previous tip..
+    ///
+    /// The conditions that will trigger this are:
+    ///     - The status view was opened when previous tip's status is invalidated.
+    ///     - The VPN is enabled when previous tip's status is invalidated.
+    ///
+    @Parameter
+    static var isDistancedFromPreviousTip: Bool = false
 
     @Parameter(.transient)
     static var vpnEnabled: Bool = false
@@ -65,14 +70,11 @@ extension VPNAddWidgetTip: Tip {
     }
 
     var rules: [Rule] {
-        #Rule(Self.geolocationTipDismissedEvent) {
-            $0.donations.count > 0
-        }
-        #Rule(Self.snoozeTipDismissedEvent) {
-            $0.donations.count > 0
-        }
         #Rule(Self.$vpnEnabled) {
             $0 == false
+        }
+        #Rule(Self.$isDistancedFromPreviousTip) {
+            $0
         }
     }
 }

@@ -115,6 +115,14 @@ final class MockTabDelegate: TabDelegate {
 
 }
 
+final class MockCredentialCreator: URLCredentialCreating {
+
+    func urlCredentialFrom(trust: SecTrust?) -> URLCredential? {
+        return URLCredential(user: "", password: "", persistence: .forSession)
+    }
+
+}
+
 extension TabViewController {
 
     static func fake(
@@ -138,7 +146,9 @@ extension TabViewController {
             urlCredentialCreator: MockCredentialCreator(),
             featureFlagger: featureFlagger,
             subscriptionCookieManager: SubscriptionCookieManagerMock(),
-            textZoomCoordinator: MockTextZoomCoordinator()
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            websiteDataManager: MockWebsiteDataManager(),
+            fireproofing: MockFireproofing()
         )
         tab.attachWebView(configuration: .nonPersistent(), andLoadRequest: nil, consumeCookies: false, customWebView: customWebView)
         return tab

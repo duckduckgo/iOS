@@ -23,6 +23,53 @@ import XCTest
 
 @testable import Core
 
+class MockStatisticsStore: StatisticsStore {
+
+    var installDate: Date?
+    var atb: String?
+    var searchRetentionAtb: String?
+    var appRetentionAtb: String?
+
+    var hasInstallStatistics: Bool {
+        return atb != nil
+    }
+
+    var variant: String?
+}
+
+final class MockInternalUserStoring: InternalUserStoring {
+    var isInternalUser: Bool = false
+}
+
+extension DefaultInternalUserDecider {
+    convenience init(mockedStore: MockInternalUserStoring = MockInternalUserStoring()) {
+        self.init(store: mockedStore)
+    }
+}
+
+class MockEmbeddedDataProvider: EmbeddedDataProvider {
+    var embeddedDataEtag: String
+
+    var embeddedData: Data
+
+    init(data: Data, etag: String) {
+        embeddedData = data
+        embeddedDataEtag = etag
+    }
+}
+
+class MockDomainsProtectionStore: DomainsProtectionStore {
+    var unprotectedDomains = Set<String>()
+
+    func disableProtection(forDomain domain: String) {
+        unprotectedDomains.remove(domain)
+    }
+
+    func enableProtection(forDomain domain: String) {
+        unprotectedDomains.insert(domain)
+    }
+}
+
 final class UserAgentTests: XCTestCase {
     
     private struct DefaultAgent {

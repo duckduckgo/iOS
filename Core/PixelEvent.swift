@@ -59,6 +59,7 @@ extension Pixel {
         case tabSwitcherClickCloseTab
         case tabSwitcherSwipeCloseTab
         case tabSwitchLongPressNewTab
+        case tabSwitcherOpenDaily
 
         case settingsDoNotSellShown
         case settingsDoNotSellOn
@@ -473,7 +474,22 @@ extension Pixel {
 
         case networkProtectionConfigurationInvalidPayload(configuration: Configuration)
 
-        case networkProtectionMalformedErrorDetected
+        // MARK: - VPN Tips
+
+        case networkProtectionGeoswitchingTipShown
+        case networkProtectionGeoswitchingTipActioned
+        case networkProtectionGeoswitchingTipDismissed
+        case networkProtectionGeoswitchingTipIgnored
+
+        case networkProtectionSnoozeTipShown
+        case networkProtectionSnoozeTipActioned
+        case networkProtectionSnoozeTipDismissed
+        case networkProtectionSnoozeTipIgnored
+
+        case networkProtectionWidgetTipShown
+        case networkProtectionWidgetTipActioned
+        case networkProtectionWidgetTipDismissed
+        case networkProtectionWidgetTipIgnored
 
         // MARK: remote messaging pixels
         
@@ -517,6 +533,10 @@ extension Pixel {
                                               component: ContentBlockerDebugEvents.Component)
         
         case contentBlockingCompilationTime
+        case contentBlockingLookupRulesSucceeded
+        case contentBlockingFetchLRCSucceeded
+        case contentBlockingNoMatchInLRC
+        case contentBlockingLRCMissing
         
         case ampBlockingRulesCompilationFailed
         
@@ -533,7 +553,7 @@ extension Pixel {
         
         case cookieDeletionTime(_ time: BucketAggregation)
         case cookieDeletionLeftovers
-        case legacyDataClearingTime(_ time: BucketAggregation)
+        case clearDataInDefaultPersistence(_ time: BucketAggregation)
 
         case webkitWarmupStart(appState: String)
         case webkitWarmupFinished(appState: String)
@@ -869,6 +889,15 @@ extension Pixel {
         case duckPlayerYouTubeOverlayNavigationOutsideYoutube
         case duckPlayerYouTubeOverlayNavigationClosed
         case duckPlayerYouTubeNavigationIdle30
+
+        // MARK: Launch time
+        case appDidFinishLaunchingTime(time: BucketAggregation)
+        case appDidShowUITime(time: BucketAggregation)
+        case appDidBecomeActiveTime(time: BucketAggregation)
+
+        // MARK: Lifecycle
+        case appDidTransitionToUnexpectedState
+
     }
 
 }
@@ -910,6 +939,7 @@ extension Pixel.Event {
         case .tabSwitcherClickCloseTab: return "m_tab_manager_close_tab_click"
         case .tabSwitcherSwipeCloseTab: return "m_tab_manager_close_tab_swipe"
         case .tabSwitchLongPressNewTab: return "m_tab_manager_long_press_new_tab"
+        case .tabSwitcherOpenDaily: return "m_tab_manager_clicked_daily"
 
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
@@ -1307,7 +1337,22 @@ extension Pixel.Event {
 
         case .networkProtectionConfigurationInvalidPayload(let config): return "m_netp_vpn_configuration_\(config.rawValue)_invalid_payload"
 
-        case .networkProtectionMalformedErrorDetected: return "m_netp_vpn_malformed_error_detected"
+            // MARK: VPN tips
+
+        case .networkProtectionGeoswitchingTipShown: return "m_vpn_tip_geoswitching_shown"
+        case .networkProtectionGeoswitchingTipActioned: return "m_vpn_tip_geoswitching_actioned"
+        case .networkProtectionGeoswitchingTipDismissed: return "m_vpn_tip_geoswitching_dismissed"
+        case .networkProtectionGeoswitchingTipIgnored: return "m_vpn_tip_geoswitching_ignored"
+
+        case .networkProtectionSnoozeTipShown: return "m_vpn_tip_snooze_shown"
+        case .networkProtectionSnoozeTipActioned: return "m_vpn_tip_snooze_actioned"
+        case .networkProtectionSnoozeTipDismissed: return "m_vpn_tip_snooze_dismissed"
+        case .networkProtectionSnoozeTipIgnored: return "m_vpn_tip_snooze_ignored"
+
+        case .networkProtectionWidgetTipShown: return "m_vpn_tip_widget_shown"
+        case .networkProtectionWidgetTipActioned: return "m_vpn_tip_widget_actioned"
+        case .networkProtectionWidgetTipDismissed: return "m_vpn_tip_widget_dismissed"
+        case .networkProtectionWidgetTipIgnored: return "m_vpn_tip_widget_ignored"
 
             // MARK: remote messaging pixels
             
@@ -1354,6 +1399,11 @@ extension Pixel.Event {
             
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
+        case .contentBlockingLookupRulesSucceeded: return "m_content_blocking_lookup_rules_succeeded"
+        case .contentBlockingFetchLRCSucceeded: return "m_content_blocking_fetch_lrc_succeeded"
+        case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
+        case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
+
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"
@@ -1369,7 +1419,7 @@ extension Pixel.Event {
             
         case .cookieDeletionTime(let aggregation):
             return "m_debug_cookie-clearing-time-\(aggregation)"
-        case .legacyDataClearingTime(let aggregation):
+        case .clearDataInDefaultPersistence(let aggregation):
             return "m_debug_legacy-data-clearing-time-\(aggregation)"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
 
@@ -1731,6 +1781,14 @@ extension Pixel.Event {
         case .duckPlayerYouTubeOverlayNavigationOutsideYoutube: return "duckplayer.youtube.overlay.navigation.outside-youtube"
         case .duckPlayerYouTubeOverlayNavigationClosed: return "duckplayer.youtube.overlay.navigation.closed"
         case .duckPlayerYouTubeNavigationIdle30: return "duckplayer.youtube.overlay.idle-30"
+
+        // MARK: Launch time
+        case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
+        case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
+        case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
+
+        // MARK: Lifecycle
+        case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"
 
         }
     }

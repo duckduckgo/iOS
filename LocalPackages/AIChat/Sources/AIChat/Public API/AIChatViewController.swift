@@ -41,11 +41,11 @@ public final class AIChatViewController: UIViewController {
     /// Initializes a new instance of `AIChatViewController` with the specified remote settings and web view configuration.
     ///
     /// - Parameters:
-    ///   - remoteSettings: An object conforming to `AIChatRemoteSettingsProvider` that provides remote settings.
+    ///   - remoteSettings: An object conforming to `AIChatSettingsProvider` that provides remote settings.
     ///   - webViewConfiguration: A `WKWebViewConfiguration` object used to configure the web view.
     ///   - pixelHandler: A `AIChatPixelHandling` object used to send pixel events.
-    public convenience init(remoteSettings: AIChatRemoteSettingsProvider, webViewConfiguration: WKWebViewConfiguration, pixelHandler: AIChatPixelHandling) {
-        let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, remoteSettings: remoteSettings)
+    public convenience init(settings: AIChatSettingsProvider, webViewConfiguration: WKWebViewConfiguration, pixelHandler: AIChatPixelHandling) {
+        let chatModel = AIChatViewModel(webViewConfiguration: webViewConfiguration, settings: settings)
         self.init(chatModel: chatModel, pixelHandler: pixelHandler)
     }
 
@@ -139,6 +139,7 @@ extension AIChatViewController {
             target: self,
             action: #selector(closeAIChat)
         )
+        closeButton.accessibilityIdentifier = "aichat.close.button"
         closeButton.tintColor = .white
 
         navigationItem.rightBarButtonItem = closeButton

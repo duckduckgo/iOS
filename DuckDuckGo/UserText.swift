@@ -76,7 +76,9 @@ public struct UserText {
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", value: "Save Favorite", comment: "Save Favorite action")
     public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", value: "Bookmark All Tabs?", comment: "Question from confirmation dialog")
     public static let alertBookmarkAllMessage = NSLocalizedString("alert.message.bookmarkAll", value: "Existing bookmarks will not be duplicated.", comment: "")
-    
+    public static let alertAlreadyBookmarkedAllTitle = NSLocalizedString("alert.title.alreadyBookmarkAll", value: "Already BookMarked!", comment: "Question from confirmation dialog")
+    public static let alertAlreadyBookmarkAllMessage = NSLocalizedString("alert.message.alreadyBookmarkAll", value: "All tabs are already bookmarked. Please add new tab", comment: "")
+
     public static let alertDisableProtection = NSLocalizedString("alert.title.disable.protection", value: "Add to Unprotected Sites", comment: "Disable protection alert")
     public static let alertDisableProtectionPlaceholder = NSLocalizedString("alert.title.disable.protection.placeholder", value: "www.example.com", comment: "Disable potection alert placeholder - leave as it is")
     public static let messageProtectionDisabled = NSLocalizedString("toast.protection.disabled", value: "Privacy Protection disabled for %@", comment: "Confirmation of an action - populated with a domain name")

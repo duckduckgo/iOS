@@ -50,7 +50,7 @@ public struct UserText {
     public static let actionCopyMessage = NSLocalizedString("action.title.copy.message", value: "URL copied", comment: "Floating message indicating URL has been copied")
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share", comment: "Share action")
     public static let actionPrint = NSLocalizedString("action.title.print", value: "Print", comment: "Print action in the menu header")
-    public static let actionPrintSite = NSLocalizedString("action.title.print.site", value: "Print Site", comment: "Print action in the menu list")
+    public static let actionPrintSite = NSLocalizedString("action.title.print.site", value: "Print", comment: "Print action in the menu list")
     public static let actionOpenAIChat = NSLocalizedString("action.title.aichat", value: "Chat", comment: "Open AI Chat action in the menu list")
 
     public static let actionOpenBookmarks = NSLocalizedString("action.title.bookmarks", value: "Bookmarks", comment: "Button: Open bookmarks list")

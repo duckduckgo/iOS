@@ -86,7 +86,7 @@
 "action.title.print" = "Print";
 
 /* Print action in the menu list */
-"action.title.print.site" = "Print Site";
+"action.title.print.site" = "Print";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";

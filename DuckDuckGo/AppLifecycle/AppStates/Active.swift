@@ -21,8 +21,32 @@ import UIKit
 
 struct Active: AppState {
 
-    init(application: UIApplication) {
+    let appContext: AppContext
+    let appDependencies: AppDependencies
 
+    init(appContext: AppContext,
+         transitionContext: TransitionContext,
+         appDependencies: AppDependencies) {
+        self.appContext = appContext
+        self.appDependencies = appDependencies
+
+        if transitionContext.sourceState is Background {
+            // handle applicationWillEnterForeground(_:) logic here
+        }
+
+        if let url = appContext.urlToOpen {
+            openURL(url)
+        }
+
+        // handle applicationDidBecomeActive(_:) logic here
+    }
+
+    private func openURL(_ url: URL) {
+        defer {
+            appContext.urlToOpen = nil
+        }
+
+        // handle application(_:open:options:) logic here
     }
 
 }

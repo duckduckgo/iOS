@@ -22,9 +22,9 @@ import UIKit
 enum AppEvent {
 
     case launching(UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
-    case activating(UIApplication)
-    case backgrounding(UIApplication)
-    case suspending(UIApplication)
+    case activating
+    case backgrounding
+    case suspending
 
     case openURL(URL)
 
@@ -51,3 +51,20 @@ final class AppStateMachine: AppEventHandler {
     }
 
 }
+
+struct AppContext {
+
+    let application: UIApplication
+    let launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    var urlToOpen: URL?
+
+}
+
+struct TransitionContext {
+
+    let event: AppEvent
+    let sourceState: AppState
+
+}
+
+

@@ -21,8 +21,20 @@ import UIKit
 
 struct Launched: AppState {
 
-    init(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    let appContext: AppContext
+    let appDependencies: AppDependencies
 
+    init(appContext: AppContext) {
+        self.appContext = appContext
+        let accountManager = AppDependencyProvider.shared.accountManager
+        let tunnelController = AppDependencyProvider.shared.networkProtectionTunnelController
+        let vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
+        let vpnFeatureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
+        self.appDependencies = AppDependencies(accountManager: accountManager,
+                                               vpnWorkaround: vpnWorkaround,
+                                               vpnFeatureVisibility: vpnFeatureVisibility)
+
+        // handle application(_:didFinishLaunchingWithOptions:) logic here
     }
 
 }

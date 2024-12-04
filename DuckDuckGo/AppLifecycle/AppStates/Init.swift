@@ -17,6 +17,4 @@
 //  limitations under the License.
 //
 
-struct Init: AppState {
-
-}
+struct Init: AppState { }

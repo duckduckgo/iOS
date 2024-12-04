@@ -21,8 +21,14 @@ import UIKit
 
 struct Background: AppState {
 
-    init(application: UIApplication) {
+    let appContext: AppContext
+    let appDependencies: AppDependencies
 
+    init(appContext: AppContext, appDependencies: AppDependencies) {
+        self.appContext = appContext
+        self.appDependencies = appDependencies
+
+        // handle applicationDidEnterBackground(_:) logic here
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  Inactive.swift
+//  AppDependencies.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,19 +17,15 @@
 //  limitations under the License.
 //
 
-import UIKit
 import Subscription
 
-struct Inactive: AppState {
+struct AppDependencies {
 
-    let appContext: AppContext
-    let appDependencies: AppDependencies
-
-    init(appContext: AppContext, appDependencies: AppDependencies) {
-        Task { @MainActor in
-            await appContext.application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility, accountManager: accountManager)
-            await appDependencies.vpnWorkaround.removeRedditSessionWorkaround()
-        }
-    }
+    // embed in Subscription service
+    let accountManager: AccountManager
+    // embed in VPN service
+    let vpnWorkaround: VPNRedditSessionWorkaround
+    let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
+    // ..
 
 }

@@ -34,7 +34,7 @@ extension TabViewController {
         return settings.isAIChatBrowsingToolbarShortcutFeatureEnabled
     }
 
-    private var shouldShowPrintButtonInBrowsingMenu: Bool { shouldShowAIChatInMenuHeader }
+    private var shouldShowPrintButtonInBrowsingMenuList: Bool { shouldShowAIChatInMenuHeader }
 
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
@@ -105,7 +105,7 @@ extension TabViewController {
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
 
-        if shouldShowPrintButtonInBrowsingMenu {
+        if shouldShowPrintButtonInBrowsingMenuList {
             entries.append(.regular(name: UserText.actionPrintSite,
                                     accessibilityLabel: UserText.actionPrintSite,
                                     image: UIImage(named: "Print-16")!,

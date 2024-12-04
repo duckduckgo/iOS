@@ -139,6 +139,7 @@ extension AIChatViewController {
             target: self,
             action: #selector(closeAIChat)
         )
+        closeButton.accessibilityIdentifier = "aichat.close.button"
         closeButton.tintColor = .white
 
         navigationItem.rightBarButtonItem = closeButton

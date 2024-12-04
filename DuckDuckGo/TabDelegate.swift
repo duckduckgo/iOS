@@ -59,6 +59,8 @@ protocol TabDelegate: AnyObject {
     
     func tabDidRequestDownloads(tab: TabViewController)
 
+    func tabDidRequestAIChat(tab: TabViewController)
+
     func tabDidRequestAutofillLogins(tab: TabViewController)
 
     func tabDidRequestSettings(tab: TabViewController)

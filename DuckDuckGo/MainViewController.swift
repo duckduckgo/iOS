@@ -38,6 +38,7 @@ import Onboarding
 import os.log
 import PageRefreshMonitor
 import BrokenSitePrompt
+import AIChat
 
 class MainViewController: UIViewController {
     
@@ -185,6 +186,16 @@ class MainViewController: UIViewController {
     var viewCoordinator: MainViewCoordinator!
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+
+    private lazy var aiChatNavigationController: UINavigationController = {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let aiChatViewController = AIChatViewController(settings: settings,
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
+                                                        pixelHandler: AIChatPixelHandler())
+        aiChatViewController.delegate = self
+        return UINavigationController(rootViewController: aiChatViewController)
+    }()
 
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -351,6 +362,7 @@ class MainViewController: UIViewController {
                 let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
                 Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                self.appDidFinishLaunchingStartTime = nil /// We only want this pixel to be fired once
             }
         }
 
@@ -1688,7 +1700,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
-    
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -2347,6 +2358,11 @@ extension MainViewController: TabDelegate {
         segueToReportBrokenSite(entryPoint: .toggleReport(completionHandler: completionHandler))
     }
 
+    func tabDidRequestAIChat(tab: TabViewController) {
+        aiChatNavigationController.modalPresentationStyle = .fullScreen
+        tab.present(aiChatNavigationController, animated: true, completion: nil)
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2929,5 +2945,12 @@ extension MainViewController {
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+// MARK: - AIChatViewControllerDelegate
+extension MainViewController: AIChatViewControllerDelegate {
+    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
+        loadUrlInNewTab(url, inheritedAttribution: nil)
     }
 }

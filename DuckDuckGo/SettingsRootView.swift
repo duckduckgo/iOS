@@ -129,6 +129,8 @@ struct SettingsRootView: View {
             SettingsDuckPlayerView().environmentObject(viewModel)
         case .netP:
             NetworkProtectionRootView()
+        case .aiChat:
+            SettingsAIChatView().environmentObject(viewModel)
         }
     }
 

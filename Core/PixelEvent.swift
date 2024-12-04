@@ -80,6 +80,7 @@ extension Pixel {
         case browsingMenuShare
         case browsingMenuCopy
         case browsingMenuPrint
+        case browsingMenuListPrint
         case browsingMenuFindInPage
         case browsingMenuZoom
         case browsingMenuDisableProtection
@@ -87,7 +88,8 @@ extension Pixel {
         case browsingMenuReportBrokenSite
         case browsingMenuFireproof
         case browsingMenuAutofill
-        
+        case browsingMenuAIChat
+
         case addressBarShare
         case addressBarSettings
         case addressBarCancelPressedOnNTP
@@ -895,9 +897,13 @@ extension Pixel {
         case appDidShowUITime(time: BucketAggregation)
         case appDidBecomeActiveTime(time: BucketAggregation)
 
+        // MARK: AI Chat
+        case openAIChatBefore10min
+        case openAIChatAfter10min
+        case aiChatNoRemoteSettingsFound(settings: String)
+
         // MARK: Lifecycle
         case appDidTransitionToUnexpectedState
-
     }
 
 }
@@ -959,6 +965,7 @@ extension Pixel.Event {
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
+
         case .browsingMenuFindInPage: return "mb_fp"
         case .browsingMenuZoom: return "m_menu_page_zoom_taps"
         case .browsingMenuDisableProtection: return "mb_wla"
@@ -968,6 +975,8 @@ extension Pixel.Event {
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .browsingMenuShare: return "m_browsingmenu_share"
+        case .browsingMenuAIChat: return "m_aichat_menu_tab_icon"
+        case .browsingMenuListPrint: return "m_browsing_menu_list_print"
 
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
@@ -1786,6 +1795,12 @@ extension Pixel.Event {
         case .appDidFinishLaunchingTime(let time): return "m_debug_app-did-finish-launching-time-\(time)"
         case .appDidShowUITime(let time): return "m_debug_app-did-show-ui-time-\(time)"
         case .appDidBecomeActiveTime(let time): return "m_debug_app-did-become-active-time-\(time)"
+
+        // MARK: AI Chat
+        case .openAIChatAfter10min: return "m_aichat_open_after_10_min"
+        case .openAIChatBefore10min: return "m_aichat_open_before_10_min"
+        case .aiChatNoRemoteSettingsFound(let settings):
+            return "m_aichat_no_remote_settings_found-\(settings.lowercased())"
 
         // MARK: Lifecycle
         case .appDidTransitionToUnexpectedState: return "m_debug_app-did-transition-to-unexpected-state"

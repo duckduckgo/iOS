@@ -33,10 +33,12 @@ public final class SyncCredentialsAdapter {
     public static let syncCredentialsPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
     public static let credentialsSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncCredentialsLimitReached")
     let syncErrorHandler: SyncErrorHandling
+    let credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging
 
     public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
                 secureVaultErrorReporter: SecureVaultReporting,
-                syncErrorHandler: SyncErrorHandling) {
+                syncErrorHandler: SyncErrorHandling,
+                tld: TLD) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         self.secureVaultErrorReporter = secureVaultErrorReporter
         self.syncErrorHandler = syncErrorHandler
@@ -45,6 +47,8 @@ public final class SyncCredentialsAdapter {
             secureVaultErrorReporter: secureVaultErrorReporter,
             errorEvents: CredentialsCleanupErrorHandling()
         )
+        credentialIdentityStoreManager = AutofillCredentialIdentityStoreManager(
+            vault: try? secureVaultFactory.makeVault(reporter: secureVaultErrorReporter), tld: tld)
     }
 
     public func cleanUpDatabaseAndUpdateSchedule(shouldEnable: Bool) {
@@ -74,9 +78,15 @@ public final class SyncCredentialsAdapter {
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
                     self?.syncErrorHandler.syncCredentialsSucceded()
+                },
+                syncDidFinish: { [weak self] credentialsInput in
+                    if let credentialsInput, !credentialsInput.modifiedAccounts.isEmpty || !credentialsInput.deletedAccounts.isEmpty {
+                        Task {
+                            await self?.credentialIdentityStoreManager.updateCredentialStoreWith(updatedAccounts: credentialsInput.modifiedAccounts, deletedAccounts: credentialsInput.deletedAccounts)
+                        }
+                    }
                 }
             )
-
             syncErrorCancellable = provider.syncErrorPublisher
                 .sink { [weak self] error in
                     self?.syncErrorHandler.handleCredentialError(error)

@@ -100,6 +100,48 @@ final class OnboardingManagerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    func testWhenAddToDockStateCalledAndVariantManagerSupportsAddToDockIntroThenReturnIntro() {
+        // GIVEN
+        variantManagerMock.isSupportedBlock = { feature in
+            feature == .addToDockIntro
+        }
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: true)
+
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .intro)
+    }
+
+    func testWhenAddToDockStateCalledAndVariantManagerSupportsAddToDockContextualThenReturnContextual() {
+        // GIVEN
+        variantManagerMock.isSupportedBlock = { feature in
+            feature == .addToDockContextual
+        }
+        sut = OnboardingManager(appDefaults: appSettingsMock, featureFlagger: featureFlaggerMock, variantManager: variantManagerMock, isIphone: true)
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .contextual)
+    }
+
+    func testWhenAddToDockStateCalledAndVariantManagerDoesNotSupportAddToDockThenReturnDisabled() {
+        // GIVEN
+        variantManagerMock.isSupportedBlock = { _ in
+            false
+        }
+
+        // WHEN
+        let result = sut.addToDockEnabledState
+
+        // THEN
+        XCTAssertEqual(result, .disabled)
+    }
+
     func testWhenAddToDockStateCalledAndLocalFlagStateIsDisabledAndFeatureFlagIsFalseThenReturnDisabled() {
         // GIVEN
         appSettingsMock.onboardingAddToDockState = .disabled

@@ -61,23 +61,39 @@ struct AIChatSettings: AIChatSettingsProvider {
         userDefaults.showAIChatBrowsingMenu
     }
 
+    var isAIChatAddressBarUserSettingsEnabled: Bool {
+        userDefaults.showAIChatAddressBar
+    }
+
     var isAIChatFeatureEnabled: Bool {
         privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .aiChat) || internalUserDecider.isInternalUser
     }
 
-    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool {
-        let isBrowsingToolbarShortcutFeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(AIChatSubfeature.browsingToolbarShortcut)
-        let isInternalUser = internalUserDecider.isInternalUser
-        let isFeatureEnabled = isBrowsingToolbarShortcutFeatureFlagEnabled || isInternalUser
-        return isFeatureEnabled && isAIChatBrowsingMenuUserSettingsEnabled
+    var isAIChatAddressBarShortcutFeatureEnabled: Bool {
+        return isFeatureEnabled(for: .addressBarShortcut)
     }
+
+    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool {
+        return isFeatureEnabled(for: .browsingToolbarShortcut)
+    }
+
 
     func enableAIChatBrowsingMenuUserSettings(enable: Bool) {
         userDefaults.showAIChatBrowsingMenu = enable
     }
 
+    func enableAIChatAddressBarUserSettings(enable: Bool) {
+        userDefaults.showAIChatAddressBar = enable
+    }
+
     // MARK: - Private
 
+    private func isFeatureEnabled(for subfeature: AIChatSubfeature) -> Bool {
+        let isSubfeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
+        let isInternalUser = internalUserDecider.isInternalUser
+        return (isSubfeatureFlagEnabled || isInternalUser) && isAIChatBrowsingMenuUserSettingsEnabled
+    }
+    
     private func getSettingsData(_ value: SettingsValue) -> String {
         if let value = remoteSettings[value.rawValue] as? String {
             return value
@@ -91,9 +107,11 @@ struct AIChatSettings: AIChatSettingsProvider {
 private extension UserDefaults {
     enum Keys {
         static let showAIChatBrowsingMenu = "aichat.settings.showAIChatBrowsingMenu"
+        static let showAIChatAddressBar = "aichat.settings.showAIChatAddressBar"
     }
 
     static let showAIChatBrowsingMenuDefaultValue = true
+    static let showAIChatAddressBarDefaultValue = true
 
     @objc dynamic var showAIChatBrowsingMenu: Bool {
         get {
@@ -103,6 +121,17 @@ private extension UserDefaults {
         set {
             guard newValue != showAIChatBrowsingMenu else { return }
             set(newValue, forKey: Keys.showAIChatBrowsingMenu)
+        }
+    }
+
+    @objc dynamic var showAIChatAddressBar: Bool {
+        get {
+            value(forKey: Keys.showAIChatAddressBar) as? Bool ?? Self.showAIChatAddressBarDefaultValue
+        }
+
+        set {
+            guard newValue != showAIChatAddressBar else { return }
+            set(newValue, forKey: Keys.showAIChatAddressBar)
         }
     }
 }

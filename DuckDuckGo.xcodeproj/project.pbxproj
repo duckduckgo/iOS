@@ -139,6 +139,7 @@
 		310E79BD2949CAA5007C49E8 /* FireButtonReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310E79BC2949CAA5007C49E8 /* FireButtonReferenceTests.swift */; };
 		310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310ECFDC282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift */; };
 		310EEA2F2CFFCDC60043CA1A /* AIChatSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EEA2E2CFFCDBF0043CA1A /* AIChatSettingsTests.swift */; };
+		311711912D00E5500063AC3D /* OmnibarAccessoryHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311711902D00E53A0063AC3D /* OmnibarAccessoryHandling.swift */; };
 		311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1AC2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift */; };
 		311BD1AF2836BB4200AEF6C1 /* AutofillItemsLockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1AE2836BB4200AEF6C1 /* AutofillItemsLockedView.swift */; };
 		311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1B02836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift */; };
@@ -1504,6 +1505,7 @@
 		310E79BC2949CAA5007C49E8 /* FireButtonReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButtonReferenceTests.swift; sourceTree = "<group>"; };
 		310ECFDC282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableAutofillSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		310EEA2E2CFFCDBF0043CA1A /* AIChatSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatSettingsTests.swift; sourceTree = "<group>"; };
+		311711902D00E53A0063AC3D /* OmnibarAccessoryHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnibarAccessoryHandling.swift; sourceTree = "<group>"; };
 		311BD1AC2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillItemsEmptyView.swift; sourceTree = "<group>"; };
 		311BD1AE2836BB4200AEF6C1 /* AutofillItemsLockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillItemsLockedView.swift; sourceTree = "<group>"; };
 		311BD1B02836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListAuthenticator.swift; sourceTree = "<group>"; };
@@ -3618,6 +3620,7 @@
 		311C79E22CF790270021196A /* AIChat */ = {
 			isa = PBXGroup;
 			children = (
+				311711902D00E53A0063AC3D /* OmnibarAccessoryHandling.swift */,
 				31043B152CFA5B890028A97F /* AIChatPixelHandler.swift */,
 				316AA4592CF8E31F00A2ED28 /* AIChatSettings.swift */,
 			);
@@ -7980,6 +7983,7 @@
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */,
 				31CC224928369B38001654A4 /* AutofillLoginSettingsListViewController.swift in Sources */,
+				311711912D00E5500063AC3D /* OmnibarAccessoryHandling.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				7BFD5FD52C9DA310000FF959 /* VPNAddWidgetTip.swift in Sources */,

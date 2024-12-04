@@ -27,7 +27,8 @@ import NetworkProtection
 extension Pixel {
     
     public enum Event {
-        
+
+        case appInstall
         case appLaunch
         case refreshPressed
         case pullToRefresh
@@ -914,6 +915,7 @@ extension Pixel.Event {
     
     public var name: String {
         switch self {
+        case .appInstall: return "m_install"
         case .appLaunch: return "ml"
         case .refreshPressed: return "m_r"
         case .pullToRefresh: return "m_pull-to-reload"

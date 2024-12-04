@@ -74,7 +74,7 @@ extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavig
             return .navigationNotHandled
         }
 
-        //handleMaliciousExemptions(for: navigationAction, url: url)
+        handleMaliciousExemptions(for: navigationAction.navigationType, url: url)
 
         guard !shouldBypassMaliciousSiteProtection(for: url) else {
             return .navigationNotHandled
@@ -123,9 +123,10 @@ extension MaliciousSiteProtectionNavigationHandler: SpecialErrorPageActionHandle
 private extension MaliciousSiteProtectionNavigationHandler {
 
     func handleMaliciousExemptions(for navigationType: WKNavigationType, url: URL) {
-        if let threatKind = bypassedMaliciousSiteThreatKind, navigationType == .other {
-            maliciousURLExemptions[url] = threatKind
-        }
+//        if let threatKind = bypassedMaliciousSiteThreatKind, navigationType == .other {
+//            maliciousURLExemptions[url] = threatKind
+//        }
+        // Re-set the flag every time we load a web page
         bypassedMaliciousSiteThreatKind = maliciousURLExemptions[url]
     }
 

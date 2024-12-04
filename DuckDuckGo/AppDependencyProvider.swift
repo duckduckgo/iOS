@@ -134,7 +134,10 @@ final class AppDependencyProvider: DependencyProvider {
             }
         }
 
-        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache),
+        let storePurchaseManager = DefaultStorePurchaseManager(subscriptionFeatureMappingCache: subscriptionFeatureMappingCache,
+                                                               subscriptionFeatureFlagger: subscriptionFeatureFlagger)
+
+        let subscriptionManager = DefaultSubscriptionManager(storePurchaseManager: storePurchaseManager,
                                                              accountManager: accountManager,
                                                              subscriptionEndpointService: subscriptionService,
                                                              authEndpointService: authService,

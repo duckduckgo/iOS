@@ -362,6 +362,7 @@ class MainViewController: UIViewController {
                 let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
                 Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                self.appDidFinishLaunchingStartTime = nil /// We only want this pixel to be fired once
             }
         }
 

@@ -23,13 +23,13 @@ import Core
 
 protocol AutoClearWorker {
 
-    func clearNavigationStack()
+    func clearNavigationStack() async
     func forgetData() async
     func forgetData(applicationState: DataStoreWarmup.ApplicationState) async
-    func forgetTabs()
+    func forgetTabs() async
 
-    func willStartClearing(_: AutoClear)
-    func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool)
+    func willStartClearing(_: AutoClear) async
+    func autoClearDidFinishClearing(_: AutoClear, isLaunching: Bool) async
 }
 
 class AutoClear {
@@ -52,17 +52,17 @@ class AutoClear {
     func clearDataIfEnabled(launching: Bool = false, applicationState: DataStoreWarmup.ApplicationState = .unknown) async {
         guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
 
-        worker.willStartClearing(self)
+        await worker.willStartClearing(self)
 
         if settings.action.contains(.clearTabs) {
-            worker.forgetTabs()
+            await worker.forgetTabs()
         }
 
         if settings.action.contains(.clearData) {
             await worker.forgetData(applicationState: applicationState)
         }
 
-        worker.autoClearDidFinishClearing(self, isLaunching: launching)
+        await worker.autoClearDidFinishClearing(self, isLaunching: launching)
     }
 
     /// Note: function is parametrised because of tests.
@@ -99,7 +99,7 @@ class AutoClear {
             shouldClearData(elapsedTime: baseTimeInterval - timestamp) else { return }
 
         self.timestamp = nil
-        worker.clearNavigationStack()
+        await worker.clearNavigationStack()
         await clearDataIfEnabled(applicationState: applicationState)
     }
 }

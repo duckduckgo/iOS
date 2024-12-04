@@ -119,12 +119,8 @@ final class SettingsViewModel: ObservableObject {
                 self.appSettings.currentFireButtonAnimation = $0
                 self.state.fireButtonAnimation = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
-                self.animator.animate {
-                    // no op
-                } onTransitionCompleted: {
-                    // no op
-                } completion: {
-                    // no op
+                Task { @MainActor in
+                    await self.animator.animate(afterScreenUpdates: true)
                 }
             }
         )

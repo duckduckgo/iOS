@@ -41,6 +41,7 @@ final class CredentialProviderListViewModel: ObservableObject {
 
     private let serviceIdentifiers: [ASCredentialServiceIdentifier]
     private let secureVault: (any AutofillSecureVault)?
+    private let credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
@@ -62,9 +63,11 @@ final class CredentialProviderListViewModel: ObservableObject {
     }
 
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
-         secureVault: (any AutofillSecureVault)?) {
+         secureVault: (any AutofillSecureVault)?,
+         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging) {
         self.serviceIdentifiers = serviceIdentifiers
         self.secureVault = secureVault
+        self.credentialIdentityStoreManager = credentialIdentityStoreManager
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0
@@ -103,16 +106,10 @@ final class CredentialProviderListViewModel: ObservableObject {
         self.accounts = fetchAccounts()
         self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
-    }
 
-    func updateLastUsed(for account: SecureVaultModels.WebsiteAccount) {
-        guard let secureVault = secureVault,
-        let accountID = account.id,
-            let accountIdInt = Int64(accountID) else {
-            return
+        Task {
+            await credentialIdentityStoreManager.replaceCredentialStore(with: accounts)
         }
-
-        try? secureVault.updateLastUsedFor(accountId: accountIdInt)
     }
 
     private func setupCancellables() {

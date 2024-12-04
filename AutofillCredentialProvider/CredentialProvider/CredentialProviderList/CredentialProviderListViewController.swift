@@ -83,9 +83,12 @@ final class CredentialProviderListViewController: UIViewController {
 
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
+         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
          onRowSelected: @escaping (AutofillLoginItem) -> Void,
          onDismiss: @escaping () -> Void) {
-        self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers, secureVault: secureVault)
+        self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers,
+                                                         secureVault: secureVault,
+                                                         credentialIdentityStoreManager: credentialIdentityStoreManager)
         self.onRowSelected = onRowSelected
         self.onDismiss = onDismiss
 

@@ -82,7 +82,7 @@ class OmniBar: UIView {
     static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol) -> OmniBar {
         let omniBar = OmniBar.load(nibName: "OmniBar")
         omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
-        omniBar.refreshState(omniBar.state)
+        omniBar.refreshState(omniBar.state, layOutIfNeeded: false)
 
         return omniBar
     }
@@ -359,7 +359,7 @@ class OmniBar: UIView {
         textField.selectedTextRange = textField.textRange(from: fromPosition, to: textField.endOfDocument)
     }
 
-    fileprivate func refreshState(_ newState: any OmniBarState) {
+    fileprivate func refreshState(_ newState: any OmniBarState, layOutIfNeeded: Bool = true) {
         if state.requiresUpdate(transitioningInto: newState) {
             Logger.general.debug("OmniBar entering \(newState.description) from \(self.state.description)")
 
@@ -399,10 +399,11 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
-        UIView.animate(withDuration: 0.0) { [weak self] in
-            self?.layoutIfNeeded()
+        if layOutIfNeeded {
+            UIView.animate(withDuration: 0.0) { [weak self] in
+                self?.layoutIfNeeded()
+            }
         }
-        
     }
 
     func updateOmniBarPadding(left: CGFloat, right: CGFloat) {

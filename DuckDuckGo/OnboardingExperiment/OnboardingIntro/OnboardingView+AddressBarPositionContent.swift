@@ -51,7 +51,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                AnimatableTypingText(UserText.HighlightsOnboardingExperiment.AddressBarPosition.title, startAnimating: animateTitle) {
+                AnimatableTypingText(UserText.OnboardingHighlights.AddressBarPosition.title, startAnimating: animateTitle) {
                     showContent.wrappedValue = true
                 }
                 .foregroundColor(.primary)
@@ -61,7 +61,7 @@ extension OnboardingView {
                     OnboardingAddressBarPositionPicker()
 
                     Button(action: action) {
-                        Text(verbatim: UserText.HighlightsOnboardingExperiment.AddressBarPosition.cta)
+                        Text(verbatim: UserText.OnboardingHighlights.AddressBarPosition.cta)
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }

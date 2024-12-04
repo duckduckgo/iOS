@@ -24,41 +24,6 @@ import BrowserServicesKit
 
 final class DefaultVariantManagerOnboardingTests: XCTestCase {
 
-    // MARK: - Is Onboarding Highlights
-
-    func testWhenIsOnboardingHighlights_AndFeaturesContainOnboardingHighlights_ThenReturnTrue() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntroHighlights])
-
-        // WHEN
-        let result = sut.isOnboardingHighlightsExperiment
-
-        // THEN
-        XCTAssertTrue(result)
-    }
-
-    func testWhenIsOnboardingHighlights_AndFeaturesDoNotContainOnboardingHighlights_ThenReturnFalse() {
-        // GIVEN
-        let sut = makeVariantManager(features: [.newOnboardingIntro, .contextualDaxDialogs])
-
-        // WHEN
-        let result = sut.isOnboardingHighlightsExperiment
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
-    func testWhenIsOnboardingHighlights_AndFeaturesIsEmpty_ThenReturnFalse() {
-        // GIVEN
-        let sut = makeVariantManager(features: [])
-
-        // WHEN
-        let result = sut.isOnboardingHighlightsExperiment
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
     // MARK: - Is Contextual Dax Dialogs Enabled
 
     func testWhenIsContextualDaxDialogsEnabled_AndFeaturesContainContextualDaxDialogs_ThenReturnTrue() {

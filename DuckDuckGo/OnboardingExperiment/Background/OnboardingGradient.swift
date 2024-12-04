@@ -23,24 +23,10 @@ import Onboarding
 struct OnboardingGradientView: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    private let type: OnboardingGradientType
-
-    init(type: OnboardingGradientType) {
-        self.type = type
-    }
-
     var body: some View {
-        switch (type, colorScheme) {
-        case (.default, .light):
-            linearLightGradient
-        case (.default, .dark):
-            linearDarkGradient
-        case (.highlights, _):
-            // If highlights experiment use new common gradient for iOS and macOS
-            OnboardingGradient()
-        @unknown default:
-            linearLightGradient
-        }
+        // TODO: https://app.asana.com/0/1206329551987282/1208839072951158/f
+        // iOS 15 doesn't render properly the light EllipticalGradient
+        OnboardingGradient()
     }
 
     private var linearLightGradient: some View {
@@ -71,9 +57,4 @@ struct OnboardingGradientView: View {
         )
     }
 
-}
-
-enum OnboardingGradientType {
-    case `default`
-    case highlights
 }

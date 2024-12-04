@@ -33,19 +33,6 @@ struct OnboardingDebugView: View {
     var body: some View {
         List {
             Section {
-                Toggle(
-                    isOn: $viewModel.isOnboardingHighlightsLocalFlagEnabled,
-                    label: {
-                        Text(verbatim: "Onboarding Highlights local setting enabled")
-                    }
-                )
-            } header: {
-                Text(verbatim: "Onboarding Higlights settings")
-            } footer: {
-                Text(verbatim: "Requires internal user flag set to have an effect.")
-            }
-
-            Section {
                 Picker(
                     selection: $viewModel.onboardingAddToDockLocalFlagState,
                     content: {
@@ -57,10 +44,11 @@ struct OnboardingDebugView: View {
                         Text(verbatim: "Onboarding Add to Dock local setting enabled")
                     }
                 )
+                .disabled(!viewModel.isIphone)
             } header: {
                 Text(verbatim: "Onboarding Add to Dock settings")
             } footer: {
-                Text(verbatim: "Requires internal user flag set to have an effect.")
+                Text(verbatim: viewModel.isIphone ? "Requires internal user flag set to have an effect." : "Requires internal user flag set to have an effect. iPhone only feature.")
             }
 
             Section {
@@ -77,8 +65,7 @@ struct OnboardingDebugView: View {
 
             Section {
                 Button(action: newOnboardingIntroStartAction, label: {
-                    let onboardingType = viewModel.isOnboardingHighlightsLocalFlagEnabled ? "Highlights" : ""
-                    Text(verbatim: "Preview New Onboarding Intro \(onboardingType)")
+                    Text(verbatim: "Preview Onboarding Intro")
                 })
             }
         }
@@ -86,11 +73,6 @@ struct OnboardingDebugView: View {
 }
 
 final class OnboardingDebugViewModel: ObservableObject {
-    @Published var isOnboardingHighlightsLocalFlagEnabled: Bool {
-        didSet {
-            manager.isOnboardingHighlightsLocalFlagEnabled = isOnboardingHighlightsLocalFlagEnabled
-        }
-    }
 
     @Published var onboardingAddToDockLocalFlagState: OnboardingAddToDockState {
         didSet {
@@ -98,13 +80,18 @@ final class OnboardingDebugViewModel: ObservableObject {
         }
     }
 
-    private let manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging
+    private let manager: OnboardingAddToDockDebugging
     private var settings: DaxDialogsSettings
+    let isIphone: Bool
 
-    init(manager: OnboardingHighlightsDebugging & OnboardingAddToDockDebugging = OnboardingManager(), settings: DaxDialogsSettings = DefaultDaxDialogsSettings()) {
+    init(
+        manager: OnboardingAddToDockDebugging = OnboardingManager(),
+        settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
+        isIphone: Bool = UIDevice.current.userInterfaceIdiom == .phone
+    ) {
         self.manager = manager
         self.settings = settings
-        isOnboardingHighlightsLocalFlagEnabled = manager.isOnboardingHighlightsLocalFlagEnabled
+        self.isIphone = isIphone
         onboardingAddToDockLocalFlagState = manager.addToDockLocalFlagState
     }
 

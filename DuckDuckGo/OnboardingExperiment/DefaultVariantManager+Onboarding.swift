@@ -22,10 +22,6 @@ import BrowserServicesKit
 
 extension VariantManager {
 
-    var isOnboardingHighlightsExperiment: Bool {
-        isSupported(feature: .newOnboardingIntroHighlights)
-    }
-
     var isContextualDaxDialogsEnabled: Bool {
         isSupported(feature: .contextualDaxDialogs)
     }

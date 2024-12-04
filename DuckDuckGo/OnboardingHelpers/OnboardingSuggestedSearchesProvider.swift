@@ -24,31 +24,17 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
     private static let imageSearch = "!image "
 
     private let countryAndLanguageProvider: OnboardingRegionAndLanguageProvider
-    private let onboardingManager: OnboardingHighlightsManaging
 
-    init(
-        countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current,
-        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
-    ) {
+    init(countryAndLanguageProvider: OnboardingRegionAndLanguageProvider = Locale.current) {
         self.countryAndLanguageProvider = countryAndLanguageProvider
-        self.onboardingManager = onboardingManager
     }
 
     var list: [ContextualOnboardingListItem] {
-        if onboardingManager.isOnboardingHighlightsEnabled {
-            [
-               option1,
-               option2,
-               surpriseMe
-           ]
-        } else {
-            [
-               option1,
-               option2,
-               option3,
-               surpriseMe
-           ]
-        }
+        [
+            option1,
+            option2,
+            surpriseMe
+        ]
     }
 
     private var country: String? {
@@ -80,19 +66,8 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
         return ContextualOnboardingListItem.search(title: search)
     }
 
-    private var option3: ContextualOnboardingListItem {
-        let search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption3
-        return ContextualOnboardingListItem.search(title: search)
-    }
-
     private var surpriseMe: ContextualOnboardingListItem {
-        let search = if onboardingManager.isOnboardingHighlightsEnabled {
-            Self.imageSearch + UserText.HighlightsOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMe
-        } else {
-            isUSCountry ?
-            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeEnglish :
-            UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeInternational
-        }
+        let search = Self.imageSearch + UserText.OnboardingHighlights.ContextualOnboarding.tryASearchOptionSurpriseMe
 
         return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
     }

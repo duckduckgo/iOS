@@ -295,7 +295,7 @@ struct OnboardingAddToDockTutorialContent: View {
 // MARK: - Preview
 
 #Preview("Try Search") {
-    OnboardingTrySearchDialog(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
+    OnboardingTrySearchDialog(message: UserText.OnboardingHighlights.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
@@ -317,14 +317,20 @@ struct OnboardingAddToDockTutorialContent: View {
 }
 
 #Preview("First Search Dialog") {
-    OnboardingFirstSearchDoneDialog(message: NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage), shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
+    let attributedMessage = {
+        let message = UserText.OnboardingHighlights.ContextualOnboarding.onboardingFirstSearchDoneMessage
+        let boldRange = message.range(of: "DuckDuckGo Search")
+        return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
+    }()
+
+    return OnboardingFirstSearchDoneDialog(message: attributedMessage, shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
         .padding()
 }
 
 #Preview("Final Dialog - No Add to Dock Tutorial") {
     OnboardingFinalDialog(
         logoPosition: .top,
-        message: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+        message: UserText.OnboardingHighlights.ContextualOnboarding.onboardingFinalScreenMessage,
         cta: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton,
         canShowAddToDockTutorial: false,
         showAddToDockTutorialAction: {},

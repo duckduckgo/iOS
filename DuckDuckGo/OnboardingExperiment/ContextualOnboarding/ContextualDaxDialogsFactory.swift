@@ -48,18 +48,14 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
     private let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
-    private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
-
-    private var gradientType: OnboardingGradientType {
-        onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
-    }
+    private let onboardingManager: OnboardingAddToDockManaging
 
     init(
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
-        onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager()
+        onboardingManager: OnboardingAddToDockManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -99,7 +95,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
 
         let viewWithBackground = rootView
             .onboardingDaxDialogStyle()
-            .onboardingContextualBackgroundStyle(background: .gradientOnly(gradientType))
+            .onboardingContextualBackgroundStyle(background: .gradientOnly)
         let hostingController = UIHostingController(rootView: AnyView(viewWithBackground))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = [.intrinsicContentSize]
@@ -116,13 +112,9 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     ) -> some View {
 
         func dialogMessage() -> NSAttributedString {
-            if onboardingManager.isOnboardingHighlightsEnabled {
-                let message = UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage
-                let boldRange = message.range(of: "DuckDuckGo Search")
-                return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
-            } else {
-                return UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFirstSearchDoneMessage.attributed
-            }
+            let message = UserText.OnboardingHighlights.ContextualOnboarding.onboardingFirstSearchDoneMessage
+            let boldRange = message.range(of: "DuckDuckGo Search")
+            return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
         }
 
         let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
@@ -188,7 +180,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
         } else {
             (
-                onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.OnboardingHighlights.ContextualOnboarding.onboardingFinalScreenMessage,
                 UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
             )
         }

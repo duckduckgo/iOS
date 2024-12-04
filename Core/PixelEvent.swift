@@ -593,6 +593,8 @@ extension Pixel {
         case debugWebsiteDataStoresNotClearedOne
         case debugWebsiteDataStoresCleared
 
+        case debugAnimationFinishedBeforeClearing
+
         case debugBookmarksMigratedMoreThanOnce
         
         // Return user measurement
@@ -1451,6 +1453,8 @@ extension Pixel.Event {
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
         case .debugWebsiteDataStoresCleared: return "m_d_wkwebsitedatastorescleared"
+
+        case .debugAnimationFinishedBeforeClearing: return "m_debug_animation-finished-before-clearing"
 
             // MARK: Ad Attribution
             

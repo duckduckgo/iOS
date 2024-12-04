@@ -2699,6 +2699,9 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetAllWithAnimation(showNextDaxDialog: Bool = false) {
+        let spid = Instruments.shared.startTimedEvent(.clearingData)
+        Pixel.fire(pixel: .forgetAllExecuted)
+
         Task { @MainActor in
 
             var dataClearingFinished = false
@@ -2706,28 +2709,32 @@ extension MainViewController: AutoClearWorker {
 
             // Run this in parallel
             Task {
-                print("***", #function, "clearing, IN")
                 self.tabManager.prepareCurrentTabForDataClearing()
                 self.stopAllOngoingDownloads()
                 self.forgetTabs()
-                preClearingUIUpdatesFinished = true
-                print("***", #function, "clearing, pre clean UI cleaned up")
-
                 self.refreshUIAfterClear()
+                preClearingUIUpdatesFinished = true
+
                 await self.forgetData()
 
                 // Add some sleep here to test the indterimnate state
                 // try? await Task.sleep(interval: 5.0)
 
+                Instruments.shared.endTimedEvent(for: spid)
                 dataClearingFinished = true
-                print("***", #function, "clearing, OUT")
             }
 
             await fireButtonAnimator.animate()
 
-            print("***", #function, "animation complete", preClearingUIUpdatesFinished, dataClearingFinished)
+            if !preClearingUIUpdatesFinished {
+                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
+            }
 
-            // TODO if clearing not finished yet show UI and wait for it to finish
+            if !dataClearingFinished {
+                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
+            }
+
+            // MARK: post-clearing animation tasks
 
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))

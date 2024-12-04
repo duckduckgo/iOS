@@ -60,10 +60,8 @@ protocol DependencyProvider {
 final class AppDependencyProvider: DependencyProvider {
 
     static var shared: DependencyProvider = AppDependencyProvider()
-
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
-
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 

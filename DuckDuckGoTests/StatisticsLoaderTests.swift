@@ -155,7 +155,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 5, handler: nil)
-        XCTAssertTrue(self.fireAppRetentionExperimentPixelsCalled)
+        XCTAssertTrue(self.fireSearchExperimentPixelsCalled)
     }
 
     func testWhenAppRefreshHasSuccessfulUpdateAtbRequestThenAppRetentionAtbUpdated() {

@@ -314,7 +314,7 @@ import os.log
             let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
             Task {
                 do {
-                    let response = try await DefaultAPIService().fetch(request: request)
+                    _ = try await DefaultAPIService().fetch(request: request)
                     onComplete(true, nil)
                 } catch {
                     onComplete(false, error)

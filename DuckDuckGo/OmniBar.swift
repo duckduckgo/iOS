@@ -399,6 +399,7 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
+        // Attempting to fix crash: https://app.asana.com/0/414709148257752/1208881366194997/f
         if layOutIfNeeded {
             UIView.animate(withDuration: 0.0) { [weak self] in
                 self?.layoutIfNeeded()

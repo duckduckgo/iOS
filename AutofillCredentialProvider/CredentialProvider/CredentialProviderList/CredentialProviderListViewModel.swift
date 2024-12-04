@@ -49,8 +49,8 @@ final class CredentialProviderListViewModel: ObservableObject {
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
-    let authenticator = UserAuthenticator(reason: UserText.autofillLoginListAuthenticationReason,
-                                          cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
+    let authenticator = UserAuthenticator(reason: UserText.credentialProviderListAuthenticationReason,
+                                          cancelTitle: UserText.credentialProviderListAuthenticationCancelButton)
     var hasAccountsSaved: Bool {
         return !accounts.isEmpty
     }
@@ -197,13 +197,13 @@ final class CredentialProviderListViewModel: ObservableObject {
                                                                          autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
                                                                          autofillDomainNameUrlSort: autofillDomainNameUrlSort)
             }
-            newSections.append(.suggestions(title: UserText.autofillLoginListSuggested, items: accountItems))
+            newSections.append(.suggestions(title: UserText.credentialProviderListSuggested, items: accountItems))
         }
 
         let viewModelsGroupedByFirstLetter = accounts.groupedByFirstLetter(
-                tld: tld,
-                autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
-                autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+            tld: tld,
+            autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+            autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         let accountSections = viewModelsGroupedByFirstLetter.sortedIntoSections(autofillDomainNameUrlSort,
                                                                                 tld: tld)
 

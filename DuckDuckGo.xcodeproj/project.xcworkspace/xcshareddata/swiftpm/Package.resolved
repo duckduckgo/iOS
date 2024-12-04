@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "michal/fix-featuremapping-cache",
-        "revision" : "a2ef3a3bac9fa59115dafe3cb7109ca12ad8098b"
+        "revision" : "a1507705d156316fa1a06b71d42e43bef9d0c2d9",
+        "version" : "211.1.3-2"
       }
     },
     {

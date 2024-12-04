@@ -437,7 +437,8 @@ class MainViewController: UIViewController {
                                          bookmarksDatabase: self.bookmarksDatabase,
                                          historyManager: self.historyManager,
                                          tabsModel: self.tabManager.model,
-                                         featureFlagger: self.featureFlagger)
+                                         featureFlagger: self.featureFlagger,
+                                         appSettings: self.appSettings)
         }) else {
             assertionFailure()
             return

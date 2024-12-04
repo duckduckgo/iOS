@@ -204,22 +204,38 @@ class AutocompleteViewController: UIHostingController<AutocompleteView> {
         guard let lastResults else { return }
 
         let messageHeight = model.isMessageVisible ? 196 : 0
-        let cellHeight = 44
-        let sectionPadding = 10
+        let sectionPadding = 12
         let controllerPadding = 20
 
         let height =
-            (lastResults.topHits.count * cellHeight) +
+            sectionHeight(lastResults.topHits) +
             (lastResults.topHits.isEmpty ? 0 : sectionPadding) +
-            (lastResults.duckduckgoSuggestions.count * cellHeight) +
+            sectionHeight(lastResults.duckduckgoSuggestions) +
             (lastResults.duckduckgoSuggestions.isEmpty ? 0 : sectionPadding) +
-            (lastResults.localSuggestions.count * cellHeight) +
+            sectionHeight(lastResults.localSuggestions) +
             (lastResults.localSuggestions.isEmpty ? 0 : sectionPadding) +
             messageHeight +
             controllerPadding
 
         presentationDelegate?
             .autocompleteDidChangeContentHeight(height: CGFloat(height))
+    }
+
+    func sectionHeight(_ suggestions: [Suggestion]) -> Int {
+        let standardCellHeight = 44
+        let subtitledCellHeight = 58
+
+        var height = 0
+        for suggestion in suggestions {
+            switch suggestion {
+            case .phrase, .website:
+                height += standardCellHeight
+
+            default:
+                height += subtitledCellHeight
+            }
+        }
+        return height
     }
 
 }

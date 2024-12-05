@@ -169,6 +169,8 @@
 		3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170048127A9504F00C03F35 /* DownloadMocks.swift */; };
 		317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */; };
 		317CA3432CFF82E100F88848 /* SettingsAIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317CA3422CFF82DB00F88848 /* SettingsAIChatView.swift */; };
+		317DF6082D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317DF6072D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift */; };
+		317DF60B2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317DF60A2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift */; };
 		317F5F982C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */; };
 		31860A5B2C57ED2D005561F5 /* DuckPlayerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
@@ -1535,6 +1537,8 @@
 		317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncatorTests.swift; sourceTree = "<group>"; };
 		31794BFF2821DFB600F18633 /* DuckUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DuckUI; sourceTree = "<group>"; };
 		317CA3422CFF82DB00F88848 /* SettingsAIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAIChatView.swift; sourceTree = "<group>"; };
+		317DF6072D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageSheetContainerViewController.swift; sourceTree = "<group>"; };
+		317DF60A2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageSheetPresentationAnimator.swift; sourceTree = "<group>"; };
 		317F5F972C94A9EB0081666F /* MarketplaceAdPostbackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceAdPostbackStorage.swift; sourceTree = "<group>"; };
 		31860A5A2C57ED2D005561F5 /* DuckPlayerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckPlayerStorage.swift; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
@@ -3708,6 +3712,15 @@
 				C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		317DF6092D01E7C400DE0145 /* RoundedPageContainer */ = {
+			isa = PBXGroup;
+			children = (
+				317DF60A2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift */,
+				317DF6072D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift */,
+			);
+			path = RoundedPageContainer;
 			sourceTree = "<group>";
 		};
 		31951E9328230D8900CAF535 /* Shared */ = {
@@ -6508,6 +6521,7 @@
 		F1D796ED1E7AE4090019D451 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				317DF6092D01E7C400DE0145 /* RoundedPageContainer */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				1E162603296840790004127F /* SwiftUI */,
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
@@ -7954,6 +7968,7 @@
 				8598D2E32CEB98B500C45685 /* FaviconUserScript.swift in Sources */,
 				8598D2E42CEB98B500C45685 /* FaviconSourcesProvider.swift in Sources */,
 				BD862E052B30DB250073E2EE /* VPNFeedbackCategory.swift in Sources */,
+				317DF60B2D01E7D600DE0145 /* RoundedPageSheetPresentationAnimator.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				BDE91CE02C6515420005CB74 /* UnifiedFeedbackFormViewModel.swift in Sources */,
 				1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */,
@@ -8040,6 +8055,7 @@
 				BD862E072B30F5E30073E2EE /* VPNFeedbackSender.swift in Sources */,
 				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
+				317DF6082D01E7B900DE0145 /* RoundedPageSheetContainerViewController.swift in Sources */,
 				980891A32237146B00313A70 /* Feedback.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarksViewControllerCells.swift in Sources */,
 				9F9EE4D42C37BB1300D4118E /* OnboardingView+Landing.swift in Sources */,

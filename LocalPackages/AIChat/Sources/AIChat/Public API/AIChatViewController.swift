@@ -67,9 +67,6 @@ extension AIChatViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-
-        setupNavigationBar()
-
         subscribeToCleanupPublisher()
     }
 
@@ -84,6 +81,11 @@ extension AIChatViewController {
         chatModel.cancelTimer()
     }
 
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        chatModel.startCleanupTimer()
+    }
+    
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
@@ -97,55 +99,6 @@ extension AIChatViewController {
 // MARK: - Views Setup
 extension AIChatViewController {
 
-    private func setupNavigationBar() {
-        guard let navigationController = navigationController else { return }
-
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        appearance.shadowImage = UIImage()
-        appearance.shadowColor = .clear
-
-        navigationController.navigationBar.standardAppearance = appearance
-        navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationController.navigationBar.compactAppearance = appearance
-        navigationController.navigationBar.isTranslucent = true
-
-        let imageView = UIImageView(image: UIImage(named: "Logo"))
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        let imageSize: CGFloat = 28
-        NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: imageSize),
-            imageView.heightAnchor.constraint(equalToConstant: imageSize)
-        ])
-
-        let titleLabel = UILabel()
-        titleLabel.text = UserText.aiChatTitle
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.textColor = .white
-        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .center
-        stackView.distribution = .fill
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stackView)
-
-        let closeButton = UIBarButtonItem(
-            image: UIImage(named: "Close-24"),
-            style: .plain,
-            target: self,
-            action: #selector(closeAIChat)
-        )
-        closeButton.accessibilityIdentifier = "aichat.close.button"
-        closeButton.tintColor = .white
-
-        navigationItem.rightBarButtonItem = closeButton
-    }
-
-
     private func addWebViewController() {
         guard webViewController == nil else { return }
 
@@ -158,16 +111,11 @@ extension AIChatViewController {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            viewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-
-        viewController.view.backgroundColor = .black
-        viewController.view.layer.cornerRadius = 20
-        viewController.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        viewController.view.clipsToBounds = true
 
         viewController.didMove(toParent: self)
     }
@@ -190,16 +138,10 @@ extension AIChatViewController {
                 self?.timerPixelHandler.markCleanup()
             }
     }
-
-    @objc private func closeAIChat() {
-        chatModel.startCleanupTimer()
-        dismiss(animated: true)
-    }
 }
 
 extension AIChatViewController: AIChatWebViewControllerDelegate {
     func aiChatWebViewController(_ viewController: AIChatWebViewController, didRequestToLoad url: URL) {
         delegate?.aiChatViewController(self, didRequestToLoad: url)
-        closeAIChat()
     }
 }

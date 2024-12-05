@@ -248,7 +248,8 @@ struct SearchWidgetView: View {
                         .accessibilityHidden(true)
                         .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
                 }
-            }.accessibilityHidden(true)
+                .accessibilityHidden(true)
+            }.accessibilityLabel(Text(UserText.searchDuckDuckGo))
         }
         .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
     }
@@ -259,7 +260,6 @@ struct PasswordsWidgetView: View {
 
     var body: some View {
         ZStack {
-
             VStack(alignment: .center, spacing: 6) {
 
                 Image(.widgetPasswordIllustration)
@@ -275,7 +275,7 @@ struct PasswordsWidgetView: View {
                         .padding(.horizontal, 8)
 
             }
-            .accessibilityHidden(true)
+            .accessibilityLabel(Text(UserText.passwords))
         }
         .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))
     }
@@ -284,13 +284,13 @@ struct PasswordsWidgetView: View {
 // See https://stackoverflow.com/a/59228385/73479
 extension View {
 
-    func widgetContainerBackground(color: Color = .clear) -> some View {
+    @ViewBuilder func widgetContainerBackground(color: Color = .clear) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
-            return containerBackground(for: .widget) {
+            containerBackground(for: .widget) {
                 color
             }
         } else {
-            return background(color)
+            background(color)
         }
     }
 
@@ -342,14 +342,6 @@ extension Image {
     @ViewBuilder func useFullColorRendering() -> some View {
         if #available(iOSApplicationExtension 18.0, *) {
             self.widgetAccentedRenderingMode(.fullColor)
-        } else {
-            self
-        }
-    }
-
-    @ViewBuilder func useAccentedRendering() -> some View {
-        if #available(iOSApplicationExtension 18.0, *) {
-            self.widgetAccentedRenderingMode(.accented)
         } else {
             self
         }

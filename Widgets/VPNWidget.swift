@@ -149,6 +149,7 @@ struct VPNStatusView: View {
                 Image(headerImageName(with: status))
                     .useFullColorRendering()
                     .padding([.bottom], 7)
+                    .accessibilityHidden(true)
 
                 Text(title(with: status))
                     .font(.system(size: 16, weight: .semibold))

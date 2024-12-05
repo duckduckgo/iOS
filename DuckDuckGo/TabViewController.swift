@@ -332,7 +332,9 @@ class TabViewController: UIViewController {
                                    urlCredentialCreator: URLCredentialCreating = URLCredentialCreator(),
                                    featureFlagger: FeatureFlagger,
                                    subscriptionCookieManager: SubscriptionCookieManaging,
-                                   textZoomCoordinator: TextZoomCoordinating) -> TabViewController {
+                                   textZoomCoordinator: TextZoomCoordinating,
+                                   websiteDataManager: WebsiteDataManaging,
+                                   fireproofing: Fireproofing) -> TabViewController {
 
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
@@ -350,7 +352,9 @@ class TabViewController: UIViewController {
                               urlCredentialCreator: urlCredentialCreator,
                               featureFlagger: featureFlagger,
                               subscriptionCookieManager: subscriptionCookieManager,
-                              textZoomCoordinator: textZoomCoordinator
+                              textZoomCoordinator: textZoomCoordinator,
+                              fireproofing: fireproofing,
+                              websiteDataManager: websiteDataManager
             )
         })
         return controller
@@ -371,6 +375,7 @@ class TabViewController: UIViewController {
     let onboardingPixelReporter: OnboardingCustomInteractionPixelReporting
     let textZoomCoordinator: TextZoomCoordinating
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
 
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
@@ -388,7 +393,8 @@ class TabViewController: UIViewController {
                    featureFlagger: FeatureFlagger,
                    subscriptionCookieManager: SubscriptionCookieManaging,
                    textZoomCoordinator: TextZoomCoordinating,
-                   fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+                   fireproofing: Fireproofing,
+                   websiteDataManager: WebsiteDataManaging) {
         self.tabModel = tabModel
         self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
@@ -410,6 +416,7 @@ class TabViewController: UIViewController {
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
         self.fireproofing = fireproofing
+        self.websiteDataManager = websiteDataManager
 
         super.init(coder: aDecoder)
         
@@ -664,7 +671,7 @@ class TabViewController: UIViewController {
         Task { @MainActor in
             await webView.configuration.websiteDataStore.dataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes())
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            await WebCacheManager.shared.consumeCookies(httpCookieStore: cookieStore)
+            await websiteDataManager.consumeCookies(into: cookieStore)
             subscriptionCookieManager.resetLastRefreshDate()
             await subscriptionCookieManager.refreshSubscriptionCookie()
             doLoad()
@@ -1705,20 +1712,16 @@ extension TabViewController: WKNavigationDelegate {
 
     private func loadSpecialErrorPageIfNeeded(error: NSError) {
         guard featureFlagger.isFeatureOn(.sslCertificatesBypass),
-              error.code == NSURLErrorServerCertificateUntrusted,
-              let errorCode = error.userInfo["_kCFStreamErrorCodeKey"] as? Int32,
-              let failedURL = error.failedUrl else {
-            return
-        }
+              error.isServerCertificateUntrusted,
+              let errorType = error.sslErrorType,
+              let failedURL = error.failedUrl,
+              let host = failedURL.host else { return }
+
         let tld = storageCache.tld
-        let errorType = SSLErrorType.forErrorCode(Int(errorCode))
         self.failedURL = failedURL
-        errorData = SpecialErrorData(kind: .ssl,
-                                     errorType: errorType.rawValue,
-                                     domain: failedURL.host,
-                                     eTldPlus1: tld.eTLDplus1(failedURL.host))
+        errorData = SpecialErrorData.ssl(type: errorType, domain: host, eTldPlus1: tld.eTLDplus1(host))
         loadSpecialErrorPage(url: failedURL)
-        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.rawParameter))
+        Pixel.fire(pixel: .certificateWarningDisplayed(errorType.pixelParameter))
     }
 
     private func loadSpecialErrorPage(url: URL) {
@@ -3080,12 +3083,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 }
 
 extension TabViewController: OnboardingNavigationDelegate {
-    
-    func searchFor(_ query: String) {
+
+    func searchFromOnboarding(for query: String) {
         delegate?.tab(self, didRequestLoadQuery: query)
     }
 
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         delegate?.tab(self, didRequestLoadURL: url)
     }
 
@@ -3138,7 +3141,7 @@ extension UserContentController {
 
 extension TabViewController: SpecialErrorPageUserScriptDelegate {
 
-    func leaveSite() {
+    func leaveSiteAction() {
         Pixel.fire(pixel: .certificateWarningLeaveClicked)
         guard webView?.canGoBack == true else {
             delegate?.tabDidRequestClose(self)
@@ -3147,7 +3150,7 @@ extension TabViewController: SpecialErrorPageUserScriptDelegate {
         _ = webView?.goBack()
     }
 
-    func visitSite() {
+    func visitSiteAction() {
         Pixel.fire(pixel: .certificateWarningProceedClicked)
         isSpecialErrorPageVisible = false
         shouldBypassSSLError = true

@@ -38,6 +38,7 @@ import Onboarding
 import os.log
 import PageRefreshMonitor
 import BrokenSitePrompt
+import AIChat
 
 class MainViewController: UIViewController {
     
@@ -178,12 +179,23 @@ class MainViewController: UIViewController {
     }
     
     let fireproofing: Fireproofing
+    let websiteDataManager: WebsiteDataManaging
     let textZoomCoordinator: TextZoomCoordinating
 
     var historyManager: HistoryManaging
     var viewCoordinator: MainViewCoordinator!
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+
+    private lazy var aiChatNavigationController: UINavigationController = {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let aiChatViewController = AIChatViewController(settings: settings,
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
+                                                        pixelHandler: AIChatPixelHandler())
+        aiChatViewController.delegate = self
+        return UINavigationController(rootViewController: aiChatViewController)
+    }()
 
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -206,9 +218,10 @@ class MainViewController: UIViewController {
         subscriptionFeatureAvailability: SubscriptionFeatureAvailability,
         voiceSearchHelper: VoiceSearchHelperProtocol,
         featureFlagger: FeatureFlagger,
-        fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
+        fireproofing: Fireproofing,
         subscriptionCookieManager: SubscriptionCookieManaging,
         textZoomCoordinator: TextZoomCoordinating,
+        websiteDataManager: WebsiteDataManaging,
         appDidFinishLaunchingStartTime: CFAbsoluteTime?
     ) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -235,7 +248,9 @@ class MainViewController: UIViewController {
                                      featureFlagger: featureFlagger,
                                      subscriptionCookieManager: subscriptionCookieManager,
                                      appSettings: appSettings,
-                                     textZoomCoordinator: textZoomCoordinator)
+                                     textZoomCoordinator: textZoomCoordinator,
+                                     websiteDataManager: websiteDataManager,
+                                     fireproofing: fireproofing)
         self.syncPausedStateManager = syncPausedStateManager
         self.privacyProDataReporter = privacyProDataReporter
         self.homeTabManager = NewTabPageManager()
@@ -249,6 +264,7 @@ class MainViewController: UIViewController {
         self.fireproofing = fireproofing
         self.subscriptionCookieManager = subscriptionCookieManager
         self.textZoomCoordinator = textZoomCoordinator
+        self.websiteDataManager = websiteDataManager
         self.appDidFinishLaunchingStartTime = appDidFinishLaunchingStartTime
 
         super.init(nibName: nil, bundle: nil)
@@ -346,6 +362,7 @@ class MainViewController: UIViewController {
                 let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
                 Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                self.appDidFinishLaunchingStartTime = nil /// We only want this pixel to be fired once
             }
         }
 
@@ -432,7 +449,8 @@ class MainViewController: UIViewController {
                                          bookmarksDatabase: self.bookmarksDatabase,
                                          historyManager: self.historyManager,
                                          tabsModel: self.tabManager.model,
-                                         featureFlagger: self.featureFlagger)
+                                         featureFlagger: self.featureFlagger,
+                                         appSettings: self.appSettings)
         }) else {
             assertionFailure()
             return
@@ -1683,7 +1701,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
-    
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -2342,6 +2359,11 @@ extension MainViewController: TabDelegate {
         segueToReportBrokenSite(entryPoint: .toggleReport(completionHandler: completionHandler))
     }
 
+    func tabDidRequestAIChat(tab: TabViewController) {
+        aiChatNavigationController.modalPresentationStyle = .fullScreen
+        tab.present(aiChatNavigationController, animated: true, completion: nil)
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2673,7 +2695,7 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        await WebCacheManager.shared.clear()
+        await websiteDataManager.clear(dataStore: WKWebsiteDataStore.default())
         pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
 
         AutoconsentManagement.shared.clearCache()
@@ -2832,11 +2854,11 @@ extension MainViewController: OnboardingDelegate {
 }
 
 extension MainViewController: OnboardingNavigationDelegate {
-    func navigateTo(url: URL) {
+    func navigateFromOnboarding(to url: URL) {
         self.loadUrl(url, fromExternalLink: true)
     }
-    
-    func searchFor(_ query: String) {
+
+    func searchFromOnboarding(for query: String) {
         self.loadQuery(query)
     }
 }
@@ -2924,5 +2946,12 @@ extension MainViewController {
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+// MARK: - AIChatViewControllerDelegate
+extension MainViewController: AIChatViewControllerDelegate {
+    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
+        loadUrlInNewTab(url, inheritedAttribution: nil)
     }
 }

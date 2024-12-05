@@ -25,6 +25,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
+/* Open AI Chat action in the menu list */
+"action.title.aichat" = "Chat";
+
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Passwords";
 
@@ -79,8 +82,11 @@
 /* Paste and Go action */
 "action.title.pasteAndGo" = "Paste & Go";
 
-/* Print action */
+/* Print action in the menu header */
 "action.title.print" = "Print";
+
+/* Print action in the menu list */
+"action.title.print.site" = "Print";
 
 /* Refresh action - button shown in alert */
 "action.title.refresh" = "Refresh";
@@ -135,6 +141,22 @@
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
+
+/* Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and () */
+"ai-chat.preferences.text.markdown" = "AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
+
+/* Toggle text to enable/disable AI Chat in the browsing menu */
+"aichat.settings.enable.browsing-menu-toggle" = "Show AI Chat in Browser Menu";
+
+/* Footer text for AI Chat settings */
+"aichat.settings.enable.footer" = "Turning this off will hide the AI Chat feature in the DuckDuckGo app.";
+
+/* Settings screen cell text for AI Chat settings */
+"aichat.settings.title" = "AI Chat";
+
+/* Title for DuckDuckGo AI Chat. Should not be translated */
+"aichat.title" = "DuckDuckGo AI Chat";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
@@ -1083,7 +1105,7 @@
 "duckplayer.settings.learn-more" = "Learn More";
 
 /* Settings screen cell text for DuckPlayer settings to open in new tab */
-"duckplayer.settings.open-new-tab-label" = "Open Duck Player in a new tab";
+"duckplayer.settings.open-new-tab-label" = "Open Duck Player in a New Tab";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.open-videos-in" = "Open YouTube Videos in Duck Player";

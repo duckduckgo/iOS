@@ -117,8 +117,7 @@ private extension SimpleNewTabPageView {
     }
 
     private func sectionsViewPadding(in geometry: GeometryProxy) -> CGFloat {
-        let requiredWidth = NewTabPageGrid.staticGridWidth(for: horizontalSizeClass) + Metrics.regularPadding
-        return geometry.frame(in: .local).width >= requiredWidth ? Metrics.regularPadding : Metrics.smallPadding
+        geometry.frame(in: .local).width > Metrics.verySmallScreenWidth ? Metrics.regularPadding : Metrics.smallPadding
     }
 }
 
@@ -142,6 +141,8 @@ private struct Metrics {
 
     static let messageMaximumWidth: CGFloat = 380
     static let messageMaximumWidthPad: CGFloat = 455
+
+    static let verySmallScreenWidth: CGFloat = 320
 }
 
 // MARK: - Preview

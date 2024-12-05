@@ -61,7 +61,7 @@ class ImageCacheDebugViewController: UITableViewController {
 
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
-          fireproofing: Fireproofing = UserDefaultsFireproofing.shared) {
+          fireproofing: Fireproofing) {
 
         bookmarksContext = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.fireproofing = fireproofing

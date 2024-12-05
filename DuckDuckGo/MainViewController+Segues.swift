@@ -292,7 +292,12 @@ extension MainViewController {
                                                             appSettings: appSettings,
                                                             bookmarksDatabase: bookmarksDatabase,
                                                             tabManager: tabManager,
-                                                            syncPausedStateManager: syncPausedStateManager)
+                                                            syncPausedStateManager: syncPausedStateManager,
+                                                            fireproofing: fireproofing,
+                                                            websiteDataManager: websiteDataManager)
+
+        let aiChatSettings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                            internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
 
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider,
                                                   subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
@@ -302,7 +307,8 @@ extension MainViewController {
                                                   historyManager: historyManager,
                                                   syncPausedStateManager: syncPausedStateManager,
                                                   privacyProDataReporter: privacyProDataReporter,
-                                                  textZoomCoordinator: textZoomCoordinator)
+                                                  textZoomCoordinator: textZoomCoordinator,
+                                                  aiChatSettings: aiChatSettings)
         Pixel.fire(pixel: .settingsPresented)
 
         if let navigationController = self.presentedViewController as? UINavigationController,
@@ -331,7 +337,8 @@ extension MainViewController {
                                     sync: self.syncService,
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider,
-                                    tabManager: self.tabManager)
+                                    tabManager: self.tabManager,
+                                    fireproofing: self.fireproofing)
         }
 
         let controller = UINavigationController(rootViewController: settings)

@@ -57,12 +57,14 @@ public final class ContentBlockingUpdating {
 
     init(appSettings: AppSettings = AppUserDefaults(),
          contentBlockerRulesManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
-         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         fireproofing: Fireproofing = UserDefaultsFireproofing.xshared) {
 
         let makeValue: (Update) -> NewContent = { rulesUpdate in
             let sourceProvider = DefaultScriptSourceProvider(appSettings: appSettings,
                                                              privacyConfigurationManager: privacyConfigurationManager,
-                                                             contentBlockingManager: contentBlockerRulesManager)
+                                                             contentBlockingManager: contentBlockerRulesManager,
+                                                             fireproofing: fireproofing)
             return NewContent(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
         }
 

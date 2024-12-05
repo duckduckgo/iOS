@@ -32,16 +32,18 @@ enum AppEvent {
 
 protocol AppState {
 
-    func apply(event: AppEvent) -> any AppState
+    mutating func apply(event: AppEvent) -> any AppState
 
 }
 
 protocol AppEventHandler {
 
+    @MainActor
     func handle(_ event: AppEvent)
 
 }
 
+@MainActor
 final class AppStateMachine: AppEventHandler {
 
     private(set) var currentState: any AppState = Init()
@@ -52,11 +54,35 @@ final class AppStateMachine: AppEventHandler {
 
 }
 
-struct AppContext {
+final class AppContext {
 
     let application: UIApplication
     let launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+
+    var didCrashDuringCrashHandlersSetUp: Bool
+    var window: UIWindow?
     var urlToOpen: URL?
+    var lastBackgroundDate: Date?
+    var didFinishLaunchingStartTime: CFAbsoluteTime?
+    var isTesting: Bool
+
+    init(application: UIApplication,
+         launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
+         didCrashDuringCrashHandlersSetUp: Bool = false,
+         window: UIWindow? = nil,
+         urlToOpen: URL? = nil,
+         lastBackgroundDate: Date? = nil,
+         didFinishLaunchingStartTime: CFAbsoluteTime? = nil,
+         isTesting: Bool = false) {
+        self.application = application
+        self.launchOptions = launchOptions
+        self.didCrashDuringCrashHandlersSetUp = didCrashDuringCrashHandlersSetUp
+        self.window = window
+        self.urlToOpen = urlToOpen
+        self.lastBackgroundDate = lastBackgroundDate
+        self.didFinishLaunchingStartTime = didFinishLaunchingStartTime
+        self.isTesting = isTesting
+    }
 
 }
 

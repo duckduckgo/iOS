@@ -1,5 +1,5 @@
 //
-//  Init.swift
+//  SubscriptionService.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -17,21 +17,16 @@
 //  limitations under the License.
 //
 
-import Core
-import Crashes
+import Subscription
+import Combine
 
-@MainActor
-struct Init: AppState {
+final class SubscriptionService {
 
-    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
-    var didCrashDuringCrashHandlersSetUp: Bool
-
-    init() {
-        if !didCrashDuringCrashHandlersSetUp {
-            didCrashDuringCrashHandlersSetUp = true
-            CrashLogMessageExtractor.setUp(swapCxaThrow: false)
-            didCrashDuringCrashHandlersSetUp = false
-        }
+    init(subscriptionCookieManager: SubscriptionCookieManaging) {
+        self.subscriptionCookieManager = subscriptionCookieManager
     }
+
+    let subscriptionCookieManager: SubscriptionCookieManaging
+    var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
 
 }

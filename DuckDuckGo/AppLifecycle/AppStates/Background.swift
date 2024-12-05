@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
 struct Background: AppState {
 
-    let appContext: AppContext
+    var appContext: AppContext
     let appDependencies: AppDependencies
 
     init(appContext: AppContext, appDependencies: AppDependencies) {
@@ -29,6 +29,25 @@ struct Background: AppState {
         self.appDependencies = appDependencies
 
         // handle applicationDidEnterBackground(_:) logic here
+        if appDependencies.autoClear.isClearingEnabled || appDependencies.privacyStore.authenticationEnabled {
+            appDependencies.uiService.displayBlankSnapshotWindow(voiceSearchHelper: appDependencies.voiceSearchHelper,
+                                                                 addressBarPosition: appDependencies.appSettings.currentAddressBarPosition)
+        }
+        appDependencies.autoClear.startClearingTimer()
+        self.appContext.lastBackgroundDate = Date()
+        appDependencies.autofillLoginSession.endSession()
+
+        /*
+
+         suspendSync()
+         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
+         privacyProDataReporter.saveApplicationLastSessionEnded()
+         resetAppStartTime()
+
+         */
+
     }
+
+
 
 }

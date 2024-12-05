@@ -17,17 +17,17 @@
 //  limitations under the License.
 //
 
-import UIKit
-import Subscription
-
 struct Inactive: AppState {
 
     let appContext: AppContext
     let appDependencies: AppDependencies
 
     init(appContext: AppContext, appDependencies: AppDependencies) {
+        self.appContext = appContext
+        self.appDependencies = appDependencies
         Task { @MainActor in
-            await appContext.application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility, accountManager: accountManager)
+            await appContext.application.refreshVPNShortcuts(vpnFeatureVisibility: appDependencies.vpnFeatureVisibility,
+                                                             accountManager: appDependencies.accountManager)
             await appDependencies.vpnWorkaround.removeRedditSessionWorkaround()
         }
     }

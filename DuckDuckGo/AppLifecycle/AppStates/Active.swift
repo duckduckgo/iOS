@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
 struct Active: AppState {
 
-    let appContext: AppContext
+    var appContext: AppContext
     let appDependencies: AppDependencies
 
     init(appContext: AppContext,
@@ -38,10 +38,38 @@ struct Active: AppState {
             openURL(url)
         }
 
+
+        /*
+         only once! on sourceState is Launched!
+         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+
+         // Enable subscriptionCookieManager if feature flag is present
+         if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
+             subscriptionCookieManager.enableSettingSubscriptionCookie()
+         }
+
+         // Keep track of feature flag changes
+         let subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher // TODO: should we move it to Active State?
+             .receive(on: DispatchQueue.main)
+             .sink { /*[weak self, weak privacyConfigurationManager] in */
+ //                 guard let self, !self.appIsLaunching, let privacyConfigurationManager else { return } // TODO
+ //
+ //                let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
+ //
+ //                Task { @MainActor [weak self] in
+ //                    if isEnabled {
+ //                        self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
+ //                    } else {
+ //                        await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
+ //                    }
+ //                }
+             }
+         */
+
         // handle applicationDidBecomeActive(_:) logic here
     }
 
-    private func openURL(_ url: URL) {
+    private mutating func openURL(_ url: URL) {
         defer {
             appContext.urlToOpen = nil
         }

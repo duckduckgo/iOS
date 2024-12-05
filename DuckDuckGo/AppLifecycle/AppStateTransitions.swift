@@ -25,7 +25,9 @@ extension Init {
     func apply(event: AppEvent) -> any AppState {
         switch event {
         case .launching(let application, let launchOptions):
-            return Launched(appContext: AppContext(application: application, launchOptions: launchOptions))
+            return Launched(appContext: AppContext(application: application, // nested type
+                                                   launchOptions: launchOptions,
+                                                   didCrashDuringCrashHandlersSetUp: didCrashDuringCrashHandlersSetUp))
         default:
             return handleUnexpectedEvent(event)
         }
@@ -35,11 +37,11 @@ extension Init {
 
 extension Launched {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
         case .activating:
             return Active(appContext: appContext,
-                          transitionContext: TransitionContext(event: event, sourceState: self)
+                          transitionContext: TransitionContext(event: event, sourceState: self),
                           appDependencies: appDependencies)
         case .openURL(let url):
             appContext.urlToOpen = url
@@ -85,7 +87,7 @@ extension Inactive {
 
 extension Background {
 
-    func apply(event: AppEvent) -> any AppState {
+    mutating func apply(event: AppEvent) -> any AppState {
         switch event {
         case .activating:
             return Active(appContext: appContext,

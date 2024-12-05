@@ -361,7 +361,7 @@ import os.log
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings,
+            window?.rootViewController = BlankSnapshotViewController(addressBarPosition: AppDependencyProvider.shared.appSettings.currentAddressBarPosition,
                                                                      voiceSearchHelper: voiceSearchHelper)
             window?.makeKeyAndVisible()
 
@@ -600,7 +600,7 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
-        appStateMachine.handle(.activating(application))
+        appStateMachine.handle(.activating)
 
         defer {
             if let didFinishLaunchingStartTime {
@@ -705,7 +705,7 @@ import os.log
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        appStateMachine.handle(.suspending(application))
+        appStateMachine.handle(.suspending)
     }
 
     private func fireAppLaunchPixel() {
@@ -794,7 +794,7 @@ import os.log
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        appStateMachine.handle(.backgrounding(application))
+        appStateMachine.handle(.backgrounding)
         displayBlankSnapshotWindow()
         autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
@@ -955,7 +955,8 @@ import os.log
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings, voiceSearchHelper: voiceSearchHelper)
+        let overlay = BlankSnapshotViewController(addressBarPosition: AppDependencyProvider.shared.appSettings.currentAddressBarPosition,
+                                                  voiceSearchHelper: voiceSearchHelper)
         overlay.delegate = self
 
         overlayWindow?.rootViewController = overlay
@@ -1229,7 +1230,7 @@ extension DataStoreWarmup.ApplicationState {
     }
 }
 
-private extension Error {
+extension Error {
 
     var isDiskFull: Bool {
         let nsError = self as NSError

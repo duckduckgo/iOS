@@ -18,6 +18,7 @@
 //
 
 import Subscription
+import UIKit
 
 extension UIApplication {
 

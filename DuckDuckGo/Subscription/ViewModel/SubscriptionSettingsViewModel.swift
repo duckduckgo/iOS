@@ -81,7 +81,8 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd, yyyy"
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
         return formatter
     }()
     
@@ -211,7 +212,6 @@ final class SubscriptionSettingsViewModel: ObservableObject {
     
     @MainActor
     private func updateSubscriptionsStatusMessage(status: Subscription.Status, date: Date, product: String, billingPeriod: Subscription.BillingPeriod) {
-        let billingPeriod = billingPeriod == .monthly ? UserText.subscriptionMonthlyBillingPeriod : UserText.subscriptionAnnualBillingPeriod
         let date = dateFormatter.string(from: date)
 
         switch status {

@@ -19,6 +19,7 @@
 
 
 import Core
+import Subscription
 
 public struct UserText {
     
@@ -1152,19 +1153,47 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionTitle = NSLocalizedString("subscription.title", value: "Privacy Pro", comment: "Navigation bar Title for subscriptions")
     public static let subscriptionSubscribed = NSLocalizedString("subscription.subscribed", value: "Subscribed", comment: "Subtitle in header when subscribed")
     public static let subscriptionCloseButton = NSLocalizedString("subscription.close", value: "Close", comment: "Navigation Button for closing subscription view")
-    
-    static func renewingSubscriptionInfo(billingPeriod: String, renewalDate: String) -> String {
-        let localized = NSLocalizedString("subscription.subscription.renewing.caption",
-                                          value: "Your %@ subscription renews on %@.",
-                                          comment: "Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)'")
-        return String(format: localized, billingPeriod, renewalDate)
+
+    static func renewingSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, renewalDate: String) -> String {
+        let localized: String
+
+        switch billingPeriod {
+        case .monthly:
+            localized = NSLocalizedString("subscription.subscription.renewing.monthly.caption",
+                                          value: "Your monthly subscription renews on %@.",
+                                          comment: "Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)'")
+        case .yearly:
+            localized = NSLocalizedString("subscription.subscription.renewing.yearly.caption",
+                                          value: "Your annual subscription renews on %@.",
+                                          comment: "Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)'")
+        case .unknown:
+            localized = NSLocalizedString("subscription.subscription.renewing.unknown.caption",
+                                          value: "Your subscription renews on %@.",
+                                          comment: "Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)'")
+        }
+
+        return String(format: localized, renewalDate)
     }
 
-    static func expiringSubscriptionInfo(billingPeriod: String, expiryDate: String) -> String {
-        let localized = NSLocalizedString("subscription.subscription.expiring.caption",
-                                          value: "Your %@ subscription expires on %@.",
-                                          comment: "Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)'")
-        return String(format: localized, billingPeriod, expiryDate)
+    static func expiringSubscriptionInfo(billingPeriod: Subscription.BillingPeriod, expiryDate: String) -> String {
+        let localized: String
+
+        switch billingPeriod {
+        case .monthly:
+            localized = NSLocalizedString("subscription.subscription.expiring.monthly.caption",
+                                          value: "Your monthly subscription expires on %@.",
+                                          comment: "Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)'")
+        case .yearly:
+            localized = NSLocalizedString("subscription.subscription.expiring.yearly.caption",
+                                          value: "Your annual subscription expires on %@.",
+                                          comment: "Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)'")
+        case .unknown:
+            localized = NSLocalizedString("subscription.subscription.expiring.unknown.caption",
+                                          value: "Your subscription expires on %@.",
+                                          comment: "Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)'")
+        }
+
+        return String(format: localized, expiryDate)
     }
 
     static func expiredSubscriptionInfo(expiration: String) -> String {
@@ -1173,9 +1202,6 @@ But if you *do* want a peek under the hood, you can find more information about 
                                           comment: "Subscription Expired Data. This reads as 'Your subscription expired on (date)'")
         return String(format: localized, expiration)
     }
-    
-    public static let subscriptionMonthlyBillingPeriod = NSLocalizedString("subscription.billing.period.monthly", value: "monthly", comment: "Subscription monthly billing period type")
-    public static let subscriptionAnnualBillingPeriod = NSLocalizedString("subscription.billing.period.annual", value: "annual", comment: "Subscription annual billing period type")
 
     public static let subscriptionDevicesSectionHeader = NSLocalizedString("subscription.devices.header", value: "Activate on Other Devices", comment: "Header for section for activating subscription on other devices")
     public static let subscriptionDevicesSectionNoEmailFooter = NSLocalizedString("subscription.devices.no.email.footer", value: "Add an optional email to your subscription to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**", comment: "Footer for section for activating subscription on other devices when email was not yet added")

@@ -103,9 +103,9 @@ class MainViewController: UIViewController {
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let syncPausedStateManager: any SyncPausedStateManaging
-    private let variantManager: VariantManager
+    let variantManager: VariantManager
     private let tutorialSettings: TutorialSettings
-    private let contextualOnboardingLogic: ContextualOnboardingLogic
+    let contextualOnboardingLogic: ContextualOnboardingLogic
     let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let statisticsStore: StatisticsStore
     let voiceSearchHelper: VoiceSearchHelperProtocol
@@ -149,7 +149,7 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
+    lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     let bookmarksCachingSearch: BookmarksCachingSearch
     
@@ -2696,63 +2696,6 @@ extension MainViewController: AutoClearWorker {
     
     func stopAllOngoingDownloads() {
         AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
-    }
-    
-    func forgetAllWithAnimation(showNextDaxDialog: Bool = false) {
-        let spid = Instruments.shared.startTimedEvent(.clearingData)
-        Pixel.fire(pixel: .forgetAllExecuted)
-
-        Task { @MainActor in
-
-            var dataClearingFinished = false
-            var preClearingUIUpdatesFinished = false
-
-            // Run this in parallel
-            Task {
-                self.tabManager.prepareCurrentTabForDataClearing()
-                self.stopAllOngoingDownloads()
-                self.forgetTabs()
-                self.refreshUIAfterClear()
-                preClearingUIUpdatesFinished = true
-
-                await self.forgetData()
-
-                // Add some sleep here to test the indterimnate state
-                // try? await Task.sleep(interval: 5.0)
-
-                Instruments.shared.endTimedEvent(for: spid)
-                dataClearingFinished = true
-            }
-
-            await fireButtonAnimator.animate()
-
-            if !preClearingUIUpdatesFinished {
-                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
-            }
-
-            if !dataClearingFinished {
-                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
-            }
-
-            // MARK: post-clearing animation tasks
-
-            ActionMessageView.present(message: UserText.actionForgetAllDone,
-                                      presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
-
-            privacyProDataReporter.saveFireCount()
-
-            if showNextDaxDialog {
-                self.newTabPageViewController?.showNextDaxDialog()
-            } else if KeyboardSettings().onNewTab &&
-                        // If we're showing the Add to Dock dialog prevent address bar to become first responder.
-                        !self.contextualOnboardingLogic.isShowingAddToDockDialog {
-                self.enterSearch()
-            }
-
-            if self.variantManager.isContextualDaxDialogsEnabled {
-                DaxDialogs.shared.clearedBrowserData()
-            }
-        }
     }
     
     private func showFireButtonPulse() {

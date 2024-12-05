@@ -117,7 +117,7 @@ class FireButtonAnimator {
     /// @param afterScreenUpdates Mainly provided for the preview in settings.  From the fire button we want the screen to be captured immediately.
     @MainActor
     func animate(afterScreenUpdates: Bool = false) async {
-        print("***", #function, "IN")
+        print("***", #function, "IN", Date().timeIntervalSince1970)
 
         guard let window = UIApplication.shared.firstKeyWindow,
               let snapshot = window.snapshotView(afterScreenUpdates: afterScreenUpdates),
@@ -139,32 +139,34 @@ class FireButtonAnimator {
         let delay = duration * currentAnimation.transition
 
         var animationFinished = false
-        print("***", #function, " play IN")
+        print("***", #function, "play IN", Date().timeIntervalSince1970)
         animationView.play(fromProgress: 0, toProgress: 1) { _ in
             animationFinished = true
-            print("***", #function, " play OUT")
+            print("***", #function, "play OUT", Date().timeIntervalSince1970)
         }
 
         await transition(snapshot, withDelay: delay)
 
         while !animationFinished {
-            await Task.yield() // Give the system chance to decide if something higher priority should run
-            try? await Task.sleep(interval: 0.01) // Either way, wait a small amount of time for the animation to finish in case this is the highest priority task
+            // This is better than a yield because with yield if this is the highest
+            //  priority task it'll run the while loop without a break
+            try? await Task.sleep(interval: 0.1)
         }
 
         animationView.removeFromSuperview()
-        print("***", #function, "OUT")
+        print("***", #function, "OUT", Date().timeIntervalSince1970)
     }
 
     func transition(_ snapshot: UIView, withDelay delay: TimeInterval) async {
-        print("***", #function, "IN")
+        print("***", #function, "IN", Date().timeIntervalSince1970)
         do {
             try await Task.sleep(interval: delay)
         } catch {
             // TODO log this
+            print("***", #function, error.localizedDescription)
         }
         await snapshot.removeFromSuperview()
-        print("***", #function, "OUT")
+        print("***", #function, "OUT", Date().timeIntervalSince1970)
     }
 
     func legacy_animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {

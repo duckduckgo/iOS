@@ -147,7 +147,7 @@
 [Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)";
 
 /* Toggle text to enable/disable AI Chat in the address bar */
-"aichat.settings.enable.address-bar-toggle" = "Show AI Chat in Search Results";
+"aichat.settings.enable.address-bar-toggle" = "Show AI Chat While Searching";
 
 /* Toggle text to enable/disable AI Chat in the browsing menu */
 "aichat.settings.enable.browsing-menu-toggle" = "Show AI Chat in Browser Menu";

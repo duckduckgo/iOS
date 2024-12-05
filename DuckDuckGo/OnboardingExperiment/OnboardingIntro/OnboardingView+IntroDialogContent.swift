@@ -39,7 +39,7 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 24.0) {
-                AnimatableTypingText(title) {
+                AnimatableTypingText(title, startAnimating: animateText) {
                     withAnimation {
                         showCTA.wrappedValue = true
                     }

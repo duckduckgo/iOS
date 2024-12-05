@@ -23,10 +23,6 @@ extension OnboardingIntroViewModel {
     struct Copy {
         let introTitle: String
         let browserComparisonTitle: String
-        let trackerBlockers: String
-        let cookiePopups: String
-        let creepyAds: String
-        let eraseBrowsingData: String
     }
 }
 
@@ -34,11 +30,7 @@ extension OnboardingIntroViewModel.Copy {
 
     static let `default` = OnboardingIntroViewModel.Copy(
         introTitle: UserText.Onboarding.Intro.title,
-        browserComparisonTitle: UserText.Onboarding.BrowsersComparison.title,
-        trackerBlockers: UserText.Onboarding.BrowsersComparison.Features.trackerBlockers,
-        cookiePopups: UserText.Onboarding.BrowsersComparison.Features.cookiePopups,
-        creepyAds: UserText.Onboarding.BrowsersComparison.Features.creepyAds,
-        eraseBrowsingData: UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData
+        browserComparisonTitle: UserText.Onboarding.BrowsersComparison.title
     )
-    
+
 }

@@ -83,5 +83,4 @@ extension OnboardingView {
 private enum Metrics {
     static let titleFont = Font.system(size: 20, weight: .semibold)
     static let messageFont = Font.system(size: 16)
-    static let pickerLeadingOffset: CGFloat = -20
 }

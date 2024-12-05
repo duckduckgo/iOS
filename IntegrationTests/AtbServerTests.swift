@@ -140,7 +140,7 @@ private struct MockStatisticsStoreInconsistencyMonitoring: StatisticsStoreIncons
 }
 
 class MockFeatureFlagger: FeatureFlagger {
-    func isFeatureOn<Flag>(for featureFlag: Flag, allowOverride: Bool) -> Bool where Flag : FeatureFlagDescribing {
+    func isFeatureOn<Flag>(for featureFlag: Flag, allowOverride: Bool) -> Bool where Flag: FeatureFlagDescribing {
         return false
     }
     
@@ -148,7 +148,7 @@ class MockFeatureFlagger: FeatureFlagger {
 
     var localOverrides: (any BrowserServicesKit.FeatureFlagLocalOverriding)?
     
-    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag : FeatureFlagExperimentDescribing {
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
         return nil
     }
     

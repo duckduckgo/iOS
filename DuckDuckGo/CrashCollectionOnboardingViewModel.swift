@@ -106,6 +106,9 @@ final class CrashCollectionOnboardingViewModel: ObservableObject {
         }
         set {
             appSettings.crashCollectionOptInStatus = newValue
+            if appSettings.crashCollectionOptInStatus == .optedOut {
+                // TODO: Clear any potentially stored crcid
+            }
         }
     }
 }

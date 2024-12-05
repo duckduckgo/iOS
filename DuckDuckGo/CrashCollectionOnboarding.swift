@@ -60,12 +60,11 @@ final class CrashCollectionOnboarding: NSObject {
         if featureFlagger.isFeatureOn(.crashReportOptInStatusResetting) {
             if appSettings.crashCollectionOptInStatus == .optedIn &&
                 appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
+
                 appSettings.crashCollectionOptInStatus = .undetermined
                 appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
             }
         }
-        
-        // TODO: Clear CRCID when user opts out of crash reporting from settings menu
         
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {
             if appSettings.crashCollectionOptInStatus == .optedIn {

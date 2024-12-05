@@ -76,8 +76,7 @@ public class AppUserDefaults: AppSettings {
 
         static let crashCollectionOptInStatus = "com.duckduckgo.ios.crashCollectionOptInStatus"
         static let crashCollectionShouldRevertOptedInStatusTrigger = "com.duckduckgo.ios.crashCollectionShouldRevertOptedInStatusTrigger"
-        static let crashReportCohortID = "com.duckduckgo.ios.crashReportCohortID"
-        
+
         static let duckPlayerMode = "com.duckduckgo.ios.duckPlayerMode"
         static let duckPlayerAskModeOverlayHidden = "com.duckduckgo.ios.duckPlayerAskModeOverlayHidden"
         static let duckPlayerOpenInNewTab = "com.duckduckgo.ios.duckPlayerOpenInNewTab"
@@ -411,19 +410,6 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.setValue(newValue, forKey: Keys.crashCollectionShouldRevertOptedInStatusTrigger)
-        }
-    }
-    
-    var crashReportCohortID: String? {
-        get {
-            if let crcid = userDefaults?.string(forKey: Keys.crashReportCohortID) {
-                return crcid
-            } else {
-                return nil
-            }
-        }
-        set {
-            userDefaults?.setValue(newValue, forKey: Keys.crashReportCohortID)
         }
     }
     

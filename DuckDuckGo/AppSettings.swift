@@ -80,7 +80,6 @@ protocol AppSettings: AnyObject, AppDebugSettings {
 
     var crashCollectionOptInStatus: CrashCollectionOptInStatus { get set }
     var crashCollectionShouldRevertOptedInStatusTrigger: Int { get set }
-    var crashReportCohortID: String? { get set }
     
     var duckPlayerMode: DuckPlayerMode { get set }
     var duckPlayerAskModeOverlayHidden: Bool { get set }

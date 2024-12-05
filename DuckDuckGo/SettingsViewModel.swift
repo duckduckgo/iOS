@@ -353,6 +353,9 @@ final class SettingsViewModel: ObservableObject {
         Binding<Bool>(
             get: { self.state.crashCollectionOptInStatus == .optedIn },
             set: {
+                if self.appSettings.crashCollectionOptInStatus == .optedIn && $0 == false {
+                    // TODO: Clear crcid when switching from Opt In to Opt Out
+                }
                 self.appSettings.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
                 self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
             }

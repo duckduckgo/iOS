@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "pete/complete-freemium-RMF-implementation",
-        "revision" : "7de7a7427af97f9c5a70fdb7d20b4cd67695768e"
+        "revision" : "f0755fbb3309c93c8490dc8bbdfb7e2e7613bef6",
+        "version" : "217.0.2"
       }
     },
     {

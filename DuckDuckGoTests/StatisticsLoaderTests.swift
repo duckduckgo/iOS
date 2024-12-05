@@ -27,6 +27,7 @@ class StatisticsLoaderTests: XCTestCase {
 
     var mockStatisticsStore: StatisticsStore!
     var mockUsageSegmentation: MockUsageSegmentation!
+    var mockPixelFiring: PixelFiringMock.Type!
     var testee: StatisticsLoader!
     private var fireAppRetentionExperimentPixelsCalled = false
     private var fireSearchExperimentPixelsCalled = false
@@ -34,17 +35,22 @@ class StatisticsLoaderTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
 
+        PixelFiringMock.tearDown()
+
+        mockPixelFiring = PixelFiringMock.self
         mockStatisticsStore = MockStatisticsStore()
         mockUsageSegmentation = MockUsageSegmentation()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore,
                                   usageSegmentation: mockUsageSegmentation,
                                   inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring(),
                                   fireAppRetentionExperimentPixels: { self.fireAppRetentionExperimentPixelsCalled = true },
-                                  fireSearchExperimentPixels: { self.fireSearchExperimentPixelsCalled = true })
+                                  fireSearchExperimentPixels: { self.fireSearchExperimentPixelsCalled = true },
+                                  pixelFiring: mockPixelFiring)
     }
 
     override func tearDown() {
         HTTPStubs.removeAllStubs()
+        PixelFiringMock.tearDown()
         super.tearDown()
     }
 
@@ -280,6 +286,19 @@ class StatisticsLoaderTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 5, handler: nil)
+    }
+
+    func testWhenInstallStatisticsRequestedThenInstallPixelIsFired() {
+        loadSuccessfulExiStub()
+
+        let testExpectation = expectation(description: "refresh complete")
+        testee.refreshAppRetentionAtb {
+            Thread.sleep(forTimeInterval: .seconds(0.1))
+            testExpectation.fulfill()
+        }
+
+        wait(for: [testExpectation], timeout: 5.0)
+        XCTAssertEqual(mockPixelFiring.lastPixelName, Pixel.Event.appInstall.name)
     }
 
     func loadSuccessfulAtbStub() {

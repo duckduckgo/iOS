@@ -56,6 +56,7 @@ public enum FeatureFlag: String {
     
     /// https://app.asana.com/0/1208592102886666/1208613627589762/f
     case crashReportOptInStatusResetting
+
     case isPrivacyProLaunchedROW
     case isPrivacyProLaunchedROWOverride
 

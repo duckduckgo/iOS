@@ -187,14 +187,14 @@ class MainViewController: UIViewController {
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
 
-    private lazy var aiChatNavigationController: UINavigationController = {
+    private lazy var aiChatViewController: AIChatViewController = {
         let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         let aiChatViewController = AIChatViewController(settings: settings,
                                                         webViewConfiguration: WKWebViewConfiguration.persistent(),
                                                         pixelHandler: AIChatPixelHandler())
         aiChatViewController.delegate = self
-        return UINavigationController(rootViewController: aiChatViewController)
+        return aiChatViewController
     }()
 
     init(
@@ -2360,8 +2360,15 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestAIChat(tab: TabViewController) {
-        aiChatNavigationController.modalPresentationStyle = .fullScreen
-        tab.present(aiChatNavigationController, animated: true, completion: nil)
+        let logoImage = UIImage(named: "Logo")
+        let title = UserText.aiChatTitle
+
+        let roundedPageSheet = RoundedPageSheetContainerViewController(
+            contentViewController: aiChatViewController,
+            logoImage: logoImage,
+            title: title)
+
+        present(roundedPageSheet, animated: true, completion: nil)
     }
 
     func tabDidRequestBookmarks(tab: TabViewController) {

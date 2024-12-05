@@ -102,18 +102,18 @@ extension AIChatWebViewController {
 
 extension AIChatWebViewController: WKNavigationDelegate {
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        if let url = navigationAction.request.url {
-            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
-                return .allow
-            } else {
-                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
-                return .cancel
-            }
-        } else {
-            return .allow
-        }
-    }
+//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+//        if let url = navigationAction.request.url {
+//            if url == chatModel.aiChatURL || navigationAction.targetFrame?.isMainFrame == false {
+//                return .allow
+//            } else {
+//                delegate?.aiChatWebViewController(self, didRequestToLoad: url)
+//                return .cancel
+//            }
+//        } else {
+//            return .allow
+//        }
+//    }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         loadingView.startAnimating()

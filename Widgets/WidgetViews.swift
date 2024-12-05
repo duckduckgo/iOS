@@ -60,6 +60,7 @@ struct FavoriteView: View {
                             
                             Image(.duckDuckGoColor24)
                                 .resizable()
+                                .useFullColorRendering()
                                 .frame(width: 45, height: 45, alignment: .center)
                             
                         } else {

@@ -1216,8 +1216,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let subscriptionManageEmailResendInstructions = NSLocalizedString("subscription.add.device.resend.instructions", value: "Resend Instructions", comment: "Resend activation instructions button")
     
     public static let subscriptionConfirmTitle = NSLocalizedString("subscription.confirm.title", value: "Are you sure?", comment: "Title for Confirm messages")
-    public static let subscriptionAlertTitle = NSLocalizedString("subscription.alert.title", value: "", comment: "Title for Alert messages")
-    
+
     // Add Email To subscription
     public static let subscriptionAddEmail = NSLocalizedString("subscription.add.email", value: "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.", comment: "Add email to an existing subscription")
     public static let subscriptionRestoreAddEmailTitle = NSLocalizedString("subscription.add.email.title", value: "Add Email", comment: "View title for adding email to subscription")

@@ -2505,9 +2505,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
-
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 

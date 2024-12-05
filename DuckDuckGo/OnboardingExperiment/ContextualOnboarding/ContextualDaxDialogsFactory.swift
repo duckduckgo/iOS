@@ -54,7 +54,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         contextualOnboardingLogic: ContextualOnboardingLogic,
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
-        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
+        contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
         onboardingManager: OnboardingAddToDockManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
@@ -112,12 +112,12 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     ) -> some View {
 
         func dialogMessage() -> NSAttributedString {
-            let message = UserText.OnboardingHighlights.ContextualOnboarding.onboardingFirstSearchDoneMessage
+            let message = UserText.Onboarding.ContextualOnboarding.onboardingFirstSearchDoneMessage
             let boldRange = message.range(of: "DuckDuckGo Search")
             return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
         }
 
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
 
         // If should not show websites search after searching inform the delegate that the user dimissed the dialog, otherwise let the dialog handle it.
         let gotItAction: () -> Void = if shouldFollowUpToWebsiteSearch {
@@ -139,7 +139,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func tryVisitingSiteDialog(delegate: ContextualOnboardingDelegate) -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: contextualOnboardingSiteSuggestionsProvider, delegate: delegate, pixelReporter: contextualOnboardingPixelReporter)
         return OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: viewModel)
             .onFirstAppear { [weak self] in
                 self?.contextualOnboardingPixelReporter.trackScreenImpression(event: .onboardingContextualTryVisitSiteUnique)
@@ -180,8 +180,8 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
             (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
         } else {
             (
-                UserText.OnboardingHighlights.ContextualOnboarding.onboardingFinalScreenMessage,
-                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+                UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenButton
             )
         }
 

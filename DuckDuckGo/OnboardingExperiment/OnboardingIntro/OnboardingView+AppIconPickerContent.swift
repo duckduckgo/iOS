@@ -50,13 +50,13 @@ extension OnboardingView {
 
         var body: some View {
             VStack(spacing: 16.0) {
-                AnimatableTypingText(UserText.OnboardingHighlights.AppIconSelection.title, startAnimating: animateTitle) {
+                AnimatableTypingText(UserText.Onboarding.AppIconSelection.title, startAnimating: animateTitle) {
                     animateMessage.wrappedValue = true
                 }
                 .foregroundColor(.primary)
                 .font(Metrics.titleFont)
 
-                AnimatableTypingText(UserText.OnboardingHighlights.AppIconSelection.message, startAnimating: animateMessage) {
+                AnimatableTypingText(UserText.Onboarding.AppIconSelection.message, startAnimating: animateMessage) {
                     withAnimation {
                         showContent.wrappedValue = true
                     }
@@ -68,7 +68,7 @@ extension OnboardingView {
                     AppIconPicker()
 
                     Button(action: action) {
-                        Text(UserText.OnboardingHighlights.AppIconSelection.cta)
+                        Text(UserText.Onboarding.AppIconSelection.cta)
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }

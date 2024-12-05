@@ -23,7 +23,7 @@ import Onboarding
 import DuckUI
 
 struct OnboardingTrySearchDialog: View {
-    let title = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASearchTitle
+    let title = UserText.Onboarding.ContextualOnboarding.onboardingTryASearchTitle
     let message: String
     let viewModel: OnboardingSearchSuggestionsViewModel
 
@@ -58,7 +58,7 @@ struct OnboardingTryVisitingSiteDialog: View {
 }
 
 struct OnboardingTryVisitingSiteDialogContent: View {
-    let message = NSAttributedString(string: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteMessage)
+    let message = NSAttributedString(string: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteMessage)
 
     let viewModel: OnboardingSiteSuggestionsViewModel
 
@@ -74,7 +74,7 @@ struct OnboardingTryVisitingSiteDialogContent: View {
 
 struct OnboardingFireButtonDialogContent: View {
     private let attributedMessage: NSAttributedString = {
-        let firstString = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryFireButtonMessage
+        let firstString = UserText.Onboarding.ContextualOnboarding.onboardingTryFireButtonMessage
         let boldString = "Fire Button."
         let attributedString = NSMutableAttributedString(string: firstString)
         let boldFontAttribute: [NSAttributedString.Key: Any] = [
@@ -95,7 +95,7 @@ struct OnboardingFireButtonDialogContent: View {
 }
 
 struct OnboardingFirstSearchDoneDialog: View {
-    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+    let cta = UserText.Onboarding.ContextualOnboarding.onboardingGotItButton
     let message: NSAttributedString
 
     @State private var showNextScreen: Bool = false
@@ -147,7 +147,7 @@ struct OnboardingFireDialog: View {
 }
 
 struct OnboardingTrackersDoneDialog: View {
-    let cta = UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingGotItButton
+    let cta = UserText.Onboarding.ContextualOnboarding.onboardingGotItButton
 
     @State private var showNextScreen: Bool = false
 
@@ -202,7 +202,7 @@ struct OnboardingFinalDialog: View {
                     }
                 } else {
                     ContextualDaxDialogContent(
-                        title: canShowAddToDockTutorial ? UserText.AddToDockOnboarding.Promo.title : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenTitle,
+                        title: canShowAddToDockTutorial ? UserText.AddToDockOnboarding.Promo.title : UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenTitle,
                         titleFont: Font(UIFont.daxTitle3()),
                         message: NSAttributedString(string: message),
                         messageFont: Font.system(size: 16),
@@ -295,17 +295,17 @@ struct OnboardingAddToDockTutorialContent: View {
 // MARK: - Preview
 
 #Preview("Try Search") {
-    OnboardingTrySearchDialog(message: UserText.OnboardingHighlights.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
+    OnboardingTrySearchDialog(message: UserText.Onboarding.ContextualOnboarding.onboardingTryASearchMessage, viewModel: OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
 #Preview("Try Site Top") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
+    OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
 #Preview("Try Site Left") {
-    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
+    OnboardingTryVisitingSiteDialog(logoPosition: .left, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()))
         .padding()
 }
 
@@ -318,20 +318,20 @@ struct OnboardingAddToDockTutorialContent: View {
 
 #Preview("First Search Dialog") {
     let attributedMessage = {
-        let message = UserText.OnboardingHighlights.ContextualOnboarding.onboardingFirstSearchDoneMessage
+        let message = UserText.Onboarding.ContextualOnboarding.onboardingFirstSearchDoneMessage
         let boldRange = message.range(of: "DuckDuckGo Search")
         return message.attributed.with(attribute: .font, value: UIFont.daxBodyBold(), in: boldRange)
     }()
 
-    return OnboardingFirstSearchDoneDialog(message: attributedMessage, shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
+    return OnboardingFirstSearchDoneDialog(message: attributedMessage, shouldFollowUp: true, viewModel: OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), pixelReporter: OnboardingPixelReporter()), gotItAction: {})
         .padding()
 }
 
 #Preview("Final Dialog - No Add to Dock Tutorial") {
     OnboardingFinalDialog(
         logoPosition: .top,
-        message: UserText.OnboardingHighlights.ContextualOnboarding.onboardingFinalScreenMessage,
-        cta: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton,
+        message: UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenMessage,
+        cta: UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenButton,
         canShowAddToDockTutorial: false,
         showAddToDockTutorialAction: {},
         dismissAction: { _ in }

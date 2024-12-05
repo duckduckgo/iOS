@@ -33,12 +33,12 @@ extension OnboardingIntroViewModel {
 extension OnboardingIntroViewModel.Copy {
 
     static let `default` = OnboardingIntroViewModel.Copy(
-        introTitle: UserText.OnboardingHighlights.Intro.title,
-        browserComparisonTitle: UserText.OnboardingHighlights.BrowsersComparison.title,
-        trackerBlockers: UserText.OnboardingHighlights.BrowsersComparison.Features.trackerBlockers,
-        cookiePopups: UserText.OnboardingHighlights.BrowsersComparison.Features.cookiePopups,
-        creepyAds: UserText.OnboardingHighlights.BrowsersComparison.Features.creepyAds,
-        eraseBrowsingData: UserText.OnboardingHighlights.BrowsersComparison.Features.eraseBrowsingData
+        introTitle: UserText.Onboarding.Intro.title,
+        browserComparisonTitle: UserText.Onboarding.BrowsersComparison.title,
+        trackerBlockers: UserText.Onboarding.BrowsersComparison.Features.trackerBlockers,
+        cookiePopups: UserText.Onboarding.BrowsersComparison.Features.cookiePopups,
+        creepyAds: UserText.Onboarding.BrowsersComparison.Features.creepyAds,
+        eraseBrowsingData: UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData
     )
     
 }

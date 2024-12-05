@@ -62,7 +62,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
 
     private func createInitialDialog() -> some View {
         let viewModel = OnboardingSearchSuggestionsViewModel(suggestedSearchesProvider: OnboardingSuggestedSearchesProvider(), delegate: delegate, pixelReporter: onboardingPixelReporter)
-        let message = UserText.OnboardingHighlights.ContextualOnboarding.onboardingTryASearchMessage
+        let message = UserText.Onboarding.ContextualOnboarding.onboardingTryASearchMessage
         return FadeInView {
             OnboardingTrySearchDialog(message: message, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
@@ -74,7 +74,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
     }
 
     private func createSubsequentDialog() -> some View {
-        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingTryASiteNTPTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), delegate: delegate, pixelReporter: onboardingPixelReporter)
+        let viewModel = OnboardingSiteSuggestionsViewModel(title: UserText.Onboarding.ContextualOnboarding.onboardingTryASiteNTPTitle, suggestedSitesProvider: OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle), delegate: delegate, pixelReporter: onboardingPixelReporter)
         return FadeInView {
             OnboardingTryVisitingSiteDialog(logoPosition: .top, viewModel: viewModel)
                 .onboardingDaxDialogStyle()
@@ -104,8 +104,8 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
             (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
         } else {
             (
-                UserText.OnboardingHighlights.ContextualOnboarding.onboardingFinalScreenMessage,
-                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+                UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.Onboarding.ContextualOnboarding.onboardingFinalScreenButton
             )
         }
 

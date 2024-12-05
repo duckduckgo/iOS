@@ -1862,9 +1862,6 @@ https://duckduckgo.com/mac";
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Search privately by default";
 
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Privacy protections activated!";
-
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Easy to reach";
 
@@ -1918,9 +1915,6 @@ https://duckduckgo.com/mac";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Let’s do it!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hi there.\n\nReady for a better, more private internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

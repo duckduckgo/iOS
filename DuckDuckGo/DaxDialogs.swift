@@ -142,12 +142,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
                                                           highlightAddressBar: false,
                                                           pixelName: .daxDialogsSiteOwnedByMajorUnique, type: .siteOwnedByMajorTracker)
 
-        static let withOneTracker = BrowsingSpec(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker,
+        static let withOneTracker = BrowsingSpec(message: UserText.Onboarding.ContextualOnboarding.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: false,
                                                  pixelName: .daxDialogsWithTrackersUnique, type: .withOneTracker)
 
-        static let withMultipleTrackers = BrowsingSpec(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers,
+        static let withMultipleTrackers = BrowsingSpec(message: UserText.Onboarding.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: false,
                                                       pixelName: .daxDialogsWithTrackersUnique, type: .withMultipleTrackers)
@@ -584,12 +584,12 @@ final class DaxDialogs: NewTabDialogSpecProvider, ContextualOnboardingLogic {
         case 1:
             settings.browsingWithTrackersShown = true
             let args = entitiesBlocked[0]
-            spec = BrowsingSpec.withOneTracker.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithOneTracker, args: args)
+            spec = BrowsingSpec.withOneTracker.format(message: UserText.Onboarding.ContextualOnboarding.daxDialogBrowsingWithOneTracker, args: args)
 
         default:
             settings.browsingWithTrackersShown = true
             let args: [CVarArg] = [entitiesBlocked.count - 2, entitiesBlocked[0], entitiesBlocked[1]]
-            spec = BrowsingSpec.withMultipleTrackers.format(message: UserText.DaxOnboardingExperiment.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers, args: args)
+            spec = BrowsingSpec.withMultipleTrackers.format(message: UserText.Onboarding.ContextualOnboarding.daxDialogBrowsingWithMultipleTrackers, args: args)
         }
         return spec
     }

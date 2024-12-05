@@ -120,15 +120,15 @@ extension BrowsersComparisonModel.PrivacyFeature {
         var title: String {
             switch self {
             case .privateSearch:
-                UserText.DaxOnboardingExperiment.BrowsersComparison.Features.privateSearch
+                UserText.Onboarding.BrowsersComparison.Features.privateSearch
             case .blockThirdPartyTrackers:
-                UserText.OnboardingHighlights.BrowsersComparison.Features.trackerBlockers
+                UserText.Onboarding.BrowsersComparison.Features.trackerBlockers
             case .blockCookiePopups:
-                UserText.OnboardingHighlights.BrowsersComparison.Features.cookiePopups
+                UserText.Onboarding.BrowsersComparison.Features.cookiePopups
             case .blockCreepyAds:
-                UserText.OnboardingHighlights.BrowsersComparison.Features.creepyAds
+                UserText.Onboarding.BrowsersComparison.Features.creepyAds
             case .eraseBrowsingData:
-                UserText.OnboardingHighlights.BrowsersComparison.Features.eraseBrowsingData
+                UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData
             }
         }
     }

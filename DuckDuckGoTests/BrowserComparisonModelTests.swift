@@ -27,7 +27,7 @@ final class BrowserComparisonModelTests: XCTestCase {
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .privateSearch })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.DaxOnboardingExperiment.BrowsersComparison.Features.privateSearch)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.privateSearch)
 
     }
 
@@ -36,7 +36,7 @@ final class BrowserComparisonModelTests: XCTestCase {
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockThirdPartyTrackers })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.BrowsersComparison.Features.trackerBlockers)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.trackerBlockers)
     }
 
     func testBrowserComparisonFeatureBlockCookiePopupsIsCorrect() throws {
@@ -44,7 +44,7 @@ final class BrowserComparisonModelTests: XCTestCase {
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCookiePopups })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.BrowsersComparison.Features.cookiePopups)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.cookiePopups)
     }
 
     func testBrowserComparisonFeatureBlockCreepyAdsIsCorrect() throws {
@@ -52,7 +52,7 @@ final class BrowserComparisonModelTests: XCTestCase {
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .blockCreepyAds })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.BrowsersComparison.Features.creepyAds)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.creepyAds)
     }
 
     func testWhenIsNotHighlightsThenBrowserComparisonFeatureEraseBrowsingDataIsCorrect() throws {
@@ -60,7 +60,7 @@ final class BrowserComparisonModelTests: XCTestCase {
         let result = try XCTUnwrap(BrowsersComparisonModel.privacyFeatures.first(where: { $0.type == .eraseBrowsingData })?.type.title)
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.BrowsersComparison.Features.eraseBrowsingData)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData)
     }
 
 }

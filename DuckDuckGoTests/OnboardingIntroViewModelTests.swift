@@ -357,7 +357,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         let result = sut.copy.introTitle
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.Intro.title)
+        XCTAssertEqual(result, UserText.Onboarding.Intro.title)
     }
 
     func testBrowserComparisonTitleIsCorrect() {
@@ -368,7 +368,7 @@ final class OnboardingIntroViewModelTests: XCTestCase {
         let result = sut.copy.browserComparisonTitle
 
         // THEN
-        XCTAssertEqual(result, UserText.OnboardingHighlights.BrowsersComparison.title)
+        XCTAssertEqual(result, UserText.Onboarding.BrowsersComparison.title)
     }
 
     // MARK: - Add To Dock

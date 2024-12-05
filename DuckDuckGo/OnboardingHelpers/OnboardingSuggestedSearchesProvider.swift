@@ -47,9 +47,9 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
     private var option1: ContextualOnboardingListItem {
         var search: String
         if language == "en" {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption1English
+            search = UserText.Onboarding.ContextualOnboarding.tryASearchOption1English
         } else {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption1International
+            search = UserText.Onboarding.ContextualOnboarding.tryASearchOption1International
         }
         return ContextualOnboardingListItem.search(title: search)
     }
@@ -59,17 +59,17 @@ struct OnboardingSuggestedSearchesProvider: OnboardingSuggestionsItemsProviding 
         // ISO 3166-1 Region capitalized.
         // https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html
         if isUSCountry {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2English
+            search = UserText.Onboarding.ContextualOnboarding.tryASearchOption2English
         } else {
-            search = UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOption2International
+            search = UserText.Onboarding.ContextualOnboarding.tryASearchOption2International
         }
         return ContextualOnboardingListItem.search(title: search)
     }
 
     private var surpriseMe: ContextualOnboardingListItem {
-        let search = Self.imageSearch + UserText.OnboardingHighlights.ContextualOnboarding.tryASearchOptionSurpriseMe
+        let search = Self.imageSearch + UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMe
 
-        return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
+        return ContextualOnboardingListItem.surprise(title: search, visibleTitle: UserText.Onboarding.ContextualOnboarding.tryASearchOptionSurpriseMeTitle)
     }
 
     private var isUSCountry: Bool {

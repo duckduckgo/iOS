@@ -1338,51 +1338,20 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let newTabPageIntroMessageBody = NSLocalizedString("new.tab.page.intro.message.body", value: "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.", comment: "Information message about New Tab Page redesign")
 
 
-    // MARK: - Dax Onboarding Experiment
-    public enum DaxOnboardingExperiment {
-        enum Intro {
-            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.\n\nReady for a better, more private internet?", comment: "The title of the onboarding dialog popup")
+    // MARK: - Onboarding
+    public enum Onboarding {
+
+        public enum Intro {
+            public static let title = NSLocalizedString("onboarding.highlights.intro.title", value: "Hi there.\n\nReady for a faster browser that keeps you protected?", comment: "The title of the onboarding dialog popup")
             public static let cta = NSLocalizedString("onboarding.intro.cta", value: "Let’s do it!", comment: "Button to continue the onboarding process")
         }
 
-        enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Privacy protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+        public enum BrowsersComparison {
+            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
             public static let cta = NSLocalizedString("onboarding.browsers.cta", value: "Choose Your Browser", comment: "Button to change the default browser")
 
-            enum Features {
+            public enum Features {
                 public static let privateSearch = NSLocalizedString("onboarding.browsers.features.privateSearch.title", value: "Search privately by default", comment: "Message to highlight browser capability of private searches")
-            }
-        }
-
-        enum ContextualOnboarding {
-            static let onboardingTryASearchTitle = NSLocalizedString("contextual.onboarding.try-a-search.title", value: "Ready to get started?\nTry a search!", comment: "Title of a popover on the browser that invites the user to try a search")
-            static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Next, try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
-            static let onboardingTryASiteNTPTitle = NSLocalizedString("contextual.onboarding.ntp.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the new tab page browser that invites the user to try a visiting a website")
-            static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "I’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
-            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
-            static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
-            static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
-            static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
-            static let tryASearchOption1English = NSLocalizedString("contextual.onboarding.try-search.option1-English", value: "how to say “duck” in spanish", comment: "Browser Search query for how to say duck in english")
-            static let tryASearchOption1International = NSLocalizedString("contextual.onboarding.try-search.option1international", value: "how to say “duck” in english", comment: "Browser Search query for how to say duck in english")
-            static let tryASearchOption2English = NSLocalizedString("contextual.onboarding.try-search.option2-english", value: "mighty ducks cast", comment: "Search query for the cast of Mighty Ducks")
-            static let tryASearchOption2International = NSLocalizedString("contextual.onboarding.try-search.option2-international", value: "cast of avatar", comment: "Search query for the cast of Avatar")
-            static let tryASearchOptionSurpriseMeTitle = NSLocalizedString("contextual.onboarding.try-search.surprise-me-title", value: "Surprise me!", comment: "Title for a button that triggers an unknown search query for the user.")
-
-            static let daxDialogBrowsingWithOneTracker = NSLocalizedString("contextual.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here. I blocked them!\n\n☝️ Tap the shield for more info.", comment: "Parameter is domain name (string)")
-            static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("contextual.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
-        }
-    }
-
-    public enum OnboardingHighlights {
-        enum Intro {
-            public static let title = NSLocalizedString("onboarding.highlights.intro.title", value: "Hi there.\n\nReady for a faster browser that keeps you protected?", comment: "The title of the onboarding dialog popup")
-        }
-        
-        enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
-
-            enum Features {
                 public static let trackerBlockers = NSLocalizedString("onboarding.highlights.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
                 public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
@@ -1407,10 +1376,26 @@ But if you *do* want a peek under the hood, you can find more information about 
         }
 
         enum ContextualOnboarding {
+            static let onboardingTryASearchTitle = NSLocalizedString("contextual.onboarding.try-a-search.title", value: "Ready to get started?\nTry a search!", comment: "Title of a popover on the browser that invites the user to try a search")
             static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.highlights.try-a-search.message", value: "Your DuckDuckGo searches are always private.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are private")
             static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.highlights.first-search-done.message", value: "That’s DuckDuckGo Search! Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
+            static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Next, try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
             static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.highlights.final-screen.message", value: "Remember: every time you browse with me a creepy ad loses its wings.", comment: "Message of the last screen of the onboarding to the browser app.")
             static let tryASearchOptionSurpriseMe = NSLocalizedString("contextual.onboarding.highlights.try-search.surprise-me", value: "baby ducklings", comment: "Browser Search query for baby ducklings")
+            static let onboardingTryASiteNTPTitle = NSLocalizedString("contextual.onboarding.ntp.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the new tab page browser that invites the user to try a visiting a website")
+            static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "I’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
+            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
+            static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
+            static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
+            static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let tryASearchOption1English = NSLocalizedString("contextual.onboarding.try-search.option1-English", value: "how to say “duck” in spanish", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption1International = NSLocalizedString("contextual.onboarding.try-search.option1international", value: "how to say “duck” in english", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption2English = NSLocalizedString("contextual.onboarding.try-search.option2-english", value: "mighty ducks cast", comment: "Search query for the cast of Mighty Ducks")
+            static let tryASearchOption2International = NSLocalizedString("contextual.onboarding.try-search.option2-international", value: "cast of avatar", comment: "Search query for the cast of Avatar")
+            static let tryASearchOptionSurpriseMeTitle = NSLocalizedString("contextual.onboarding.try-search.surprise-me-title", value: "Surprise me!", comment: "Title for a button that triggers an unknown search query for the user.")
+
+            static let daxDialogBrowsingWithOneTracker = NSLocalizedString("contextual.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here. I blocked them!\n\n☝️ Tap the shield for more info.", comment: "Parameter is domain name (string)")
+            static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("contextual.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
         }
 
         enum FireDialog {

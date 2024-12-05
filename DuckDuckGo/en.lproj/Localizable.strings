@@ -806,14 +806,8 @@
 /* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
 "contextual.onboarding.final-screen.button" = "High five!";
 
-/* Message of the last screen of the onboarding to the browser app. */
-"contextual.onboarding.final-screen.message" = "Remember: every time you browse with me a creepy ad loses its wings. 👌";
-
 /* Title of the last screen of the onboarding to the browser app */
 "contextual.onboarding.final-screen.title" = "You’ve got this!";
-
-/* After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo */
-"contextual.onboarding.first-search-done.message" = "That’s DuckDuckGo Search. Private. Fast. Fewer ads.";
 
 /* During onboarding steps this button is shown and takes either to the next steps or closes the onboarding. */
 "contextual.onboarding.got-it.button" = "Got it!";
@@ -832,9 +826,6 @@
 
 /* Title of a popover on the new tab page browser that invites the user to try a visiting a website */
 "contextual.onboarding.ntp.try-a-site.title" = "Try visiting a site!";
-
-/* Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous */
-"contextual.onboarding.try-a-search.message" = "Your DuckDuckGo searches are always anonymous.";
 
 /* Title of a popover on the browser that invites the user to try a search */
 "contextual.onboarding.try-a-search.title" = "Ready to get started?\nTry a search!";
@@ -859,15 +850,6 @@
 
 /* Search query for the cast of Avatar */
 "contextual.onboarding.try-search.option2-international" = "cast of avatar";
-
-/* Browser Search query for local weather */
-"contextual.onboarding.try-search.option3" = "local weather";
-
-/* Browser Search query for chocolate chip cookie recipes */
-"contextual.onboarding.try-search.surprise-me-english" = "chocolate chip cookie recipes";
-
-/* Browser Search query for dinner recipes */
-"contextual.onboarding.try-search.surprise-me-international" = "dinner recipes";
 
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Surprise me!";
@@ -1877,23 +1859,8 @@ https://duckduckgo.com/mac";
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Choose Your Browser";
 
-/* Message to highlight how the browser allows you to block cookie pop-ups */
-"onboarding.browsers.features.cookiePopups.title" = "Block cookie pop-ups";
-
-/* Message to highlight browser capability of blocking creepy ads */
-"onboarding.browsers.features.creepyAds.title" = "Block creepy ads";
-
-/* Message to highlight browser capability of swiftly erase browsing data */
-"onboarding.browsers.features.eraseBrowsingData.title" = "Swiftly erase browsing data";
-
 /* Message to highlight browser capability of private searches */
 "onboarding.browsers.features.privateSearch.title" = "Search privately by default";
-
-/* Message to highlight browser capability ofblocking 3rd party trackers */
-"onboarding.browsers.features.trackerBlocker.title" = "Block 3rd-party trackers";
-
-/* The title of the dialog to show the privacy features that DuckDuckGo offers */
-"onboarding.browsers.title" = "Privacy protections activated!";
 
 /* The message of the option to set the address bar to the bottom. */
 "onboarding.highlights.addressBarPosition.bottom.message" = "Easy to reach";
@@ -1948,9 +1915,6 @@ https://duckduckgo.com/mac";
 
 /* Button to continue the onboarding process */
 "onboarding.intro.cta" = "Let’s do it!";
-
-/* The title of the onboarding dialog popup */
-"onboarding.intro.title" = "Hi there.\n\nReady for a better, more private internet?";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

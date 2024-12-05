@@ -57,7 +57,6 @@ struct OnboardingView: View {
                 onboardingDialogView(state: viewState)
             }
         }
-        .onboardingGradient(model.gradientType)
     }
 
     private func onboardingDialogView(state: ViewState.Intro) -> some View {

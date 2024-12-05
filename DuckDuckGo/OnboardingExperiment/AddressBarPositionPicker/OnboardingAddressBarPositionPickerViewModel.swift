@@ -74,22 +74,22 @@ private extension AddressBarPosition {
     var titleAndMessage: (title: NSAttributedString, message: String) {
         switch self {
         case .top:
-            let firstPart = NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.topTitle)
+            let firstPart = NSAttributedString(string: UserText.Onboarding.AddressBarPosition.topTitle)
                 .withFont(UIFont.daxBodyBold())
                 .withTextColor(UIColor.label)
-            let secondPart = NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.defaultOption)
+            let secondPart = NSAttributedString(string: UserText.Onboarding.AddressBarPosition.defaultOption)
                 .withFont(UIFont.daxBodyRegular())
                 .withTextColor(UIColor.secondaryLabel)
 
             return (
                 firstPart + " " + secondPart,
-                UserText.HighlightsOnboardingExperiment.AddressBarPosition.topMessage
+                UserText.Onboarding.AddressBarPosition.topMessage
             )
         case .bottom:
             return (
-                NSAttributedString(string: UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomTitle)
+                NSAttributedString(string: UserText.Onboarding.AddressBarPosition.bottomTitle)
                     .withFont(UIFont.daxBodyBold()),
-                UserText.HighlightsOnboardingExperiment.AddressBarPosition.bottomMessage
+                UserText.Onboarding.AddressBarPosition.bottomMessage
             )
         }
     }

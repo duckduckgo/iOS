@@ -98,25 +98,6 @@ extension MainViewController {
         }
     }
 
-    func segueToActionSheetDaxDialogWithSpec(_ spec: DaxDialogs.ActionSheetSpec) {
-        Logger.lifecycle.debug(#function)
-        hideAllHighlightsIfNeeded()
-
-        if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
-            ViewHighlighter.hideAll()
-        }
-
-        let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
-        let controller = storyboard.instantiateViewController(identifier: "ActionSheetDaxDialog", creator: { coder in
-            ActionSheetDaxDialogViewController(coder: coder)
-        })
-        controller.spec = spec
-        controller.delegate = self
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .overFullScreen
-        present(controller, animated: true)
-    }
-
     func segueToReportBrokenSite(entryPoint: PrivacyDashboardEntryPoint = .report) {
         Logger.lifecycle.debug(#function)
         hideAllHighlightsIfNeeded()

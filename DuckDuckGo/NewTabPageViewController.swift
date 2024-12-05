@@ -210,11 +210,6 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
                 self.launchNewSearch()
             }
         }
-
-        if !variantManager.isContextualDaxDialogsEnabled {
-            // In the new onboarding this gets called twice (viewDidAppear in Tab) which then reset the spec to nil.
-            presentNextDaxDialog()
-        }
     }
 
     func dismiss() {
@@ -239,11 +234,7 @@ final class NewTabPageViewController: UIHostingController<AnyView>, NewTabPage {
     // MARK: - Onboarding
 
     private func presentNextDaxDialog() {
-        if variantManager.isContextualDaxDialogsEnabled {
-            showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
-        } else {
-            showNextDaxDialog(dialogProvider: newTabDialogTypeProvider)
-        }
+        showNextDaxDialogNew(dialogProvider: newTabDialogTypeProvider, factory: newTabDialogFactory)
     }
 
     // MARK: - Private
@@ -279,37 +270,6 @@ extension NewTabPageViewController: HomeScreenTransitionSource {
 }
 
 extension NewTabPageViewController {
-
-    func showNextDaxDialog(dialogProvider: NewTabDialogSpecProvider) {
-        guard let spec = dialogProvider.nextHomeScreenMessage() else { return }
-        guard !isDaxDialogVisible else { return }
-        guard let daxDialogViewController = daxDialogViewController else { return }
-
-        newTabPageViewModel.startOnboarding()
-
-        daxDialogViewController.view.isHidden = false
-        daxDialogViewController.view.alpha = 0.0
-
-        daxDialogViewController.loadViewIfNeeded()
-        daxDialogViewController.message = spec.message
-        daxDialogViewController.accessibleMessage = spec.accessibilityLabel
-
-        if spec == .initial {
-            UniquePixel.fire(pixel: .onboardingContextualTryVisitSiteUnique, includedParameters: [.appVersion, .atb])
-        }
-
-        view.addGestureRecognizer(daxDialogViewController.tapToCompleteGestureRecognizer)
-
-        daxDialogHeightConstraint?.constant = daxDialogViewController.calculateHeight()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            UIView.animate(withDuration: 0.4, animations: {
-                daxDialogViewController.view.alpha = 1.0
-            }, completion: { _ in
-                daxDialogViewController.start()
-            })
-        }
-    }
 
     func showNextDaxDialogNew(dialogProvider: NewTabDialogSpecProvider, factory: any NewTabDaxDialogProvider) {
         dismissHostingController(didFinishNTPOnboarding: false)

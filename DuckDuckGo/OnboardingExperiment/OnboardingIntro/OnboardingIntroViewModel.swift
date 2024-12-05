@@ -26,12 +26,11 @@ final class OnboardingIntroViewModel: ObservableObject {
     @Published private(set) var state: OnboardingView.ViewState = .landing
 
     let copy: Copy
-    let gradientType: OnboardingGradientType
     var onCompletingOnboardingIntro: (() -> Void)?
     private var introSteps: [OnboardingIntroStep]
 
     private let pixelReporter: OnboardingIntroPixelReporting & OnboardingAddToDockReporting
-    private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
+    private let onboardingManager: OnboardingAddToDockManaging
     private let isIpad: Bool
     private let urlOpener: URLOpener
     private let appIconProvider: () -> AppIcon
@@ -39,7 +38,7 @@ final class OnboardingIntroViewModel: ObservableObject {
 
     init(
         pixelReporter: OnboardingIntroPixelReporting & OnboardingAddToDockReporting,
-        onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager(),
+        onboardingManager: OnboardingAddToDockManaging = OnboardingManager(),
         isIpad: Bool = UIDevice.current.userInterfaceIdiom == .pad,
         urlOpener: URLOpener = UIApplication.shared,
         appIconProvider: @escaping () -> AppIcon = { AppIconManager.shared.appIcon },
@@ -52,16 +51,14 @@ final class OnboardingIntroViewModel: ObservableObject {
         self.appIconProvider = appIconProvider
         self.addressBarPositionProvider = addressBarPositionProvider
 
-        introSteps = if onboardingManager.isOnboardingHighlightsEnabled && onboardingManager.addToDockEnabledState == .intro {
-            isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsAddToDockIphoneFlow
-        } else if onboardingManager.isOnboardingHighlightsEnabled {
-            isIpad ? OnboardingIntroStep.highlightsIPadFlow : OnboardingIntroStep.highlightsIPhoneFlow
+        // Add to Dock experiment assigned only to iPhone users
+        introSteps = if onboardingManager.addToDockEnabledState == .intro {
+            OnboardingIntroStep.addToDockIphoneFlow
         } else {
-            OnboardingIntroStep.defaultFlow
+            isIpad ? OnboardingIntroStep.defaultIPadFlow : OnboardingIntroStep.defaultIPhoneFlow
         }
 
-        copy = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
-        gradientType = onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
+        copy = .default
     }
 
     func onAppear() {
@@ -129,12 +126,7 @@ private extension OnboardingIntroViewModel {
     func makeViewState(for introStep: OnboardingIntroStep) -> OnboardingView.ViewState {
         
         func stepInfo() -> OnboardingView.ViewState.Intro.StepInfo {
-            guard
-                let currentStepIndex = introSteps.firstIndex(of: introStep),
-                    onboardingManager.isOnboardingHighlightsEnabled
-            else {
-                return .hidden
-            }
+            guard let currentStepIndex = introSteps.firstIndex(of: introStep) else { return .hidden }
 
             // Remove startOnboardingDialog from the count of total steps since we don't show the progress for that step.
             return OnboardingView.ViewState.Intro.StepInfo(currentStep: currentStepIndex, totalSteps: introSteps.count - 1)
@@ -157,14 +149,12 @@ private extension OnboardingIntroViewModel {
     }
 
     func handleSetDefaultBrowserAction() {
-        if onboardingManager.addToDockEnabledState == .intro && onboardingManager.isOnboardingHighlightsEnabled {
+        if onboardingManager.addToDockEnabledState == .intro {
             state = makeViewState(for: .addToDockPromo)
             pixelReporter.trackAddToDockPromoImpression()
-        } else if onboardingManager.isOnboardingHighlightsEnabled {
+        } else {
             state = makeViewState(for: .appIconSelection)
             pixelReporter.trackChooseAppIconImpression()
-        } else {
-            onCompletingOnboardingIntro?()
         }
     }
 
@@ -179,8 +169,7 @@ private enum OnboardingIntroStep {
     case addressBarPositionSelection
     case addToDockPromo
 
-    static let defaultFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison]
-    static let highlightsIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
-    static let highlightsIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
-    static let highlightsAddToDockIphoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .addToDockPromo, .appIconSelection, .addressBarPositionSelection]
+    static let defaultIPhoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection, .addressBarPositionSelection]
+    static let defaultIPadFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .appIconSelection]
+    static let addToDockIphoneFlow: [OnboardingIntroStep] = [.introDialog, .browserComparison, .addToDockPromo, .appIconSelection, .addressBarPositionSelection]
 }

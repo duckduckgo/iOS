@@ -10,17 +10,16 @@ appId: com.duckduckgo.mobile.ios
     text: "Let’s Do It!"
     index: 0
 
-# Disabled while UI testing is happening
-# - assertVisible: "Make DuckDuckGo your default browser."
+# Browser comparison chart
+# - assertVisible: "Protections activated!"
 - tapOn:
     text: "Skip"
 
-- runFlow:
-    when:
-        visible: "Which color looks best on me?"
-    commands:
-        - assertVisible: "Next"
-        - tapOn: "Next"
-        - assertVisible: "Where should I put your address bar?"
-        - assertVisible: "Next"
-        - tapOn: "Next"
+# Customization Flow
+
+- assertVisible: "Which color looks best on me?"
+- assertVisible: "Next"
+- tapOn: "Next"
+- assertVisible: "Where should I put your address bar?"
+- assertVisible: "Next"
+- tapOn: "Next"

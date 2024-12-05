@@ -33,20 +33,12 @@ extension OnboardingIntroViewModel {
 extension OnboardingIntroViewModel.Copy {
 
     static let `default` = OnboardingIntroViewModel.Copy(
-        introTitle: UserText.DaxOnboardingExperiment.Intro.title,
-        browserComparisonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.title,
-        trackerBlockers: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.trackerBlockers,
-        cookiePopups: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.cookiePopups,
-        creepyAds: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.creepyAds,
-        eraseBrowsingData: UserText.DaxOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData
+        introTitle: UserText.Onboarding.Intro.title,
+        browserComparisonTitle: UserText.Onboarding.BrowsersComparison.title,
+        trackerBlockers: UserText.Onboarding.BrowsersComparison.Features.trackerBlockers,
+        cookiePopups: UserText.Onboarding.BrowsersComparison.Features.cookiePopups,
+        creepyAds: UserText.Onboarding.BrowsersComparison.Features.creepyAds,
+        eraseBrowsingData: UserText.Onboarding.BrowsersComparison.Features.eraseBrowsingData
     )
-
-    static let highlights = OnboardingIntroViewModel.Copy(
-        introTitle: UserText.HighlightsOnboardingExperiment.Intro.title,
-        browserComparisonTitle: UserText.HighlightsOnboardingExperiment.BrowsersComparison.title,
-        trackerBlockers: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.trackerBlockers,
-        cookiePopups: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.cookiePopups,
-        creepyAds: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.creepyAds,
-        eraseBrowsingData: UserText.HighlightsOnboardingExperiment.BrowsersComparison.Features.eraseBrowsingData
-    )
+    
 }

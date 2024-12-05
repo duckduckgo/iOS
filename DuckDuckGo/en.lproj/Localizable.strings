@@ -2374,9 +2374,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtitle in settings */
-"settings.subscription.description" = "Includes our VPN, Personal Information Removal, and Identity Theft Restoration.";
-
 /* I have a Subscription button text for privacy pro */
 "settings.subscription.existing.subscription" = "I Have a Subscription";
 
@@ -2403,6 +2400,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Call to action title for Privacy Pro settings */
 "settings.subscription.subscribe" = "Protect your connection and identity with Privacy Pro";
+
+/* Privacy pro description subtitle in settings */
+"settings.subscription.us.description" = "Includes our VPN, Personal Information Removal, and Identity Theft Restoration.";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2527,9 +2527,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* View title for adding email to subscription */
 "subscription.add.email.title" = "Add Email";
 
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
-
 /* Subscription availability message on Apple devices */
 "subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
 
@@ -2538,12 +2535,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Subscription Plans";
-
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
 
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Your subscription has been removed from this device.";
@@ -2686,11 +2677,23 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Your subscription expired on %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Your monthly subscription expires on %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Your subscription expires on %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Your annual subscription expires on %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Your monthly subscription renews on %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Your subscription renews on %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Your annual subscription renews on %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";

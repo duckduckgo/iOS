@@ -1,5 +1,5 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "A VPN-kapcsolat megszakadt, mert lejárt az előfizetésed. Fizess elő a Privacy Pro szolgáltatásra a DuckDuckGo VPN újracsatlakoztatásához.";
 
 /* The body of the notification shown when Network Protection fails to reconnect */
 "network.protection.failure.notification.body" = "A hálózatvédelmi funkció csatlakozása sikertelen. Próbálkozz újra később.";
@@ -10,9 +10,15 @@
 /* The title of the notifications shown from Network Protection */
 "network.protection.notification.title" = "DuckDuckGo";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+
 /* The body of the notification shown when Network Protection reconnects successfully */
 "network.protection.success.notification.body" = "A hálózatvédelem be van kapcsolva. A tartózkodási helyed és online tevékenységed védelme aktív.";
 
 /* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Az eszköz forgalmának átirányítási helyszíne: %@.";
+
+/* The body of the notification shown when Network Protection connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
 

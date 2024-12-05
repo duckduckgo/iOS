@@ -1,5 +1,5 @@
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"network.protection.entitlement.expired.notification.body" = "VPN-ühendus katkestati aegunud tellimuse tõttu. DuckDuckGo VPN-i taasühendamiseks telli Privacy Pro.";
 
 /* The body of the notification shown when Network Protection fails to reconnect */
 "network.protection.failure.notification.body" = "Network Protectioni ühenduse loomine nurjus. Proovi hiljem uuesti.";
@@ -10,9 +10,15 @@
 /* The title of the notifications shown from Network Protection */
 "network.protection.notification.title" = "DuckDuckGo";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+
 /* The body of the notification shown when Network Protection reconnects successfully */
 "network.protection.success.notification.body" = "Network Protection on sisse lülitatud. Sinu asukoht ja võrgutegevus on kaitstud.";
 
 /* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Seadme liiklus suunatakse läbi %@.";
+
+/* The body of the notification shown when Network Protection connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
 

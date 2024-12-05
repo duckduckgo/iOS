@@ -226,7 +226,7 @@ extension HeadlessWebViewCoordinator: WKNavigationDelegate {
                 return
             }
 
-        let alertController = UIAlertController(title: UserText.subscriptionAlertTitle, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: UserText.actionOK, style: .default, handler: { _ in completionHandler() }))
             presenter.present(alertController, animated: true, completion: nil)
         }

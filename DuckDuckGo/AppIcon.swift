@@ -20,16 +20,22 @@
 import UIKit
 
 enum AppIcon: String, CaseIterable {
-    case red
-    case yellow
-    case green
-    case blue
-    case purple
-    case black
+    case red = "AppIcon-red"
+    case yellow = "AppIcon-yellow"
+    case green = "AppIcon-green"
+    case blue = "AppIcon-blue"
+    case purple = "AppIcon-purple"
+    case black = "AppIcon-black"
 
-    /// Returns a user facing string representation of the app icon.
-    var name: String {
-        rawValue
+    var accessibilityName: String {
+        switch self {
+        case .red: "red"
+        case .yellow: "yellow"
+        case .green: "green"
+        case .blue: "blue"
+        case .purple: "purple"
+        case .black: "black"
+        }
     }
 
     static var defaultAppIcon: AppIcon {

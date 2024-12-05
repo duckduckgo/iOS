@@ -175,7 +175,7 @@ struct VPNStatusView: View {
 
                     Button(buttonTitle, intent: intent)
                         .borderedStyle(widgetRenderingMode == .fullColor)
-                        .makeAccentable()
+                        .makeAccentable(status == .connected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(snoozeTimingStore.isSnoozing ?
                                          connectButtonForegroundColor(isDisabled: false) :
@@ -192,7 +192,7 @@ struct VPNStatusView: View {
                 case .connecting, .reasserting:
                     Button(UserText.vpnWidgetDisconnectButton, intent: DisableVPNIntent())
                         .borderedStyle(widgetRenderingMode == .fullColor)
-                        .makeAccentable()
+                        .makeAccentable(status == .connected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(disconnectButtonForegroundColor(isDisabled: status != .connected))
                         .buttonBorderShape(.roundedRectangle(radius: 8))
@@ -204,7 +204,7 @@ struct VPNStatusView: View {
                 case .disconnected, .disconnecting:
                     connectButton
                         .borderedStyle(widgetRenderingMode == .fullColor)
-                        .makeAccentable()
+                        .makeAccentable(status == .disconnected)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(connectButtonForegroundColor(isDisabled: status != .disconnected))
                         .buttonBorderShape(.roundedRectangle(radius: 8))

@@ -320,7 +320,8 @@ import os.log
                 }
             }
         }
-        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger)
+        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                        eventTracker: ExperimentEventTracker(store: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults()))
 
         let syncErrorHandler = SyncErrorHandler()
 

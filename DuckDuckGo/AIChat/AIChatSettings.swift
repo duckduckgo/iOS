@@ -41,11 +41,14 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
     private let internalUserDecider: InternalUserDecider
     private let userDefaults: UserDefaults
+    private let notificationCenter: NotificationCenter
 
-    init(privacyConfigurationManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider, userDefaults: UserDefaults = .standard) {
+    init(privacyConfigurationManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider, userDefaults: UserDefaults = .standard,
+         notificationCenter: NotificationCenter = .default) {
         self.internalUserDecider = internalUserDecider
         self.privacyConfigurationManager = privacyConfigurationManager
         self.userDefaults = userDefaults
+        self.notificationCenter = notificationCenter
     }
 
     // MARK: - Public
@@ -77,16 +80,21 @@ struct AIChatSettings: AIChatSettingsProvider {
         return isFeatureEnabled(for: .browsingToolbarShortcut)
     }
 
-
     func enableAIChatBrowsingMenuUserSettings(enable: Bool) {
         userDefaults.showAIChatBrowsingMenu = enable
+        triggerSettingsChangedNotification()
     }
 
     func enableAIChatAddressBarUserSettings(enable: Bool) {
         userDefaults.showAIChatAddressBar = enable
+        triggerSettingsChangedNotification()
     }
 
     // MARK: - Private
+
+    private func triggerSettingsChangedNotification() {
+        notificationCenter.post(name: .aiChatSettingsChanged, object: nil)
+    }
 
     private func isFeatureEnabled(for subfeature: AIChatSubfeature) -> Bool {
         let isSubfeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
@@ -134,4 +142,8 @@ private extension UserDefaults {
             set(newValue, forKey: Keys.showAIChatAddressBar)
         }
     }
+}
+
+public extension NSNotification.Name {
+    static let aiChatSettingsChanged = Notification.Name("com.duckduckgo.aichat.settings.changed")
 }

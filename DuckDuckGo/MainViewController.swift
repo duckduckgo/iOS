@@ -124,6 +124,7 @@ class MainViewController: UIViewController {
     private let tunnelDefaults = UserDefaults.networkProtectionGroupDefaults
     private var vpnCancellables = Set<AnyCancellable>()
     private var feedbackCancellable: AnyCancellable?
+    private var aiChatCancellables = Set<AnyCancellable>()
 
     let subscriptionFeatureAvailability: SubscriptionFeatureAvailability
     private let subscriptionCookieManager: SubscriptionCookieManaging
@@ -337,6 +338,7 @@ class MainViewController: UIViewController {
         subscribeToSettingsDeeplinkNotifications()
         subscribeToNetworkProtectionEvents()
         subscribeToUnifiedFeedbackNotifications()
+        subscribeToAIChatSettingsEvents()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1552,6 +1554,15 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &settingsDeepLinkcancellables)
+    }
+
+    private func subscribeToAIChatSettingsEvents() {
+        NotificationCenter.default.publisher(for: .aiChatSettingsChanged)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.refreshOmniBar()
+            }
+            .store(in: &aiChatCancellables)
     }
 
     private func subscribeToNetworkProtectionEvents() {

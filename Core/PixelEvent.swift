@@ -532,12 +532,12 @@ extension Pixel {
         case contentBlockingCompilationFailed(listType: CompileRulesListType,
                                               component: ContentBlockerDebugEvents.Component)
         
-        case contentBlockingCompilationTime
         case contentBlockingLookupRulesSucceeded
         case contentBlockingFetchLRCSucceeded
         case contentBlockingNoMatchInLRC
         case contentBlockingLRCMissing
         
+        case contentBlockingCompilationTaskPerformance(retryCount: Int, timeBucketAggregation: CompileTimeBucketAggregation)
         case ampBlockingRulesCompilationFailed
         
         case webKitDidTerminate
@@ -1394,13 +1394,14 @@ extension Pixel.Event {
         case .contentBlockingCompilationFailed(let listType, let component):
             return "m_d_content_blocking_\(listType)_\(component)_compilation_failed"
             
-        case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .contentBlockingLookupRulesSucceeded: return "m_content_blocking_lookup_rules_succeeded"
         case .contentBlockingFetchLRCSucceeded: return "m_content_blocking_fetch_lrc_succeeded"
         case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
         case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
 
+        case .contentBlockingCompilationTaskPerformance(let retryCount, let timeBucketAggregation):
+            return "m_content_blocking_compilation_loops_\(retryCount)_time_\(timeBucketAggregation)"
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"
@@ -1857,6 +1858,29 @@ extension Pixel.Event {
         case blockingAttribution
         case attributed
         case unknown
-        
+
+    }
+
+    public enum CompileTimeBucketAggregation: String, CustomStringConvertible {
+
+        public var description: String { rawValue }
+
+        case lessThan10 = "10"
+        case lessThan20 = "20"
+        case lessThan40 = "40"
+        case more
+
+        public init(number: Double) {
+            switch number {
+            case ...10:
+                self = .lessThan10
+            case ...20:
+                self = .lessThan20
+            case ...40:
+                self = .lessThan40
+            default:
+                self = .more
+            }
+        }
     }
 }

@@ -27,6 +27,8 @@ import Common
 import NetworkProtection
 import RemoteMessaging
 import PageRefreshMonitor
+import PixelKit
+import PixelExperimentKit
 
 protocol DependencyProvider {
 
@@ -58,10 +60,8 @@ protocol DependencyProvider {
 final class AppDependencyProvider: DependencyProvider {
 
     static var shared: DependencyProvider = AppDependencyProvider()
-    
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
-    
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
     let featureFlagger: FeatureFlagger
 
@@ -93,13 +93,14 @@ final class AppDependencyProvider: DependencyProvider {
     let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     private init() {
+        let featureFlaggerOverrides = FeatureFlagLocalOverrides(keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
+                                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
+        )
+        let experimentManager = ExperimentCohortsManager(store: ExperimentsDataStore(), fireCohortAssigned: PixelKit.fireExperimentEnrollmentPixel(subfeatureID:experiment:))
         featureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider,
                                                privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
-                                               localOverrides: FeatureFlagLocalOverrides(
-                                                keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
-                                                actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
-                                               ),
-                                               experimentManager: ExperimentCohortsManager(store: ExperimentsDataStore()),
+                                               localOverrides: featureFlaggerOverrides,
+                                               experimentManager: experimentManager,
                                                for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)

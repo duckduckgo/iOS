@@ -29,6 +29,8 @@ class StatisticsLoaderTests: XCTestCase {
     var mockUsageSegmentation: MockUsageSegmentation!
     var mockPixelFiring: PixelFiringMock.Type!
     var testee: StatisticsLoader!
+    private var fireAppRetentionExperimentPixelsCalled = false
+    private var fireSearchExperimentPixelsCalled = false
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -41,6 +43,8 @@ class StatisticsLoaderTests: XCTestCase {
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore,
                                   usageSegmentation: mockUsageSegmentation,
                                   inconsistencyMonitoring: MockStatisticsStoreInconsistencyMonitoring(),
+                                  fireAppRetentionExperimentPixels: { self.fireAppRetentionExperimentPixelsCalled = true },
+                                  fireSearchExperimentPixels: { self.fireSearchExperimentPixelsCalled = true },
                                   pixelFiring: mockPixelFiring)
     }
 
@@ -62,6 +66,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertTrue(mockUsageSegmentation.atbs[0].installAtb.isReturningUser)
+        XCTAssertTrue(fireAppRetentionExperimentPixelsCalled)
     }
 
     func testWhenReturnUser_ThenSegmentationIncludesCorrectVariant() {
@@ -76,6 +81,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertTrue(mockUsageSegmentation.atbs[0].installAtb.isReturningUser)
+        XCTAssertTrue(fireSearchExperimentPixelsCalled)
     }
 
     func testWhenSearchRefreshHappensButNotInstalled_ThenRetentionSegmentationNotified() {
@@ -87,6 +93,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertFalse(mockUsageSegmentation.atbs.isEmpty)
+        XCTAssertTrue(fireSearchExperimentPixelsCalled)
     }
 
     func testWhenAppRefreshHappensButNotInstalled_ThenRetentionSegmentationNotified() {
@@ -98,6 +105,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertFalse(mockUsageSegmentation.atbs.isEmpty)
+        XCTAssertTrue(fireAppRetentionExperimentPixelsCalled)
     }
 
     func testWhenStatisticsInstalled_ThenRetentionSegmentationNotNotified() {
@@ -122,6 +130,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertFalse(mockUsageSegmentation.atbs.isEmpty)
+        XCTAssertTrue(fireAppRetentionExperimentPixelsCalled)
     }
 
     func testWhenSearchRetentionRefreshHappens_ThenRetentionSegmentationNotified() {
@@ -135,6 +144,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
         wait(for: [testExpectation], timeout: 5.0)
         XCTAssertFalse(mockUsageSegmentation.atbs.isEmpty)
+        XCTAssertTrue(self.fireSearchExperimentPixelsCalled)
     }
     
     func testWhenSearchRefreshHasSuccessfulUpdateAtbRequestThenSearchRetentionAtbUpdated() {
@@ -151,6 +161,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(self.fireSearchExperimentPixelsCalled)
     }
 
     func testWhenAppRefreshHasSuccessfulUpdateAtbRequestThenAppRetentionAtbUpdated() {
@@ -167,6 +178,7 @@ class StatisticsLoaderTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertTrue(self.fireAppRetentionExperimentPixelsCalled)
     }
 
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {

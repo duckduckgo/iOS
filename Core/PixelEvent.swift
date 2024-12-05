@@ -1887,20 +1887,23 @@ extension Pixel.Event {
     public enum CompileTimeBucketAggregation: String, CustomStringConvertible {
 
         public var description: String { rawValue }
-
+     
+        case lessThan1 = "1"
+        case lessThan2 = "2"
+        case lessThan5 = "5"
         case lessThan10 = "10"
-        case lessThan20 = "20"
-        case lessThan40 = "40"
         case more
 
         public init(number: Double) {
             switch number {
+            case ...1:
+                self = .lessThan1
+            case ...2:
+                self = .lessThan2
+            case ...5:
+                self = .lessThan5
             case ...10:
                 self = .lessThan10
-            case ...20:
-                self = .lessThan20
-            case ...40:
-                self = .lessThan40
             default:
                 self = .more
             }

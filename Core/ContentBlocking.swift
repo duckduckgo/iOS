@@ -116,7 +116,7 @@ public final class ContentBlocking {
 
             domainEvent = .contentBlockingCompilationFailed(listType: listType, component: component)
 
-          case .contentBlockingLookupRulesSucceeded:
+        case .contentBlockingLookupRulesSucceeded:
             domainEvent = .contentBlockingLookupRulesSucceeded
             
         case .contentBlockingFetchLRCSucceeded:

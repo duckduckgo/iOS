@@ -329,10 +329,8 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
                 cell.omniBar?.startBrowsing()
                 cell.omniBar?.refreshText(forUrl: url, forceFullURL: appSettings.showFullSiteAddress)
                 cell.omniBar?.resetPrivacyIcon(for: url)
+                cell.omniBar?.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: url)
 
-                if let omnibar = cell.omniBar {
-                    omnibarAccessoryHandler.updateAccessoryForOmnibar(omnibar, with: url)
-                }
             }
         }
 

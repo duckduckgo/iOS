@@ -21,23 +21,18 @@ import Foundation
 import AIChat
 
 protocol OmnibarAccessoryHandling {
-    func updateAccessoryForOmnibar(_ bar: OmniBar, with url: URL?)
+    func omnibarAccessory(for url: URL?) -> OmniBar.AccessoryType
 }
 
 struct OmnibarAccessoryHandler: OmnibarAccessoryHandling {
     let settings: AIChatSettingsProvider
 
-    func updateAccessoryForOmnibar(_ bar: OmniBar, with url: URL?) {
+    func omnibarAccessory(for url: URL?) -> OmniBar.AccessoryType {
         guard settings.isAIChatFeatureEnabled,
-                settings.isAIChatAddressBarUserSettingsEnabled else {
-            bar.accessoryType = .share
-            return
+              settings.isAIChatAddressBarUserSettingsEnabled else {
+            return .share
         }
 
-        if url?.isDuckDuckGoSearch == true {
-            bar.accessoryType = .chat
-        } else {
-            bar.accessoryType = .share
-        }
+        return (url?.isDuckDuckGoSearch == true) ? .chat : .share
     }
 }

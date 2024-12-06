@@ -1142,8 +1142,8 @@ class MainViewController: UIViewController {
         } else {
             viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
-        
-        omnibarAccessoryHandler.updateAccessoryForOmnibar(viewCoordinator.omniBar, with: tab.url)
+
+        viewCoordinator.omniBar.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: tab.url)
 
         viewCoordinator.omniBar.startBrowsing()
     }

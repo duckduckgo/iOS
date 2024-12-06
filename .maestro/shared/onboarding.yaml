@@ -15,6 +15,14 @@ appId: com.duckduckgo.mobile.ios
 - tapOn:
     text: "Skip"
 
+# Add To Dock Flow
+- runFlow:
+    when:
+        visible: "Add me to your Dock!"
+    commands:
+        - assertVisible: "Show Me How"
+        - tapOn: "Skip"
+
 # Customization Flow
 
 - assertVisible: "Which color looks best on me?"

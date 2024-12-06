@@ -9,7 +9,7 @@ tags:
     file: ../shared/setup.yaml
     env:
         ONBOARDING_COMPLETED: "false"
-        APP_VARIANT: "mh"
+        APP_VARIANT: "mo"
 
 # Handle Search Suggestions
 - assertVisible: "Ready to get started?\nTry a search!"
@@ -47,7 +47,8 @@ tags:
 - tapOn: "Close Tabs and Clear Data"
 
 # Handle End of Journey Dialog
-- assertVisible: "You’ve got this!"
-- assertVisible: "High five!"
-- tapOn: "High five!"
+- assertVisible: "Add me to your Dock!"
+- assertVisible: "Show Me How"
+- tapOn: "Start Browsing"
+
 

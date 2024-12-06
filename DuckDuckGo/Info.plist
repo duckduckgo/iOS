@@ -192,6 +192,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigurationIntent</string>
+		<string>com.duckduckgo.mobile.ios.web-browsing</string>
 	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>

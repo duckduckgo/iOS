@@ -211,6 +211,7 @@ class TabViewController: UIViewController {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
             checkLoginDetectionAfterNavigation()
+            updateCurrentActivity(url: url)
         }
     }
     
@@ -274,7 +275,7 @@ class TabViewController: UIViewController {
         manager.delegate = self
         return manager
     }()
-    
+
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, onComplete in
         let domainEvent: Pixel.Event
         switch event {
@@ -3181,4 +3182,43 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
         }
     }
     
+}
+
+// NSUserActivity-related
+extension TabViewController {
+    func becomeCurrentActivity() {
+        if userActivity?.webpageURL == nil {
+            userActivity?.invalidate()
+            userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+            userActivity?.webpageURL = nil
+        }
+
+        userActivity?.becomeCurrent()
+    }
+
+    private func updateCurrentActivity(url: URL?) {
+        let newURL: URL? = {
+            guard let url, let scheme = url.scheme, ["http", "https"].contains(scheme) else { return nil }
+            return url.isDuckDuckGo ? url.removingInternalSearchParameters() : url
+        }()
+        guard newURL != userActivity?.webpageURL else { return }
+
+        userActivity?.invalidate()
+        if newURL != nil {
+            userActivity = NSUserActivity(activityType: "com.duckduckgo.mobile.ios.web-browsing")
+        } else {
+            userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+        }
+        userActivity?.webpageURL = newURL
+
+        userActivity?.becomeCurrent()
+    }
+
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
+        guard activity.activityType == "com.duckduckgo.mobile.ios.web-browsing", let url = activity.webpageURL else {
+            return
+        }
+
+        openTab(for: url)
+    }
 }

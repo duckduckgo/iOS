@@ -1055,6 +1055,7 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         if tab.link == nil {
             attachHomeScreen()
+            invalidateCurrentActivity()
         } else {
             attachTab(tab: tab)
             refreshControls()
@@ -1072,7 +1073,7 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-            
+
         addToContentContainer(controller: tab)
 
         viewCoordinator.logoContainer.isHidden = true
@@ -1080,6 +1081,7 @@ class MainViewController: UIViewController {
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
+        tab.becomeCurrentActivity()
     }
 
     private func addToContentContainer(controller: UIViewController) {
@@ -1464,6 +1466,8 @@ class MainViewController: UIViewController {
         tabsBarController?.refresh(tabsModel: tabManager.model)
         swipeTabsCoordinator?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
         newTabPageViewController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
+
+        invalidateCurrentActivity()
     }
     
     func updateFindInPage() {
@@ -2960,5 +2964,15 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
 extension MainViewController: AIChatViewControllerDelegate {
     func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
         loadUrlInNewTab(url, inheritedAttribution: nil)
+    }
+}
+
+// NSUserActivity-related
+extension MainViewController {
+    private func invalidateCurrentActivity() {
+        userActivity?.invalidate()
+        userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+        userActivity?.webpageURL = nil
+        userActivity?.becomeCurrent()
     }
 }

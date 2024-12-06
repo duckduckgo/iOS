@@ -45,7 +45,11 @@ struct SettingsAIChatView: View {
 
             Section {
                 SettingsCellView(label: UserText.aiChatSettingsEnableBrowsingMenuToggle,
-                                 accessory: .toggle(isOn: viewModel.aiChatEnabledBinding))
+                                 accessory: .toggle(isOn: viewModel.aiChatBrowsingMenuEnabledBinding))
+
+                SettingsCellView(label: UserText.aiChatSettingsEnableAddressBarToggle,
+                                 accessory: .toggle(isOn: viewModel.aiChatAddressBarEnabledBinding))
+
             }
         }.applySettingsListModifiers(title: UserText.aiChatFeatureName,
                                      displayMode: .inline,

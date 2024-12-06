@@ -51,11 +51,14 @@ class SwipeTabsCoordinator: NSObject {
     var collectionView: MainViewFactory.NavigationBarCollectionView {
         coordinator.navigationBarCollectionView
     }
-    
+
+    private let omnibarAccessoryHandler: OmnibarAccessoryHandler
+
     init(coordinator: MainViewCoordinator,
          tabPreviewsSource: TabPreviewsSource,
          appSettings: AppSettings,
          voiceSearchHelper: VoiceSearchHelperProtocol,
+         omnibarAccessoryHandler: OmnibarAccessoryHandler,
          selectTab: @escaping (Int) -> Void,
          newTab: @escaping () -> Void,
          onSwipeStarted: @escaping () -> Void) {
@@ -64,7 +67,7 @@ class SwipeTabsCoordinator: NSObject {
         self.tabPreviewsSource = tabPreviewsSource
         self.appSettings = appSettings
         self.voiceSearchHelper = voiceSearchHelper
-
+        self.omnibarAccessoryHandler = omnibarAccessoryHandler
         self.selectTab = selectTab
         self.newTab = newTab
         self.onSwipeStarted = onSwipeStarted
@@ -326,8 +329,9 @@ extension SwipeTabsCoordinator: UICollectionViewDataSource {
                 cell.omniBar?.startBrowsing()
                 cell.omniBar?.refreshText(forUrl: url, forceFullURL: appSettings.showFullSiteAddress)
                 cell.omniBar?.resetPrivacyIcon(for: url)
-            }
+                cell.omniBar?.accessoryType = omnibarAccessoryHandler.omnibarAccessory(for: url)
 
+            }
         }
 
         cell.setNeedsUpdateConstraints()

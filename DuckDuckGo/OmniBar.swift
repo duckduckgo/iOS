@@ -33,6 +33,11 @@ public enum OmniBarIcon: String {
 
 class OmniBar: UIView {
 
+    enum AccessoryType {
+         case share
+         case chat
+     }
+
     public static let didLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
     
     @IBOutlet weak var searchLoupe: UIView!
@@ -55,8 +60,8 @@ class OmniBar: UIView {
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
-    
+    @IBOutlet weak var accessoryButton: UIButton!
+
     private(set) var menuButtonContent = MenuButton()
 
     // Don't use weak because adding/removing them causes them to go away
@@ -71,6 +76,16 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState!
+    var accessoryType: AccessoryType = .share {
+        didSet {
+            switch accessoryType {
+            case .chat:
+                accessoryButton.setImage(UIImage(named: "AIChat-24"), for: .normal)
+            case .share:
+                accessoryButton.setImage(UIImage(named: "Share-24"), for: .normal)
+            }
+        }
+    }
 
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
@@ -104,7 +119,7 @@ class OmniBar: UIView {
         configureSettingsLongPressButton()
         configureShareLongPressButton()
         registerNotifications()
-        
+
         configureSeparator()
         configureEditingMenu()
         enableInteractionsWithPointer()
@@ -123,7 +138,7 @@ class OmniBar: UIView {
     private func configureShareLongPressButton() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleShareLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.7
-        shareButton.addGestureRecognizer(longPressGesture)
+        accessoryButton.addGestureRecognizer(longPressGesture)
     }
 
     @objc private func handleSettingsLongPress(_ gesture: UILongPressGestureRecognizer) {
@@ -134,7 +149,7 @@ class OmniBar: UIView {
 
     @objc private func handleShareLongPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            omniDelegate?.onShareLongPressed()
+            omniDelegate?.onShareLongPressed(accessoryType: accessoryType)
         }
     }
 
@@ -156,7 +171,7 @@ class OmniBar: UIView {
         settingsButton.isPointerInteractionEnabled = true
         cancelButton.isPointerInteractionEnabled = true
         bookmarksButton.isPointerInteractionEnabled = true
-        shareButton.isPointerInteractionEnabled = true
+        accessoryButton.isPointerInteractionEnabled = true
         menuButton.isPointerInteractionEnabled = true
 
         refreshButton.isPointerInteractionEnabled = true
@@ -265,7 +280,7 @@ class OmniBar: UIView {
     public func hidePrivacyIcon() {
         privacyInfoContainer.privacyIcon.isHidden = true
     }
-    
+
     public func resetPrivacyIcon(for url: URL?) {
         cancelAllAnimations()
         privacyInfoContainer.privacyIcon.isHidden = false
@@ -388,7 +403,7 @@ class OmniBar: UIView {
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
-        setVisibility(shareButton, hidden: !state.showShareButton)
+        setVisibility(accessoryButton, hidden: !state.shoeAccessoryButton)
         
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
@@ -529,10 +544,10 @@ class OmniBar: UIView {
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
         omniDelegate?.onBookmarksPressed()
     }
-    
-    @IBAction func onSharePressed(_ sender: Any) {
+
+    @IBAction func onAccessoryPressed(_ sender: Any) {
         Pixel.fire(pixel: .addressBarShare)
-        omniDelegate?.onSharePressed()
+        omniDelegate?.onAccessoryPressed(accessoryType: accessoryType)
     }
     
     func enterPhoneState() {

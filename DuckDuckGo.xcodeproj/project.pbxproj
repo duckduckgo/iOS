@@ -11379,8 +11379,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sabrina/setup-experiment-test";
-				kind = branch;
+				kind = exactVersion;
+				version = 218.0.1;
 			};
 		};
 		9F8FE9472BAE50E50071E372 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sabrina/setup-experiment-test",
-        "revision" : "a294718068171e3517d7a1b2351f6ba53ff61d44"
+        "revision" : "bbcb41c87c5788718a43883b5b10eb3b4f54aff3",
+        "version" : "218.0.1"
       }
     },
     {

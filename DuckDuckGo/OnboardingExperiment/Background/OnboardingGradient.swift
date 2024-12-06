@@ -23,57 +23,22 @@ import Onboarding
 struct OnboardingGradientView: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    private let type: OnboardingGradientType
-
-    init(type: OnboardingGradientType) {
-        self.type = type
-    }
-
     var body: some View {
-        switch (type, colorScheme) {
-        case (.default, .light):
-            linearLightGradient
-        case (.default, .dark):
-            linearDarkGradient
-        case (.highlights, _):
-            // If highlights experiment use new common gradient for iOS and macOS
+        switch colorScheme {
+        case .dark:
             OnboardingGradient()
+        case .light:
+            // iOS 15 doesn't render properly the light EllipticalGradient while the Dark gradient is rendered correctly
+            // https://app.asana.com/0/1206329551987282/1208839072951158/f
+            if #available(iOS 16, *) {
+                OnboardingGradient()
+            } else {
+                Image(.onboardingGradientLight)
+                    .resizable()
+            }
         @unknown default:
-            linearLightGradient
+            OnboardingGradient()
         }
     }
 
-    private var linearLightGradient: some View {
-        gradient(colorStops: [
-            .init(color: Color(red: 1, green: 0.9, blue: 0.87), location: 0.00),
-            .init(color: Color(red: 0.99, green: 0.89, blue: 0.87), location: 0.28),
-            .init(color: Color(red: 0.99, green: 0.89, blue: 0.87), location: 0.46),
-            .init(color: Color(red: 0.96, green: 0.87, blue: 0.87), location: 0.72),
-            .init(color: Color(red: 0.9, green: 0.84, blue: 0.92), location: 1.00),
-        ])
-    }
-
-    private var linearDarkGradient: some View {
-        gradient(colorStops: [
-            .init(color: Color(red: 0.29, green: 0.19, blue: 0.25), location: 0.00),
-            .init(color: Color(red: 0.35, green: 0.23, blue: 0.32), location: 0.28),
-            .init(color: Color(red: 0.37, green: 0.25, blue: 0.38), location: 0.46),
-            .init(color: Color(red: 0.2, green: 0.15, blue: 0.32), location: 0.72),
-            .init(color: Color(red: 0.16, green: 0.15, blue: 0.34), location: 1.00),
-        ])
-    }
-
-    private func gradient(colorStops: [SwiftUI.Gradient.Stop]) -> some View {
-        LinearGradient(
-            stops: colorStops,
-            startPoint: UnitPoint(x: 0.5, y: 0),
-            endPoint: UnitPoint(x: 0.5, y: 1)
-        )
-    }
-
-}
-
-enum OnboardingGradientType {
-    case `default`
-    case highlights
 }

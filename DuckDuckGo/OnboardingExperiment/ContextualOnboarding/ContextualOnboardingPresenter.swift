@@ -47,15 +47,11 @@ final class ContextualOnboardingPresenter: ContextualOnboardingPresenting {
     }
 
     func presentContextualOnboarding(for spec: DaxDialogs.BrowsingSpec, in vc: TabViewOnboardingDelegate) {
-        if variantManager.isContextualDaxDialogsEnabled {
-            presentExperimentContextualOnboarding(for: spec, in: vc)
-        } else {
-            presentControlContextualOnboarding(for: spec, in: vc)
-        }
+        presentExperimentContextualOnboarding(for: spec, in: vc)
     }
 
     func dismissContextualOnboardingIfNeeded(from vc: TabViewOnboardingDelegate) {
-        guard variantManager.isContextualDaxDialogsEnabled, let daxContextualOnboarding = vc.daxContextualOnboardingController else { return }
+        guard let daxContextualOnboarding = vc.daxContextualOnboardingController else { return }
         remove(daxController: daxContextualOnboarding, fromParent: vc)
     }
 

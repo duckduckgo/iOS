@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/update-rmf-version-matching-to-ignore-build-number",
-        "revision" : "3ca813f6b599ec7c5960767ef24a97287fdd7455"
+        "revision" : "bbcb41c87c5788718a43883b5b10eb3b4f54aff3",
+        "version" : "218.0.1"
       }
     },
     {

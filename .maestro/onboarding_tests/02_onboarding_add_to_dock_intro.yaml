@@ -9,7 +9,7 @@ tags:
     file: ../shared/setup.yaml
     env:
         ONBOARDING_COMPLETED: "false"
-        APP_VARIANT: "mb"
+        APP_VARIANT: "mk"
 
 # Handle Search Suggestions
 - assertVisible: "Ready to get started?\nTry a search!"
@@ -50,3 +50,5 @@ tags:
 - assertVisible: "You’ve got this!"
 - assertVisible: "High five!"
 - tapOn: "High five!"
+
+

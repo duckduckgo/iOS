@@ -925,7 +925,7 @@ import os.log
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([any UIUserActivityRestoring]?) -> Void) -> Bool {
         guard userActivity.activityType == "com.duckduckgo.mobile.ios.web-browsing",
-              let currentTab = mainViewController?.currentTab else {
+              let currentTab = mainViewController?.tabManager.current(createIfNeeded: true) else {
             return false
         }
 

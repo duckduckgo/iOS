@@ -3213,12 +3213,4 @@ extension TabViewController {
 
         userActivity?.becomeCurrent()
     }
-
-    override func restoreUserActivityState(_ activity: NSUserActivity) {
-        guard activity.activityType == "com.duckduckgo.mobile.ios.web-browsing", let url = activity.webpageURL else {
-            return
-        }
-
-        openTab(for: url)
-    }
 }

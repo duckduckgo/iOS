@@ -925,11 +925,11 @@ import os.log
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([any UIUserActivityRestoring]?) -> Void) -> Bool {
         guard userActivity.activityType == "com.duckduckgo.mobile.ios.web-browsing",
-              let currentTab = mainViewController?.tabManager.current(createIfNeeded: true) else {
+              let mainViewController else {
             return false
         }
 
-        restorationHandler([currentTab])
+        restorationHandler([mainViewController])
 
         return true
     }

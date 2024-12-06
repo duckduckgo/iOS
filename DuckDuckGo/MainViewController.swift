@@ -2975,4 +2975,12 @@ extension MainViewController {
         userActivity?.webpageURL = nil
         userActivity?.becomeCurrent()
     }
+
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
+        guard activity.activityType == "com.duckduckgo.mobile.ios.web-browsing", let url = activity.webpageURL else {
+            return
+        }
+
+        loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+    }
 }

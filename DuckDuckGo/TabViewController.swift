@@ -1587,9 +1587,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if !DefaultVariantManager().isContextualDaxDialogsEnabled {
-            isShowingFullScreenDaxDialog = true
-        }
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
         let daxDialogSourceURL = self.url
         

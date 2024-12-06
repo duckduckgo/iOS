@@ -38,12 +38,11 @@ extension OnboardingStyles {
         func body(content: Content) -> some View {
             ZStack {
                 switch backgroundType {
-                case let .illustratedGradient(gradientType):
+                case .illustratedGradient:
                     OnboardingBackground()
-                        .onboardingGradient(gradientType)
                         .ignoresSafeArea(.keyboard)
-                case let .gradientOnly(gradientType):
-                    OnboardingGradientView(type: gradientType)
+                case .gradientOnly:
+                    OnboardingGradientView()
                         .ignoresSafeArea(.keyboard)
                 }
 
@@ -71,25 +70,6 @@ extension View {
 }
 
 enum OnboardingBackgroundType {
-    case illustratedGradient(OnboardingGradientType)
-    case gradientOnly(OnboardingGradientType)
-}
-
-enum OnboardingGradientTypeKey: EnvironmentKey {
-    static var defaultValue: OnboardingGradientType = .default
-}
-
-extension EnvironmentValues {
-    var onboardingGradientType: OnboardingGradientType {
-        get { self[OnboardingGradientTypeKey.self] }
-        set { self[OnboardingGradientTypeKey.self] = newValue }
-    }
-}
-
-extension View {
-
-    func onboardingGradient(_ type: OnboardingGradientType) -> some View {
-        environment(\.onboardingGradientType, type)
-    }
-
+    case illustratedGradient
+    case gradientOnly
 }

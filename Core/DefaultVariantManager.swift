@@ -27,9 +27,8 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    public static let newOnboardingIntro = FeatureName(rawValue: "newOnboardingIntro")
-    public static let newOnboardingIntroHighlights = FeatureName(rawValue: "newOnboardingIntroHighlights")
-    public static let contextualDaxDialogs = FeatureName(rawValue: "contextualDaxDialogs")
+    public static let addToDockIntro = FeatureName(rawValue: "addToDockIntro")
+    public static let addToDockContextual = FeatureName(rawValue: "addToDockContextual")
 }
 
 public struct VariantIOS: Variant {
@@ -58,9 +57,9 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
 
-        VariantIOS(name: "ms", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro]),
-        VariantIOS(name: "mu", weight: 1, isIncluded: When.always, features: [.newOnboardingIntro, .contextualDaxDialogs]),
-        VariantIOS(name: "mx", weight: 1, isIncluded: When.always, features: [.newOnboardingIntroHighlights, .contextualDaxDialogs]),
+        VariantIOS(name: "mh", weight: 1, isIncluded: When.notPadDevice, features: []),
+        VariantIOS(name: "mk", weight: 1, isIncluded: When.notPadDevice, features: [.addToDockIntro]),
+        VariantIOS(name: "mo", weight: 1, isIncluded: When.notPadDevice, features: [.addToDockContextual]),
 
         returningUser
     ]

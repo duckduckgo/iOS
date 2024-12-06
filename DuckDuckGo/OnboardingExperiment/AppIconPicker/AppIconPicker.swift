@@ -30,8 +30,6 @@ private enum Metrics {
 }
 
 struct AppIconPicker: View {
-    @Environment(\.colorScheme) private var color
-
     @StateObject private var viewModel = AppIconPickerViewModel()
 
     let layout = [GridItem(.adaptive(minimum: Metrics.iconSize), spacing: Metrics.spacing, alignment: .leading)]

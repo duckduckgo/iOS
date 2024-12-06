@@ -83,7 +83,6 @@ final class NewTabPageViewModel: ObservableObject {
     }
 }
 
-
 // This is just temporarily here to run an A/A test to check the new experiment framework works as expected
 public struct CredentialsSavingFlag: FeatureFlagExperimentDescribing {
     public init() {}

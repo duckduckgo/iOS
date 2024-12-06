@@ -3187,6 +3187,8 @@ extension TabViewController: DuckPlayerTabNavigationHandling {
 // NSUserActivity-related
 extension TabViewController {
     func becomeCurrentActivity() {
+        guard supportsHandoff() else { return }
+        
         if userActivity?.webpageURL == nil {
             userActivity?.invalidate()
             userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
@@ -3197,6 +3199,8 @@ extension TabViewController {
     }
 
     private func updateCurrentActivity(url: URL?) {
+        guard supportsHandoff() else { return }
+
         let newURL: URL? = {
             guard let url, let scheme = url.scheme, ["http", "https"].contains(scheme) else { return nil }
             return url.isDuckDuckGo ? url.removingInternalSearchParameters() : url
@@ -3212,5 +3216,9 @@ extension TabViewController {
         userActivity?.webpageURL = newURL
 
         userActivity?.becomeCurrent()
+    }
+
+    private func supportsHandoff() -> Bool {
+        featureFlagger.isFeatureOn(.handoff)
     }
 }

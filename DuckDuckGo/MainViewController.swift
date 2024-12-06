@@ -2970,6 +2970,8 @@ extension MainViewController: AIChatViewControllerDelegate {
 // NSUserActivity-related
 extension MainViewController {
     private func invalidateCurrentActivity() {
+        guard supportsHandoff() else { return }
+
         userActivity?.invalidate()
         userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
         userActivity?.webpageURL = nil
@@ -2977,10 +2979,14 @@ extension MainViewController {
     }
 
     override func restoreUserActivityState(_ activity: NSUserActivity) {
-        guard activity.activityType == "com.duckduckgo.mobile.ios.web-browsing", let url = activity.webpageURL else {
+        guard supportsHandoff(), activity.activityType == "com.duckduckgo.mobile.ios.web-browsing", let url = activity.webpageURL else {
             return
         }
 
         loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
+    }
+
+    private func supportsHandoff() -> Bool {
+        featureFlagger.isFeatureOn(.handoff)
     }
 }

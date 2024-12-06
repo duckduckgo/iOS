@@ -1890,7 +1890,13 @@ extension Pixel.Event {
      
         case lessThan1 = "1"
         case lessThan2 = "2"
+        case lessThan3 = "3"
+        case lessThan4 = "4"
         case lessThan5 = "5"
+        case lessThan6 = "6"
+        case lessThan7 = "7"
+        case lessThan8 = "8"
+        case lessThan9 = "9"
         case lessThan10 = "10"
         case more
 
@@ -1900,8 +1906,20 @@ extension Pixel.Event {
                 self = .lessThan1
             case ...2:
                 self = .lessThan2
+            case ...3:
+                self = .lessThan3
+            case ...4:
+                self = .lessThan4
             case ...5:
                 self = .lessThan5
+            case ...6:
+                self = .lessThan6
+            case ...7:
+                self = .lessThan7
+            case ...8:
+                self = .lessThan8
+            case ...9:
+                self = .lessThan9
             case ...10:
                 self = .lessThan10
             default:

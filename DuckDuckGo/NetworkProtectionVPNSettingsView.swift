@@ -194,10 +194,11 @@ struct NetworkProtectionVPNSettingsView: View {
 
 }
 
+@available(iOS 17.0, *)
 private extension WidgetEducationView {
     static var vpn: Self {
         WidgetEducationView(
-            navBarTitle: UserText.vpnSettingsAddWidget,
+            navBarTitle: UserText.settingsAddWidgetTitle,
             thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph,
             widgetExampleImageConfig: .init(
                 image: Image("WidgetEducationVPNWidgetExample"),

@@ -32,10 +32,12 @@ struct SettingsNextStepsView: View {
                              action: { viewModel.presentLegacyView(.addToDock) },
                              isButton: true)
 
-            // Add Widget to Home Screen
-            NavigationLink(destination: WidgetEducationView()) {
-                SettingsCellView(label: UserText.settingsAddWidget,
-                                 image: Image("SettingsAddWidget"))
+            if #available(iOS 17.0, *) {
+                // Add Widget to Home Screen
+                NavigationLink(destination: WidgetEducationView()) {
+                    SettingsCellView(label: UserText.settingsAddWidget,
+                                     image: Image("SettingsAddWidget"))
+                }
             }
 
             // Set Your Address Bar Position

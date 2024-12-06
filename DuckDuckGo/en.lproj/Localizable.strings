@@ -125,13 +125,13 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
+"addWidget.settings.firstParagraph" = "Long-press on the home screen until the apps jiggle.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Find and select DuckDuckGo. Then choose a widget.";
+"addWidget.settings.secondParagraph" = "Tap the “Edit” button, then choose “Add Widget”.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
@@ -2178,6 +2178,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Add Widget to Home Screen";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.title" = "Add DuckDuckGo VPN Widget to Your Home Screen";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */

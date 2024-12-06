@@ -39,14 +39,17 @@ struct WidgetEducationImageConfig {
     }
 }
 
+@available(iOS 17.0, *)
 struct WidgetEducationView: View {
     typealias ImageConfig = WidgetEducationImageConfig
+
+    @Environment(\.dismiss) private var dismiss
 
     let navBarTitle: String
     let thirdParagraphText: String
     let widgetExampleImageConfig: ImageConfig
 
-    init(navBarTitle: String = UserText.settingsAddWidget,
+    init(navBarTitle: String = UserText.settingsAddWidgetTitle,
          thirdParagraphText: String = UserText.addWidgetSettingsThirdParagraph,
          widgetExampleImageConfig: ImageConfig = .init(image: .widgetExample, maxWidth: Const.Size.imageWidth)) {
         self.navBarTitle = navBarTitle
@@ -55,29 +58,25 @@ struct WidgetEducationView: View {
     }
 
     var body: some View {
-        ZStack {
-            Color.background
-                .ignoresSafeArea()
-            ScrollView {
-                VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
-                    NumberedParagraph(number: 1,
-                                      text: Text(UserText.addWidgetSettingsFirstParagraph))
-                    NumberedParagraph(number: 2,
-                                      text: secondParagraphText,
-                                      imageConfig: ImageConfig(image: Image.homeScreen, maxWidth: Const.Size.imageWidth))
-                    NumberedParagraph(number: 3,
-                                      text: Text(thirdParagraphText),
-                                      imageConfig: widgetExampleImageConfig)
-                }
-                .padding(.horizontal)
-                .padding(.top, Const.Padding.top)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
+                Text(UserText.settingsAddWidgetTitle)
+                    .font(.system(size: 22, weight: .bold, design: .default))
+
+                NumberedParagraph(number: 1,
+                                  text: Text(UserText.addWidgetSettingsFirstParagraph))
+                NumberedParagraph(number: 2,
+                                  text: Text(UserText.addWidgetSettingsSecondParagraph),
+                                  imageConfig: ImageConfig(image: Image.homeScreen, maxWidth: Const.Size.imageWidth))
+                NumberedParagraph(number: 3,
+                                  text: Text(thirdParagraphText),
+                                  imageConfig: widgetExampleImageConfig)
             }
-        }.navigationBarTitle(navBarTitle, displayMode: .inline)
-    }
-    
-    private var secondParagraphText: Text {
-        // https://stackoverflow.com/questions/62168292/what-s-the-equivalent-to-string-localizedstringwithformat-for-swiftuis-lo
-        Text("addWidget.settings.secondParagraph.\(Image.add)")
+            .padding(.horizontal, Const.Padding.horizontal)
+            .padding(.top, Const.Padding.top)
+        }
+        .navigationBarTitle("")
+        .background(Color.background)
     }
 }
 
@@ -144,6 +143,7 @@ private enum Const {
     
     enum Padding {
         static let top: CGFloat = 32
+        static let horizontal: CGFloat = 24
     }
     
     enum Spacing {
@@ -159,6 +159,7 @@ private enum Const {
     }
 }
 
+@available(iOS 17.0, *)
 struct WidgetEducationView_Previews: PreviewProvider {
     static var previews: some View {
         WidgetEducationView()

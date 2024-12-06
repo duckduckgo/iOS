@@ -337,10 +337,10 @@ public struct UserText {
     public static let addWidget = NSLocalizedString("addWidget.button", value: "Add Widget", comment: "")
     public static let addWidgetTitle = NSLocalizedString("addWidget.title", value: "One tap to your favorite sites.", comment: "")
     public static let addWidgetDescription = NSLocalizedString("addWidget.description", value: "Get quick access to private search and the sites you love.", comment: "")
-    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the Home Screen to enter jiggle mode.", comment: "")
-    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph.%@", value: "Tap the plus %@ button.", comment: "Replacement string is a plus button icon.")
-    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
-    
+    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the home screen until the apps jiggle.", comment: "")
+    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph", value: "Tap the “Edit” button, then choose “Add Widget”.", comment: "")
+    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.", comment: "")
+
     public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
     public static func messageDownloadStarted(for filename: String) -> String {
         let message = NSLocalizedString("downloads.message.download-started", value: "Download started for %@", comment: "Message confirming that the download process has started. Parameter is downloaded file's filename")
@@ -1056,6 +1056,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let nextSteps = NSLocalizedString("settings.next.steps", value: "Next Steps", comment: "The name of a settings category listing next steps")
     public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
     public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
+    public static let settingsAddWidgetTitle = NSLocalizedString("settings.add.widget.title", value: "Add DuckDuckGo VPN Widget to Your Home Screen", comment: "Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen")
     public static let setYourAddressBarPosition = NSLocalizedString("settings.set.your.address.bar.position", value: "Set Your Address Bar Position", comment: "Settings screen cell text for setting address bar position")
     public static let enableVoiceSearch = NSLocalizedString("settings.enable.voice.search", value: "Enable Voice Search", comment: "Settings screen cell text for enabling voice search")
 

@@ -131,13 +131,13 @@
 "addWidget.description" = "Get quick access to private search and the sites you love.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Long-press on the Home Screen to enter jiggle mode.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
+"addWidget.settings.firstParagraph" = "Long-press on the home screen until the apps jiggle.";
 
 /* No comment provided by engineer. */
-"addWidget.settings.title" = "Find and select DuckDuckGo. Then choose a widget.";
+"addWidget.settings.secondParagraph" = "Tap the “Edit” button, then choose “Add Widget”.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Find and select DuckDuckGo. Then swipe to VPN and select Add Widget.";
 
 /* No comment provided by engineer. */
 "addWidget.title" = "One tap to your favorite sites.";
@@ -875,6 +875,18 @@
 
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Surprise me!";
+
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Swipe down from the top-right corner of the screen.";
+
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tap the “+” button at the top left of Control Center.";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tap “+ Add a Control” at the bottom of the screen.";
+
+/* Fourth paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.4" = "Find DuckDuckGo in the list, then tap the VPN control to add it to your Control Center.";
 
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
@@ -1824,6 +1836,9 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";
 
+/* Section header for the shortcuts section in VPN settings. */
+"network.protection.vpn.shortcuts.section.header" = "Shortcuts";
+
 /* Information message about New Tab Page redesign */
 "new.tab.page.intro.message.body" = "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.";
 
@@ -2161,6 +2176,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
 /* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Add Widget to Home Screen";
+
+/* Title for the settings VPN subsection where the user can learn how to add the VPN to their home screen */
+"settings.add.widget.title" = "Add DuckDuckGo VPN Widget to Your Home Screen";
 
 /* Name of the settings subsection related to the address bar
    Settings screen cell text for addess bar position */
@@ -2881,8 +2899,14 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Title for each screen of the VPN feedback form */
 "vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
 
+/* VPN settings screen cell text for adding the VPN widget to the control center */
+"vpn.settings.add.control-center.widget" = "Add VPN to Control Center";
+
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Add VPN Widget to Home Screen";
+
+/* VPN settings screen cell text to learn how to control the VPN with Siri */
+"vpn.settings.control.with.siri" = "Control with Siri";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
 "vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";

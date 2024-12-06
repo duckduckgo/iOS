@@ -26,23 +26,13 @@ struct NetworkProtectionVPNSettingsView: View {
     var body: some View {
         VStack {
             List {
-                // Widget only available for iOS 17 and up
-                if #available(iOS 17.0, *) {
-                    Section {
-                        NavigationLink {
-                            WidgetEducationView.vpn
-                        } label: {
-                            Text(UserText.vpnSettingsAddWidget).daxBodyRegular()
-                        }
-                    }
-                    .listRowBackground(Color(designSystemColor: .surface))
-                }
-
                 switch viewModel.viewKind {
                 case .loading: EmptyView()
                 case .unauthorized: notificationsUnauthorizedView
                 case .authorized: notificationAuthorizedView
                 }
+
+                shortcutsView
 
                 toggleSection(
                     text: UserText.netPExcludeLocalNetworksSettingTitle,
@@ -156,17 +146,69 @@ struct NetworkProtectionVPNSettingsView: View {
         .listRowBackground(Color(designSystemColor: .surface))
     }
 
+    @ViewBuilder
+    private var shortcutsView: some View {
+        // Widget only available for iOS 17 and up
+        if #available(iOS 17.0, *) {
+            Section {
+                NavigationLink {
+                    WidgetEducationView.vpn
+                } label: {
+                    Label {
+                        Text(UserText.vpnSettingsAddWidget)
+                    } icon: {
+                        Image(.addWidgetColor24)
+                            .frame(width: 24, height: 24)
+                    }.daxBodyRegular()
+                }
+
+                if #available(iOS 18.0, *) {
+                    NavigationLink {
+                        ControlCenterWidgetEducationView(
+                            navBarTitle: "Control Center",
+                            widgetExampleImageConfig: .init(image: Image("ControlCenterBottom"),
+                                                            maxWidth: 270,
+                                                            dropsShadow: true))
+                    } label: {
+                        Label {
+                            Text(UserText.vpnSettingsAddControlCenterWidget)
+                        } icon: {
+                            Image(.settingsColor24)
+                                .frame(width: 24, height: 24)
+                        }.daxBodyRegular()
+                    }
+                }
+
+                NavigationLink {
+                    WidgetEducationView.vpn
+                } label: {
+                    Label {
+                        Text(UserText.vpnSettingsControlWithSiri)
+                    } icon: {
+                        Image(.askSiriColor24)
+                            .frame(width: 24, height: 24)
+                    }.daxBodyRegular()
+                }
+            } header: {
+                Text(UserText.netPVPNShortcutsSectionHeader)
+            }
+            .listRowBackground(Color(designSystemColor: .surface))
+        }
+    }
 }
 
+@available(iOS 17.0, *)
 private extension WidgetEducationView {
+
     static var vpn: Self {
         WidgetEducationView(
-            navBarTitle: UserText.vpnSettingsAddWidget,
+            navBarTitle: UserText.settingsAddWidgetTitle,
             thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph,
             widgetExampleImageConfig: .init(
                 image: Image("WidgetEducationVPNWidgetExample"),
                 maxWidth: 164,
-                horizontalOffset: -7
+                horizontalOffset: -7,
+                dropsShadow: true
             )
         )
     }

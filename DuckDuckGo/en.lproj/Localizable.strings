@@ -872,6 +872,18 @@
 /* Title for a button that triggers an unknown search query for the user. */
 "contextual.onboarding.try-search.surprise-me-title" = "Surprise me!";
 
+/* First paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.1" = "Swipe down from the top-right corner of the screen.";
+
+/* Second paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.2" = "Tap the “+” button at the top left of Control Center.";
+
+/* Third paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.3" = "Tap “+ Add a Control” at the bottom of the screen.";
+
+/* Fourth paragraph of the Control Center Widget Education screen */
+"control.center.widget.education.paragraph.4" = "Find DuckDuckGo in the list, then tap the VPN control to add it to your Control Center.";
+
 /* Crash Report always send button title */
 "crash.report.dialog.always.send" = "Always Send Crash Reports";
 

@@ -447,6 +447,13 @@ public struct UserText {
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Passwords", comment: "Autofill Logins menu item opening the login list")
 
+    // MARK: - Control Center Widget Education
+
+    public static let controlCenterWidgetEducationParagraph1 = NSLocalizedString("control.center.widget.education.paragraph.1", value: "Swipe down from the top-right corner of the screen.", comment: "First paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph2 = NSLocalizedString("control.center.widget.education.paragraph.2", value: "Tap the “+” button at the top left of Control Center.", comment: "Second paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph3 = NSLocalizedString("control.center.widget.education.paragraph.3", value: "Tap “+ Add a Control” at the bottom of the screen.", comment: "Third paragraph of the Control Center Widget Education screen")
+    public static let controlCenterWidgetEducationParagraph4 = NSLocalizedString("control.center.widget.education.paragraph.4", value: "Find DuckDuckGo in the list, then tap the VPN control to add it to your Control Center.", comment: "Fourth paragraph of the Control Center Widget Education screen")
+
     // MARK: - Waitlist
     
     public static let waitlistPrivacyDisclaimer = NSLocalizedString("waitlist.privacy-disclaimer",

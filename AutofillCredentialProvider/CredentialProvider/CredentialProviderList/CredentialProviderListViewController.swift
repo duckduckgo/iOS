@@ -24,7 +24,7 @@ import Combine
 import Core
 import SwiftUI
 
-class CredentialProviderListViewController: UIViewController {
+final class CredentialProviderListViewController: UIViewController {
 
     private let viewModel: CredentialProviderListViewModel
     private let onRowSelected: (AutofillLoginItem) -> Void

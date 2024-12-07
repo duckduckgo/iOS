@@ -21,6 +21,9 @@ import UIKit
 
 extension UIResponder {
 
+    /// Attempts to open a URL using the UIApplication instance in the responder chain.
+    /// This is required as the CredentialProvider extension context cannot directly launch the host app.
+    /// - Returns: True if the URL was opened successfully, false otherwise.
     @discardableResult
     func openUrl(_ url: URL?) -> Bool {
         guard let url = url else { return false }

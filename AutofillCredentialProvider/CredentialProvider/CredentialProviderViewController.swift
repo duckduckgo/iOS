@@ -22,7 +22,7 @@ import SwiftUI
 import BrowserServicesKit
 import Core
 
-class CredentialProviderViewController: ASCredentialProviderViewController {
+final class CredentialProviderViewController: ASCredentialProviderViewController {
     
     private struct Constants {
         static let openPasswords = AppDeepLinkSchemes.openPasswords.url

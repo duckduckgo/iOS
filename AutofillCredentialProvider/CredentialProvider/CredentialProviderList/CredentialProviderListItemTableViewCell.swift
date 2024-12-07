@@ -121,11 +121,11 @@ class CredentialProviderListItemTableViewCell: UITableViewCell {
     
     
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
-        guard let domain = domain else { return nil }
-        
+        guard let domain = domain,
+              let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return nil }
+
         let key = FaviconHasher.createHash(ofDomain: domain)
-        guard let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return nil }
-        
+
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
         let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)

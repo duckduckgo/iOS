@@ -26,7 +26,7 @@ class AppIconSettingsCell: UICollectionViewCell {
     var appIcon: AppIcon! {
         didSet {
             imageView.image = appIcon.mediumImage
-            accessibilityLabel = appIcon.name
+            accessibilityLabel = appIcon.accessibilityName
         }
     }
     @IBOutlet weak var imageView: UIImageView!

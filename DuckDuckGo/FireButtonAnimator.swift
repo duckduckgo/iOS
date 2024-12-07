@@ -109,8 +109,65 @@ class FireButtonAnimator {
                                                name: AppUserDefaults.Notifications.currentFireButtonAnimationChange,
                                                object: nil)
     }
-        
-    func animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {
+
+    /// Shows the selected clearing animation while managing a screenshot of the screen in order to allow UI updates happen while the animation is running (e.g. tabs closing).
+    ///
+    /// To use this start clearing immediately in a separate task.  Wait for this task to finish and if cleaning is still happening then show the indeterminte progress.
+    ///
+    /// @param afterScreenUpdates Mainly provided for the preview in settings.  From the fire button we want the screen to be captured immediately.
+    @MainActor
+    func animate(afterScreenUpdates: Bool = false) async {
+        print("***", #function, "IN")
+
+        guard let window = UIApplication.shared.firstKeyWindow,
+              let snapshot = window.snapshotView(afterScreenUpdates: afterScreenUpdates),
+              let composition = preLoadedComposition else {
+            return
+        }
+
+        window.addSubview(snapshot)
+
+        let animationView = LottieAnimationView(animation: composition)
+        let currentAnimation = appSettings.currentFireButtonAnimation
+        let speed = currentAnimation.speed
+        animationView.contentMode = .scaleAspectFill
+        animationView.animationSpeed = CGFloat(speed)
+        animationView.frame = window.frame
+        window.addSubview(animationView)
+
+        let duration = Double(composition.duration) / speed
+        let delay = duration * currentAnimation.transition
+
+        var animationFinished = false
+        print("***", #function, " play IN")
+        animationView.play(fromProgress: 0, toProgress: 1) { _ in
+            animationFinished = true
+            print("***", #function, " play OUT")
+        }
+
+        await transition(snapshot, withDelay: delay)
+
+        while !animationFinished {
+            await Task.yield() // Give the system chance to decide if something higher priority should run
+            try? await Task.sleep(interval: 0.01) // Either way, wait a small amount of time for the animation to finish in case this is the highest priority task
+        }
+
+        animationView.removeFromSuperview()
+        print("***", #function, "OUT")
+    }
+
+    func transition(_ snapshot: UIView, withDelay delay: TimeInterval) async {
+        print("***", #function, "IN")
+        do {
+            try await Task.sleep(interval: delay)
+        } catch {
+            // TODO log this
+        }
+        await snapshot.removeFromSuperview()
+        print("***", #function, "OUT")
+    }
+
+    func legacy_animate(onAnimationStart: @escaping () async -> Void, onTransitionCompleted: @escaping () async -> Void, completion: @escaping () async -> Void) {
 
         guard let window = UIApplication.shared.firstKeyWindow,
               let snapshot = window.snapshotView(afterScreenUpdates: false) else {

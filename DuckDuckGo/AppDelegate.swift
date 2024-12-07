@@ -721,6 +721,8 @@ import os.log
         }
 
         AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
+
+        mainViewController?.currentTab?.becomeCurrentActivity()
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -918,6 +920,17 @@ import os.log
     }
 
     func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        return true
+    }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([any UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == "com.duckduckgo.mobile.ios.web-browsing",
+              let mainViewController else {
+            return false
+        }
+
+        restorationHandler([mainViewController])
+
         return true
     }
 

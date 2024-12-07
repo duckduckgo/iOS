@@ -35,8 +35,8 @@ extension UIAlertController {
         }
 
         let alertController = UIAlertController(
-            title: UserText.autofillNoDeviceAuthSetTitle,
-            message: String(format: UserText.autofillNoDeviceAuthSetMessage, deviceType),
+            title: UserText.credentialProviderNoDeviceAuthSetTitle,
+            message: String(format: UserText.credentialProviderNoDeviceAuthSetMessage, deviceType),
             preferredStyle: .alert
         )
 

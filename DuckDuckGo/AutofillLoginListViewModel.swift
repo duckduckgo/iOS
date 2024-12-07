@@ -88,6 +88,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         return settings["monitorIntervalDays"] as? Int ?? 42
     }()
 
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging = AutofillCredentialIdentityStoreManager(vault: secureVault, tld: tld)
+
     private lazy var syncPromoManager: SyncPromoManaging = SyncPromoManager(syncService: syncService)
 
     private lazy var autofillSurveyManager: AutofillSurveyManaging = AutofillSurveyManager()
@@ -380,7 +382,13 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         do {
-            return try secureVault.accounts()
+            let accounts = try secureVault.accounts()
+
+            Task {
+                await credentialIdentityStoreManager.replaceCredentialStore(with: accounts)
+            }
+
+            return accounts
         } catch {
             Logger.autofill.error("Failed to fetch accounts \(error.localizedDescription, privacy: .public)")
             return []

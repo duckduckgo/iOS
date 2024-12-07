@@ -27,6 +27,7 @@ import RemoteMessaging
 import Configuration
 import Core
 import SubscriptionTestingUtilities
+import Common
 @testable import DuckDuckGo
 
 final class OnboardingDaxFavouritesTests: XCTestCase {
@@ -47,7 +48,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
             syncErrorHandler: SyncErrorHandler(),
-            faviconStoring: MockFaviconStore()
+            faviconStoring: MockFaviconStore(),
+            tld: TLD()
         )
 
         let remoteMessagingClient = RemoteMessagingClient(

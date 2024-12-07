@@ -61,7 +61,7 @@ extension OnboardingView {
 
                     OnboardingActions(
                         viewModel: .init(
-                            primaryButtonTitle: UserText.DaxOnboardingExperiment.BrowsersComparison.cta,
+                            primaryButtonTitle: UserText.Onboarding.BrowsersComparison.cta,
                             secondaryButtonTitle: UserText.onboardingSkip
                         ),
                         primaryAction: setAsDefaultBrowserAction,

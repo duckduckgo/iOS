@@ -38,6 +38,7 @@ import Onboarding
 import os.log
 import PageRefreshMonitor
 import BrokenSitePrompt
+import AIChat
 
 class MainViewController: UIViewController {
     
@@ -185,6 +186,16 @@ class MainViewController: UIViewController {
     var viewCoordinator: MainViewCoordinator!
 
     var appDidFinishLaunchingStartTime: CFAbsoluteTime?
+
+    private lazy var aiChatViewController: AIChatViewController = {
+        let settings = AIChatSettings(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let aiChatViewController = AIChatViewController(settings: settings,
+                                                        webViewConfiguration: WKWebViewConfiguration.persistent(),
+                                                        pixelHandler: AIChatPixelHandler())
+        aiChatViewController.delegate = self
+        return aiChatViewController
+    }()
 
     init(
         bookmarksDatabase: CoreDataDatabase,
@@ -351,6 +362,7 @@ class MainViewController: UIViewController {
                 let launchTime = CFAbsoluteTimeGetCurrent() - appDidFinishLaunchingStartTime
                 Pixel.fire(pixel: .appDidShowUITime(time: Pixel.Event.BucketAggregation(number: launchTime)),
                            withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+                self.appDidFinishLaunchingStartTime = nil /// We only want this pixel to be fired once
             }
         }
 
@@ -437,7 +449,8 @@ class MainViewController: UIViewController {
                                          bookmarksDatabase: self.bookmarksDatabase,
                                          historyManager: self.historyManager,
                                          tabsModel: self.tabManager.model,
-                                         featureFlagger: self.featureFlagger)
+                                         featureFlagger: self.featureFlagger,
+                                         appSettings: self.appSettings)
         }) else {
             assertionFailure()
             return
@@ -464,12 +477,6 @@ class MainViewController: UIViewController {
     }
 
     func startAddFavoriteFlow() {
-        // Disable add favourite flow when new onboarding experiment is running and open a new tab.
-        guard contextualOnboardingLogic.canEnableAddFavoriteFlow() else {
-            newTab()
-            return
-        }
-
         contextualOnboardingLogic.enableAddFavoriteFlow()
         if tutorialSettings.hasSeenOnboarding {
             newTab()
@@ -864,18 +871,10 @@ class MainViewController: UIViewController {
         hideNotificationBarIfBrokenSitePromptShown()
         wakeLazyFireButtonAnimator()
 
-        if variantManager.isContextualDaxDialogsEnabled {
-            // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
-            currentTab?.dismissContextualDaxFireDialog()
-            ViewHighlighter.hideAll()
-            showClearDataAlert()
-        } else {
-            if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-                segueToActionSheetDaxDialogWithSpec(spec)
-            } else {
-               showClearDataAlert()
-            }
-        }
+        // Dismiss dax dialog and pulse animation when the user taps on the Fire Button.
+        currentTab?.dismissContextualDaxFireDialog()
+        ViewHighlighter.hideAll()
+        showClearDataAlert()
         
         performCancel()
     }
@@ -1688,7 +1687,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
-    
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -2347,6 +2345,18 @@ extension MainViewController: TabDelegate {
         segueToReportBrokenSite(entryPoint: .toggleReport(completionHandler: completionHandler))
     }
 
+    func tabDidRequestAIChat(tab: TabViewController) {
+        let logoImage = UIImage(named: "Logo")
+        let title = UserText.aiChatTitle
+
+        let roundedPageSheet = RoundedPageSheetContainerViewController(
+            contentViewController: aiChatViewController,
+            logoImage: logoImage,
+            title: title)
+
+        present(roundedPageSheet, animated: true, completion: nil)
+    }
+
     func tabDidRequestBookmarks(tab: TabViewController) {
         Pixel.fire(pixel: .bookmarksButtonPressed,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
@@ -2733,9 +2743,8 @@ extension MainViewController: AutoClearWorker {
                 self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
 
-            if self.variantManager.isContextualDaxDialogsEnabled {
-                DaxDialogs.shared.clearedBrowserData()
-            }
+            DaxDialogs.shared.clearedBrowserData()
+
         }
     }
     
@@ -2929,5 +2938,12 @@ extension MainViewController {
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+// MARK: - AIChatViewControllerDelegate
+extension MainViewController: AIChatViewControllerDelegate {
+    func aiChatViewController(_ viewController: AIChatViewController, didRequestToLoad url: URL) {
+        loadUrlInNewTab(url, inheritedAttribution: nil)
     }
 }

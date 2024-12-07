@@ -40,7 +40,6 @@ struct OnboardingView: View {
 
     @State private var appIconPickerContentState = AppIconPickerContentState()
     @State private var addressBarPositionContentState = AddressBarPositionContentState()
-    @State private var addToDockPromoContentState = AddToDockPromoContentState()
 
     init(model: OnboardingIntroViewModel) {
         self.model = model
@@ -57,7 +56,6 @@ struct OnboardingView: View {
                 onboardingDialogView(state: viewState)
             }
         }
-        .onboardingGradient(model.gradientType)
     }
 
     private func onboardingDialogView(state: ViewState.Intro) -> some View {
@@ -76,10 +74,6 @@ struct OnboardingView: View {
                             case .browsersComparisonDialog:
                                 showComparisonButton = true
                                 animateComparisonText = false
-                            case .addToDockPromoDialog:
-                                addToDockPromoContentState.animateTitle = false
-                                addToDockPromoContentState.animateMessage = false
-                                addToDockPromoContentState.showContent = true
                             case .chooseAppIconDialog:
                                 appIconPickerContentState.animateTitle = false
                                 appIconPickerContentState.animateMessage = false

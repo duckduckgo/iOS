@@ -49,7 +49,10 @@ public struct UserText {
     public static let actionCopy = NSLocalizedString("action.title.copy", value: "Copy", comment: "Copy action")
     public static let actionCopyMessage = NSLocalizedString("action.title.copy.message", value: "URL copied", comment: "Floating message indicating URL has been copied")
     public static let actionShare = NSLocalizedString("action.title.share", value: "Share", comment: "Share action")
-    public static let actionPrint = NSLocalizedString("action.title.print", value: "Print", comment: "Print action")
+    public static let actionPrint = NSLocalizedString("action.title.print", value: "Print", comment: "Print action in the menu header")
+    public static let actionPrintSite = NSLocalizedString("action.title.print.site", value: "Print", comment: "Print action in the menu list")
+    public static let actionOpenAIChat = NSLocalizedString("action.title.aichat", value: "Chat", comment: "Open AI Chat action in the menu list")
+
     public static let actionOpenBookmarks = NSLocalizedString("action.title.bookmarks", value: "Bookmarks", comment: "Button: Open bookmarks list")
     public static let actionEnableProtection = NSLocalizedString("action.title.enable.protection", value: "Enable Privacy Protection", comment: "Enable protection action")
     public static let actionDisableProtection = NSLocalizedString("action.title.disable.protection", value: "Disable Privacy Protection", comment: "Disable protection action")
@@ -1293,8 +1296,8 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsOpenVideosInDuckPlayerLabel = NSLocalizedString("duckplayer.settings.open-videos-in", value: "Open YouTube Videos in Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let duckPlayerFeatureName = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     
-    public static let settingsOpenDuckPlayerNewTabLabel = NSLocalizedString("duckplayer.settings.open-new-tab-label", value: "Open Duck Player in a new tab", comment: "Settings screen cell text for DuckPlayer settings to open in new tab")    
-    
+    public static let settingsOpenDuckPlayerNewTabLabel = NSLocalizedString("duckplayer.settings.open-new-tab-label", value: "Open Duck Player in a New Tab", comment: "Settings screen cell text for DuckPlayer settings to open in new tab")
+
 
     public static let settingsOpenVideosInDuckPlayerTitle = NSLocalizedString("duckplayer.settings.title", value: "Duck Player", comment: "Settings screen cell text for DuckPlayer settings")
     public static let settingsDuckPlayerFooter = NSLocalizedString("duckplayer.settings.footer", value: "DuckDuckGo provides all the privacy essentials you need to protect yourself as you browse the web.", comment: "Footer label in the settings screen for Duck Player")
@@ -1309,6 +1312,18 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let duckPlayerContingencyMessageTitle = NSLocalizedString("duck-player.contingency-title", value: "Duck Player Unavailable", comment: "Title for message explaining to the user that Duck Player is not available")
     static let duckPlayerContingencyMessageBody = NSLocalizedString("duck-player.video-contingency-message", value: "Duck Player's functionality has been affected by recent changes to YouTube. We’re working to fix these issues and appreciate your understanding.", comment: "Message explaining to the user that Duck Player is not available")
     static let duckPlayerContingencyMessageCTA = NSLocalizedString("duck-player.video-contingency-cta", value: "Learn More", comment: "Button for the message explaining to the user that Duck Player is not available so the user can learn more")
+
+    // MARK: - AI Chat
+    public static let aiChatTitle = NSLocalizedString("aichat.title", value: "DuckDuckGo AI Chat", comment: "Title for DuckDuckGo AI Chat. Should not be translated")
+    public static let aiChatFeatureName = NSLocalizedString("aichat.settings.title", value: "AI Chat", comment: "Settings screen cell text for AI Chat settings")
+
+    public static let aiChatSettingsEnableFooter = NSLocalizedString("aichat.settings.enable.footer", value: "Turning this off will hide the AI Chat feature in the DuckDuckGo app.", comment: "Footer text for AI Chat settings")
+    static let aiChatSettingsCaptionWithLinkMarkdown = NSLocalizedString("ai-chat.preferences.text.markdown", value: """
+AI Chat is an optional feature available at [duck.ai](ddgquicklink://duck.ai) that lets you have private conversations with popular 3rd-party AI chat models. Your chats are not used to train chat models.
+[Learn More](ddgquicklink://duckduckgo.com/duckduckgo-help-pages/aichat/)
+""", comment: "Ai Chat preferences explanation with a markdown link. Do not translate what's inside [] and ()")
+    public static let aiChatSettingsEnableBrowsingMenuToggle = NSLocalizedString("aichat.settings.enable.browsing-menu-toggle", value: "Show AI Chat in Browser Menu", comment: "Toggle text to enable/disable AI Chat in the browsing menu")
+
 
     // MARK: - New Tab Page
 
@@ -1338,61 +1353,20 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let newTabPageIntroMessageBody = NSLocalizedString("new.tab.page.intro.message.body", value: "Customize your Favorites and go-to features. Reorder things or hide them to keep it clean.", comment: "Information message about New Tab Page redesign")
 
 
-    // MARK: - Dax Onboarding Experiment
-    public enum DaxOnboardingExperiment {
-        enum Intro {
-            public static let title = NSLocalizedString("onboarding.intro.title", value: "Hi there.\n\nReady for a better, more private internet?", comment: "The title of the onboarding dialog popup")
+    // MARK: - Onboarding
+    public enum Onboarding {
+
+        public enum Intro {
+            public static let title = NSLocalizedString("onboarding.highlights.intro.title", value: "Hi there.\n\nReady for a faster browser that keeps you protected?", comment: "The title of the onboarding dialog popup")
             public static let cta = NSLocalizedString("onboarding.intro.cta", value: "Let’s do it!", comment: "Button to continue the onboarding process")
         }
 
-        enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.browsers.title", value: "Privacy protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
+        public enum BrowsersComparison {
+            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
             public static let cta = NSLocalizedString("onboarding.browsers.cta", value: "Choose Your Browser", comment: "Button to change the default browser")
 
-            enum Features {
+            public enum Features {
                 public static let privateSearch = NSLocalizedString("onboarding.browsers.features.privateSearch.title", value: "Search privately by default", comment: "Message to highlight browser capability of private searches")
-                public static let trackerBlockers = NSLocalizedString("onboarding.browsers.features.trackerBlocker.title", value: "Block 3rd-party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
-                public static let cookiePopups = NSLocalizedString("onboarding.browsers.features.cookiePopups.title", value: "Block cookie pop-ups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
-                public static let creepyAds = NSLocalizedString("onboarding.browsers.features.creepyAds.title", value: "Block creepy ads", comment: "Message to highlight browser capability of blocking creepy ads")
-                public static let eraseBrowsingData = NSLocalizedString("onboarding.browsers.features.eraseBrowsingData.title", value: "Swiftly erase browsing data", comment: "Message to highlight browser capability of swiftly erase browsing data")
-            }
-        }
-
-        enum ContextualOnboarding {
-            static let onboardingTryASearchTitle = NSLocalizedString("contextual.onboarding.try-a-search.title", value: "Ready to get started?\nTry a search!", comment: "Title of a popover on the browser that invites the user to try a search")
-            static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.try-a-search.message", value: "Your DuckDuckGo searches are always anonymous.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are anonymous")
-            static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Next, try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
-            static let onboardingTryASiteNTPTitle = NSLocalizedString("contextual.onboarding.ntp.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the new tab page browser that invites the user to try a visiting a website")
-            static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "I’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
-            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
-            static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
-            static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.first-search-done.message", value: "That’s DuckDuckGo Search. Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
-            static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
-            static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.final-screen.message", value: "Remember: every time you browse with me a creepy ad loses its wings. 👌", comment: "Message of the last screen of the onboarding to the browser app.")
-            static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
-            static let tryASearchOption1English = NSLocalizedString("contextual.onboarding.try-search.option1-English", value: "how to say “duck” in spanish", comment: "Browser Search query for how to say duck in english")
-            static let tryASearchOption1International = NSLocalizedString("contextual.onboarding.try-search.option1international", value: "how to say “duck” in english", comment: "Browser Search query for how to say duck in english")
-            static let tryASearchOption2English = NSLocalizedString("contextual.onboarding.try-search.option2-english", value: "mighty ducks cast", comment: "Search query for the cast of Mighty Ducks")
-            static let tryASearchOption2International = NSLocalizedString("contextual.onboarding.try-search.option2-international", value: "cast of avatar", comment: "Search query for the cast of Avatar")
-            static let tryASearchOption3 = NSLocalizedString("contextual.onboarding.try-search.option3", value: "local weather", comment: "Browser Search query for local weather")
-            static let tryASearchOptionSurpriseMeTitle = NSLocalizedString("contextual.onboarding.try-search.surprise-me-title", value: "Surprise me!", comment: "Title for a button that triggers an unknown search query for the user.")
-            static let tryASearchOptionSurpriseMeEnglish = NSLocalizedString("contextual.onboarding.try-search.surprise-me-english", value: "chocolate chip cookie recipes", comment: "Browser Search query for chocolate chip cookie recipes")
-            static let tryASearchOptionSurpriseMeInternational = NSLocalizedString("contextual.onboarding.try-search.surprise-me-international", value: "dinner recipes", comment: "Browser Search query for dinner recipes")
-
-            static let daxDialogBrowsingWithOneTracker = NSLocalizedString("contextual.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here. I blocked them!\n\n☝️ Tap the shield for more info.", comment: "Parameter is domain name (string)")
-            static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("contextual.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
-        }
-    }
-
-    public enum HighlightsOnboardingExperiment {
-        enum Intro {
-            public static let title = NSLocalizedString("onboarding.highlights.intro.title", value: "Hi there.\n\nReady for a faster browser that keeps you protected?", comment: "The title of the onboarding dialog popup")
-        }
-        
-        enum BrowsersComparison {
-            public static let title = NSLocalizedString("onboarding.highlights.browsers.title", value: "Protections activated!", comment: "The title of the dialog to show the privacy features that DuckDuckGo offers")
-
-            enum Features {
                 public static let trackerBlockers = NSLocalizedString("onboarding.highlights.browsers.features.trackerBlocker.title", value: "Block 3rd party trackers", comment: "Message to highlight browser capability ofblocking 3rd party trackers")
                 public static let cookiePopups = NSLocalizedString("onboarding.highlights.browsers.features.cookiePopups.title", value: "Block cookie requests & popups", comment: "Message to highlight how the browser allows you to block cookie pop-ups")
                 public static let creepyAds = NSLocalizedString("onboarding.highlights.browsers.features.creepyAds.title", value: "Block targeted ads", comment: "Message to highlight browser capability of blocking creepy ads")
@@ -1417,10 +1391,26 @@ But if you *do* want a peek under the hood, you can find more information about 
         }
 
         enum ContextualOnboarding {
+            static let onboardingTryASearchTitle = NSLocalizedString("contextual.onboarding.try-a-search.title", value: "Ready to get started?\nTry a search!", comment: "Title of a popover on the browser that invites the user to try a search")
             static let onboardingTryASearchMessage = NSLocalizedString("contextual.onboarding.highlights.try-a-search.message", value: "Your DuckDuckGo searches are always private.", comment: "Message of a popover on the browser that invites the user to try a search explaining that their searches are private")
             static let onboardingFirstSearchDoneMessage = NSLocalizedString("contextual.onboarding.highlights.first-search-done.message", value: "That’s DuckDuckGo Search! Private. Fast. Fewer ads.", comment: "After the user performs their first search using the browser, this dialog explains the advantages of using DuckDuckGo")
+            static let onboardingTryASiteTitle = NSLocalizedString("contextual.onboarding.try-a-site.title", value: "Next, try visiting a site!", comment: "Title of a popover on the browser that invites the user to try a visiting a website")
             static let onboardingFinalScreenMessage = NSLocalizedString("contextual.onboarding.highlights.final-screen.message", value: "Remember: every time you browse with me a creepy ad loses its wings.", comment: "Message of the last screen of the onboarding to the browser app.")
             static let tryASearchOptionSurpriseMe = NSLocalizedString("contextual.onboarding.highlights.try-search.surprise-me", value: "baby ducklings", comment: "Browser Search query for baby ducklings")
+            static let onboardingTryASiteNTPTitle = NSLocalizedString("contextual.onboarding.ntp.try-a-site.title", value: "Try visiting a site!", comment: "Title of a popover on the new tab page browser that invites the user to try a visiting a website")
+            static let onboardingTryASiteMessage = NSLocalizedString("contextual.onboarding.try-a-site.message", value: "I’ll block trackers so they can’t spy on you.", comment: "Message of a popover on the browser that invites the user to try visiting a website to explain that we block trackers")
+            static let onboardingTryFireButtonMessage = NSLocalizedString("contextual.onboarding.try-fire-button.message", value: "Instantly clear your browsing activity with the Fire Button.\n\nGive it a try! 🔥", comment: "Message of a popover on the browser that invites the user to try visiting the browser Fire Button. Please leave the line break")
+            static let onboardingGotItButton = NSLocalizedString("contextual.onboarding.got-it.button", value: "Got it!", comment: "During onboarding steps this button is shown and takes either to the next steps or closes the onboarding.")
+            static let onboardingFinalScreenTitle = NSLocalizedString("contextual.onboarding.final-screen.title", value: "You’ve got this!", comment: "Title of the last screen of the onboarding to the browser app")
+            static let onboardingFinalScreenButton = NSLocalizedString("contextual.onboarding.final-screen.button", value: "High five!", comment: "Button on the last screen of the onboarding, it will dismiss the onboarding screen.")
+            static let tryASearchOption1English = NSLocalizedString("contextual.onboarding.try-search.option1-English", value: "how to say “duck” in spanish", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption1International = NSLocalizedString("contextual.onboarding.try-search.option1international", value: "how to say “duck” in english", comment: "Browser Search query for how to say duck in english")
+            static let tryASearchOption2English = NSLocalizedString("contextual.onboarding.try-search.option2-english", value: "mighty ducks cast", comment: "Search query for the cast of Mighty Ducks")
+            static let tryASearchOption2International = NSLocalizedString("contextual.onboarding.try-search.option2-international", value: "cast of avatar", comment: "Search query for the cast of Avatar")
+            static let tryASearchOptionSurpriseMeTitle = NSLocalizedString("contextual.onboarding.try-search.surprise-me-title", value: "Surprise me!", comment: "Title for a button that triggers an unknown search query for the user.")
+
+            static let daxDialogBrowsingWithOneTracker = NSLocalizedString("contextual.onboarding.browsing.one.tracker", value: "*%1$@* was trying to track you here. I blocked them!\n\n☝️ Tap the shield for more info.", comment: "Parameter is domain name (string)")
+            static let daxDialogBrowsingWithMultipleTrackers = NSLocalizedString("contextual.onboarding.browsing.multiple.trackers", comment: "First parameter is a count of additional trackers, second and third are names of the tracker networks (strings)")
         }
 
         enum FireDialog {

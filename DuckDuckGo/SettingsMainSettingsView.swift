@@ -67,13 +67,21 @@ struct SettingsMainSettingsView: View {
                 SettingsCellView(label: UserText.dataClearing,
                                  image: Image("SettingsDataClearing"))
             }
-            
+
             // Duck Player
             // We need to hide the settings until the user is enrolled in the experiment
             if viewModel.state.duckPlayerEnabled {
                 NavigationLink(destination: SettingsDuckPlayerView().environmentObject(viewModel)) {
                     SettingsCellView(label: UserText.duckPlayerFeatureName,
                                      image: Image("SettingsDuckPlayer"))
+                }
+            }
+
+            // AI Chat
+            if viewModel.state.aiChatEnabled {
+                NavigationLink(destination: SettingsAIChatView().environmentObject(viewModel)) {
+                    SettingsCellView(label: UserText.aiChatFeatureName,
+                                     image: Image("SettingsAIChat"))
                 }
             }
         }

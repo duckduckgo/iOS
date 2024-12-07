@@ -233,7 +233,6 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
     private(set) var didCallSetFireEducationMessageSeen = false
     private(set) var didCallsetFinalOnboardingDialogSeen = false
     private(set) var didCallsetsetSearchMessageSeen = false
-    private(set) var didCallCanEnableAddFavoriteFlow = false
     private(set) var didCallEnableAddFavoriteFlow = false
     private(set) var didCallSetDaxDialogDismiss = false
     private(set) var didCallClearedBrowserData = false
@@ -261,11 +260,6 @@ final class ContextualOnboardingLogicMock: ContextualOnboardingLogic {
 
     func setPrivacyButtonPulseSeen() {
 
-    }
-
-    func canEnableAddFavoriteFlow() -> Bool {
-        didCallCanEnableAddFavoriteFlow = true
-        return canStartFavoriteFlow
     }
 
     func enableAddFavoriteFlow() {

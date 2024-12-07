@@ -38,7 +38,6 @@ final class DaxDialogsNewTabTests: XCTestCase {
     }
 
     func testIfIsAddFavoriteFlow_OnNextHomeScreenMessageNew_ReturnsAddFavorite() {
-        XCTExpectFailure("Add Favrite flow, is currenty disabled for new onboarding. Remove failure expectation once we support it.")
         // GIVEN
         daxDialogs.enableAddFavoriteFlow()
 

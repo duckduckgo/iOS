@@ -102,7 +102,10 @@ struct SettingsState {
     var duckPlayerMode: DuckPlayerMode?
     var duckPlayerOpenInNewTab: Bool
     var duckPlayerOpenInNewTabEnabled: Bool
-    
+
+    // AI Chat
+    var aiChatEnabled: Bool
+
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
@@ -142,7 +145,8 @@ struct SettingsState {
             duckPlayerEnabled: false,
             duckPlayerMode: .alwaysAsk,
             duckPlayerOpenInNewTab: true,
-            duckPlayerOpenInNewTabEnabled: false
+            duckPlayerOpenInNewTabEnabled: false,
+            aiChatEnabled: false
         )
     }
 }

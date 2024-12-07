@@ -1,5 +1,5 @@
 //
-//  DefaultVariantManager+Onboarding.swift
+//  AIChatSettingsProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2024 DuckDuckGo. All rights reserved.
@@ -18,16 +18,20 @@
 //
 
 import Foundation
-import BrowserServicesKit
 
-extension VariantManager {
+public protocol AIChatSettingsProvider {
+    /// The URL used to open AI Chat in `AIChatViewController`.
+    var aiChatURL: URL { get }
 
-    var isOnboardingHighlightsExperiment: Bool {
-        isSupported(feature: .newOnboardingIntroHighlights)
-    }
+    /// User settings state for AI Chat browsing menu icon
+    var isAIChatBrowsingMenuUserSettingsEnabled: Bool { get }
 
-    var isContextualDaxDialogsEnabled: Bool {
-        isSupported(feature: .contextualDaxDialogs)
-    }
+    /// Remote feature flag state for AI Chat
+    var isAIChatFeatureEnabled: Bool { get }
 
+    /// Remote feature flag for AI Chat shortcut in browsing menu
+    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool { get }
+
+    /// Update user settings state for AI Chat browsing menu
+    func enableAIChatBrowsingMenuUserSettings(enable: Bool)
 }

@@ -1886,10 +1886,6 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
 
-        if let url = navigationAction.request.url, navigationAction.isTargetingMainFrame() {
-            pageLoadTimeCalculator.willStartLoading(url)
-        }
-
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
             if let self = self,
                let url = navigationAction.request.url,
@@ -1902,6 +1898,11 @@ extension TabViewController: WKNavigationDelegate {
 
                 self.delegate?.closeFindInPage(tab: self)
             }
+
+            if let self, let url = navigationAction.request.url, navigationAction.isTargetingMainFrame() {
+                self.pageLoadTimeCalculator.willStartLoading(url)
+            }
+
             decisionHandler(decision)
         }
     }

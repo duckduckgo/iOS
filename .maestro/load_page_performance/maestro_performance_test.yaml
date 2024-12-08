@@ -29,6 +29,7 @@ tags:
       'https://www.usatoday.com/story/money/2024/03/28/sam-bankman-fried-sentencing-ftx-crypto-founder/73128640007/',
       'https://www.okcupid.com/',
       'https://www.roboform.com/filling-test-all-fields',
+      'https://www.github.com',
     ]}
 - evalScript: |
     ${output.testApps = [

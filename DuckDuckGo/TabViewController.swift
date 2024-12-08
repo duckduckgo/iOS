@@ -1844,32 +1844,34 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
 
-        if let url = navigationAction.request.url, navigationAction.isTargetingMainFrame() {
-            pageLoadTimeCalculator.willStartLoading(url)
-        }
+        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+            if let self = self,
+               let url = navigationAction.request.url,
+               decision != .cancel,
+               navigationAction.isTargetingMainFrame() {
+                if url.isDuckDuckGoSearch {
+                    StatisticsLoader.shared.refreshSearchRetentionAtb()
+                    privacyProDataReporter.saveSearchCount()
+                }
+                self.delegate?.closeFindInPage(tab: self)
+            }
 
-        Task { @MainActor in
-            // Check if should show a special error page for malicious site
-            if !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
-               await specialErrorPageNavigationHandler.handleSpecialErrorNavigation(navigationAction: navigationAction, webView: webView) {
-                decisionHandler(.cancel)
-            } else {
-                decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-                    if let self = self,
-                       let url = navigationAction.request.url,
-                       decision != .cancel,
-                       navigationAction.isTargetingMainFrame() {
-                        if url.isDuckDuckGoSearch {
-                            StatisticsLoader.shared.refreshSearchRetentionAtb()
-                            privacyProDataReporter.saveSearchCount()
-                        }
-                        self.delegate?.closeFindInPage(tab: self)
-                    }
+            Task { @MainActor in
+                if let self, decision == .allow, let url = navigationAction.request.url, navigationAction.isTargetingMainFrame() {
+                    self.pageLoadTimeCalculator.willStartLoading(url)
+                }
+
+                if let self,
+                   decision == .allow,
+                   !self.specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
+                   await self.specialErrorPageNavigationHandler.handleSpecialErrorNavigation(navigationAction: navigationAction, webView: webView) {
+                    decisionHandler(.cancel)
+                } else {
                     decisionHandler(decision)
                 }
             }
-        }
     }
+}
     // swiftlint:enable cyclomatic_complexity
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {

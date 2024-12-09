@@ -149,7 +149,7 @@ class OmniBar: UIView {
 
     @objc private func handleShareLongPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            omniDelegate?.onShareLongPressed(accessoryType: accessoryType)
+            omniDelegate?.onAccessoryLongPressed(accessoryType: accessoryType)
         }
     }
 

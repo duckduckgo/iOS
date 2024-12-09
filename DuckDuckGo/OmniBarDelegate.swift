@@ -61,7 +61,7 @@ protocol OmniBarDelegate: AnyObject {
     
     func onAccessoryPressed(accessoryType: OmniBar.AccessoryType)
 
-    func onShareLongPressed(accessoryType: OmniBar.AccessoryType)
+    func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType)
 
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar, tapped: Bool)
     
@@ -92,8 +92,8 @@ extension OmniBarDelegate {
         
     }
 
-    func onShareLongPressed(accessoryType: OmniBar.AccessoryType) {
-        
+    func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {
+
     }
 
     func onBookmarksPressed() {

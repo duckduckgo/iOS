@@ -2104,7 +2104,7 @@ extension MainViewController: OmniBarDelegate {
         }
     }
 
-    func onShareLongPressed(accessoryType: OmniBar.AccessoryType) {
+    func onAccessoryLongPressed(accessoryType: OmniBar.AccessoryType) {
         if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
             segueToDebugSettings()
         } else {

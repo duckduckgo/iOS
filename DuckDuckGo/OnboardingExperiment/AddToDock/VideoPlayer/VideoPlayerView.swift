@@ -24,7 +24,7 @@ struct VideoPlayerView: View {
 
     @ObservedObject private var model: VideoPlayerViewModel
 
-    private var isPlaying: Binding <Bool>
+    private var isPlaying: Binding<Bool>
 
     init(model: VideoPlayerViewModel, isPlaying: Binding<Bool> = .constant(true)) {
         self.model = model
@@ -40,6 +40,12 @@ struct VideoPlayerView: View {
                 } else {
                     model.pause()
                 }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification), perform: { _ in
+                isPlaying.wrappedValue = false
+            })
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                isPlaying.wrappedValue = true
             }
     }
 

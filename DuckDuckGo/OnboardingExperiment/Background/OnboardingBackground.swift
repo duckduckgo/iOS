@@ -20,7 +20,6 @@
 import SwiftUI
 
 struct OnboardingBackground: View {
-    @Environment(\.onboardingGradientType) private var gradientType
     @Environment(\.verticalSizeClass) private var vSizeClass
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.colorScheme) private var colorScheme
@@ -35,7 +34,7 @@ struct OnboardingBackground: View {
                 .opacity(colorScheme == .light ? 0.5 : 0.3)
                 .frame(width: proxy.size.width, height: proxy.size.height, alignment: alignment)
                 .background(
-                    OnboardingGradientView(type: gradientType)
+                    OnboardingGradientView()
                         .ignoresSafeArea()
                 )
         }
@@ -48,24 +47,10 @@ private enum Metrics {
 
 #Preview("Light Mode") {
     OnboardingBackground()
-        .onboardingGradient(.default)
-        .preferredColorScheme(.light)
-}
-
-#Preview("Dark Mode") {
-    OnboardingBackground()
-        .onboardingGradient(.default)
-        .preferredColorScheme(.dark)
-}
-
-#Preview("Light Mode - Highlights") {
-    OnboardingBackground()
-        .onboardingGradient(.highlights)
         .preferredColorScheme(.light)
 }
 
 #Preview("Dark Mode - Highlights") {
     OnboardingBackground()
-        .onboardingGradient(.highlights)
         .preferredColorScheme(.dark)
 }

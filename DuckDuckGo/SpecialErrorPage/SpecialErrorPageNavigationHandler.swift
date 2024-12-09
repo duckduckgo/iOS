@@ -127,12 +127,17 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
 
     @MainActor
     func leaveSiteAction() {
-        defer {
+
+        func navigateBackIfPossible() {
             if webView?.canGoBack == true {
                 _ = webView?.goBack()
             } else {
-                delegate?.closeSpecialErrorPageTab()
+                forceCloseTab()
             }
+        }
+
+        func forceCloseTab() {
+            delegate?.closeSpecialErrorPageTab()
         }
 
         guard let errorData else { return }
@@ -140,8 +145,10 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
         switch errorData {
         case .ssl:
             sslErrorPageNavigationHandler.leaveSite()
+            navigateBackIfPossible()
         case .maliciousSite:
             maliciousSiteProtectionNavigationHandler.leaveSite()
+            forceCloseTab()
         }
     }
 

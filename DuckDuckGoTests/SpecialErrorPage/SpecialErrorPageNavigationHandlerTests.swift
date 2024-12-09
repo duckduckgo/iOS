@@ -253,11 +253,12 @@ final class SpecialErrorPageNavigationHandlerTests {
     }
 
     @MainActor
-    @Test("Lave Site navigates Back")
-    func whenLeaveSite_AndWebViewCanNavigateBack_ThenNavigateBack() {
+    @Test("Lave Site navigates Back when SSL Error")
+    func whenLeaveSite_AndSSLError_AndWebViewCanNavigateBack_ThenNavigateBack() {
         // GIVEN
         webView.setCanGoBack(true)
         sut.attachWebView(webView)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!webView.didCallGoBack)
 
         // WHEN
@@ -268,14 +269,47 @@ final class SpecialErrorPageNavigationHandlerTests {
     }
 
     @MainActor
-    @Test("Lave Site closes Tab")
-    func whenLeaveSite_AndWebViewCannotNavigateBack_ThenAskDelegateToCloseTab() {
+    @Test("Lave Site closes Tab when SSL Error")
+    func whenLeaveSite_AndSSLError_AndWebViewCannotNavigateBack_ThenAskDelegateToCloseTab() {
         // GIVEN
         webView.setCanGoBack(false)
         let delegate = SpySpecialErrorPageNavigationDelegate()
         sut.delegate = delegate
         sut.attachWebView(webView)
+        sut.handleWebView(webView, didFailProvisionalNavigation: DummyWKNavigation(), withError: .genericSSL)
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
+
+        // WHEN
+        sut.leaveSiteAction()
+
+        // THEN
+        #expect(delegate.didCallCloseSpecialErrorPageTab)
+    }
+
+    @MainActor
+    @Test(
+        "Lave Site closes Tab when Malicious Site Error",
+        arguments: [
+            ThreatKind.phishing,
+            .malware
+        ]
+    )
+    func whenLeaveSite_AndMaliciousSiteError_AndWebViewCanNavigateBack_ThenNavigateBack(threat: ThreatKind) async throws {
+        // GIVEN
+        webView.setCanGoBack(true)
+        sut.attachWebView(webView)
+        let url = try #require(URL(string: "https://example.com"))
+        let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+        let navigationResponse = MockNavigationResponse.with(url: url)
+        maliciousSiteProtectionNavigationHandler.task = Task {
+            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
+        }
+        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        let delegate = SpySpecialErrorPageNavigationDelegate()
+        sut.delegate = delegate
+        #expect(!delegate.didCallCloseSpecialErrorPageTab)
+        
 
         // WHEN
         sut.leaveSiteAction()

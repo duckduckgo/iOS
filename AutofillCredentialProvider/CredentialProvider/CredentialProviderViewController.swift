@@ -54,7 +54,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
     override func provideCredentialWithoutUserInteraction(for credentialIdentity: ASPasswordCredentialIdentity) {
         // A quirk here is calling .canAuthenticate in this one scenario actually triggers the prompt to authentication
         // Calling .authenticate here results in the extension attempting to present a non-existent view controller causing weird UI
-        if authenticator.canAuthenticate() {
+        if authenticator.canAuthenticateViaBiometrics() {
             provideCredential(for: credentialIdentity)
         } else {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,
@@ -70,7 +70,7 @@ class CredentialProviderViewController: ASCredentialProviderViewController {
             return
         }
 
-        if authenticator.canAuthenticate() {
+        if authenticator.canAuthenticateViaBiometrics() {
             provideCredential(for: credentialRequest.credentialIdentity)
         } else {
             self.extensionContext.cancelRequest(withError: NSError(domain: ASExtensionErrorDomain,

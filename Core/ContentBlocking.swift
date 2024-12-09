@@ -129,7 +129,7 @@ public final class ContentBlocking {
             domainEvent = .contentBlockingLRCMissing
 
         case .contentBlockingCompilationTaskPerformance(let retryCount, let timeBucketAggregation):
-            domainEvent = .contentBlockingCompilationTaskPerformance(retryCount: retryCount,
+            domainEvent = .contentBlockingCompilationTaskPerformance(iterationCount: retryCount,
                                                                      timeBucketAggregation: Pixel.Event.CompileTimeBucketAggregation(number: timeBucketAggregation))
         }
 

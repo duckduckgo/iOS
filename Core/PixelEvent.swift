@@ -540,7 +540,7 @@ extension Pixel {
         case contentBlockingNoMatchInLRC
         case contentBlockingLRCMissing
         
-        case contentBlockingCompilationTaskPerformance(retryCount: Int, timeBucketAggregation: CompileTimeBucketAggregation)
+        case contentBlockingCompilationTaskPerformance(iterationCount: Int, timeBucketAggregation: CompileTimeBucketAggregation)
         case ampBlockingRulesCompilationFailed
         
         case webKitDidTerminate
@@ -1414,8 +1414,8 @@ extension Pixel.Event {
         case .contentBlockingNoMatchInLRC: return "m_content_blocking_no_match_in_lrc"
         case .contentBlockingLRCMissing: return "m_content_blocking_lrc_missing"
 
-        case .contentBlockingCompilationTaskPerformance(let retryCount, let timeBucketAggregation):
-            return "m_content_blocking_compilation_loops_\(retryCount)_time_\(timeBucketAggregation)"
+        case .contentBlockingCompilationTaskPerformance(let iterationCount, let timeBucketAggregation):
+            return "m_content_blocking_compilation_loops_\(iterationCount)_time_\(timeBucketAggregation)"
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
             
         case .webKitDidTerminate: return "m_d_wkt"

@@ -165,8 +165,7 @@ class MainViewController: UIViewController {
     }
     
     var keyModifierFlags: UIKeyModifierFlags?
-    var showKeyboardAfterFireButton: DispatchWorkItem?
-    
+
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
 
@@ -862,7 +861,7 @@ class MainViewController: UIViewController {
 
         func showClearDataAlert() {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
-                self?.forgetAllWithAnimation {}
+                self?.forgetAllWithAnimation()
             })
             self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
@@ -881,7 +880,7 @@ class MainViewController: UIViewController {
     
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
-        forgetAllWithAnimation {}
+        forgetAllWithAnimation()
         dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
             enterSearch()
@@ -2194,8 +2193,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
 extension MainViewController {
     private func handleRequestedURL(_ url: URL) {
-        showKeyboardAfterFireButton?.cancel()
-
         if url.isBookmarklet() {
             executeBookmarklet(url)
         } else {
@@ -2546,9 +2543,8 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        self.forgetAllWithAnimation {
-            tabSwitcher.dismiss(animated: false, completion: nil)
-        }
+        self.forgetAllWithAnimation()
+        tabSwitcher.dismiss(animated: false, completion: nil)
     }
     
 }
@@ -2711,36 +2707,55 @@ extension MainViewController: AutoClearWorker {
         AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
     }
     
-    func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
+    func forgetAllWithAnimation(showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
 
-        tabManager.prepareAllTabsExceptCurrentForDataClearing()
-        
-        fireButtonAnimator.animate {
-            self.tabManager.prepareCurrentTabForDataClearing()
-            self.stopAllOngoingDownloads()
-            self.forgetTabs()
-            await self.forgetData()
-            Instruments.shared.endTimedEvent(for: spid)
-            DaxDialogs.shared.resumeRegularFlow()
-        } onTransitionCompleted: {
-            ActionMessageView.present(message: UserText.actionForgetAllDone,
-                                      presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
-            transitionCompletion?()
-            self.refreshUIAfterClear()
-        } completion: {
-            self.privacyProDataReporter.saveFireCount()
+        Task { @MainActor in
 
-            // Ideally this should happen once data clearing has finished AND the animation is finished
+            var dataClearingFinished = false
+            var preClearingUIUpdatesFinished = false
+
+            // Run this in parallel
+            Task {
+                self.tabManager.prepareCurrentTabForDataClearing()
+                self.stopAllOngoingDownloads()
+                self.forgetTabs()
+                self.refreshUIAfterClear()
+                preClearingUIUpdatesFinished = true
+
+                await self.forgetData()
+
+                // Add some sleep here to test the indterimnate state
+                // try? await Task.sleep(interval: 5.0)
+
+                Instruments.shared.endTimedEvent(for: spid)
+                dataClearingFinished = true
+            }
+
+            await fireButtonAnimator.animate()
+
+            if !preClearingUIUpdatesFinished {
+                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
+            }
+
+            if !dataClearingFinished {
+                Pixel.fire(pixel: .debugAnimationFinishedBeforeClearing)
+            }
+
+            // MARK: post-clearing animation tasks
+
+            ActionMessageView.present(message: UserText.actionForgetAllDone,
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
+
+            privacyProDataReporter.saveFireCount()
+
             if showNextDaxDialog {
                 self.newTabPageViewController?.showNextDaxDialog()
-            } else if KeyboardSettings().onNewTab && !self.contextualOnboardingLogic.isShowingAddToDockDialog { // If we're showing the Add to Dock dialog prevent address bar to become first responder. We want to make sure the user focues on the Add to Dock instructions.
-                let showKeyboardAfterFireButton = DispatchWorkItem {
-                    self.enterSearch()
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
-                self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
+            } else if KeyboardSettings().onNewTab &&
+                        // If we're showing the Add to Dock dialog prevent address bar to become first responder.
+                        !self.contextualOnboardingLogic.isShowingAddToDockDialog {
+                self.enterSearch()
             }
 
             DaxDialogs.shared.clearedBrowserData()

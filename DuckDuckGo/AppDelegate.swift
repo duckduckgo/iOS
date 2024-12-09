@@ -36,6 +36,8 @@ import RemoteMessaging
 import SyncDataProviders
 import Subscription
 import NetworkProtection
+import PixelKit
+import PixelExperimentKit
 import WebKit
 import os.log
 
@@ -293,6 +295,33 @@ import os.log
                 defaultValue: defaultEnvironment.description
             ).wrappedValue
         ) ?? defaultEnvironment
+
+        var dryRun = false
+#if DEBUG
+        dryRun = true
+#endif
+        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
+        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
+        PixelKit.setUp(dryRun: dryRun,
+                       appVersion: AppVersion.shared.versionNumber,
+                       source: source.rawValue,
+                       defaultHeaders: [:],
+                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults())
+        { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
+
+            let url = URL.pixelUrl(forPixelNamed: pixelName)
+            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
+            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
+            Task {
+                do {
+                    let response = try await DefaultAPIService().fetch(request: request)
+                    onComplete(true, nil)
+                } catch {
+                    onComplete(false, error)
+                }
+            }
+        }
+        PixelKit.configureExperimentKit(featureFlagger: AppDependencyProvider.shared.featureFlagger)
 
         let syncErrorHandler = SyncErrorHandler()
 

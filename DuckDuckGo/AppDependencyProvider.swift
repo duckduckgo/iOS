@@ -29,7 +29,6 @@ import RemoteMessaging
 import PageRefreshMonitor
 import PixelKit
 import PixelExperimentKit
-import Networking
 
 protocol DependencyProvider {
 
@@ -96,31 +95,6 @@ final class AppDependencyProvider: DependencyProvider {
     let persistentPixel: PersistentPixelFiring = PersistentPixel()
 
     private init() {
-        var dryRun = false
-#if DEBUG
-        dryRun = true
-#endif
-        let isPhone = UIDevice.current.userInterfaceIdiom == .phone
-        let source = isPhone ? PixelKit.Source.iOS : PixelKit.Source.iPadOS
-        PixelKit.setUp(dryRun: dryRun,
-                       appVersion: AppVersion.shared.versionNumber,
-                       source: source.rawValue,
-                       defaultHeaders: [:],
-                       defaults: UserDefaults(suiteName: "\(Global.groupIdPrefix).app-configuration") ?? UserDefaults())
-        { (pixelName: String, headers: [String: String], parameters: [String: String], _, _, onComplete: @escaping PixelKit.CompletionBlock) in
-
-            let url = URL.pixelUrl(forPixelNamed: pixelName)
-            let apiHeaders = APIRequestV2.HeadersV2(additionalHeaders: headers)
-            let request = APIRequestV2(url: url, method: .get, queryItems: parameters, headers: apiHeaders)
-            Task {
-                do {
-                    let response = try await DefaultAPIService().fetch(request: request)
-                    onComplete(true, nil)
-                } catch {
-                    onComplete(false, error)
-                }
-            }
-        }
         let featureFlaggerOverrides = FeatureFlagLocalOverrides(keyValueStore: UserDefaults(suiteName: FeatureFlag.localOverrideStoreName)!,
                                                                 actionHandler: FeatureFlagOverridesPublishingHandler<FeatureFlag>()
         )
@@ -132,7 +106,6 @@ final class AppDependencyProvider: DependencyProvider {
                                                for: FeatureFlag.self)
 
         configurationManager = ConfigurationManager(store: configurationStore)
-        PixelKit.configureExperimentKit(featureFlagger: featureFlagger)
 
         // MARK: - Configure Subscription
         let subscriptionUserDefaults = UserDefaults(suiteName: subscriptionAppGroup)!

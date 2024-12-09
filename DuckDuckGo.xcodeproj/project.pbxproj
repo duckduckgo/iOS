@@ -371,7 +371,10 @@
 		7B059F0F2D0387E900371ED0 /* NumberedParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B059F0A2D0387E900371ED0 /* NumberedParagraphView.swift */; };
 		7B059F112D0387E900371ED0 /* WidgetEducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B059F0D2D0387E900371ED0 /* WidgetEducationViewController.swift */; };
 		7B059F122D0387E900371ED0 /* WidgetEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B059F0C2D0387E900371ED0 /* WidgetEducationView.swift */; };
-		7B059F142D03881000371ED0 /* ControlCenterEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B059F132D03881000371ED0 /* ControlCenterEducationView.swift */; };
+		7B059F142D03881000371ED0 /* ControlCenterWidgetEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B059F132D03881000371ED0 /* ControlCenterWidgetEducationView.swift */; };
+		7B059F1D2D03A7E400371ED0 /* WidgetsShared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B059F1C2D03A7E400371ED0 /* WidgetsShared.xcassets */; };
+		7B059F1E2D03A7E400371ED0 /* WidgetsShared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B059F1C2D03A7E400371ED0 /* WidgetsShared.xcassets */; };
+		7B059F222D03BC4400371ED0 /* WidgetEducation.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B059F212D03BC4400371ED0 /* WidgetEducation.xcassets */; };
 		7B1604E82CB685B400A44EC6 /* Logger+TipKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1604E72CB685B400A44EC6 /* Logger+TipKit.swift */; };
 		7B1604EC2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1604EB2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift */; };
 		7B1604EE2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1604ED2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift */; };
@@ -382,6 +385,7 @@
 		7B4DC5C22CB2AE4600EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C32CB2AF0700EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
 		7B4DC5C42CB2B1D000EE5CC2 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */; };
+		7B4F87E72D0734090010B18F /* ControlCenterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F87E62D0734060010B18F /* ControlCenterWidget.swift */; };
 		7B8E0EC62CC81B4900B2B722 /* TipKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */; };
 		7BC571202BDBB877003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
 		7BC571212BDBB977003B0CCE /* VPNActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */; };
@@ -1712,7 +1716,9 @@
 		7B059F0A2D0387E900371ED0 /* NumberedParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberedParagraphView.swift; sourceTree = "<group>"; };
 		7B059F0C2D0387E900371ED0 /* WidgetEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationView.swift; sourceTree = "<group>"; };
 		7B059F0D2D0387E900371ED0 /* WidgetEducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationViewController.swift; sourceTree = "<group>"; };
-		7B059F132D03881000371ED0 /* ControlCenterEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCenterEducationView.swift; sourceTree = "<group>"; };
+		7B059F132D03881000371ED0 /* ControlCenterWidgetEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCenterWidgetEducationView.swift; sourceTree = "<group>"; };
+		7B059F1C2D03A7E400371ED0 /* WidgetsShared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WidgetsShared.xcassets; sourceTree = "<group>"; };
+		7B059F212D03BC4400371ED0 /* WidgetEducation.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = WidgetEducation.xcassets; sourceTree = "<group>"; };
 		7B1604E72CB685B400A44EC6 /* Logger+TipKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+TipKit.swift"; sourceTree = "<group>"; };
 		7B1604EB2CB68BDA00A44EC6 /* TipKitController+ConvenienceInitializers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TipKitController+ConvenienceInitializers.swift"; sourceTree = "<group>"; };
 		7B1604ED2CB68D2600A44EC6 /* TipKitDebugOptionsUIActionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitDebugOptionsUIActionHandling.swift; sourceTree = "<group>"; };
@@ -1720,6 +1726,7 @@
 		7B4DC5BC2CB29D8400EE5CC2 /* VPNToggleIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNToggleIntent.swift; sourceTree = "<group>"; };
 		7B4DC5BF2CB2A4A500EE5CC2 /* VPNStatusValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNStatusValueProvider.swift; sourceTree = "<group>"; };
 		7B4DC5C12CB2AE4600EE5CC2 /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
+		7B4F87E62D0734060010B18F /* ControlCenterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlCenterWidget.swift; sourceTree = "<group>"; };
 		7B8E0EC52CC81B4800B2B722 /* TipKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipKitController.swift; sourceTree = "<group>"; };
 		7BC5711F2BDBB877003B0CCE /* VPNActivationDateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNActivationDateStore.swift; sourceTree = "<group>"; };
 		7BDBAD0D2CBFB3F1000379B7 /* VPN.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = VPN.xcassets; sourceTree = "<group>"; };
@@ -4096,15 +4103,25 @@
 			path = NumberedParagraphView;
 			sourceTree = "<group>";
 		};
-		7B059F0E2D0387E900371ED0 /* WidgetEducation */ = {
+		7B059F0E2D0387E900371ED0 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				7B4F87E32D0733B30010B18F /* Education */,
+				7B4F87E62D0734060010B18F /* ControlCenterWidget.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		7B4F87E32D0733B30010B18F /* Education */ = {
 			isa = PBXGroup;
 			children = (
 				7B059F0B2D0387E900371ED0 /* NumberedParagraphView */,
-				7B059F132D03881000371ED0 /* ControlCenterEducationView.swift */,
+				7B059F132D03881000371ED0 /* ControlCenterWidgetEducationView.swift */,
 				7B059F0C2D0387E900371ED0 /* WidgetEducationView.swift */,
 				7B059F0D2D0387E900371ED0 /* WidgetEducationViewController.swift */,
+				7B059F212D03BC4400371ED0 /* WidgetEducation.xcassets */,
 			);
-			path = WidgetEducation;
+			path = Education;
 			sourceTree = "<group>";
 		};
 		7BF78E002CA2CC100026A1FC /* TipKit */ = {
@@ -4366,7 +4383,7 @@
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
 				3151F0E827357F8F00226F58 /* VoiceSearch */,
 				4B6484F427FD1E390050A7A1 /* Waitlist */,
-				7B059F0E2D0387E900371ED0 /* WidgetEducation */,
+				7B059F0E2D0387E900371ED0 /* Widgets */,
 			);
 			path = DuckDuckGo;
 			sourceTree = "<group>";
@@ -4405,6 +4422,7 @@
 			isa = PBXGroup;
 			children = (
 				8512EA5624ED30D30073EE19 /* Assets.xcassets */,
+				7B059F1C2D03A7E400371ED0 /* WidgetsShared.xcassets */,
 				4BCBE45D2BA7E81F00FC75A1 /* PrivacyInfo.xcprivacy */,
 				853273AC24FEF49600E3C778 /* ColorExtension.swift */,
 				853273B124FF114700E3C778 /* DeepLinks.swift */,
@@ -7248,7 +7266,9 @@
 				4B37E0502B928CA6009E81CA /* vpn-light-mode.json in Resources */,
 				9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */,
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
+				7B059F1E2D03A7E400371ED0 /* WidgetsShared.xcassets in Resources */,
 				85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */,
+				7B059F222D03BC4400371ED0 /* WidgetEducation.xcassets in Resources */,
 				98788E9A2521DA1E00D55218 /* Localizable.stringsdict in Resources */,
 				CB9B873E278C93C2001F4906 /* HomeMessage.xcassets in Resources */,
 			);
@@ -7274,6 +7294,7 @@
 				98B001AA251EABB40090EC07 /* Localizable.strings in Resources */,
 				98B001A4251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				4BCBE45E2BA7E81F00FC75A1 /* PrivacyInfo.xcprivacy in Resources */,
+				7B059F1D2D03A7E400371ED0 /* WidgetsShared.xcassets in Resources */,
 				8512EA5724ED30D30073EE19 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7685,7 +7706,7 @@
 				D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */,
 				9F8E0F262CC9395D001EA7C5 /* Logger+Onboarding.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
-				7B059F142D03881000371ED0 /* ControlCenterEducationView.swift in Sources */,
+				7B059F142D03881000371ED0 /* ControlCenterWidgetEducationView.swift in Sources */,
 				85C297042476C1FD0063A335 /* DaxDialogsSettings.swift in Sources */,
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				D6F93E3C2B4FFA97004C268D /* SubscriptionDebugViewController.swift in Sources */,
@@ -7838,6 +7859,7 @@
 				D6E83C602B22B3C9006C8AFB /* SettingsState.swift in Sources */,
 				D6E83C482B20C812006C8AFB /* SettingsHostingController.swift in Sources */,
 				F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */,
+				7B4F87E72D0734090010B18F /* ControlCenterWidget.swift in Sources */,
 				9F7CFF762C86BB8F0012833E /* OnboardingView+AppIconPickerContent.swift in Sources */,
 				D68A21442B7EC08500BB372E /* SubscriptionExternalLinkView.swift in Sources */,
 				BDD3B3552B8EF8DB005857A8 /* NetworkProtectionUNNotificationPresenter.swift in Sources */,

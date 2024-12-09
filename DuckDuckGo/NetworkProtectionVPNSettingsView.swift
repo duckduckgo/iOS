@@ -164,11 +164,7 @@ struct NetworkProtectionVPNSettingsView: View {
 
                 if #available(iOS 18.0, *) {
                     NavigationLink {
-                        ControlCenterWidgetEducationView(
-                            navBarTitle: "Control Center",
-                            widgetExampleImageConfig: .init(image: Image("ControlCenterBottom"),
-                                                            maxWidth: 270,
-                                                            dropsShadow: true))
+                        ControlCenterWidgetEducationView(navBarTitle: "Control Center")
                     } label: {
                         Label {
                             Text(UserText.vpnSettingsAddControlCenterWidget)
@@ -204,8 +200,8 @@ private extension WidgetEducationView {
         WidgetEducationView(
             navBarTitle: UserText.settingsAddWidgetTitle,
             thirdParagraphText: UserText.addVPNWidgetSettingsThirdParagraph,
-            widgetExampleImageConfig: .init(
-                image: Image("WidgetEducationVPNWidgetExample"),
+            thirdParagraphDetail: .image(
+                Image("WidgetEducationVPNWidgetExample"),
                 maxWidth: 164,
                 horizontalOffset: -7,
                 dropsShadow: true

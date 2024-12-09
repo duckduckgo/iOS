@@ -124,8 +124,8 @@ private struct NumberedCircle: View {
 }
 
 private extension Color {
-    static let circle = Color(designSystemColor: .accent)
-    static let numbers = Color.white
+    static let circle = Color.blue0
+    static let numbers = Color.blueBase
 }
 
 private enum Const {

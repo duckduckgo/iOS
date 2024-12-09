@@ -164,7 +164,8 @@ struct NetworkProtectionVPNSettingsView: View {
 
                 if #available(iOS 18.0, *) {
                     NavigationLink {
-                        ControlCenterWidgetEducationView(navBarTitle: "Control Center")
+                        ControlCenterWidgetEducationView(navBarTitle: "Control Center",
+                                                         widget: .vpnToggle)
                     } label: {
                         Label {
                             Text(UserText.vpnSettingsAddControlCenterWidget)
@@ -176,7 +177,7 @@ struct NetworkProtectionVPNSettingsView: View {
                 }
 
                 NavigationLink {
-                    WidgetEducationView.vpn
+                    SiriEducationView()
                 } label: {
                     Label {
                         Text(UserText.vpnSettingsControlWithSiri)

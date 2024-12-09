@@ -45,7 +45,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
     
     func testWhenInHomeEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
@@ -66,7 +66,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
 
     func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
@@ -121,7 +121,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
 
     func testWhenInHomeTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
@@ -141,7 +141,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
     
     func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
@@ -196,7 +196,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
     
     func testWhenInHomeNonEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
@@ -216,7 +216,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
 
     func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
@@ -271,7 +271,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
 
     func testWhenInBrowserEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
@@ -291,7 +291,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
     
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
@@ -346,7 +346,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
 
     func testWhenInBrowsingTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
@@ -366,7 +366,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertFalse(testee.shoeAccessoryButton)
+        XCTAssertFalse(testee.showAccessoryButton)
     }
     
     func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
@@ -420,7 +420,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showBackButton)
         XCTAssertFalse(testee.showForwardButton)
         XCTAssertFalse(testee.showBookmarksButton)
-        XCTAssertTrue(testee.shoeAccessoryButton)
+        XCTAssertTrue(testee.showAccessoryButton)
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {

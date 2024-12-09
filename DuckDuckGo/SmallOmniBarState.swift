@@ -27,7 +27,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -60,7 +60,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -93,7 +93,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -127,7 +127,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -161,7 +161,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -195,7 +195,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = true
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = true
         let showSearchLoupe = false
@@ -228,7 +228,7 @@ struct SmallOmniBarState {
         let showBackButton: Bool = false
         let showForwardButton: Bool = false
         let showBookmarksButton: Bool = false
-        let shoeAccessoryButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false

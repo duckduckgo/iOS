@@ -403,7 +403,7 @@ class OmniBar: UIView {
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
         setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
-        setVisibility(accessoryButton, hidden: !state.shoeAccessoryButton)
+        setVisibility(accessoryButton, hidden: !state.showAccessoryButton)
         
         searchContainerCenterConstraint.isActive = state.hasLargeWidth
         searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth

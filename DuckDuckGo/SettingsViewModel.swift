@@ -25,6 +25,7 @@ import Common
 import Combine
 import SyncUI
 import DuckPlayer
+import Crashes
 
 import Subscription
 import NetworkProtection
@@ -373,6 +374,10 @@ final class SettingsViewModel: ObservableObject {
         Binding<Bool>(
             get: { self.state.crashCollectionOptInStatus == .optedIn },
             set: {
+                if self.appSettings.crashCollectionOptInStatus == .optedIn && $0 == false {
+                    let crashCollection = CrashCollection(crashReportSender: CrashReportSender(platform: .iOS))
+                    crashCollection.clearCRCID()
+                }
                 self.appSettings.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
                 self.state.crashCollectionOptInStatus = $0 ? .optedIn : .optedOut
             }

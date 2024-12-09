@@ -56,6 +56,12 @@ open class UserAuthenticator {
         return canAuthenticate
     }
 
+    public func canAuthenticateViaBiometrics() -> Bool {
+        var error: NSError?
+        let canAuthenticate = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        return canAuthenticate
+    }
+
     open func authenticate(completion: ((AuthError?) -> Void)? = nil) {
 
         if state == .loggedIn {

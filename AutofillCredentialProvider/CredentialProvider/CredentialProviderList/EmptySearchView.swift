@@ -26,7 +26,7 @@ final class EmptySearchView: UIView {
         let label = UILabel(frame: CGRect.zero)
         
         label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title2).pointSize * 1.091, weight: .regular)
-        label.text = UserText.autofillSearchNoResultTitle
+        label.text = UserText.credentialProviderListSearchNoResultTitle
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
@@ -57,7 +57,7 @@ final class EmptySearchView: UIView {
     var query: String = "" {
         didSet {
             if query.count > 0 {
-                subtitle.text = UserText.autofillSearchNoResultSubtitle(for: query)
+                subtitle.text = UserText.credentialProviderListSearchNoResultSubtitle(for: query)
             } else {
                 subtitle.text = ""
             }

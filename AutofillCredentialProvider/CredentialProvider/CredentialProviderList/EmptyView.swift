@@ -31,14 +31,14 @@ struct EmptyView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 96, height: 96)
             
-            Text(UserText.autofillEmptyViewTitle)
+            Text(UserText.credentialProviderListEmptyViewTitle)
                 .daxTitle3()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
                 .padding(.top, 16)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
             
-            Text(UserText.autofillEmptyViewSubtitle)
+            Text(UserText.credentialProviderListEmptyViewSubtitle)
                 .daxBodyRegular()
                 .foregroundColor(Color.init(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)

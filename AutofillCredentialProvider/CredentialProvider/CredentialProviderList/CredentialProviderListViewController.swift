@@ -45,7 +45,7 @@ final class CredentialProviderListViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
+        searchController.searchBar.placeholder = UserText.credentialProviderListSearchPlaceholder
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
 
@@ -83,9 +83,12 @@ final class CredentialProviderListViewController: UIViewController {
 
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
+         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
          onRowSelected: @escaping (AutofillLoginItem) -> Void,
          onDismiss: @escaping () -> Void) {
-        self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers, secureVault: secureVault)
+        self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers,
+                                                         secureVault: secureVault,
+                                                         credentialIdentityStoreManager: credentialIdentityStoreManager)
         self.onRowSelected = onRowSelected
         self.onDismiss = onDismiss
 
@@ -101,7 +104,7 @@ final class CredentialProviderListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = UserText.autofillLoginListTitle
+        title = UserText.credentialProviderListTitle
 
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         navigationItem.rightBarButtonItem = doneItem

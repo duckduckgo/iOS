@@ -18,36 +18,91 @@
 //
 
 import Foundation
+import Combine
+import DDGSync
+import UIKit
 
 struct Background: AppState {
 
-    var appContext: AppContext
-    let appDependencies: AppDependencies
+    private let lastBackgroundDate: Date = Date()
+    private let application: UIApplication
+    private let appDependencies: AppDependencies
+    private var syncDidFinishCancellable: AnyCancellable? // TODO: should we pass it through appDependencies to sustain its lifecycle? perhaps we should have a registry to register it
+    var urlToOpen: URL?
 
-    init(appContext: AppContext, appDependencies: AppDependencies) {
-        self.appContext = appContext
-        self.appDependencies = appDependencies
+    init(stateContext: Inactive.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
 
-        // handle applicationDidEnterBackground(_:) logic here
-        if appDependencies.autoClear.isClearingEnabled || appDependencies.privacyStore.authenticationEnabled {
-            appDependencies.uiService.displayBlankSnapshotWindow(voiceSearchHelper: appDependencies.voiceSearchHelper,
-                                                                 addressBarPosition: appDependencies.appSettings.currentAddressBarPosition)
+        let autoClear = appDependencies.autoClear
+        let privacyStore = appDependencies.privacyStore
+        let privacyProDataReporter = appDependencies.privacyProDataReporter
+        let voiceSearchHelper = appDependencies.voiceSearchHelper
+        let appSettings = appDependencies.appSettings
+        let autofillLoginSession = appDependencies.autofillLoginSession
+        let syncService = appDependencies.syncService
+        let syncDataProviders = appDependencies.syncDataProviders
+        let uiService = appDependencies.uiService
+
+        if autoClear.isClearingEnabled || privacyStore.authenticationEnabled {
+            uiService.displayBlankSnapshotWindow(voiceSearchHelper: voiceSearchHelper,
+                                                 addressBarPosition: appSettings.currentAddressBarPosition)
         }
-        appDependencies.autoClear.startClearingTimer()
-        self.appContext.lastBackgroundDate = Date()
-        appDependencies.autofillLoginSession.endSession()
+        autoClear.startClearingTimer()
+        autofillLoginSession.endSession()
 
-        /*
+        suspendSync(syncService: syncService)
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(stateContext.application)
+        privacyProDataReporter.saveApplicationLastSessionEnded()
 
-         suspendSync()
-         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
-         privacyProDataReporter.saveApplicationLastSessionEnded()
-         resetAppStartTime()
+        resetAppStartTime()
+    }
 
-         */
+    private mutating func suspendSync(syncService: DDGSync) {
+        if syncService.isSyncInProgress {
+            Logger.sync.debug("Sync is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                Logger.sync.debug("Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
+            syncDidFinishCancellable?.cancel()
+            syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    Logger.sync.debug("Ending background task")
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+        }
+
+        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
+    }
+
+    private func resetAppStartTime() {
+//        didFinishLaunchingStartTime = nil // TODO: not needed most likely
+        appDependencies.mainViewController.appDidFinishLaunchingStartTime = nil
+    }
+
+}
+
+extension Background {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let lastBackgroundDate: Date
+        let urlToOpen: URL?
+        let appDependencies: AppDependencies
 
     }
 
-
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              lastBackgroundDate: lastBackgroundDate,
+              urlToOpen: urlToOpen,
+              appDependencies: appDependencies)
+    }
 
 }

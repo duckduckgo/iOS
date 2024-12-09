@@ -36,10 +36,11 @@ import Combine
 @MainActor
 struct Launched: AppState {
 
-    var appContext: AppContext
-
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String?
+
+    @UserDefaultsWrapper(key: .didCrashDuringCrashHandlersSetUp, defaultValue: false)
+    private var didCrashDuringCrashHandlersSetUp: Bool
 
     private let crashCollection = CrashCollection(platform: .iOS)
     private let bookmarksDatabase = BookmarksDatabase.make()
@@ -49,7 +50,6 @@ struct Launched: AppState {
     private let vpnFeatureVisibility = AppDependencyProvider.shared.vpnFeatureVisibility
     private let appSettings = AppDependencyProvider.shared.appSettings
     private let privacyStore = PrivacyUserDefaults()
-    private let uiService = UIService()
     private let voiceSearchHelper = VoiceSearchHelper()
     private let autofillLoginSession = AppDependencyProvider.shared.autofillLoginSession
     private let onboardingPixelReporter = OnboardingPixelReporter()
@@ -59,29 +59,38 @@ struct Launched: AppState {
 
     private let vpnWorkaround: VPNRedditSessionWorkaround
     private let privacyProDataReporter: PrivacyProDataReporting
-    private let unService: UNService
+    private let isTesting = ProcessInfo().arguments.contains("testing")
+    private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
-    // TODO
+    // These should ideally be `let` properties instead of force unwrapped. However, due to the large amount of code, the compiler cannot track the initialization order.
+    // As a result, it complains about accessing `self` before all properties are set.
+    // This is a temporary state and will be gradually phased out as the class is cleaned up and most of the code is moved into services.
+    // Note: This cleanup is not part of the current milestone.
+    private var uiService: UIService!
+    private var unService: UNService!
     private var syncDataProviders: SyncDataProviders!
     private var autoClear: AutoClear!
     private var syncService: DDGSync!
     private var isSyncInProgressCancellable: AnyCancellable!
     private var remoteMessagingClient: RemoteMessagingClient!
     private var subscriptionCookieManager: SubscriptionCookieManaging!
+    private var window: UIWindow?
+    private var autofillPixelReporter: AutofillPixelReporter!
+    private var mainViewController: MainViewController!
 
-    init(appContext: AppContext) {
-        self.appContext = appContext
+    var urlToOpen: URL?
+
+    let application: UIApplication
+    init(stateContext: Init.StateContext) {
+
+        application = stateContext.application
         privacyProDataReporter = PrivacyProDataReporter(fireproofing: fireproofing)
         vpnWorkaround = VPNRedditSessionWorkaround(accountManager: accountManager, tunnelController: tunnelController)
-        unService = UNService(window: appContext.window, accountManager: accountManager)
 
-        self.appContext.didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
-            if let didFinishLaunchingStartTime = appContext.didFinishLaunchingStartTime {
-                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
-                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
-                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
-            }
+            let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+            Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                       withAdditionalParameters: [PixelParameters.time: String(launchTime)])
         }
 
 #if targetEnvironment(simulator)
@@ -117,37 +126,37 @@ struct Launched: AppState {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }
 
-        crashCollection.startAttachingCrashLogMessages { pixelParameters, payloads, sendReport in
+        crashCollection.startAttachingCrashLogMessages { [application] pixelParameters, payloads, sendReport in
             pixelParameters.forEach { params in
                 Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [])
             }
 
             // Async dispatch because rootViewController may otherwise be nil here
             DispatchQueue.main.async {
-                guard let viewController = appContext.window?.rootViewController else { return }
-
+                guard let viewController = application.window?.rootViewController else { return } // todo: check if it shows
                 let crashReportUploaderOnboarding = CrashCollectionOnboarding(appSettings: AppDependencyProvider.shared.appSettings)
-                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport) // test, does it show?
+                crashReportUploaderOnboarding.presentOnboardingIfNeeded(for: payloads, from: viewController, sendReport: sendReport)
             }
         }
 
         clearTmp()
 
         _ = DefaultUserAgentManager.shared
-        self.appContext.isTesting = ProcessInfo().arguments.contains("testing")
-        if appContext.isTesting {
+        if isTesting {
             Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
 
-            self.appContext.window = UIWindow(frame: UIScreen.main.bounds)
-            self.appContext.window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window!.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
 
             let blockingDelegate = BlockingNavigationDelegate()
             let webView = blockingDelegate.prepareWebView()
-            self.appContext.window?.rootViewController?.view.addSubview(webView)
-            self.appContext.window?.rootViewController?.view.backgroundColor = .red
+            window!.rootViewController?.view.addSubview(webView)
+            window!.rootViewController?.view.backgroundColor = .red
+            application.setWindow(window) // to do check if application.delegate?.window is non-nil
+
             webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
 
             let request = URLRequest(url: URL(string: "about:blank")!)
@@ -162,8 +171,8 @@ struct Launched: AppState {
         Database.shared.loadStore { context, error in
             guard let context = context else {
 
-                let parameters = [PixelParameters.applicationState: "\(appContext.application.applicationState.rawValue)",
-                                  PixelParameters.dataAvailability: "\(appContext.application.isProtectedDataAvailable)"]
+                let parameters = [PixelParameters.applicationState: "\(stateContext.application.applicationState.rawValue)",
+                                  PixelParameters.dataAvailability: "\(stateContext.application.isProtectedDataAvailable)"]
 
                 switch error {
                 case .none:
@@ -281,6 +290,7 @@ struct Launched: AppState {
             purchasePlatform: .appStore)
 
         subscriptionCookieManager = makeSubscriptionCookieManager()
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                           remoteMessagingClient: remoteMessagingClient,
@@ -295,54 +305,59 @@ struct Launched: AppState {
 
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
-            self.appContext.window = UIWindow(frame: UIScreen.main.bounds)
-            appContext.window?.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
-                                                                                voiceSearchHelper: voiceSearchHelper)
-            appContext.window?.makeKeyAndVisible()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window!.rootViewController = BlankSnapshotViewController(addressBarPosition: appSettings.currentAddressBarPosition,
+                                                                     voiceSearchHelper: voiceSearchHelper)
+            window!.makeKeyAndVisible()
+            application.setWindow(window)
 
             presentInsufficientDiskSpaceAlert()
         } else {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
-            let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
-                                          bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
-                                          historyManager: historyManager,
-                                          homePageConfiguration: homePageConfiguration,
-                                          syncService: syncService,
-                                          syncDataProviders: syncDataProviders,
-                                          appSettings: AppDependencyProvider.shared.appSettings,
-                                          previewsSource: previewsSource,
-                                          tabsModel: tabsModel,
-                                          syncPausedStateManager: syncErrorHandler,
-                                          privacyProDataReporter: privacyProDataReporter,
-                                          variantManager: variantManager,
-                                          contextualOnboardingPresenter: contextualOnboardingPresenter,
-                                          contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
-                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
-                                          voiceSearchHelper: voiceSearchHelper,
-                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
-                                          fireproofing: fireproofing,
-                                          subscriptionCookieManager: subscriptionCookieManager,
-                                          textZoomCoordinator: makeTextZoomCoordinator(),
-                                          websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
-                                          appDidFinishLaunchingStartTime: appContext.didFinishLaunchingStartTime)
+            mainViewController = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                                    bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                                    historyManager: historyManager,
+                                                    homePageConfiguration: homePageConfiguration,
+                                                    syncService: syncService,
+                                                    syncDataProviders: syncDataProviders,
+                                                    appSettings: AppDependencyProvider.shared.appSettings,
+                                                    previewsSource: previewsSource,
+                                                    tabsModel: tabsModel,
+                                                    syncPausedStateManager: syncErrorHandler,
+                                                    privacyProDataReporter: privacyProDataReporter,
+                                                    variantManager: variantManager,
+                                                    contextualOnboardingPresenter: contextualOnboardingPresenter,
+                                                    contextualOnboardingLogic: daxDialogs,
+                                                    contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                                    subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                                    voiceSearchHelper: voiceSearchHelper,
+                                                    featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                                    fireproofing: fireproofing,
+                                                    subscriptionCookieManager: subscriptionCookieManager,
+                                                    textZoomCoordinator: makeTextZoomCoordinator(),
+                                                    websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
+                                                    appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
-            main.loadViewIfNeeded()
-            syncErrorHandler.alertPresenter = main
+            mainViewController.loadViewIfNeeded()
+            syncErrorHandler.alertPresenter = mainViewController
 
-            self.appContext.window = UIWindow(frame: UIScreen.main.bounds)
-            appContext.window?.rootViewController = main
-            appContext.window?.makeKeyAndVisible()
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.rootViewController = mainViewController
+            window.makeKeyAndVisible()
+            application.setWindow(window)
 
-            autoClear = AutoClear(worker: main)
-            let applicationState = appContext.application.applicationState
-            Task { [self] in // todo
+            let autoClear = AutoClear(worker: mainViewController)
+            self.autoClear = autoClear
+            let applicationState = stateContext.application.applicationState
+            let vpnWorkaround = appDependencies.vpnWorkaround
+            Task {
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
                 await vpnWorkaround.installRedditSessionWorkaround()
             }
         }
-
+        unService = UNService(window: window!, accountManager: accountManager)
+        uiService = UIService(window: window!)
         voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -351,8 +366,8 @@ struct Launched: AppState {
 
         UNUserNotificationCenter.current().delegate = unService
 
-        appContext.window?.windowScene?.screenshotService?.delegate = uiService
-        ThemeManager.shared.updateUserInterfaceStyle(window: appContext.window)
+        window?.windowScene?.screenshotService?.delegate = uiService
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         // Temporary logic for rollout of Autofill as on by default for new installs only
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
@@ -365,7 +380,7 @@ struct Launched: AppState {
 
         AppDependencyProvider.shared.subscriptionManager.loadInitialData()
 
-        let autofillPixelReporter = AutofillPixelReporter(
+        autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
             eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
@@ -390,19 +405,19 @@ struct Launched: AppState {
 
         _ = NotificationCenter.default.addObserver(forName: AppUserDefaults.Notifications.autofillEnabledChange,
                                                    object: nil,
-                                                   queue: nil) { /*[weak self]*/ _ in
-            autofillPixelReporter.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled) // todo: autofillPixelReporter is local var
+                                                   queue: nil) { [autofillPixelReporter] _ in
+            autofillPixelReporter?.updateAutofillEnabledStatus(AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled)
         }
 
-        if appContext.didCrashDuringCrashHandlersSetUp {
+        if stateContext.didCrashDuringCrashHandlersSetUp {
             Pixel.fire(pixel: .crashOnCrashHandlersSetUp)
-            self.appContext.didCrashDuringCrashHandlersSetUp = false
+            didCrashDuringCrashHandlersSetUp = false
         }
 
         tipKitAppEventsHandler.appDidFinishLaunching()
     }
 
-    var appDependencies: AppDependencies {
+    private var appDependencies: AppDependencies {
         AppDependencies(
             accountManager: accountManager,
             vpnWorkaround: vpnWorkaround,
@@ -410,23 +425,28 @@ struct Launched: AppState {
             appSettings: appSettings,
             privacyStore: privacyStore,
             uiService: uiService,
+            mainViewController: mainViewController,
             voiceSearchHelper: voiceSearchHelper,
             autoClear: autoClear,
             autofillLoginSession: autofillLoginSession,
             marketplaceAdPostbackManager: marketplaceAdPostbackManager,
             syncService: syncService,
+            syncDataProviders: syncDataProviders,
             isSyncInProgressCancellable: isSyncInProgressCancellable,
             privacyProDataReporter: privacyProDataReporter,
             remoteMessagingClient: remoteMessagingClient,
-            subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager),
-            onboardingPixelReporter: onboardingPixelReporter
+            subscriptionService: SubscriptionService(subscriptionCookieManager: subscriptionCookieManager,
+                                                     privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager),
+            onboardingPixelReporter: onboardingPixelReporter,
+            widgetRefreshModel: widgetRefreshModel,
+            autofillPixelReporter: autofillPixelReporter
         )
     }
 
     private func presentPreemptiveCrashAlert() {
         Task { @MainActor in
             let alertController = CriticalAlerts.makePreemptiveCrashAlert()
-            appContext.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
         }
     }
 
@@ -484,12 +504,13 @@ struct Launched: AppState {
 
     private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
         let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
-                                                                  currentCookieStore: { //[weak self] in
-//            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else { // TODO
-//                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
-//                // eventually the subscription cookie will be refreshed on opening the first tab
-//                return nil
-//            }
+                                                                  currentCookieStore: {
+            guard let mainViewController = application.window?.rootViewController as? MainViewController,
+                mainViewController.tabManager.model.hasActiveTabs else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
             return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
         }, eventMapping: SubscriptionCookieManageEventPixelMapping())
 
@@ -521,9 +542,10 @@ struct Launched: AppState {
 
     private func presentInsufficientDiskSpaceAlert() {
         let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-        appContext.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
+    
     private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                   isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
@@ -561,5 +583,38 @@ struct Launched: AppState {
                                dataStoreIDManager: dataStoreIDManager)
     }
 
+}
+
+extension Launched {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let isTesting: Bool
+        let didFinishLaunchingStartTime: CFAbsoluteTime
+        let urlToOpen: URL?
+        let appDependencies: AppDependencies
+
+    }
+
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              isTesting: isTesting,
+              didFinishLaunchingStartTime: didFinishLaunchingStartTime,
+              urlToOpen: urlToOpen,
+              appDependencies: appDependencies)
+    }
+
+}
+
+extension UIApplication {
+
+    func setWindow(_ window: UIWindow?) {
+        (delegate as? AppDelegate)?.window = window
+    }
+
+    var window: UIWindow? {
+        delegate?.window ?? nil
+    }
 
 }

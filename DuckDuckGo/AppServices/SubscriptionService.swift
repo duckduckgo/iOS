@@ -19,14 +19,26 @@
 
 import Subscription
 import Combine
+import BrowserServicesKit
 
 final class SubscriptionService {
 
-    init(subscriptionCookieManager: SubscriptionCookieManaging) {
+    let subscriptionCookieManager: SubscriptionCookieManaging
+    private var cancellables: Set<AnyCancellable> = []
+
+    var onPrivacyConfigurationUpdate: (() -> Void)?
+
+    init(subscriptionCookieManager: SubscriptionCookieManaging,
+         privacyConfigurationManager: PrivacyConfigurationManaging) {
         self.subscriptionCookieManager = subscriptionCookieManager
+        privacyConfigurationManager.updatesPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.onPrivacyConfigurationUpdate?()
+            }
+            .store(in: &cancellables)
     }
 
-    let subscriptionCookieManager: SubscriptionCookieManaging
-    var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
+
 
 }

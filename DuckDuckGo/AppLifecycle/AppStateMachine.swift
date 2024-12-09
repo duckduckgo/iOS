@@ -21,7 +21,7 @@ import UIKit
 
 enum AppEvent {
 
-    case launching(UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
+    case launching(UIApplication)
     case activating
     case backgrounding
     case suspending
@@ -53,44 +53,3 @@ final class AppStateMachine: AppEventHandler {
     }
 
 }
-
-final class AppContext {
-
-    let application: UIApplication
-    let launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-
-    var didCrashDuringCrashHandlersSetUp: Bool
-    var window: UIWindow?
-    var urlToOpen: URL?
-    var lastBackgroundDate: Date?
-    var didFinishLaunchingStartTime: CFAbsoluteTime?
-    var isTesting: Bool
-
-    init(application: UIApplication,
-         launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil,
-         didCrashDuringCrashHandlersSetUp: Bool = false,
-         window: UIWindow? = nil,
-         urlToOpen: URL? = nil,
-         lastBackgroundDate: Date? = nil,
-         didFinishLaunchingStartTime: CFAbsoluteTime? = nil,
-         isTesting: Bool = false) {
-        self.application = application
-        self.launchOptions = launchOptions
-        self.didCrashDuringCrashHandlersSetUp = didCrashDuringCrashHandlersSetUp
-        self.window = window
-        self.urlToOpen = urlToOpen
-        self.lastBackgroundDate = lastBackgroundDate
-        self.didFinishLaunchingStartTime = didFinishLaunchingStartTime
-        self.isTesting = isTesting
-    }
-
-}
-
-struct TransitionContext {
-
-    let event: AppEvent
-    let sourceState: AppState
-
-}
-
-

@@ -19,6 +19,7 @@
 
 import Core
 import Crashes
+import UIKit
 
 @MainActor
 struct Init: AppState {
@@ -32,6 +33,22 @@ struct Init: AppState {
             CrashLogMessageExtractor.setUp(swapCxaThrow: false)
             didCrashDuringCrashHandlersSetUp = false
         }
+    }
+
+}
+
+extension Init {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let didCrashDuringCrashHandlersSetUp: Bool
+
+    }
+
+    func makeStateContext(application: UIApplication) -> StateContext {
+        .init(application: application,
+              didCrashDuringCrashHandlersSetUp: didCrashDuringCrashHandlersSetUp)
     }
 
 }

@@ -17,19 +17,41 @@
 //  limitations under the License.
 //
 
+import UIKit
+
 struct Inactive: AppState {
 
-    let appContext: AppContext
-    let appDependencies: AppDependencies
+    private let application: UIApplication
+    private let appDependencies: AppDependencies
 
-    init(appContext: AppContext, appDependencies: AppDependencies) {
-        self.appContext = appContext
-        self.appDependencies = appDependencies
-        Task { @MainActor in
-            await appContext.application.refreshVPNShortcuts(vpnFeatureVisibility: appDependencies.vpnFeatureVisibility,
-                                                             accountManager: appDependencies.accountManager)
-            await appDependencies.vpnWorkaround.removeRedditSessionWorkaround()
+    init(stateContext: Active.StateContext) {
+        application = stateContext.application
+        appDependencies = stateContext.appDependencies
+
+        let vpnFeatureVisibility = appDependencies.vpnFeatureVisibility
+        let accountManager = appDependencies.accountManager
+        let vpnWorkaround = appDependencies.vpnWorkaround
+        Task { @MainActor [application] in
+            await application.refreshVPNShortcuts(vpnFeatureVisibility: vpnFeatureVisibility,
+                                                  accountManager: accountManager)
+            await vpnWorkaround.removeRedditSessionWorkaround()
         }
+    }
+
+}
+
+extension Inactive {
+
+    struct StateContext {
+
+        let application: UIApplication
+        let appDependencies: AppDependencies
+
+    }
+
+    func makeStateContext() -> StateContext {
+        .init(application: application,
+              appDependencies: appDependencies)
     }
 
 }

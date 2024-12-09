@@ -40,8 +40,8 @@ import WebKit
 import os.log
 
 @UIApplicationMain class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    private static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
+
+    static let ShowKeyboardOnLaunchThreshold = TimeInterval(20)
     struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
         static let passwords = "com.duckduckgo.mobile.ios.passwords"
@@ -117,7 +117,7 @@ import os.log
 
     private var didFinishLaunchingStartTime: CFAbsoluteTime?
 
-    private let appStateMachine = AppStateMachine()
+    private let appStateMachine: AppStateMachine = AppStateMachine()
 
     override init() {
         super.init()
@@ -133,7 +133,7 @@ import os.log
     // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        appStateMachine.handle(.launching(application, launchOptions: launchOptions))
+        appStateMachine.handle(.launching(application))
         didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
             if let didFinishLaunchingStartTime {

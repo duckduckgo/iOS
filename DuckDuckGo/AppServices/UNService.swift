@@ -24,10 +24,10 @@ import Subscription
 
 final class UNService: NSObject {
 
-    let window: () -> UIWindow? // possibly non optional
+    let window: UIWindow
     let accountManager: AccountManager
 
-    init(window: @autoclosure @escaping () -> UIWindow?,
+    init(window: UIWindow,
          accountManager: AccountManager) {
         self.window = window
         self.accountManager = accountManager
@@ -60,15 +60,15 @@ extension UNService: UNUserNotificationCenterDelegate {
     private func presentNetworkProtectionStatusSettingsModal() {
         Task { @MainActor in
             if case .success(let hasEntitlements) = await accountManager.hasEntitlement(forProductName: .networkProtection), hasEntitlements {
-                (window()?.rootViewController as? MainViewController)?.segueToVPN()
+                (window.rootViewController as? MainViewController)?.segueToVPN()
             } else {
-                (window()?.rootViewController as? MainViewController)?.segueToPrivacyPro()
+                (window.rootViewController as? MainViewController)?.segueToPrivacyPro()
             }
         }
     }
 
     private func presentSettings(with viewController: UIViewController) {
-        guard let window = window(), let rootViewController = window.rootViewController as? MainViewController else { return }
+        guard let rootViewController = window.rootViewController as? MainViewController else { return }
 
         if let navigationController = rootViewController.presentedViewController as? UINavigationController {
             if let lastViewController = navigationController.viewControllers.last, lastViewController.isKind(of: type(of: viewController)) {

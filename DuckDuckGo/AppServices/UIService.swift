@@ -19,16 +19,22 @@
 
 import UIKit
 
-final class UIService: NSObject { // possibly WindowService?
+final class UIService: NSObject {
 
     var overlayWindow: UIWindow?
-    var window: UIWindow?
+    let window: UIWindow
+
+    var showKeyboardIfSettingOn = true // temporary
+
+    init(window: UIWindow) {
+        self.window = window
+    }
 
     func displayBlankSnapshotWindow(voiceSearchHelper: VoiceSearchHelper,
                                     addressBarPosition: AddressBarPosition) {
-        guard overlayWindow == nil, let frame = window?.frame else { return }
+        guard overlayWindow == nil else { return }
 
-        overlayWindow = UIWindow(frame: frame)
+        overlayWindow = UIWindow(frame: window.frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
 
         // TODO: most likely we do not need voiceSearchHelper for BlankSnapshotVC
@@ -37,7 +43,7 @@ final class UIService: NSObject { // possibly WindowService?
 
         overlayWindow?.rootViewController = overlay
         overlayWindow?.makeKeyAndVisible()
-        window?.isHidden = true
+        window.isHidden = true
     }
 
     func removeOverlay() {
@@ -48,7 +54,7 @@ final class UIService: NSObject { // possibly WindowService?
         if let overlay = overlayWindow {
             overlay.isHidden = true
             overlayWindow = nil
-            window?.makeKeyAndVisible()
+            window.makeKeyAndVisible()
         }
     }
 
@@ -57,6 +63,15 @@ final class UIService: NSObject { // possibly WindowService?
             overlayWindow = window
             return
         }
+    }
+
+    func displayAuthenticationWindow() {
+        guard overlayWindow == nil else { return }
+        overlayWindow = UIWindow(frame: window.frame)
+        overlayWindow?.windowLevel = UIWindow.Level.alert
+        overlayWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
+        overlayWindow?.makeKeyAndVisible()
+        window.isHidden = true
     }
 
 }
@@ -70,7 +85,7 @@ extension UIService: BlankSnapshotViewRecoveringDelegate {
 
         overlayWindow?.isHidden = true
         overlayWindow = nil
-        window?.makeKeyAndVisible()
+        window.makeKeyAndVisible()
     }
 
 }
@@ -79,7 +94,7 @@ extension UIService: UIScreenshotServiceDelegate {
 
     func screenshotService(_ screenshotService: UIScreenshotService,
                            generatePDFRepresentationWithCompletion completionHandler: @escaping (Data?, Int, CGRect) -> Void) {
-        guard let mainViewController = window?.rootViewController as? MainViewController,
+        guard let mainViewController = window.rootViewController as? MainViewController, // todo, will it be needed?
               let webView = mainViewController.currentTab?.webView else {
             completionHandler(nil, 0, .zero)
             return

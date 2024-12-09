@@ -22,29 +22,26 @@ import UIKit
 import Core
 import DDGSync
 import Combine
+import BrowserServicesKit
 
-struct AppDependencies { // should we initialize some of these in place or all in Launched state? ; also struct/class?
+struct AppDependencies {
 
-    // embed in Subscription service
     let accountManager: AccountManager
-    // embed in VPN service
     let vpnWorkaround: VPNRedditSessionWorkaround
     let vpnFeatureVisibility: DefaultNetworkProtectionVisibility
 
-    // embed in DBService
     let appSettings: AppSettings
     let privacyStore: PrivacyUserDefaults
 
-    // ..
     let uiService: UIService
-
-    // ..
+    let mainViewController: MainViewController
 
     let voiceSearchHelper: VoiceSearchHelper
     let autoClear: AutoClear
     let autofillLoginSession: AutofillLoginSession
-    let marketplaceAdPostbackManager: MarketplaceAdPostbackManager
+    let marketplaceAdPostbackManager: MarketplaceAdPostbackManaging
     let syncService: DDGSync
+    let syncDataProviders: SyncDataProviders
     let isSyncInProgressCancellable: AnyCancellable
     let privacyProDataReporter: PrivacyProDataReporting
     let remoteMessagingClient: RemoteMessagingClient
@@ -52,8 +49,7 @@ struct AppDependencies { // should we initialize some of these in place or all i
     let subscriptionService: SubscriptionService
 
     let onboardingPixelReporter: OnboardingPixelReporter
-    // ..
-    
-
+    let widgetRefreshModel: NetworkProtectionWidgetRefreshModel
+    let autofillPixelReporter: AutofillPixelReporter
 
 }

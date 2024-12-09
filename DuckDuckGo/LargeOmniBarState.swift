@@ -27,7 +27,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -68,7 +68,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -101,7 +101,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = false
+        let showAccessoryButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
@@ -134,7 +134,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -167,7 +167,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showPrivacyIcon = false
@@ -200,7 +200,7 @@ struct LargeOmniBarState {
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
         let showBookmarksButton: Bool = true
-        let showShareButton: Bool = true
+        let showAccessoryButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = true
         let showSearchLoupe = false

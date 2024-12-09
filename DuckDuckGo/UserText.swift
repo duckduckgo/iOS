@@ -635,6 +635,19 @@ public struct UserText {
     static let vpnAccessRevokedAlertActionSubscribe = NSLocalizedString("vpn.access-revoked.alert.action.subscribe", value: "Subscribe", comment: "Primary action for the alert when the subscription expires")
     static let vpnAccessRevokedAlertActionCancel = NSLocalizedString("vpn.access-revoked.alert.action.cancel", value: "Dismiss", comment: "Cancel action for the alert when the subscription expires")
 
+    // MARK: Tool tips
+
+    static let networkProtectionAddWidgetTipTitle = NSLocalizedString("network.protection.addwidget.tip.title", value: "Add VPN Widget", comment: "Title for tooltip about adding VPN widget")
+    static let networkProtectionAddWidgetTipMessage = NSLocalizedString("network.protection.addwidget.tip.message", value: "Turn the VPN on and off right from the Home Screen.", comment: "Message for tooltip about adding VPN widget")
+    static let networkProtectionAddWidgetTipAction = NSLocalizedString("network.protection.addwidget.tip.action", value: "Add widget", comment: "Button title for tooltip about adding VPN widget")
+
+    static let networkProtectionGeoswitchingTipTitle = NSLocalizedString("network.protection.geoswitching.tip.title", value: "Change Your Location", comment: "Title for tooltip about geoswitching")
+    static let networkProtectionGeoswitchingTipMessage = NSLocalizedString("network.protection.geoswitching.tip.message", value: "You can customize your VPN location by connecting to any of our servers worldwide.", comment: "Message for tooltip about geoswitching")
+
+    static let networkProtectionSnoozeTipTitle = NSLocalizedString("network.protection.snooze.tip.title", value: "Avoid VPN Conflicts", comment: "Title for tooltip about VPN snooze mode")
+    static let networkProtectionSnoozeTipMessage = NSLocalizedString("network.protection.snooze.tip.message", value: "You can use sites or apps that block VPN traffic by snoozing the VPN connection.", comment: "Message for tooltip about VPN snooze mode")
+    static let networkProtectionSnoozeTipAction = NSLocalizedString("network.protection.snooze.tip.action", value: "Learn more", comment: "Button title for tooltip about VPN snooze mode")
+
     // MARK: Unified Feedback Form
     static let browserFeedbackReportProblem = NSLocalizedString("send.browser.feedback.report-problem", value: "Report a problem", comment: "Name of the option the user can chose to give browser feedback about a problem they enountered")
     static let browserFeedbackRequestFeature = NSLocalizedString("send.browser.feedback.request-feature", value: "Request a feature", comment: "Name of the option the user can chose to give browser feedback about a feature they would like")

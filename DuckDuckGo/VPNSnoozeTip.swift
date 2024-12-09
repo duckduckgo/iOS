@@ -49,11 +49,11 @@ extension VPNSnoozeTip: Tip {
     }
 
     var title: Text {
-        Text("Avoid VPN Conflicts")
+        Text(UserText.networkProtectionSnoozeTipTitle)
     }
 
     var message: Text? {
-        Text("You can use sites or apps that block VPN traffic by snoozing the VPN connection.")
+        Text(UserText.networkProtectionSnoozeTipMessage)
     }
 
     var image: Image? {
@@ -62,7 +62,7 @@ extension VPNSnoozeTip: Tip {
 
     var actions: [Action] {
         [Action(id: ActionIdentifiers.learnMore.rawValue) {
-            Text("Learn more")
+            Text(UserText.networkProtectionSnoozeTipAction)
                 .foregroundStyle(Color(designSystemColor: .accent))
         }]
     }

@@ -32,6 +32,7 @@ protocol SpecialErrorPageContextHandling: AnyObject {
     /// The URL that failed to load, if any.
     var failedURL: URL? { get }
 
+    /// A boolean value indicating whether the WebView request requires showing a special error page.
     var isSpecialErrorPageRequest: Bool { get }
 
     /// Attaches a web view to the special error page handling.

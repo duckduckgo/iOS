@@ -42,7 +42,7 @@ protocol MaliciousSiteProtectionNavigationHandling: AnyObject {
     ///     the navigation event.
     ///   - webView: The web view from which the navigation request began.
     @MainActor
-    func creatMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView)
+    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView)
 
     /// Retrieves a task for detecting malicious sites based on the provided navigation response.
     ///
@@ -79,7 +79,7 @@ final class MaliciousSiteProtectionNavigationHandler {
 extension MaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling {
 
     @MainActor
-    func creatMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
+    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
 
         guard let url = navigationAction.request.url else {
             return

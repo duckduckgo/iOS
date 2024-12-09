@@ -34,6 +34,7 @@ struct OnboardingTrySearchDialog: View {
                     title: title,
                     titleFont: Font(UIFont.daxTitle3()),
                     message: NSAttributedString(string: message),
+                    messageFont: Font.system(size: 16),
                     list: viewModel.itemsList,
                     listAction: viewModel.listItemPressed
                 )
@@ -67,6 +68,7 @@ struct OnboardingTryVisitingSiteDialogContent: View {
             title: viewModel.title,
             titleFont: Font(UIFont.daxTitle3()),
             message: message,
+            messageFont: Font.system(size: 16),
             list: viewModel.itemsList,
             listAction: viewModel.listItemPressed)
     }
@@ -90,7 +92,9 @@ struct OnboardingFireButtonDialogContent: View {
 
     var body: some View {
         ContextualDaxDialogContent(
-            message: attributedMessage)
+            message: attributedMessage,
+            messageFont: Font.system(size: 16)
+        )
     }
 }
 
@@ -113,6 +117,7 @@ struct OnboardingFirstSearchDoneDialog: View {
                     } else {
                         ContextualDaxDialogContent(
                             message: message,
+                            messageFont: Font.system(size: 16),
                             customActionView: AnyView(
                                 OnboardingCTAButton(title: cta) {
                                     gotItAction()
@@ -164,6 +169,7 @@ struct OnboardingTrackersDoneDialog: View {
                     } else {
                         ContextualDaxDialogContent(
                             message: message,
+                            messageFont: Font.system(size: 16),
                             customActionView: AnyView(
                                 OnboardingCTAButton(title: cta) {
                                     blockedTrackersCTAAction()

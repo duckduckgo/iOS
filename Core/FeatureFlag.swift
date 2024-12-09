@@ -32,6 +32,7 @@ public enum FeatureFlag: String {
     case autofillFailureReporting
     case autofillOnForExistingUsers
     case autofillUnknownUsernameCategorization
+    case autofillPartialFormSaves
     case incontextSignup
     case autoconsentOnByDefault
     case history
@@ -101,6 +102,8 @@ extension FeatureFlag: FeatureFlagDescribing {
             return .remoteReleasable(.subfeature(AutofillSubfeature.onForExistingUsers))
         case .autofillUnknownUsernameCategorization:
             return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
+        case .autofillPartialFormSaves:
+            return .internalOnly()
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:

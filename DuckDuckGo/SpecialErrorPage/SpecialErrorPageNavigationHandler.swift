@@ -27,12 +27,13 @@ typealias SpecialErrorPageManaging = SpecialErrorPageContextHandling & WebViewNa
 
 final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
     private var webView: WKWebView?
-    private(set) var errorData: SpecialErrorData?
-    private(set) var isSpecialErrorPageVisible = false
-    private(set) var failedURL: URL?
-    private(set) var isSpecialErrorPageRequest = false
     private weak var userScript: SpecialErrorPageUserScript?
     weak var delegate: SpecialErrorPageNavigationDelegate?
+
+    @MainActor private(set) var errorData: SpecialErrorData?
+    @MainActor private(set) var isSpecialErrorPageVisible = false
+    @MainActor private(set) var failedURL: URL?
+    @MainActor private(set) var isSpecialErrorPageRequest = false
 
     private let sslErrorPageNavigationHandler: SSLSpecialErrorPageNavigationHandling & SpecialErrorPageActionHandler
     private let maliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler
@@ -59,38 +60,48 @@ final class SpecialErrorPageNavigationHandler: SpecialErrorPageContextHandling {
 
 extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
-    func handleSpecialErrorNavigation(navigationAction: WKNavigationAction, webView: WKWebView) async -> Bool {
-        let result = await maliciousSiteProtectionNavigationHandler.handleMaliciousSiteProtectionNavigation(for: navigationAction, webView: webView)
+    @MainActor
+    func handleDecidePolicyFor(navigationAction: WKNavigationAction, webView: WKWebView) {
+        maliciousSiteProtectionNavigationHandler.creatMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+    }
 
-        return await MainActor.run {
-            switch result {
-            case let .navigationHandled(.mainFrame(error)):
-                var request = navigationAction.request
-                request.url = error.url
-                isSpecialErrorPageRequest = true
-                failedURL = error.url
-                errorData = error
-                loadSpecialErrorPage(request: request)
-                return true
-            case let .navigationHandled(.iFrame(maliciousURL, error)):
-                isSpecialErrorPageRequest = true
-                failedURL = maliciousURL
-                errorData = error
-                loadSpecialErrorPage(url: maliciousURL)
-                return true
-            case .navigationNotHandled:
-                isSpecialErrorPageRequest = false
-                return false
-            }
+    @MainActor
+    func handleDecidePolicyfor(navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
+        guard let task = maliciousSiteProtectionNavigationHandler.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView) else {
+            return false
+        }
+
+        let result = await task.value
+
+        switch result {
+        case let .navigationHandled(.mainFrame(response)):
+            var request = response.navigationAction.request
+            request.url = response.errorData.url
+            isSpecialErrorPageRequest = true
+            failedURL = response.errorData.url
+            errorData = response.errorData
+            loadSpecialErrorPage(request: request)
+            return true
+        case let .navigationHandled(.iFrame(maliciousURL, error)):
+            isSpecialErrorPageRequest = true
+            failedURL = maliciousURL
+            errorData = error
+            loadSpecialErrorPage(url: maliciousURL)
+            return true
+        case .navigationNotHandled:
+            isSpecialErrorPageRequest = false
+            return false
         }
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust else { return }
 
         sslErrorPageNavigationHandler.handleServerTrustChallenge(challenge, completionHandler: completionHandler)
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WebViewNavigation, withError error: NSError) {
         guard let sslSpecialError = sslErrorPageNavigationHandler.makeNewRequestURLAndSpecialErrorDataIfEnabled(error: error) else { return }
         failedURL = sslSpecialError.error.url
@@ -98,7 +109,8 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
         errorData = sslSpecialError.error.errorData
         loadSpecialErrorPage(url: sslSpecialError.error.url)
     }
-    
+
+    @MainActor
     func handleWebView(_ webView: WKWebView, didFinish navigation: WebViewNavigation) {
         isSpecialErrorPageRequest = false
         userScript?.isEnabled = webView.url == failedURL
@@ -167,10 +179,12 @@ extension SpecialErrorPageNavigationHandler: SpecialErrorPageUserScriptDelegate 
 
 private extension SpecialErrorPageNavigationHandler {
 
+    @MainActor
     func loadSpecialErrorPage(url: URL) {
         loadSpecialErrorPage(request: URLRequest(url: url))
     }
 
+    @MainActor
     func loadSpecialErrorPage(request: URLRequest) {
         let html = SpecialErrorPageHTMLTemplate.htmlFromTemplate
         webView?.loadSimulatedRequest(request, responseHTML: html)
@@ -179,7 +193,9 @@ private extension SpecialErrorPageNavigationHandler {
 
 }
 
-extension SpecialErrorData {
+// MARK: - Helpers
+
+private extension SpecialErrorData {
 
     var url: URL? {
         switch self {
@@ -187,15 +203,6 @@ extension SpecialErrorData {
             return nil
         case let .maliciousSite(_, url):
             return url
-        }
-    }
-
-    var threatKind: ThreatKind? {
-        switch self {
-        case .ssl:
-            return nil
-        case let .maliciousSite(threatKind, _):
-            return threatKind
         }
     }
 

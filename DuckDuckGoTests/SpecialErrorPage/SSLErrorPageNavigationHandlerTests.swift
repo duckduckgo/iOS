@@ -131,6 +131,7 @@ final class SSLSpecialErrorPageTests {
         #expect(expectedCredential == nil)
     }
 
+    @MainActor
     @Test
     func whenDidReceiveChallengeIfChallengeForCertificateValidationAndUserRequestBypassThenReturnsCredentials() throws {
         // GIVEN

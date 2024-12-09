@@ -89,7 +89,7 @@ final class NewTabDaxDialogFactory: NewTabDaxDialogProvider {
         FadeInView {
             ScrollView(.vertical) {
                 DaxDialogView(logoPosition: .top) {
-                    ContextualDaxDialogContent(message: NSAttributedString(string: message))
+                    ContextualDaxDialogContent(message: NSAttributedString(string: message), messageFont: Font.system(size: 16))
                 }
                 .padding()
             }

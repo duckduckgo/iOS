@@ -188,9 +188,9 @@ import os.log
                 // If for some reason the parameter can't be found, fall back to the current version.
                 if let crashAppVersion = params[PixelParameters.appVersion] {
                     let dailyParameters = [PixelParameters.appVersion: crashAppVersion]
-                    DailyPixel.fireDaily(.dbCrashDetected, withAdditionalParameters: dailyParameters)
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily, withAdditionalParameters: dailyParameters)
                 } else {
-                    DailyPixel.fireDaily(.dbCrashDetected)
+                    DailyPixel.fireDaily(.dbCrashDetectedDaily)
                 }
             }
 

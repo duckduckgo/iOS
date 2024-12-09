@@ -1,8 +1,8 @@
 //
-//  AutofillLoginListItemViewModel.swift
+//  AutofillLoginItem.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,40 +19,44 @@
 
 import Foundation
 import BrowserServicesKit
-import UIKit
 import Common
 
-final class AutofillLoginListItemViewModel: Identifiable, Hashable {
-    
-    var preferredFaviconLetters: String {
+public struct AutofillLoginItem: Identifiable, Hashable {
+
+    public let id = UUID()
+    public let account: SecureVaultModels.WebsiteAccount
+    public let title: String
+    public let subtitle: String
+
+    public var preferredFaviconLetters: String {
         let accountName = self.account.name(tld: tld, autofillDomainNameUrlMatcher: urlMatcher)
         let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"
         return tld.eTLDplus1(accountName) ?? accountTitle
     }
-    
-    let account: SecureVaultModels.WebsiteAccount
-    let title: String
-    let subtitle: String
-    let id = UUID()
-    let tld: TLD
-    let urlMatcher: AutofillDomainNameUrlMatcher
 
-    internal init(account: SecureVaultModels.WebsiteAccount,
-                  tld: TLD,
-                  autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
-                  autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
+    private let tld: TLD
+    private let urlMatcher: AutofillDomainNameUrlMatcher
+
+    public init(account: SecureVaultModels.WebsiteAccount,
+                tld: TLD,
+                autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
+                autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
         self.account = account
         self.tld = tld
+        self.urlMatcher = autofillDomainNameUrlMatcher
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username ?? ""
-        self.urlMatcher = autofillDomainNameUrlMatcher
     }
-    
-    static func == (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
+
+    public static func == (lhs: AutofillLoginItem, rhs: AutofillLoginItem) -> Bool {
         lhs.account.id == rhs.account.id
     }
-    
-    func hash(into hasher: inout Hasher) {
+
+    static func < (lhs: AutofillLoginItem, rhs: AutofillLoginItem) -> Bool {
+        lhs.title < rhs.title
+    }
+
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(account.id)
     }
 }

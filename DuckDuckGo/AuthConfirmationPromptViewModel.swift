@@ -29,7 +29,8 @@ protocol AuthConfirmationPromptViewModelDelegate: AnyObject {
 final class AuthConfirmationPromptViewModel: ObservableObject {
     
     weak var delegate: AuthConfirmationPromptViewModelDelegate?
-    private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillDeleteAllPasswordsAuthenticationReason)
+    private let authenticator = AutofillLoginListAuthenticator(reason: UserText.autofillDeleteAllPasswordsAuthenticationReason,
+                                                               cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
 
     var contentHeight: CGFloat = AutofillViews.deleteAllPromptMinHeight {
         didSet {

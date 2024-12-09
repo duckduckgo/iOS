@@ -36,7 +36,7 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         sslErrorPageNavigationHandler = SSLErrorPageNavigationHandler(featureFlagger: featureFlagger)
         sut = SpecialErrorPageNavigationHandler(
             sslErrorPageNavigationHandler: sslErrorPageNavigationHandler,
-            maliciousSiteProtectionNavigationHandler: DummyMaliciousSiteProtectionNavigationHandler()
+            maliciousSiteProtectionNavigationHandler: MockMaliciousSiteProtectionNavigationHandler()
         )
     }
 
@@ -249,5 +249,4 @@ final class SpecialErrorPageNavigationHandlerIntegrationTests {
         // THEN
         #expect(script.isEnabled)
     }
-
 }

@@ -27,11 +27,14 @@ import SpecialErrorPages
 /// advanced information related to the error.
 protocol SpecialErrorPageActionHandler {
     /// Handles the action of navigating to the site associated with the error page
+    @MainActor
     func visitSite(url: URL, errorData: SpecialErrorData)
 
     /// Handles the action of leaving the site associated with the error page
+    @MainActor
     func leaveSite()
 
     /// Handles the action of requesting more detailed information about the error
+    @MainActor
     func advancedInfoPresented()
 }

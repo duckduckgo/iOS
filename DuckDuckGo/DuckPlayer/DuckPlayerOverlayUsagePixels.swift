@@ -108,6 +108,7 @@ final class DuckPlayerOverlayUsagePixels: NSObject, DuckPlayerOverlayPixelFiring
         }
     }
 
+    // swiftlint:disable block_based_kvo
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard let webView = object as? WKWebView else { return }
                         
@@ -115,6 +116,7 @@ final class DuckPlayerOverlayUsagePixels: NSObject, DuckPlayerOverlayPixelFiring
             fireNavigationPixelsIfNeeded(webView: webView)
         }
     }
+    // swiftlint:enable block_based_kvo
 
     private func firePixelIfNeeded(_ pixel: Pixel.Event, url: URL?) {
         if let url, url.isYoutubeWatch, duckPlayerMode == .alwaysAsk {

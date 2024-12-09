@@ -629,9 +629,7 @@ class TabViewController: UIViewController {
                 // break a js-initiated popup request such as printing from a popup
                 guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: cleanURLRequest)
-                
-                
-      
+
             })
         }
 

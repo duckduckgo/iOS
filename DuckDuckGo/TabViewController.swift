@@ -601,6 +601,12 @@ class TabViewController: UIViewController {
         }
 
         instrumentation.didPrepareWebView()
+
+        // Initialize DuckPlayerNavigationHandler
+        if let handler = duckPlayerNavigationHandler,
+            let webView = webView {
+            handler.handleAttach(webView: webView)
+        }
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
@@ -625,10 +631,7 @@ class TabViewController: UIViewController {
                 self?.load(urlRequest: cleanURLRequest)
                 
                 
-                if let handler = self?.duckPlayerNavigationHandler,
-                    let webView = self?.webView {
-                    handler.handleAttach(webView: webView)
-                }
+      
             })
         }
 

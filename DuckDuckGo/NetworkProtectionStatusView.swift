@@ -65,7 +65,9 @@ struct NetworkProtectionStatusView: View {
         })
         .applyInsetGroupedListStyle()
         .sheet(isPresented: $statusModel.showAddWidgetEducationView) {
-            widgetEducationSheet()
+            if #available(iOS 17.0, *) {
+                widgetEducationSheet()
+            }
         }
         .onAppear {
             if #available(iOS 18.0, *) {
@@ -413,6 +415,7 @@ struct NetworkProtectionStatusView: View {
 
     // MARK: - Sheets
 
+    @available(iOS 17.0, *)
     private func widgetEducationSheet() -> some View {
         NavigationView {
             WidgetEducationView()

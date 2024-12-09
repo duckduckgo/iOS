@@ -1,8 +1,8 @@
 //
-//  NetworkProtectionWidgetRefreshModel.swift
+//  VPNControlStatusValueProvider.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,25 +18,18 @@
 //
 
 import Foundation
-import Combine
 import NetworkExtension
 import WidgetKit
 
-class NetworkProtectionWidgetRefreshModel {
+struct VPNControlStatusValueProvider: ControlValueProvider {
 
-    private var cancellable: AnyCancellable?
+    let previewValue: VPNStatus = .notConfigured
 
-    public func beginObservingVPNStatus() {
-        cancellable = NotificationCenter.default.publisher(for: .NEVPNStatusDidChange)
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.refreshVPNWidget()
-            }
+    func currentValue() async throws -> VPNStatus {
+        guard let manager = try await NETunnelProviderManager.loadAllFromPreferences().first else {
+            return .notConfigured
+        }
+
+        return .status(manager.connection.status)
     }
-
-    public func refreshVPNWidget() {
-        VPNReloadStatusWidgets()
-    }
-
 }

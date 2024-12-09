@@ -103,7 +103,7 @@ extension FeatureFlag: FeatureFlagDescribing {
         case .autofillUnknownUsernameCategorization:
             return .remoteReleasable(.subfeature(AutofillSubfeature.unknownUsernameCategorization))
         case .autofillPartialFormSaves:
-            return .internalOnly()
+            return .remoteReleasable(.subfeature(AutofillSubfeature.partialFormSaves))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         case .autoconsentOnByDefault:

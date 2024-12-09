@@ -33,7 +33,7 @@ public protocol AIChatSettingsProvider {
     var isAIChatFeatureEnabled: Bool { get }
 
     /// The remote feature flag for the AI Chat shortcut in the browsing menu.
-    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool { get }
+    var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool { get }
 
     /// The remote feature flag for the AI Chat shortcut in the address bar.
     var isAIChatAddressBarShortcutFeatureEnabled: Bool { get }

@@ -87,7 +87,7 @@ private final class MockAIChatSettingsProvider: AIChatSettingsProvider {
     var isAIChatAddressBarUserSettingsEnabled: Bool = false
     var isAIChatBrowsingMenuUserSettingsEnabled: Bool = false
     var isAIChatFeatureEnabled: Bool = false
-    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool = false
+    var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool = false
     var isAIChatAddressBarShortcutFeatureEnabled: Bool = false
 
     func enableAIChatBrowsingMenuUserSettings(enable: Bool) {

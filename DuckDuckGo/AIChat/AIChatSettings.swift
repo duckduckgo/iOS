@@ -62,7 +62,7 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     var isAIChatBrowsingMenuUserSettingsEnabled: Bool {
-        userDefaults.showAIChatBrowsingMenu && isAIChatBrowsingToolbarShortcutFeatureEnabled
+        userDefaults.showAIChatBrowsingMenu && isAIChatBrowsingMenubarShortcutFeatureEnabled
     }
 
     var isAIChatAddressBarUserSettingsEnabled: Bool {
@@ -77,7 +77,7 @@ struct AIChatSettings: AIChatSettingsProvider {
         return isFeatureEnabled(for: .addressBarShortcut)
     }
 
-    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool {
+    var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool {
         return isFeatureEnabled(for: .browsingToolbarShortcut)
     }
 

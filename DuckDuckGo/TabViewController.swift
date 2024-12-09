@@ -270,6 +270,7 @@ class TabViewController: UIViewController {
 
     lazy var vaultManager: SecureVaultManager = {
         let manager = SecureVaultManager(includePartialAccountMatches: true,
+                                         shouldAllowPartialFormSaves: featureFlagger.isFeatureOn(.autofillPartialFormSaves),
                                          tld: AppDependencyProvider.shared.storageCache.tld)
         manager.delegate = self
         return manager

@@ -40,7 +40,7 @@ final class MockMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectio
 
     var task: Task<MaliciousSiteProtectionNavigationResult, Never>?
 
-    func creatMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
+    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
         didCallHandleMaliciousSiteProtectionForNavigationAction = true
         capturedNavigationAction = navigationAction
         capturedWebView = webView

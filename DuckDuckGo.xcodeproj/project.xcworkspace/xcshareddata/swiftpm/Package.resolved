@@ -32,6 +32,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
+        "branch" : "smodi/compilation_time_tracking",
         "revision" : "05a3529d498b46c163ed4d8f72d80f41970b2528"
       }
     },

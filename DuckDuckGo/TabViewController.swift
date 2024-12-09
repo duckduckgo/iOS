@@ -1375,55 +1375,64 @@ extension TabViewController: WKNavigationDelegate {
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 
-        // Important: Order of these checks matter!
-        if urlSchemeType == .blob {
-            // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
-            if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
-                // BLOB already has a temporary downloaded so and we can allow loading it
-                blobDownloadTargetFrame = nil
-                decisionHandler(.allow)
-            } else {
-                // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
-                decisionHandler(.download)
-            }
-        } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-            // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
-            let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-            mostRecentAutoPreviewDownloadID = download?.id
-            Pixel.fire(pixel: .downloadStarted,
-                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-        } else if shouldTriggerDownloadAction(for: navigationResponse),
-                  let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
-            // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
-            if urlNavigationalScheme == .data {
-                decisionHandler(.download)
-                return
-            }
-
-            // 3b. We know the response should trigger the file download prompt
-            self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-            } cancelHandler: {
+        // If the navigation has been handled by the special error page handler cancel navigating to new content as the special error page will be shown.
+        Task { @MainActor in
+            if
+                !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
+                await specialErrorPageNavigationHandler.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView) {
                 decisionHandler(.cancel)
-            }
-        } else if navigationResponse.canShowMIMEType {
-            // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
-            url = webView.url
-            if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
-                // Loading a file preview in web view
-                decisionHandler(decision)
             } else {
-                // Loading HTML
-                if navigationResponse.isForMainFrame && isSuccessfulResponse {
-                    adClickAttributionDetection.on2XXResponse(url: url)
-                }
-                adClickAttributionLogic.onProvisionalNavigation {
+                // Important: Order of these checks matter!
+                if urlSchemeType == .blob {
+                    // 1. To properly handle BLOB we need to trigger its download, if temporaryDownloadForPreviewedFile is set we allow its load in the web view
+                    if let temporaryDownloadForPreviewedFile, temporaryDownloadForPreviewedFile.url == navigationResponse.response.url {
+                        // BLOB already has a temporary downloaded so and we can allow loading it
+                        blobDownloadTargetFrame = nil
+                        decisionHandler(.allow)
+                    } else {
+                        // First we need to trigger download to handle it then in webView:navigationAction:didBecomeDownload
+                        decisionHandler(.download)
+                    }
+                } else if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+                    // 2. For this MIME type we are able to provide a better custom preview via FilePreviewHelper so it takes priority
+                    let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                    mostRecentAutoPreviewDownloadID = download?.id
+                    Pixel.fire(pixel: .downloadStarted,
+                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+                } else if shouldTriggerDownloadAction(for: navigationResponse),
+                          let downloadMetadata = AppDependencyProvider.shared.downloadManager.downloadMetaData(for: navigationResponse.response) {
+                    // 3a. We know it is a download, but allow WebKit handle the "data" scheme natively
+                    if urlNavigationalScheme == .data {
+                        decisionHandler(.download)
+                        return
+                    }
+
+                    // 3b. We know the response should trigger the file download prompt
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                    } cancelHandler: {
+                        decisionHandler(.cancel)
+                    }
+                } else if navigationResponse.canShowMIMEType {
+                    // 4. WebView can preview the MIME type and it is not to be handled by our custom FilePreviewHelper
+                    url = webView.url
+                    if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+                        // Loading a file preview in web view
+                        decisionHandler(decision)
+                    } else {
+                        // Loading HTML
+                        if navigationResponse.isForMainFrame && isSuccessfulResponse {
+                            adClickAttributionDetection.on2XXResponse(url: url)
+                        }
+                        adClickAttributionLogic.onProvisionalNavigation {
+                            decisionHandler(.allow)
+                        }
+                    }
+                } else {
+                    // Fallback
                     decisionHandler(.allow)
                 }
             }
-        } else {
-            // Fallback
-            decisionHandler(.allow)
         }
     }
 
@@ -1846,26 +1855,24 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
 
-        Task { @MainActor in
-            // Check if should show a special error page for malicious site
-            if !specialErrorPageNavigationHandler.isSpecialErrorPageRequest,
-               await specialErrorPageNavigationHandler.handleSpecialErrorNavigation(navigationAction: navigationAction, webView: webView) {
-                decisionHandler(.cancel)
-            } else {
-                decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-                    if let self = self,
-                       let url = navigationAction.request.url,
-                       decision != .cancel,
-                       navigationAction.isTargetingMainFrame() {
-                        if url.isDuckDuckGoSearch {
-                            StatisticsLoader.shared.refreshSearchRetentionAtb()
-                            privacyProDataReporter.saveSearchCount()
-                        }
-                        self.delegate?.closeFindInPage(tab: self)
-                    }
-                    decisionHandler(decision)
+        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+            if let self = self,
+               let url = navigationAction.request.url,
+               decision != .cancel,
+               navigationAction.isTargetingMainFrame() {
+                if url.isDuckDuckGoSearch {
+                    StatisticsLoader.shared.refreshSearchRetentionAtb()
+                    privacyProDataReporter.saveSearchCount()
                 }
+
+                self.delegate?.closeFindInPage(tab: self)
             }
+            // If navigating to the URL is allowed and the URL request is not sideloaded ask the specialErrorPageNavigationHandler forward the event to
+            // the SpecialErrorPageNavigationHandler.
+            if let self, decision == .allow, !self.specialErrorPageNavigationHandler.isSpecialErrorPageRequest {
+                self.specialErrorPageNavigationHandler.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+            }
+            decisionHandler(decision)
         }
     }
     // swiftlint:enable cyclomatic_complexity

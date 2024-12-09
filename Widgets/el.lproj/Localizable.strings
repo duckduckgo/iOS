@@ -77,19 +77,19 @@
 "widget.vpn.button.disconnect" = "Αποσύνδεση";
 
 /* Label for the snooze end date, e.g. 'Until 9:51 AM' */
-"widget.vpn.label.snoozing-until" = "Until %@";
+"widget.vpn.label.snoozing-until" = "Μέχρι %@";
 
 /* VPN Live Activity dismiss button text */
-"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+"widget.vpn.live-activity.button.dismiss" = "Απόρριψη";
 
 /* VPN Live Activity wake up button text */
-"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+"widget.vpn.live-activity.button.wake-up" = "Αφύπνιση";
 
 /* VPN Live Activity active label text */
-"widget.vpn.live-activity.label.active" = "VPN is On";
+"widget.vpn.live-activity.label.active" = "Το VPN είναι ενεργοποιημένο";
 
 /* VPN Live Activity snoozing label text */
-"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+"widget.vpn.live-activity.label.snoozing" = "Αναστολή VPN";
 
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "Το VPN είναι ενεργοποιημένο";
@@ -98,7 +98,7 @@
 "widget.vpn.status.disconnected" = "Το VPN είναι απενεργοποιημένο";
 
 /* Message describing VPN snoozing status */
-"widget.vpn.status.snoozed" = "VPN is Snoozed";
+"widget.vpn.status.snoozed" = "Το VPN είναι σε αναστολή";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Δεν έχει συνδεθεί";

@@ -77,19 +77,19 @@
 "widget.vpn.button.disconnect" = "Verbinding verbreken";
 
 /* Label for the snooze end date, e.g. 'Until 9:51 AM' */
-"widget.vpn.label.snoozing-until" = "Until %@";
+"widget.vpn.label.snoozing-until" = "Tot %@";
 
 /* VPN Live Activity dismiss button text */
-"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+"widget.vpn.live-activity.button.dismiss" = "Negeren";
 
 /* VPN Live Activity wake up button text */
-"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+"widget.vpn.live-activity.button.wake-up" = "Inschakelen";
 
 /* VPN Live Activity active label text */
-"widget.vpn.live-activity.label.active" = "VPN is On";
+"widget.vpn.live-activity.label.active" = "VPN is ingeschakeld";
 
 /* VPN Live Activity snoozing label text */
-"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+"widget.vpn.live-activity.label.snoozing" = "VPN in sluimerstand";
 
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN is ingeschakeld";
@@ -98,7 +98,7 @@
 "widget.vpn.status.disconnected" = "VPN is uitgeschakeld";
 
 /* Message describing VPN snoozing status */
-"widget.vpn.status.snoozed" = "VPN is Snoozed";
+"widget.vpn.status.snoozed" = "VPN is in sluimerstand";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Niet verbonden";

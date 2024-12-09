@@ -77,19 +77,19 @@
 "widget.vpn.button.disconnect" = "Leválasztás";
 
 /* Label for the snooze end date, e.g. 'Until 9:51 AM' */
-"widget.vpn.label.snoozing-until" = "Until %@";
+"widget.vpn.label.snoozing-until" = "%@-ig";
 
 /* VPN Live Activity dismiss button text */
-"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+"widget.vpn.live-activity.button.dismiss" = "Elutasítás";
 
 /* VPN Live Activity wake up button text */
-"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+"widget.vpn.live-activity.button.wake-up" = "Ébredj fel";
 
 /* VPN Live Activity active label text */
-"widget.vpn.live-activity.label.active" = "VPN is On";
+"widget.vpn.live-activity.label.active" = "VPN csatlakoztatva";
 
 /* VPN Live Activity snoozing label text */
-"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+"widget.vpn.live-activity.label.snoozing" = "VPN szüneteltetése";
 
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN csatlakoztatva";
@@ -98,7 +98,7 @@
 "widget.vpn.status.disconnected" = "VPN kikapcsolva";
 
 /* Message describing VPN snoozing status */
-"widget.vpn.status.snoozed" = "VPN is Snoozed";
+"widget.vpn.status.snoozed" = "A VPN szüneteltetve van";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Nincs csatlakoztatva";

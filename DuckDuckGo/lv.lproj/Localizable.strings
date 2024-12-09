@@ -118,12 +118,6 @@
 /* Share action */
 "action.title.share" = "Kopīgot";
 
-/* No comment provided by engineer. */
-"Add VPN Widget" = "Pievienot VPN logrīku";
-
-/* No comment provided by engineer. */
-"Add widget" = "Pievienot logrīku";
-
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Apakšā";
 
@@ -347,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Atslēgt";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Uzzināt vairāk";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
@@ -668,9 +662,6 @@
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Atjaunināt lietotājvārdu?";
 
-/* No comment provided by engineer. */
-"Avoid VPN Conflicts" = "Izvairīties no VPN konfliktiem";
-
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Pievienot grāmatzīmi";
 
@@ -787,9 +778,6 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Jā";
-
-/* No comment provided by engineer. */
-"Change Your Location" = "Mainīt atrašanās vietu";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Izlaist";
@@ -1335,37 +1323,37 @@
 "feedback.form.submit" = "Iesniegt";
 
 /* Title of the feedback form */
-"feedback.form.title" = "Help Improve Privacy Pro";
+"feedback.form.title" = "Palīdzi uzlabot Privacy Pro";
 
 /* Category for Identity Theft Restoration feedback */
 "feedback.general.category.itr" = "Identity Theft Restoration";
 
 /* Category for Personal Info Removal feedback */
-"feedback.general.category.pir" = "Personal Info Removal";
+"feedback.general.category.pir" = "Personīgās informācijas noņemšana";
 
 /* Category for subscription and payments feedback */
-"feedback.general.category.ppro" = "Subscription and Payments";
+"feedback.general.category.ppro" = "Abonements un maksājumi";
 
 /* Prompt to select a category for general feedback */
-"feedback.general.category.select" = "Select a category";
+"feedback.general.category.select" = "ATLASĪT KATEGORIJU";
 
 /* Category for VPN feedback */
 "feedback.general.category.vpn" = "VPN";
 
 /* Category for access code issues */
-"feedback.itr.category.access-code" = "Issue with access code";
+"feedback.itr.category.access-code" = "Problēma ar piekļuves kodu";
 
 /* Category for issues contacting an advisor */
-"feedback.itr.category.cant-contact-advisor" = "Unable to contact advisor";
+"feedback.itr.category.cant-contact-advisor" = "Nevar sazināties ar konsultantu";
 
 /* Prompt to select a category for Identity Theft Restoration feedback */
-"feedback.itr.category.select" = "Select a category";
+"feedback.itr.category.select" = "ATLASĪT KATEGORIJU";
 
 /* Category for other Identity Theft Restoration issues */
-"feedback.itr.category.something-else" = "Something else";
+"feedback.itr.category.something-else" = "Kaut kas cits";
 
 /* Category for unhelpful advisor calls */
-"feedback.itr.category.unhelpful" = "Call to Advisor was unhelpful";
+"feedback.itr.category.unhelpful" = "Zvans konsultantam nepalīdzēja";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Lūdzu, norādi pēc iespējas precīzāk";
@@ -1407,22 +1395,22 @@
 "feedback.performance.slowLoading" = "Tīmekļa lapas vai meklēšanas rezultāti tiek lēni ielādēti";
 
 /* Category for when scan finds incorrect records */
-"feedback.pir.category.not-me" = "The scan found records which aren't me";
+"feedback.pir.category.not-me" = "Skenēšanas laikā tika atrasti ieraksti, kas nav mani";
 
 /* Category for when scan doesn't find info on a specific site */
-"feedback.pir.category.nothing-on-site" = "The scan didn't find my info on a specific site";
+"feedback.pir.category.nothing-on-site" = "Skenēšana neatrada manu informāciju konkrētā vietnē";
 
 /* Category for other Personal Info Removal issues */
-"feedback.pir.category.other" = "Something else";
+"feedback.pir.category.other" = "Kaut kas cits";
 
 /* Category for when the removal process is stuck */
-"feedback.pir.category.removal-stuck" = "The removal process is stuck";
+"feedback.pir.category.removal-stuck" = "Noņemšanas process ir iestrēdzis";
 
 /* Category for when the scan is stuck */
-"feedback.pir.category.scan-stuck" = "The scan for records is stuck";
+"feedback.pir.category.scan-stuck" = "Ierakstu skenēšana ir iestrēgusi";
 
 /* Prompt to select a category for Personal Info Removal feedback */
-"feedback.pir.category.select" = "Select a category";
+"feedback.pir.category.select" = "ATLASĪT KATEGORIJU";
 
 /* Header above input field */
 "feedback.positive.form.header" = "Informācijas kopīgošana";
@@ -1443,13 +1431,13 @@
 "feedback.positive.submit" = "Kopīgot informāciju";
 
 /* Category for other Privacy Pro issues */
-"feedback.ppro.category.other" = "Something else";
+"feedback.ppro.category.other" = "Kaut kas cits";
 
 /* Category for one-time password issues */
-"feedback.ppro.category.otp" = "Issue with one-time password";
+"feedback.ppro.category.otp" = "Problēma ar vienreizējo paroli";
 
 /* Prompt to select a category for Privacy Pro feedback */
-"feedback.ppro.category.select" = "Select a category";
+"feedback.ppro.category.select" = "ATLASĪT KATEGORIJU";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Tavas anonīmās atsauksmes mums ir svarīgas.";
@@ -1601,9 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Rādīt visas cilnes";
 
-/* No comment provided by engineer. */
-"Learn more" = "Uzzināt vairāk";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo Mac datoram sniedz nepieciešamo ātrumu, ierastās pārlūkošanas funkcijas un savā klasē labākās privātuma pamatfunkcijas.";
 
@@ -1656,7 +1641,7 @@
 "navigation.title.edit" = "Rediģēt";
 
 /* String indicating NetP is snoozing when viewed from the settings screen */
-"netP.cell.snoozing" = "Snoozing";
+"netP.cell.snoozing" = "Iemidzināts";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
@@ -1664,14 +1649,8 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN atvienots, jo ir beidzies abonements. Abonē Privacy Pro, lai atkārtoti izveidotu savienojumu ar DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Tīkla aizsardzībai neizdevās izveidot savienojumu. Lūdzu, mēģini vēlreiz vēlāk.";
-
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Bieži uzdotie jautājumi par DuckDuckGo VPN ";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Tīkla aizsardzība tika pārtraukta. Tagad tiek mēģināts atkārtoti izveidot savienojumu...";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Ievadi savu ielūguma kodu, lai sāktu.";
@@ -1688,14 +1667,14 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Izdevās! Tu esi pievienots.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Atvērt VPN";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
-"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+"network.protection.snoozed.notification.body" = "VPN ir atslēgts uz %@";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Savienots · %@";
@@ -1722,22 +1701,22 @@
 "network.protection.status.header.title.on" = "DuckDuckGo VPN ir ieslēgts";
 
 /* Header title label text for the status view when VPN is snoozing */
-"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN is Snoozed";
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN ir atlikts";
 
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Kopīgot atsauksmi";
 
 /* The label for the NetP VPN when paused */
-"network.protection.status.paused" = "Paused";
+"network.protection.status.paused" = "Pārtraukts";
 
 /* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
-"network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
+"network.protection.status.snoozing.format" = "Atlikt, %@ paliek";
 
 /* Snooze button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.snooze" = "Snooze For 20 Minutes";
+"network.protection.status.view.action.snooze" = "Iemidzināt uz 20 minūtēm";
 
 /* Wake Up button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.wake-up" = "Wake Up";
+"network.protection.status.view.action.wake-up" = "Pamodināt";
 
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Savienojuma informācija";
@@ -1763,14 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Tīkla aizsardzība ir ieslēgta. Tava atrašanās vieta un darbības tiešsaistē ir aizsargātas.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Ierīces datplūsma tiek maršrutēta caur: %@.";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
-"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snauda ir beigusies. Ierīces datplūsma tiek maršrutēta caur: %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Ieslēgt paziņojumus";
@@ -2031,10 +2007,10 @@
 "ppro.feedback-form.email.placeholder" = "vards@email.com";
 
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
+"ppro.feedback-form.general-feedback.placeholder" = "Lūdzu, sniedz atsauksmes…";
 
 /* Title for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.title" = "General Feedback";
+"ppro.feedback-form.general-feedback.title" = "Vispārīgas atsauksmes";
 
 /* Title for the ITR category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
@@ -2043,46 +2019,46 @@
 "ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
 
 /* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
-"ppro.feedback-form.report-ppro-problem.title" = "Subscriptions and Payments";
+"ppro.feedback-form.report-ppro-problem.title" = "Abonementi un maksājumi";
 
 /* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.placeholder" = "Tell us what's going on…";
+"ppro.feedback-form.report-problem.placeholder" = "Pastāsti, kas notiek…";
 
 /* Title for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.title" = "Report a Problem";
+"ppro.feedback-form.report-problem.title" = "Ziņot par problēmu";
 
 /* Title for the VPN category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-vpn-problem.title" = "VPN";
 
 /* Placeholder for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.placeholder" = "What feature would you like to see?";
+"ppro.feedback-form.request-feature.placeholder" = "Kādu funkciju tu vēlētos redzēt?";
 
 /* Title for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.title" = "Feature Request";
+"ppro.feedback-form.request-feature.title" = "Funkcionalitātes pieprasījums";
 
 /* Title for the category selection section in the Privacy Pro feedback form */
-"ppro.feedback-form.select-category.title" = "Select a category";
+"ppro.feedback-form.select-category.title" = "ATLASĪT KATEGORIJU";
 
 /* Text for the body of the PPro feedback form */
 "ppro.feedback-form.text-1" = "Vai atradi problēmu, kas nav aplūkota mūsu [palīdzības centrā](duck://)? Mēs noteikti gribam par to uzzināt.Norādi savu e-pasta adresi, ja vēlies, lai mēs ar tevi sazināmies par šo problēmu (iespējams, nevarēsim reaģēt uz visām problēmām):";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
+"ppro.feedback-form.text-2" = "Papildus iepriekš ievadītajai informācijai mēs kopā ar tavām atsauksmēm nosūtām anonimizētu informāciju:";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-3" = "• Whether some browser features are active";
+"ppro.feedback-form.text-3" = "• vai dažas pārlūkprogrammas funkcijas ir aktīvas";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-4" = "• Aggregate app diagnostics (e.g., error codes)";
+"ppro.feedback-form.text-4" = "• apkopotus lietotņu diagnostikas datus (piemēram, kļūdu kodus)";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-5" = "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.";
+"ppro.feedback-form.text-5" = "Pieskaroties pie \"Iesniegt\", tu piekrīti, ka DuckDuckGo var izmantot iesniegto informāciju, lai uzlabotu lietotni.";
 
 /* Title for the text box in the Privacy Pro feedback form */
-"ppro.feedback-form.text-box.title" = "Feedback";
+"ppro.feedback-form.text-box.title" = "Atsauksmes";
 
 /* Title for the Privacy Pro feedback form */
-"ppro.feedback-form.title" = "Send Feedback";
+"ppro.feedback-form.title" = "Sūtīt atsauksmi";
 
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Pārvaldīt grāmatzīmes";
@@ -2174,16 +2150,16 @@
 "section.title.favorites" = "Izlase";
 
 /* Name of the option the user can chose to give general browser feedback */
-"send.browser.feedback.general-feedback" = "General feedback";
+"send.browser.feedback.general-feedback" = "Vispārīgas atsauksmes";
 
 /* Name of the option the user can chose to give browser feedback about a problem they enountered */
-"send.browser.feedback.report-problem" = "Report a problem";
+"send.browser.feedback.report-problem" = "Ziņot par problēmu";
 
 /* Name of the option the user can chose to give browser feedback about a feature they would like */
-"send.browser.feedback.request-feature" = "Request a feature";
+"send.browser.feedback.request-feature" = "Pieprasīt funkciju";
 
 /* Title of the picker where the user can chose the category of the feedback they want ot send. */
-"send.browser.feedback.select-category" = "Select a category";
+"send.browser.feedback.select-category" = "ATLASĪT KATEGORIJU";
 
 /* Settings cell for About DDG */
 "settings.about.ddg" = "Par DuckDuckGo";
@@ -2241,7 +2217,7 @@
 "settings.autolock.description" = "Ja ir iespējots Touch ID, Face ID vai sistēmas piekļuves kods, atverot lietotni, tev tā būs jāatbloķē.";
 
 /* Settings cell for Browser Feedback */
-"settings.browser.feedback" = "Browser Feedback";
+"settings.browser.feedback" = "Atsauksmes par pārlūkprogrammu";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automātiski notīrīt datus";
@@ -2541,12 +2517,6 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Abonēšanas plāni";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "ikgadējs";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "ikmēneša";
-
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Tavs abonements ir noņemts no šīs ierīces.";
 
@@ -2584,7 +2554,7 @@
 "subscription.faq.description" = "Saņem atbildes uz bieži uzdotiem jautājumiem vai sazinies ar Privacy Pro atbalsta dienestu mūsu palīdzības lapās.";
 
 /* Send Feedback Button */
-"subscription.feedback" = "Send Feedback";
+"subscription.feedback" = "Sūtīt atsauksmi";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Atcelt";
@@ -2688,11 +2658,23 @@
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Tava abonementa termiņš beidzās %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Tavs %1$@ abonements beidzas %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Tavs mēneša abonements beidzas %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Tavs %1$@ abonements atjaunojas %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Tavs abonements beidzas %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Tavs gada abonements beidzas %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Tavs mēneša abonements atjaunojas %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Tavs abonements atjaunojas %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Tavs gada abonements atjaunojas %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2804,9 +2786,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "%@ ir iespējota privātuma aizsardzība";
-
-/* No comment provided by engineer. */
-"Turn the VPN on and off right from the Home Screen." = "Ieslēdz un izslēdz VPN tieši no sākuma ekrāna.";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
@@ -3050,10 +3029,4 @@
 
 /* Title for the Windows browser download link page */
 "windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Iegūsti DuckDuckGo operētājsistēmai Windows!";
-
-/* No comment provided by engineer. */
-"You can customize your VPN location by connecting to any of our servers worldwide." = "Tu vari pielāgot savu VPN atrašanās vietu, izveidojot savienojumu ar jebkuru no mūsu serveriem visā pasaulē.";
-
-/* No comment provided by engineer. */
-"You can use sites or apps that block VPN traffic by snoozing the VPN connection." = "Vari izmantot vietnes vai lietotnes, kas bloķē VPN trafiku, uz laiku pārtraucot VPN savienojumu.";
 

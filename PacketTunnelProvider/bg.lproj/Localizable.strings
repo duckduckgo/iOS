@@ -1,24 +1,15 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN връзката е прекъсната поради изтекъл абонамент. Абонирайте се за Privacy Pro, за да свържете отново DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Неуспешно свързване на мрежовата защита. Моля, опитайте отново по-късно.";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Мрежовата защита е прекъсната. Извършва се опит за повторно свързване...";
-
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
-"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+"network.protection.snoozed.notification.body" = "VPN е отложен за %@";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Мрежовата защита е включена. Вашето местоположение и онлайн активност са защитени.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Трафикът на устройството се маршрутизира през %@.";
 
-/* The body of the notification shown when Network Protection connects successfully after snooze with the city + state/country as formatted parameter */
-"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
+/* The body of the notification shown when VPN connects successfully after snooze with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "Отлагането на VPN приключи. Трафикът на устройството се маршрутизира през %@.";
 

@@ -77,19 +77,19 @@
 "widget.vpn.button.disconnect" = "Отключиться";
 
 /* Label for the snooze end date, e.g. 'Until 9:51 AM' */
-"widget.vpn.label.snoozing-until" = "Until %@";
+"widget.vpn.label.snoozing-until" = "До %@";
 
 /* VPN Live Activity dismiss button text */
-"widget.vpn.live-activity.button.dismiss" = "Dismiss";
+"widget.vpn.live-activity.button.dismiss" = "Отклонить";
 
 /* VPN Live Activity wake up button text */
-"widget.vpn.live-activity.button.wake-up" = "Wake Up";
+"widget.vpn.live-activity.button.wake-up" = "Разбудить";
 
 /* VPN Live Activity active label text */
-"widget.vpn.live-activity.label.active" = "VPN is On";
+"widget.vpn.live-activity.label.active" = "VPN включен";
 
 /* VPN Live Activity snoozing label text */
-"widget.vpn.live-activity.label.snoozing" = "VPN Snoozing";
+"widget.vpn.live-activity.label.snoozing" = "Работа VPN отложена";
 
 /* Message describing VPN connected status */
 "widget.vpn.status.connected" = "VPN включен";
@@ -98,7 +98,7 @@
 "widget.vpn.status.disconnected" = "VPN отключен";
 
 /* Message describing VPN snoozing status */
-"widget.vpn.status.snoozed" = "VPN is Snoozed";
+"widget.vpn.status.snoozed" = "Работа VPN приостановлена";
 
 /* Subtitle describing VPN disconnected status */
 "widget.vpn.subtitle.disconnected" = "Не подключен";

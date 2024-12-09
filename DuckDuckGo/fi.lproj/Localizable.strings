@@ -118,12 +118,6 @@
 /* Share action */
 "action.title.share" = "Jaa";
 
-/* No comment provided by engineer. */
-"Add VPN Widget" = "Lisää VPN-widget";
-
-/* No comment provided by engineer. */
-"Add widget" = "Lisää widget";
-
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Alareuna";
 
@@ -347,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Poista Käytöstä";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Lue lisää";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Näytä";
@@ -668,9 +662,6 @@
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Päivitetäänkö käyttäjätunnus?";
 
-/* No comment provided by engineer. */
-"Avoid VPN Conflicts" = "Vältä VPN-konfliktit";
-
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Lisää kirjanmerkki";
 
@@ -787,9 +778,6 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Kyllä";
-
-/* No comment provided by engineer. */
-"Change Your Location" = "Vaihda sijaintisi";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Ohita";
@@ -1335,37 +1323,37 @@
 "feedback.form.submit" = "Lähetä";
 
 /* Title of the feedback form */
-"feedback.form.title" = "Help Improve Privacy Pro";
+"feedback.form.title" = "Auta parantamaan Privacy Prota";
 
 /* Category for Identity Theft Restoration feedback */
 "feedback.general.category.itr" = "Identity Theft Restoration";
 
 /* Category for Personal Info Removal feedback */
-"feedback.general.category.pir" = "Personal Info Removal";
+"feedback.general.category.pir" = "Henkilötietojen poistaminen";
 
 /* Category for subscription and payments feedback */
-"feedback.general.category.ppro" = "Subscription and Payments";
+"feedback.general.category.ppro" = "Tilaus ja maksut";
 
 /* Prompt to select a category for general feedback */
-"feedback.general.category.select" = "Select a category";
+"feedback.general.category.select" = "VALITSE KATEGORIA";
 
 /* Category for VPN feedback */
 "feedback.general.category.vpn" = "VPN";
 
 /* Category for access code issues */
-"feedback.itr.category.access-code" = "Issue with access code";
+"feedback.itr.category.access-code" = "Ongelma pääsykoodin kanssa";
 
 /* Category for issues contacting an advisor */
-"feedback.itr.category.cant-contact-advisor" = "Unable to contact advisor";
+"feedback.itr.category.cant-contact-advisor" = "Yhteydenotto neuvonantajaan ei onnistu";
 
 /* Prompt to select a category for Identity Theft Restoration feedback */
-"feedback.itr.category.select" = "Select a category";
+"feedback.itr.category.select" = "VALITSE KATEGORIA";
 
 /* Category for other Identity Theft Restoration issues */
-"feedback.itr.category.something-else" = "Something else";
+"feedback.itr.category.something-else" = "Jotain muuta";
 
 /* Category for unhelpful advisor calls */
-"feedback.itr.category.unhelpful" = "Call to Advisor was unhelpful";
+"feedback.itr.category.unhelpful" = "Soitto neuvonantajalle ei ollut hyödyllinen";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Kerro mahdollisimman tarkasti";
@@ -1407,22 +1395,22 @@
 "feedback.performance.slowLoading" = "Verkkosivut tai hakutulokset latautuvat hitaasti";
 
 /* Category for when scan finds incorrect records */
-"feedback.pir.category.not-me" = "The scan found records which aren't me";
+"feedback.pir.category.not-me" = "Skannaus löysi tietueita, jotka eivät liity minuun";
 
 /* Category for when scan doesn't find info on a specific site */
-"feedback.pir.category.nothing-on-site" = "The scan didn't find my info on a specific site";
+"feedback.pir.category.nothing-on-site" = "Skannaus ei löytänyt tietojani tietyltä sivustolta";
 
 /* Category for other Personal Info Removal issues */
-"feedback.pir.category.other" = "Something else";
+"feedback.pir.category.other" = "Jotain muuta";
 
 /* Category for when the removal process is stuck */
-"feedback.pir.category.removal-stuck" = "The removal process is stuck";
+"feedback.pir.category.removal-stuck" = "Poistoprosessi on jumissa";
 
 /* Category for when the scan is stuck */
-"feedback.pir.category.scan-stuck" = "The scan for records is stuck";
+"feedback.pir.category.scan-stuck" = "Tietueiden skannaus on jumissa";
 
 /* Prompt to select a category for Personal Info Removal feedback */
-"feedback.pir.category.select" = "Select a category";
+"feedback.pir.category.select" = "VALITSE KATEGORIA";
 
 /* Header above input field */
 "feedback.positive.form.header" = "Kerro tarkempia tietoja";
@@ -1443,13 +1431,13 @@
 "feedback.positive.submit" = "Kerro tarkempia tietoja";
 
 /* Category for other Privacy Pro issues */
-"feedback.ppro.category.other" = "Something else";
+"feedback.ppro.category.other" = "Jotain muuta";
 
 /* Category for one-time password issues */
-"feedback.ppro.category.otp" = "Issue with one-time password";
+"feedback.ppro.category.otp" = "Ongelma kertakäyttöisen salasanan kanssa";
 
 /* Prompt to select a category for Privacy Pro feedback */
-"feedback.ppro.category.select" = "Select a category";
+"feedback.ppro.category.select" = "VALITSE KATEGORIA";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Anonyymi palautteesi on meille tärkeää.";
@@ -1601,9 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Näytä kaikki välilehdet";
 
-/* No comment provided by engineer. */
-"Learn more" = "Lue lisää";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Macin DuckDuckGo tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot ja luokkansa parhaat tietosuojaominaisuudet.";
 
@@ -1656,7 +1641,7 @@
 "navigation.title.edit" = "Muokkaa";
 
 /* String indicating NetP is snoozing when viewed from the settings screen */
-"netP.cell.snoozing" = "Snoozing";
+"netP.cell.snoozing" = "Lepotila";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
@@ -1664,14 +1649,8 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN katkaistu vanhentuneen tilauksen takia. Tilaa Privacy Pro, jotta voit yhdistää DuckDuckGo VPN:n uudelleen.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Network Protection ei onnistunut muodostamaan yhteyttä. Yritä myöhemmin uudelleen.";
-
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "DuckDuckGo VPN – usein kysytyt kysymykset";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Network Protection keskeytettiin. Yritetään muodostaa yhteys uudelleen...";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Aloita antamalla kutsukoodisi.";
@@ -1688,14 +1667,14 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Onnistui! Olet mukana.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Avaa VPN";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
-"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+"network.protection.snoozed.notification.body" = "VPN on lepotilassa %@";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Yhdistetty · %@";
@@ -1722,22 +1701,22 @@
 "network.protection.status.header.title.on" = "DuckDuckGo VPN on päällä";
 
 /* Header title label text for the status view when VPN is snoozing */
-"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN is Snoozed";
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN on lepotilassa";
 
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Jaa palaute";
 
 /* The label for the NetP VPN when paused */
-"network.protection.status.paused" = "Paused";
+"network.protection.status.paused" = "Keskeytetty";
 
 /* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
-"network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
+"network.protection.status.snoozing.format" = "Lepotila, %@ jäljellä";
 
 /* Snooze button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.snooze" = "Snooze For 20 Minutes";
+"network.protection.status.view.action.snooze" = "Aseta lepotilaan 20 minuutiksi";
 
 /* Wake Up button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.wake-up" = "Wake Up";
+"network.protection.status.view.action.wake-up" = "Herätä";
 
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Yhteyden tiedot";
@@ -1763,14 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Network Protection on käytössä. Sijaintisi ja verkkotoimintasi on suojattu.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Laitteen liikenne reititetään %@ kautta.";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
-"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN-lepotila on päättynyt. Laitteen liikenne reititetään %@ kautta.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Ota ilmoitukset käyttöön";
@@ -2031,10 +2007,10 @@
 "ppro.feedback-form.email.placeholder" = "nimi@sähköposti.com";
 
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
+"ppro.feedback-form.general-feedback.placeholder" = "Anna meille palautetta...";
 
 /* Title for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.title" = "General Feedback";
+"ppro.feedback-form.general-feedback.title" = "Yleistä palautetta";
 
 /* Title for the ITR category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
@@ -2043,46 +2019,46 @@
 "ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
 
 /* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
-"ppro.feedback-form.report-ppro-problem.title" = "Subscriptions and Payments";
+"ppro.feedback-form.report-ppro-problem.title" = "Tilaukset ja maksut";
 
 /* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.placeholder" = "Tell us what's going on…";
+"ppro.feedback-form.report-problem.placeholder" = "Kerro meille, mitä tapahtuu...";
 
 /* Title for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.title" = "Report a Problem";
+"ppro.feedback-form.report-problem.title" = "Ilmoita ongelmasta";
 
 /* Title for the VPN category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-vpn-problem.title" = "VPN";
 
 /* Placeholder for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.placeholder" = "What feature would you like to see?";
+"ppro.feedback-form.request-feature.placeholder" = "Minkä ominaisuuden haluaisit nähdä?";
 
 /* Title for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.title" = "Feature Request";
+"ppro.feedback-form.request-feature.title" = "Ominaisuuspyyntö";
 
 /* Title for the category selection section in the Privacy Pro feedback form */
-"ppro.feedback-form.select-category.title" = "Select a category";
+"ppro.feedback-form.select-category.title" = "VALITSE KATEGORIA";
 
 /* Text for the body of the PPro feedback form */
 "ppro.feedback-form.text-1" = "Kohtasitko ongelman, jota ei löydy [ohjekeskuksestamme](duck://)? Haluamme ehdottomasti tietää siitä.\n\nAnna sähköpostiosoite, jos haluat meidän ottavan sinuun yhteyttä tästä ongelmasta (emme ehkä pysty vastaamaan kaikkiin ongelmiin):";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
+"ppro.feedback-form.text-2" = "Edellä annettujen tietojen lisäksi lähetämme palautteesi mukana joitakin anonymisoituja tietoja:";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-3" = "• Whether some browser features are active";
+"ppro.feedback-form.text-3" = "• Ovatko jotkin selaimen ominaisuudet aktiivisia";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-4" = "• Aggregate app diagnostics (e.g., error codes)";
+"ppro.feedback-form.text-4" = "• Yhdistetty sovellusdiagnostiikka (esim. virhekoodit)";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-5" = "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.";
+"ppro.feedback-form.text-5" = "Napauttamalla \"Lähetä\" hyväksyt, että DuckDuckGo voi käyttää annettuja tietoja sovelluksen parantamiseen.";
 
 /* Title for the text box in the Privacy Pro feedback form */
-"ppro.feedback-form.text-box.title" = "Feedback";
+"ppro.feedback-form.text-box.title" = "Palaute";
 
 /* Title for the Privacy Pro feedback form */
-"ppro.feedback-form.title" = "Send Feedback";
+"ppro.feedback-form.title" = "Lähetä palautetta";
 
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Hallitse kirjanmerkkejä";
@@ -2174,16 +2150,16 @@
 "section.title.favorites" = "Suosikit";
 
 /* Name of the option the user can chose to give general browser feedback */
-"send.browser.feedback.general-feedback" = "General feedback";
+"send.browser.feedback.general-feedback" = "Yleistä palautetta";
 
 /* Name of the option the user can chose to give browser feedback about a problem they enountered */
-"send.browser.feedback.report-problem" = "Report a problem";
+"send.browser.feedback.report-problem" = "Ilmoita ongelmasta";
 
 /* Name of the option the user can chose to give browser feedback about a feature they would like */
-"send.browser.feedback.request-feature" = "Request a feature";
+"send.browser.feedback.request-feature" = "Pyydä ominaisuutta";
 
 /* Title of the picker where the user can chose the category of the feedback they want ot send. */
-"send.browser.feedback.select-category" = "Select a category";
+"send.browser.feedback.select-category" = "VALITSE KATEGORIA";
 
 /* Settings cell for About DDG */
 "settings.about.ddg" = "Tietoa DuckDuckGo:sta";
@@ -2241,7 +2217,7 @@
 "settings.autolock.description" = "Jos käytössä on Touch ID, Face ID tai järjestelmän salasana, sinua pyydetään poistamaan lukitus, kun avaat sovelluksen.";
 
 /* Settings cell for Browser Feedback */
-"settings.browser.feedback" = "Browser Feedback";
+"settings.browser.feedback" = "Selainpalaute";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Tyhjennä tiedot automaattisesti";
@@ -2541,12 +2517,6 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Tilaussopimukset";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "vuotuinen";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "kuukausittain";
-
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Tilauksesi on poistettu tältä laitteelta.";
 
@@ -2584,7 +2554,7 @@
 "subscription.faq.description" = "Katso vastaukset usein kysyttyihin kysymyksiin tai ota yhteyttä Privacy Pron tukeen ohjesivuiltamme.";
 
 /* Send Feedback Button */
-"subscription.feedback" = "Send Feedback";
+"subscription.feedback" = "Lähetä palautetta";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Peruuta";
@@ -2688,11 +2658,23 @@
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Tilauksesi päättyi %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Tilauksesi %1$@ vanhenee %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Kuukausitilauksesi vanhenee %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Tilauksesi %1$@ uusiutuu %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Tilauksesi vanhenee %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Vuositilauksesi päättyy %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Kuukausitilauksesi uusiutuu %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Tilauksesi uusiutuu %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Vuositilauksesi uusiutuu %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2804,9 +2786,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Yksityisyydensuoja otettu käyttöön osoitteessa %@";
-
-/* No comment provided by engineer. */
-"Turn the VPN on and off right from the Home Screen." = "Kytke VPN päälle ja pois päältä suoraan aloitusnäytöstä.";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
@@ -3050,10 +3029,4 @@
 
 /* Title for the Windows browser download link page */
 "windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Hanki DuckDuckGo Windowsille!";
-
-/* No comment provided by engineer. */
-"You can customize your VPN location by connecting to any of our servers worldwide." = "Voit mukauttaa VPN-sijaintisi muodostamalla yhteyden mihin tahansa palvelimistamme maailmanlaajuisesti.";
-
-/* No comment provided by engineer. */
-"You can use sites or apps that block VPN traffic by snoozing the VPN connection." = "Voit käyttää sivustoja tai sovelluksia, jotka estävät VPN-liikenteen torkuttamalla VPN-yhteyttä.";
 

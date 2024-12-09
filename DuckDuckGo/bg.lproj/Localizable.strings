@@ -118,12 +118,6 @@
 /* Share action */
 "action.title.share" = "Споделяне";
 
-/* No comment provided by engineer. */
-"Add VPN Widget" = "Добавете приспособлението VPN";
-
-/* No comment provided by engineer. */
-"Add widget" = "Добави приспособлението";
-
 /* Settings label for bottom position for the address bar */
 "address.bar.bottom" = "Отдолу";
 
@@ -347,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Забрани";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Научете повече";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Преглед";
@@ -668,9 +662,6 @@
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Актуализиране на потребителското име?";
 
-/* No comment provided by engineer. */
-"Avoid VPN Conflicts" = "Така ще избегнете на конфликти с VPN";
-
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Добави отметка";
 
@@ -787,9 +778,6 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Да";
-
-/* No comment provided by engineer. */
-"Change Your Location" = "Променете Вашето местоположение";
 
 /* Button to continue the onboarding process */
 "contextual.onboarding.addToDock.buttons.skip" = "Пропускане";
@@ -1335,37 +1323,37 @@
 "feedback.form.submit" = "Изпрати";
 
 /* Title of the feedback form */
-"feedback.form.title" = "Help Improve Privacy Pro";
+"feedback.form.title" = "Помощ за подобряване на Privacy Pro";
 
 /* Category for Identity Theft Restoration feedback */
 "feedback.general.category.itr" = "Identity Theft Restoration";
 
 /* Category for Personal Info Removal feedback */
-"feedback.general.category.pir" = "Personal Info Removal";
+"feedback.general.category.pir" = "Премахване на лични данни";
 
 /* Category for subscription and payments feedback */
-"feedback.general.category.ppro" = "Subscription and Payments";
+"feedback.general.category.ppro" = "Абонамент и плащания";
 
 /* Prompt to select a category for general feedback */
-"feedback.general.category.select" = "Select a category";
+"feedback.general.category.select" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* Category for VPN feedback */
 "feedback.general.category.vpn" = "VPN";
 
 /* Category for access code issues */
-"feedback.itr.category.access-code" = "Issue with access code";
+"feedback.itr.category.access-code" = "Проблем с кода за достъп";
 
 /* Category for issues contacting an advisor */
-"feedback.itr.category.cant-contact-advisor" = "Unable to contact advisor";
+"feedback.itr.category.cant-contact-advisor" = "Неуспешно свързване с консултант";
 
 /* Prompt to select a category for Identity Theft Restoration feedback */
-"feedback.itr.category.select" = "Select a category";
+"feedback.itr.category.select" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* Category for other Identity Theft Restoration issues */
-"feedback.itr.category.something-else" = "Something else";
+"feedback.itr.category.something-else" = "Нещо друго";
 
 /* Category for unhelpful advisor calls */
-"feedback.itr.category.unhelpful" = "Call to Advisor was unhelpful";
+"feedback.itr.category.unhelpful" = "Разговорът с консултанта беше неефективен";
 
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Моля, бъдете колкото може по-конкретни";
@@ -1407,22 +1395,22 @@
 "feedback.performance.slowLoading" = "Уеб страниците или резултатите от търсене се зареждат бавно";
 
 /* Category for when scan finds incorrect records */
-"feedback.pir.category.not-me" = "The scan found records which aren't me";
+"feedback.pir.category.not-me" = "Сканирането откри записи, които не са направени от мен";
 
 /* Category for when scan doesn't find info on a specific site */
-"feedback.pir.category.nothing-on-site" = "The scan didn't find my info on a specific site";
+"feedback.pir.category.nothing-on-site" = "Сканирането не откри моята информация на конкретен сайт";
 
 /* Category for other Personal Info Removal issues */
-"feedback.pir.category.other" = "Something else";
+"feedback.pir.category.other" = "Нещо друго";
 
 /* Category for when the removal process is stuck */
-"feedback.pir.category.removal-stuck" = "The removal process is stuck";
+"feedback.pir.category.removal-stuck" = "Процесът на премахване е блокирал";
 
 /* Category for when the scan is stuck */
-"feedback.pir.category.scan-stuck" = "The scan for records is stuck";
+"feedback.pir.category.scan-stuck" = "Сканирането за записи е блокирало";
 
 /* Prompt to select a category for Personal Info Removal feedback */
-"feedback.pir.category.select" = "Select a category";
+"feedback.pir.category.select" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* Header above input field */
 "feedback.positive.form.header" = "Споделете подробности";
@@ -1443,13 +1431,13 @@
 "feedback.positive.submit" = "Споделете подробности";
 
 /* Category for other Privacy Pro issues */
-"feedback.ppro.category.other" = "Something else";
+"feedback.ppro.category.other" = "Нещо друго";
 
 /* Category for one-time password issues */
-"feedback.ppro.category.otp" = "Issue with one-time password";
+"feedback.ppro.category.otp" = "Проблем с еднократна парола";
 
 /* Prompt to select a category for Privacy Pro feedback */
-"feedback.ppro.category.select" = "Select a category";
+"feedback.ppro.category.select" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Вашите анонимни отзиви са важни за нас.";
@@ -1601,9 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Показване на всички раздели";
 
-/* No comment provided by engineer. */
-"Learn more" = "Научете повече";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo за Mac притежава необходимата скорост, както и очакваните от Вас функции за сърфиране, и предлага най-добрите в този клас елементи за защита.";
 
@@ -1656,7 +1641,7 @@
 "navigation.title.edit" = "Редактиране";
 
 /* String indicating NetP is snoozing when viewed from the settings screen */
-"netP.cell.snoozing" = "Snoozing";
+"netP.cell.snoozing" = "Отлагане";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
@@ -1664,14 +1649,8 @@
 /* The body of the notification when Privacy Pro subscription expired */
 "network.protection.entitlement.expired.notification.body" = "VPN връзката е прекъсната поради изтекъл абонамент. Абонирайте се за Privacy Pro, за да свържете отново DuckDuckGo VPN.";
 
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Неуспешно свързване на мрежовата защита. Моля, опитайте отново по-късно.";
-
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Често задавани въпроси за DuckDuckGo VPN";
-
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Мрежовата защита е прекъсната. Извършва се опит за повторно свързване...";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Въведете кода за покана, за да започнете.";
@@ -1688,14 +1667,14 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Успешна заявка! Вече сте регистрирани.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Отваряне на VPN";
 
 /* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
-"network.protection.snoozed.notification.body" = "VPN snoozed for %@";
+"network.protection.snoozed.notification.body" = "VPN е отложен за %@";
 
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Свързан · %@";
@@ -1722,22 +1701,22 @@
 "network.protection.status.header.title.on" = "DuckDuckGo VPN е включен";
 
 /* Header title label text for the status view when VPN is snoozing */
-"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN is Snoozed";
+"network.protection.status.header.title.snoozed" = "VPN на DuckDuckGo е отложен";
 
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Споделяне на отзив";
 
 /* The label for the NetP VPN when paused */
-"network.protection.status.paused" = "Paused";
+"network.protection.status.paused" = "На пауза";
 
 /* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
-"network.protection.status.snoozing.format" = "Snoozing, %@ remaining";
+"network.protection.status.snoozing.format" = "Отлагане, остават %@";
 
 /* Snooze button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.snooze" = "Snooze For 20 Minutes";
+"network.protection.status.view.action.snooze" = "Отлагане за 20 минути";
 
 /* Wake Up button title shown in NetworkProtection's status view. */
-"network.protection.status.view.action.wake-up" = "Wake Up";
+"network.protection.status.view.action.wake-up" = "Събуждане";
 
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Подробности за връзката";
@@ -1763,14 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Мрежовата защита е включена. Вашето местоположение и онлайн активност са защитени.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Трафикът на устройството се маршрутизира през %@.";
 
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
-"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN snooze has ended. Routing device traffic through %@.";
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "Отлагането на VPN приключи. Трафикът на устройството се маршрутизира през %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Включване на известията";
@@ -2031,10 +2007,10 @@
 "ppro.feedback-form.email.placeholder" = "име@имейл.com";
 
 /* Placeholder for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.placeholder" = "Please give us your feedback…";
+"ppro.feedback-form.general-feedback.placeholder" = "Моля, споделете своето мнение…";
 
 /* Title for the General Feedback step in the Privacy Pro feedback form */
-"ppro.feedback-form.general-feedback.title" = "General Feedback";
+"ppro.feedback-form.general-feedback.title" = "Отзив с обща информация";
 
 /* Title for the ITR category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
@@ -2043,46 +2019,46 @@
 "ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
 
 /* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
-"ppro.feedback-form.report-ppro-problem.title" = "Subscriptions and Payments";
+"ppro.feedback-form.report-ppro-problem.title" = "Абонаменти и плащания";
 
 /* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.placeholder" = "Tell us what's going on…";
+"ppro.feedback-form.report-problem.placeholder" = "Кажете ни какъв е проблемът…";
 
 /* Title for the Report a Problem step in the Privacy Pro feedback form */
-"ppro.feedback-form.report-problem.title" = "Report a Problem";
+"ppro.feedback-form.report-problem.title" = "Докладване на проблем";
 
 /* Title for the VPN category in the Privacy Pro feedback form */
 "ppro.feedback-form.report-vpn-problem.title" = "VPN";
 
 /* Placeholder for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.placeholder" = "What feature would you like to see?";
+"ppro.feedback-form.request-feature.placeholder" = "Каква функция бихте искали да въведем?";
 
 /* Title for the Feature Request step in the Privacy Pro feedback form */
-"ppro.feedback-form.request-feature.title" = "Feature Request";
+"ppro.feedback-form.request-feature.title" = "Заявка за функция";
 
 /* Title for the category selection section in the Privacy Pro feedback form */
-"ppro.feedback-form.select-category.title" = "Select a category";
+"ppro.feedback-form.select-category.title" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* Text for the body of the PPro feedback form */
 "ppro.feedback-form.text-1" = "Попаднахте на проблем, който не е разгледан в нашия [помощен център](duck://)? Определено искаме да знаем за това.\n\nПосочете имейл, ако искате да се свържем с Вас относно този проблем (може да не успеем да изпратим отговор за всички проблеми):";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-2" = "In addition to the details entered above, we send some anonymized info with your feedback:";
+"ppro.feedback-form.text-2" = "В допълнение към данните, въведени по-горе, изпращаме анонимна информация с вашия отзив:";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-3" = "• Whether some browser features are active";
+"ppro.feedback-form.text-3" = "• Дали някои функции на браузъра са активни";
 
 /* Bullet text for the body of the PPro feedback form */
-"ppro.feedback-form.text-4" = "• Aggregate app diagnostics (e.g., error codes)";
+"ppro.feedback-form.text-4" = "• Обобщени диагностични данни за приложението (напр. кодове за грешки)";
 
 /* Text for the body of the PPro feedback form */
-"ppro.feedback-form.text-5" = "By tapping \"Submit\" you agree that DuckDuckGo may use information submitted to improve the app.";
+"ppro.feedback-form.text-5" = "С натискането на бутона „Изпращане“ се съгласявате, че DuckDuckGo може да използва предоставената информация за подобряване на приложението.";
 
 /* Title for the text box in the Privacy Pro feedback form */
-"ppro.feedback-form.text-box.title" = "Feedback";
+"ppro.feedback-form.text-box.title" = "Обратна връзка";
 
 /* Title for the Privacy Pro feedback form */
-"ppro.feedback-form.title" = "Send Feedback";
+"ppro.feedback-form.title" = "Изпратете отзив";
 
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Управление на отметки";
@@ -2174,16 +2150,16 @@
 "section.title.favorites" = "Любими";
 
 /* Name of the option the user can chose to give general browser feedback */
-"send.browser.feedback.general-feedback" = "General feedback";
+"send.browser.feedback.general-feedback" = "Отзив с обща информация";
 
 /* Name of the option the user can chose to give browser feedback about a problem they enountered */
-"send.browser.feedback.report-problem" = "Report a problem";
+"send.browser.feedback.report-problem" = "Докладване на проблем";
 
 /* Name of the option the user can chose to give browser feedback about a feature they would like */
-"send.browser.feedback.request-feature" = "Request a feature";
+"send.browser.feedback.request-feature" = "Заявка за функция";
 
 /* Title of the picker where the user can chose the category of the feedback they want ot send. */
-"send.browser.feedback.select-category" = "Select a category";
+"send.browser.feedback.select-category" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
 
 /* Settings cell for About DDG */
 "settings.about.ddg" = "Относно DuckDuckGo";
@@ -2241,7 +2217,7 @@
 "settings.autolock.description" = "Ако сте активирали пръстов отпечатък, лицево разпознаване или системна парола, ще бъдете приканени да отключите приложението при отваряне.";
 
 /* Settings cell for Browser Feedback */
-"settings.browser.feedback" = "Browser Feedback";
+"settings.browser.feedback" = "Отзив за браузъра";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Автоматично изчистване на данните";
@@ -2541,12 +2517,6 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Абонаментни планове";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "годишен";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "месечен";
-
 /* Subscription Removal confirmation message */
 "subscription.cancel.message" = "Абонаментът е премахнат от това устройство.";
 
@@ -2584,7 +2554,7 @@
 "subscription.faq.description" = "Вижте отговори на често задавани въпроси или се свържете с поддръжката на Privacy Pro от нашите страници за помощ.";
 
 /* Send Feedback Button */
-"subscription.feedback" = "Send Feedback";
+"subscription.feedback" = "Изпратете отзив";
 
 /* Cancel action for the existing subscription dialog */
 "subscription.found.cancel" = "Отмени";
@@ -2688,11 +2658,23 @@
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Абонаментът ви е изтекъл на %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Вашият %1$@ абонамент изтича на %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Месечният ви абонамент изтича на %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Вашият %1$@ абонамент се подновява на %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Абонаментът ви изтича на %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Годишният ви абонамент изтича на %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Месечният ви абонамент се подновява на %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Абонаментът ви се подновява на %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Годишният ви абонамент се подновява на %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2804,9 +2786,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Активирана защита на поверителността за %@";
-
-/* No comment provided by engineer. */
-"Turn the VPN on and off right from the Home Screen." = "Можете да включвате и изключвате VPN направо от началния екран.";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Предложение за автоматично довършване";
@@ -3050,10 +3029,4 @@
 
 /* Title for the Windows browser download link page */
 "windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Вземете DuckDuckGo за Windows!";
-
-/* No comment provided by engineer. */
-"You can customize your VPN location by connecting to any of our servers worldwide." = "Можете да персонализирате Вашето VPN местоположение, като се свържете с някой от нашите сървъри по целия свят.";
-
-/* No comment provided by engineer. */
-"You can use sites or apps that block VPN traffic by snoozing the VPN connection." = "Можете да използвате сайтове или приложения, които блокират VPN трафика, като изключите временно VPN връзката.";
 

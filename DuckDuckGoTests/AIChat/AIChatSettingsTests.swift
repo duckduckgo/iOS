@@ -110,10 +110,10 @@ class AIChatSettingsTests: XCTestCase {
             AIChatSubfeature.browsingToolbarShortcut.rawValue: [AppVersionProvider().appVersion() ?? ""]
         ]
         settings.enableAIChatBrowsingMenuUserSettings(enable: false)
-        XCTAssertFalse(settings.isAIChatBrowsingToolbarShortcutFeatureEnabled)
+        XCTAssertFalse(settings.isAIChatBrowsingMenuUserSettingsEnabled)
 
         settings.enableAIChatBrowsingMenuUserSettings(enable: true)
-        XCTAssertTrue(settings.isAIChatBrowsingToolbarShortcutFeatureEnabled)
+        XCTAssertTrue(settings.isAIChatBrowsingMenuUserSettingsEnabled)
     }
 
     func testEnableAIChatAddressBarUserSettings() {
@@ -121,6 +121,14 @@ class AIChatSettingsTests: XCTestCase {
                                       internalUserDecider: mockInternalUserDecider,
                                       userDefaults: mockUserDefaults,
                                       notificationCenter: mockNotificationCenter)
+
+        (mockPrivacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.enabledFeaturesForVersions = [
+            .aiChat: [AppVersionProvider().appVersion() ?? ""]
+        ]
+
+        (mockPrivacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.enabledSubfeaturesForVersions = [
+            AIChatSubfeature.addressBarShortcut.rawValue: [AppVersionProvider().appVersion() ?? ""]
+        ]
 
         settings.enableAIChatAddressBarUserSettings(enable: false)
         XCTAssertFalse(settings.isAIChatAddressBarUserSettingsEnabled)
@@ -145,6 +153,37 @@ class AIChatSettingsTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
         mockNotificationCenter.removeObserver(observer)
     }
+
+    func testAIChatBrowsingMenuUserSettingsDisabledWhenToolbarShortcutFeatureDisabled() {
+        let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
+                                      internalUserDecider: mockInternalUserDecider,
+                                      userDefaults: mockUserDefaults,
+                                      notificationCenter: mockNotificationCenter)
+
+        (mockPrivacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.enabledSubfeaturesForVersions = [
+            AIChatSubfeature.browsingToolbarShortcut.rawValue: []
+        ]
+
+        settings.enableAIChatBrowsingMenuUserSettings(enable: true)
+
+        XCTAssertFalse(settings.isAIChatBrowsingMenuUserSettingsEnabled)
+    }
+
+    func testAIChatAddressBarUserSettingsDisabledWhenAddressBarShortcutFeatureDisabled() {
+        let settings = AIChatSettings(privacyConfigurationManager: mockPrivacyConfigurationManager,
+                                      internalUserDecider: mockInternalUserDecider,
+                                      userDefaults: mockUserDefaults,
+                                      notificationCenter: mockNotificationCenter)
+
+        (mockPrivacyConfigurationManager.privacyConfig as? PrivacyConfigurationMock)?.enabledSubfeaturesForVersions = [
+            AIChatSubfeature.addressBarShortcut.rawValue: []
+        ]
+
+        settings.enableAIChatAddressBarUserSettings(enable: true)
+
+        XCTAssertFalse(settings.isAIChatAddressBarUserSettingsEnabled)
+    }
+
 }
 
 final private class MockInternalUserDecider: InternalUserDecider {

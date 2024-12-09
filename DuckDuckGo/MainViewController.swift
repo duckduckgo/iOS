@@ -1559,7 +1559,7 @@ class MainViewController: UIViewController {
     private func subscribeToAIChatSettingsEvents() {
         NotificationCenter.default.publisher(for: .aiChatSettingsChanged)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] notification in
+            .sink { [weak self] _ in
                 self?.refreshOmniBar()
             }
             .store(in: &aiChatCancellables)

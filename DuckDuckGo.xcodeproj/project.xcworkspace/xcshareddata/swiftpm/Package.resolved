@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "graeme/partial-form-save-refactor",
-        "revision" : "2d9339d4e20353a06d35e7747f1c167db549df5e"
+        "revision" : "20df9e22d5a69acfc25204fb0228a9d6f79b721f",
+        "version" : "219.0.0"
       }
     },
     {

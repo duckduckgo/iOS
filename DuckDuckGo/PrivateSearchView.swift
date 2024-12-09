@@ -69,6 +69,9 @@ struct PrivateSearchViewSettings: View {
                              webLinkIndicator: true,
                              isButton: true)
         }
+        .onFirstAppear {
+            Pixel.fire(pixel: .settingsPrivateSearchOpen)
+        }
     }
 }
 

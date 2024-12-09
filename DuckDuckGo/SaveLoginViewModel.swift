@@ -88,8 +88,12 @@ final class SaveLoginViewModel: ObservableObject {
         credentialManager.hasSavedMatchingUsername
     }
     
-    var isUpdatingUsername: Bool {
+    var isUpdatingEmptyUsername: Bool {
         credentialManager.hasSavedMatchingPasswordWithoutUsername
+    }
+
+    var isUpdatingEmptyPassword: Bool {
+        credentialManager.hasSavedMatchingUsernameWithoutPassword
     }
 
     var hiddenPassword: String {
@@ -132,7 +136,7 @@ final class SaveLoginViewModel: ObservableObject {
             return .savePassword
         }
         
-        if isUpdatingUsername {
+        if isUpdatingEmptyUsername {
             return .updateUsername
         }
         

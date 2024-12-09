@@ -470,8 +470,9 @@ extension SettingsViewModel {
             duckPlayerMode: appSettings.duckPlayerMode,
             duckPlayerOpenInNewTab: appSettings.duckPlayerOpenInNewTab,
             duckPlayerOpenInNewTabEnabled: featureFlagger.isFeatureOn(.duckPlayerOpenInNewTab),
-            aiChatEnabled: aiChatSettings.isAIChatFeatureEnabled
-
+            aiChat: SettingsState.AIChat(enabled: aiChatSettings.isAIChatFeatureEnabled,
+                                         isAIChatBrowsingMenuFeatureFlagEnabled: aiChatSettings.isAIChatBrowsingToolbarShortcutFeatureEnabled,
+                                         isAIChatAddressBarFeatureFlagEnabled: aiChatSettings.isAIChatAddressBarShortcutFeatureEnabled)
         )
         
         updateRecentlyVisitedSitesVisibility()

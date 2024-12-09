@@ -62,11 +62,11 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     var isAIChatBrowsingMenuUserSettingsEnabled: Bool {
-        userDefaults.showAIChatBrowsingMenu
+        userDefaults.showAIChatBrowsingMenu && isAIChatBrowsingToolbarShortcutFeatureEnabled
     }
 
     var isAIChatAddressBarUserSettingsEnabled: Bool {
-        userDefaults.showAIChatAddressBar
+        userDefaults.showAIChatAddressBar && isAIChatAddressBarShortcutFeatureEnabled
     }
 
     var isAIChatFeatureEnabled: Bool {
@@ -100,7 +100,7 @@ struct AIChatSettings: AIChatSettingsProvider {
     private func isFeatureEnabled(for subfeature: AIChatSubfeature) -> Bool {
         let isSubfeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
         let isInternalUser = internalUserDecider.isInternalUser
-        return (isSubfeatureFlagEnabled || isInternalUser) && isAIChatBrowsingMenuUserSettingsEnabled
+        return (isSubfeatureFlagEnabled || isInternalUser)
     }
     
     private func getSettingsData(_ value: SettingsValue) -> String {

@@ -44,11 +44,15 @@ struct SettingsAIChatView: View {
             .listRowBackground(Color.clear)
 
             Section {
-                SettingsCellView(label: UserText.aiChatSettingsEnableBrowsingMenuToggle,
-                                 accessory: .toggle(isOn: viewModel.aiChatBrowsingMenuEnabledBinding))
+                if viewModel.state.aiChat.isAIChatBrowsingMenuFeatureFlagEnabled {
+                    SettingsCellView(label: UserText.aiChatSettingsEnableBrowsingMenuToggle,
+                                     accessory: .toggle(isOn: viewModel.aiChatBrowsingMenuEnabledBinding))
+                }
 
-                SettingsCellView(label: UserText.aiChatSettingsEnableAddressBarToggle,
-                                 accessory: .toggle(isOn: viewModel.aiChatAddressBarEnabledBinding))
+                if viewModel.state.aiChat.isAIChatAddressBarFeatureFlagEnabled {
+                    SettingsCellView(label: UserText.aiChatSettingsEnableAddressBarToggle,
+                                     accessory: .toggle(isOn: viewModel.aiChatAddressBarEnabledBinding))
+                }
 
             }
         }.applySettingsListModifiers(title: UserText.aiChatFeatureName,

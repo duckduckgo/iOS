@@ -30,6 +30,7 @@ struct AIChatSettings: AIChatSettingsProvider {
 
         var defaultValue: String {
             switch self {
+                /// https://app.asana.com/0/1208541424548398/1208567543352020/f
             case .aiChatURL: return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=4"
             }
         }
@@ -41,11 +42,14 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
     private let internalUserDecider: InternalUserDecider
     private let userDefaults: UserDefaults
+    private let notificationCenter: NotificationCenter
 
-    init(privacyConfigurationManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider, userDefaults: UserDefaults = .standard) {
+    init(privacyConfigurationManager: PrivacyConfigurationManaging, internalUserDecider: InternalUserDecider, userDefaults: UserDefaults = .standard,
+         notificationCenter: NotificationCenter = .default) {
         self.internalUserDecider = internalUserDecider
         self.privacyConfigurationManager = privacyConfigurationManager
         self.userDefaults = userDefaults
+        self.notificationCenter = notificationCenter
     }
 
     // MARK: - Public
@@ -58,26 +62,47 @@ struct AIChatSettings: AIChatSettingsProvider {
     }
 
     var isAIChatBrowsingMenuUserSettingsEnabled: Bool {
-        userDefaults.showAIChatBrowsingMenu
+        userDefaults.showAIChatBrowsingMenu && isAIChatBrowsingMenubarShortcutFeatureEnabled
+    }
+
+    var isAIChatAddressBarUserSettingsEnabled: Bool {
+        userDefaults.showAIChatAddressBar && isAIChatAddressBarShortcutFeatureEnabled
     }
 
     var isAIChatFeatureEnabled: Bool {
         privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .aiChat) || internalUserDecider.isInternalUser
     }
 
-    var isAIChatBrowsingToolbarShortcutFeatureEnabled: Bool {
-        let isBrowsingToolbarShortcutFeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(AIChatSubfeature.browsingToolbarShortcut)
-        let isInternalUser = internalUserDecider.isInternalUser
-        let isFeatureEnabled = isBrowsingToolbarShortcutFeatureFlagEnabled || isInternalUser
-        return isFeatureEnabled && isAIChatBrowsingMenuUserSettingsEnabled
+    var isAIChatAddressBarShortcutFeatureEnabled: Bool {
+        return isFeatureEnabled(for: .addressBarShortcut)
+    }
+
+    var isAIChatBrowsingMenubarShortcutFeatureEnabled: Bool {
+        return isFeatureEnabled(for: .browsingToolbarShortcut)
     }
 
     func enableAIChatBrowsingMenuUserSettings(enable: Bool) {
         userDefaults.showAIChatBrowsingMenu = enable
+        triggerSettingsChangedNotification()
+    }
+
+    func enableAIChatAddressBarUserSettings(enable: Bool) {
+        userDefaults.showAIChatAddressBar = enable
+        triggerSettingsChangedNotification()
     }
 
     // MARK: - Private
 
+    private func triggerSettingsChangedNotification() {
+        notificationCenter.post(name: .aiChatSettingsChanged, object: nil)
+    }
+
+    private func isFeatureEnabled(for subfeature: AIChatSubfeature) -> Bool {
+        let isSubfeatureFlagEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(subfeature)
+        let isInternalUser = internalUserDecider.isInternalUser
+        return (isSubfeatureFlagEnabled || isInternalUser)
+    }
+    
     private func getSettingsData(_ value: SettingsValue) -> String {
         if let value = remoteSettings[value.rawValue] as? String {
             return value
@@ -91,9 +116,11 @@ struct AIChatSettings: AIChatSettingsProvider {
 private extension UserDefaults {
     enum Keys {
         static let showAIChatBrowsingMenu = "aichat.settings.showAIChatBrowsingMenu"
+        static let showAIChatAddressBar = "aichat.settings.showAIChatAddressBar"
     }
 
     static let showAIChatBrowsingMenuDefaultValue = true
+    static let showAIChatAddressBarDefaultValue = true
 
     @objc dynamic var showAIChatBrowsingMenu: Bool {
         get {
@@ -105,4 +132,19 @@ private extension UserDefaults {
             set(newValue, forKey: Keys.showAIChatBrowsingMenu)
         }
     }
+
+    @objc dynamic var showAIChatAddressBar: Bool {
+        get {
+            value(forKey: Keys.showAIChatAddressBar) as? Bool ?? Self.showAIChatAddressBarDefaultValue
+        }
+
+        set {
+            guard newValue != showAIChatAddressBar else { return }
+            set(newValue, forKey: Keys.showAIChatAddressBar)
+        }
+    }
+}
+
+public extension NSNotification.Name {
+    static let aiChatSettingsChanged = Notification.Name("com.duckduckgo.aichat.settings.changed")
 }

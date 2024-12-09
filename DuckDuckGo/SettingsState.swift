@@ -48,7 +48,13 @@ struct SettingsState {
         var platform: DDGSubscription.Platform
         var isShowingStripeView: Bool
     }
-    
+
+    struct AIChat: Codable {
+        var enabled: Bool
+        var isAIChatBrowsingMenuFeatureFlagEnabled: Bool
+        var isAIChatAddressBarFeatureFlagEnabled: Bool
+    }
+
     struct SyncSettings {
         var enabled: Bool
         var title: String
@@ -104,7 +110,7 @@ struct SettingsState {
     var duckPlayerOpenInNewTabEnabled: Bool
 
     // AI Chat
-    var aiChatEnabled: Bool
+    var aiChat: AIChat
 
     static var defaults: SettingsState {
         return SettingsState(
@@ -146,7 +152,9 @@ struct SettingsState {
             duckPlayerMode: .alwaysAsk,
             duckPlayerOpenInNewTab: true,
             duckPlayerOpenInNewTabEnabled: false,
-            aiChatEnabled: false
+            aiChat: AIChat(enabled: false,
+                                  isAIChatBrowsingMenuFeatureFlagEnabled: false,
+                                  isAIChatAddressBarFeatureFlagEnabled: false)
         )
     }
 }

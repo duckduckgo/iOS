@@ -1,8 +1,8 @@
 //
-//  AutofillListItemTableViewCell.swift
+//  CredentialProviderListItemTableViewCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2024 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,22 +18,17 @@
 //
 
 import UIKit
-import SwiftUI
-import DuckUI
 import Core
+import DesignResourcesKit
 
-class AutofillListItemTableViewCell: UITableViewCell {
-
-    var theme: Theme? {
-        didSet {
-            updateTheme()
-        }
-    }
-
+class CredentialProviderListItemTableViewCell: UITableViewCell {
+    
+    static var reuseIdentifier = "CredentialProviderListItemTableViewCell"
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .callout)
-        label.textColor = .label
+        label.textColor = .init(designSystemColor: .textPrimary)
         label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
@@ -41,7 +36,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .footnote)
-        label.textColor = .gray50
+        label.textColor = .init(designSystemColor: .textPrimary)
         label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
@@ -92,44 +87,98 @@ class AutofillListItemTableViewCell: UITableViewCell {
         contentView.addSubview(contentStackView)
         installConstraints()
     }
-
-    private func updateTheme() {
-        guard let theme = theme else {
-            return
-        }
-
-        titleLabel.textColor = theme.autofillDefaultTitleTextColor
-        subtitleLabel.textColor = theme.autofillDefaultSubtitleTextColor
-    }
-
+    
     private func installConstraints() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         let imageSize: CGFloat = 32
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
             iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
             iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
-
+            
             contentStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             contentStackView.topAnchor.constraint(equalTo: margins.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
     }
-
+    
     private func setupContentView(with item: AutofillLoginItem) {
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
-        iconImageView.loadFavicon(forDomain: item.account.domain, usingCache: .fireproof, preferredFakeFaviconLetters: item.preferredFaviconLetters)
+        iconImageView.image = loadImageFromCache(forDomain: item.account.domain)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         contentStackView.frame = contentView.bounds
-
+        
         separatorInset = UIEdgeInsets(top: 0, left: contentView.layoutMargins.left + textStackView.frame.origin.x, bottom: 0, right: 0)
     }
+    
+    
+    private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
+        guard let domain = domain,
+              let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return nil }
+
+        let key = FaviconHasher.createHash(ofDomain: domain)
+
+        // Slight leap here to avoid loading Kingisher as a library for the widgets.
+        // Once dependency management is fixed, link it and use Favicons directly.
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)
+        
+        guard let data = (try? Data(contentsOf: imageUrl)) else {
+            let image = createFakeFavicon(forDomain: domain, size: 32, backgroundColor: UIColor.forDomain(domain), preferredFakeFaviconLetters: item?.preferredFaviconLetters)
+            return image
+        }
+        
+        return UIImage(data: data)?.toSRGB()
+    }
+    
+    private func createFakeFavicon(forDomain domain: String,
+                                   size: CGFloat = 192,
+                                   backgroundColor: UIColor = UIColor.red,
+                                   bold: Bool = true,
+                                   preferredFakeFaviconLetters: String? = nil,
+                                   letterCount: Int = 2) -> UIImage? {
+        
+        let cornerRadius = size * 0.125
+        let imageRect = CGRect(x: 0, y: 0, width: size, height: size)
+        let padding = size * 0.16
+        let labelFrame = CGRect(x: padding, y: padding, width: imageRect.width - (2 * padding), height: imageRect.height - (2 * padding))
+        
+        let renderer = UIGraphicsImageRenderer(size: imageRect.size)
+        let icon = renderer.image { imageContext in
+            let context = imageContext.cgContext
+            
+            context.setFillColor(backgroundColor.cgColor)
+            context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
+            context.fillPath()
+            
+            let label = UILabel(frame: labelFrame)
+            label.numberOfLines = 1
+            label.adjustsFontSizeToFitWidth = true
+            label.minimumScaleFactor = 0.1
+            label.baselineAdjustment = .alignCenters
+            label.font = bold ? UIFont.boldSystemFont(ofSize: size) : UIFont.systemFont(ofSize: size)
+            label.textColor = .white
+            label.textAlignment = .center
+            
+            if let prefferedPrefix = preferredFakeFaviconLetters?.droppingWwwPrefix().prefix(letterCount).capitalized {
+                label.text = prefferedPrefix
+            } else {
+                label.text = item?.preferredFaviconLetters.capitalized ?? "#"
+            }
+            
+            context.translateBy(x: padding, y: padding)
+            
+            label.layer.draw(in: context)
+        }
+        
+        return icon.withRenderingMode(.alwaysOriginal)
+    }
+    
 }

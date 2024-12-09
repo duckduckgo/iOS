@@ -275,7 +275,16 @@ class TabViewController: UIViewController {
         manager.delegate = self
         return manager
     }()
-    
+
+    private lazy var credentialIdentityStoreManager: AutofillCredentialIdentityStoreManager? = {
+        guard let vault = try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) else {
+            return nil
+        }
+
+        return AutofillCredentialIdentityStoreManager(vault: vault,
+                                                      tld: AppDependencyProvider.shared.storageCache.tld)
+    }()
+
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, onComplete in
         let domainEvent: Pixel.Event
         switch event {
@@ -2836,8 +2845,13 @@ extension TabViewController: SecureVaultManagerDelegate {
         if accounts.count > 0 {
             let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
-            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
+            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { [weak self] account in
                 onAccountSelected(account)
+
+                guard let domain = account?.domain else { return }
+                Task {
+                    await self?.credentialIdentityStoreManager?.updateCredentialStore(for: domain)
+                }
             } completionHandler: { account in
                 if account != nil {
                     NotificationCenter.default.post(name: .autofillFillEvent, object: nil)
@@ -3030,6 +3044,11 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                         self.showLoginDetails(with: newCredential.account)
                     })
                     Favicons.shared.loadFavicon(forDomain: newCredential.account.domain, intoCache: .fireproof, fromCache: .tabs)
+                }
+
+                guard let domain = newCredential.account.domain else { return }
+                Task {
+                    await credentialIdentityStoreManager?.updateCredentialStore(for: domain)
                 }
             }
         } catch {

@@ -331,7 +331,8 @@ import os.log
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
             syncErrorHandler: syncErrorHandler,
-            faviconStoring: Favicons.shared
+            faviconStoring: Favicons.shared,
+            tld: AppDependencyProvider.shared.storageCache.tld
         )
 
         let syncService = DDGSync(

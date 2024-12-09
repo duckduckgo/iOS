@@ -142,6 +142,7 @@
 				<string>ddgFavorites</string>
 				<string>ddgQuickLink</string>
 				<string>ddgAddFavorite</string>
+				<string>ddgOpenPasswords</string>
 				<string>http</string>
 				<string>https</string>
 			</array>
@@ -229,5 +230,7 @@
 	<string>https://duckduckgo.com</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>VAULT_APP_GROUP</key>
+	<string>$(AppIdentifierPrefix)$(VAULT_APP_GROUP)</string>
 </dict>
 </plist>

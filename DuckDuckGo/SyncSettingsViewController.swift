@@ -35,7 +35,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     let syncCredentialsAdapter: SyncCredentialsAdapter
     var connector: RemoteConnecting?
 
-    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason)
+    let userAuthenticator = UserAuthenticator(reason: UserText.syncUserUserAuthenticationReason,
+                                              cancelTitle: UserText.autofillLoginListAuthenticationCancelButton)
     let userSession = UserSession()
 
     var recoveryCode: String {

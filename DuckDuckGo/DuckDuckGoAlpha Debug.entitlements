@@ -12,13 +12,13 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.alpha.app-configuration</string>
-		<string>group.com.duckduckgo.alpha.bookmarks</string>
-		<string>group.com.duckduckgo.alpha.contentblocker</string>
-		<string>group.com.duckduckgo.alpha.database</string>
-		<string>group.com.duckduckgo.alpha.netp</string>
-		<string>group.com.duckduckgo.alpha.statistics</string>
-		<string>group.com.duckduckgo.alpha.vault</string>
+		<string>$(GROUP_ID_PREFIX).app-configuration</string>
+		<string>$(GROUP_ID_PREFIX).bookmarks</string>
+		<string>$(GROUP_ID_PREFIX).contentblocker</string>
+		<string>$(GROUP_ID_PREFIX).database</string>
+		<string>$(GROUP_ID_PREFIX).netp</string>
+		<string>$(GROUP_ID_PREFIX).statistics</string>
+		<string>$(GROUP_ID_PREFIX).vault</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

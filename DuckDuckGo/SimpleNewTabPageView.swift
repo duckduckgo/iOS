@@ -85,6 +85,8 @@ private extension SimpleNewTabPageView {
             }
             .withScrollKeyboardDismiss()
         }
+        // Prevent recreating geomery reader when keyboard is shown/hidden.
+        .ignoresSafeArea(.keyboard)
     }
 
     @ViewBuilder

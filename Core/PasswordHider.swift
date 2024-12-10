@@ -19,11 +19,15 @@
 
 import Foundation
 
-struct PasswordHider {
-    let password: String
-    var hiddenPassword: String {
+public struct PasswordHider {
+    public let password: String
+    public var hiddenPassword: String {
         let maximumPasswordDisplayCount = 22
         let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
         return String(repeating: "•", count: passwordCount)
+    }
+
+    public init(password: String) {
+        self.password = password
     }
 }

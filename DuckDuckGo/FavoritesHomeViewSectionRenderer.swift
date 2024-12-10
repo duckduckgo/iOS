@@ -34,7 +34,7 @@ protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
                            favoriteDeleted favorite: BookmarkEntity)
 }
 
-class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
+class FavoritesHomeViewSectionRenderer {
 
     struct Constants {
         
@@ -43,7 +43,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         static let defaultHeaderHeight: CGFloat = 20
         static let horizontalMargin: CGFloat = 2
         static let largeModeMargin: CGFloat = 24
-        
+        static let sideInsets: CGFloat = 25
+
     }
     
     let viewModel: FavoritesListInteracting
@@ -83,13 +84,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return Constants.defaultHeaderHeight
     }
 
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-        if numberOfItems > 0 {
-            controller.hideLogo()
-        }
-    }
-
     func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }
@@ -103,7 +97,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
         } else {
-            let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
+            let defaultMargin = FavoritesHomeViewSectionRenderer.Constants.sideInsets
             let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }
@@ -162,6 +156,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let indexPath = collectionView.indexPath(for: cell),
         let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
+        fireActionPixel()
         viewModel.removeFavorite(favorite)
         WidgetCenter.shared.reloadAllTimelines()
         collectionView.performBatchUpdates {
@@ -174,6 +169,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let indexPath = collectionView.indexPath(for: cell),
               let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenEditFavorite)
+        fireActionPixel()
         controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
@@ -278,7 +274,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
               let dragItem = coordinator.items.first?.dragItem,
               let sourcePath = coordinator.items.first?.sourceIndexPath,
               let destinationPath = coordinator.destinationIndexPath,
-              let cell = self.collectionView(collectionView, cellForItemAt: sourcePath) as? FavoriteHomeCell,
+              let cell = collectionView.cellForItem(at: sourcePath) as? FavoriteHomeCell,
               let favorite = cell.favorite
         else { return }
 
@@ -291,10 +287,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
         coordinator.drop(dragItem, toItemAt: destinationPath)
 
+        fireActionPixel()
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return [] }
 
         if let size = cell.iconImage.image?.size.width, size <= 32 {
             cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
@@ -318,6 +315,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    /// Actions are only available from the bookmarks UI, so this is safe to send from here.
+    func fireActionPixel() {
+        DailyPixel.fire(pixel: .bookmarksUIFavoritesAction)
     }
 
 }

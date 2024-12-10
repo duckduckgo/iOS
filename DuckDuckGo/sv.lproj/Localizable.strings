@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "OK";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Zoom (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Zoom";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Textzoom (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lägg till";
 
@@ -472,6 +481,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Sök lösenord";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Lösenorden är krypterade. Ingen annan än du kan se dem, inte ens vi.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Lösenorden är krypterade. Ingen annan än du kan se dem, inte ens vi. [Läs mer](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Spara det här lösenordet?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Nej tack";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Förvara ditt lösenord säkert på enheten med DuckDuckGo Lösenord och autofyll.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Ja";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Hoppa över";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Börja bläddra";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Visa mig hur";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Kom ihåg att varje gång du surfar med mig förlorar en påträngande annons sina vingar.\n\nSå spara mig i din Dock för ditt dagliga surfande.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Jag kommer att hålla mig nära för allt ditt dagliga surfande.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Lägg till mig i din Dock!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Leta upp DuckDuckGo-ikonen på hemskärmen. Tryck och dra den därefter på plats. Sen är det klart!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Det är enkelt att lägga till mig i din Dock.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Popup-fönster dolt";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Jag fattar";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Välj din webbläsare";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Synkronisering och säkerhetskopiering";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Textstorlek";
+"settings.text.size" = "Standardzoom för text";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Avvisa";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Rapportera skadad webbplats";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Det hjälper oss att förbättra webbläsaren.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Fungerar inte webbplatsen? Informera DuckDuckGo.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Webbplatsen fungerar inte";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Skicka in rapport";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Flikväxlare";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Välj önskad textstorlek. Webbplatser som du visar i DuckDuckGo anpassas efter din inställning.";
+"textSize.description" = "Öka eller minska textstorleken på alla webbplatser.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Textstorlek – %@";

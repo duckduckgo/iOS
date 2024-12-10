@@ -87,7 +87,14 @@ import os.log
     private var autofillPixelReporter: AutofillPixelReporter?
     private var autofillUsageMonitor = AutofillUsageMonitor()
 
+    private(set) var subscriptionFeatureAvailability: SubscriptionFeatureAvailability!
+    private var subscriptionCookieManager: SubscriptionCookieManaging!
+    private var subscriptionCookieManagerFeatureFlagCancellable: AnyCancellable?
     var privacyProDataReporter: PrivacyProDataReporting!
+
+    // MARK: - Feature specific app event handlers
+
+    private let tipKitAppEventsHandler = TipKitAppEventHandler()
 
     // MARK: lifecycle
 
@@ -104,7 +111,12 @@ import os.log
     private let launchOptionsHandler = LaunchOptionsHandler()
     private let onboardingPixelReporter = OnboardingPixelReporter()
 
+    private let voiceSearchHelper = VoiceSearchHelper()
+
     private let marketplaceAdPostbackManager = MarketplaceAdPostbackManager()
+
+    private var didFinishLaunchingStartTime: CFAbsoluteTime?
+
     override init() {
         super.init()
 
@@ -116,7 +128,18 @@ import os.log
     }
 
     // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidFinishLaunchingTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
 
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
@@ -129,7 +152,7 @@ import os.log
         }
 #endif
 
-#if DEBUG && !ALPHA
+#if DEBUG
         Pixel.isDryRun = true
 #else
         Pixel.isDryRun = false
@@ -175,7 +198,19 @@ import os.log
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup().loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
+
+            window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+
+            let blockingDelegate = BlockingNavigationDelegate()
+            let webView = blockingDelegate.prepareWebView()
+            window?.rootViewController?.view.addSubview(webView)
+            window?.rootViewController?.view.backgroundColor = .red
+            webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
+
+            let request = URLRequest(url: URL(string: "about:blank")!)
+            webView.load(request)
+
             return true
         }
 
@@ -263,7 +298,8 @@ import os.log
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
-            syncErrorHandler: syncErrorHandler
+            syncErrorHandler: syncErrorHandler,
+            faviconStoring: Favicons.shared
         )
 
         let syncService = DDGSync(
@@ -302,6 +338,12 @@ import os.log
         )
         remoteMessagingClient.registerBackgroundRefreshTaskHandler()
 
+        subscriptionFeatureAvailability = DefaultSubscriptionFeatureAvailability(
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            purchasePlatform: .appStore)
+
+        subscriptionCookieManager = makeSubscriptionCookieManager()
+
         homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
                                                       remoteMessagingClient: remoteMessagingClient,
                                                       privacyProDataReporter: privacyProDataReporter)
@@ -315,7 +357,8 @@ import os.log
         if shouldPresentInsufficientDiskSpaceAlertAndCrash {
 
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+            window?.rootViewController = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings,
+                                                                     voiceSearchHelper: voiceSearchHelper)
             window?.makeKeyAndVisible()
 
             presentInsufficientDiskSpaceAlert()
@@ -336,7 +379,13 @@ import os.log
                                           variantManager: variantManager,
                                           contextualOnboardingPresenter: contextualOnboardingPresenter,
                                           contextualOnboardingLogic: daxDialogs,
-                                          contextualOnboardingPixelReporter: onboardingPixelReporter)
+                                          contextualOnboardingPixelReporter: onboardingPixelReporter,
+                                          subscriptionFeatureAvailability: subscriptionFeatureAvailability,
+                                          voiceSearchHelper: voiceSearchHelper,
+                                          featureFlagger: AppDependencyProvider.shared.featureFlagger,
+                                          subscriptionCookieManager: subscriptionCookieManager,
+                                          textZoomCoordinator: makeTextZoomCoordinator(),
+                                          appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             main.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = main
@@ -353,7 +402,7 @@ import os.log
             }
         }
 
-        AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
+        self.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
@@ -384,7 +433,58 @@ import os.log
             didCrashDuringCrashHandlersSetUp = false
         }
 
+        tipKitAppEventsHandler.appDidFinishLaunching()
+
         return true
+    }
+
+    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+        let provider = AppDependencyProvider.shared
+        let storage = TextZoomStorage()
+
+        return TextZoomCoordinator(appSettings: provider.appSettings,
+                                   storage: storage,
+                                   featureFlagger: provider.featureFlagger)
+    }
+
+    private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
+        let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
+                                                              currentCookieStore: { [weak self] in
+            guard self?.mainViewController?.tabManager.model.hasActiveTabs ?? false else {
+                // We shouldn't interact with WebKit's cookie store unless we have a WebView,
+                // eventually the subscription cookie will be refreshed on opening the first tab
+                return nil
+            }
+
+            return WKHTTPCookieStoreWrapper(store: WKWebsiteDataStore.current().httpCookieStore)
+        }, eventMapping: SubscriptionCookieManageEventPixelMapping())
+
+
+        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
+
+        // Enable subscriptionCookieManager if feature flag is present
+        if privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains) {
+            subscriptionCookieManager.enableSettingSubscriptionCookie()
+        }
+
+        // Keep track of feature flag changes
+        subscriptionCookieManagerFeatureFlagCancellable = privacyConfigurationManager.updatesPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self, weak privacyConfigurationManager] in
+                guard let self, !self.appIsLaunching, let privacyConfigurationManager else { return }
+
+                let isEnabled = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(PrivacyProSubfeature.setAccessTokenCookieForSubscriptionDomains)
+
+                Task { @MainActor [weak self] in
+                    if isEnabled {
+                        self?.subscriptionCookieManager.enableSettingSubscriptionCookie()
+                    } else {
+                        await self?.subscriptionCookieManager.disableSettingSubscriptionCookie()
+                    }
+                }
+            }
+
+        return subscriptionCookieManager
     }
 
     private func makeHistoryManager() -> HistoryManaging {
@@ -479,8 +579,6 @@ import os.log
     }
 
     private func reportAdAttribution() {
-        guard AdAttributionPixelReporter.isAdAttributionReportingEnabled else { return }
-
         Task.detached(priority: .background) {
             await AdAttributionPixelReporter.shared.reportAttributionIfNeeded()
         }
@@ -489,6 +587,15 @@ import os.log
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        defer {
+            if let didFinishLaunchingStartTime {
+                let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
+                Pixel.fire(pixel: .appDidBecomeActiveTime(time: Pixel.Event.BucketAggregation(number: launchTime)),
+                           withAdditionalParameters: [PixelParameters.time: String(launchTime)])
+            }
+        }
+
+        StorageInconsistencyMonitor().didBecomeActive(isProtectedDataAvailable: application.isProtectedDataAvailable)
         syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
@@ -558,12 +665,18 @@ import os.log
             }
         }
 
+        Task {
+            await subscriptionCookieManager.refreshSubscriptionCookie()
+        }
+
         let importPasswordsStatusHandler = ImportPasswordsStatusHandler(syncService: syncService)
         importPasswordsStatusHandler.checkSyncSuccessStatus()
 
         Task {
             await privacyProDataReporter.saveWidgetAdded()
         }
+
+        AppDependencyProvider.shared.persistentPixel.sendQueuedPixels { _ in }
     }
 
     private func stopAndRemoveVPNIfNotAuthenticated() async {
@@ -676,6 +789,12 @@ import os.log
         suspendSync()
         syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
         privacyProDataReporter.saveApplicationLastSessionEnded()
+        resetAppStartTime()
+    }
+
+    private func resetAppStartTime() {
+        didFinishLaunchingStartTime = nil
+        mainViewController?.appDidFinishLaunchingStartTime = nil
     }
 
     private func suspendSync() {
@@ -822,7 +941,7 @@ import os.log
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
+        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings, voiceSearchHelper: voiceSearchHelper)
         overlay.delegate = self
 
         overlayWindow?.rootViewController = overlay

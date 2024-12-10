@@ -28,7 +28,7 @@ struct EditableShortcutsView: View {
     private let haptics = UIImpactFeedbackGenerator()
 
     var body: some View {
-        NewTabPageGridView(geometry: geometry) { _ in
+        NewTabPageGridView(geometry: geometry, isUsingDynamicSpacing: true) { _ in
             ReorderableForEach(model.itemsSettings, id: \.item.id, isReorderingEnabled: true) { setting in
                 let isEnabled = model.enabledItems.contains(setting.item)
                 Button {
@@ -37,6 +37,7 @@ struct EditableShortcutsView: View {
                     ShortcutItemView(shortcut: setting.item, accessoryType: isEnabled ? .selected : .add)
                         .frame(width: NewTabPageGrid.Item.edgeSize)
                 }
+                .buttonStyle(.plain)
                 .padding([.horizontal, .top], 6) // Adjust for the accessory being cut-off when lifting for preview
                 .previewShape()
             } preview: { setting in

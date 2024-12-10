@@ -84,10 +84,9 @@ public final class ContentBlockingUpdating {
             // prefs changes notifications with initially published value for combineLatest to work.
             // Not all of these will trigger Tab reload,
             // refer TabViewController.swift:2116 for the list of notifications triggering reload
-            .combineLatest(onNotificationWithInitial(PreserveLogins.Notifications.loginDetectionStateChanged), combine)
+            .combineLatest(onNotificationWithInitial(UserDefaultsFireproofing.Notifications.loginDetectionStateChanged), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.doNotSellStatusChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.autofillEnabledChange), combine)
-            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.textSizeChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.didVerifyInternalUser), combine)
             .combineLatest(onNotificationWithInitial(ConfigurationManager.didUpdateTrackerDependencies)
                 .receive(on: DispatchQueue.main), combine)

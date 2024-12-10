@@ -120,7 +120,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         }
     }
 
-    func testWhenPreserveLoginsNotificationSentThenUserScriptsAreRebuild() {
+    func testWhenFireproffingNotificationSentThenUserScriptsAreRebuild() {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
 
@@ -141,7 +141,7 @@ final class ContentBlockingUpdatingTests: XCTestCase {
         withExtendedLifetime(c) {
             waitForExpectations(timeout: 1, handler: nil)
             e2 = expectation(description: "should rebuild user scripts")
-            NotificationCenter.default.post(name: PreserveLogins.Notifications.loginDetectionStateChanged, object: nil)
+            NotificationCenter.default.post(name: UserDefaultsFireproofing.Notifications.loginDetectionStateChanged, object: nil)
             waitForExpectations(timeout: 1, handler: nil)
         }
     }
@@ -167,31 +167,6 @@ final class ContentBlockingUpdatingTests: XCTestCase {
             waitForExpectations(timeout: 1, handler: nil)
             e2 = expectation(description: "should rebuild user scripts")
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: nil)
-            waitForExpectations(timeout: 1, handler: nil)
-        }
-    }
-
-    func testWhenTextSizeChangeNotificationSentThenUserScriptsAreRebuild() {
-        let e1 = expectation(description: "should post initial update")
-        var e2: XCTestExpectation!
-        var ruleList: WKContentRuleList!
-        let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil {
-                ruleList = assets.rules(withName: "test")
-                e1.fulfill()
-            } else {
-                // ruleList should not be recompiled
-                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
-                XCTAssertTrue(assets.isValid)
-                e2.fulfill()
-            }
-        }
-
-        rulesManager.updatesSubject.send(Self.testUpdate())
-        withExtendedLifetime(c) {
-            waitForExpectations(timeout: 1, handler: nil)
-            e2 = expectation(description: "should rebuild user scripts")
-            NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeChange, object: nil)
             waitForExpectations(timeout: 1, handler: nil)
         }
     }

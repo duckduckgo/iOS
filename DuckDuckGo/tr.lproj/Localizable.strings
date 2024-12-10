@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "Tamam";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Yakınlaştır (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Yakınlaştır";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Metin Yakınlaştırma (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
@@ -428,7 +437,7 @@
 "autofill.logins.empty-view.button.title" = "Şifreleri İçe Aktar";
 
 /* Subtitle for view displayed when no autofill passwords have been saved */
-"autofill.logins.empty-view.subtitle.first.paragraph" = "Kayıtlı parolaları başka bir tarayıcıdan DuckDuckGo&apos;ya aktarabilirsiniz.";
+"autofill.logins.empty-view.subtitle.first.paragraph" = "Kayıtlı parolaları başka bir tarayıcıdan DuckDuckGo'ya aktarabilirsiniz.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Henüz şifre kaydedilmedi";
@@ -471,6 +480,9 @@
 
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Şifreleri ara";
+
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Parolalar şifrelenir. Onları sizden başka kimse göremez. Biz bile.";
 
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Parolalar şifrelenir. Onları sizden başka kimse göremez. Biz bile. [Daha Fazla Bilgi](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Bu parola kaydedilsin mi?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Hayır Teşekkürler";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "DuckDuckGo Parolalar ve Otomatik Doldurma ile parolanızı cihazınızda güvenle saklayın.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Evet";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Atla";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Gezinmeye Başla";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Nasıl Yapılacağını Göster";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Unutmayın: Benimle her gezinti yaptığınızda rahatsız edici bir reklam kanatlarını kaybeder.\n\nO yüzden günlük gezintileriniz için beni Dock'unuzda tutun.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Tüm günlük gezinmeleriniz için kolay erişilebilir bir yere yuvalanacağım.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Beni Dock'a ekleyin!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Ana Ekranınızda DuckDuckGo simgesini bulun. Daha sonra simgeye basıp sürükleyerek yerine sabitleyin. Hepsi bu kadar!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Beni Dock'unuza eklemek çok kolay.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Açılır Pencere Gizli";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Anladım";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Tarayıcınızı Seçin";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Senkronizasyon ve Yedekleme";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Metin Boyutu";
+"settings.text.size" = "Varsayılan Metin Yakınlaştırma";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Reddet";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Hatalı Siteyi Bildir";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Bu gibi bildirimler tarayıcıyı geliştirmemize yardımcı olur.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Site çalışmıyor mu? DuckDuckGo'ya bildirin.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Web Sitesi Bozuk";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapor Gönder";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Sekme Değiştirici";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Tercih ettiğiniz metin boyutunu seçin. DuckDuckGo'da görüntülediğiniz web siteleri bu boyuta ayarlanır.";
+"textSize.description" = "Tüm sitelerde metin boyutunu artırın veya azaltın.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Metin Boyutu - %@";

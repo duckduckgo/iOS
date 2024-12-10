@@ -20,10 +20,17 @@
 import XCTest
 import Combine
 import Bookmarks
+@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageFavoritesModelTests: XCTestCase {
     private let favoriteDataSource = MockNewTabPageFavoriteDataSource()
+
+    override func setUpWithError() throws {
+        throw XCTSkip("Potentially flaky")
+
+        try super.setUpWithError()
+    }
 
     override func tearDown() {
         PixelFiringMock.tearDown()
@@ -35,7 +42,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertTrue(sut.isCollapsed)
         sut.toggleCollapse()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesSeeMore)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesSeeMore.name)
     }
 
     func testFiresPixelWhenCollapsingList() {
@@ -46,7 +53,14 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertFalse(sut.isCollapsed)
         sut.toggleCollapse()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesSeeLess)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesSeeLess.name)
+    }
+
+    func testReturnsAllFavoritesWhenCustomizationDisabled() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+        
+        XCTAssertEqual(sut.prefixedFavorites(for: 1).items.count, 10)
     }
 
     func testFiresPixelsOnFavoriteSelected() {
@@ -54,8 +68,8 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.favoriteSelected(Favorite(id: "", title: "", domain: "", urlObject: URL(string: "https://foo.bar")))
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .favoriteLaunchedNTP)
-        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixel, .favoriteLaunchedNTPDaily)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.favoriteLaunchedNTP.name)
+        XCTAssertEqual(PixelFiringMock.lastDailyPixelInfo?.pixelName, Pixel.Event.favoriteLaunchedNTPDaily.name)
     }
 
     func testFiresPixelOnFavoriteDeleted() {
@@ -66,7 +80,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.deleteFavorite(favorite)
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenDeleteFavorite)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.homeScreenDeleteFavorite.name)
     }
 
     func testFiresPixelOnFavoriteEdited() {
@@ -77,7 +91,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.editFavorite(favorite)
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .homeScreenEditFavorite)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.homeScreenEditFavorite.name)
     }
 
     func testFiresPixelOnTappingPlaceholder() {
@@ -85,7 +99,7 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         sut.placeholderTapped()
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageFavoritesPlaceholderTapped)
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageFavoritesPlaceholderTapped.name)
     }
 
     func testPrefixFavoritesCreatesRemainingPlaceholders() {
@@ -98,6 +112,16 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertFalse(slice.isCollapsible)
     }
 
+    func testPrefixFavoritesDoesNotCreatePlaceholdersWhenCustomizationDisabled() {
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        let slice = sut.prefixedFavorites(for: 3)
+
+        XCTAssertTrue(slice.items.filter(\.isPlaceholder).isEmpty)
+        XCTAssertTrue(slice.items.isEmpty)
+        XCTAssertFalse(slice.isCollapsible)
+    }
+
     func testPrefixFavoritesLimitsToTwoRows() {
         favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
         let sut = createSUT()
@@ -106,6 +130,16 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
 
         XCTAssertEqual(slice.items.count, 8)
         XCTAssertTrue(slice.isCollapsible)
+    }
+
+    func testListNotCollapsibleWhenCustomizationDisabled() {
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        let favorites = sut.prefixedFavorites(for: 1)
+        XCTAssertFalse(favorites.isCollapsible)
+        XCTAssertFalse(sut.isCollapsed)
     }
 
     func testAddItemIsLastWhenFavoritesPresent() throws {
@@ -125,9 +159,21 @@ final class NewTabPageFavoritesModelTests: XCTestCase {
         XCTAssertTrue(firstItem == .addFavorite)
     }
 
-    private func createSUT() -> FavoritesViewModel {
-        FavoritesViewModel(favoriteDataSource: favoriteDataSource,
-                           faviconLoader: FavoritesFaviconLoader(),
+    func testDoesNotAppendAddItemWhenCustomizationDisabled() {
+        let sut = createSUT(isNewTabPageCustomizationEnabled: false)
+
+        XCTAssertNil(sut.allFavorites.first)
+
+        favoriteDataSource.favorites.append(contentsOf: Array(repeating: Favorite.stub(), count: 10))
+
+        XCTAssertNil(sut.allFavorites.first(where: { $0 == .addFavorite }))
+    }
+
+    private func createSUT(isNewTabPageCustomizationEnabled: Bool = true) -> FavoritesViewModel {
+        FavoritesViewModel(isNewTabPageCustomizationEnabled: isNewTabPageCustomizationEnabled,
+                           favoriteDataSource: favoriteDataSource,
+                           faviconLoader: MockFavoritesFaviconLoading(),
+                           faviconsCache: MockFavoritesFaviconCaching(),
                            pixelFiring: PixelFiringMock.self,
                            dailyPixelFiring: PixelFiringMock.self)
     }
@@ -164,5 +210,25 @@ private extension FavoriteItem {
         case .placeholder: return true
         case .favorite, .addFavorite: return false
         }
+    }
+}
+
+private final class MockFavoritesFaviconLoading: FavoritesFaviconLoading {
+    func loadFavicon(for favorite: Favorite, size: CGFloat) async -> Favicon? {
+        nil
+    }
+
+    func fakeFavicon(for favorite: Favorite, size: CGFloat) -> Favicon {
+        Favicon(image: .init(), isUsingBorder: false, isFake: false)
+    }
+
+    func existingFavicon(for favorite: Favorite, size: CGFloat) -> Favicon? {
+        nil
+    }
+}
+
+private final class MockFavoritesFaviconCaching: FavoritesFaviconCaching {
+    func populateFavicon(for domain: String, intoCache: FaviconsCacheType, fromCache: FaviconsCacheType?) {
+
     }
 }

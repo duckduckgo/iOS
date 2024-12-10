@@ -36,16 +36,6 @@ extension EventMapping where Event == NetworkProtectionError {
         case .failedToParseLocationListResponse(let error):
             pixelEvent = .networkProtectionClientFailedToParseLocationsResponse
             pixelError = error
-        case .failedToEncodeRedeemRequest:
-            pixelEvent = .networkProtectionClientFailedToEncodeRedeemRequest
-        case .invalidInviteCode:
-            pixelEvent = .networkProtectionClientInvalidInviteCode
-        case .failedToRedeemInviteCode(let error):
-            pixelEvent = .networkProtectionClientFailedToRedeemInviteCode
-            pixelError = error
-        case .failedToParseRedeemResponse(let error):
-            pixelEvent = .networkProtectionClientFailedToParseRedeemResponse
-            pixelError = error
         case .invalidAuthToken:
             pixelEvent = .networkProtectionClientInvalidAuthToken
         case .failedToCastKeychainValueToData(field: let field):
@@ -85,7 +75,6 @@ extension EventMapping where Event == NetworkProtectionError {
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,
                 .wireGuardSetNetworkSettings,
-                .failedToRetrieveAuthToken,
                 .failedToFetchServerStatus,
                 .failedToParseServerStatusResponse:
             pixelEvent = .networkProtectionUnhandledError
@@ -102,6 +91,9 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelError = error
         }
 
-        DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
+        DailyPixel.fireDailyAndCount(pixel: pixelEvent,
+                                     pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
+                                     error: pixelError,
+                                     withAdditionalParameters: params)
     }
 }

@@ -48,7 +48,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     private let contextualOnboardingSettings: ContextualOnboardingSettings
     private let contextualOnboardingPixelReporter: OnboardingPixelReporting
     private let contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding
-    private let onboardingManager: OnboardingHighlightsManaging
+    private let onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging
 
     private var gradientType: OnboardingGradientType {
         onboardingManager.isOnboardingHighlightsEnabled ? .highlights : .default
@@ -59,7 +59,7 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
         contextualOnboardingSettings: ContextualOnboardingSettings = DefaultDaxDialogsSettings(),
         contextualOnboardingPixelReporter: OnboardingPixelReporting,
         contextualOnboardingSiteSuggestionsProvider: OnboardingSuggestionsItemsProviding = OnboardingSuggestedSitesProvider(surpriseItemTitle: UserText.DaxOnboardingExperiment.ContextualOnboarding.tryASearchOptionSurpriseMeTitle),
-        onboardingManager: OnboardingHighlightsManaging = OnboardingManager()
+        onboardingManager: OnboardingHighlightsManaging & OnboardingAddToDockManaging = OnboardingManager()
     ) {
         self.contextualOnboardingSettings = contextualOnboardingSettings
         self.contextualOnboardingLogic = contextualOnboardingLogic
@@ -182,15 +182,47 @@ final class ExperimentContextualDaxDialogsFactory: ContextualDaxDialogsFactory {
     }
 
     private func endOfJourneyDialog(delegate: ContextualOnboardingDelegate, pixelName: Pixel.Event) -> some View {
-        let message = onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage
+        let shouldShowAddToDock = onboardingManager.addToDockEnabledState == .contextual
 
-        return OnboardingFinalDialog(message: message, highFiveAction: { [weak delegate, weak self] in
+        let (message, cta) = if shouldShowAddToDock {
+            (UserText.AddToDockOnboarding.Promo.contextualMessage, UserText.AddToDockOnboarding.Buttons.startBrowsing)
+        } else {
+            (
+                onboardingManager.isOnboardingHighlightsEnabled ? UserText.HighlightsOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage : UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenMessage,
+                UserText.DaxOnboardingExperiment.ContextualOnboarding.onboardingFinalScreenButton
+            )
+        }
+
+        let showAddToDockTutorialAction: () -> Void = { [weak self] in
+            self?.contextualOnboardingPixelReporter.trackAddToDockPromoShowTutorialCTAAction()
+        }
+
+        let dismissAction = { [weak delegate, weak self] isDismissedFromAddToDockTutorial in
             delegate?.didTapDismissContextualOnboardingAction()
-            self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
-        })
+            if isDismissedFromAddToDockTutorial {
+                self?.contextualOnboardingPixelReporter.trackAddToDockTutorialDismissCTAAction()
+            } else {
+                self?.contextualOnboardingPixelReporter.trackEndOfJourneyDialogCTAAction()
+                if shouldShowAddToDock {
+                    self?.contextualOnboardingPixelReporter.trackAddToDockPromoDismissCTAAction()
+                }
+            }
+        }
+
+        return OnboardingFinalDialog(
+            logoPosition: .left,
+            message: message,
+            cta: cta,
+            canShowAddToDockTutorial: shouldShowAddToDock,
+            showAddToDockTutorialAction: showAddToDockTutorialAction,
+            dismissAction: dismissAction
+        )
         .onFirstAppear { [weak self] in
             self?.contextualOnboardingLogic.setFinalOnboardingDialogSeen()
             self?.contextualOnboardingPixelReporter.trackScreenImpression(event: pixelName)
+            if shouldShowAddToDock {
+                self?.contextualOnboardingPixelReporter.trackAddToDockPromoImpression()
+            }
         }
     }
 

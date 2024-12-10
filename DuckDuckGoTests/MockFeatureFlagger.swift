@@ -21,16 +21,34 @@ import BrowserServicesKit
 import Core
 
 final class MockFeatureFlagger: FeatureFlagger {
-    var enabledFeatureFlags: [FeatureFlag] = []
-    var enabledFeatureFlag: FeatureFlag?
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
+    var localOverrides: FeatureFlagLocalOverriding?
 
-    func isFeatureOn<F>(forProvider provider: F) -> Bool where F: BrowserServicesKit.FeatureFlagSourceProviding {
-        guard let flag = provider as? FeatureFlag else {
+    var enabledFeatureFlags: [FeatureFlag] = []
+
+    init(enabledFeatureFlags: [FeatureFlag] = []) {
+        self.enabledFeatureFlags = enabledFeatureFlags
+    }
+
+    func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
+        guard let flag = featureFlag as? FeatureFlag else {
             return false
         }
         guard enabledFeatureFlags.contains(flag) else {
             return false
         }
         return true
+    }
+
+    func getCohortIfEnabled(_ subfeature: any PrivacySubfeature) -> CohortID? {
+        return nil
+    }
+
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+        return nil
+    }
+
+    func getAllActiveExperiments() -> Experiments {
+        return [:]
     }
 }

@@ -27,21 +27,6 @@ import os.log
 
 final class HomePageConfiguration: HomePageMessagesConfiguration {
     
-    enum Component: Equatable {
-        case navigationBarSearch(fixed: Bool)
-        case favorites
-        case homeMessage
-    }
-
-    func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
-        let fixed = favoritesViewModel.favorites.count == 0
-        return [
-            .navigationBarSearch(fixed: fixed),
-            .homeMessage,
-            .favorites
-        ]
-    }
-    
     // MARK: - Messages
     
     private var homeMessageStorage: HomeMessageStorage
@@ -84,11 +69,12 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
 
-    func dismissHomeMessage(_ homeMessage: HomeMessage) {
+    @MainActor
+    func dismissHomeMessage(_ homeMessage: HomeMessage) async {
         switch homeMessage {
         case .remoteMessage(let remoteMessage):
             Logger.remoteMessaging.info("Home message dismissed: \(remoteMessage.id)")
-            remoteMessagingClient.store.dismissRemoteMessage(withID: remoteMessage.id)
+            await remoteMessagingClient.store.dismissRemoteMessage(withID: remoteMessage.id)
 
             if let index = homeMessages.firstIndex(of: homeMessage) {
                 homeMessages.remove(at: index)
@@ -113,7 +99,9 @@ final class HomePageConfiguration: HomePageMessagesConfiguration {
                     Pixel.fire(pixel: .remoteMessageShownUnique,
                                withAdditionalParameters: additionalParameters(for: remoteMessage.id))
                 }
-                remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
+                Task {
+                    await remoteMessagingClient.store.updateRemoteMessage(withID: remoteMessage.id, asShown: true)
+                }
             }
 
         default:

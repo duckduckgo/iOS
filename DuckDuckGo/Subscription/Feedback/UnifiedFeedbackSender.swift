@@ -62,6 +62,7 @@ extension UnifiedFeedbackSender {
                            onComplete: completionHandler)
             case .dailyAndCount:
                 DailyPixel.fireDailyAndCount(pixel: pixel,
+                                             pixelNameSuffixes: DailyPixel.Constant.legacyDailyPixelSuffixes,
                                              withAdditionalParameters: Self.additionalParameters(for: pixel),
                                              onDailyComplete: { _ in },
                                              onCountComplete: completionHandler)

@@ -69,6 +69,14 @@ Makes Ad-Hoc build with a specified name and release bundle ID in a given direct
 
 Makes Ad-Hoc build for alpha with a specified name and alpha bundle ID in a given directory
 
+### promote_latest_testflight_to_appstore
+
+```sh
+[bundle exec] fastlane promote_latest_testflight_to_appstore
+```
+
+Promotes the latest TestFlight build to App Store without submitting for review
+
 ### release_appstore
 
 ```sh

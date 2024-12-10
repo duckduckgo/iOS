@@ -28,35 +28,33 @@ struct SettingsAccessibilityView: View {
 
     var body: some View {
         List {
-            Section {
-                // Text Size
-                if viewModel.state.textSize.enabled {
-                    SettingsCellView(label: UserText.settingsText,
-                                     action: { viewModel.presentLegacyView(.textSize) },
-                                     accessory: .rightDetail("\(viewModel.state.textSize.size)%"),
-                                     disclosureIndicator: true,
-                                     isButton: true)
+            if viewModel.state.textZoom.enabled {
+                Section(footer: Text(UserText.textZoomDescription)) {
+                    // Text Size
+                    SettingsPickerCellView(label: UserText.settingsText,
+                                           options: TextZoomLevel.allCases,
+                                           selectedOption: viewModel.textZoomLevelBinding)
                 }
             }
 
-            Section(footer: Text(UserText.voiceSearchFooter)) {
-                // Private Voice Search
-                if viewModel.state.speechRecognitionAvailable {
+            if viewModel.state.speechRecognitionAvailable {
+                Section(footer: Text(UserText.voiceSearchFooter)) {
+                    // Private Voice Search
                     SettingsCellView(label: UserText.settingsVoiceSearch,
                                      accessory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
                 }
-            }
-            .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
-                Alert(title: Text(UserText.noVoicePermissionAlertTitle),
-                      message: Text(UserText.noVoicePermissionAlertMessage),
-                      dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
-                      action: {
-                        viewModel.shouldShowNoMicrophonePermissionAlert = false
-                    })
-                )
-            }
-            .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
-                shouldShowNoMicrophonePermissionAlert = value
+                .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
+                    Alert(title: Text(UserText.noVoicePermissionAlertTitle),
+                          message: Text(UserText.noVoicePermissionAlertMessage),
+                          dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
+                          action: {
+                            viewModel.shouldShowNoMicrophonePermissionAlert = false
+                        })
+                    )
+                }
+                .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
+                    shouldShowNoMicrophonePermissionAlert = value
+                }
             }
         }
         .applySettingsListModifiers(title: UserText.accessibility,

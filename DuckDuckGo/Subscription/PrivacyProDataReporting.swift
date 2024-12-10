@@ -22,6 +22,8 @@ import Core
 import BrowserServicesKit
 import DDGSync
 
+/// The additional parameters being collected only apply to a single promotion about a DuckDuckGo product.
+/// The parameters are temporary, collected in aggregate, and anonymous.
 enum PrivacyProPromoParameters: String, CaseIterable {
     case isReinstall
     case fireButtonUser = "fireButtonUsed"
@@ -110,6 +112,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
     private let secureVaultMaker: () -> (any AutofillSecureVault)?
     private var syncService: DDGSyncing?
     private var tabsModel: TabsModel?
+    private let fireproofing: Fireproofing
     private let dateGenerator: () -> Date
 
     private var secureVault: (any AutofillSecureVault)?
@@ -126,6 +129,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
          secureVaultMaker: @escaping () -> (any AutofillSecureVault)? = { try? AutofillSecureVaultFactory.makeVault(reporter: SecureVaultReporter()) },
          syncService: DDGSyncing? = nil,
          tabsModel: TabsModel? = nil,
+         fireproofing: Fireproofing = UserDefaultsFireproofing.shared,
          dateGenerator: @escaping () -> Date = Date.init) {
         self.configurationManager = configurationManager
         self.variantManager = variantManager
@@ -139,6 +143,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
         self.secureVaultMaker = secureVaultMaker
         self.syncService = syncService
         self.tabsModel = tabsModel
+        self.fireproofing = fireproofing
         self.dateGenerator = dateGenerator
     }
 
@@ -293,7 +298,7 @@ final class PrivacyProDataReporter: PrivacyProDataReporting {
     }
 
     var _fireproofedDomainsCount: Int {
-        PreserveLogins.shared.allowedDomains.count
+        fireproofing.allowedDomains.count
     }
 
     var _lastSessionEnded: Date? {

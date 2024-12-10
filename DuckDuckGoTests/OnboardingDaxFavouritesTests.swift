@@ -26,6 +26,7 @@ import BrowserServicesKit
 import RemoteMessaging
 import Configuration
 import Core
+import SubscriptionTestingUtilities
 @testable import DuckDuckGo
 
 final class OnboardingDaxFavouritesTests: XCTestCase {
@@ -43,7 +44,8 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             secureVaultErrorReporter: SecureVaultReporter(),
             settingHandlers: [],
             favoritesDisplayModeStorage: MockFavoritesDisplayModeStoring(),
-            syncErrorHandler: SyncErrorHandler()
+            syncErrorHandler: SyncErrorHandler(),
+            faviconStoring: MockFaviconStore()
         )
 
         let remoteMessagingClient = RemoteMessagingClient(
@@ -76,7 +78,13 @@ final class OnboardingDaxFavouritesTests: XCTestCase {
             contextualOnboardingPresenter: ContextualOnboardingPresenterMock(),
             contextualOnboardingLogic: contextualOnboardingLogicMock,
             contextualOnboardingPixelReporter: OnboardingPixelReporterMock(),
-            tutorialSettings: tutorialSettingsMock
+            tutorialSettings: tutorialSettingsMock,
+            subscriptionFeatureAvailability: SubscriptionFeatureAvailabilityMock.enabled,
+            voiceSearchHelper: MockVoiceSearchHelper(isSpeechRecognizerAvailable: true, voiceSearchEnabled: true),
+            featureFlagger: MockFeatureFlagger(),
+            subscriptionCookieManager: SubscriptionCookieManagerMock(),
+            textZoomCoordinator: MockTextZoomCoordinator(),
+            appDidFinishLaunchingStartTime: nil
         )
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()

@@ -24,6 +24,6 @@ protocol HomePageMessagesConfiguration {
 
     func refresh()
     
-    func dismissHomeMessage(_ homeMessage: HomeMessage)
+    func dismissHomeMessage(_ homeMessage: HomeMessage) async
     func didAppear(_ homeMessage: HomeMessage)
 }

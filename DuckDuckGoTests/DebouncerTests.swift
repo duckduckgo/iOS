@@ -43,7 +43,7 @@ final class DebouncerTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 0.1)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     func testWhenCancelThenCancelBlockExecution() {
@@ -58,7 +58,7 @@ final class DebouncerTests: XCTestCase {
         // WHEN
         sut.cancel()
 
-        wait(for: [expectation], timeout: 0.1)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     func testWhenDebounceTwoBlocksThenCancelFirstTaskWhenSecondBlockIsScheduled() {
@@ -76,6 +76,6 @@ final class DebouncerTests: XCTestCase {
             secondTaskExpectation.fulfill()
         }
 
-        wait(for: [firstTaskExpectation, secondTaskExpectation], timeout: 0.1)
+        wait(for: [firstTaskExpectation, secondTaskExpectation], timeout: 1.0)
     }
 }

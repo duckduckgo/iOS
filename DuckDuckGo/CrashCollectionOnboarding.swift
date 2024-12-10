@@ -20,6 +20,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import BrowserServicesKit
 
 enum CrashCollectionOptInStatus: String {
     case undetermined, optedIn, optedOut
@@ -35,16 +36,33 @@ final class CrashCollectionOnboardingViewController: UIHostingController<CrashCo
 }
 
 final class CrashCollectionOnboarding: NSObject {
+    
+    private var featureFlagger: FeatureFlagger
 
-    init(appSettings: AppSettings) {
+    init(appSettings: AppSettings,
+         featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
         self.appSettings = appSettings
         self.viewModel = CrashCollectionOnboardingViewModel(appSettings: appSettings)
+        self.featureFlagger = featureFlagger
         super.init()
     }
+    
+    // If the user's crash report opt in status should be reset to unknown upon next release,
+    // increment this value by 1
+    private let crashCollectionShouldRevertOptedInStatusTriggerTargetValue: Int = 1
 
     @MainActor
     func presentOnboardingIfNeeded(for payloads: [Data], from viewController: UIViewController, sendReport: @escaping () -> Void) {
         let isCurrentlyPresenting = viewController.presentedViewController != nil
+        
+        if featureFlagger.isFeatureOn(.crashReportOptInStatusResetting) {
+            if appSettings.crashCollectionOptInStatus == .optedIn &&
+                appSettings.crashCollectionShouldRevertOptedInStatusTrigger < crashCollectionShouldRevertOptedInStatusTriggerTargetValue {
+                appSettings.crashCollectionOptInStatus = .undetermined
+                appSettings.crashCollectionShouldRevertOptedInStatusTrigger = crashCollectionShouldRevertOptedInStatusTriggerTargetValue
+            }
+        }
+        
         guard shouldPresentOnboarding, !isCurrentlyPresenting else {
             if appSettings.crashCollectionOptInStatus == .optedIn {
                 sendReport()

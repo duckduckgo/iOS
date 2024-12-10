@@ -34,7 +34,7 @@ struct SettingsSubscriptionView: View {
         static let privacyPolicyURL = URL(string: "https://duckduckgo.com/pro/privacy-terms")!
     }
 
-    @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var subscriptionNavigationCoordinator: SubscriptionNavigationCoordinator
     @State var isShowingDBP = false
     @State var isShowingITP = false
@@ -46,7 +46,8 @@ struct SettingsSubscriptionView: View {
 
     var subscriptionRestoreView: some View {
         SubscriptionContainerViewFactory.makeRestoreFlow(navigationCoordinator: subscriptionNavigationCoordinator,
-                                                                           subscriptionManager: subscriptionManager)
+                                                         subscriptionManager: subscriptionManager,
+                                                         subscriptionFeatureAvailability: settingsViewModel.subscriptionFeatureAvailability)
     }
     
     private var manageSubscriptionView: some View {
@@ -63,9 +64,19 @@ struct SettingsSubscriptionView: View {
     @ViewBuilder
     private var purchaseSubscriptionView: some View {
         Group {
+            let subtitleText = {
+                switch subscriptionManager.storePurchaseManager().currentStorefrontRegion {
+                case .usa:
+                    UserText.settingsPProDescription
+                case .restOfWorld:
+                    UserText.settingsPProROWDescription
+                }
+            }()
+
             SettingsCellView(label: UserText.settingsPProSubscribe,
-                             subtitle: UserText.settingsPProDescription,
+                             subtitle: subtitleText,
                              image: Image("SettingsPrivacyPro"))
+            .disabled(true)
 
             // Get privacy pro
             SettingsCustomCell(content: {
@@ -92,23 +103,33 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var disabledFeaturesView: some View {
-        SettingsCellView(label: UserText.settingsPProVPNTitle,
-                         image: Image("SettingsPrivacyProVPN"),
-                         statusIndicator: StatusIndicatorView(status: .off),
-                         isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProDBPTitle,
-            image: Image("SettingsPrivacyProPIR"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
-        SettingsCellView(
-            label: UserText.settingsPProITRTitle,
-            image: Image("SettingsPrivacyProITP"),
-            statusIndicator: StatusIndicatorView(status: .off),
-            isGreyedOut: true
-        )
+        let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
+
+        if subscriptionFeatures.contains(.networkProtection) {
+            SettingsCellView(label: UserText.settingsPProVPNTitle,
+                             image: Image("SettingsPrivacyProVPN"),
+                             statusIndicator: StatusIndicatorView(status: .off),
+                             isGreyedOut: true
+            )
+        }
+
+        if subscriptionFeatures.contains(.dataBrokerProtection) {
+            SettingsCellView(
+                label: UserText.settingsPProDBPTitle,
+                image: Image("SettingsPrivacyProPIR"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
+
+        if subscriptionFeatures.contains(.identityTheftRestoration) || subscriptionFeatures.contains(.identityTheftRestorationGlobal) {
+            SettingsCellView(
+                label: UserText.settingsPProITRTitle,
+                image: Image("SettingsPrivacyProITP"),
+                statusIndicator: StatusIndicatorView(status: .off),
+                isGreyedOut: true
+            )
+        }
     }
 
     @ViewBuilder
@@ -117,7 +138,7 @@ struct SettingsSubscriptionView: View {
 
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .expired,
-                                                    settingsViewModel: viewModel,
+                                                    settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
@@ -138,7 +159,7 @@ struct SettingsSubscriptionView: View {
         
         // Renew Subscription (Expired)
         let settingsView = SubscriptionSettingsView(configuration: .activating,
-                                                    settingsViewModel: viewModel,
+                                                    settingsViewModel: settingsViewModel,
                                                     viewPlans: {
             subscriptionNavigationCoordinator.shouldPushSubscriptionWebView = true
         })
@@ -154,43 +175,54 @@ struct SettingsSubscriptionView: View {
 
     @ViewBuilder
     private var subscriptionDetailsView: some View {
-        
-        if viewModel.state.subscription.entitlements.contains(.networkProtection) {
-            NavigationLink(destination: NetworkProtectionRootView(), isActive: $isShowingVPN) {
+        let subscriptionFeatures = settingsViewModel.state.subscription.subscriptionFeatures
+        let userEntitlements = settingsViewModel.state.subscription.entitlements
+
+        if subscriptionFeatures.contains(.networkProtection) {
+            let hasVPNEntitlement = userEntitlements.contains(.networkProtection)
+            let isVPNConnected = settingsViewModel.state.networkProtectionConnected
+
+            NavigationLink(destination: LazyView(NetworkProtectionRootView()), isActive: $isShowingVPN) {
                 SettingsCellView(
                     label: UserText.settingsPProVPNTitle,
                     image: Image("SettingsPrivacyProVPN"),
-                    statusIndicator: StatusIndicatorView(status: viewModel.state.networkProtectionConnected ? .on : .off)
+                    statusIndicator: StatusIndicatorView(status: isVPNConnected ? .on : .off),
+                    isGreyedOut: !hasVPNEntitlement
                 )
             }
+            .disabled(!hasVPNEntitlement)
         }
-        
-        if viewModel.state.subscription.entitlements.contains(.dataBrokerProtection) {
-            NavigationLink(destination: SubscriptionPIRView(), isActive: $isShowingDBP) {
+
+        if subscriptionFeatures.contains(.dataBrokerProtection) {
+            let hasDBPEntitlement = userEntitlements.contains(.dataBrokerProtection)
+
+            NavigationLink(destination: LazyView(SubscriptionPIRView()), isActive: $isShowingDBP) {
                 SettingsCellView(
                     label: UserText.settingsPProDBPTitle,
                     image: Image("SettingsPrivacyProPIR"),
-                    statusIndicator: StatusIndicatorView(status: .on)
+                    statusIndicator: StatusIndicatorView(status: hasDBPEntitlement ? .on : .off),
+                    isGreyedOut: !hasDBPEntitlement
                 )
             }
+            .disabled(!hasDBPEntitlement)
         }
-        
-        if viewModel.state.subscription.entitlements.contains(.identityTheftRestoration) {
-            NavigationLink(
-                destination: SubscriptionITPView(),
-                isActive: $isShowingITP) {
-                    SettingsCellView(
-                        label: UserText.settingsPProITRTitle,
-                        image: Image("SettingsPrivacyProITP"),
-                        statusIndicator: StatusIndicatorView(status: .on)
-                    )
+
+        if subscriptionFeatures.contains(.identityTheftRestoration) || subscriptionFeatures.contains(.identityTheftRestorationGlobal) {
+            let hasITREntitlement = userEntitlements.contains(.identityTheftRestoration) || userEntitlements.contains(.identityTheftRestorationGlobal)
+
+            NavigationLink(destination: LazyView(SubscriptionITPView()), isActive: $isShowingITP) {
+                SettingsCellView(
+                    label: UserText.settingsPProITRTitle,
+                    image: Image("SettingsPrivacyProITP"),
+                    statusIndicator: StatusIndicatorView(status: hasITREntitlement ? .on : .off),
+                    isGreyedOut: !hasITREntitlement
+                )
             }
+            .disabled(!hasITREntitlement)
         }
         
-        NavigationLink(
-            destination: SubscriptionSettingsView(configuration: .subscribed,
-                                                  settingsViewModel: viewModel)
-                .environmentObject(subscriptionNavigationCoordinator)
+        NavigationLink(destination: LazyView(SubscriptionSettingsView(configuration: .subscribed, settingsViewModel: settingsViewModel))
+            .environmentObject(subscriptionNavigationCoordinator)
         ) {
             SettingsCustomCell(content: { manageSubscriptionView })
         }
@@ -200,9 +232,9 @@ struct SettingsSubscriptionView: View {
         Group {
             if isShowingPrivacyPro {
 
-                let isSignedIn = viewModel.state.subscription.isSignedIn
-                let hasActiveSubscription = viewModel.state.subscription.hasActiveSubscription
-                let hasNoEntitlements = viewModel.state.subscription.entitlements.isEmpty
+                let isSignedIn = settingsViewModel.state.subscription.isSignedIn
+                let hasActiveSubscription = settingsViewModel.state.subscription.hasActiveSubscription
+                let hasNoEntitlements = settingsViewModel.state.subscription.entitlements.isEmpty
 
                 let footerLink = Link(UserText.settingsPProSectionFooter,
                                       destination: ViewConstants.privacyPolicyURL)
@@ -239,7 +271,7 @@ struct SettingsSubscriptionView: View {
                 }
             }
         }
-        .onReceive(viewModel.$state) { state in
+        .onReceive(settingsViewModel.$state) { state in
             isShowingPrivacyPro = state.subscription.enabled && (state.subscription.isSignedIn || state.subscription.canPurchase)
         }
     }

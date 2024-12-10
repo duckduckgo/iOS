@@ -32,7 +32,7 @@ public enum OmniBarIcon: String {
 }
 
 class OmniBar: UIView {
-   
+
     public static let didLayoutNotification = Notification.Name("com.duckduckgo.app.OmniBarDidLayout")
     
     @IBOutlet weak var searchLoupe: UIView!
@@ -50,7 +50,8 @@ class OmniBar: UIView {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var voiceSearchButton: UIButton!
-    
+    @IBOutlet weak var abortButton: UIButton!
+
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -69,8 +70,8 @@ class OmniBar: UIView {
     @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
-    
+    fileprivate var state: OmniBarState!
+
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
     private let privacyIconContextualOnboardingAnimator = PrivacyIconContextualOnboardingAnimator()
@@ -78,20 +79,21 @@ class OmniBar: UIView {
     // Set up a view to add a custom icon to the Omnibar
     private var customIconView: UIImageView = UIImageView(frame: CGRect(x: 4, y: 8, width: 26, height: 26))
 
-    static func loadFromXib() -> OmniBar {
-        return OmniBar.load(nibName: "OmniBar")
+    static func loadFromXib(voiceSearchHelper: VoiceSearchHelperProtocol) -> OmniBar {
+        let omniBar = OmniBar.load(nibName: "OmniBar")
+        omniBar.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
+        omniBar.refreshState(omniBar.state)
+
+        return omniBar
     }
 
-    private let appSettings: AppSettings
-
     required init?(coder: NSCoder) {
-        appSettings = AppDependencyProvider.shared.appSettings
         super.init(coder: coder)
     }
 
     // Tests require this
-    override init(frame: CGRect) {
-        appSettings = AppDependencyProvider.shared.appSettings
+    init(voiceSearchHelper: VoiceSearchHelperProtocol, frame: CGRect) {
+        self.state = SmallOmniBarState.HomeNonEditingState(voiceSearchHelper: voiceSearchHelper, isLoading: false)
         super.init(frame: frame)
     }
 
@@ -105,7 +107,6 @@ class OmniBar: UIView {
         
         configureSeparator()
         configureEditingMenu()
-        refreshState(state)
         enableInteractionsWithPointer()
         
         privacyInfoContainer.isHidden = true
@@ -249,6 +250,14 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
+    func startLoading() {
+        refreshState(state.withLoading())
+    }
+
+    func stopLoading() {
+        refreshState(state.withoutLoading())
+    }
+
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
@@ -263,6 +272,7 @@ class OmniBar: UIView {
         
         let icon = PrivacyIconLogic.privacyIcon(for: url)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        customIconView.isHidden = true
     }
     
     public func updatePrivacyIcon(for privacyInfo: PrivacyInfo?) {
@@ -275,11 +285,11 @@ class OmniBar: UIView {
             showCustomIcon(icon: .duckPlayer)
             return
         }
-
-        customIconView.isHidden = true
+        
         privacyInfoContainer.privacyIcon.isHidden = privacyInfo.isSpecialErrorPageVisible
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
+        customIconView.isHidden = true
     }
     
     // Support static custom icons, for things like internal pages, for example
@@ -349,16 +359,20 @@ class OmniBar: UIView {
         textField.selectedTextRange = textField.textRange(from: fromPosition, to: textField.endOfDocument)
     }
 
-    fileprivate func refreshState(_ newState: OmniBarState) {
-        if state.name != newState.name {
-            Logger.general.debug("OmniBar entering \(newState.name) from \(self.state.name)")
-            if newState.clearTextOnStart {
-                clear()
+    fileprivate func refreshState(_ newState: any OmniBarState) {
+        if state.requiresUpdate(transitioningInto: newState) {
+            Logger.general.debug("OmniBar entering \(newState.description) from \(self.state.description)")
+
+            if state.isDifferentState(than: newState) {
+                if newState.clearTextOnStart {
+                    clear()
+                }
+                cancelAllAnimations()
             }
+
             state = newState
-            cancelAllAnimations()
         }
-        
+
         searchFieldContainer.adjustTextFieldOffset(for: state)
         
         setVisibility(privacyInfoContainer, hidden: !state.showPrivacyIcon)
@@ -369,6 +383,7 @@ class OmniBar: UIView {
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
         setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
+        setVisibility(abortButton, hidden: !state.showAbort)
 
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
@@ -384,8 +399,8 @@ class OmniBar: UIView {
             searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
         }
 
-        UIView.animate(withDuration: 0.0) {
-            self.layoutIfNeeded()
+        UIView.animate(withDuration: 0.0) { [weak self] in
+            self?.layoutIfNeeded()
         }
         
     }
@@ -461,7 +476,11 @@ class OmniBar: UIView {
     @IBAction func onVoiceSearchButtonPressed(_ sender: UIButton) {
         omniDelegate?.onVoiceSearchPressed()
     }
-    
+
+    @IBAction func onAbortButtonPressed(_ sender: Any) {
+        omniDelegate?.onAbortPressed()
+    }
+
     @IBAction func onClearButtonPressed(_ sender: Any) {
         omniDelegate?.onClearPressed()
         refreshState(state.onTextClearedState)

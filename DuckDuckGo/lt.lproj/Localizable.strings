@@ -19,6 +19,15 @@
 /* Button label for OK action */
 "action.ok" = "GERAI";
 
+/* Title for text zoom menu item.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-menu-item" = "Padidinimas (%d%%)";
+
+/* Text zoom menu item */
+"action.text-zoom-sheet-menu-item" = "Padidinti";
+
+/* Title for text zoom sheet view.  %d%% is replaced with percent, e.g. 56% so do not change that please. */
+"action.text-zoom-sheet-title" = "Teksto mastelio keitimas (%d%%)";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
 
@@ -472,6 +481,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Ieškoti slaptažodžių";
 
+/* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. */
+"autofill.logins.list.settings.footer.fallback" = "Slaptažodžiai yra užšifruoti. Niekas, išskyrus jus, negali jų matyti – net mes.";
+
 /* Subtext under Autofill Settings briefly explaining security to alleviate user concerns. Has a URL link by clicking Learn More. */
 "autofill.logins.list.settings.footer.markdown" = "Slaptažodžiai yra užšifruoti. Niekas, išskyrus jus, negali jų matyti – net mes. [Sužinoti daugiau](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/sync-and-backup/password-manager-security/)";
 
@@ -595,6 +607,9 @@
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Išsaugoti šį slaptažodį?";
+
+/* CTA displayed on modal asking if the user wants to dismiss the save login action for now */
+"autofill.save-login.no-thanks.CTA" = "Ne, dėkoju";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.security.message" = "Saugiai išsaugokite slaptažodį įrenginyje naudodami „DuckDuckGo“ slaptažodžių ir automatinio pildymo parinktį.";
@@ -763,6 +778,30 @@
 
 /* Button to answer question 'Did turning off protections resolve the issue on this site?' */
 "broken.site.report.toggle.alert.yes.button" = "Taip";
+
+/* Button to continue the onboarding process */
+"contextual.onboarding.addToDock.buttons.skip" = "Praleisti";
+
+/* Button on the last screen of the onboarding, it will dismiss the onboarding screen. */
+"contextual.onboarding.addToDock.buttons.startBrowsing" = "Pradėti naršyti";
+
+/* Button of the onboarding dialog. On click it shows a dialog with a tutorial video about how to add the DDG browser icon to the device dock. */
+"contextual.onboarding.addToDock.buttons.tutorial" = "Parodyti, kaip";
+
+/* Message of the last screen of the onboarding that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.contextual.message" = "Įsidėmėkite: kiekvieną kartą, kai naršote su manimi, bauginantis skelbimas praranda galią.\n\nTaigi laikykite mane savo juostoje, kad galėtumėte kasdien naršyti.";
+
+/* The message of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.intro.message" = "Mane lengvai pasieksite savo kasdienei naršymo veiklai.";
+
+/* The title of the onboarding dialog popup that promotes adding the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.promo.title" = "Įtraukite mane į savo juostą!";
+
+/* The message of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.message" = "Pagrindiniame ekrane raskite „DuckDuckGo“ piktogramą. Tada paspauskite ir vilkite ją į vietą. Štai ir viskas!";
+
+/* The title of the onboarding dialog popup that explains how to add the DDG browser icon to the dock. */
+"contextual.onboarding.addToDock.tutorial.title" = "Įtraukti mane į savo juostą paprasta.";
 
 /* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
 "contextual.onboarding.browsing.multiple.trackers" = "contextual.onboarding.browsing.multiple.trackers";
@@ -1778,6 +1817,9 @@
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Iškylantysis langas paslėptas";
 
+/* Button on the Add to Dock tutorial screen of the onboarding, it will proceed to the next step of the onboarding. */
+"onboarding.addToDock.buttons.gotIt" = "Supratau";
+
 /* Button to change the default browser */
 "onboarding.browsers.cta" = "Pasirinkite naršyklę";
 
@@ -2218,7 +2260,7 @@
 "settings.sync" = "Sinchronizuoti ir kurti atsarginę kopiją";
 
 /* Settings screen cell text for text size */
-"settings.text.size" = "Teksto dydis";
+"settings.text.size" = "Numatytasis teksto mastelio keitimas";
 
 /* Settings screen cell text for theme */
 "settings.theme" = "Tema";
@@ -2247,14 +2289,14 @@
 /* Dismiss button */
 "site.not.working.dismiss" = "Atmesti";
 
+/* Button that triggers flow to report broken site */
+"site.not.working.report.broken.site" = "Pranešti apie sugadintą svetainę";
+
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.subtitle" = "Tai padeda mums tobulinti naršyklę.";
 
 /* Prompt asking user to send report to us if we suspect site may be broken */
 "site.not.working.title" = "Svetainė neveikia? Praneškite „DuckDuckGo“.";
-
-/* Button that triggers flow to report broken site */
-"site.not.working.website.is.broken" = "Svetainė neveikia";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -2566,7 +2608,7 @@
 "tab.switcher.accessibility.label" = "Skirtukų perjungiklis";
 
 /* Description text for the text size adjustment setting */
-"textSize.description" = "Pasirinkite norimą teksto dydį. „DuckDuckGo“ rodomos svetainės atitiks šį nustatymą.";
+"textSize.description" = "Padidinti arba sumažinti teksto dydį visose svetainėse.";
 
 /* Replacement string is a current percent value e.g. '120%' */
 "textSize.footer" = "Teksto dydis – %@";

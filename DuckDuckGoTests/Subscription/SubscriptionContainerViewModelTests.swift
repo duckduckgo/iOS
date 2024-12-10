@@ -24,7 +24,24 @@ import SubscriptionTestingUtilities
 
 final class SubscriptionContainerViewModelTests: XCTestCase {
     var sut: SubscriptionContainerViewModel!
-    let subscriptionManager = MockDependencyProvider().subscriptionManager
+
+    let subscriptionManager: SubscriptionManager = {
+        let accountManager = AccountManagerMock()
+        let subscriptionService = SubscriptionEndpointServiceMock()
+        let authService = AuthEndpointServiceMock()
+        let storePurchaseManager = StorePurchaseManagerMock()
+        let subscriptionFeatureMappingCache = SubscriptionFeatureMappingCacheMock()
+        return SubscriptionManagerMock(accountManager: accountManager,
+                                       subscriptionEndpointService: subscriptionService,
+                                       authEndpointService: authService,
+                                       storePurchaseManager: storePurchaseManager,
+                                       currentEnvironment: SubscriptionEnvironment(serviceEnvironment: .production,
+                                                                                   purchasePlatform: .appStore),
+                                       canPurchase: true,
+                                       subscriptionFeatureMappingCache: subscriptionFeatureMappingCache)
+    }()
+
+    let subscriptionFeatureAvailability = SubscriptionFeatureAvailabilityMock.enabled
 
     func testWhenInitWithOriginThenSubscriptionFlowPurchaseURLHasOriginSet() {
         // GIVEN
@@ -49,6 +66,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     origin: origin,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: subscriptionManager,
+                                      subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                       subscriptionAttributionOrigin: nil,
                                       appStorePurchaseFlow: appStorePurchaseFlow,
                                       appStoreRestoreFlow: appStoreRestoreFlow,
@@ -77,6 +95,7 @@ final class SubscriptionContainerViewModelTests: XCTestCase {
                     origin: nil,
                     userScript: .init(),
                     subFeature: .init(subscriptionManager: subscriptionManager,
+                                      subscriptionFeatureAvailability: subscriptionFeatureAvailability,
                                       subscriptionAttributionOrigin: nil,
                                       appStorePurchaseFlow: appStorePurchaseFlow,
                                       appStoreRestoreFlow: appStoreRestoreFlow,

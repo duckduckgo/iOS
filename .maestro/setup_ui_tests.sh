@@ -7,15 +7,15 @@ source $(dirname $0)/common.sh
 ## Constants
 
 # The simulator command requires the hyphens
-target_device="iPhone-15"
-target_os="iOS-17-0"
+target_device="iPhone-16"
+target_os="iOS-18-1"
 
 ## Functions
 
 check_maestro() {
 
     local command_name="maestro"
-    local known_version="1.36.0"
+    local known_version="1.39.1"
 
     if command -v $command_name > /dev/null 2>&1; then
       local version_output=$($command_name -v 2>&1 | tail -n 1)
@@ -50,7 +50,7 @@ build_app() {
     echo "⏲️ Building the app"
     set -o pipefail && xcodebuild -project "$project_root"/DuckDuckGo.xcodeproj \
                                   -scheme "DuckDuckGo" \
-                                  -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+                                  -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
                                   -derivedDataPath "$derived_data_path" \
                                   -skipPackagePluginValidation \
                                   -skipMacroValidation \

@@ -20,6 +20,7 @@
 import XCTest
 import BrowserServicesKit
 
+@testable import Core
 @testable import DuckDuckGo
 
 final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
@@ -37,7 +38,7 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 
         passwordsSettings.isEnabled.wrappedValue = true
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutAdded("passwords"))
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeShortcutAdded("passwords").name)
     }
 
     func testFiresPixelWhenItemDisabled() throws {
@@ -49,7 +50,7 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 
         passwordsSettings.isEnabled.wrappedValue = false
 
-        XCTAssertEqual(PixelFiringMock.lastPixel, .newTabPageCustomizeShortcutRemoved("passwords"))
+        XCTAssertEqual(PixelFiringMock.lastPixelName, Pixel.Event.newTabPageCustomizeShortcutRemoved("passwords").name)
     }
 
     private func createSUT() -> NewTabPageShortcutsSettingsModel {
@@ -66,7 +67,22 @@ final class NewTabPageShortcutsSettingsModelTests: XCTestCase {
 }
 
 private final class AlwaysTrueFeatureFlagger: FeatureFlagger {
-    func isFeatureOn<F>(forProvider: F) -> Bool where F: FeatureFlagSourceProviding {
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: MockInternalUserStoring())
+    var localOverrides: FeatureFlagLocalOverriding?
+
+    func isFeatureOn<Flag: FeatureFlagDescribing>(for featureFlag: Flag, allowOverride: Bool) -> Bool {
         true
+    }
+
+    func getCohortIfEnabled(_ subfeature: any PrivacySubfeature) -> CohortID? {
+        return nil
+    }
+
+    func getCohortIfEnabled<Flag>(for featureFlag: Flag) -> (any FlagCohort)? where Flag: FeatureFlagExperimentDescribing {
+        return nil
+    }
+
+    func getAllActiveExperiments() -> Experiments {
+        return [:]
     }
 }

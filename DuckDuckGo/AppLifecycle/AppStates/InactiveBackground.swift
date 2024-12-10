@@ -19,8 +19,4 @@
 
 struct InactiveBackground: AppState {
 
-    init() {
-
-    }
-
 }

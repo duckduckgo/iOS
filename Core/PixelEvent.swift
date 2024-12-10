@@ -463,8 +463,12 @@ extension Pixel {
 
         case networkProtectionWidgetConnectAttempt
         case networkProtectionWidgetConnectSuccess
+        case networkProtectionWidgetConnectCancelled
+        case networkProtectionWidgetConnectFailure
         case networkProtectionWidgetDisconnectAttempt
         case networkProtectionWidgetDisconnectSuccess
+        case networkProtectionWidgetDisconnectCancelled
+        case networkProtectionWidgetDisconnectFailure
 
         case networkProtectionDNSUpdateCustom
         case networkProtectionDNSUpdateDefault
@@ -1660,8 +1664,12 @@ extension Pixel.Event {
 
         case .networkProtectionWidgetConnectAttempt: return "m_netp_widget_connect_attempt"
         case .networkProtectionWidgetConnectSuccess: return "m_netp_widget_connect_success"
+        case .networkProtectionWidgetConnectCancelled: return "m_netp_widget_connect_cancelled"
+        case .networkProtectionWidgetConnectFailure: return "m_netp_widget_connect_failure"
         case .networkProtectionWidgetDisconnectAttempt: return "m_netp_widget_disconnect_attempt"
         case .networkProtectionWidgetDisconnectSuccess: return "m_netp_widget_disconnect_success"
+        case .networkProtectionWidgetDisconnectCancelled: return "m_netp_widget_disconnect_cancelled"
+        case .networkProtectionWidgetDisconnectFailure: return "m_netp_widget_disconnect_failure"
 
         // MARK: Secure Vault
         case .secureVaultL1KeyMigration: return "m_secure-vault_keystore_event_l1-key-migration"

@@ -95,6 +95,7 @@ public struct UserDefaultsWrapper<T> {
         case autofillFillDate = "com.duckduckgo.app.autofill.FillDate"
         case autofillOnboardedUser = "com.duckduckgo.app.autofill.OnboardedUser"
         case autofillSurveysCompleted = "com.duckduckgo.app.autofill.SurveysCompleted"
+        case autofillExtensionEnabled = "com.duckduckgo.app.autofill.ExtensionEnabled"
 
         case syncPromoBookmarksDismissed = "com.duckduckgo.app.sync.PromoBookmarksDismissed"
         case syncPromoPasswordsDismissed = "com.duckduckgo.app.sync.PromoPasswordsDismissed"

@@ -21,13 +21,17 @@ import UIKit
 import AuthenticationServices
 import BrowserServicesKit
 import Combine
+import Common
 import Core
 import SwiftUI
 
 final class CredentialProviderListViewController: UIViewController {
 
     private let viewModel: CredentialProviderListViewModel
+    private let shouldProvideTextToInsert: Bool
+    private let tld: TLD
     private let onRowSelected: (AutofillLoginItem) -> Void
+    private let onTextProvided: (String) -> Void
     private let onDismiss: () -> Void
     private var cancellables: Set<AnyCancellable> = []
 
@@ -80,21 +84,35 @@ final class CredentialProviderListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
          credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
+         shouldProvideTextToInsert: Bool,
+         tld: TLD,
          onRowSelected: @escaping (AutofillLoginItem) -> Void,
+         onTextProvided: @escaping (String) -> Void,
          onDismiss: @escaping () -> Void) {
         self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers,
                                                          secureVault: secureVault,
-                                                         credentialIdentityStoreManager: credentialIdentityStoreManager)
+                                                         credentialIdentityStoreManager: credentialIdentityStoreManager,
+                                                         tld: tld)
+        self.shouldProvideTextToInsert = shouldProvideTextToInsert
+        self.tld = tld
         self.onRowSelected = onRowSelected
+        self.onTextProvided = onTextProvided
         self.onDismiss = onDismiss
 
         super.init(nibName: nil, bundle: nil)
 
-        authenticate()
+        if #available(iOS 18.0, *) {
+            authenticate()
+        } else {
+            // pre-iOS 18.0 authentication can fail silently if extension is loaded twice in quick succession
+            // if authenticate is called without a slight delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.authenticate()
+            }
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -105,6 +123,10 @@ final class CredentialProviderListViewController: UIViewController {
         super.viewDidLoad()
 
         title = UserText.credentialProviderListTitle
+
+        if let itemPrompt = viewModel.serviceIdentifierPromptLabel {
+            navigationItem.prompt = itemPrompt
+        }
 
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         navigationItem.rightBarButtonItem = doneItem
@@ -117,6 +139,8 @@ final class CredentialProviderListViewController: UIViewController {
         registerForKeyboardNotifications()
 
         navigationItem.searchController = searchController
+
+        Pixel.fire(pixel: .autofillExtensionPasswordsOpened)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -156,19 +180,17 @@ final class CredentialProviderListViewController: UIViewController {
     }
 
     private func authenticate() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.viewModel.authenticate {[weak self] error in
-                guard let self = self else { return }
+        viewModel.authenticate {[weak self] error in
+            guard let self = self else { return }
 
-                if error != nil {
-                    if error != .noAuthAvailable {
-                        self.onDismiss()
-                    } else {
-                        let alert = UIAlertController.makeDeviceAuthenticationAlert { [weak self] in
-                            self?.onDismiss()
-                        }
-                        present(alert, animated: true)
+            if error != nil {
+                if error != .noAuthAvailable {
+                    self.onDismiss()
+                } else {
+                    let alert = UIAlertController.makeDeviceAuthenticationAlert { [weak self] in
+                        self?.onDismiss()
                     }
+                    present(alert, animated: true)
                 }
             }
         }
@@ -270,6 +292,7 @@ final class CredentialProviderListViewController: UIViewController {
 
     @objc private func doneTapped() {
         onDismiss()
+        Pixel.fire(pixel: .autofillExtensionPasswordsDismissed)
     }
 
 }
@@ -293,6 +316,11 @@ extension CredentialProviderListViewController: UITableViewDataSource {
             }
             cell.item = items[indexPath.row]
             cell.backgroundColor = UIColor(designSystemColor: .surface)
+
+            cell.disclosureButtonTapped = { [weak self] in
+                let item = items[indexPath.row]
+                self?.presentDetailsForCredentials(item: item)
+            }
             return cell
         default:
             return UITableViewCell()
@@ -312,6 +340,14 @@ extension CredentialProviderListViewController: UITableViewDataSource {
         viewModel.viewState == .showItems ? UILocalizedIndexedCollation.current().sectionIndexTitles : []
     }
 
+    private func presentDetailsForCredentials(item: AutofillLoginItem) {
+        let detailViewController = CredentialProviderListDetailsViewController(account: item.account,
+                                                                               tld: tld,
+                                                                               shouldProvideTextToInsert: self.shouldProvideTextToInsert)
+        detailViewController.delegate = self
+
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
 
 extension CredentialProviderListViewController: UITableViewDelegate {
@@ -321,9 +357,14 @@ extension CredentialProviderListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .suggestions(_, items: let items), .credentials(_, let items):
             let item = items[indexPath.row]
-            onRowSelected(item)
+            if shouldProvideTextToInsert {
+                presentDetailsForCredentials(item: item)
+            } else {
+                onRowSelected(item)
+                Pixel.fire(pixel: .autofillExtensionPasswordSelected)
+            }
         default:
-            break
+            return
         }
     }
 
@@ -377,6 +418,13 @@ extension CredentialProviderListViewController {
             (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
             (tableView.frame.height / 2) - searchController.searchBar.frame.height
         )
+    }
+}
+
+extension CredentialProviderListViewController: CredentialProviderListDetailsViewControllerDelegate {
+
+    func credentialProviderListDetailsViewControllerDidProvideText(_ controller: CredentialProviderListDetailsViewController, text: String) {
+        onTextProvided(text)
     }
 
 }

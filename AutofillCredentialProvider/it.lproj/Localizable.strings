@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Chiudi";
+
+/* Done button title */
+"action.button.done" = "Fatto";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Apri DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Compilazione automatica delle password attivata!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "dispositivo";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Annulla";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Sblocca il dispositivo per accedere alle password";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "URL del sito Web";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Copia %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Indirizzo copiato";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Appunti copiati";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Password copiata";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Nome utente copiato";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Nascondi password";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Ultimo aggiornamento %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Titolo";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Note";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Password";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Mostra password";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Nome utente";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Le password sono archiviate in modo sicuro sul tuo dispositivo.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Nessuna password ancora salvata";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Scegli una password da usare per \"%@\"";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Cerca password";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "per \"%@\"";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Nessun risultato";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Suggerimenti";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Password";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Imposta un codice di accesso su %@ per inserire automaticamente le tue password DuckDuckGo.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "È necessario il codice di accesso del dispositivo";
+

@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Kapat";
+
+/* Done button title */
+"action.button.done" = "Bitti";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "DuckDuckGo'yu aç";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Şifreleri otomatik doldurma etkinleştirildi!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "cihaz";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "İptal";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Şifrelere erişmek için cihazın kilidini açın";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Web sitesi URL'si";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "%@ Ögesini Kopyala";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Adres kopyalandı";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Notlar kopyalandı";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Şifre kopyalandı";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Kullanıcı adı kopyalandı";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Parolayı gizle";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Son güncelleme %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Title";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Notlar";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Parola";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Parolayı göster";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Kullanıcı adı";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Şifreler cihazınızda güvenli bir şekilde saklanır.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Henüz şifre kaydedilmedi";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "\"%@\" için kullanılacak bir şifre seçin";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Şifreleri ara";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "\"%@\" için";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Sonuç yok";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Önerilen";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Şifreler";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "DuckDuckGo şifrelerinizi otomatik olarak doldurmak için %@ üzerinde bir parola belirleyin.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Cihaz Parolası Gerekli";
+

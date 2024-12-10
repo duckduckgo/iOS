@@ -24,7 +24,9 @@ import DesignResourcesKit
 class CredentialProviderListItemTableViewCell: UITableViewCell {
     
     static var reuseIdentifier = "CredentialProviderListItemTableViewCell"
-    
+
+    var disclosureButtonTapped: (() -> Void)?
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .callout)
@@ -64,7 +66,23 @@ class CredentialProviderListItemTableViewCell: UITableViewCell {
         stackView.alignment = .center
         return stackView
     }()
-    
+
+    private lazy var disclosureButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "chevron.forward")
+        let boldImage = image?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 11, weight: .bold))
+        button.setImage(boldImage, for: .normal)
+        button.tintColor = UIColor.tertiaryLabel
+        button.addTarget(self, action: #selector(handleDisclosureButtonTap), for: .touchUpInside)
+
+        let buttonSize: CGFloat = 44
+        button.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+
+        return button
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         installSubviews()
@@ -85,22 +103,29 @@ class CredentialProviderListItemTableViewCell: UITableViewCell {
     
     private func installSubviews() {
         contentView.addSubview(contentStackView)
+        contentView.addSubview(disclosureButton)
         installConstraints()
     }
     
     private func installConstraints() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        disclosureButton.translatesAutoresizingMaskIntoConstraints = false
+
         let imageSize: CGFloat = 32
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
             iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
             iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
-            
+
+            disclosureButton.widthAnchor.constraint(equalToConstant: 44),
+            disclosureButton.heightAnchor.constraint(equalToConstant: 44),
+            disclosureButton.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
+            disclosureButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 16),
+
             contentStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: disclosureButton.leadingAnchor, constant: -12),
             contentStackView.topAnchor.constraint(equalTo: margins.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
@@ -109,7 +134,7 @@ class CredentialProviderListItemTableViewCell: UITableViewCell {
     private func setupContentView(with item: AutofillLoginItem) {
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
-        iconImageView.image = loadImageFromCache(forDomain: item.account.domain)
+        iconImageView.image = FaviconHelper.loadImageFromCache(forDomain: item.account.domain, preferredFakeFaviconLetters: item.preferredFaviconLetters)
     }
     
     override func layoutSubviews() {
@@ -118,67 +143,9 @@ class CredentialProviderListItemTableViewCell: UITableViewCell {
         
         separatorInset = UIEdgeInsets(top: 0, left: contentView.layoutMargins.left + textStackView.frame.origin.x, bottom: 0, right: 0)
     }
-    
-    
-    private func loadImageFromCache(forDomain domain: String?) -> UIImage? {
-        guard let domain = domain,
-              let cacheUrl = FaviconsCacheType.fireproof.cacheLocation() else { return nil }
 
-        let key = FaviconHasher.createHash(ofDomain: domain)
+    @objc private func handleDisclosureButtonTap() {
+        disclosureButtonTapped?()
+    }
 
-        // Slight leap here to avoid loading Kingisher as a library for the widgets.
-        // Once dependency management is fixed, link it and use Favicons directly.
-        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)
-        
-        guard let data = (try? Data(contentsOf: imageUrl)) else {
-            let image = createFakeFavicon(forDomain: domain, size: 32, backgroundColor: UIColor.forDomain(domain), preferredFakeFaviconLetters: item?.preferredFaviconLetters)
-            return image
-        }
-        
-        return UIImage(data: data)?.toSRGB()
-    }
-    
-    private func createFakeFavicon(forDomain domain: String,
-                                   size: CGFloat = 192,
-                                   backgroundColor: UIColor = UIColor.red,
-                                   bold: Bool = true,
-                                   preferredFakeFaviconLetters: String? = nil,
-                                   letterCount: Int = 2) -> UIImage? {
-        
-        let cornerRadius = size * 0.125
-        let imageRect = CGRect(x: 0, y: 0, width: size, height: size)
-        let padding = size * 0.16
-        let labelFrame = CGRect(x: padding, y: padding, width: imageRect.width - (2 * padding), height: imageRect.height - (2 * padding))
-        
-        let renderer = UIGraphicsImageRenderer(size: imageRect.size)
-        let icon = renderer.image { imageContext in
-            let context = imageContext.cgContext
-            
-            context.setFillColor(backgroundColor.cgColor)
-            context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
-            context.fillPath()
-            
-            let label = UILabel(frame: labelFrame)
-            label.numberOfLines = 1
-            label.adjustsFontSizeToFitWidth = true
-            label.minimumScaleFactor = 0.1
-            label.baselineAdjustment = .alignCenters
-            label.font = bold ? UIFont.boldSystemFont(ofSize: size) : UIFont.systemFont(ofSize: size)
-            label.textColor = .white
-            label.textAlignment = .center
-            
-            if let prefferedPrefix = preferredFakeFaviconLetters?.droppingWwwPrefix().prefix(letterCount).capitalized {
-                label.text = prefferedPrefix
-            } else {
-                label.text = item?.preferredFaviconLetters.capitalized ?? "#"
-            }
-            
-            context.translateBy(x: padding, y: padding)
-            
-            label.layer.draw(in: context)
-        }
-        
-        return icon.withRenderingMode(.alwaysOriginal)
-    }
-    
 }

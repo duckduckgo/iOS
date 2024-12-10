@@ -36,7 +36,13 @@ final class CredentialProviderListViewModel: ObservableObject {
         case searchingNoResults
     }
 
-    var isSearching: Bool = false
+    var isSearching: Bool = false {
+        didSet {
+            if oldValue != isSearching, isSearching {
+                Pixel.fire(pixel: .autofillExtensionPasswordsSearch)
+            }
+        }
+    }
     var authenticationNotRequired = false
 
     private let serviceIdentifiers: [ASCredentialServiceIdentifier]
@@ -45,7 +51,7 @@ final class CredentialProviderListViewModel: ObservableObject {
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
-    private let tld: TLD = TLD()
+    private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
@@ -53,6 +59,13 @@ final class CredentialProviderListViewModel: ObservableObject {
                                           cancelTitle: UserText.credentialProviderListAuthenticationCancelButton)
     var hasAccountsSaved: Bool {
         return !accounts.isEmpty
+    }
+
+    var serviceIdentifierPromptLabel: String? {
+        guard let identifier = serviceIdentifiers.first?.identifier else {
+            return nil
+        }
+        return String(format: UserText.credentialProviderListPrompt, autofillDomainNameUrlMatcher.normalizeUrlForWeb(identifier))
     }
 
     @Published private(set) var viewState: CredentialProviderListViewModel.ViewState = .authLocked
@@ -64,10 +77,12 @@ final class CredentialProviderListViewModel: ObservableObject {
 
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
-         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging) {
+         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
+         tld: TLD) {
         self.serviceIdentifiers = serviceIdentifiers
         self.secureVault = secureVault
         self.credentialIdentityStoreManager = credentialIdentityStoreManager
+        self.tld = tld
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0

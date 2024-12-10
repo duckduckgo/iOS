@@ -34,6 +34,8 @@ public enum AppDeepLinkSchemes: String, CaseIterable {
     case openVPN = "ddgOpenVPN"
     case openPasswords = "ddgOpenPasswords"
 
+    case openAIChat = "ddgOpenAIChat"
+
     public var url: URL {
         URL(string: rawValue + "://")!
     }

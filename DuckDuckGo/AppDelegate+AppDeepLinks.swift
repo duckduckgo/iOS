@@ -69,6 +69,10 @@ extension AppDelegate {
                 mainViewController.launchAutofillLogins(openSearch: true, source: source)
             }
 
+        case .openAIChat:
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                mainViewController.openAIChat()
+            }
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

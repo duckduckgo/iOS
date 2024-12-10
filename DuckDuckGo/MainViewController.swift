@@ -1709,7 +1709,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
 
-    private func openAIChat() {
+    func openAIChat() {
         let logoImage = UIImage(named: "Logo")
         let title = UserText.aiChatTitle
 

@@ -222,34 +222,44 @@ struct FavoritesWidgetView: View {
 
 struct SearchWidgetView: View {
     var entry: Provider.Entry
+    let imageSize: CGFloat = 52
 
     var body: some View {
         ZStack {
-            VStack(alignment: .center, spacing: 15) {
-
-                Image(.logo)
-                    .resizable()
-                    .useFullColorRendering()
-                    .frame(width: 46, height: 46, alignment: .center)
-                    .isHidden(false)
-                    .accessibilityHidden(true)
-
-                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .center)) {
-
-                    RoundedRectangle(cornerSize: CGSize(width: 8, height: 8))
-                        .fill(Color(designSystemColor: .container))
-                        .frame(width: 126, height: 46)
-
-                    Image(.findSearch20)
+            VStack {
+                HStack {
+                    Image(.logo)
+                        .resizable()
                         .useFullColorRendering()
-                        .frame(width: 20, height: 20)
-                        .padding(.leading)
-                        .padding(.trailing, 13)
-                        .isHidden(false)
+                        .frame(width: imageSize,
+                               height: imageSize,
+                               alignment: .center)
                         .accessibilityHidden(true)
-                        .foregroundColor(Color(designSystemColor: .textPrimary).opacity(0.5))
+                    Spacer()
                 }
-                .accessibilityHidden(true)
+                Spacer()
+                HStack {
+                    Link(destination: DeepLinks.newSearch) {
+                        Image(.searchIcon)
+                            .resizable()
+                            .useFullColorRendering()
+                        .frame(width: imageSize,
+                               height: imageSize,
+                               alignment: .center)
+                        .accessibilityHidden(true)
+                    }
+
+                    Spacer()
+                    Link(destination: DeepLinks.openAIChat) {
+                        Image(.chatIcon)
+                            .resizable()
+                            .useFullColorRendering()
+                            .frame(width: imageSize,
+                                   height: imageSize,
+                                   alignment: .center)
+                            .accessibilityHidden(true)
+                    }
+                }
             }.accessibilityLabel(Text(UserText.searchDuckDuckGo))
         }
         .widgetContainerBackground(color: Color(designSystemColor: .backgroundSheets))

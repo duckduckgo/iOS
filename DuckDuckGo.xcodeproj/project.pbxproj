@@ -964,6 +964,7 @@
 		CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */; };
 		CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EF028410DF700885F67 /* PixelEvent.swift */; };
 		CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */; };
+		CB3C78912D08484800A7E4ED /* InactiveBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C78902D08483F00A7E4ED /* InactiveBackground.swift */; };
 		CB48D3332B90CE9F00631D8B /* PageRefreshStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB48D3312B90CE9F00631D8B /* PageRefreshStore.swift */; };
 		CB4FA44E2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */; };
 		CB5516D0286500290079B175 /* TrackerRadarIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */; };
@@ -2805,6 +2806,7 @@
 		CB2A7EF028410DF700885F67 /* PixelEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelEvent.swift; sourceTree = "<group>"; };
 		CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLastCompiledRulesStore.swift; sourceTree = "<group>"; };
 		CB2C47822AF6D55800AEDCD9 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB3C78902D08483F00A7E4ED /* InactiveBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactiveBackground.swift; sourceTree = "<group>"; };
 		CB4448752AF6D51D001F93F7 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB48D3312B90CE9F00631D8B /* PageRefreshStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageRefreshStore.swift; sourceTree = "<group>"; };
 		CB4FA44D2C78AACE00A16F5A /* SpecialErrorPageUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialErrorPageUserScript.swift; sourceTree = "<group>"; };
@@ -5516,6 +5518,7 @@
 				CBAD0EFC2CFE1D48006267B8 /* Active.swift */,
 				CBAD0EFE2CFE1D4E006267B8 /* Inactive.swift */,
 				CBAD0F002CFE1D54006267B8 /* Background.swift */,
+				CB3C78902D08483F00A7E4ED /* InactiveBackground.swift */,
 			);
 			path = AppStates;
 			sourceTree = "<group>";
@@ -8134,6 +8137,7 @@
 				1DEAADF42BA47B5300E25A97 /* WebTrackingProtectionView.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				BD862E092B30F63E0073E2EE /* VPNMetadataCollector.swift in Sources */,
+				CB3C78912D08484800A7E4ED /* InactiveBackground.swift in Sources */,
 				D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */,
 				7BF78E022CA2CC3E0026A1FC /* TipKitAppEventHandling.swift in Sources */,
 				1DEAADF62BA4809400E25A97 /* CookiePopUpProtectionView.swift in Sources */,

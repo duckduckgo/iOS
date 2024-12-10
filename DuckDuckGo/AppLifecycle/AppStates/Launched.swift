@@ -62,10 +62,7 @@ struct Launched: AppState {
     private let isTesting = ProcessInfo().arguments.contains("testing")
     private let didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
 
-    // These should ideally be `let` properties instead of force unwrapped. However, due to the large amount of code, the compiler cannot track the initialization order.
-    // As a result, it complains about accessing `self` before all properties are set.
-    // This is a temporary state and will be gradually phased out as the class is cleaned up and most of the code is moved into services.
-    // Note: This cleanup is not part of the current milestone.
+    // These should ideally be let properties instead of force-unwrapped. However, due to various initialization paths, such as database completion blocks, setting them up in advance is currently not feasible. Refactoring will be done once this code is streamlined.
     private var uiService: UIService!
     private var unService: UNService!
     private var syncDataProviders: SyncDataProviders!
@@ -110,13 +107,26 @@ struct Launched: AppState {
         Pixel.isDryRun = false
 #endif
 
-        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+        ContentBlocking.shared.onCriticalError = { [application] in
+            Task { @MainActor [application] in
+                let alertController = CriticalAlerts.makePreemptiveCrashAlert()
+                application.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            }
+        }
         // Explicitly prepare ContentBlockingUpdating instance before Tabs are created
         _ = ContentBlockingUpdating.shared
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
         cleanUpIncrementalRolloutPixelTest()
+
+        func cleanUpMacPromoExperiment2() {
+            UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
+        }
+
+        func cleanUpIncrementalRolloutPixelTest() {
+            UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")
+        }
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
@@ -140,6 +150,15 @@ struct Launched: AppState {
         }
 
         clearTmp()
+
+        func clearTmp() {
+            let tmp = FileManager.default.temporaryDirectory
+            do {
+                try FileManager.default.removeItem(at: tmp)
+            } catch {
+                Logger.general.error("Failed to delete tmp dir")
+            }
+        }
 
         _ = DefaultUserAgentManager.shared
         if isTesting {
@@ -166,6 +185,18 @@ struct Launched: AppState {
         }
 
         removeEmailWaitlistState()
+
+        func removeEmailWaitlistState() {
+            EmailWaitlist.removeEmailState()
+
+            let autofillStorage = EmailKeychainManager()
+            try? autofillStorage.deleteWaitlistState()
+
+            // Remove the authentication state if this is a fresh install.
+            if !Database.shared.isDatabaseFileInitialized {
+                try? autofillStorage.deleteAuthenticationState()
+            }
+        }
 
         var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         Database.shared.loadStore { context, error in
@@ -226,7 +257,34 @@ struct Launched: AppState {
 
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
-        cleanUpATBAndAssignVariant(variantManager: variantManager, daxDialogs: daxDialogs)
+        cleanUpATBAndAssignVariant(variantManager: variantManager,
+                                   daxDialogs: daxDialogs,
+                                   marketplaceAdPostbackManager: marketplaceAdPostbackManager)
+
+        func cleanUpATBAndAssignVariant(variantManager: VariantManager,
+                                                daxDialogs: DaxDialogs,
+                                        marketplaceAdPostbackManager: MarketplaceAdPostbackManager) {
+            let historyMessageManager = HistoryMessageManager()
+
+            AtbAndVariantCleanup.cleanup()
+            variantManager.assignVariantIfNeeded { _ in
+                let launchOptionsHandler = LaunchOptionsHandler()
+
+                // MARK: perform first time launch logic here
+                // If it's running UI Tests check if the onboarding should be in a completed state.
+                if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
+                    daxDialogs.dismiss()
+                } else {
+                    daxDialogs.primeForUse()
+                }
+
+                // New users don't see the message
+                historyMessageManager.dismiss()
+
+                // Setup storage for marketplace postback
+                marketplaceAdPostbackManager.updateReturningUserValue()
+            }
+        }
 
         // MARK: Sync initialisation
 #if DEBUG
@@ -289,7 +347,7 @@ struct Launched: AppState {
             privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
             purchasePlatform: .appStore)
 
-        subscriptionCookieManager = makeSubscriptionCookieManager()
+        subscriptionCookieManager = Self.makeSubscriptionCookieManager(application: application)
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager
 
         let homePageConfiguration = HomePageConfiguration(variantManager: AppDependencyProvider.shared.variantManager,
@@ -298,8 +356,8 @@ struct Launched: AppState {
 
 
         let previewsSource = TabPreviewsSource()
-        let historyManager = makeHistoryManager()
-        let tabsModel = prepareTabsModel(previewsSource: previewsSource)
+        let historyManager = Self.makeHistoryManager()
+        let tabsModel = Self.prepareTabsModel(previewsSource: previewsSource)
 
         privacyProDataReporter.injectTabsModel(tabsModel)
 
@@ -311,7 +369,7 @@ struct Launched: AppState {
             window!.makeKeyAndVisible()
             application.setWindow(window)
 
-            presentInsufficientDiskSpaceAlert()
+            window!.presentInsufficientDiskSpaceAlert()
         } else {
             let daxDialogsFactory = ExperimentContextualDaxDialogsFactory(contextualOnboardingLogic: daxDialogs, contextualOnboardingPixelReporter: onboardingPixelReporter)
             let contextualOnboardingPresenter = ContextualOnboardingPresenter(variantManager: variantManager, daxDialogsFactory: daxDialogsFactory)
@@ -335,8 +393,8 @@ struct Launched: AppState {
                                                     featureFlagger: AppDependencyProvider.shared.featureFlagger,
                                                     fireproofing: fireproofing,
                                                     subscriptionCookieManager: subscriptionCookieManager,
-                                                    textZoomCoordinator: makeTextZoomCoordinator(),
-                                                    websiteDataManager: makeWebsiteDataManager(fireproofing: fireproofing),
+                                                    textZoomCoordinator: Self.makeTextZoomCoordinator(),
+                                                    websiteDataManager: Self.makeWebsiteDataManager(fireproofing: fireproofing),
                                                     appDidFinishLaunchingStartTime: didFinishLaunchingStartTime)
 
             mainViewController.loadViewIfNeeded()
@@ -443,66 +501,7 @@ struct Launched: AppState {
         )
     }
 
-    private func presentPreemptiveCrashAlert() {
-        Task { @MainActor in
-            let alertController = CriticalAlerts.makePreemptiveCrashAlert()
-            window?.rootViewController?.present(alertController, animated: true, completion: nil)
-        }
-    }
-
-    private func cleanUpMacPromoExperiment2() {
-        UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
-    }
-
-    private func cleanUpIncrementalRolloutPixelTest() {
-        UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")
-    }
-
-    private func clearTmp() {
-        let tmp = FileManager.default.temporaryDirectory
-        do {
-            try FileManager.default.removeItem(at: tmp)
-        } catch {
-            Logger.general.error("Failed to delete tmp dir")
-        }
-    }
-
-    private func removeEmailWaitlistState() {
-        EmailWaitlist.removeEmailState()
-
-        let autofillStorage = EmailKeychainManager()
-        try? autofillStorage.deleteWaitlistState()
-
-        // Remove the authentication state if this is a fresh install.
-        if !Database.shared.isDatabaseFileInitialized {
-            try? autofillStorage.deleteAuthenticationState()
-        }
-    }
-
-    private func cleanUpATBAndAssignVariant(variantManager: VariantManager, daxDialogs: DaxDialogs) {
-        let historyMessageManager = HistoryMessageManager()
-
-        AtbAndVariantCleanup.cleanup()
-        variantManager.assignVariantIfNeeded { _ in
-            let launchOptionsHandler = LaunchOptionsHandler()
-
-            // MARK: perform first time launch logic here
-            // If it's running UI Tests check if the onboarding should be in a completed state.
-            if launchOptionsHandler.isUITesting && launchOptionsHandler.isOnboardingCompleted {
-                daxDialogs.dismiss()
-            } else {
-                daxDialogs.primeForUse()
-            }
-
-            // New users don't see the message
-            historyMessageManager.dismiss()
-
-            // Setup storage for marketplace postback
-            marketplaceAdPostbackManager.updateReturningUserValue()
-        }
-    }
-
-    private func makeSubscriptionCookieManager() -> SubscriptionCookieManaging {
+    private static func makeSubscriptionCookieManager(application: UIApplication) -> SubscriptionCookieManaging {
         let subscriptionCookieManager = SubscriptionCookieManager(subscriptionManager: AppDependencyProvider.shared.subscriptionManager,
                                                                   currentCookieStore: {
             guard let mainViewController = application.window?.rootViewController as? MainViewController,
@@ -517,10 +516,8 @@ struct Launched: AppState {
         return subscriptionCookieManager
     }
 
-    private func makeHistoryManager() -> HistoryManaging {
-
+    private static func makeHistoryManager() -> HistoryManaging {
         let provider = AppDependencyProvider.shared
-
         switch HistoryManager.make(isAutocompleteEnabledByUser: provider.appSettings.autocomplete,
                                    isRecentlyVisitedSitesEnabledByUser: provider.appSettings.recentlyVisitedSites,
                                    privacyConfigManager: ContentBlocking.shared.privacyConfigurationManager,
@@ -528,11 +525,12 @@ struct Launched: AppState {
 
         case .failure(let error):
             Pixel.fire(pixel: .historyStoreLoadFailed, error: error)
-            if error.isDiskFull {
-                self.presentInsufficientDiskSpaceAlert()
-            } else {
-                self.presentPreemptiveCrashAlert()
-            }
+// Commenting out as it didn't work anyway - the window was just always nil at this point
+//            if error.isDiskFull {
+//                self.presentInsufficientDiskSpaceAlert()
+//            } else {
+//                self.presentPreemptiveCrashAlert()
+//            }
             return NullHistoryManager()
 
         case .success(let historyManager):
@@ -540,15 +538,9 @@ struct Launched: AppState {
         }
     }
 
-    private func presentInsufficientDiskSpaceAlert() {
-        let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
-        window?.rootViewController?.present(alertController, animated: true, completion: nil)
-    }
-
-    
-    private func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
-                                  appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-                                  isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
+    private static func prepareTabsModel(previewsSource: TabPreviewsSource = TabPreviewsSource(),
+                                         appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                         isDesktop: Bool = UIDevice.current.userInterfaceIdiom == .pad) -> TabsModel {
         let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
         let tabsModel: TabsModel
         if AutoClearSettingsModel(settings: appSettings) != nil {
@@ -567,7 +559,7 @@ struct Launched: AppState {
         return tabsModel
     }
 
-    private func makeTextZoomCoordinator() -> TextZoomCoordinator {
+    private static func makeTextZoomCoordinator() -> TextZoomCoordinator {
         let provider = AppDependencyProvider.shared
         let storage = TextZoomStorage()
 
@@ -576,8 +568,8 @@ struct Launched: AppState {
                                    featureFlagger: provider.featureFlagger)
     }
 
-    private func makeWebsiteDataManager(fireproofing: Fireproofing,
-                                        dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
+    private static func makeWebsiteDataManager(fireproofing: Fireproofing,
+                                               dataStoreIDManager: DataStoreIDManaging = DataStoreIDManager.shared) -> WebsiteDataManaging {
         return WebCacheManager(cookieStorage: MigratableCookieStorage(),
                                fireproofing: fireproofing,
                                dataStoreIDManager: dataStoreIDManager)

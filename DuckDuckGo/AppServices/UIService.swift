@@ -76,6 +76,15 @@ final class UIService: NSObject {
 
 }
 
+extension UIWindow {
+
+    func presentInsufficientDiskSpaceAlert() {
+        let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+        rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+
+}
+
 extension UIService: BlankSnapshotViewRecoveringDelegate {
 
     func recoverFromPresenting(controller: BlankSnapshotViewController) {

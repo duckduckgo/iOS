@@ -67,30 +67,4 @@ extension UNService: UNUserNotificationCenterDelegate {
         }
     }
 
-    private func presentSettings(with viewController: UIViewController) {
-        guard let rootViewController = window.rootViewController as? MainViewController else { return }
-
-        if let navigationController = rootViewController.presentedViewController as? UINavigationController {
-            if let lastViewController = navigationController.viewControllers.last, lastViewController.isKind(of: type(of: viewController)) {
-                // Avoid presenting dismissing and re-presenting the view controller if it's already visible:
-                return
-            } else {
-                // Otherwise, replace existing view controllers with the presented one:
-                navigationController.popToRootViewController(animated: false)
-                navigationController.pushViewController(viewController, animated: false)
-                return
-            }
-        }
-
-        // If the previous checks failed, make sure the nav stack is reset and present the view controller from scratch:
-        rootViewController.clearNavigationStack()
-
-        // Give the `clearNavigationStack` call time to complete.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            rootViewController.segueToSettings()
-            let navigationController = rootViewController.presentedViewController as? UINavigationController
-            navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(viewController, animated: false)
-        }
-    }
 }

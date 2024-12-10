@@ -18,7 +18,7 @@
 		<string>$(GROUP_ID_PREFIX).netp</string>
 		<string>$(GROUP_ID_PREFIX).statistics</string>
 		<string>group.com.duckduckgo.app-configuration</string>
-		<string>group.com.duckduckgo.vault</string>
+		<string>$(GROUP_ID_PREFIX).vault</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

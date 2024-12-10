@@ -20,7 +20,7 @@
 import Foundation
 import MaliciousSiteProtection
 
-class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
+final class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
 
     func evaluate(_ url: URL) async -> ThreatKind? {
         try? await Task.sleep(interval: 0.3)
@@ -34,4 +34,5 @@ class MaliciousSiteProtectionManager: MaliciousSiteDetecting {
             return .none
         }
     }
+
 }

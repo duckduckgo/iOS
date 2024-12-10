@@ -49,12 +49,6 @@ struct CredentialProviderActivatedView: View {
                     .padding(.top, 16)
                     .multilineTextAlignment(.center)
 
-                Text(UserText.credentialProviderActivatedSubtitle)
-                    .daxBodyRegular()
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .padding(.top, 8)
-                    .multilineTextAlignment(.center)
-
                 Spacer()
 
                 Button {
@@ -67,7 +61,7 @@ struct CredentialProviderActivatedView: View {
 
             }
             .padding(.horizontal, 24)
-            .navigationBarItems(trailing: Button(UserText.actionCancel) {
+            .navigationBarItems(trailing: Button(UserText.actionDone) {
                 viewModel.dismiss()
             })
         }

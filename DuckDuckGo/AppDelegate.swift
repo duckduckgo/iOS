@@ -1108,7 +1108,7 @@ import os.log
         autofillPixelReporter = AutofillPixelReporter(
             userDefaults: .standard,
             autofillEnabled: AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled,
-            eventMapping: EventMapping<AutofillPixelEvent> {event, _, params, _ in
+            eventMapping: EventMapping<AutofillPixelEvent> {[weak self] event, _, params, _ in
                 switch event {
                 case .autofillActiveUser:
                     Pixel.fire(pixel: .autofillActiveUser)
@@ -1118,8 +1118,16 @@ import os.log
                     Pixel.fire(pixel: .autofillOnboardedUser)
                 case .autofillToggledOn:
                     Pixel.fire(pixel: .autofillToggledOn, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillToggledOff:
                     Pixel.fire(pixel: .autofillToggledOff, withAdditionalParameters: params ?? [:])
+                    if let autofillExtensionToggled = self?.autofillUsageMonitor.autofillExtensionEnabled {
+                        Pixel.fire(pixel: autofillExtensionToggled ? .autofillExtensionToggledOn : .autofillExtensionToggledOff,
+                                   withAdditionalParameters: params ?? [:])
+                    }
                 case .autofillLoginsStacked:
                     Pixel.fire(pixel: .autofillLoginsStacked, withAdditionalParameters: params ?? [:])
                 default:

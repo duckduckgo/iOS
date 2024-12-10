@@ -1,8 +1,8 @@
 //
-//  PasswordHider.swift
+//  NibLoading.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,13 +17,18 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-struct PasswordHider {
-    let password: String
-    var hiddenPassword: String {
-        let maximumPasswordDisplayCount = 22
-        let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
-        return String(repeating: "•", count: passwordCount)
+protocol NibLoading {
+}
+
+extension NibLoading where Self: UIView {
+    static func load(nibName: String) -> Self {
+        let nib = UINib(nibName: nibName, bundle: nil)
+        guard let view = nib.instantiate(withOwner: self, options: nil).first as? Self else {
+            fatalError("Error instantiating view")
+        }
+        view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
+        return view
     }
 }

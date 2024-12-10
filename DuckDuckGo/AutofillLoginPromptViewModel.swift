@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import BrowserServicesKit
+import Core
 
 protocol AutofillLoginPromptViewModelDelegate: AnyObject {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount)

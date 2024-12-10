@@ -1,0 +1,96 @@
+/* Close button title */
+"action.button.close" = "Затваряне";
+
+/* Done button title */
+"action.button.done" = "Готово";
+
+/* Title of button to launch the DuckDuckGo app */
+"credential.provider.activated.button" = "Отваряне на DuckDuckGo";
+
+/* The title of the screen confirming DuckDuckGo can now be used for autofilling passwords */
+"credential.provider.activated.title" = "Автоматичното попълване на пароли е активирано!";
+
+/* Default string used if users device is not iPhone or iPad */
+"credential.provider.device.type.default" = "устройство";
+
+/* Device type is iPhone */
+"credential.provider.device.type.iphone" = "iPhone";
+
+/* Device type is iPad */
+"credential.provider.device.type.pad" = "iPad";
+
+/* Cancel button for auth when opening login list */
+"credential.provider.list.auth.cancel" = "Отмени";
+
+/* Reason for auth when opening screen with list of saved passwords */
+"credential.provider.list.auth.reason" = "Отключете устройството, за да получите достъп до паролите";
+
+/* Address label for login details on autofill */
+"credential.provider.list.details.address" = "Адрес на уебсайта";
+
+/* Menu item text for copying autofill login details */
+"credential.provider.list.details.copy-prompt" = "Копиране на %@";
+
+/* Title for toast when copying address */
+"credential.provider.list.details.copy-toast.address-copied" = "Адресът е копиран";
+
+/* Title for toast when copying notes */
+"credential.provider.list.details.copy-toast.notes-copied" = "Бележките са копирани";
+
+/* Title for toast when copying password */
+"credential.provider.list.details.copy-toast.password-copied" = "Паролата е копирана";
+
+/* Title for toast when copying username */
+"credential.provider.list.details.copy-toast.username-copied" = "Потребителското име е копирано";
+
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"credential.provider.list.details.hide-password" = "Скриване на паролата";
+
+/* Message displaying when the login was last updated */
+"credential.provider.list.details.last-updated" = "Последна актуализация %@";
+
+/* Login name label for login details on autofill */
+"credential.provider.list.details.login-name" = "Заглавие";
+
+/* Notes label for login details on autofill */
+"credential.provider.list.details.notes" = "Бележки";
+
+/* Password label for login details on autofill */
+"credential.provider.list.details.password" = "Парола";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"credential.provider.list.details.show-password" = "Показване на паролата";
+
+/* Username label for login details on autofill */
+"credential.provider.list.details.username" = "Потребителско име";
+
+/* Footer label displayed below table section with option to enable autofill */
+"credential.provider.list.empty-view.footer" = "Паролите се съхраняват сигурно на Вашето устройство.";
+
+/* Title for view displayed when autofill has no items */
+"credential.provider.list.empty-view.title" = "Все още няма запазени пароли";
+
+/* Prompt above the title for screen listing autofill logins, example: Choose a password to use for "website.com" */
+"credential.provider.list.prompt" = "Избиране на парола, която да бъде използвана за „%@“";
+
+/* Placeholder for search field on autofill login listing */
+"credential.provider.list.search-placeholder" = "Търсене на пароли";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"credential.provider.list.search.no-results.subtitle" = "за '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"credential.provider.list.search.no-results.title" = "Няма резултати";
+
+/* Section title for group of suggested saved logins */
+"credential.provider.list.suggested" = "Предложения";
+
+/* Title for screen listing autofill logins */
+"credential.provider.list.title" = "Пароли";
+
+/* Message for alert when device authentication is not set, where %@ is iPhone|iPad|device */
+"credential.provider.no-device-auth-set.message" = "Задаване на парола на %@ за автоматично попълване на паролите за DuckDuckGo.";
+
+/* Title for alert when device authentication is not set */
+"credential.provider.no-device-auth-set.title" = "Изисква се парола на устройството";
+

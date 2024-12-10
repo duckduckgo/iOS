@@ -45,7 +45,7 @@ final class CredentialProviderListViewModel: ObservableObject {
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
-    private let tld: TLD = TLD()
+    private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
@@ -64,10 +64,12 @@ final class CredentialProviderListViewModel: ObservableObject {
 
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
-         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging) {
+         credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
+         tld: TLD) {
         self.serviceIdentifiers = serviceIdentifiers
         self.secureVault = secureVault
         self.credentialIdentityStoreManager = credentialIdentityStoreManager
+        self.tld = tld
 
         if let count = getAccountsCount() {
             authenticationNotRequired = count == 0

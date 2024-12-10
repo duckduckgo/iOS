@@ -21,13 +21,17 @@ import UIKit
 import AuthenticationServices
 import BrowserServicesKit
 import Combine
+import Common
 import Core
 import SwiftUI
 
 final class CredentialProviderListViewController: UIViewController {
 
     private let viewModel: CredentialProviderListViewModel
+    private let shouldProvideTextToInsert: Bool
+    private let tld: TLD
     private let onRowSelected: (AutofillLoginItem) -> Void
+    private let onTextProvided: (String) -> Void
     private let onDismiss: () -> Void
     private var cancellables: Set<AnyCancellable> = []
 
@@ -84,12 +88,19 @@ final class CredentialProviderListViewController: UIViewController {
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
          credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
+         shouldProvideTextToInsert: Bool,
+         tld: TLD,
          onRowSelected: @escaping (AutofillLoginItem) -> Void,
+         onTextProvided: @escaping (String) -> Void,
          onDismiss: @escaping () -> Void) {
         self.viewModel = CredentialProviderListViewModel(serviceIdentifiers: serviceIdentifiers,
                                                          secureVault: secureVault,
-                                                         credentialIdentityStoreManager: credentialIdentityStoreManager)
+                                                         credentialIdentityStoreManager: credentialIdentityStoreManager,
+                                                         tld: tld)
+        self.shouldProvideTextToInsert = shouldProvideTextToInsert
+        self.tld = tld
         self.onRowSelected = onRowSelected
+        self.onTextProvided = onTextProvided
         self.onDismiss = onDismiss
 
         super.init(nibName: nil, bundle: nil)
@@ -293,6 +304,11 @@ extension CredentialProviderListViewController: UITableViewDataSource {
             }
             cell.item = items[indexPath.row]
             cell.backgroundColor = UIColor(designSystemColor: .surface)
+
+            cell.disclosureButtonTapped = { [weak self] in
+                let item = items[indexPath.row]
+                self?.presentDetailsForCredentials(item: item)
+            }
             return cell
         default:
             return UITableViewCell()
@@ -312,6 +328,14 @@ extension CredentialProviderListViewController: UITableViewDataSource {
         viewModel.viewState == .showItems ? UILocalizedIndexedCollation.current().sectionIndexTitles : []
     }
 
+    private func presentDetailsForCredentials(item: AutofillLoginItem) {
+        let detailViewController = CredentialProviderListDetailsViewController(account: item.account,
+                                                                               tld: tld,
+                                                                               shouldProvideTextToInsert: self.shouldProvideTextToInsert)
+        detailViewController.delegate = self
+
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
 
 extension CredentialProviderListViewController: UITableViewDelegate {
@@ -321,9 +345,13 @@ extension CredentialProviderListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .suggestions(_, items: let items), .credentials(_, let items):
             let item = items[indexPath.row]
-            onRowSelected(item)
+            if shouldProvideTextToInsert {
+                presentDetailsForCredentials(item: item)
+            } else {
+                onRowSelected(item)
+            }
         default:
-            break
+            return
         }
     }
 
@@ -377,6 +405,13 @@ extension CredentialProviderListViewController {
             (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
             (tableView.frame.height / 2) - searchController.searchBar.frame.height
         )
+    }
+}
+
+extension CredentialProviderListViewController: CredentialProviderListDetailsViewControllerDelegate {
+
+    func credentialProviderListDetailsViewControllerDidProvideText(_ controller: CredentialProviderListDetailsViewController, text: String) {
+        onTextProvided(text)
     }
 
 }

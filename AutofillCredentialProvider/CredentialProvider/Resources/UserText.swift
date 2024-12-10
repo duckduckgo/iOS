@@ -31,6 +31,8 @@ final class UserText {
 
     static let credentialProviderListTitle = NSLocalizedString("credential.provider.list.title", value: "Passwords", comment: "Title for screen listing autofill logins")
 
+    static let credentialProviderListPrompt = NSLocalizedString("credential.provider.list.prompt", value: "Choose a password to use for \"%@\"", comment: "Prompt above the title for screen listing autofill logins, example: Choose a password to use for \"website.com\"")
+
     static let credentialProviderListSearchPlaceholder = NSLocalizedString("credential.provider.list.search-placeholder", value: "Search passwords", comment: "Placeholder for search field on autofill login listing")
 
     static let credentialProviderListEmptyViewTitle = NSLocalizedString("credential.provider.list.empty-view.title", value: "No passwords saved yet", comment: "Title for view displayed when autofill has no items")

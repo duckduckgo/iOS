@@ -55,6 +55,13 @@ final class CredentialProviderListViewModel: ObservableObject {
         return !accounts.isEmpty
     }
 
+    var serviceIdentifierPromptLabel: String? {
+        guard let identifier = serviceIdentifiers.first?.identifier else {
+            return nil
+        }
+        return String(format: UserText.credentialProviderListPrompt, autofillDomainNameUrlMatcher.normalizeUrlForWeb(identifier))
+    }
+
     @Published private(set) var viewState: CredentialProviderListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
         didSet {

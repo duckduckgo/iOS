@@ -84,7 +84,6 @@ final class CredentialProviderListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-
     init(serviceIdentifiers: [ASCredentialServiceIdentifier],
          secureVault: (any AutofillSecureVault)?,
          credentialIdentityStoreManager: AutofillCredentialIdentityStoreManaging,
@@ -105,7 +104,15 @@ final class CredentialProviderListViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        authenticate()
+        if #available(iOS 18.0, *) {
+            authenticate()
+        } else {
+            // pre-iOS 18.0 authentication can fail silently if extension is loaded twice in quick succession
+            // if authenticate is called without a slight delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.authenticate()
+            }
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -116,6 +123,10 @@ final class CredentialProviderListViewController: UIViewController {
         super.viewDidLoad()
 
         title = UserText.credentialProviderListTitle
+
+        if let itemPrompt = viewModel.serviceIdentifierPromptLabel {
+            navigationItem.prompt = itemPrompt
+        }
 
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         navigationItem.rightBarButtonItem = doneItem
@@ -167,19 +178,17 @@ final class CredentialProviderListViewController: UIViewController {
     }
 
     private func authenticate() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.viewModel.authenticate {[weak self] error in
-                guard let self = self else { return }
+        viewModel.authenticate {[weak self] error in
+            guard let self = self else { return }
 
-                if error != nil {
-                    if error != .noAuthAvailable {
-                        self.onDismiss()
-                    } else {
-                        let alert = UIAlertController.makeDeviceAuthenticationAlert { [weak self] in
-                            self?.onDismiss()
-                        }
-                        present(alert, animated: true)
+            if error != nil {
+                if error != .noAuthAvailable {
+                    self.onDismiss()
+                } else {
+                    let alert = UIAlertController.makeDeviceAuthenticationAlert { [weak self] in
+                        self?.onDismiss()
                     }
+                    present(alert, animated: true)
                 }
             }
         }

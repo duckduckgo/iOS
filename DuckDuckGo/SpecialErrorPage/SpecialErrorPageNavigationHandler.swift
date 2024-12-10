@@ -62,17 +62,13 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
 
     @MainActor
     func handleDecidePolicyFor(navigationAction: WKNavigationAction, webView: WKWebView) {
-        maliciousSiteProtectionNavigationHandler.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        maliciousSiteProtectionNavigationHandler.handleWebView(navigationAction: navigationAction)
     }
 
     @MainActor
-    func handleDecidePolicyfor(navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool {
-        guard let task = maliciousSiteProtectionNavigationHandler.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView) else {
-            return false
-        }
-
-        let result = await task.value
-
+    func handleDidStart(provisionalNavigation: WebViewNavigation, webView: WKWebView) async {
+        let result = await maliciousSiteProtectionNavigationHandler.handleMaliciousSiteProtectionNavigation(webView: webView)
+        
         switch result {
         case let .navigationHandled(.mainFrame(response)):
             // Re-use the same request to avoid that the new sideload request is intercepted and cancelled
@@ -83,16 +79,13 @@ extension SpecialErrorPageNavigationHandler: WebViewNavigationHandling {
             failedURL = response.errorData.url
             errorData = response.errorData
             loadSpecialErrorPage(request: request)
-            return true
         case let .navigationHandled(.iFrame(maliciousURL, error)):
             isSpecialErrorPageRequest = true
             failedURL = maliciousURL
             errorData = error
             loadSpecialErrorPage(url: maliciousURL)
-            return true
         case .navigationNotHandled:
             isSpecialErrorPageRequest = false
-            return false
         }
     }
 

@@ -37,21 +37,24 @@ extension WKNavigation: WebViewNavigation {}
 
 /// A protocol that defines methods for handling navigation events of `WKWebView`.
 protocol WebViewNavigationHandling: AnyObject {
-    /// Decides whether to cancel navigation to prevent opening a site and show a special error page based on the specified action information.
+    /// Handles the decision policy for navigation actions in a `WKWebView`.
     ///
     /// - Parameters:
     ///   - navigationAction: Details about the action that triggered the navigation request.
     ///   - webView: The web view from which the navigation request began.
+    /// - Note: This method does not return a value or a decision policy parameter.
+    ///   Any necessary actions based on the navigation action should be performed
+    ///   within this method.
     @MainActor
     func handleDecidePolicyFor(navigationAction: WKNavigationAction, webView: WKWebView)
 
-    /// Decides whether to to navigate to new content after the response to the navigation request is known or cancel the navigation and show a special error page based on the specified action information.
+    /// Handles the event when a provisional navigation starts in a `WKWebView`.
+    ///
     /// - Parameters:
-    ///   - navigationResponse: Descriptive information about the navigation response.
-    ///   - webView: The web view from which the navigation request began.
-    /// - Returns: A Boolean value that indicates whether to cancel or allow the navigation.
+    ///   - provisionalNavigation: The navigation object associated with the load request.
+    ///   - webView: The web view that is loading the content.
     @MainActor
-    func handleDecidePolicyfor(navigationResponse: WKNavigationResponse, webView: WKWebView) async -> Bool
+    func handleDidStart(provisionalNavigation: WebViewNavigation, webView: WKWebView) async
 
     /// Handles authentication challenges received by the web view.
     ///

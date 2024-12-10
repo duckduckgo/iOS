@@ -51,7 +51,7 @@ final class SpecialErrorPageNavigationHandlerTests {
 
     @MainActor
     @Test("Decide Policy For Navigation Action forwards event to Malicious Site Protection Handler")
-    func whenHandleDecidePolicyForNavigationActionIsCalledThenAskMaliciousSiteProtectionNavigationHandlerToHandleTheDecision() throws {
+    func whenHandleDecidePolicyForNavigationActionIsCalledThenAskMaliciousSiteProtectionNavigationHandlerToHandleNavigationAction() throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
@@ -60,139 +60,129 @@ final class SpecialErrorPageNavigationHandlerTests {
         sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
 
         // THEN
-        #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionForNavigationAction)
+        #expect(maliciousSiteProtectionNavigationHandler.didCallHandleWebViewNavigationAction)
         #expect(maliciousSiteProtectionNavigationHandler.capturedNavigationAction == navigationAction)
-        #expect(maliciousSiteProtectionNavigationHandler.capturedWebView == webView)
     }
 
     @MainActor
-    @Test("Decide Policy For Navigation Response forwards event to Malicious Site Protection Handler")
-    func whenHandleDecidePolicyforNavigationResponseThenAskMaliciousSiteProtectionNavigationHandlerToHandleTheDecision() async throws {
+    @Test("Provisional Navigation forwards event to Malicious Site Protection Handler")
+    func whenHandleProvisionalNavigationThenAskMaliciousSiteProtectionNavigationHandlerToHandleTheDecision() async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
-        let navigationResponse = MockNavigationResponse.with(url: url)
+        webView.setCurrentURL(url)
 
         // WHEN
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        _ = await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         // THEN
-        #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionForNavigationResponse)
-        #expect(maliciousSiteProtectionNavigationHandler.capturedNavigationResponse == navigationResponse)
+        #expect(maliciousSiteProtectionNavigationHandler.didCallHandleMaliciousSiteProtectionNavigation)
         #expect(maliciousSiteProtectionNavigationHandler.capturedWebView == webView)
     }
 
-    @MainActor
-    @Test("Decide Policy For Navigation Response returns false when malicious site detection Task is not found")
-    func whenHandleDecidePolicyForNavigationResponse_And_TaskIsNil_ThenReturnFalse() async throws {
-        // GIVEN
-        let url = try #require(URL(string: "https://www.example.com"))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = nil
-
-        // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
-
-        // THEN
-        #expect(result == false)
-    }
+//    @MainActor
+//    @Test("Provisional Navigation returns not handled when navigation action is not found")
+//    func whenHandleDecidePolicyForNavigationResponse_And_TaskIsNil_ThenReturnFalse() async throws {
+//        // GIVEN
+//        let url = try #require(URL(string: "https://www.example.com"))
+//        webView.setCurrentURL(url)
+//
+//        // WHEN
+//        let result = await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
+//
+//        // THEN
+//        #expect(result == .navigationNotHandled)
+//    }
 
     @MainActor
     @Test(
-        "When Main Frame Threat Then Load Bundled Response And Return True",
+        "When Main Frame Threat Then Load Bundled Response",
         arguments: [
             ThreatKind.phishing,
             .malware
         ]
     )
-    func whenHandleDecidePolicyForNavigationResponse_AndMainFrameThreat_ThenLoadBundledReponseAndReturnTrue(threat: ThreatKind) async throws {
+    func whenHandleProvisionalNavigation_AndMainFrameThreat_ThenLoadBundledReponse(threat: ThreatKind) async throws {
         // GIVEN
         sut.attachWebView(webView)
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        let navigationResponse = MockNavigationResponse.with(url: url)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
-        }
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
         var didCallLoadSimulatedRequest = false
         webView.loadRequestHandler = { _, _ in
             didCallLoadSimulatedRequest = true
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest)
         #expect(sut.failedURL == url)
         #expect(sut.errorData == errorData)
         #expect(didCallLoadSimulatedRequest)
-        #expect(result)
     }
 
     @MainActor
     @Test(
-        "When iFrame Threat Then Load Bundled Response And Return True",
+        "When iFrame Threat Then Load Bundled Response",
         arguments: [
             ThreatKind.phishing,
             .malware
         ]
     )
-    func whenHandleDecidePolicyForNavigationResponse_AndIFrameThreat_ThenLoadBundledReponseAndReturnTrue(threat: ThreatKind) async throws {
+    func whenHandleProvisionalNavigation_AndIFrameThreat_ThenLoadBundledReponse(threat: ThreatKind) async throws {
         // GIVEN
         sut.attachWebView(webView)
         let topFrameURL = try #require(URL(string: "https://www.example.com"))
         let iFrameURL = try  #require(URL(string: "https://www.iframe.example.com"))
-        let navigationResponse = MockNavigationResponse.with(url: topFrameURL)
+        webView.setCurrentURL(iFrameURL)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: topFrameURL)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.iFrame(maliciousURL: iFrameURL, error: errorData))
-        }
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.iFrame(maliciousURL: iFrameURL, error: errorData))
+
         var didCallLoadSimulatedRequest = false
         webView.loadRequestHandler = { _, _ in
             didCallLoadSimulatedRequest = true
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest)
         #expect(sut.failedURL == iFrameURL)
         #expect(sut.errorData == errorData)
         #expect(didCallLoadSimulatedRequest)
-        #expect(result)
     }
 
     @MainActor
     @Test(
-        "When No Threat Found Then Return False",
+        "When No Threat Found Set Special Error Page Request To False",
         arguments: [
             ThreatKind.phishing,
             .malware
         ]
     )
-    func whenHandleDecidePolicyForNavigationResponse_AndNoFrameThreat_ThenReturnFalse(threat: ThreatKind) async throws {
+    func whenHandleProvisionalNavigation_AndNoThreat_ThenSetSpecialRequestToFalse(threat: ThreatKind) async throws {
         // GIVEN
         sut.attachWebView(webView)
         let url = try #require(URL(string: "https://www.example.com"))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationNotHandled
-        }
+        webView.setCurrentURL(url)
+        maliciousSiteProtectionNavigationHandler.result = .navigationNotHandled
+
         var didCallLoadSimulatedRequest = false
         webView.loadRequestHandler = { _, _ in
             didCallLoadSimulatedRequest = true
         }
 
         // WHEN
-        let result = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         // THEN
         #expect(sut.isSpecialErrorPageRequest == false)
         #expect(sut.failedURL == nil)
         #expect(didCallLoadSimulatedRequest == false)
-        #expect(result == false)
     }
 
     @MainActor
@@ -235,13 +225,12 @@ final class SpecialErrorPageNavigationHandlerTests {
     func whenLeaveSite_AndMaliciousSiteError_ThenCallLeaveSiteOnMaliciousSiteProtectioneNavigationHandler(threat: ThreatKind) async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
-        }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallLeaveSite)
 
@@ -294,22 +283,20 @@ final class SpecialErrorPageNavigationHandlerTests {
             .malware
         ]
     )
-    func whenLeaveSite_AndMaliciousSiteError_AndWebViewCanNavigateBack_ThenNavigateBack(threat: ThreatKind) async throws {
+    func whenLeaveSite_AndMaliciousSiteError_AndWebViewCanNavigateBack_ThenCloseTab(threat: ThreatKind) async throws {
         // GIVEN
         webView.setCanGoBack(true)
         sut.attachWebView(webView)
         let url = try #require(URL(string: "https://example.com"))
+        webView.setCurrentURL(url)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
-        }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
         let delegate = SpySpecialErrorPageNavigationDelegate()
         sut.delegate = delegate
         #expect(!delegate.didCallCloseSpecialErrorPageTab)
-        
 
         // WHEN
         sut.leaveSiteAction()
@@ -350,11 +337,9 @@ final class SpecialErrorPageNavigationHandlerTests {
         sut.attachWebView(webView)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
-        }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallVisitSite)
 
@@ -406,13 +391,12 @@ final class SpecialErrorPageNavigationHandlerTests {
     )
     func whenAdvancedInfoPresented_AndPhishingError_ThenCallAdvancedInfoPresentedOnMaliciousSiteProtectionNavigationHandler(threat: ThreatKind) async throws {
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         let errorData = SpecialErrorData.maliciousSite(kind: threat, url: url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        maliciousSiteProtectionNavigationHandler.task = Task {
-            .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
-        }
-        _ = await sut.handleDecidePolicyfor(navigationResponse: navigationResponse, webView: webView)
+        sut.handleDecidePolicyFor(navigationAction: navigationAction, webView: webView)
+        maliciousSiteProtectionNavigationHandler.result = .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: errorData)))
+        await sut.handleDidStart(provisionalNavigation: DummyWKNavigation(), webView: webView)
 
         #expect(!maliciousSiteProtectionNavigationHandler.didCallAdvancedInfoPresented)
 

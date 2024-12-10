@@ -37,8 +37,40 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     }
 
     @MainActor
+    @Test("Handling Navigation Action stores it")
+    func whenHandlingNavigationAction_ThenStoreItInDictionary() throws {
+        // GIVEN
+        let url = try #require(URL(string: "https://www.example.com"))
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        #expect(sut.currentNavigationActions[url] == nil)
+
+        // WHEN
+        sut.handleWebView(navigationAction: navigationAction)
+
+        // THEN
+        #expect(sut.currentNavigationActions[url] != nil)
+    }
+
+    @MainActor
+    @Test("Retrieving Navigation Action Nullifies it")
+    func whenNavigationActionIsNotNil_ReturnNavigationActionAndRemoveItFromTheDictionary() async throws {
+        // GIVEN
+        let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
+        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        sut.handleWebView(navigationAction: navigationAction)
+        #expect(sut.currentNavigationActions[url] != nil)
+
+        // WHEN
+        _ = try #require(await sut.handleMaliciousSiteProtectionNavigation(webView: webView))
+
+        // THEN
+        #expect(sut.currentNavigationActions[url] == nil)
+    }
+
+    @MainActor
     @Test(
-        "URLs that should not be handled do not create a Malicious Detection Task",
+        "URLs that should not be handled",
         arguments: [
             "about:blank",
             "https://duckduckgo.com?q=swift-testing",
@@ -49,60 +81,47 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: path))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        sut.handleWebView(navigationAction: navigationAction)
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(sut.maliciousSiteDetectionTasks[url] == nil)
+        #expect(result == .navigationNotHandled)
     }
 
     @MainActor
-    @Test("Non Bypassed Malicious Site creates a Malicious Detection Task", arguments: [ThreatKind.phishing, .malware])
-    func whenBypassedMaliciousSiteThreatKindIsNotSetThenReturnNavigationHandled(threat: ThreatKind) throws {
+    @Test("Non Bypassed Malicious Site should not allow navigation", arguments: [ThreatKind.phishing, .malware])
+    func whenBypassedMaliciousSiteThreatKindIsNotSetThenReturnNavigationHandled(threat: ThreatKind) async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         mockMaliciousSiteProtectionManager.threatKind = threat
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
+        sut.handleWebView(navigationAction: navigationAction)
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(sut.maliciousSiteDetectionTasks[url] != nil)
+        #expect(result == .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: .maliciousSite(kind: threat, url: url)))))
     }
 
     @MainActor
-    @Test("Bypassed Malicious Site does not create a Malicious Detection Task", arguments: [ThreatKind.phishing, .malware])
-    func whenBypassedMaliciousSiteThreatKindIsSetThenReturnNavigationNotHandled(threat: ThreatKind) throws {
+    @Test("Bypassed Malicious Site should allow navigation", arguments: [ThreatKind.phishing, .malware])
+    func whenBypassedMaliciousSiteThreatKindIsSetThenReturnNavigationNotHandled(threat: ThreatKind) async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         mockMaliciousSiteProtectionManager.threatKind = threat
         sut.visitSite(url: url, errorData: .maliciousSite(kind: threat, url: url))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
+        sut.handleWebView(navigationAction: navigationAction)
 
         // WHEN
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(sut.maliciousSiteDetectionTasks[url] == nil)
-    }
-
-    @MainActor
-    @Test("Retrieving Malicious Site Detection Task Nullifies it")
-    func whenHandleDecidePolicyForNavigationResponse_AndTaskIsNotNil_ReturnTaskAndRemoveItFromTheDictionary() throws {
-        // GIVEN
-        let url = try #require(URL(string: "https://www.example.com"))
-        let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
-        #expect(sut.maliciousSiteDetectionTasks[url] != nil)
-
-        // WHEN
-        _ = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
-
-        // THEN
-        #expect(sut.maliciousSiteDetectionTasks[url] == nil)
+        #expect(result == .navigationNotHandled)
     }
 
     @MainActor
@@ -111,68 +130,68 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
         let navigationAction = MockNavigationAction(request: URLRequest(url: url))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
+        sut.handleWebView(navigationAction: navigationAction)
         mockMaliciousSiteProtectionManager.threatKind = nil
 
         // WHEN
-        let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(await result.value == .navigationNotHandled)
+        #expect(result == .navigationNotHandled)
     }
 
     @MainActor
     @Test(
-        "Handle known threat in Main Frame",
+        "Handle known Main Frame Threat",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsMainFrame_ThenReturnNavigationHandledMainFrame(threat: ThreatKind) async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: true))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
+        sut.handleWebView(navigationAction: navigationAction)
         mockMaliciousSiteProtectionManager.threatKind = threat
 
         // WHEN
-        let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(await result.value == .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: .maliciousSite(kind: threat, url: url)))))
+        #expect(result == .navigationHandled(.mainFrame(MaliciousSiteDetectionNavigationResponse(navigationAction: navigationAction, errorData: .maliciousSite(kind: threat, url: url)))))
     }
 
     @MainActor
     @Test(
-        "Handle known threat in IFrame",
+        "Handle known iFrame Threat",
         arguments: [
             ThreatKind.phishing,
-                .malware
+            .malware
         ]
     )
     func whenThreatKindIsNotNil_AndNavigationIsIFrame_ThenReturnNavigationHandledIFrame(threat: ThreatKind) async throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))
+        webView.setCurrentURL(url)
         let navigationAction = MockNavigationAction(request: URLRequest(url: url), targetFrame: MockFrameInfo(isMainFrame: false))
-        sut.createMaliciousSiteDetectionTask(for: navigationAction, webView: webView)
-        let navigationResponse = MockNavigationResponse.with(url: url)
+        sut.handleWebView(navigationAction: navigationAction)
         mockMaliciousSiteProtectionManager.threatKind = threat
 
         // WHEN
-        let result = try #require(sut.getMaliciousSiteDectionTask(for: navigationResponse, webView: webView))
+        let result = await sut.handleMaliciousSiteProtectionNavigation(webView: webView)
 
         // THEN
-        #expect(await result.value == .navigationHandled(.iFrame(maliciousURL: url, error: .maliciousSite(kind: threat, url: url))))
+        #expect(result == .navigationHandled(.iFrame(maliciousURL: url, error: .maliciousSite(kind: threat, url: url))))
     }
 
     @MainActor
     @Test(
         "Visit Site sets Exemption URL and Threat Kind",
         arguments: [
-            ThreatKind.phishing, .malware
+            ThreatKind.phishing,
+            .malware
         ]
     )
     func whenVisitSiteActionThenSetExemptionURLAndThreatKind(threat: ThreatKind) throws {
@@ -190,25 +209,16 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
         #expect(sut.bypassedMaliciousSiteThreatKind == threat)
     }
 
+    @MainActor
     @Test("Leave Site Pixel", .disabled("Will be implmented in upcoming PR"))
     func whenLeaveSiteActionThenFirePixel() throws {
 
     }
 
+    @MainActor
     @Test("Advanced Site Info Pixel", .disabled("Will be implmented in upcoming PR"))
     func whenAdvancedSiteInfoActionThenFirePixel() throws {
 
-    }
-
-}
-
-extension MockNavigationResponse {
-
-    static func with(url: URL) -> MockNavigationResponse {
-        let response = MockNavigationResponse()
-        response.url = url
-        response.mimeType = "text/html"
-        return response
     }
 
 }

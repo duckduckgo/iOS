@@ -23,12 +23,11 @@ import SpecialErrorPages
 @testable import DuckDuckGo
 
 final class MockMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectionNavigationHandling & SpecialErrorPageActionHandler {
-    private(set) var didCallHandleMaliciousSiteProtectionForNavigationAction = false
+    private(set) var didCallHandleWebViewNavigationAction = false
     private(set) var capturedNavigationAction: WKNavigationAction?
-    private(set) var capturedWebView: WKWebView?
 
-    private(set) var didCallHandleMaliciousSiteProtectionForNavigationResponse = false
-    private(set) var capturedNavigationResponse: WKNavigationResponse?
+    private(set) var didCallHandleMaliciousSiteProtectionNavigation = false
+    private(set) var capturedWebView: WKWebView?
 
     private(set) var didCallVisitSite = false
     private(set) var capturedVisitSiteURL: URL?
@@ -38,20 +37,17 @@ final class MockMaliciousSiteProtectionNavigationHandler: MaliciousSiteProtectio
 
     private(set) var didCallAdvancedInfoPresented = false
 
-    var task: Task<MaliciousSiteProtectionNavigationResult, Never>?
+    var result: MaliciousSiteProtectionNavigationResult = .navigationNotHandled
 
-    func createMaliciousSiteDetectionTask(for navigationAction: WKNavigationAction, webView: WKWebView) {
-        didCallHandleMaliciousSiteProtectionForNavigationAction = true
+    func handleWebView(navigationAction: WKNavigationAction) {
+        didCallHandleWebViewNavigationAction = true
         capturedNavigationAction = navigationAction
-        capturedWebView = webView
     }
-    
-    func getMaliciousSiteDectionTask(for navigationResponse: WKNavigationResponse, webView: WKWebView) -> Task<MaliciousSiteProtectionNavigationResult, Never>? {
-        didCallHandleMaliciousSiteProtectionForNavigationResponse = true
-        capturedNavigationResponse = navigationResponse
-        capturedWebView = webView
 
-        return task
+    func handleMaliciousSiteProtectionNavigation(webView: WKWebView) async -> MaliciousSiteProtectionNavigationResult {
+        didCallHandleMaliciousSiteProtectionNavigation = true
+        capturedWebView = webView
+        return result
     }
     
     func visitSite(url: URL, errorData: SpecialErrorData) {

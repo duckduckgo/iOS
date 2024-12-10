@@ -41,7 +41,9 @@ extension Launched {
             return Active(application: application)
         case .openURL:
             return self
-        case .launching, .suspending, .backgrounding:
+        case .backgrounding:
+            return InactiveBackground()
+        case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
     }
@@ -54,7 +56,9 @@ extension Active {
         switch event {
         case .suspending(let application):
             return Inactive(application: application)
-        case .launching, .activating, .backgrounding, .openURL:
+        case .openURL:
+            return self
+        case .launching, .activating, .backgrounding:
             return handleUnexpectedEvent(event)
         }
     }
@@ -69,7 +73,9 @@ extension Inactive {
             return Background(application: application)
         case .activating(let application):
             return Active(application: application)
-        case .launching, .suspending, .openURL:
+        case .openURL:
+            return self
+        case .launching, .suspending:
             return handleUnexpectedEvent(event)
         }
     }
@@ -87,6 +93,14 @@ extension Background {
         case .launching, .suspending, .backgrounding:
             return handleUnexpectedEvent(event)
         }
+    }
+
+}
+
+extension InactiveBackground {
+
+    func apply(event: AppEvent) -> any AppState {
+        handleUnexpectedEvent(event)
     }
 
 }

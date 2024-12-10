@@ -74,9 +74,9 @@ struct Launched: AppState {
     private var isSyncInProgressCancellable: AnyCancellable!
     private var remoteMessagingClient: RemoteMessagingClient!
     private var subscriptionCookieManager: SubscriptionCookieManaging!
-    private var window: UIWindow?
     private var autofillPixelReporter: AutofillPixelReporter!
     private var mainViewController: MainViewController!
+    private var window: UIWindow?
 
     var urlToOpen: URL?
 
@@ -155,7 +155,7 @@ struct Launched: AppState {
             let webView = blockingDelegate.prepareWebView()
             window!.rootViewController?.view.addSubview(webView)
             window!.rootViewController?.view.backgroundColor = .red
-            application.setWindow(window) // to do check if application.delegate?.window is non-nil
+            application.setWindow(window!)
 
             webView.frame = CGRect(x: 10, y: 10, width: 300, height: 300)
 
@@ -342,15 +342,15 @@ struct Launched: AppState {
             mainViewController.loadViewIfNeeded()
             syncErrorHandler.alertPresenter = mainViewController
 
-            let window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = mainViewController
-            window.makeKeyAndVisible()
-            application.setWindow(window)
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window!.rootViewController = mainViewController
+            window!.makeKeyAndVisible()
+            application.setWindow(window!)
 
             let autoClear = AutoClear(worker: mainViewController)
             self.autoClear = autoClear
             let applicationState = stateContext.application.applicationState
-            let vpnWorkaround = appDependencies.vpnWorkaround
+            let vpnWorkaround = vpnWorkaround
             Task {
                 await autoClear.clearDataIfEnabled(applicationState: .init(with: applicationState))
                 await vpnWorkaround.installRedditSessionWorkaround()
@@ -366,8 +366,8 @@ struct Launched: AppState {
 
         UNUserNotificationCenter.current().delegate = unService
 
-        window?.windowScene?.screenshotService?.delegate = uiService
-        ThemeManager.shared.updateUserInterfaceStyle(window: window)
+        window!.windowScene?.screenshotService?.delegate = uiService
+        ThemeManager.shared.updateUserInterfaceStyle(window: window!)
 
         // Temporary logic for rollout of Autofill as on by default for new installs only
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {

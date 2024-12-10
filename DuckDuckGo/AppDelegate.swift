@@ -134,6 +134,7 @@ import os.log
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         appStateMachine.handle(.launching(application))
+        return true
         didFinishLaunchingStartTime = CFAbsoluteTimeGetCurrent()
         defer {
             if let didFinishLaunchingStartTime {
@@ -601,7 +602,7 @@ import os.log
         guard !testing else { return }
 
         appStateMachine.handle(.activating)
-
+        return
         defer {
             if let didFinishLaunchingStartTime {
                 let launchTime = CFAbsoluteTimeGetCurrent() - didFinishLaunchingStartTime
@@ -783,6 +784,7 @@ import os.log
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        return
         ThemeManager.shared.updateUserInterfaceStyle()
 
         Task { @MainActor in
@@ -795,6 +797,7 @@ import os.log
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         appStateMachine.handle(.backgrounding)
+        return
         displayBlankSnapshotWindow()
         autoClear?.startClearingTimer()
         lastBackgroundDate = Date()
@@ -841,6 +844,7 @@ import os.log
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.sync.debug("App launched with url \(url.absoluteString)")
         appStateMachine.handle(.openURL(url))
+        return true
 
         // If showing the onboarding intro ignore deeplinks
         guard mainViewController?.needsToShowOnboardingIntro() == false else {

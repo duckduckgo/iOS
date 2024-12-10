@@ -777,6 +777,8 @@ extension Pixel {
         case settingsAddressBarSelectorPressed
         case settingsAccessibilityOpen
         case settingsAccessiblityTextZoom
+
+        #warning("NEW PIXELS - remove this comment")
         case settingsPrivateSearchOpen
         case settingsEmailProtectionOpen
         case settingsEmailProtectionEnable
@@ -795,6 +797,7 @@ extension Pixel {
         case settingsAutomaticallyClearDataOff
         case settingsNextStepsAddAppToDock
         case settingsNextStepsAddWidget
+        
         case settingsMoreSearchSettings
 
         // Web pixels
@@ -1684,6 +1687,8 @@ extension Pixel.Event {
 
         // MARK: Pixel Experiment
         case .pixelExperimentEnrollment: return "pixel_experiment_enrollment"
+
+        // MARK: Settings
         case .settingsPresented: return "m_settings_presented"
         case .settingsSetAsDefault: return "m_settings_set_as_default"
         case .settingsVoiceSearchOn: return "m_settings_voice_search_on"

@@ -76,7 +76,7 @@ struct NewTabPageView: View {
                 .simultaneousGesture(
                     DragGesture()
                         .onChanged({ value in
-                            if value.translation.height > 0 {
+                            if value.translation.height != 0 {
                                 viewModel.beginDragging()
                             }
                         })

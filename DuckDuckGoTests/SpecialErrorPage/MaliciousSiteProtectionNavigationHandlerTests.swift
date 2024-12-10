@@ -73,7 +73,13 @@ struct MaliciousSiteProtectionNavigationHandlerTests {
     }
 
     @MainActor
-    @Test("Bypassed Malicious Site does not create a Malicious Detection Task", arguments: [ThreatKind.phishing, .malware])
+    @Test(
+        "Bypassed Malicious Site does not create a Malicious Detection Task",
+        arguments: [
+            ThreatKind.phishing,
+            .malware
+        ]
+    )
     func whenBypassedMaliciousSiteThreatKindIsSetThenReturnNavigationNotHandled(threat: ThreatKind) throws {
         // GIVEN
         let url = try #require(URL(string: "https://www.example.com"))

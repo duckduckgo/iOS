@@ -341,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Devre dışı bırak";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Daha Fazla Bilgi";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
@@ -978,9 +978,6 @@
 "dax.onboarding.home.subsequent" = "İşte bu kadar!\n\nUnutmayın: İnterneti benimle ne kadar çok gezerseniz rahatsız edici reklamları da o kadar az görürsünüz. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "İnternet bazen ürkütücü olabilir.\n\nEndişelenmeyin! İnternette kimsenin göremeyeceği şekilde arama yapmak ve gezinmek sandığınızdan çok daha kolay.";
-
-/* No comment provided by engineer. */
 "Debug" = "Hata Ayıklama";
 
 /* Default string used if users device is not iPhone or iPad */
@@ -1080,7 +1077,7 @@
 "duckPlayer.never.label" = "Hiçbir zaman";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player, DuckDuckGo'da sinema benzeri bir deneyimde hedefli reklamlar olmadan YouTube'u izlemenizi sağlar ve izlediğiniz şeyler önerilerinizi etkilemez.";
+"duckplayer.presentation.modal.body" = "Duck Player, DuckDuckGo'da hedefli reklamlar olmadan YouTube'u izlemenizi sağlar ve izlediğiniz şeyler önerilerinizi etkilemez.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Anladım!";
@@ -1088,17 +1085,23 @@
 /* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "YouTube'da reklama mı boğuluyorsunuz? Duck Player'ı deneyin!";
 
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "YouTube'da reklama mı boğuluyorsunuz? Duck Player ile bundan kurtulun!";
+
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo, web'de gezinirken kendinizi korumak için ihtiyacınız olan tüm Privacy Essentials özelliklerini sağlar.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Duck Player, kişiselleştirilmiş reklamlar olmadan temiz bir görüntüleme deneyimi sağlar ve görüntüleme etkinliğinin YouTube önerilerinizi etkilemesini önler.";
+"duckplayer.settings.info-text" = "Duck Player, DuckDuckGo'da hedefli reklamlar olmadan YouTube'u izlemenizi sağlar ve izlediğiniz şeyler önerilerinizi etkilemez.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Daha Fazla Bilgi";
 
+/* Settings screen cell text for DuckPlayer settings to open in new tab */
+"duckplayer.settings.open-new-tab-label" = "Duck Player'ı yeni bir sekmede aç";
+
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Videoları Duck Player'da Aç";
+"duckplayer.settings.open-videos-in" = "YouTube Videolarını Duck Player'da Aç";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";
@@ -1168,9 +1171,6 @@
 
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "E-postanızı Gizleyin ve \n İzleyicileri Engelleyin";
-
-/* No comment provided by engineer. */
-"empty!" = "empty!";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -1322,6 +1322,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Gönder";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Privacy Pro'nun İyileştirilmesine Yardımcı Olun";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Kişisel Bilgilerin Silinmesi";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Abonelik ve Ödemeler";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "BİR KATEGORİ SEÇİN";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Erişim koduyla ilgili sorun";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Danışmanla iletişime geçilemiyor";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "BİR KATEGORİ SEÇİN";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Başka bir şey";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Danışmanı aramak işe yaramadı";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Lütfen mümkün olduğunca spesifik olun";
 
@@ -1361,6 +1394,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Web sayfaları veya arama sonuçları yavaş yükleniyor";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "Tarama, beni temsil etmeyen kayıtlar buldu";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "Tarama, belirli bir sitede bilgilerimi bulamadı";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Başka bir şey";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "Silme işlemi takıldı";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "Kayıt tarama işlemi takıldı";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "BİR KATEGORİ SEÇİN";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Ayrıntıları paylaşın";
 
@@ -1378,6 +1429,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Ayrıntıları paylaşın";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Başka bir şey";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Tek kullanımlık şifre ile ilgili sorun";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "BİR KATEGORİ SEÇİN";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "İsimsiz geri bildiriminiz bizim için önemlidir.";
@@ -1529,12 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Tüm Sekmeleri Göster";
 
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
-
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Mac için DuckDuckGo, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfındaki en iyi gizlilik özelliklerini (Privacy Essentials) sunuyor.";
 
@@ -1586,62 +1640,53 @@
 /* Edit button */
 "navigation.title.edit" = "Düzenle";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "Uyku Modunda";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "DuckDuckGo VPN";
 
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
-
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Ağ Koruması bağlanamadı. Lütfen daha sonra tekrar deneyin.";
+"network.protection.entitlement.expired.notification.body" = "Abonelik süresi dolduğu için VPN bağlantısı kesildi. DuckDuckGo VPN'e yeniden bağlanmak için Privacy Pro'ya abone olun.";
 
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "DuckDuckGo VPN Sıkça Sorulan Sorular";
 
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Ağ Koruması kesintiye uğradı. Şimdi yeniden bağlanmaya çalışılıyor...";
-
 /* Message for the network protection invite dialog */
-"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+"network.protection.invite.dialog.message" = "Başlamak için davet kodunuzu girin.";
 
 /* Title for the network protection invite screen */
 "network.protection.invite.dialog.title" = "DuckDuckGo VPN'i denemeye davetlisiniz";
 
 /* Prompt for the network protection invite code text field */
-"network.protection.invite.field.prompt" = "Invite Code";
+"network.protection.invite.field.prompt" = "Davet Kodu";
 
 /* Message for the network protection invite success view */
-"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+"network.protection.invite.success.message" = "Konumunuzu web sitelerinden gizleyin ve çevrimiçi etkinliğinizi İnternet sağlayıcılarından ve ağınızdaki diğer kişilerden gizli tutun.";
 
 /* Title for the network protection invite success view */
-"network.protection.invite.success.title" = "Success! You’re in.";
+"network.protection.invite.success.title" = "Tebrikler! Katıldınız.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "VPN'i aç";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN %@ için uyku moduna alındı";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Bağlandı · %@";
 
 /* The label for the NetP VPN when connecting */
-"network.protection.status.connecting" = "Connecting...";
+"network.protection.status.connecting" = "Bağlanıyor...";
 
 /* The label for the NetP VPN when disconnected */
-"network.protection.status.disconnected" = "Not connected";
+"network.protection.status.disconnected" = "Bağlı değil";
 
 /* The label for the NetP VPN when disconnecting */
-"network.protection.status.disconnecting" = "Disconnecting...";
+"network.protection.status.disconnecting" = "Bağlantı kesiliyor...";
 
 /* Message label text for the status view when VPN is disconnected */
 "network.protection.status.header.message.off" = "Tüm cihazlarınızın internet trafiğinde güvenliği sağlamak\niçin bağlanın.";
@@ -1655,26 +1700,41 @@
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "DuckDuckGo VPN Açık";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN Uyku Moduna Alındı";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
-"network.protection.status.menu.share.feedback" = "Share Feedback";
+"network.protection.status.menu.share.feedback" = "Geri Bildirim Paylaş";
+
+/* The label for the NetP VPN when paused */
+"network.protection.status.paused" = "Duraklatıldı";
+
+/* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
+"network.protection.status.snoozing.format" = "Uyku modunda, %@ kaldı";
+
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "20 Dakikalığına Uyku Moduna Al";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Uyandır";
 
 /* Connection details label shown in NetworkProtection's status view. */
-"network.protection.status.view.connection.details" = "Connection Details";
+"network.protection.status.view.connection.details" = "Bağlantı Ayrıntıları";
 
 /* Custom DNS label shown in NetworkProtection's status view. */
-"network.protection.status.view.custom.dns" = "DNS Server";
+"network.protection.status.view.custom.dns" = "DNS Sunucusu";
 
 /* Generic connection failed error message shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+"network.protection.status.view.error.connection.failed.message" = "Lütfen daha sonra tekrar deneyin.";
 
 /* Generic connection failed error title shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+"network.protection.status.view.error.connection.failed.title" = "Bağlanılamadı.";
 
 /* IP Address label shown in NetworkProtection's status view. */
-"network.protection.status.view.ip.address" = "IP Address";
+"network.protection.status.view.ip.address" = "IP Adresi";
 
 /* Location label shown in NetworkProtection's status view. */
-"network.protection.status.view.location" = "Location";
+"network.protection.status.view.location" = "Konum";
 
 /* Label shown on the title of the settings section in NetworkProtection's status view. */
 "network.protection.status.view.settings.section.title" = "Yönet";
@@ -1682,11 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Ağ Koruması Açık. Konumunuz ve çevrim içi etkinliğiniz korunuyor.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Cihaz trafiği %@ üzerinden yönlendiriliyor.";
+
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN uyku modu sona erdi. Cihaz trafiği %@ üzerinden yönlendiriliyor.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Bildirimleri Açın";
@@ -1698,13 +1758,13 @@
 "network.protection.vpn.about" = "Hakkında";
 
 /* Section header for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.section.header" = "Notifications";
+"network.protection.vpn.alerts.section.header" = "Bildirimler";
 
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Bağlantınız kesilirse veya VPN durumunuz değişirse bildirim alın.";
 
 /* Title for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
+"network.protection.vpn.alerts.toggle.title" = "VPN Bildirimleri";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Veri Hacmi";
@@ -1713,13 +1773,13 @@
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Yerel trafiğin VPN'i atlamasını ve yerel ağınızdaki yazıcı gibi cihazlara bağlanmasını sağlayın.";
 
 /* Header text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.header" = "General";
+"network.protection.vpn.exclude.local.networks.setting.header" = "Genel";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Yerel Ağları Hariç Tut";
 
 /* Title for the VPN Location screen's All Countries section. */
-"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+"network.protection.vpn.location.all.countries.section.title" = "Tüm Ülkeler";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.connected" = "Bağlı Konum";
@@ -1734,7 +1794,7 @@
 "network.protection.vpn.location.recommended.section.footer" = "Bulabildiğimiz en yakın sunucuya otomatik olarak bağlanın.";
 
 /* Title for the VPN Location screen's Recommended section. */
-"network.protection.vpn.location.recommended.section.title" = "Recommended";
+"network.protection.vpn.location.recommended.section.title" = "Önerilen";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.selected" = "Konum Seçildi";
@@ -1752,13 +1812,13 @@
 "network.protection.vpn.preferred.location.nearest" = "En yakın konum";
 
 /* Title for the Preferred Location VPN Settings item. */
-"network.protection.vpn.preferred.location.title" = "Preferred Location";
+"network.protection.vpn.preferred.location.title" = "Tercih Edilen Konum";
 
 /* Footer text for the DNS server setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo, DNS sorgularını DNS sunucularımız üzerinden yönlendirir. Böylece internet sağlayıcınız hangi web sitelerini ziyaret ettiğinizi göremez.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "FAQs and Support";
+"network.protection.vpn.settings.faq" = "SSS ve Destek";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "VPN Geri Bildirimini Paylaş";
@@ -1940,6 +2000,66 @@
 /* Deactivate button */
 "pm.deactivate" = "Devre dışı bırak";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "E-posta (isteğe bağlı)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "name@email.com";
+
+/* Placeholder for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.placeholder" = "Lütfen bize geri bildirimlerinizi iletin…";
+
+/* Title for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.title" = "Genel geri bildirim";
+
+/* Title for the ITR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
+
+/* Title for the PIR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
+
+/* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-ppro-problem.title" = "Abonelikler ve Ödemeler";
+
+/* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.placeholder" = "Bize neler olduğunu anlatın...";
+
+/* Title for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.title" = "Sorun bildir";
+
+/* Title for the VPN category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-vpn-problem.title" = "VPN";
+
+/* Placeholder for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.placeholder" = "Hangi özelliği görmek istersiniz?";
+
+/* Title for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.title" = "Özellik isteği";
+
+/* Title for the category selection section in the Privacy Pro feedback form */
+"ppro.feedback-form.select-category.title" = "BİR KATEGORİ SEÇİN";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-1" = "Yardım merkezimizde ([help center](duck://)) ele alınmayan bir sorun mu buldunuz? Ne olduğunu kesinlikle öğrenmek isteriz.\n\nBu sorunla ilgili olarak sizinle iletişime geçmemizi istiyorsanız bir e-posta adresi sağlayın (tüm sorunlara yanıt veremeyebiliriz):";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-2" = "Yukarıda girilen bilgilere ek olarak, geri bildiriminizle birlikte bazı anonimleştirilmiş bilgiler gönderiyoruz:";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-3" = "• Bazı tarayıcı özelliklerinin etkin olup olmadığı";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-4" = "• Toplu uygulama tanılamaları (ör. hata kodları)";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-5" = "\"Gönder\"e dokunarak, DuckDuckGo'nun gönderilen bilgileri uygulamayı iyileştirmek için kullanabileceğini kabul ediyorsunuz.";
+
+/* Title for the text box in the Privacy Pro feedback form */
+"ppro.feedback-form.text-box.title" = "Geri Bildirim";
+
+/* Title for the Privacy Pro feedback form */
+"ppro.feedback-form.title" = "Geri Bildirim gönder";
+
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Yer İmlerini Yönet";
 
@@ -2029,6 +2149,18 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";
 
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "Genel geri bildirim";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Sorun bildir";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Bir özellik isteyin";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "BİR KATEGORİ SEÇİN";
+
 /* Settings cell for About DDG */
 "settings.about.ddg" = "DuckDuckGo Hakkında";
 
@@ -2083,6 +2215,9 @@
 
 /* Section footer Autolock description */
 "settings.autolock.description" = "Touch ID, Face ID veya sistem parolası etkinleştirilmişse, uygulamayı açtığınızda kilidi açmanız istenir.";
+
+/* Settings cell for Browser Feedback */
+"settings.browser.feedback" = "Tarayıcı Geri Bildirimi";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Verileri Otomatik Olarak Temizle";
@@ -2182,7 +2317,7 @@
 "settings.ppro" = "Privacy Pro";
 
 /* Title for Link in the Footer of Privacy Pro section */
-"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+"settings.ppro.footer" = "Gizlilik Politikası ve Hizmet Şartları";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Uzun Basma Önizlemeleri";
@@ -2208,23 +2343,20 @@
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Adres Çubuğu Konumunuzu Ayarlayın";
 
-/* Subscription activation pending description */
-"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Etkinleştiriliyor";
 
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Aboneliğiniz etkinleştiriliyor";
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "Bu işlem normalden daha uzun sürüyor. Lütfen daha sonra tekrar kontrol edin.";
 
 /* Data Broker protection cell subtitle for privacy pro */
-"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+"settings.subscription.DBP.subtitle" = "Bilgilerinizi, bunları satan sitelerden kaldırın";
 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "Üç yeni koruma ile daha sorunsuz gizlilik:";
-
 /* I have a Subscription button text for privacy pro */
-"settings.subscription.existing.subscription" = "I Have a Subscription";
+"settings.subscription.existing.subscription" = "Aboneliğim Var";
 
 /* Subscription expired description */
 "settings.subscription.expired.comment" = "Privacy Pro'yu kullanmaya devam etmek için tekrar abone olun";
@@ -2232,23 +2364,26 @@
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Privacy Pro aboneliğiniz sona erdi";
 
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
-
 /* Identity theft restoration cell subtitle for privacy pro */
-"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+"settings.subscription.ITR.subtitle" = "Kimliğiniz çalınırsa kurtarmanıza yardımcı olacağız";
 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
 /* Get Privacy Pro button text for privacy pro */
-"settings.subscription.learn.more" = "Get Privacy Pro";
+"settings.subscription.learn.more" = "Privacy Pro'yu Al";
 
 /* Subscription Settings button text for privacy pro */
-"settings.subscription.manage" = "Subscription Settings";
+"settings.subscription.manage" = "Abonelik Ayarları";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "VPN ve Identity Theft Restoration hizmetlerimizi içerir.";
+
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Privacy Pro ile bağlantınızı ve kimliğinizi koruyun";
+
+/* Privacy pro description subtitle in settings */
+"settings.subscription.us.description" = "VPN, Personal Information Removal ve Identity Theft Restoration'ı içerir.";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2317,67 +2452,64 @@
 "siteFeedback.urlPlaceholder" = "Hangi web sitesi hatalı?";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate..header.description" = "Bu cihazda Privacy Pro aboneliğinize Apple ID veya bir e-posta adresi aracılığıyla erişin.";
 
 /* Button for adding email address to subscription */
-"subscription.activate.add.email.button" = "Add Email";
+"subscription.activate.add.email.button" = "E-posta Ekle";
 
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
-"subscription.activate.appleid.button" = "Restore Purchase";
+"subscription.activate.appleid.button" = "Satın Almayı Geri Yükle";
 
 /* Description for Apple ID activation */
-"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+"subscription.activate.appleid.description" = "Aboneliğinizi bu cihazda etkinleştirmek için satın alma işleminizi geri yükleyin.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+"subscription.activate.description" = "Aboneliğiniz, Apple ID'niz ile oturum açtığınız tüm cihazlarda DuckDuckGo'da otomatik olarak kullanılabilir.";
 
 /* Button for editing email address added to subscription */
-"subscription.activate.edit.email.button" = "Edit Email";
+"subscription.activate.edit.email.button" = "E-postayı Düzenle";
 
 /* View Title for editing your email account */
-"subscription.activate.edit.email.title" = "Edit Email";
+"subscription.activate.edit.email.title" = "E-postayı Düzenle";
 
 /* Email option for activation */
-"subscription.activate.email" = "Email";
+"subscription.activate.email" = "E-posta";
 
 /* Restore button title for Email */
-"subscription.activate.email.button" = "Enter Email";
+"subscription.activate.email.button" = "E-posta Girin";
 
 /* Description for Email activation */
-"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+"subscription.activate.email.description" = "Bu cihazda aboneliğinizi etkinleştirmek için e-postanızı kullanın.";
 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Aboneliği Etkinleştir";
 
 /* Button title for cancelling email deletion */
-"subscription.activate.manage.email.cancel" = "Cancel";
+"subscription.activate.manage.email.cancel" = "İptal";
 
 /* Button title for confirming email deletion */
-"subscription.activate.manage.email.OK" = "OK";
+"subscription.activate.manage.email.OK" = "Tamam";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore Purchase";
+"subscription.activate.restore.apple" = "Satın Almayı Geri Yükle";
 
 /* Subscription Activation Title */
-"subscription.activate.title" = "Activate your subscription on this device";
+"subscription.activate.title" = "Bu cihazda aboneliğinizi etkinleştirin";
 
 /* Resend activation instructions button */
-"subscription.add.device.resend.instructions" = "Resend Instructions";
+"subscription.add.device.resend.instructions" = "Talimatları Tekrar Gönder";
 
 /* Add email to an existing subscription */
-"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+"subscription.add.email" = "Aboneliğinizi diğer cihazlarınızda etkinleştirmek için bir e-posta adresi ekleyin. Bu adresi yalnızca aboneliğinizi doğrulamak için kullanacağız.";
 
 /* View title for adding email to subscription */
-"subscription.add.email.title" = "Add Email";
-
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
+"subscription.add.email.title" = "E-posta Ekle";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+"subscription.available.apple" = "Privacy Pro, aynı Apple ID ile oturum açılmış herhangi bir cihazda kullanılabilir.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Aboneliğiniz Google Play Store üzerinden satın alınmış. Aboneliğinizi yenilemek için lütfen ilk olarak aboneliğinizi satın alırken kullandığınız Google Hesabında oturum açılmış bir cihazda Google Play Store abonelik ayarlarını açın.";
@@ -2385,89 +2517,86 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Abonelik Planları";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
-
 /* Subscription Removal confirmation message */
-"subscription.cancel.message" = "Your subscription has been removed from this device.";
+"subscription.cancel.message" = "Aboneliğiniz bu cihazdan kaldırıldı.";
 
 /* Change plan or cancel title */
-"subscription.change.plan" = "Update Plan or Cancel";
+"subscription.change.plan" = "Planı Güncelle veya İptal Et";
 
 /* Navigation Button for closing subscription view */
-"subscription.close" = "Close";
+"subscription.close" = "Kapat";
 
 /* Title for Confirm messages */
-"subscription.confirm.title" = "Are you sure?";
+"subscription.confirm.title" = "Emin misiniz?";
 
 /* Header for section for activating subscription on other devices */
-"subscription.devices.header" = "Activate on Other Devices";
+"subscription.devices.header" = "Diğer Cihazlarda Etkinleştir";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Privacy Pro'ya diğer cihazlardan erişmek için aboneliğinize isteğe bağlı bir e-posta ekleyin. **[Daha fazla bilgi edinin](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
-"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.with.email.footer" = "Bu e-postayı, diğer cihazlarınızdaki DuckDuckGo uygulamasında Ayarlar > Privacy Pro bölümünde aboneliğinizi etkinleştirmek için kullanın. **[Daha fazla bilgi edinin](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
-"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+"subscription.email.inactive.alert.message" = "Bu e-postayla ilişkili abonelik artık aktif değil.";
 
 /* Alert title for not found subscription */
-"subscription.email.inactive.alert.title" = "Subscription Not Found";
+"subscription.email.inactive.alert.title" = "Abonelik Bulunamadı";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.expired.alert.message" = "Bu Apple ID ile ilişkili abonelik artık aktif değil.";
 
 /* FAQ Button */
-"subscription.faq" = "FAQs and Support";
+"subscription.faq" = "SSS ve Destek";
 
 /* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
+"subscription.faq.description" = "Yardım sayfalarımızdan sıkça sorulan soruların yanıtlarını alabilir veya Privacy Pro destek ekibiyle iletişime geçebilirsiniz.";
+
+/* Send Feedback Button */
+"subscription.feedback" = "Geri Bildirim gönder";
 
 /* Cancel action for the existing subscription dialog */
-"subscription.found.cancel" = "Cancel";
+"subscription.found.cancel" = "İptal";
 
 /* Restore action for the existing subscription dialog */
-"subscription.found.restore" = "Restore";
+"subscription.found.restore" = "Geri Yükle";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+"subscription.found.text" = "Bu Apple ID ile ilişkili bir abonelik bulduk.";
 
 /* Title for the existing subscription dialog */
-"subscription.found.title" = "Subscription Found";
+"subscription.found.title" = "Abonelik Bulundu";
 
 /* Help and support Section header */
-"subscription.help" = "Help and support";
+"subscription.help" = "Yardım ve Destek";
 
 /* Manage Plan header */
-"subscription.manage.plan" = "Manage Plan";
+"subscription.manage.plan" = "Planı Yönetin";
 
 /* Header for the subscription section */
-"subscription.manage.title" = "Subscription";
+"subscription.manage.title" = "Abonelik";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+"subscription.notFound.alert.message" = "Bu Apple ID ile ilişkili bir abonelik yok.";
 
 /* Alert title for not found subscription */
-"subscription.notFound.alert.title" = "Subscription Not Found";
+"subscription.notFound.alert.title" = "Abonelik Bulunamadı";
 
 /* View plans button text */
-"subscription.notFound.view.plans" = "View Plans";
+"subscription.notFound.view.plans" = "Planları Görüntüle";
 
 /* Hero Text for Personal information removal */
-"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+"subscription.pir.hero" = "Personal Information Removal kurulumu için masaüstünde Privacy Pro'yu etkinleştirin";
 
 /* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
-"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+"subscription.pir.heroText" = "Masaüstü için DuckDuckGo tarayıcısında %1$@ adresine gidin ve başlamak için %2$@ seçeneğine tıklayın.";
 
 /* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
-"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+"subscription.pir.heroTextLocation" = "Ayarlar > Privacy Pro";
 
 /* Menu item for enabling Personal Information Removal on Desktop */
-"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+"subscription.pir.heroTextMenyEntry" = "Aboneliğim Var";
 
 /* Text for the 'macOS' button */
 "subscription.pir.macos" = "Mac";
@@ -2476,28 +2605,28 @@
 "subscription.pir.windows" = "Windows";
 
 /* Progress view title when completing the purchase */
-"subscription.progress.view.completing.purchase" = "Completing purchase...";
+"subscription.progress.view.completing.purchase" = "Satın alma tamamlanıyor...";
 
 /* Progress view title when starting the purchase */
-"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+"subscription.progress.view.purchasing.subscription" = "Satın alma devam ediyor...";
 
 /* Progress view title when restoring past subscription purchase */
-"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+"subscription.progress.view.restoring.subscription" = "Abonelik geri yükleniyor...";
 
 /* Remove from this device button */
-"subscription.remove.from.device.button" = "Remove From This Device";
+"subscription.remove.from.device.button" = "Bu Cihazdan Kaldır";
 
 /* Remove from device confirmation dialog text */
-"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+"subscription.remove.from.device.text" = "Privacy Pro aboneliğinize artık bu cihaz üzerinden erişemeyeceksiniz. Bu, aboneliğinizi iptal etmez ve abonelik diğer cihazlarınızda aktif kalır.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove from this device?";
+"subscription.remove.from.device.title" = "Bu cihazdan kaldırılsın mı?";
 
 /* Remove subscription button text */
-"subscription.remove.subscription" = "Remove Subscription";
+"subscription.remove.subscription" = "Aboneliği Kaldır";
 
 /* Remove subscription cancel button text */
-"subscription.remove.subscription.cancel" = "Cancel";
+"subscription.remove.subscription.cancel" = "İptal";
 
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Ayarlara Geri Dön";
@@ -2509,28 +2638,43 @@
 "subscription.restore.backend.error.title" = "Bir hata oluştu";
 
 /* Alert for general error message */
-"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+"subscription.restore.general.error.message" = "App Store satın alma işleminizi gerçekleştiremedi. Lütfen daha sonra tekrar deneyin.";
 
 /* Alert for general error title */
-"subscription.restore.general.error.title" = "Something Went Wrong";
+"subscription.restore.general.error.title" = "Bir hata oluştu";
 
 /* Alert button text for restored purchase alert */
-"subscription.restore.success.alert.button" = "OK";
+"subscription.restore.success.alert.button" = "Tamam";
 
 /* Alert message for restored purchase */
-"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+"subscription.restore.success.alert.message" = "Satın aldıklarınız geri yüklendi.";
 
 /* Alert title for restored purchase */
-"subscription.restore.success.alert.title" = "You’re all set.";
+"subscription.restore.success.alert.title" = "Artık hazırsınız.";
+
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Abone olundu";
 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Aboneliğinizin süresi %@ tarihinde doldu";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Aylık aboneliğiniz %@ tarihinde sona erecek.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Aboneliğiniz %@ tarihinde sona erecek.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Yıllık aboneliğiniz %@ tarihinde sona erecek.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Aylık aboneliğiniz %@ tarihinde yenilenecek.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Aboneliğiniz %@ tarihinde yenilenecek.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Yıllık aboneliğiniz %@ tarihinde yenilenecek.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2677,118 +2821,118 @@
 "voiceSearch.footer.note.old" = "Ses cihazda işlenir. Saklanmaz ve DuckDuckGo da dâhil olmak üzere kimseyle paylaşılmaz.";
 
 /* Cancel action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+"vpn.access-revoked.alert.action.cancel" = "Reddet";
 
 /* Primary action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+"vpn.access-revoked.alert.action.subscribe" = "Abone ol";
 
 /* Alert message for the alert when the Privacy Pro subscription expiress */
-"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"vpn.access-revoked.alert.message" = "DuckDuckGo VPN'e yeniden bağlanmak için Privacy Pro'ya abone olun.";
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
-"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+"vpn.access-revoked.alert.title" = "Abonelik süresi dolduğu için VPN bağlantısı kesildi";
 
 /* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "DuckDuckGo'yu bulun ve seçin. Ardından VPN'e kaydırın ve Widget Ekle'yi seçin.";
 
 /* Title for the Cancel button of the VPN feedback form */
-"vpn.feedback-form.button.cancel" = "Cancel";
+"vpn.feedback-form.button.cancel" = "İptal";
 
 /* Title for the Done button of the VPN feedback form */
-"vpn.feedback-form.button.done" = "Done";
+"vpn.feedback-form.button.done" = "Bitti";
 
 /* Title for the Submit button of the VPN feedback form */
-"vpn.feedback-form.button.submit" = "Submit";
+"vpn.feedback-form.button.submit" = "Gönder";
 
 /* Title for the Submitting state of the VPN feedback form */
-"vpn.feedback-form.button.submitting" = "Submitting…";
+"vpn.feedback-form.button.submitting" = "Gönderiliyor…";
 
 /* Title for the browser crash/freeze category of the VPN feedback form */
-"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN tarayıcının çökmesine veya donmasına sebep oluyor";
 
 /* Title for the 'VPN fails to connect' category of the VPN feedback form */
-"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+"vpn.feedback-form.category.fails-to-connect" = "VPN bağlanamıyor";
 
 /* Title for the 'VPN feature request' category of the VPN feedback form */
-"vpn.feedback-form.category.feature-request" = "VPN feature request";
+"vpn.feedback-form.category.feature-request" = "VPN özellik talebi";
 
 /* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
-"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+"vpn.feedback-form.category.issues-with-apps" = "VPN, diğer uygulamalar veya web sitelerinde sorunlara yol açıyor";
 
 /* Title for the local device connectivity category of the VPN feedback form */
-"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+"vpn.feedback-form.category.local-device-connectivity" = "VPN yerel cihaza bağlanmama izin vermiyor";
 
 /* Title for the 'other VPN feedback' category of the VPN feedback form */
-"vpn.feedback-form.category.other" = "Other VPN feedback";
+"vpn.feedback-form.category.other" = "Diğer VPN geri bildirimi";
 
 /* Title for the category selection state of the VPN feedback form */
-"vpn.feedback-form.category.select-category" = "Select a category";
+"vpn.feedback-form.category.select-category" = "BİR KATEGORİ SEÇİN";
 
 /* Title for the 'VPN is too slow' category of the VPN feedback form */
-"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+"vpn.feedback-form.category.too-slow" = "VPN bağlantısı çok yavaş";
 
 /* Title for the 'unable to install' category of the VPN feedback form */
-"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+"vpn.feedback-form.category.unable-to-install" = "VPN yüklenemiyor";
 
 /* Title for the feedback sent view description of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+"vpn.feedback-form.sending-confirmation.description" = "Geri bildiriminiz, DuckDuckGo VPN'i\ngeliştirmemize yardımcı olacak.";
 
 /* Title for the feedback sending error text of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+"vpn.feedback-form.sending-confirmation.error" = "Geri bildiriminizi şu anda gönderemedik, lütfen tekrar deneyin.";
 
 /* Title for the feedback sent view title of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+"vpn.feedback-form.sending-confirmation.title" = "Teşekkür ederiz!";
 
 /* Toast message when the VPN feedback form is submitted successfully */
-"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+"vpn.feedback-form.submitted.message" = "Teşekkür Ederiz! Geri bildirim gönderildi.";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+"vpn.feedback-form.text-1" = "Lütfen neler olduğunu, ne olmasını beklediğinizi ve soruna yol açan adımları açıklayın:";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+"vpn.feedback-form.text-2" = "Bu forma girilen ayrıntılara ek olarak, uygulama sorun raporunuz şunları içerecek:";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+"vpn.feedback-form.text-3" = "• Belirli DuckDuckGo özelliklerinin etkin olup olmadığı";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+"vpn.feedback-form.text-4" = "• Toplu DuckDuckGo uygulama tanılamaları";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+"vpn.feedback-form.text-5" = "\"Gönder\"e dokunarak, DuckDuckGo'nun bu rapordaki bilgileri uygulamanın özelliklerini geliştirmek amacıyla kullanabileceğini kabul ediyorum.";
 
 /* Title for each screen of the VPN feedback form */
-"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+"vpn.feedback-form.title" = "DuckDuckGo VPN'i geliştirmeye yardımcı olun";
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "VPN Widget'ını Ana Ekrana Ekleyin";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
+"vpn.settings.dns.section-disclaimer" = "Özel bir DNS sunucusu kullanmak, tarama hızlarını etkileyebilir ve sunucu güvenli veya güvenilir değilse etkinliğini üçüncü taraflara ifşa edebilir.";
 
 /* Header text for the DNS section on the VPN Settings screen */
 "vpn.settings.dns.section-header" = "DNS";
 
 /* Title for the Apply button on the DNS Server setting screen */
-"vpn.settings.dns.server.apply.button.title" = "Apply";
+"vpn.settings.dns.server.apply.button.title" = "Uygula";
 
 /* Default value for the DNS Server row on the VPN Settings screen */
 "vpn.settings.dns.server.default.value" = "DuckDuckGo";
 
 /* Title for the IPv4 Address setting */
-"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
+"vpn.settings.dns.server.ipv4.title" = "IPv4 Adresi";
 
 /* Custom option for the DNS Server setting */
-"vpn.settings.dns.server.option.custom" = "Custom";
+"vpn.settings.dns.server.option.custom" = "Özelleştirme";
 
 /* Recommended option for the DNS Server setting */
-"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
+"vpn.settings.dns.server.option.default" = "DuckDuckGo (Önerilen)";
 
 /* Title for the DNS Server setting screen */
-"vpn.settings.dns.server.screen.title" = "DNS Server";
+"vpn.settings.dns.server.screen.title" = "DNS Sunucusu";
 
 /* Title for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.title" = "DNS Server";
+"vpn.settings.dns.server.title" = "DNS Sunucusu";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Bildirimlere İzin Ver";

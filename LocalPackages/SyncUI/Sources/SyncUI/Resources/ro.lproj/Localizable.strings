@@ -230,7 +230,7 @@
 "sync.and.backup.this.device.link" = "Sincronizează și fă backup pentru acest dispozitiv";
 
 /* Button to get DuckDuckGo on other devices */
-"sync.get.other.devices" = "Obține DuckDuckGo pe alte dispozitive";
+"sync.get.other.devices" = "Descarcă DuckDuckGo pe alte dispozitive";
 
 /* Button title to share link for downloading DuckDuckGo on other devices */
 "sync.get.other.devices.card.button.title" = "Trimite linkul de descărcare";

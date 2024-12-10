@@ -341,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Vypnout";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Více informací";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobrazit";
@@ -978,9 +978,6 @@
 "dax.onboarding.home.subsequent" = "Máte to!\n\nPamatujte: Pokaždé, když internet procházíte s námi, příšerným reklamám přistřihneme křídla. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet může být trochu strašidelný.\n\nNebojte se! Anonymní vyhledávání a procházení je jednodušší, než si myslíte.";
-
-/* No comment provided by engineer. */
 "Debug" = "Ladění";
 
 /* Default string used if users device is not iPhone or iPad */
@@ -1080,7 +1077,7 @@
 "duckPlayer.never.label" = "Nikdy";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player umožňuje dívat se na YouTube v prohlížeči DuckDuckGo v režimu kina a bez cílených reklam. To, co sleduješ, nebude ovlivňovat tvoje doporučení.";
+"duckplayer.presentation.modal.body" = "Duck Player umožňuje dívat se na YouTube v prohlížeči DuckDuckGo bez cílených reklam. To, co sleduješ, nebude ovlivňovat tvoje doporučení.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Mám to!";
@@ -1088,17 +1085,23 @@
 /* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "Topíš se v reklamách na YouTube? Vyzkoušej přehrávač Duck Player!";
 
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "Topíš se v reklamách na YouTube? S přehrávačem Duck Player nebudeš!";
+
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo má všechno, co ti zaručí ochranu soukromí při procházení webu.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Přehrávač Duck Player nabízí sledování v minimalistickém prostředí bez personalizovaných reklam a brání tomu, aby sledovaná videa ovlivňovala tvoje doporučení na YouTube.";
+"duckplayer.settings.info-text" = "Duck Player umožňuje dívat se na YouTube v prohlížeči DuckDuckGo bez cílených reklam. To, co sleduješ, nebude ovlivňovat tvoje doporučení.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Více informací";
 
+/* Settings screen cell text for DuckPlayer settings to open in new tab */
+"duckplayer.settings.open-new-tab-label" = "Otevřít Duck Player na nové kartě";
+
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Otevírat videa v přehrávači Duck Player";
+"duckplayer.settings.open-videos-in" = "Otevírat videa na YouTube v přehrávači Duck Player";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";
@@ -1168,9 +1171,6 @@
 
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Skryj svůj e-mail\na blokuj trackery";
-
-/* No comment provided by engineer. */
-"empty!" = "empty!";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -1322,6 +1322,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Odeslat";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Pomoz zlepšit službu Privacy Pro";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Odstranění osobních údajů";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Předplatné a platby";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "VYBER KATEGORII";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Problém s přístupovým kódem";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Nejde kontaktovat poradce";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "VYBER KATEGORII";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Něco jiného";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Hovor s poradcem mi nepomohl";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Buďte co nejkonkrétnější.";
 
@@ -1361,6 +1394,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Webové stránky nebo výsledky vyhledávání se načítají pomalu.";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "Skenování našlo záznamy, které se mě netýkají";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "Skenování nenašlo moje informace na konkrétním webu";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Něco jiného";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "Proces odstranění se zasekl";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "Skenování záznamů se zaseklo";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "VYBER KATEGORII";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Podělte se o podrobnosti.";
 
@@ -1378,6 +1429,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Podělte se o podrobnosti.";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Něco jiného";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Problém s jednorázovým heslem";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "VYBER KATEGORII";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Vaše anonymní zpětná vazba je pro nás důležitá.";
@@ -1529,12 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Zobrazit všechny karty";
 
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
-
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pro Mac má rychlost, kterou potřebuješ, funkce prohlížeče, které očekáváš, a obsahuje naše nejlepší nástroje na ochranu soukromí.";
 
@@ -1586,62 +1640,53 @@
 /* Edit button */
 "navigation.title.edit" = "Upravit";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "Uspáno";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "VPN DuckDuckGo";
 
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
-
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Ochrana sítě se nepřipojila. Zkus to znovu později.";
+"network.protection.entitlement.expired.notification.body" = "VPN byla odpojena kvůli vypršení platnosti předplatného. Předplať si službu Privacy Pro, ať můžeš DuckDuckGo VPN dál používat.";
 
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Nejčastější dotazy ohledně VPN DuckDuckGo";
 
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "Ochrana sítě je přerušená. Probíhá pokus o opětovné připojení...";
-
 /* Message for the network protection invite dialog */
-"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+"network.protection.invite.dialog.message" = "Zadej svůj kód pozvánky, ať můžeš začít.";
 
 /* Title for the network protection invite screen */
 "network.protection.invite.dialog.title" = "Zveme vás k vyzkoušení VPN DuckDuckGo";
 
 /* Prompt for the network protection invite code text field */
-"network.protection.invite.field.prompt" = "Invite Code";
+"network.protection.invite.field.prompt" = "Zvací kód";
 
 /* Message for the network protection invite success view */
-"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+"network.protection.invite.success.message" = "Skryj svou polohu před webovými stránkami a schovej svou online aktivitu před poskytovateli internetu a ostatními uživateli tvé sítě.";
 
 /* Title for the network protection invite success view */
-"network.protection.invite.success.title" = "Success! You’re in.";
+"network.protection.invite.success.title" = "A je to!";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Otevřít VPN";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "VPN je uspaná na %@";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Připojeno · %@";
 
 /* The label for the NetP VPN when connecting */
-"network.protection.status.connecting" = "Connecting...";
+"network.protection.status.connecting" = "Připojování...";
 
 /* The label for the NetP VPN when disconnected */
-"network.protection.status.disconnected" = "Not connected";
+"network.protection.status.disconnected" = "Nepřipojeno";
 
 /* The label for the NetP VPN when disconnecting */
-"network.protection.status.disconnecting" = "Disconnecting...";
+"network.protection.status.disconnecting" = "Odpojování...";
 
 /* Message label text for the status view when VPN is disconnected */
 "network.protection.status.header.message.off" = "Připojte se a zabezpečte všechna svá zařízení\nInternetový provoz.";
@@ -1655,26 +1700,41 @@
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "VPN DuckDuckGo je zapnutá";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "VPN DuckDuckGo je uspaná";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
-"network.protection.status.menu.share.feedback" = "Share Feedback";
+"network.protection.status.menu.share.feedback" = "Podělte se o zpětnou vazbu";
+
+/* The label for the NetP VPN when paused */
+"network.protection.status.paused" = "Pozastaveno";
+
+/* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
+"network.protection.status.snoozing.format" = "Uspáno, zbývá %@";
+
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "Uspat na 20 minut";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Probudit";
 
 /* Connection details label shown in NetworkProtection's status view. */
-"network.protection.status.view.connection.details" = "Connection Details";
+"network.protection.status.view.connection.details" = "Podrobnosti o připojení";
 
 /* Custom DNS label shown in NetworkProtection's status view. */
-"network.protection.status.view.custom.dns" = "DNS Server";
+"network.protection.status.view.custom.dns" = "DNS server";
 
 /* Generic connection failed error message shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+"network.protection.status.view.error.connection.failed.message" = "Zkus to znovu později.";
 
 /* Generic connection failed error title shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+"network.protection.status.view.error.connection.failed.title" = "Připojení se nezdařilo.";
 
 /* IP Address label shown in NetworkProtection's status view. */
-"network.protection.status.view.ip.address" = "IP Address";
+"network.protection.status.view.ip.address" = "IP adresa";
 
 /* Location label shown in NetworkProtection's status view. */
-"network.protection.status.view.location" = "Location";
+"network.protection.status.view.location" = "Poloha";
 
 /* Label shown on the title of the settings section in NetworkProtection's status view. */
 "network.protection.status.view.settings.section.title" = "Spravovat";
@@ -1682,11 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Ochrana sítě je zapnutá. Tvoje poloha a online aktivita jsou chráněné.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Směrování provozu zařízení přes %@.";
+
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "VPN už není uspaná. Směrování provozu zařízení přes %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Zapnout oznámení";
@@ -1698,13 +1758,13 @@
 "network.protection.vpn.about" = "O společnosti";
 
 /* Section header for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.section.header" = "Notifications";
+"network.protection.vpn.alerts.section.header" = "Oznámení";
 
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Nech si poslat upozornění, když se přeruší připojení nebo se změní stav VPN.";
 
 /* Title for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
+"network.protection.vpn.alerts.toggle.title" = "Oznámení sítě VPN";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Objem dat";
@@ -1713,13 +1773,13 @@
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Místní provoz může obejít síť VPN a připojit se k zařízením v místní síti, třeba k tiskárně.";
 
 /* Header text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.header" = "General";
+"network.protection.vpn.exclude.local.networks.setting.header" = "Hlavní";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Vyloučení místních sítí";
 
 /* Title for the VPN Location screen's All Countries section. */
-"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+"network.protection.vpn.location.all.countries.section.title" = "Všechny země";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.connected" = "Připojené umístění";
@@ -1734,7 +1794,7 @@
 "network.protection.vpn.location.recommended.section.footer" = "Automatické připojení k nejbližšímu nalezenému serveru.";
 
 /* Title for the VPN Location screen's Recommended section. */
-"network.protection.vpn.location.recommended.section.title" = "Recommended";
+"network.protection.vpn.location.recommended.section.title" = "Doporučeno";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.selected" = "Vybrané umístění";
@@ -1752,13 +1812,13 @@
 "network.protection.vpn.preferred.location.nearest" = "Nejbližší umístění";
 
 /* Title for the Preferred Location VPN Settings item. */
-"network.protection.vpn.preferred.location.title" = "Preferred Location";
+"network.protection.vpn.preferred.location.title" = "Preferovaná lokalita";
 
 /* Footer text for the DNS server setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo směruje dotazy DNS přes naše DNS servery, takže tvůj poskytovatel internetu nevidí, jaké webové stránky navštěvuješ.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "FAQs and Support";
+"network.protection.vpn.settings.faq" = "Časté dotazy a podpora";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Podělte se o zpětnou vazbu k VPN";
@@ -1940,6 +2000,66 @@
 /* Deactivate button */
 "pm.deactivate" = "Deaktivovat";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "E-mail (nepovinné)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "jmeno@email.com";
+
+/* Placeholder for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.placeholder" = "Pošli nám svou zpětnou vazbu...";
+
+/* Title for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.title" = "Obecná zpětná vazba";
+
+/* Title for the ITR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
+
+/* Title for the PIR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
+
+/* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-ppro-problem.title" = "Předplatné a platby";
+
+/* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.placeholder" = "Řekni nám, o co jde...";
+
+/* Title for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.title" = "Nahlásit problém";
+
+/* Title for the VPN category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-vpn-problem.title" = "VPN";
+
+/* Placeholder for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.placeholder" = "Jaká funkce by se ti líbila?";
+
+/* Title for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.title" = "Požadavek na funkci";
+
+/* Title for the category selection section in the Privacy Pro feedback form */
+"ppro.feedback-form.select-category.title" = "VYBER KATEGORII";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-1" = "Víš o problému, který není popsaný v našem [centru nápovědy](duck://)? Řekni nám o něm!\n\nZadej e-mail, pokud chceš, abychom tě ohledně tohoto problému kontaktovali (možná ale nezvládneme reagovat na všechny problémy):";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-2" = "Kromě údajů zadaných nahoře posíláme s tvojí zpětnou vazbou i některé anonymizované informace:";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-3" = "• Jestli jsou aktivní některé funkce prohlížeče";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-4" = "• Agregovaná diagnostika aplikace (např. chybové kódy)";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-5" = "Klepnutím na Odeslat vyjadřuješ souhlas s tím, že DuckDuckGo může použít poskytnuté informace ke zlepšení aplikace.";
+
+/* Title for the text box in the Privacy Pro feedback form */
+"ppro.feedback-form.text-box.title" = "Zpětná vazba";
+
+/* Title for the Privacy Pro feedback form */
+"ppro.feedback-form.title" = "Odeslat zpětnou vazbu";
+
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Spravovat záložky";
 
@@ -2029,6 +2149,18 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Oblíbené";
 
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "Obecná zpětná vazba";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Nahlásit problém";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Požádat o novou funkci";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "VYBER KATEGORII";
+
 /* Settings cell for About DDG */
 "settings.about.ddg" = "O DuckDuckGo";
 
@@ -2083,6 +2215,9 @@
 
 /* Section footer Autolock description */
 "settings.autolock.description" = "Pokud je zapnuté Touch ID nebo Face ID, případně nastavený přístupový kód k systému, zobrazí se při otevírání aplikace výzva k jejímu odemknutí.";
+
+/* Settings cell for Browser Feedback */
+"settings.browser.feedback" = "Zpětná vazba k prohlížeči";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automaticky vymazat data";
@@ -2182,7 +2317,7 @@
 "settings.ppro" = "Privacy Pro";
 
 /* Title for Link in the Footer of Privacy Pro section */
-"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+"settings.ppro.footer" = "Zásady ochrany osobních údajů a podmínky služby";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Náhledy dlouhého stisknutí";
@@ -2208,23 +2343,20 @@
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Nastavte pozici adresního řádku";
 
-/* Subscription activation pending description */
-"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Aktivuje se";
 
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Tvoje předplatné se aktivuje";
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "Akce trvá déle než obvykle. Stav se tady prosím později.";
 
 /* Data Broker protection cell subtitle for privacy pro */
-"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+"settings.subscription.DBP.subtitle" = "Odstraň své údaje z webů, které je prodávají";
 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "Tři nové ochranné funkce pro ještě větší soukromí:";
-
 /* I have a Subscription button text for privacy pro */
-"settings.subscription.existing.subscription" = "I Have a Subscription";
+"settings.subscription.existing.subscription" = "Mám předplatné";
 
 /* Subscription expired description */
 "settings.subscription.expired.comment" = "Pokud chceš dál používat službu Privacy Pro, znovu si založ předplatné";
@@ -2232,23 +2364,26 @@
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Tvoje předplatné Privacy Pro vypršelo";
 
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
-
 /* Identity theft restoration cell subtitle for privacy pro */
-"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+"settings.subscription.ITR.subtitle" = "Pokud dojde ke krádeži tvé identity, pomůžeme ti ji obnovit.";
 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
 /* Get Privacy Pro button text for privacy pro */
-"settings.subscription.learn.more" = "Get Privacy Pro";
+"settings.subscription.learn.more" = "Pořiď si službu Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
-"settings.subscription.manage" = "Subscription Settings";
+"settings.subscription.manage" = "Nastavení předplatného";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Zahrnuje naši VPN a službu Identity Theft Restoration.";
+
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Chraň své připojení a identitu se službou Privacy Pro";
+
+/* Privacy pro description subtitle in settings */
+"settings.subscription.us.description" = "Zahrnuje naše funkce VPN, Personal Information Removal a Identity Theft Restoration.";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2317,67 +2452,64 @@
 "siteFeedback.urlPlaceholder" = "Které webové stránky jsou poškozené?";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate..header.description" = "Získej na tomto zařízení přístup ke svému předplatnému Privacy Pro přes Apple ID nebo e-mailovou adresu.";
 
 /* Button for adding email address to subscription */
-"subscription.activate.add.email.button" = "Add Email";
+"subscription.activate.add.email.button" = "Přidat e-mail";
 
 /* Apple ID option for activation */
 "subscription.activate.appleid" = "Apple ID";
 
 /* Button text for restoring purchase via Apple ID */
-"subscription.activate.appleid.button" = "Restore Purchase";
+"subscription.activate.appleid.button" = "Obnovit nákup";
 
 /* Description for Apple ID activation */
-"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+"subscription.activate.appleid.description" = "Pokud chceš na tomhle zařízení aktivovat svoje předplatné, musíš si obnovit nákup.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+"subscription.activate.description" = "Tvoje předplatné se na DuckDuckGo automaticky aktivuje na jakémkoli zařízení přihlášeném ke tvému účtu Apple ID.";
 
 /* Button for editing email address added to subscription */
-"subscription.activate.edit.email.button" = "Edit Email";
+"subscription.activate.edit.email.button" = "Upravit e-mail";
 
 /* View Title for editing your email account */
-"subscription.activate.edit.email.title" = "Edit Email";
+"subscription.activate.edit.email.title" = "Upravit e-mail";
 
 /* Email option for activation */
-"subscription.activate.email" = "Email";
+"subscription.activate.email" = "Emailová adresa";
 
 /* Restore button title for Email */
-"subscription.activate.email.button" = "Enter Email";
+"subscription.activate.email.button" = "Zadej e-mail";
 
 /* Description for Email activation */
-"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+"subscription.activate.email.description" = "Pokud chceš na tomhle zařízení aktivovat svoje předplatné, musíš nejdřív do e-mailu.";
 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Aktivace předplatného";
 
 /* Button title for cancelling email deletion */
-"subscription.activate.manage.email.cancel" = "Cancel";
+"subscription.activate.manage.email.cancel" = "Zrušit";
 
 /* Button title for confirming email deletion */
-"subscription.activate.manage.email.OK" = "OK";
+"subscription.activate.manage.email.OK" = "DOBŘE";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore Purchase";
+"subscription.activate.restore.apple" = "Obnovit nákup";
 
 /* Subscription Activation Title */
-"subscription.activate.title" = "Activate your subscription on this device";
+"subscription.activate.title" = "Aktivuj si předplatné na tomhle zařízení";
 
 /* Resend activation instructions button */
-"subscription.add.device.resend.instructions" = "Resend Instructions";
+"subscription.add.device.resend.instructions" = "Znovu poslat instrukce";
 
 /* Add email to an existing subscription */
-"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+"subscription.add.email" = "Pokud chceš své předplatné aktivovat na dalších zařízeních, přidej e-mailovou adresu. Použijeme ji jen k ověření tvého předplatného.";
 
 /* View title for adding email to subscription */
-"subscription.add.email.title" = "Add Email";
-
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
+"subscription.add.email.title" = "Přidat e-mail";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+"subscription.available.apple" = "Služba Privacy Pro je dostupná na jakémkoli zařízení přihlášeném ke stejnému Apple ID.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Předplatné bylo zakoupeno prostřednictvím obchodu Google Play. Předplatné se dá obnovit tak, že otevřeš nastavení předplatného obchodu Google Play na zařízení přihlášeném ke stejnému účtu Google, který byl původně použit k nákupu předplatného.";
@@ -2385,89 +2517,86 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Plány předplatného";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
-
 /* Subscription Removal confirmation message */
-"subscription.cancel.message" = "Your subscription has been removed from this device.";
+"subscription.cancel.message" = "Tvoje předplatné bylo z tohohle zařízení odstraněno.";
 
 /* Change plan or cancel title */
-"subscription.change.plan" = "Update Plan or Cancel";
+"subscription.change.plan" = "Aktualizace nebo zrušení tarifu";
 
 /* Navigation Button for closing subscription view */
-"subscription.close" = "Close";
+"subscription.close" = "Zavřít";
 
 /* Title for Confirm messages */
-"subscription.confirm.title" = "Are you sure?";
+"subscription.confirm.title" = "Opravdu to chceš udělat?";
 
 /* Header for section for activating subscription on other devices */
-"subscription.devices.header" = "Activate on Other Devices";
+"subscription.devices.header" = "Aktivovat na jiných zařízeních";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Přidej si k předplatnému nepovinný e-mail, ať můžeš službu Privacy Pro využívat i na jiných zařízeních. **[Další informace](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
-"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.with.email.footer" = "Pomocí tohohle e-mailu si v aplikaci DuckDuckGo aktivuješ předplatné i na jiných zařízeních. Stačí přejít do Nastavení > Privacy Pro. **[Další informace](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
-"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+"subscription.email.inactive.alert.message" = "Předplatné spojené s tímhle e-mailem už není aktivní.";
 
 /* Alert title for not found subscription */
-"subscription.email.inactive.alert.title" = "Subscription Not Found";
+"subscription.email.inactive.alert.title" = "Předplatné nenalezeno";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.expired.alert.message" = "Předplatné spojené s tímhle Apple ID už není aktivní.";
 
 /* FAQ Button */
-"subscription.faq" = "FAQs and Support";
+"subscription.faq" = "Časté dotazy a podpora";
 
 /* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
+"subscription.faq.description" = "Získej odpovědi na časté otázky nebo přes naše stránky nápovědy kontaktuj podporu služby Privacy Pro.";
+
+/* Send Feedback Button */
+"subscription.feedback" = "Odeslat zpětnou vazbu";
 
 /* Cancel action for the existing subscription dialog */
-"subscription.found.cancel" = "Cancel";
+"subscription.found.cancel" = "Zrušit";
 
 /* Restore action for the existing subscription dialog */
-"subscription.found.restore" = "Restore";
+"subscription.found.restore" = "Obnovit";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+"subscription.found.text" = "Našli jsme předplatné spojené s tímhle Apple ID.";
 
 /* Title for the existing subscription dialog */
-"subscription.found.title" = "Subscription Found";
+"subscription.found.title" = "Našli jsme předplatné";
 
 /* Help and support Section header */
-"subscription.help" = "Help and support";
+"subscription.help" = "Nápověda a podpora";
 
 /* Manage Plan header */
-"subscription.manage.plan" = "Manage Plan";
+"subscription.manage.plan" = "Spravovat tarif";
 
 /* Header for the subscription section */
-"subscription.manage.title" = "Subscription";
+"subscription.manage.title" = "Předplatné";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+"subscription.notFound.alert.message" = "S tímhle Apple ID není spojené žádné předplatné.";
 
 /* Alert title for not found subscription */
-"subscription.notFound.alert.title" = "Subscription Not Found";
+"subscription.notFound.alert.title" = "Předplatné nenalezeno";
 
 /* View plans button text */
-"subscription.notFound.view.plans" = "View Plans";
+"subscription.notFound.view.plans" = "Zobrazit tarify";
 
 /* Hero Text for Personal information removal */
-"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+"subscription.pir.hero" = "Aktivuj si na počítači službu Privacy Pro a nastav si v ní funkci Personal Information Removal";
 
 /* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
-"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+"subscription.pir.heroText" = "V prohlížeči DuckDuckGo pro počítače přejdi na %1$@ a klikni na %2$@.";
 
 /* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
-"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+"subscription.pir.heroTextLocation" = "Nastavení > Privacy Pro";
 
 /* Menu item for enabling Personal Information Removal on Desktop */
-"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+"subscription.pir.heroTextMenyEntry" = "Mám předplatné";
 
 /* Text for the 'macOS' button */
 "subscription.pir.macos" = "Mac";
@@ -2476,28 +2605,28 @@
 "subscription.pir.windows" = "Windows";
 
 /* Progress view title when completing the purchase */
-"subscription.progress.view.completing.purchase" = "Completing purchase...";
+"subscription.progress.view.completing.purchase" = "Dokončuji nákup...";
 
 /* Progress view title when starting the purchase */
-"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+"subscription.progress.view.purchasing.subscription" = "Probíhá nákup...";
 
 /* Progress view title when restoring past subscription purchase */
-"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+"subscription.progress.view.restoring.subscription" = "Obnovování předplatného...";
 
 /* Remove from this device button */
-"subscription.remove.from.device.button" = "Remove From This Device";
+"subscription.remove.from.device.button" = "Odebrat z tohohle zařízení";
 
 /* Remove from device confirmation dialog text */
-"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+"subscription.remove.from.device.text" = "Na tomhle zařízení už nebudeš mít přístup k předplatnému Privacy Pro. Tím se tvoje předplatné nezruší, na tvých ostatních zařízeních zůstane aktivní.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove from this device?";
+"subscription.remove.from.device.title" = "Odebrat z tohohle zařízení?";
 
 /* Remove subscription button text */
-"subscription.remove.subscription" = "Remove Subscription";
+"subscription.remove.subscription" = "Odebrat předplatné";
 
 /* Remove subscription cancel button text */
-"subscription.remove.subscription.cancel" = "Cancel";
+"subscription.remove.subscription.cancel" = "Zrušit";
 
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Zpět do nastavení";
@@ -2509,28 +2638,43 @@
 "subscription.restore.backend.error.title" = "Něco se pokazilo";
 
 /* Alert for general error message */
-"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+"subscription.restore.general.error.message" = "App Store nemůže zpracovat tvůj nákup. Zkus to znovu později.";
 
 /* Alert for general error title */
-"subscription.restore.general.error.title" = "Something Went Wrong";
+"subscription.restore.general.error.title" = "Něco se pokazilo";
 
 /* Alert button text for restored purchase alert */
-"subscription.restore.success.alert.button" = "OK";
+"subscription.restore.success.alert.button" = "DOBŘE";
 
 /* Alert message for restored purchase */
-"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+"subscription.restore.success.alert.message" = "Tvoje nákupy byly obnovené.";
 
 /* Alert title for restored purchase */
-"subscription.restore.success.alert.title" = "You’re all set.";
+"subscription.restore.success.alert.title" = "Všechno je hotové.";
+
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Přihlášeno";
 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Tvoje předplatné vypršelo %@";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Tvoje měsíční předplatné vyprší %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Tvoje předplatné vyprší %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Tvoje roční předplatné vyprší %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Tvoje měsíční předplatné se obnoví %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Tvoje předplatné se obnoví %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Tvoje roční předplatné se obnoví %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2677,118 +2821,118 @@
 "voiceSearch.footer.note.old" = "Zvuk se zpracovává na zařízení. Nikde ho neukládáme a s nikým ho nesdílíme. Ani DuckDuckGo se k němu nedostane.";
 
 /* Cancel action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+"vpn.access-revoked.alert.action.cancel" = "Odmítnout";
 
 /* Primary action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+"vpn.access-revoked.alert.action.subscribe" = "Odebírat novinky";
 
 /* Alert message for the alert when the Privacy Pro subscription expiress */
-"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"vpn.access-revoked.alert.message" = "Předplať si službu Privacy Pro, ať můžeš DuckDuckGo VPN dál používat.";
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
-"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+"vpn.access-revoked.alert.title" = "VPN byla odpojena kvůli vypršení platnosti předplatného";
 
 /* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "Najdi aplikaci DuckDuckGo a vyber ji. Potom se posuň na VPN a vyber Přidat widget.";
 
 /* Title for the Cancel button of the VPN feedback form */
-"vpn.feedback-form.button.cancel" = "Cancel";
+"vpn.feedback-form.button.cancel" = "Zrušit";
 
 /* Title for the Done button of the VPN feedback form */
-"vpn.feedback-form.button.done" = "Done";
+"vpn.feedback-form.button.done" = "Hotovo";
 
 /* Title for the Submit button of the VPN feedback form */
-"vpn.feedback-form.button.submit" = "Submit";
+"vpn.feedback-form.button.submit" = "Odeslat";
 
 /* Title for the Submitting state of the VPN feedback form */
-"vpn.feedback-form.button.submitting" = "Submitting…";
+"vpn.feedback-form.button.submitting" = "Odesílání…";
 
 /* Title for the browser crash/freeze category of the VPN feedback form */
-"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN způsobuje selhání nebo zamrznutí prohlížeče";
 
 /* Title for the 'VPN fails to connect' category of the VPN feedback form */
-"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+"vpn.feedback-form.category.fails-to-connect" = "VPN se nedaří připojit";
 
 /* Title for the 'VPN feature request' category of the VPN feedback form */
-"vpn.feedback-form.category.feature-request" = "VPN feature request";
+"vpn.feedback-form.category.feature-request" = "Požadavek na funkci VPN";
 
 /* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
-"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+"vpn.feedback-form.category.issues-with-apps" = "VPN způsobuje problémy s jinými aplikacemi nebo webovými stránkami";
 
 /* Title for the local device connectivity category of the VPN feedback form */
-"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+"vpn.feedback-form.category.local-device-connectivity" = "VPN mi nedovolí připojit se k místnímu zařízení";
 
 /* Title for the 'other VPN feedback' category of the VPN feedback form */
-"vpn.feedback-form.category.other" = "Other VPN feedback";
+"vpn.feedback-form.category.other" = "Jiná zpětná vazba k VPN";
 
 /* Title for the category selection state of the VPN feedback form */
-"vpn.feedback-form.category.select-category" = "Select a category";
+"vpn.feedback-form.category.select-category" = "VYBER KATEGORII";
 
 /* Title for the 'VPN is too slow' category of the VPN feedback form */
-"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+"vpn.feedback-form.category.too-slow" = "Připojení k VPN je příliš pomalé";
 
 /* Title for the 'unable to install' category of the VPN feedback form */
-"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+"vpn.feedback-form.category.unable-to-install" = "VPN není možné nainstalovat";
 
 /* Title for the feedback sent view description of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+"vpn.feedback-form.sending-confirmation.description" = "Tvoje zpětná vazba nám pomůže zlepšit\n DuckDuckGo VPN.";
 
 /* Title for the feedback sending error text of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+"vpn.feedback-form.sending-confirmation.error" = "Tvoji zpětnou vazbu se nám nepodařilo odeslat, zkus to prosím znovu.";
 
 /* Title for the feedback sent view title of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+"vpn.feedback-form.sending-confirmation.title" = "Děkujeme!";
 
 /* Toast message when the VPN feedback form is submitted successfully */
-"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+"vpn.feedback-form.submitted.message" = "Děkujeme! Zpětná vazba odeslána.";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+"vpn.feedback-form.text-1" = "Popiš, co se děje, co se mělo stát a jaké kroky k problému vedly:";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+"vpn.feedback-form.text-2" = "Kromě údajů zadaných do tohoto formuláře bude zpráva o problému s aplikací obsahovat:";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+"vpn.feedback-form.text-3" = "• Jestli jsou zapnuté konkrétní funkce DuckDuckGo";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+"vpn.feedback-form.text-4" = "• Agregovanou diagnostiku aplikace DuckDuckGo";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+"vpn.feedback-form.text-5" = "Klepnutím na tlačítko Odeslat vyjadřuji souhlas s tím, aby služba DuckDuckGo mohla použít informace z této zprávy k vylepšování funkcí aplikace.";
 
 /* Title for each screen of the VPN feedback form */
-"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+"vpn.feedback-form.title" = "Pomoz zlepšit DuckDuckGo VPN";
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Přidat widget VPN na domovskou obrazovku";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
+"vpn.settings.dns.section-disclaimer" = "Používání vlastního serveru DNS může ovlivnit rychlost procházení a odhalit tvoji aktivitu třetím stranám, pokud server není bezpečný nebo spolehlivý.";
 
 /* Header text for the DNS section on the VPN Settings screen */
 "vpn.settings.dns.section-header" = "DNS";
 
 /* Title for the Apply button on the DNS Server setting screen */
-"vpn.settings.dns.server.apply.button.title" = "Apply";
+"vpn.settings.dns.server.apply.button.title" = "Aplikovat";
 
 /* Default value for the DNS Server row on the VPN Settings screen */
 "vpn.settings.dns.server.default.value" = "DuckDuckGo";
 
 /* Title for the IPv4 Address setting */
-"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
+"vpn.settings.dns.server.ipv4.title" = "Adresa IPv4";
 
 /* Custom option for the DNS Server setting */
-"vpn.settings.dns.server.option.custom" = "Custom";
+"vpn.settings.dns.server.option.custom" = "Vlastní";
 
 /* Recommended option for the DNS Server setting */
-"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
+"vpn.settings.dns.server.option.default" = "DuckDuckGo (doporučeno)";
 
 /* Title for the DNS Server setting screen */
-"vpn.settings.dns.server.screen.title" = "DNS Server";
+"vpn.settings.dns.server.screen.title" = "DNS server";
 
 /* Title for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.title" = "DNS Server";
+"vpn.settings.dns.server.title" = "DNS server";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Povolit oznámení";

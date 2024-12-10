@@ -10,9 +10,6 @@
 /* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
 "5YD-Od-uDU.text" = "Verileri Otomatik Olarak Temizle";
 
-/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
-"8YG-7Q-Czd.normalTitle" = "Ayarlar";
-
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "1 Saat Boyunca Hareket Yoksa Uygulamadan Çık";
 
@@ -75,9 +72,6 @@
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Korumasız Siteler";
-
-/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
-"ssa-zd-L3T.title" = "Metin Boyutu";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Şu durumda klavyeyi göster:";

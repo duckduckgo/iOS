@@ -50,7 +50,7 @@
 "action.title.copy.message" = "URL copiato";
 
 /* Delete action - button shown in alert */
-"action.title.delete" = "Cancella";
+"action.title.delete" = "Elimina";
 
 /* Disable protection action */
 "action.title.disable.protection" = "Disattiva la tutela della privacy";
@@ -341,7 +341,7 @@
 "autofill.keep-enabled.alert.disable" = "Disabilita";
 
 /* A link that takes the user to the DuckDuckGo help pages explaining password managers */
-"autofill.learn.more.link.title" = "Learn More";
+"autofill.learn.more.link.title" = "Ulteriori informazioni";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizza";
@@ -687,7 +687,7 @@
 "bookmark.deleted.toast" = "Segnalibro eliminato";
 
 /* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Cancella";
+"bookmark.deleteFolderAlert.deleteButton" = "Elimina";
 
 /* Do not translate - stringsdict entry */
 "bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
@@ -978,9 +978,6 @@
 "dax.onboarding.home.subsequent" = "Ben fatto!\n\nRicorda: quando navighi con me, gli annunci inquietanti non possono seguirti. 👍";
 
 /* No comment provided by engineer. */
-"dax.onboarding.message" = "Internet può essere un po' inquietante.\n\nNon preoccuparti! Effettuare ricerche e navigare in modo privato è più facile di quanto pensi.";
-
-/* No comment provided by engineer. */
 "Debug" = "Debug";
 
 /* Default string used if users device is not iPhone or iPad */
@@ -1080,7 +1077,7 @@
 "duckPlayer.never.label" = "Mai";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player ti consente di guardare YouTube senza annunci mirati in un'esperienza analoga a quella cinematografica in DuckDuckGo e ciò che guardi non influenzerà i tuoi consigli.";
+"duckplayer.presentation.modal.body" = "Duck Player ti consente di guardare YouTube senza annunci mirati in DuckDuckGo e ciò che guardi non inciderà sui consigli che ricevi.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Ho capito!";
@@ -1088,17 +1085,23 @@
 /* Two line title (separated by \n) for the feature explanation */
 "duckplayer.presentation.modal.title" = "YouTube ti inonda di annunci? Prova Duck Player!";
 
+/* Two line title (separated by \n) for the feature explanation */
+"duckplayer.presentation.modal.title.youtube" = "YouTube ti inonda di annunci? Non con Duck Player!";
+
 /* Footer label in the settings screen for Duck Player */
 "duckplayer.settings.footer" = "DuckDuckGo fornisce tutti gli elementi essenziali per la privacy di cui hai bisogno per proteggerti mentre navighi sul Web.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Duck Player offre un'esperienza di visualizzazione pulita, senza annunci personalizzati, e impedisce che l'attività di visualizzazione incida sulle raccomandazioni di YouTube.";
+"duckplayer.settings.info-text" = "Duck Player ti consente di guardare YouTube senza annunci mirati in DuckDuckGo e ciò che guardi non inciderà sui consigli che ricevi.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Ulteriori informazioni";
 
+/* Settings screen cell text for DuckPlayer settings to open in new tab */
+"duckplayer.settings.open-new-tab-label" = "Apri Duck Player in una nuova scheda";
+
 /* Settings screen cell text for DuckPlayer settings */
-"duckplayer.settings.open-videos-in" = "Apri i video in Duck Player";
+"duckplayer.settings.open-videos-in" = "Apri i video di YouTube in Duck Player";
 
 /* Settings screen cell text for DuckPlayer settings */
 "duckplayer.settings.title" = "Duck Player";
@@ -1168,9 +1171,6 @@
 
 /* Title for prompt to sign up for email protection */
 "email.signup-prompt.title" = "Nascondi il tuo indirizzo e-mail e \n blocca i sistemi di tracciamento";
-
-/* No comment provided by engineer. */
-"empty!" = "empty!";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Non è ancora stato aggiunto nessun segnalibro";
@@ -1322,6 +1322,39 @@
 /* Confirmation button */
 "feedback.form.submit" = "Invia";
 
+/* Title of the feedback form */
+"feedback.form.title" = "Aiuta a migliorare Privacy Pro";
+
+/* Category for Identity Theft Restoration feedback */
+"feedback.general.category.itr" = "Identity Theft Restoration";
+
+/* Category for Personal Info Removal feedback */
+"feedback.general.category.pir" = "Rimozione delle informazioni personali";
+
+/* Category for subscription and payments feedback */
+"feedback.general.category.ppro" = "Abbonamento e pagamenti";
+
+/* Prompt to select a category for general feedback */
+"feedback.general.category.select" = "SELEZIONA UNA CATEGORIA";
+
+/* Category for VPN feedback */
+"feedback.general.category.vpn" = "VPN";
+
+/* Category for access code issues */
+"feedback.itr.category.access-code" = "Problema con il codice di accesso";
+
+/* Category for issues contacting an advisor */
+"feedback.itr.category.cant-contact-advisor" = "Impossibile contattare il consulente";
+
+/* Prompt to select a category for Identity Theft Restoration feedback */
+"feedback.itr.category.select" = "SELEZIONA UNA CATEGORIA";
+
+/* Category for other Identity Theft Restoration issues */
+"feedback.itr.category.something-else" = "Qualcos'altro";
+
+/* Category for unhelpful advisor calls */
+"feedback.itr.category.unhelpful" = "Chiamata al consulente inutile";
+
 /* No comment provided by engineer. */
 "feedback.negative.form.genericPlaceholder" = "Sii quanto più specifico possibile";
 
@@ -1361,6 +1394,24 @@
 /* No comment provided by engineer. */
 "feedback.performance.slowLoading" = "Il caricamento delle pagine web o dei risultati di ricerca è lento";
 
+/* Category for when scan finds incorrect records */
+"feedback.pir.category.not-me" = "La scansione ha trovato dei record che non sono miei";
+
+/* Category for when scan doesn't find info on a specific site */
+"feedback.pir.category.nothing-on-site" = "La scansione non ha trovato le mie informazioni su un sito specifico";
+
+/* Category for other Personal Info Removal issues */
+"feedback.pir.category.other" = "Qualcos'altro";
+
+/* Category for when the removal process is stuck */
+"feedback.pir.category.removal-stuck" = "Il processo di rimozione è bloccato";
+
+/* Category for when the scan is stuck */
+"feedback.pir.category.scan-stuck" = "La scansione dei record è bloccata";
+
+/* Prompt to select a category for Personal Info Removal feedback */
+"feedback.pir.category.select" = "SELEZIONA UNA CATEGORIA";
+
 /* Header above input field */
 "feedback.positive.form.header" = "Condividi maggiori dettagli";
 
@@ -1378,6 +1429,15 @@
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Condividi maggiori dettagli";
+
+/* Category for other Privacy Pro issues */
+"feedback.ppro.category.other" = "Qualcos'altro";
+
+/* Category for one-time password issues */
+"feedback.ppro.category.otp" = "Problema con la password monouso";
+
+/* Prompt to select a category for Privacy Pro feedback */
+"feedback.ppro.category.select" = "SELEZIONA UNA CATEGORIA";
 
 /* No comment provided by engineer. */
 "feedback.start.footer" = "Il tuo feedback anonimo è importante per noi.";
@@ -1529,12 +1589,6 @@
 /* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Mostra tutte le schede";
 
-/* Please preserve newline character */
-"launchscreenWelcomeMessage" = "DuckDuckGo\nti dà il benvenuto!";
-
-/* No comment provided by engineer. */
-"LOREM IPSUM" = "LOREM IPSUM";
-
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo per Mac ti offre la velocità di cui hai bisogno, le funzioni di navigazione che desideri e i migliori strumenti per la privacy.";
 
@@ -1586,62 +1640,53 @@
 /* Edit button */
 "navigation.title.edit" = "Modifica";
 
-/* String indicating NetP is connected when viewed from the settings screen */
-"netP.cell.connected" = "Connected";
-
-/* String indicating NetP is disconnected when viewed from the settings screen */
-"netP.cell.disconnected" = "Not connected";
-
-/* Title for the DuckDuckGo VPN feature in settings */
-"netP.settings.title" = "VPN";
+/* String indicating NetP is snoozing when viewed from the settings screen */
+"netP.cell.snoozing" = "In sospensione";
 
 /* Title for the DuckDuckGo VPN feature */
 "netP.title" = "VPN DuckDuckGo";
 
 /* The body of the notification when Privacy Pro subscription expired */
-"network.protection.entitlement.expired.notification.body" = "VPN disconnected due to expired subscription. Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
-
-/* The body of the notification shown when Network Protection fails to reconnect */
-"network.protection.failure.notification.body" = "Connessione di Network Protection non riuscita. Riprova più tardi.";
+"network.protection.entitlement.expired.notification.body" = "La VPN si è scollegata perché l'abbonamento è scaduto. Iscriviti a Privacy Pro per riconnettere la VPN di DuckDuckGo.";
 
 /* Title for the VPN FAQ screen. */
 "network.protection.faq.title" = "Domande frequenti su DuckDuckGo VPN";
 
-/* The body of the notification shown when Network Protection's connection is interrupted */
-"network.protection.interrupted.notification.body" = "La funzione Network Protection è stata interrotta. Tentativo di riconnessione in corso...";
-
 /* Message for the network protection invite dialog */
-"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+"network.protection.invite.dialog.message" = "Inserisci il tuo codice invito per iniziare.";
 
 /* Title for the network protection invite screen */
 "network.protection.invite.dialog.title" = "Hai ricevuto un invito a provare DuckDuckGo VPN";
 
 /* Prompt for the network protection invite code text field */
-"network.protection.invite.field.prompt" = "Invite Code";
+"network.protection.invite.field.prompt" = "Codice invito";
 
 /* Message for the network protection invite success view */
-"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+"network.protection.invite.success.message" = "Nascondi la tua posizione dai siti web e la tua attività online ai provider internet e ad altri utenti sulla tua rete.";
 
 /* Title for the network protection invite success view */
-"network.protection.invite.success.title" = "Success! You’re in.";
+"network.protection.invite.success.title" = "Operazione completata.";
 
-/* The title of the notifications shown from Network Protection */
+/* The title of the notifications shown from VPN */
 "network.protection.notification.title" = "DuckDuckGo";
 
 /* Title text for an iOS quick action that opens VPN settings */
 "network.protection.quick-action.open-vpn" = "Apri VPN";
 
+/* The body of the notification when the VPN is snoozed, with a duration string as parameter (e.g, 30 minutes) */
+"network.protection.snoozed.notification.body" = "La VPN è sospesa per %@";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connesso · %@";
 
 /* The label for the NetP VPN when connecting */
-"network.protection.status.connecting" = "Connecting...";
+"network.protection.status.connecting" = "Connessione in corso...";
 
 /* The label for the NetP VPN when disconnected */
-"network.protection.status.disconnected" = "Not connected";
+"network.protection.status.disconnected" = "Non collegata";
 
 /* The label for the NetP VPN when disconnecting */
-"network.protection.status.disconnecting" = "Disconnecting...";
+"network.protection.status.disconnecting" = "Disconnessione in corso...";
 
 /* Message label text for the status view when VPN is disconnected */
 "network.protection.status.header.message.off" = "Connetti per proteggere tutto il traffico\nInternet del tuo dispositivo.";
@@ -1655,26 +1700,41 @@
 /* Header title label text for the status view when VPN is connected */
 "network.protection.status.header.title.on" = "DuckDuckGo VPN è attiva";
 
+/* Header title label text for the status view when VPN is snoozing */
+"network.protection.status.header.title.snoozed" = "DuckDuckGo VPN è sospesa";
+
 /* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
-"network.protection.status.menu.share.feedback" = "Share Feedback";
+"network.protection.status.menu.share.feedback" = "Condividi feedback";
+
+/* The label for the NetP VPN when paused */
+"network.protection.status.paused" = "In pausa";
+
+/* The label for when NetP VPN is snoozing plus the length of time remaining formatted as '0:00' */
+"network.protection.status.snoozing.format" = "In sospensione, %@ rimanenti";
+
+/* Snooze button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.snooze" = "Posponi di 20 minuti";
+
+/* Wake Up button title shown in NetworkProtection's status view. */
+"network.protection.status.view.action.wake-up" = "Sveglia";
 
 /* Connection details label shown in NetworkProtection's status view. */
-"network.protection.status.view.connection.details" = "Connection Details";
+"network.protection.status.view.connection.details" = "Dettagli della connessione";
 
 /* Custom DNS label shown in NetworkProtection's status view. */
-"network.protection.status.view.custom.dns" = "DNS Server";
+"network.protection.status.view.custom.dns" = "Server DNS";
 
 /* Generic connection failed error message shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+"network.protection.status.view.error.connection.failed.message" = "Riprova più tardi.";
 
 /* Generic connection failed error title shown in NetworkProtection's status view. */
-"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+"network.protection.status.view.error.connection.failed.title" = "Connessione non riuscita.";
 
 /* IP Address label shown in NetworkProtection's status view. */
-"network.protection.status.view.ip.address" = "IP Address";
+"network.protection.status.view.ip.address" = "Indirizzo IP";
 
 /* Location label shown in NetworkProtection's status view. */
-"network.protection.status.view.location" = "Location";
+"network.protection.status.view.location" = "Posizione";
 
 /* Label shown on the title of the settings section in NetworkProtection's status view. */
 "network.protection.status.view.settings.section.title" = "Gestisci";
@@ -1682,11 +1742,11 @@
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "VPN";
 
-/* The body of the notification shown when Network Protection reconnects successfully */
-"network.protection.success.notification.body" = "Network Protection è attiva. La tua posizione e le tue attività online sono protette.";
-
-/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
 "network.protection.success.notification.subtitle.including.serverLocation" = "Instradamento del traffico del dispositivo tramite %@.";
+
+/* The body of the notification shown when VPN connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.snooze.ended.including.serverLocation" = "La sospensione della VPN è finita. Instradamento del traffico del dispositivo tramite %@.";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.button.title" = "Attiva le notifiche";
@@ -1698,13 +1758,13 @@
 "network.protection.vpn.about" = "Informazioni";
 
 /* Section header for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.section.header" = "Notifications";
+"network.protection.vpn.alerts.section.header" = "Notifiche";
 
 /* List section footer for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.section.footer" = "Ricevi una notifica se la tua connessione si interrompe o lo stato della VPN cambia.";
 
 /* Title for the toggle for VPN notifications. */
-"network.protection.vpn.alerts.toggle.title" = "VPN Notifications";
+"network.protection.vpn.alerts.toggle.title" = "Notifiche VPN";
 
 /* Title for the data volume section in the VPN status screen */
 "network.protection.vpn.data-volume" = "Volume dati";
@@ -1713,13 +1773,13 @@
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Consenti al traffico locale di bypassare la VPN e connettersi ai dispositivi sulla tua rete locale, come una stampante.";
 
 /* Header text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.header" = "General";
+"network.protection.vpn.exclude.local.networks.setting.header" = "Generale";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Escludi reti locali";
 
 /* Title for the VPN Location screen's All Countries section. */
-"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+"network.protection.vpn.location.all.countries.section.title" = "Tutti i paesi";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.connected" = "Posizione connessa";
@@ -1734,7 +1794,7 @@
 "network.protection.vpn.location.recommended.section.footer" = "Connettiti automaticamente al server più vicino che riusciamo a trovare.";
 
 /* Title for the VPN Location screen's Recommended section. */
-"network.protection.vpn.location.recommended.section.title" = "Recommended";
+"network.protection.vpn.location.recommended.section.title" = "Consigliato";
 
 /* Description of the location type in the VPN status screen */
 "network.protection.vpn.location.selected" = "Posizione selezionata";
@@ -1752,13 +1812,13 @@
 "network.protection.vpn.preferred.location.nearest" = "Posizione più vicina";
 
 /* Title for the Preferred Location VPN Settings item. */
-"network.protection.vpn.preferred.location.title" = "Preferred Location";
+"network.protection.vpn.preferred.location.title" = "Posizione preferita";
 
 /* Footer text for the DNS server setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo routes DNS queries through our DNS servers so your internet provider can't see what websites you visit.";
+"network.protection.vpn.secure.dns.setting.footer" = "DuckDuckGo instrada le query DNS tramite i nostri server DNS in modo che il tuo provider internet non possa vedere quali siti web visiti.";
 
 /* Title for the FAQ row in the VPN status screen. */
-"network.protection.vpn.settings.faq" = "FAQs and Support";
+"network.protection.vpn.settings.faq" = "Domande frequenti e assistenza";
 
 /* Title for the feedback row in the VPN status screen. */
 "network.protection.vpn.settings.share-feedback" = "Condividi feedback sulla VPN";
@@ -1940,6 +2000,66 @@
 /* Deactivate button */
 "pm.deactivate" = "Disattiva";
 
+/* Label for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.label" = "Email (facoltativo)";
+
+/* Placeholder for the email form in the Privacy Pro feedback form */
+"ppro.feedback-form.email.placeholder" = "name@email.com";
+
+/* Placeholder for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.placeholder" = "Comunicaci la tua opinione...";
+
+/* Title for the General Feedback step in the Privacy Pro feedback form */
+"ppro.feedback-form.general-feedback.title" = "Feedback generale";
+
+/* Title for the ITR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-itr-problem.title" = "Identity Theft Restoration";
+
+/* Title for the PIR category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-pir-problem.title" = "Personal Information Removal";
+
+/* Title for the Subscriptions and Payments category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-ppro-problem.title" = "Abbonamenti e pagamenti";
+
+/* Placeholder for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.placeholder" = "Raccontaci cosa succede...";
+
+/* Title for the Report a Problem step in the Privacy Pro feedback form */
+"ppro.feedback-form.report-problem.title" = "Segnala un problema";
+
+/* Title for the VPN category in the Privacy Pro feedback form */
+"ppro.feedback-form.report-vpn-problem.title" = "VPN";
+
+/* Placeholder for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.placeholder" = "Quale funzionalità vorresti vedere?";
+
+/* Title for the Feature Request step in the Privacy Pro feedback form */
+"ppro.feedback-form.request-feature.title" = "Richiesta di funzionalità";
+
+/* Title for the category selection section in the Privacy Pro feedback form */
+"ppro.feedback-form.select-category.title" = "SELEZIONA UNA CATEGORIA";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-1" = "Hai trovato un problema non trattato nel nostro [centro assistenza](duck://)? Ci piacerebbe saperlo.\n\nIndica un indirizzo e-mail se vuoi che ti contattiamo in merito a questo problema (potremmo non essere in grado di rispondere a tutti i problemi):";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-2" = "Oltre ai dettagli inseriti sopra, inviamo alcune informazioni anonime con il tuo feedback:";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-3" = "• Se alcune funzioni del browser sono attive";
+
+/* Bullet text for the body of the PPro feedback form */
+"ppro.feedback-form.text-4" = "• Diagnostica aggregata dell'applicazione (ad esempio, codici di errore)";
+
+/* Text for the body of the PPro feedback form */
+"ppro.feedback-form.text-5" = "Toccando \"Invia\" accetti che DuckDuckGo possa usare le informazioni inviate per migliorare l'app.";
+
+/* Title for the text box in the Privacy Pro feedback form */
+"ppro.feedback-form.text-box.title" = "Feedback";
+
+/* Title for the Privacy Pro feedback form */
+"ppro.feedback-form.title" = "Invia feedback";
+
 /* Button title for sync bookmarks limits exceeded warning to go to manage bookmarks */
 "prefrences.sync.bookmarks-limit-exceeded-action" = "Gestisci segnalibri";
 
@@ -2029,6 +2149,18 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Preferiti";
 
+/* Name of the option the user can chose to give general browser feedback */
+"send.browser.feedback.general-feedback" = "Feedback generale";
+
+/* Name of the option the user can chose to give browser feedback about a problem they enountered */
+"send.browser.feedback.report-problem" = "Segnala un problema";
+
+/* Name of the option the user can chose to give browser feedback about a feature they would like */
+"send.browser.feedback.request-feature" = "Richiedi una funzionalità";
+
+/* Title of the picker where the user can chose the category of the feedback they want ot send. */
+"send.browser.feedback.select-category" = "SELEZIONA UNA CATEGORIA";
+
 /* Settings cell for About DDG */
 "settings.about.ddg" = "Info su DuckDuckGo";
 
@@ -2083,6 +2215,9 @@
 
 /* Section footer Autolock description */
 "settings.autolock.description" = "Se hai attivato Touch ID, Face ID o un passcode di sistema, ti verrà chiesto di sbloccare l'app al momento dell'apertura.";
+
+/* Settings cell for Browser Feedback */
+"settings.browser.feedback" = "Feedback sul browser";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Cancellazione automatica dei dati";
@@ -2182,7 +2317,7 @@
 "settings.ppro" = "Privacy Pro";
 
 /* Title for Link in the Footer of Privacy Pro section */
-"settings.ppro.footer" = "Privacy Policy and Terms of Service";
+"settings.ppro.footer" = "Privacy policy e Termini di servizio";
 
 /* Settings screen cell for long press previews */
 "settings.previews" = "Anteprime con pressione prolungata";
@@ -2208,23 +2343,20 @@
 /* Settings screen cell text for setting address bar position */
 "settings.set.your.address.bar.position" = "Imposta la posizione della barra degli indirizzi";
 
-/* Subscription activation pending description */
-"settings.subscription.activation.pending.description" = "This is taking longer than usual, please check back later.";
+/* Privacy pro description subtitle in settings when the is activating */
+"settings.subscription.activating" = "Attivazione in corso…";
 
-/* Subscription activation pending title */
-"settings.subscription.activation.pending.title" = "Il tuo abbonamento è in fase di attivazione";
+/* Subscription activation pending description */
+"settings.subscription.activation.pending.description" = "Richiede più tempo del solito, ricontrolla più tardi.";
 
 /* Data Broker protection cell subtitle for privacy pro */
-"settings.subscription.DBP.subtitle" = "Remove your info from sites that sell it";
+"settings.subscription.DBP.subtitle" = "Rimuovi le tue info dai siti che le vendono";
 
 /* Data Broker protection cell title for privacy pro */
 "settings.subscription.DBP.title" = "Personal Information Removal";
 
-/* Privacy pro description subtext */
-"settings.subscription.description" = "Più tutela della privacy senza interruzioni con tre nuove protezioni:";
-
 /* I have a Subscription button text for privacy pro */
-"settings.subscription.existing.subscription" = "I Have a Subscription";
+"settings.subscription.existing.subscription" = "Ho un abbonamento";
 
 /* Subscription expired description */
 "settings.subscription.expired.comment" = "Iscriviti di nuovo per continuare a utilizzare Privacy Pro";
@@ -2232,23 +2364,26 @@
 /* Subscription expired tittle message */
 "settings.subscription.expired.title" = "Il tuo abbonamento Privacy Pro è scaduto";
 
-/* Privacy pro features list */
-"settings.subscription.features" = " • VPN\n • Personal Information Removal\n • Identity Theft Restoration";
-
 /* Identity theft restoration cell subtitle for privacy pro */
-"settings.subscription.ITR.subtitle" = "If your identity is stolen, we'll help restore it";
+"settings.subscription.ITR.subtitle" = "Se la tua identità viene rubata, ti aiuteremo a ripristinarla";
 
 /* Identity theft restoration cell title for privacy pro */
 "settings.subscription.ITR.title" = "Identity Theft Restoration";
 
 /* Get Privacy Pro button text for privacy pro */
-"settings.subscription.learn.more" = "Get Privacy Pro";
+"settings.subscription.learn.more" = "Ottieni Privacy Pro";
 
 /* Subscription Settings button text for privacy pro */
-"settings.subscription.manage" = "Subscription Settings";
+"settings.subscription.manage" = "Impostazioni dell'abbonamento";
 
-/* Call to action title for Privacy Pro */
-"settings.subscription.subscribe" = "Subscribe to Privacy Pro";
+/* Privacy Pro description subtitle in settings */
+"settings.subscription.row.description" = "Include i nostri servizi di VPN e Identity Theft Restoration.";
+
+/* Call to action title for Privacy Pro settings */
+"settings.subscription.subscribe" = "Proteggi la tua connessione e la tua identità con Privacy Pro";
+
+/* Privacy pro description subtitle in settings */
+"settings.subscription.us.description" = "Includi VPN, Personal Information Removal e Identity Theft Restoration.";
 
 /* VPN cell title for privacy pro */
 "settings.subscription.VPN.title" = "VPN";
@@ -2317,67 +2452,64 @@
 "siteFeedback.urlPlaceholder" = "Quale sito web è danneggiato?";
 
 /* Subscription Activation Info */
-"subscription.activate..header.description" = "Access your Privacy Pro subscription on this device via Apple ID or an email address.";
+"subscription.activate..header.description" = "Accedi al tuo abbonamento Privacy Pro su questo dispositivo tramite ID Apple o un indirizzo e-mail.";
 
 /* Button for adding email address to subscription */
-"subscription.activate.add.email.button" = "Add Email";
+"subscription.activate.add.email.button" = "Aggiungi e-mail";
 
 /* Apple ID option for activation */
-"subscription.activate.appleid" = "Apple ID";
+"subscription.activate.appleid" = "ID Apple";
 
 /* Button text for restoring purchase via Apple ID */
-"subscription.activate.appleid.button" = "Restore Purchase";
+"subscription.activate.appleid.button" = "Ripristina acquisto";
 
 /* Description for Apple ID activation */
-"subscription.activate.appleid.description" = "Restore your purchase to activate your subscription on this device.";
+"subscription.activate.appleid.description" = "Ripristina il tuo acquisto per attivare l'abbonamento su questo dispositivo.";
 
 /* Subscription Activation Info */
-"subscription.activate.description" = "Your subscription is automatically available in DuckDuckGo on any device signed in to your Apple ID.";
+"subscription.activate.description" = "Il tuo abbonamento è automaticamente disponibile in DuckDuckGo su qualsiasi dispositivo connesso al tuo ID Apple.";
 
 /* Button for editing email address added to subscription */
-"subscription.activate.edit.email.button" = "Edit Email";
+"subscription.activate.edit.email.button" = "Modifica email";
 
 /* View Title for editing your email account */
-"subscription.activate.edit.email.title" = "Edit Email";
+"subscription.activate.edit.email.title" = "Modifica email";
 
 /* Email option for activation */
 "subscription.activate.email" = "Email";
 
 /* Restore button title for Email */
-"subscription.activate.email.button" = "Enter Email";
+"subscription.activate.email.button" = "Inserisci l'e-mail";
 
 /* Description for Email activation */
-"subscription.activate.email.description" = "Use your email to activate your subscription on this device.";
+"subscription.activate.email.description" = "Usa la tua e-mail per attivare l'abbonamento su questo dispositivo.";
 
 /* Activate subscription title */
 "subscription.activate.email.title" = "Attiva abbonamento";
 
 /* Button title for cancelling email deletion */
-"subscription.activate.manage.email.cancel" = "Cancel";
+"subscription.activate.manage.email.cancel" = "Annulla";
 
 /* Button title for confirming email deletion */
 "subscription.activate.manage.email.OK" = "OK";
 
 /* Restore button title for AppleID */
-"subscription.activate.restore.apple" = "Restore Purchase";
+"subscription.activate.restore.apple" = "Ripristina acquisto";
 
 /* Subscription Activation Title */
-"subscription.activate.title" = "Activate your subscription on this device";
+"subscription.activate.title" = "Attiva il tuo abbonamento su questo dispositivo";
 
 /* Resend activation instructions button */
-"subscription.add.device.resend.instructions" = "Resend Instructions";
+"subscription.add.device.resend.instructions" = "Invia nuovamente le istruzioni";
 
 /* Add email to an existing subscription */
-"subscription.add.email" = "Add an email address to activate your subscription on your other devices. We’ll only use this address to verify your subscription.";
+"subscription.add.email" = "Aggiungi un indirizzo e-mail per attivare il tuo abbonamento sugli altri dispositivi. Utilizzeremo questo indirizzo solo per verificare l'abbonamento.";
 
 /* View title for adding email to subscription */
-"subscription.add.email.title" = "Add Email";
-
-/* Title for Alert messages */
-"subscription.alert.title" = "subscription.alert.title";
+"subscription.add.email.title" = "Aggiungi e-mail";
 
 /* Subscription availability message on Apple devices */
-"subscription.available.apple" = "Privacy Pro is available on any device signed in to the same Apple ID.";
+"subscription.available.apple" = "Privacy Pro è disponibile su qualsiasi dispositivo connesso allo stesso ID Apple.";
 
 /* Text for the manage billing page */
 "subscription.billing.google.text" = "Il tuo abbonamento è stato acquistato tramite Google Play Store. Per effettuare il rinnovo, accedi alle impostazioni dell'abbonamento di Google Play Store su un dispositivo collegato allo stesso account Google utilizzato per effettuare l'acquisto originale dell'abbonamento.";
@@ -2385,89 +2517,86 @@
 /* Title for the manage billing page */
 "subscription.billing.google.title" = "Piani di abbonamento";
 
-/* Subscription annual billing period type */
-"subscription.billing.period.annual" = "annual";
-
-/* Subscription monthly billing period type */
-"subscription.billing.period.monthly" = "monthly";
-
 /* Subscription Removal confirmation message */
-"subscription.cancel.message" = "Your subscription has been removed from this device.";
+"subscription.cancel.message" = "Il tuo abbonamento è stato rimosso da questo dispositivo.";
 
 /* Change plan or cancel title */
-"subscription.change.plan" = "Update Plan or Cancel";
+"subscription.change.plan" = "Aggiorna o o annulla il piano";
 
 /* Navigation Button for closing subscription view */
-"subscription.close" = "Close";
+"subscription.close" = "Chiudi";
 
 /* Title for Confirm messages */
-"subscription.confirm.title" = "Are you sure?";
+"subscription.confirm.title" = "Procedere?";
 
 /* Header for section for activating subscription on other devices */
-"subscription.devices.header" = "Activate on Other Devices";
+"subscription.devices.header" = "Attiva sugli altri dispositivi";
 
 /* Footer for section for activating subscription on other devices when email was not yet added */
-"subscription.devices.no.email.footer" = "Add an optional email to your subscription or use your Apple ID to access Privacy Pro on other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.no.email.footer" = "Aggiungi un'e-mail opzionale al tuo abbonamento per accedere a Privacy Pro su altri dispositivi. **[Scopri di più](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Footer for section for activating subscription on other devices when email is added */
-"subscription.devices.with.email.footer" = "Use this email to activate your subscription in Settings > Privacy Pro in the DuckDuckGo app on your other devices. **[Learn more](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
+"subscription.devices.with.email.footer" = "Usa questa e-mail per attivare il tuo abbonamento in Impostazioni > Privacy Pro nell'app DuckDuckGo sugli altri tuoi dispositivi. **[Scopri di più](https://duckduckgo.com/duckduckgo-help-pages/privacy-pro/adding-email/)**";
 
 /* Alert content for not found subscription */
-"subscription.email.inactive.alert.message" = "The subscription associated with this email is no longer active.";
+"subscription.email.inactive.alert.message" = "L'abbonamento associato a questa e-mail non è più attivo.";
 
 /* Alert title for not found subscription */
-"subscription.email.inactive.alert.title" = "Subscription Not Found";
+"subscription.email.inactive.alert.title" = "Abbonamento non trovato";
 
 /* Alert content for not found subscription */
-"subscription.expired.alert.message" = "The subscription associated with this Apple ID is no longer active.";
+"subscription.expired.alert.message" = "L'abbonamento associato a questo ID Apple non è più attivo.";
 
 /* FAQ Button */
-"subscription.faq" = "FAQs and Support";
+"subscription.faq" = "Domande frequenti e assistenza";
 
 /* FAQ Description */
-"subscription.faq.description" = "Get answers to frequently asked questions or contact Privacy Pro support from our help pages.";
+"subscription.faq.description" = "Ottieni risposte alle domande frequenti o contatta l'assistenza di Privacy Pro dalle nostre pagine di assistenza.";
+
+/* Send Feedback Button */
+"subscription.feedback" = "Invia feedback";
 
 /* Cancel action for the existing subscription dialog */
-"subscription.found.cancel" = "Cancel";
+"subscription.found.cancel" = "Annulla";
 
 /* Restore action for the existing subscription dialog */
-"subscription.found.restore" = "Restore";
+"subscription.found.restore" = "Ripristina";
 
 /* Message for the existing subscription dialog */
-"subscription.found.text" = "We found a subscription associated with this Apple ID.";
+"subscription.found.text" = "Abbiamo trovato un abbonamento associato a questo ID Apple.";
 
 /* Title for the existing subscription dialog */
-"subscription.found.title" = "Subscription Found";
+"subscription.found.title" = "Abbonamento trovato";
 
 /* Help and support Section header */
-"subscription.help" = "Help and support";
+"subscription.help" = "Aiuto e assistenza";
 
 /* Manage Plan header */
-"subscription.manage.plan" = "Manage Plan";
+"subscription.manage.plan" = "Gestisci il piano";
 
 /* Header for the subscription section */
-"subscription.manage.title" = "Subscription";
+"subscription.manage.title" = "Abbonamento";
 
 /* Alert content for not found subscription */
-"subscription.notFound.alert.message" = "There is no subscription associated with this Apple ID.";
+"subscription.notFound.alert.message" = "Nessun abbonamento associato a questo ID Apple.";
 
 /* Alert title for not found subscription */
-"subscription.notFound.alert.title" = "Subscription Not Found";
+"subscription.notFound.alert.title" = "Abbonamento non trovato";
 
 /* View plans button text */
-"subscription.notFound.view.plans" = "View Plans";
+"subscription.notFound.view.plans" = "Visualizza i piani";
 
 /* Hero Text for Personal information removal */
-"subscription.pir.hero" = "Activate Privacy Pro on desktop to set up Personal Information Removal";
+"subscription.pir.hero" = "Attiva Privacy Pro sul desktop per impostare Personal Information Removal";
 
 /* Description on how to use Personal information removal in desktop. The first placeholder references a location in the Desktop application. <i.e: Settings > Privacy Pro>, and the second, the menu entry. i.e. <I have a Subscription> */
-"subscription.pir.heroText" = "In the DuckDuckGo browser for desktop, go to %1$@ and click %2$@ to get started.";
+"subscription.pir.heroText" = "Nel browser DuckDuckGo per desktop, vai a %1$@ e fai clic su %2$@ per iniziare.";
 
 /* Settings references a menu in the Desktop app, Privacy Pro, references our product name */
-"subscription.pir.heroTextLocation" = "Settings > Privacy Pro";
+"subscription.pir.heroTextLocation" = "Impostazioni > Privacy Pro";
 
 /* Menu item for enabling Personal Information Removal on Desktop */
-"subscription.pir.heroTextMenyEntry" = "I have a subscription";
+"subscription.pir.heroTextMenyEntry" = "Ho un abbonamento";
 
 /* Text for the 'macOS' button */
 "subscription.pir.macos" = "Mac";
@@ -2476,28 +2605,28 @@
 "subscription.pir.windows" = "Windows";
 
 /* Progress view title when completing the purchase */
-"subscription.progress.view.completing.purchase" = "Completing purchase...";
+"subscription.progress.view.completing.purchase" = "Stiamo completando l'acquisto...";
 
 /* Progress view title when starting the purchase */
-"subscription.progress.view.purchasing.subscription" = "Purchase in progress...";
+"subscription.progress.view.purchasing.subscription" = "Acquisto in corso...";
 
 /* Progress view title when restoring past subscription purchase */
-"subscription.progress.view.restoring.subscription" = "Restoring subscription...";
+"subscription.progress.view.restoring.subscription" = "Stiamo ripristinando l'abbonamento...";
 
 /* Remove from this device button */
-"subscription.remove.from.device.button" = "Remove From This Device";
+"subscription.remove.from.device.button" = "Rimuovi da questo dispositivo";
 
 /* Remove from device confirmation dialog text */
-"subscription.remove.from.device.text" = "You will no longer be able to access your Privacy Pro subscription on this device. This will not cancel your subscription, and it will remain active on your other devices.";
+"subscription.remove.from.device.text" = "Non potrai più accedere al tuo abbonamento Privacy Pro su questo dispositivo. Questo non annulla il tuo abbonamento, che rimane attivo sugli altri tuoi dispositivi.";
 
 /* Remove from device confirmation dialog title */
-"subscription.remove.from.device.title" = "Remove from this device?";
+"subscription.remove.from.device.title" = "Rimuovere da questo dispositivo?";
 
 /* Remove subscription button text */
-"subscription.remove.subscription" = "Remove Subscription";
+"subscription.remove.subscription" = "Rimuovi abbonamento";
 
 /* Remove subscription cancel button text */
-"subscription.remove.subscription.cancel" = "Cancel";
+"subscription.remove.subscription.cancel" = "Annulla";
 
 /* Button text for general error message */
 "subscription.restore.backend.error.button" = "Torna a Impostazioni";
@@ -2509,28 +2638,43 @@
 "subscription.restore.backend.error.title" = "Si è verificato un errore";
 
 /* Alert for general error message */
-"subscription.restore.general.error.message" = "The App Store was unable to process your purchase. Please try again later.";
+"subscription.restore.general.error.message" = "L'App Store non è riuscito a elaborare l'acquisto. Riprova in seguito.";
 
 /* Alert for general error title */
-"subscription.restore.general.error.title" = "Something Went Wrong";
+"subscription.restore.general.error.title" = "Si è verificato un errore";
 
 /* Alert button text for restored purchase alert */
 "subscription.restore.success.alert.button" = "OK";
 
 /* Alert message for restored purchase */
-"subscription.restore.success.alert.message" = "Your purchases have been restored.";
+"subscription.restore.success.alert.message" = "I tuoi acquisti sono stati ripristinati.";
 
 /* Alert title for restored purchase */
-"subscription.restore.success.alert.title" = "You’re all set.";
+"subscription.restore.success.alert.title" = "Tutto pronto.";
+
+/* Subtitle in header when subscribed */
+"subscription.subscribed" = "Iscritto";
 
 /* Subscription Expired Data. This reads as 'Your subscription expired on (date)' */
 "subscription.subscription.expired.caption" = "Il tuo abbonamento è scaduto il % @";
 
-/* Subscription expiration info. This reads as 'Your (monthly or annual) subscription expires on (date)' */
-"subscription.subscription.expiring.caption" = "Your %1$@ subscription expires on %2$@.";
+/* Monthly subscription expiration info where parameter is expiration date. This reads as 'Your monthly subscription expires on (date)' */
+"subscription.subscription.expiring.monthly.caption" = "Il tuo abbonamento mensile scade il %@.";
 
-/* Subscription renewal info. This reads as 'Your (monthly or annual) subscription renews on (date)' */
-"subscription.subscription.renewing.caption" = "Your %1$@ subscription renews on %2$@.";
+/* Unknown period subscription expiration info where parameter is expiration date. This reads as 'Your subscription expires on (date)' */
+"subscription.subscription.expiring.unknown.caption" = "Il tuo abbonamento scade il %@.";
+
+/* Annual subscription expiration info where parameter is expiration date. This reads as 'Your annual subscription expires on (date)' */
+"subscription.subscription.expiring.yearly.caption" = "Il tuo abbonamento annuale scade il %@.";
+
+/* Monthly subscription renewal info where parameter is renewal date. This reads as 'Your monthly subscription renews on (date)' */
+"subscription.subscription.renewing.monthly.caption" = "Il tuo abbonamento mensile si rinnova il %@.";
+
+/* Unknown period subscription renewal info where parameter is renewal date. This reads as 'Your subscription renews on (date)' */
+"subscription.subscription.renewing.unknown.caption" = "Il tuo abbonamento si rinnova il %@.";
+
+/* Annual subscription renewal info where parameter is renewal date. This reads as 'Your annual subscription renews on (date)' */
+"subscription.subscription.renewing.yearly.caption" = "Il tuo abbonamento annuale si rinnova il %@.";
 
 /* Navigation bar Title for subscriptions */
 "subscription.title" = "Privacy Pro";
@@ -2677,118 +2821,118 @@
 "voiceSearch.footer.note.old" = "L'audio viene elaborato sul dispositivo e non viene memorizzato né condiviso con altri utenti, nemmeno con DuckDuckGo.";
 
 /* Cancel action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.cancel" = "Dismiss";
+"vpn.access-revoked.alert.action.cancel" = "Ignora";
 
 /* Primary action for the alert when the subscription expires */
-"vpn.access-revoked.alert.action.subscribe" = "Subscribe";
+"vpn.access-revoked.alert.action.subscribe" = "Iscriviti";
 
 /* Alert message for the alert when the Privacy Pro subscription expiress */
-"vpn.access-revoked.alert.message" = "Subscribe to Privacy Pro to reconnect DuckDuckGo VPN.";
+"vpn.access-revoked.alert.message" = "Iscriviti a Privacy Pro per riconnettere la VPN di DuckDuckGo.";
 
 /* Alert title for the alert when the Privacy Pro subscription expires */
-"vpn.access-revoked.alert.title" = "VPN disconnected due to expired subscription";
+"vpn.access-revoked.alert.title" = "La VPN si è scollegata a causa di un abbonamento scaduto";
 
 /* Title for the VPN widget onboarding screen */
 "vpn.addWidget.settings.title" = "Trova e seleziona DuckDuckGo. Quindi scorri fino a VPN e seleziona Aggiungi widget.";
 
 /* Title for the Cancel button of the VPN feedback form */
-"vpn.feedback-form.button.cancel" = "Cancel";
+"vpn.feedback-form.button.cancel" = "Annulla";
 
 /* Title for the Done button of the VPN feedback form */
-"vpn.feedback-form.button.done" = "Done";
+"vpn.feedback-form.button.done" = "Fatto";
 
 /* Title for the Submit button of the VPN feedback form */
-"vpn.feedback-form.button.submit" = "Submit";
+"vpn.feedback-form.button.submit" = "Invia";
 
 /* Title for the Submitting state of the VPN feedback form */
-"vpn.feedback-form.button.submitting" = "Submitting…";
+"vpn.feedback-form.button.submitting" = "Invio in corso...";
 
 /* Title for the browser crash/freeze category of the VPN feedback form */
-"vpn.feedback-form.category.browser-crash-or-freeze" = "VPN causes browser to crash or freeze";
+"vpn.feedback-form.category.browser-crash-or-freeze" = "La VPN causa l'arresto anomalo o il blocco del browser";
 
 /* Title for the 'VPN fails to connect' category of the VPN feedback form */
-"vpn.feedback-form.category.fails-to-connect" = "VPN fails to connect";
+"vpn.feedback-form.category.fails-to-connect" = "La VPN non si connette";
 
 /* Title for the 'VPN feature request' category of the VPN feedback form */
-"vpn.feedback-form.category.feature-request" = "VPN feature request";
+"vpn.feedback-form.category.feature-request" = "Richiesta di funzionalità VPN";
 
 /* Title for the category 'VPN causes issues with other apps or websites' category of the VPN feedback form */
-"vpn.feedback-form.category.issues-with-apps" = "VPN causes issues with other apps or websites";
+"vpn.feedback-form.category.issues-with-apps" = "La VPN causa problemi con altre app o siti web";
 
 /* Title for the local device connectivity category of the VPN feedback form */
-"vpn.feedback-form.category.local-device-connectivity" = "VPN won't let me connect to local device";
+"vpn.feedback-form.category.local-device-connectivity" = "Non mi consente di connettermi al dispositivo locale";
 
 /* Title for the 'other VPN feedback' category of the VPN feedback form */
-"vpn.feedback-form.category.other" = "Other VPN feedback";
+"vpn.feedback-form.category.other" = "Altri feedback sulla VPN";
 
 /* Title for the category selection state of the VPN feedback form */
-"vpn.feedback-form.category.select-category" = "Select a category";
+"vpn.feedback-form.category.select-category" = "SELEZIONA UNA CATEGORIA";
 
 /* Title for the 'VPN is too slow' category of the VPN feedback form */
-"vpn.feedback-form.category.too-slow" = "VPN connection is too slow";
+"vpn.feedback-form.category.too-slow" = "La connessione VPN è troppo lenta";
 
 /* Title for the 'unable to install' category of the VPN feedback form */
-"vpn.feedback-form.category.unable-to-install" = "Unable to install VPN";
+"vpn.feedback-form.category.unable-to-install" = "Impossibile installare la VPN";
 
 /* Title for the feedback sent view description of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.description" = "Your feedback will help us improve the\nDuckDuckGo VPN.";
+"vpn.feedback-form.sending-confirmation.description" = "La tua opinione ci aiuterà a migliorare la VPN DuckDuckGo.";
 
 /* Title for the feedback sending error text of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.error" = "We couldn't send your feedback right now, please try again.";
+"vpn.feedback-form.sending-confirmation.error" = "Non siamo riusciti a inviare il tuo feedback in questo momento, riprova.";
 
 /* Title for the feedback sent view title of the VPN feedback form */
-"vpn.feedback-form.sending-confirmation.title" = "Thank you!";
+"vpn.feedback-form.sending-confirmation.title" = "Grazie!";
 
 /* Toast message when the VPN feedback form is submitted successfully */
-"vpn.feedback-form.submitted.message" = "Thank You! Feedback submitted.";
+"vpn.feedback-form.submitted.message" = "Grazie! Il feedback è stato inviato.";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-1" = "Please describe what's happening, what you expected to happen, and the steps that led to the issue:";
+"vpn.feedback-form.text-1" = "Descrivi cosa sta succedendo, cosa ti aspettavi che accadesse e i passaggi che hanno portato al problema:";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-2" = "In addition to the details entered into this form, your app issue report will contain:";
+"vpn.feedback-form.text-2" = "Oltre ai dettagli inseriti in questo modulo, la segnalazione sui problemi dell'app conterrà le seguenti informazioni:";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-3" = "• Whether specific DuckDuckGo features are enabled";
+"vpn.feedback-form.text-3" = "• Comunicherà se specifiche funzioni di DuckDuckGo sono attive";
 
 /* Bullet text for the body of the VPN feedback form */
-"vpn.feedback-form.text-4" = "• Aggregate DuckDuckGo app diagnostics";
+"vpn.feedback-form.text-4" = "• Aggregherà le diagnostiche dell'app DuckDuckGo";
 
 /* Text for the body of the VPN feedback form */
-"vpn.feedback-form.text-5" = "By tapping \"Submit\" I agree that DuckDuckGo may use the information in this report for purposes of improving the app's features.";
+"vpn.feedback-form.text-5" = "Toccando \"Invia\" accetto che DuckDuckGo possa usare le informazioni in questo rapporto per migliorare le funzionalità dell'app.";
 
 /* Title for each screen of the VPN feedback form */
-"vpn.feedback-form.title" = "Help Improve the DuckDuckGo VPN";
+"vpn.feedback-form.title" = "Aiuta a migliorare la VPN di DuckDuckGo";
 
 /* VPN settings screen cell text for adding the VPN widget to the home screen */
 "vpn.settings.add.widget" = "Aggiungi il widget VPN alla schermata iniziale";
 
 /* Disclaimer for the DNS Server section on the DNS Server screen */
-"vpn.settings.dns.section-disclaimer" = "Using a custom DNS server can impact browsing speeds and expose your activity to third parties if the server isn't secure or reliable.";
+"vpn.settings.dns.section-disclaimer" = "L'utilizzo di un server DNS personalizzato può incidere sulla velocità di navigazione ed esporre la tua attività a terzi se il server non è sicuro o affidabile.";
 
 /* Header text for the DNS section on the VPN Settings screen */
-"vpn.settings.dns.section-header" = "DNS";
+"vpn.settings.dns.section-header" = "dns";
 
 /* Title for the Apply button on the DNS Server setting screen */
-"vpn.settings.dns.server.apply.button.title" = "Apply";
+"vpn.settings.dns.server.apply.button.title" = "Applica";
 
 /* Default value for the DNS Server row on the VPN Settings screen */
 "vpn.settings.dns.server.default.value" = "DuckDuckGo";
 
 /* Title for the IPv4 Address setting */
-"vpn.settings.dns.server.ipv4.title" = "IPv4 Address";
+"vpn.settings.dns.server.ipv4.title" = "Indirizzo IPv4";
 
 /* Custom option for the DNS Server setting */
-"vpn.settings.dns.server.option.custom" = "Custom";
+"vpn.settings.dns.server.option.custom" = "Personalizzato";
 
 /* Recommended option for the DNS Server setting */
-"vpn.settings.dns.server.option.default" = "DuckDuckGo (Recommended)";
+"vpn.settings.dns.server.option.default" = "DuckDuckGo (consigliato)";
 
 /* Title for the DNS Server setting screen */
-"vpn.settings.dns.server.screen.title" = "DNS Server";
+"vpn.settings.dns.server.screen.title" = "Server DNS";
 
 /* Title for the DNS Server row on the VPN Settings screen */
-"vpn.settings.dns.server.title" = "DNS Server";
+"vpn.settings.dns.server.title" = "Server DNS";
 
 /* Title for the button to enable push notifications in system settings */
 "waitlist.allow-notifications" = "Consenti notifiche";

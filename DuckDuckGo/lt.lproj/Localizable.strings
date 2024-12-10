@@ -1077,7 +1077,7 @@
 "duckPlayer.never.label" = "Niekada";
 
 /* Body text for the modal feature explanation */
-"duckplayer.presentation.modal.body" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
+"duckplayer.presentation.modal.body" = "„Duck Player“ leidžia sistemoje „DuckDuckGo“ žiūrėti „YouTube“ be taikomų reklamų, o tai, ką žiūrite, neturės įtakos jūsų rekomendacijoms.";
 
 /* Button that will dismiss the modal */
 "duckplayer.presentation.modal.dismiss-button" = "Supratau!";
@@ -1092,7 +1092,7 @@
 "duckplayer.settings.footer" = "„DuckDuckGo“ suteikia visas pagrindines privatumą užtikrinančias priemones, kurių reikia norint apsisaugoti naršant internete.";
 
 /* Text explaining what Duck Player is in the settings screen. */
-"duckplayer.settings.info-text" = "Duck Player lets you watch YouTube without targeted ads in DuckDuckGo and what you watch won’t influence your recommendations.";
+"duckplayer.settings.info-text" = "„Duck Player“ leidžia sistemoje „DuckDuckGo“ žiūrėti „YouTube“ be taikomų reklamų, o tai, ką žiūrite, neturės įtakos jūsų rekomendacijoms.";
 
 /* Button that takes the user to learn more about Duck Player. */
 "duckplayer.settings.learn-more" = "Sužinoti daugiau";
